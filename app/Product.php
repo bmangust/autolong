@@ -21,6 +21,11 @@ class Product extends Model
        return $this->hasMany('App\OrderItem');
     }
 
+    public function providers()
+    {
+        return $this->belongsToMany('App\Provider', 'product_provider', 'product_id', 'provider_id');
+    }
+
     public function createOrUpdateImage($image)
     {
         if (!is_null($this->image)) {

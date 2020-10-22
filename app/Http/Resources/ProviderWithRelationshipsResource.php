@@ -36,6 +36,7 @@ class ProviderWithRelationshipsResource extends JsonResource
             'beneficiarySwiftAddress' => $this->beneficiary_swift_address,
             'catalogs' => CatalogResource::collection($this->catalogs),
             'orders' => OrderResource::collection($this->orders),
+            'products' => ProductResource::collection($this->products),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

@@ -41,4 +41,9 @@ class Provider extends Model
         return $this->belongsTo('App\Country');
     }
 
+    public function products()
+    {
+        return $this->belongsToMany('App\Product', 'product_provider', 'provider_id', 'product_id');
+    }
+
 }

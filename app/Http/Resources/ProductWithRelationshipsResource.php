@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CatalogResource;
 use App\Http\Resources\OrderItemResource;
+use App\Http\Resources\ProviderResource;
 use phpDocumentor\Reflection\Types\Object_;
 
 class ProductWithRelationshipsResource extends JsonResource
@@ -23,7 +24,7 @@ class ProductWithRelationshipsResource extends JsonResource
             'nameEn' => $this->name_en,
             'aboutRu' => $this->about_ru,
             'aboutEn' => $this->about_en,
-            'providerId' => new ProviderResource($this->provider_id),
+            'providers' => ProviderResource::collection($this->providers),
             'image' => $this->image,
             'price' => (Object)['rub' => $this->price_rub, 'usd' => $this->price_usd, 'cny' => $this->price_cny],
             'weightNetto' => $this->weight_netto,
