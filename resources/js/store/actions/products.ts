@@ -133,7 +133,9 @@ export const fetchProductsByVendors = (data) => async dispatch => {
     await dispatch({
         type: FETCH_BY_VENDOR_START
     })
-    const numbers = data.numbers.split('\n')
+    const numbers = data.numbers.split('\n').filter(el => {
+        return el != null && el != ''
+    })
     const url = '/api/products/checknumbercode'
     axios
         .post(url, {
