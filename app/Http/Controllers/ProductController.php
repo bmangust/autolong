@@ -154,10 +154,10 @@ class ProductController extends Controller
     public function checkNumberCode(Request $request, AutolongRuProduct $autolongRuProduct)
     {
         $request->validate([
-            'vendorCodes' => 'required'
+            'numbers' => 'required'
         ]);
-        $vendorCodes = $request->input('vendorCodes');
-        $availableProducts = $autolongRuProduct->checkNumberCodesInDB($vendorCodes);
+        $numbers = $request->input('numbers');
+        $availableProducts = $autolongRuProduct->checkNumberCodesInDB($numbers);
         return response()->json($availableProducts, 200);
     }
 }

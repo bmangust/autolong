@@ -11,18 +11,18 @@ class AutolongRuProduct extends Model
 
     public function checkNumberCodesInDB($numbers)
     {
-        $avilableProducts = [];
+        $availableProducts = [];
         foreach ($numbers as $number) {
             $usProduct = Product::whereAutolongNumber($number);
             $product = $this->whereNumber($number)->first();
             if ($usProduct->exists()) {
-                array_push($avilableProducts,  new ProductResource($usProduct->first()));
+                array_push($availableProducts,  new ProductResource($usProduct->first()));
             } elseif(!is_null($product) && $product != '') {
-                array_push($avilableProducts,  $product);
+                array_push($availableProducts,  $product);
             } else {
-                array_push($avilableProducts, $number);
+                array_push($availableProducts, $number);
             }
         }
-        return $avilableProducts;
+        return $availableProducts;
     }
 }
