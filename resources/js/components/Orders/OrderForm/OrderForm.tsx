@@ -8,10 +8,14 @@ import {useForm} from 'react-hook-form'
 
 // Typescript
 import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
+import {IProduct, IProductsRootState} from '../../Products/IProducts'
 
 // Actions
 import {createOrder} from '../../../store/actions/orders'
 import {fetchProviders} from '../../../store/actions/providers'
+import {fetchProducts} from '../../../store/actions/products'
+
+// App
 import OrderItems from '../OrderItems/OrderItems'
 
 interface ICreateOrderData {
@@ -37,8 +41,14 @@ const OrderForm: React.FC = () => {
             providers: state.providersState.providers
         }))
 
+    const {products} = useSelector(
+        (state: IProductsRootState) => ({
+            products: state.productsState.products
+        }))
+
     useEffect(() => {
         dispatch(fetchProviders())
+        dispatch(fetchProducts())
     }, [dispatch])
 
     const onChangeQtyHandler = (e, itemId: number) => {
@@ -55,12 +65,12 @@ const OrderForm: React.FC = () => {
         setItems(newItems)
     }
 
-    // const onChangeHandler = (e) => {
-    //     const product = JSON.parse(e.target.value)
-    //     // @ts-ignore
-    //     setData(oldData => [...oldData, {id: product.id, quantity: 1}])
-    //     setItems(oldItems => [...oldItems, product])
-    // }
+    const onChangeHandler = (e) => {
+        const product = JSON.parse(e.target.value)
+        // @ts-ignore
+        setData(oldData => [...oldData, {id: product.id, quantity: 1}])
+        setItems(oldItems => [...oldItems, product])
+    }
 
     const orderFormSubmitHandler =
         handleSubmit((formValues: ICreateOrderData) => {
@@ -127,6 +137,24 @@ const OrderForm: React.FC = () => {
             <div className='card mb-3'>
                 <div className="card-body">
                     <h2>Список товаров в заказе</h2>
+                    <select name="addProduct" onChange={onChangeHandler}
+                            className='mb-3'>
+                        <option defaultValue=''>
+                            Выберите товар
+                        </option>
+                        {products.map((product: IProduct) => {
+                            const isFind = items.find(
+                                ({id}) => id === product.id)
+                            if (!isFind) {
+                                return (<option
+                                    key={product.id}
+                                    value={JSON.stringify(product)}>
+                                    {product.nameRu}</option>)
+                            } else {
+                                return null
+                            }
+                        })}
+                    </select>
                     <OrderItems
                         onDelete={onDeleteHandler}
                         onChange={onChangeQtyHandler} items={items}/>

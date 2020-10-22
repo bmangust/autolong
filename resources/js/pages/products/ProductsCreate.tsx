@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useEffect} from 'react'
 
 // Third-party
 import ProductFormEdit
@@ -8,11 +8,15 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
 
 // Typescript
-import {IOrdersRootState} from '../../components/Orders/IOrders'
-import {IProduct, IProductAutolong} from '../../components/Products/IProducts'
+import {
+    IProduct, IProductAutolong,
+    IProductsRootState
+} from '../../components/Products/IProducts'
+import {IProvidersRootState} from '../../components/Providers/IProviders'
 
 // Actions
-import {fetchProductsByVendor} from '../../store/actions/orders'
+import {fetchProductsByVendors} from '../../store/actions/products'
+import {fetchProviders} from '../../store/actions/providers'
 
 
 const ProductsCreate: React.FC = () => {
@@ -22,14 +26,23 @@ const ProductsCreate: React.FC = () => {
         register, handleSubmit
     } = useForm()
 
-    const {orderProducts} = useSelector(
-        (state: IOrdersRootState) => ({
-            orderProducts: state.ordersState.orderProducts
+    const {providers} = useSelector(
+        (state: IProvidersRootState) => ({
+            providers: state.providersState.providers
+        }))
+
+    useEffect(() => {
+        dispatch(fetchProviders())
+    }, [dispatch])
+
+    const {vendorProducts} = useSelector(
+        (state: IProductsRootState) => ({
+            vendorProducts: state.productsState.vendorProducts
         }))
 
     const getProductSubmitHandler =
         handleSubmit((formValues) => {
-            dispatch(fetchProductsByVendor(formValues))
+            dispatch(fetchProductsByVendors(formValues))
         })
     return (
         <>
@@ -52,8 +65,9 @@ const ProductsCreate: React.FC = () => {
                     </div>
                 </div>
             </form>
-            {orderProducts.map((product: IProduct | IProductAutolong) => {
+            {vendorProducts.map((product: IProduct | IProductAutolong) => {
                 return <ProductFormEdit
+                    providers={providers}
                     key={'id' in product
                         ? product.id
                         : product.number + product.articul}

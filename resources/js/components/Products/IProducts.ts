@@ -23,8 +23,9 @@ export interface IProduct {
     nameEn?: string
     aboutRu?: string
     aboutEn?: string
-    catalogId?: number
+    providerId?: number
     vendorCode: string
+    autolongNumber: string
     image: string
     price: IProductPrice
     weightNetto: number

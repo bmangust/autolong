@@ -134,7 +134,7 @@ export const fetchProductsByVendors = (data) => async dispatch => {
         type: FETCH_BY_VENDOR_START
     })
     const vendorCodesArr = data.vendorCodes.split(' ')
-    const url = `/api/products/checkvendorcode`
+    const url = '/api/products/checkvendorcode'
     axios
         .post(url, {
             vendorCodes: vendorCodesArr

@@ -18,6 +18,7 @@ interface ICreateProductData {
     nameRu: string
     nameEn: string
     vendorCode: string
+    autolongNumber: string
     aboutRu: string
     aboutEn: string
     providerId: number
@@ -114,11 +115,20 @@ const ProductForm: React.FC = () => {
                                            ref={register}
                                            type="text"
                                            placeholder="Введите номер"/>
-                                    <label htmlFor='catalogId'
+                                    <label htmlFor='vendorCode'
+                                           className='w-100'>
+                                        1c артикул
+                                    </label>
+                                    <input className='col-lg-10 mb-3'
+                                           name="autolongNumber"
+                                           ref={register}
+                                           type="text"
+                                           placeholder="Введите номер"/>
+                                    <label htmlFor='providerId'
                                            className='w-100'>
                                         Выберите поставщика
                                     </label>
-                                    <select name="catalogId" ref={register}
+                                    <select name="providerId" ref={register}
                                             className='col-lg-10 mb-3'
                                             id="providerId">
                                         <option disabled defaultValue=''>

@@ -24,7 +24,7 @@ interface ICreateProviderData {
     phone: string
     wechat: string
     countryId: string
-    catalogId: [number]
+    catalogs: [number]
     beneficiaryName: string
     beneficiaryAccountName: string
     beneficiaryBankAddress: string
@@ -62,7 +62,9 @@ const ProviderForm: React.FC = () => {
     const providerFormSubmitHandler =
         handleSubmit((formValues: ICreateProviderData) => {
             if (catalogsArr.length) {
-                formValues.catalogId = catalogsArr
+                formValues.catalogs = catalogsArr
+            } else {
+                formValues.catalogs = [+formValues.catalogs]
             }
             dispatch(createProvider(formValues))
             history.push('/providers')
@@ -70,9 +72,9 @@ const ProviderForm: React.FC = () => {
 
     const onClickHandler = (e) => {
         e.preventDefault()
-        const {catalogId} = getValues()
-        if (catalogId) {
-            setCatalogsArr(prevState => [...prevState, +catalogId])
+        const {catalogs} = getValues()
+        if (catalogs) {
+            setCatalogsArr(prevState => [...prevState, +catalogs])
         }
     }
 
@@ -262,7 +264,7 @@ const ProviderForm: React.FC = () => {
                                 Выберите каталог
                             </label>
                             <select
-                                name="catalogId"
+                                name="catalogs"
                                 ref={register}
                                 className='col-lg-10 mb-3'
                             >
@@ -276,7 +278,7 @@ const ProviderForm: React.FC = () => {
                                     if (!isFind) {
                                         return (<option
                                             key={catalog.id}
-                                            value={catalog.id}>
+                                            value={+catalog.id}>
                                             {catalog.name}</option>)
                                     } else {
                                         return null
