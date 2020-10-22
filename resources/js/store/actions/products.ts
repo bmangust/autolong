@@ -133,11 +133,11 @@ export const fetchProductsByVendors = (data) => async dispatch => {
     await dispatch({
         type: FETCH_BY_VENDOR_START
     })
-    const vendorCodesArr = data.vendorCodes.split(' ')
-    const url = '/api/products/checkvendorcode'
+    const numbers = data.numbers.split('\n')
+    const url = '/api/products/checknumbercode'
     axios
         .post(url, {
-            vendorCodes: vendorCodesArr
+            numbers: numbers
         })
         .then((answer) => {
             dispatch({

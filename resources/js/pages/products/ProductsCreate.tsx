@@ -54,8 +54,8 @@ const ProductsCreate: React.FC = () => {
                         </label>
                         <textarea
                             ref={register}
-                            name="vendorCodes" rows={4}
-                            placeholder='Каждый артикул через пробел'>
+                            name="numbers" rows={4}
+                            placeholder='Каждый артикул через enter'>
                         </textarea>
                         <button
                             className='btn btn-success'
