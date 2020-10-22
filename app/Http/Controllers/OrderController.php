@@ -109,16 +109,6 @@ class OrderController extends Controller
         return response()->json([], 204);
     }
 
-    public function checkVendorCode(Request $request, AutolongRuProduct $autolongRuProduct)
-    {
-        $request->validate([
-            'vendorCodes' => 'required'
-        ]);
-        $vendorCodes = $request->input('vendorCodes');
-        $availableProducts = $autolongRuProduct->checkVendorCodesInDB($vendorCodes);
-        return response()->json($availableProducts, 200);
-    }
-
     public function changeStatus(Request $request, Order $order)
     {
         $request->validate([

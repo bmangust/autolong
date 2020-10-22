@@ -37,6 +37,7 @@ Route::get('products/{product}', 'ProductController@show');
 Route::put('products/{product}', 'ProductController@update');
 Route::delete('products/{product}', 'ProductController@destroy');
 Route::post('products/calculateprice', 'ProductController@getPrice');
+Route::post('products/checkvendorcode', 'ProductController@checkVendorCode');
 
 Route::get('catalogs', 'CatalogController@index');
 Route::post('catalogs', 'CatalogController@store');
@@ -55,6 +56,5 @@ Route::post('orders', 'OrderController@store');
 Route::get('orders/{order}', 'OrderController@show');
 Route::put('orders/{order}', 'OrderController@update');
 Route::delete('orders/{order}', 'OrderController@destroy');
-Route::post('orders/checkvendorcode', 'OrderController@checkVendorCode');
 Route::post('orders/{order}/changestatus', 'OrderController@changeStatus');
 Route::post('orders/{order}/changestatusPayment', 'OrderController@changeStatusPayment');

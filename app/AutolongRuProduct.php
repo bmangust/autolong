@@ -13,12 +13,14 @@ class AutolongRuProduct extends Model
     {
         $avilableProducts = [];
         foreach ($vendorCodes as $vendorCode) {
+            $usProduct = Product::whereVendorCode($vendorCode);
             $product = $this->whereArticul($vendorCode)->first();
-            $usProducts = Product::whereVendorCode($vendorCode);
-            if (!is_null($product) && $product != '') {
-                array_push($avilableProducts, $product);
-            } elseif($usProducts->exists()) {
-                array_push($avilableProducts, new ProductResource($usProducts->first()));
+            if ($usProduct->exists()) {
+                array_push($avilableProducts,  new ProductResource($usProduct->first()));
+            } elseif(!is_null($product) && $product != '') {
+                array_push($avilableProducts,  $product);
+            } else {
+                array_push($avilableProducts, []);
             }
         }
         return $avilableProducts;

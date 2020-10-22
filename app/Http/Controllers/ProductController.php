@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\AutolongRuProduct;
 use App\ExchangeRate;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
@@ -146,5 +147,15 @@ class ProductController extends Controller
             'cny' => $priceCny,
             'rub' => $exchangeRate->lastCourse()->rub * $priceCny,
             'usd' => $exchangeRate->lastCourse()->usd * $priceCny]], 200);
+    }
+
+    public function checkVendorCode(Request $request, AutolongRuProduct $autolongRuProduct)
+    {
+        $request->validate([
+            'vendorCodes' => 'required'
+        ]);
+        $vendorCodes = $request->input('vendorCodes');
+        $availableProducts = $autolongRuProduct->checkVendorCodesInDB($vendorCodes);
+        return response()->json($availableProducts, 200);
     }
 }
