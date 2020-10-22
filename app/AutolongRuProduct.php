@@ -14,7 +14,7 @@ class AutolongRuProduct extends Model
         $avilableProducts = [];
         foreach ($vendorCodes as $vendorCode) {
             $usProduct = Product::whereVendorCode($vendorCode);
-            $product = $this->whereArticul($vendorCode)->first();
+            $product = $this->whereNumber($vendorCode)->first();
             if ($usProduct->exists()) {
                 array_push($avilableProducts,  new ProductResource($usProduct->first()));
             } elseif(!is_null($product) && $product != '') {
