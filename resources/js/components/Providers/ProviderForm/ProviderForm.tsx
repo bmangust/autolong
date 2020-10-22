@@ -1,17 +1,20 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 
+// Typescript
+import {ICountriesRootState, ICountry} from '../../Сountries/ICountries'
+import {ICatalog, ICatalogsRootState} from '../../Catalogs/ICatalogs'
+
 // Actions
 import {createProvider} from '../../../store/actions/providers'
 import {fetchCountries} from '../../../store/actions/countries'
-import {ICountriesRootState, ICountry} from '../../Сountries/ICountries'
 import {fetchCatalogs} from '../../../store/actions/catalogs'
-import {ICatalog, ICatalogsRootState} from '../../Catalogs/ICatalogs'
+import SvgClose from '../../UI/iconComponents/Close'
 
 interface ICreateProviderData {
     name: string
@@ -21,6 +24,7 @@ interface ICreateProviderData {
     phone: string
     wechat: string
     countryId: string
+    catalogId: [number]
     beneficiaryName: string
     beneficiaryAccountName: string
     beneficiaryBankAddress: string
@@ -32,11 +36,13 @@ interface ICreateProviderData {
 
 const ProviderForm: React.FC = () => {
     const {
-        register, handleSubmit
+        register, handleSubmit, getValues
     } = useForm<ICreateProviderData>()
 
     const dispatch = useDispatch()
     const history = useHistory()
+
+    const [catalogsArr, setCatalogsArr] = useState<Array<number>>([])
 
     const {countries} = useSelector(
         (state: ICountriesRootState) => ({
@@ -55,9 +61,25 @@ const ProviderForm: React.FC = () => {
 
     const providerFormSubmitHandler =
         handleSubmit((formValues: ICreateProviderData) => {
+            if (catalogsArr.length) {
+                formValues.catalogId = catalogsArr
+            }
             dispatch(createProvider(formValues))
             history.push('/providers')
         })
+
+    const onClickHandler = (e) => {
+        e.preventDefault()
+        const {catalogId} = getValues()
+        if (catalogId) {
+            setCatalogsArr(prevState => [...prevState, +catalogId])
+        }
+    }
+
+    const onDeleteHandler = (catId) => {
+        const newCatalogsArr = catalogsArr.filter(el => el !== catId)
+        setCatalogsArr(newCatalogsArr)
+    }
 
     return (
         <div className='card'>
@@ -217,31 +239,54 @@ const ProviderForm: React.FC = () => {
                         </div>
 
                         <div className="col-lg-12 mt-4 mb-1">
-                            <h2>Каталоги</h2>
+                            <h2>Каталоги {catalogsArr.length
+                                ? `(${catalogsArr.length})`
+                                : null}</h2>
                         </div>
+
+                        {catalogsArr.length
+                            ? catalogsArr.map(catId => {
+                                return (
+                                    <div className='col-12' key={catId}>
+                                        {catalogs.find(({id}) =>
+                                            id === catId)?.name}
+                                        <SvgClose onClick={() =>
+                                            onDeleteHandler(catId)}/>
+                                    </div>
+                                )
+                            })
+                            : null}
 
                         <div className="col-lg-6">
                             <label className='w-100'>
                                 Выберите каталог
                             </label>
                             <select
-                                name="nameEn"
+                                name="catalogId"
                                 ref={register}
                                 className='col-lg-10 mb-3'
                             >
                                 <option disabled
-                                        defaultValue=''>Каталог
+                                        defaultValue=''>
+                                    Каталог
                                 </option>
                                 {catalogs.map((catalog: ICatalog) => {
-                                    return (<option
-                                        key={catalog.id}
-                                        value={catalog.id}>
-                                        {catalog.name}</option>)
+                                    const isFind =
+                                        catalogsArr.includes(catalog.id)
+                                    if (!isFind) {
+                                        return (<option
+                                            key={catalog.id}
+                                            value={catalog.id}>
+                                            {catalog.name}</option>)
+                                    } else {
+                                        return null
+                                    }
                                 })}
                             </select>
-                            <span className='mb-4 d-block small'>
-                                    + Привязать ещё один каталог
-                            </span>
+                            <button onClick={onClickHandler}
+                                    className='mb-4 d-block small'>
+                                + Привязать ещё один каталог
+                            </button>
                         </div>
 
                     </div>
