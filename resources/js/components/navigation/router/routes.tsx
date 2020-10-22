@@ -1,12 +1,12 @@
 // React
-import React from 'react';
+import React from 'react'
 
-import {lazy} from '@loadable/component';
-import pMinDelay from 'p-min-delay';
+import {lazy} from '@loadable/component'
+import pMinDelay from 'p-min-delay'
 
 // Typescript
-import {IRoute} from './IRoute';
-import Loader from '../../UI/Loader/Loader';
+import {IRoute} from './IRoute'
+import Loader from '../../UI/Loader/Loader'
 
 // Icons
 import {
@@ -16,7 +16,7 @@ import {
     Orders,
     Products, Settings,
     Providers
-} from '../../UI/iconComponents';
+} from '../../UI/iconComponents'
 
 export const routes: IRoute[] = [
     {
@@ -97,7 +97,8 @@ export const routes: IRoute[] = [
         name: 'Добавление нового контейнера',
         path: '/containercreate',
         component: lazy(() =>
-        pMinDelay(import('../../../pages/containers/ContainerCreate'), 600)),
+            pMinDelay(import('../../../pages/containers/ContainerCreate'),
+                600)),
         hide: true,
         exact: false,
         private: true,
@@ -162,6 +163,16 @@ export const routes: IRoute[] = [
         path: '/productcreate',
         component: lazy(() =>
             pMinDelay(import('../../../pages/products/ProductCreate'), 600)),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>
+    },
+    {
+        name: 'Добавление нескольких новых товаров',
+        path: '/productscreate',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/products/ProductsCreate'), 600)),
         hide: true,
         exact: false,
         private: true,
@@ -263,4 +274,4 @@ export const routes: IRoute[] = [
         fallback: <Loader/>,
         icon: <Settings/>
     }
-];
+]

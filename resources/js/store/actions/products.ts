@@ -10,7 +10,11 @@ import {
     FETCH_PRODUCT_SUCCESS,
     UPDATE_PRODUCT_ERROR,
     UPDATE_PRODUCT_START,
-    UPDATE_PRODUCT_SUCCESS, FETCH_PRODUCT_PRICE
+    UPDATE_PRODUCT_SUCCESS,
+    FETCH_PRODUCT_PRICE,
+    FETCH_BY_VENDOR_START,
+    FETCH_BY_VENDOR_SUCCESS,
+    FETCH_BY_VENDOR_ERROR
 } from './actionTypes'
 
 import axios, {AxiosError} from 'axios'
@@ -119,8 +123,31 @@ export const fetchProductPrice = (priceCny) =>
             .then((answer) => {
                     dispatch({
                         type: FETCH_PRODUCT_PRICE,
-                        payload: answer.data,
+                        payload: answer.data
                     })
                 }
             )
     }
+
+export const fetchProductsByVendors = (data) => async dispatch => {
+    await dispatch({
+        type: FETCH_BY_VENDOR_START
+    })
+    const vendorCodesArr = data.vendorCodes.split(' ')
+    const url = `/api/products/checkvendorcode`
+    axios
+        .post(url, {
+            vendorCodes: vendorCodesArr
+        })
+        .then((answer) => {
+            dispatch({
+                type: FETCH_BY_VENDOR_SUCCESS,
+                payload: answer.data
+            })
+        }).catch((error: AxiosError) => {
+        dispatch({
+            type: FETCH_BY_VENDOR_ERROR,
+            payload: error.response
+        })
+    })
+}

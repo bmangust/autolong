@@ -6,12 +6,12 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 
+// Typescript
+import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
+
 // Actions
 import {createCatalog} from '../../../store/actions/catalogs'
 import {fetchProviders} from '../../../store/actions/providers'
-
-// Typescript
-import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
 
 interface ICreateCatalogData {
     name: string
@@ -40,7 +40,7 @@ const CatalogForm: React.FC = () => {
     const catalogFormSubmitHandler =
         handleSubmit((formValues: ICreateCatalogData) => {
             formValues.file = formValues.file[0]
-            formValues.tags = [formValues.tags]
+            formValues.tags = [...formValues.tags]
             dispatch(createCatalog(formValues))
             history.push('/catalogs')
         })

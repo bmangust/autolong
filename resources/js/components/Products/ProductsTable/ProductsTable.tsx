@@ -3,6 +3,7 @@ import React, {useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
+import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Actions
 import {fetchProducts} from '../../../store/actions/products'
@@ -20,7 +21,6 @@ import {
     timeConverter
 } from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
-import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
 
 const ProductsTable: React.FC = () => {
@@ -106,6 +106,7 @@ const ProductsTable: React.FC = () => {
         <AutoTable
             expandRowTable={expandRowTable}
             keyField='id' data={products} columns={columns}
+            secondBtn={{link: 'productscreate', text: 'Добавить несколько'}}
             button={{link: 'productcreate', text: 'Добавить товар'}}/>
     )
 }

@@ -202,6 +202,7 @@ const Product: React.FC = () => {
                         <p className="infoBlockText">
                             {'country' in provider
                                 ? provider.country
+                                    ? provider.country.name : ''
                                 : ''}
                         </p>
                         <p className="infoBlockHeaders mb-1">Почта</p>

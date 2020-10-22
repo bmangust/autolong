@@ -6,11 +6,13 @@ import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {useForm} from 'react-hook-form'
 
+// Typescript
+import {IProductsRootState} from '../IProducts'
+import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
+
 // Actions
 import {createProduct, fetchProductPrice} from '../../../store/actions/products'
-import {fetchCatalogs} from '../../../store/actions/catalogs'
-import {ICatalog, ICatalogsRootState} from '../../Catalogs/ICatalogs'
-import {IProductsRootState} from '../IProducts'
+import {fetchProviders} from '../../../store/actions/providers'
 
 interface ICreateProductData {
     nameRu: string
@@ -18,7 +20,7 @@ interface ICreateProductData {
     vendorCode: string
     aboutRu: string
     aboutEn: string
-    catalogId: number
+    providerId: number
     image: string
     priceCny: number
     weightNetto: number
@@ -33,9 +35,9 @@ const ProductForm: React.FC = () => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const {catalogs} = useSelector(
-        (state: ICatalogsRootState) => ({
-            catalogs: state.catalogsState.catalogs
+    const {providers} = useSelector(
+        (state: IProvidersRootState) => ({
+            providers: state.providersState.providers
         }))
 
     const {price} = useSelector(
@@ -44,7 +46,7 @@ const ProductForm: React.FC = () => {
         }))
 
     useEffect(() => {
-        dispatch(fetchCatalogs())
+        dispatch(fetchProviders())
     }, [dispatch])
 
     const productFormSubmitHandler =
@@ -114,20 +116,21 @@ const ProductForm: React.FC = () => {
                                            placeholder="Введите номер"/>
                                     <label htmlFor='catalogId'
                                            className='w-100'>
-                                        Выберите каталог
+                                        Выберите поставщика
                                     </label>
                                     <select name="catalogId" ref={register}
                                             className='col-lg-10 mb-3'
-                                            id="catalogId">
+                                            id="providerId">
                                         <option disabled defaultValue=''>
-                                            Выберите каталог
+                                            Выберите поставщика
                                         </option>
-                                        {catalogs.map((catalog: ICatalog) => {
-                                            return (<option
-                                                key={catalog.id}
-                                                value={catalog.id}>
-                                                {catalog.name}</option>)
-                                        })}
+                                        {providers.map(
+                                            (provider: IProvider) => {
+                                                return (<option
+                                                    key={provider.id}
+                                                    value={provider.id}>
+                                                    {provider.name}</option>)
+                                            })}
                                     </select>
                                     <label htmlFor='image' className='w-100'>
                                         Загрузите изображение товара
@@ -171,7 +174,9 @@ const ProductForm: React.FC = () => {
                                             <input
                                                 name="priceUsd"
                                                 type="number"
-                                                value={price.usd}
+                                                value={'usd' in price
+                                                    ? price.usd
+                                                    : 0}
                                                 className='w-100'
                                                 placeholder="0"
                                                 disabled
@@ -188,7 +193,9 @@ const ProductForm: React.FC = () => {
                                             <input
                                                 name="priceRub"
                                                 type="number"
-                                                value={price.rub}
+                                                value={'rub' in price
+                                                    ? price.rub
+                                                    : 0}
                                                 className='w-100'
                                                 placeholder="0"
                                                 disabled

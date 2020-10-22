@@ -14,11 +14,14 @@ interface expandRow<T extends object = any, E = any> {
     formatter?: ColumnFormatter<T, E>
 }
 
+interface button {
+    link: string;
+    text: string
+}
+
 interface IAutoTable extends BootstrapTableProps {
-    button?: {
-        link: string;
-        text: string
-    } | undefined,
+    secondBtn?: button | undefined
+    button?: button | undefined,
     expandRowTable?: expandRow[] | undefined
 }
 
@@ -27,6 +30,7 @@ const AutoTable: React.FC<IAutoTable> =
          data,
          columns,
          keyField,
+         secondBtn,
          button,
          expandRowTable = undefined
      }) => {
@@ -54,7 +58,12 @@ const AutoTable: React.FC<IAutoTable> =
                 ?.map((item, index) => {
                     return (
                         <td key={`${item.dataField}-${index}`}>
-                            {row[item.dataField]}
+                            {
+                                item.formatter
+                                    ? item.formatter(row[item.dataField],
+                                    row, rowIndex, '')
+                                    : row[item.dataField]
+                            }
                         </td>
                     )
                 })
@@ -81,12 +90,23 @@ const AutoTable: React.FC<IAutoTable> =
         function expandColumnRenderer({expanded}) {
             if (expanded) {
                 return (
-                    <svg width="5" height="17" viewBox="0 0 5 17" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="2.75" cy="2.75" r="1.75" stroke="#3A405F"/><circle cx="2.75" cy="8.75" r="1.75" stroke="#3A405F"/><circle cx="2.75" cy="14.75" r="1.75" stroke="#3A405F"/></svg>
+                    <svg width="5" height="17" viewBox="0 0 5 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                        <circle cx="2.75" cy="2.75" r="1.75" stroke="#3A405F"/>
+                        <circle cx="2.75" cy="8.75" r="1.75" stroke="#3A405F"/>
+                        <circle cx="2.75" cy="14.75" r="1.75" stroke="#3A405F"/>
+                    </svg>
 
                 )
             }
             return (
-                <svg width="5" height="17" viewBox="0 0 5 17" fill="none" xmlns="http://www.w3.org/2000/svg"><circle cx="2.75" cy="2.75" r="1.75" fill="#3A405F" stroke="#3A405F"/><circle cx="2.75" cy="8.75" r="1.75" fill="#3A405F" stroke="#3A405F"/><circle cx="2.75" cy="14.75" r="1.75" fill="#3A405F" stroke="#3A405F"/></svg>
+                <svg width="5" height="17" viewBox="0 0 5 17" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <circle cx="2.75" cy="2.75" r="1.75"
+                            fill="#3A405F" stroke="#3A405F"/>
+                    <circle cx="2.75" cy="8.75" r="1.75"
+                            fill="#3A405F" stroke="#3A405F"/>
+                    <circle cx="2.75" cy="14.75" r="1.75"
+                            fill="#3A405F" stroke="#3A405F"/>
+                </svg>
             )
         }
 
@@ -102,17 +122,27 @@ const AutoTable: React.FC<IAutoTable> =
                     <div>
                         <div className="d-flex justify-content-between mb-2">
                             <div className="searchBar">
-                                {/* eslint-disable-next-line max-len */}
-                                <SearchBar {...props.searchProps} placeholder="Поиск по названию"/>
+                                <SearchBar {...props.searchProps}
+                                           placeholder="Поиск по названию"/>
                             </div>
-                            {button
-                                ?
-                                <NavLink to={`/${button.link}`}
-                                         className='btn addButton'>
-                                    {button.text}
-                                </NavLink>
-                                : null
-                            }
+                            <div>
+                                {secondBtn
+                                    ?
+                                    <NavLink to={`/${secondBtn.link}`}
+                                             className='btn addButton mr-3'>
+                                        {secondBtn.text}
+                                    </NavLink>
+                                    : null
+                                }
+                                {button
+                                    ?
+                                    <NavLink to={`/${button.link}`}
+                                             className='btn addButton'>
+                                        {button.text}
+                                    </NavLink>
+                                    : null
+                                }
+                            </div>
                         </div>
                         <div className='card'>
                             <div className="card-body text-muted">
