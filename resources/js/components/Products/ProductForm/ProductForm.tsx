@@ -117,7 +117,7 @@ const ProductForm: React.FC = () => {
                                            placeholder="Введите номер"/>
                                     <label htmlFor='vendorCode'
                                            className='w-100'>
-                                        1c артикул
+                                        Внутренний номер
                                     </label>
                                     <input className='col-lg-10 mb-3'
                                            name="autolongNumber"

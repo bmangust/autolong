@@ -81,7 +81,7 @@ const ProductFormEdit: React.FC<{
                 }
                 if ('id' in product && product.id) {
                     dispatch(updateProduct(product.id, formValues))
-                } else if ('number' in product) {
+                } else {
                     dispatch(createProduct(formValues))
                 }
                 setShow(false)
@@ -130,7 +130,7 @@ const ProductFormEdit: React.FC<{
                                 <div className="col-lg-6">
                                     <label htmlFor='autolongNumber'
                                            className='w-100'>
-                                        1с артикул
+                                        Внутренний номер
                                     </label>
                                     <input className='col-lg-10 mb-3'
                                            name="autolongNumber"
