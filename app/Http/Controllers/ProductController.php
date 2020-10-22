@@ -69,6 +69,7 @@ class ProductController extends Controller
         $product->weight_netto = $request->input('weightNetto');
         $product->weight_brutto = $request->input('weightBrutto');
         $product->vendor_code = $request->input('vendorCode');
+        $product->autolong_number = $request->input('autolongNumber');
         $product->save();
         $product->createOrUpdateImage($request->file('image'));
         return response()->json(new ProductWithRelationshipsResource($product), 201);
@@ -106,6 +107,7 @@ class ProductController extends Controller
         $product->weight_netto = $request->input('weightNetto');
         $product->weight_brutto = $request->input('weightBrutto');
         $product->vendor_code = $request->input('vendorCode');
+        $product->autolong_number = $request->input('autolongNumber');
         $product->save();
         $product->createOrUpdateImage($request->file('image'));
         return response()->json(new ProductWithRelationshipsResource($product), 200);
