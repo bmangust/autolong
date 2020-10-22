@@ -23,7 +23,7 @@ class ProductWithRelationshipsResource extends JsonResource
             'nameEn' => $this->name_en,
             'aboutRu' => $this->about_ru,
             'aboutEn' => $this->about_en,
-            'catalogId' => $this->catalog_id,
+            'providerId' => new ProviderResource($this->provider_id),
             'image' => $this->image,
             'price' => (Object)['rub' => $this->price_rub, 'usd' => $this->price_usd, 'cny' => $this->price_cny],
             'weightNetto' => $this->weight_netto,
