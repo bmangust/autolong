@@ -68,6 +68,13 @@ const ProductFormEdit: React.FC<{
             defaultValues
         })
 
+        let img = ''
+        if ('image' in product && product.image) {
+            img = product.image
+        } else if ('picture' in product && product.picture) {
+            img = product.photo
+        }
+
         const [show, setShow] = useState(true)
 
         const dispatch = useDispatch()
@@ -242,9 +249,9 @@ const ProductFormEdit: React.FC<{
                                     <label htmlFor='image' className='w-100'>
                                         Загрузите изображение товара
                                     </label>
-                                    {'image' in product && product.image
+                                    {img
                                         ? <img width={100} height={100}
-                                               src={product.image} alt=""/>
+                                               src={img} alt=""/>
                                         : null
                                     }
                                     <input className='hidden d-none'

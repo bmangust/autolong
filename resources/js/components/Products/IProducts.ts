@@ -49,6 +49,7 @@ export interface IProductAutolong {
     articul: string
     text: string
     price: string
+    photo: string
 }
 
 export interface IProductsState {
