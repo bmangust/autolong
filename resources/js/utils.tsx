@@ -4,6 +4,7 @@ import React from 'react'
 // Third-party
 import {NavLink} from 'react-router-dom'
 import getSymbolFromCurrency from 'currency-symbol-map'
+import {IProductPrice} from './components/Products/IProducts'
 
 export function nameToLinkFormatter(name, row, page) {
     return (
@@ -47,7 +48,7 @@ export function timeConverter(timestamp) {
  * Map price object
  * @param price
  */
-export function moneyFormatter(price) {
+export function moneyFormatter(price: IProductPrice) {
     return (
         <span className="pricesBlock">
            {Object.entries(price).map(([key, val]) => {

@@ -7,14 +7,19 @@ import {
     FETCH_ORDERS_SUCCESS,
     FETCH_ORDER_ERROR,
     FETCH_ORDER_START,
-    FETCH_ORDER_SUCCESS, FETCH_ORDER_PRODUCTS
+    FETCH_ORDER_SUCCESS,
+    FETCH_ORDER_PRODUCTS
 } from '../../store/actions/actionTypes'
+import {IProvider} from '../Providers/IProviders'
+import {IProduct} from '../Products/IProducts'
 
 export interface IOrder {
     id: number
     name: string
     status: string
-    providerId?: number
+    items: IProduct[]
+    priceCny: number
+    provider: IProvider
     createdAt?: number
     updatedAt?: number
 }
