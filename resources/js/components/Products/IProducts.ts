@@ -16,6 +16,7 @@ import {
     FETCH_BY_VENDOR_ERROR,
     FETCH_BY_VENDOR_START
 } from '../../store/actions/actionTypes'
+import {IProvider} from '../Providers/IProviders'
 
 export interface IProduct {
     id: number
@@ -23,7 +24,7 @@ export interface IProduct {
     nameEn?: string
     aboutRu?: string
     aboutEn?: string
-    providerId?: number
+    providers?: IProvider[]
     priceCny?: number
     vendorCode: string
     quantity?: number

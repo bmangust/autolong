@@ -36,7 +36,7 @@ const Container: React.FC<IContainer> = () => {
 
     useEffect(() => {
         dispatch(fetchContainerById(id))
-    }, [dispatch])
+    }, [dispatch, id])
 
     if (error) {
         return <Error/>

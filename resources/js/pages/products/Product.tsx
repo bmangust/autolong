@@ -11,15 +11,10 @@ import {IProductsRootState} from '../../components/Products/IProducts'
 
 // Actions
 import {fetchProductById} from '../../store/actions/products'
-import {fetchProviderById} from '../../store/actions/providers'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import {moneyFormatter, timeConverter} from '../../utils'
-import {
-    // IProvider,
-    IProvidersRootState
-} from '../../components/Providers/IProviders'
 
 const Product: React.FC = () => {
     const {id}: any = useParams()
@@ -34,19 +29,9 @@ const Product: React.FC = () => {
         })
     )
 
-    const {provider} = useSelector(
-        (state: IProvidersRootState) => ({
-            provider: state.providersState.provider
-        })
-    )
-
-    useEffect(() => {
-        dispatch(fetchProviderById(id))
-    }, [dispatch])
-
     useEffect(() => {
         dispatch(fetchProductById(id))
-    }, [dispatch])
+    }, [dispatch, id])
 
     if (error) {
         return <div>Error! {error.message}</div>
@@ -190,61 +175,61 @@ const Product: React.FC = () => {
                 </div>
             </div>
             <div className='col-lg-4'>
-                <div className="card">
-                    <div className="card-body">
-                        <p className="infoBlockHeaders mb-1">Поставщик</p>
-                        <p className="infoBlockText">
-                            {'name' in provider
-                                ? provider.name
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">Страна</p>
-                        <p className="infoBlockText">
-                            {'country' in provider
-                                ? provider.country
-                                    ? provider.country.name : ''
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">Почта</p>
-                        <p className="infoBlockText">
-                            {'email' in provider
-                                ? provider.email
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">Телефон</p>
-                        <p className="infoBlockText">
-                            {'phone' in provider
-                                ? provider.phone
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">Wechat</p>
-                        <p className="infoBlockText">
-                            {'wechat' in provider
-                                ? provider.wechat
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">Сайт</p>
-                        <p className="infoBlockText">
-                            <a href={'website' in provider
-                                ? provider.website
-                                : ''}
-                               target="_blank"
-                               rel="noreferrer">
-                                {'website' in provider
-                                    ? provider.website
-                                    : ''}
-                            </a>
-                        </p>
-                        <p className="infoBlockHeaders mb-1 mt-5">
-                            Перейти на страницу поставщика
-                        </p>
-                        <NavLink to={'id' in provider
-                            ? '/provider/' + provider.id
-                            : ''}>
-                            <SvgArrowRight/>
-                        </NavLink>
-                    </div>
-                </div>
+                {'providers' in product && product.providers
+                    ? product.providers.map(provider => {
+                        return (
+                            <div key={provider.id + provider.name}
+                                 className="card">
+                                <div className="card-body">
+                                    <p className="infoBlockHeaders mb-1">
+                                        Поставщик</p>
+                                    <p className="infoBlockText">
+                                        {provider.name}
+                                    </p>
+                                    <p className="infoBlockHeaders mb-1">
+                                        Страна</p>
+                                    <p className="infoBlockText">
+                                        {'country' in provider
+                                            ? provider.country
+                                                ? provider.country.name : ''
+                                            : ''}
+                                    </p>
+                                    <p className="infoBlockHeaders mb-1">
+                                        Почта</p>
+                                    <p className="infoBlockText">
+                                        {provider.email}
+                                    </p>
+                                    <p className="infoBlockHeaders mb-1">
+                                        Телефон</p>
+                                    <p className="infoBlockText">
+                                        {provider.phone}
+                                    </p>
+                                    <p className="infoBlockHeaders mb-1">
+                                        Wechat</p>
+                                    <p className="infoBlockText">
+                                        {provider.wechat}
+                                    </p>
+                                    <p className="infoBlockHeaders mb-1">
+                                        Сайт</p>
+                                    <p className="infoBlockText">
+                                        <a href={provider.website}
+                                           target="_blank"
+                                           rel="noreferrer">
+                                            {provider.website}
+                                        </a>
+                                    </p>
+                                    <p className="infoBlockHeaders mb-1 mt-5">
+                                        Перейти на страницу поставщика
+                                    </p>
+                                    <NavLink to={'/provider/' + provider.id}>
+                                        <SvgArrowRight/>
+                                    </NavLink>
+                                </div>
+                            </div>
+                        )
+                    })
+                    : null
+                }
             </div>
         </div>
     )

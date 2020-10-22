@@ -50,7 +50,7 @@ const Catalog: React.FC<ICatalog> = () => {
     useEffect(() => {
         dispatch(fetchCatalogById(id))
         dispatch(fetchProviderById(id))
-    }, [dispatch])
+    }, [dispatch, id])
 
     if (error) {
         return <Error/>

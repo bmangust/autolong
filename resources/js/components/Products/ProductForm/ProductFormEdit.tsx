@@ -25,6 +25,7 @@ interface IEditProductData {
     aboutEn: string
     providerId: number
     image: string
+    imageFile: Blob
     priceCny: number
     priceRub: number
     priceUsd: number
@@ -37,34 +38,35 @@ const ProductFormEdit: React.FC<{
     providers: IProvider[]
 }> =
     ({product, providers}) => {
+        let defaultValues
+        'id' in product
+            ? defaultValues = {
+                nameRu: product.nameRu,
+                nameEn: product.nameEn,
+                vendorCode: product.vendorCode,
+                aboutRu: product.aboutRu,
+                aboutEn: product.aboutEn,
+                image: product.image,
+                autolongNumber: product.autolongNumber,
+                priceCny: product.price.cny,
+                priceRub: product.price.rub,
+                priceUsd: product.price.usd,
+                weightNetto: product.weightNetto,
+                weightBrutto: product.weightBrutto
+            }
+            : defaultValues = {
+                nameRu: product.name,
+                autolongNumber: product.number,
+                vendorCode: product.articul,
+                aboutRu: product.text,
+                priceCny: +product.price
+            }
+
         const {
             register, handleSubmit
-        } =
-            'id' in product ?
-                useForm<IEditProductData>({
-                    defaultValues: {
-                        nameRu: product.nameRu,
-                        nameEn: product.nameEn,
-                        vendorCode: product.vendorCode,
-                        aboutRu: product.aboutRu,
-                        aboutEn: product.aboutEn,
-                        autolongNumber: product.autolongNumber,
-                        priceCny: product.price.cny,
-                        priceRub: product.price.rub,
-                        priceUsd: product.price.usd,
-                        weightNetto: product.weightNetto,
-                        weightBrutto: product.weightBrutto
-                    }
-                })
-                : useForm<IEditProductData>({
-                    defaultValues: {
-                        nameRu: product.name,
-                        autolongNumber: product.number,
-                        vendorCode: product.articul,
-                        aboutRu: product.text,
-                        priceCny: +product.price
-                    }
-                })
+        } = useForm<IEditProductData>({
+            defaultValues
+        })
 
         const [show, setShow] = useState(true)
 
@@ -72,16 +74,13 @@ const ProductFormEdit: React.FC<{
 
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {
-                if (formValues.image) {
-                    formValues.image = formValues.image[0]
-                } else {
-                    if ('image' in product) {
-                        formValues.image = product.image
-                    }
+                if (formValues.imageFile[0]) {
+                    formValues.image = formValues.imageFile[0]
                 }
+                // @ts-ignore
                 if ('id' in product && product.id) {
                     dispatch(updateProduct(product.id, formValues))
-                } else {
+                } else if ('number' in product) {
                     dispatch(createProduct(formValues))
                 }
                 setShow(false)
@@ -248,8 +247,12 @@ const ProductFormEdit: React.FC<{
                                                src={product.image} alt=""/>
                                         : null
                                     }
+                                    <input className='hidden d-none'
+                                           ref={register}
+                                           name='image' type="hidden"/>
                                     <input
-                                        name="image" className='col-lg-10 mb-3'
+                                        name="imageFile"
+                                        className='col-lg-10 mb-3'
                                         ref={register}
                                         type="file"
                                         placeholder="Путь до изображения"/>

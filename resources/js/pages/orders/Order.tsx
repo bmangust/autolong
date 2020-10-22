@@ -38,7 +38,7 @@ const Order: React.FC<IOrder> = () => {
 
     useEffect(() => {
         dispatch(fetchOrderById(id))
-    }, [dispatch])
+    }, [dispatch, id])
 
     if (error) {
         return <Error/>

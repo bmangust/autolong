@@ -1,23 +1,23 @@
 // React
 import React from 'react'
-import ReactDOM from 'react-dom';
+import ReactDOM from 'react-dom'
 
 // Third-party
-import {BrowserRouter as Router} from 'react-router-dom';
-import {applyMiddleware, createStore} from 'redux';
-import {Provider} from 'react-redux';
-import thunk, {ThunkMiddleware} from 'redux-thunk';
-import {composeWithDevTools} from 'redux-devtools-extension';
+import {BrowserRouter as Router} from 'react-router-dom'
+import {applyMiddleware, createStore} from 'redux'
+import {Provider} from 'react-redux'
+import thunk, {ThunkMiddleware} from 'redux-thunk'
+import {composeWithDevTools} from 'redux-devtools-extension'
 
 // App
 import Index from './index'
-import rootReducer from './store/reducers/rootReducer';
+import rootReducer from './store/reducers/rootReducer'
 
-const middleware = thunk as ThunkMiddleware;
+const middleware = thunk as ThunkMiddleware
 
 const store = createStore(rootReducer, composeWithDevTools(
-    applyMiddleware(middleware),
-));
+    applyMiddleware(middleware)
+))
 
 const application = (
     <React.StrictMode>
@@ -27,6 +27,6 @@ const application = (
             </Router>
         </Provider>
     </React.StrictMode>
-);
+)
 
-ReactDOM.render(application, document.getElementById('root'));
+ReactDOM.render(application, document.getElementById('root'))

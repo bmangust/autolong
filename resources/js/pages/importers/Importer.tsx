@@ -33,7 +33,7 @@ const Importer: React.FC<IImporter> = () => {
 
     useEffect(() => {
         dispatch(fetchImporterById(id))
-    }, [dispatch])
+    }, [dispatch, id])
 
     if (error) {
         return <Error/>

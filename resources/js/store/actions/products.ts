@@ -18,6 +18,7 @@ import {
 } from './actionTypes'
 
 import axios, {AxiosError} from 'axios'
+import {toast} from 'react-toastify'
 
 export const fetchProducts = () => async dispatch => {
     await dispatch({
@@ -78,6 +79,7 @@ export const createProduct = (data) => async dispatch => {
                 type: CREATE_PRODUCT_SUCCESS,
                 payload: answer.data
             })
+            toast.success(`${answer.data.nameRu} - товар создан`)
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -103,6 +105,7 @@ export const updateProduct = (id, data) => async dispatch => {
                 type: UPDATE_PRODUCT_SUCCESS,
                 payload: answer.data
             })
+            toast.success(`${answer.data.nameRu} - товар обновлен`)
         })
         .catch((error: AxiosError) => {
             dispatch({

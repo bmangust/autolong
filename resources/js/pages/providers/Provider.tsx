@@ -36,7 +36,7 @@ const Provider: React.FC<IProvider> = () => {
 
     useEffect(() => {
         dispatch(fetchProviderById(id))
-    }, [dispatch])
+    }, [dispatch, id])
 
     if (error) {
         return <Error/>
