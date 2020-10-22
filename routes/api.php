@@ -37,7 +37,7 @@ Route::get('products/{product}', 'ProductController@show');
 Route::put('products/{product}', 'ProductController@update');
 Route::delete('products/{product}', 'ProductController@destroy');
 Route::post('products/calculateprice', 'ProductController@getPrice');
-Route::post('products/checkvendorcode', 'ProductController@checkVendorCode');
+Route::post('products/checknumbercode', 'ProductController@checkNumberCode');
 
 Route::get('catalogs', 'CatalogController@index');
 Route::post('catalogs', 'CatalogController@store');

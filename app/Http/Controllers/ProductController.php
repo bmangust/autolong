@@ -151,13 +151,13 @@ class ProductController extends Controller
             'usd' => $exchangeRate->lastCourse()->usd * $priceCny]], 200);
     }
 
-    public function checkVendorCode(Request $request, AutolongRuProduct $autolongRuProduct)
+    public function checkNumberCode(Request $request, AutolongRuProduct $autolongRuProduct)
     {
         $request->validate([
             'vendorCodes' => 'required'
         ]);
         $vendorCodes = $request->input('vendorCodes');
-        $availableProducts = $autolongRuProduct->checkVendorCodesInDB($vendorCodes);
+        $availableProducts = $autolongRuProduct->checkNumberCodesInDB($vendorCodes);
         return response()->json($availableProducts, 200);
     }
 }
