@@ -50,6 +50,35 @@ const ProvidersTable: React.FC = () => {
         return (catalogs.length)
     }
 
+    function orderFormatter(orders) {
+        return (
+            orders.map(order => {
+                return <p key={order.id + order.name}>{order.name}</p>
+            })
+        )
+    }
+
+    function catalogFormatter(catalogs) {
+        return (
+            catalogs.map(catalog => {
+                return <p key={catalog.id + catalog.name}>{catalog.name}</p>
+            })
+        )
+    }
+
+    const expandRowTable = [
+        {
+            dataField: 'orders',
+            text: 'Текущие заказы',
+            formatter: orderFormatter
+        },
+        {
+            dataField: 'catalogs',
+            text: 'Каталоги поставщика',
+            formatter: catalogFormatter
+        }
+    ]
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
@@ -82,6 +111,7 @@ const ProvidersTable: React.FC = () => {
 
     return (
         <AutoTable
+            expandRowTable={expandRowTable}
             keyField='id' data={providers} columns={columns}
             button={{link: 'providercreate', text: 'Добавить поставщика'}}/>
     )

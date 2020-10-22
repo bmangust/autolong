@@ -58,7 +58,12 @@ const AutoTable: React.FC<IAutoTable> =
                 ?.map((item, index) => {
                     return (
                         <td key={`${item.dataField}-${index}`}>
-                            {row[item.dataField]}
+                            {
+                                item.formatter
+                                    ? item.formatter(row[item.dataField],
+                                    row, rowIndex, '')
+                                    : row[item.dataField]
+                            }
                         </td>
                     )
                 })
