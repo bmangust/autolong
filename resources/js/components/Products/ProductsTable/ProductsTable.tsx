@@ -106,6 +106,7 @@ const ProductsTable: React.FC = () => {
         <AutoTable
             expandRowTable={expandRowTable}
             keyField='id' data={products} columns={columns}
+            secondBtn={{link: 'productscreate', text: 'Добавить несколько'}}
             button={{link: 'productcreate', text: 'Добавить товар'}}/>
     )
 }

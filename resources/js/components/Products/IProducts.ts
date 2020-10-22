@@ -11,7 +11,10 @@ import {
     FETCH_PRODUCT_SUCCESS,
     UPDATE_PRODUCT_ERROR,
     UPDATE_PRODUCT_START,
-    UPDATE_PRODUCT_SUCCESS
+    UPDATE_PRODUCT_SUCCESS,
+    FETCH_BY_VENDOR_SUCCESS,
+    FETCH_BY_VENDOR_ERROR,
+    FETCH_BY_VENDOR_START
 } from '../../store/actions/actionTypes'
 
 export interface IProduct {
@@ -36,8 +39,17 @@ export interface IProductPrice {
     cny: number
 }
 
+export interface IProductAutolong {
+    number: string
+    name: string
+    articul: string
+    text: string
+    price: string
+}
+
 export interface IProductsState {
     products: IProduct[] | []
+    vendorProducts: IProduct[] | IProductAutolong[] | []
     product: IProduct | {}
     price: IProductPrice | {}
     loading: boolean
@@ -116,6 +128,23 @@ interface IUpdateProductError {
     loading: boolean
 }
 
+interface IFetchByVendorStart {
+    type: typeof FETCH_BY_VENDOR_START
+    loading: boolean
+}
+
+interface IFetchByVendorSuccess {
+    type: typeof FETCH_BY_VENDOR_SUCCESS
+    payload: IProduct[] | IProductAutolong[]
+    loading: boolean
+}
+
+interface IFetchByVendorError {
+    type: typeof FETCH_BY_VENDOR_ERROR
+    payload: any
+    loading: boolean
+}
+
 interface IFetchProductPrice {
     type: typeof FETCH_PRODUCT_PRICE
     vendorCode: string
@@ -128,4 +157,5 @@ export type IProductsActionTypes =
     IFetchProductStart | IFetchProductSuccess | IFetchProductError |
     ICreateProductStart | ICreateProductSuccess | ICreateProductError |
     IUpdateProductStart | IUpdateProductSuccess | IUpdateProductError |
-    IFetchProductPrice
+    IFetchProductPrice | IFetchByVendorStart | IFetchByVendorSuccess |
+    IFetchByVendorError
