@@ -15,7 +15,7 @@ export interface ICatalog {
     id: number
     name: string
     provider?: IProvider | {}
-    catalogFile: ICatalogFile
+    file: string
     tags: ICatalogTag[]
     createdAt?: number
     updatedAt?: number
@@ -24,12 +24,6 @@ export interface ICatalog {
 export interface ICatalogTag {
     key?: string
     value: string
-}
-
-export interface ICatalogFile {
-    name: string
-    size: number
-    type: string
 }
 
 export interface ICatalogsState {
