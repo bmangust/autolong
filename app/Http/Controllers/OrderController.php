@@ -109,26 +109,33 @@ class OrderController extends Controller
         return response()->json([], 204);
     }
 
-    protected function vendorCodesCreateValidator(array $data)
-    {
-        $messages = [
-            'required' => 'Поле :attribute обязательно для заполнения.',
-        ];
-
-        $names = [
-            'vendorCodes' => 'артикулы',
-        ];
-
-        return Validator::make($data, [
-            'vendorCodes' => ['required'],
-        ], $messages, $names);
-    }
-
     public function checkVendorCode(Request $request, AutolongRuProduct $autolongRuProduct)
     {
-        $this->vendorCodesCreateValidator($request->all())->validate();
+        $request->validate([
+            'vendorCodes' => 'required'
+        ]);
         $vendorCodes = $request->input('vendorCodes');
         $availableProducts = $autolongRuProduct->checkVendorCodesInDB($vendorCodes);
         return response()->json($availableProducts, 200);
+    }
+
+    public function changeStatus(Request $request, Order $order)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+        $order->status = $request->input('status');
+        $order->save();
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
+
+    public function changeStatusPayment(Request $request, Order $order)
+    {
+        $request->validate([
+            'statusPayment' => 'required',
+        ]);
+        $order->status_payment = $request->input('statusPayment');
+        $order->save();
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 }

@@ -26,6 +26,7 @@ class ProductResource extends JsonResource
             'weightNetto' => $this->weight_netto,
             'weightBrutto' => $this->weight_brutto,
             'vendorCode' => $this->vendor_code,
+            'autolongNumber' => $this->autolong_number,
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

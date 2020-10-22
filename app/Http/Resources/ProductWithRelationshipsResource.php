@@ -31,6 +31,7 @@ class ProductWithRelationshipsResource extends JsonResource
             'catalog' => new CatalogResource($this->catalog),
             'orderItems' => OrderItemResource::collection($this->orderitems),
             'vendorCode' => $this->vendor_code,
+            'autolongNumber' => $this->autolong_number,
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
