@@ -83,7 +83,7 @@ const Order: React.FC<IOrder> = () => {
                         </div>
                     </div>
 
-                    <div className="card mb-3">
+                    <div className="card mb-3 pb-4">
                         <div className="card-body-info">
                             <h2 className="mb-4">Список заказа</h2>
                             {'items' in order
@@ -91,7 +91,7 @@ const Order: React.FC<IOrder> = () => {
                                 : null
                             }
                             <div
-                                className="text-right font-weight-bold mt-4">
+                                className="text-right font-weight-bold mt-3">
                                 Общая стоимость
                                 <span
                                     className="text-orange ml-3"
