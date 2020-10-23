@@ -17,6 +17,14 @@ class AutolongRuProduct extends Model
        return (self::AUTOLONG_LINK_IMAGE . $this->attributes['photo']);
     }
 
+    public function getTextAttribute()
+    {
+        return strtr($this->attributes['text'], [
+            '&lt;' => '<',
+            '&gt;' => '>']
+        );
+    }
+
     public function checkNumberCodesInDB($numbers): array
     {
         $availableProducts = [];

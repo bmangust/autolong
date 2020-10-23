@@ -68,23 +68,26 @@ const OrderItems: React.FC<IOrderItems> =
                             '/imgs/placeholder-product-image.png'}
                                  alt={item.nameRu}/>
                         </div>
-                        <div className="col-4">
-                            <p className={classes.productName}>
+                        <div className="col-4 pl-0 pr-0">
+                            <p className={classes.orderProductsName}>
                                 {item.nameRu}
                             </p>
                         </div>
                         <div className="col-2">
-                            <p className={classes.orderProductsQty}>
+                            <p className={classes.orderProductsCount}>
                                 {item.quantity + ' шт'}
                             </p>
                         </div>
-                        <div className='col-4'>
-                            <p className={classes.productPrices}>
+                        <div className='col-4 text-right'>
+                            <p className={classes.orderProductsPrice}>
                                 {item.price
                                     ? moneyFormatter(item.price)
                                     : null
                                 }
                             </p>
+                        </div>
+                        <div className='col-10 offset-2 pl-0'>
+                            <hr/>
                         </div>
                     </div>
                 )

@@ -38,11 +38,29 @@ class Order extends Model
         }
     }
 
-    public function getOrderSum()
+    public function getOrderSumInCny()
     {
         $sum = 0;
         foreach ($this->orderItems as $orderItem) {
-            $sum += $orderItem->getSum();
+            $sum += $orderItem->getSumInCny();
+        }
+        return $sum;
+    }
+
+    public function getOrderSumInRub()
+    {
+        $sum = 0;
+        foreach ($this->orderItems as $orderItem) {
+            $sum += $orderItem->getSumInRub();
+        }
+        return $sum;
+    }
+
+    public function getOrderSumInUsd()
+    {
+        $sum = 0;
+        foreach ($this->orderItems as $orderItem) {
+            $sum += $orderItem->getSumInUsd();
         }
         return $sum;
     }

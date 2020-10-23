@@ -17,13 +17,14 @@ class OrderItemResource extends JsonResource
         return [
             'id' => $this->id,
             'productId' => $this->product_id,
+            'nameRu' => $this->product->name_ru,
             'orderId' => $this->order_id,
             'quantity' => $this->quantity,
             'price' => (Object)['rub' => $this->product->price_rub,
                                 'usd' => $this->product->price_usd,
                                 'cny' => $this->product->price_cny],
             'image' => $this->product->image,
-            'fullPriceCny' => $this->getSum(),
+            'fullPriceCny' => $this->getSumInCny(),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
