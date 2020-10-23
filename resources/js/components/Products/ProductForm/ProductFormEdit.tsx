@@ -57,6 +57,7 @@ const ProductFormEdit: React.FC<{
             : defaultValues = {
                 nameRu: product.name,
                 autolongNumber: product.number,
+                image: product.photo,
                 vendorCode: product.articul,
                 aboutRu: product.text,
                 priceCny: +product.price
@@ -71,7 +72,7 @@ const ProductFormEdit: React.FC<{
         let img = ''
         if ('image' in product && product.image) {
             img = product.image
-        } else if ('picture' in product && product.picture) {
+        } else if ('photo' in product && product.photo) {
             img = product.photo
         }
 
