@@ -133,7 +133,7 @@ class OrderController extends Controller
 
     public function checkProductNUmberWithUs(Request $request)
     {
-        $this->validate([
+        $request->validate([
             'numbers' => 'required'
         ]);
         $numbers = $request->input('numbers');
