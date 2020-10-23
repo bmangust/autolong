@@ -133,6 +133,9 @@ class OrderController extends Controller
 
     public function checkProductNUmberWithUs(Request $request)
     {
+        $this->validate([
+            'numbers' => 'required'
+        ]);
         $numbers = $request->input('numbers');
         $availableProducts = [];
         foreach ($numbers as $number) {
