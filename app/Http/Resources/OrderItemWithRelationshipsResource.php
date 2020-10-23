@@ -19,7 +19,6 @@ class OrderItemWithRelationshipsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'productId' => $this->product_id,
             'quantity' => $this->quantity,
             'price' => (Object)['rub' => $this->product->price_rub,
                                 'usd' => $this->product->price_usd,

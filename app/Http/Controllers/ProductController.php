@@ -73,7 +73,11 @@ class ProductController extends Controller
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
         $product->save();
-        $product->createOrUpdateImage($request->file('image'));
+        if ($request->has('image') && $request->hasFile('image')){
+            $product->createOrUpdateImage($request->file('image'));
+        } elseif ($request->has('image') && is_string($request->input('image'))) {
+            $product->loadImageFromAutolong($request->input('image'));
+        }
         return response()->json(new ProductWithRelationshipsResource($product), 201);
     }
 
@@ -111,6 +115,11 @@ class ProductController extends Controller
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
         $product->save();
+        if ($request->has('image') && $request->hasFile('image')){
+            $product->createOrUpdateImage($request->file('image'));
+        } elseif ($request->has('image') && is_string($request->input('image'))) {
+            $product->loadImageFromAutolong($request->input('image'));
+        }
         $product->createOrUpdateImage($request->file('image'));
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }

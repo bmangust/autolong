@@ -1,12 +1,15 @@
 // React
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
 
 // Typescript
-import {IProduct, IProductAutolong, IProductsRootState} from '../IProducts'
+import {
+    IProduct, IProductAutolong,
+    IProductPrice, IProductsRootState
+} from '../IProducts'
 
 // Actions
 import {
@@ -39,6 +42,7 @@ const ProductFormEdit: React.FC<{
 }> =
     ({product, providers}) => {
         let defaultValues
+
         'id' in product
             ? defaultValues = {
                 nameRu: product.nameRu,
@@ -60,11 +64,11 @@ const ProductFormEdit: React.FC<{
                 image: product.photo,
                 vendorCode: product.articul,
                 aboutRu: product.text,
-                priceCny: +product.price
+                priceCny: product.price
             }
 
         const {
-            register, handleSubmit
+            register, handleSubmit, errors
         } = useForm<IEditProductData>({
             defaultValues
         })
@@ -77,8 +81,19 @@ const ProductFormEdit: React.FC<{
         }
 
         const [show, setShow] = useState(true)
+        const [priceState, setPriceState] = useState<IProductPrice | {}>({})
+        const [dirty, setDirty] = useState<boolean>(false)
 
         const dispatch = useDispatch()
+
+        const {price} = useSelector(
+            (state: IProductsRootState) => ({
+                price: state.productsState.price
+            }))
+
+        useEffect(() => {
+            setPriceState(price)
+        }, [price])
 
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {
@@ -94,13 +109,9 @@ const ProductFormEdit: React.FC<{
                 setShow(false)
             })
 
-        const {price} = useSelector(
-            (state: IProductsRootState) => ({
-                price: state.productsState.price
-            }))
-
         const onChangePrice = (e) => {
             const value = e.target.value
+            setDirty(true)
             dispatch(fetchProductPrice(value))
         }
 
@@ -130,9 +141,11 @@ const ProductFormEdit: React.FC<{
                                 </span>
                                     </label>
                                     <input name="nameRu" className='col-lg-10'
-                                           ref={register}
+                                           ref={register({required: true})}
                                            type="text"
                                            placeholder="Введите название"/>
+                                    {errors.nameRu &&
+                                    <small>Это поле обязательно</small>}
                                 </div>
                                 <div className="col-lg-6">
                                     <label htmlFor='autolongNumber'
@@ -141,12 +154,14 @@ const ProductFormEdit: React.FC<{
                                     </label>
                                     <input className='col-lg-10 mb-3'
                                            name="autolongNumber"
-                                           ref={register}
+                                           ref={register({required: true})}
                                            type="text"
                                            defaultValue={'number' in product
                                                ? product.number
                                                : ''}
                                            placeholder="Введите номер"/>
+                                    {errors.autolongNumber &&
+                                    <small>Это поле обязательно</small>}
                                     <label htmlFor='nameEn' className='w-100'>
                                         Product name
                                         <span className="float-right
@@ -168,12 +183,15 @@ const ProductFormEdit: React.FC<{
                                     <textarea name="aboutRu" id="aboutRu"
                                               className='col-lg-10 mb-3'
                                               rows={4}
-                                              ref={register}
+                                              ref={register({required: true})}
                                               placeholder="Введите описание">
-                                </textarea>
+                                        </textarea>
+                                    {errors.aboutRu &&
+                                    <small>Это поле обязательно</small>}
                                     <label htmlFor='providerId'>
                                         Выберите поставщика</label>
-                                    <select name="providerId" ref={register}
+                                    <select name="providerId"
+                                            ref={register({required: true})}
                                             className='col-lg-10 mb-3'
                                             id="providerId">
                                         <option disabled defaultValue=''>
@@ -187,16 +205,20 @@ const ProductFormEdit: React.FC<{
                                                     {provider.name}</option>)
                                             })}
                                     </select>
+                                    {errors.providerId &&
+                                    <small>Это поле обязательно</small>}
                                     <label>Укажите цену</label>
                                     <div className='row mb-3'>
                                         <div className='col-10'>
                                             <input
                                                 name="priceCny"
                                                 className='w-100'
-                                                ref={register}
+                                                ref={register({required: true})}
                                                 type="number"
                                                 onChange={onChangePrice}
                                                 placeholder="0"/>
+                                            {errors.priceCny &&
+                                            <small>Это поле обязательно</small>}
                                         </div>
                                         <div className='col-1 pl-0'>
                                     <span
@@ -213,9 +235,10 @@ const ProductFormEdit: React.FC<{
                                                 name="priceUsd"
                                                 type="number"
                                                 ref={register}
-                                                defaultValue={'usd' in price
-                                                    ? price.usd
-                                                    : 0}
+                                                disabled
+                                                value={dirty
+                                                    ? priceState.usd
+                                                    : null}
                                                 className='w-100'
                                                 placeholder="0"
                                             />
@@ -232,9 +255,10 @@ const ProductFormEdit: React.FC<{
                                                 name="priceRub"
                                                 type="number"
                                                 ref={register}
-                                                defaultValue={'rub' in price
-                                                    ? price.rub
-                                                    : 0}
+                                                disabled
+                                                value={dirty
+                                                    ? priceState.rub
+                                                    : null}
                                                 className='w-100'
                                                 placeholder="0"
                                             />
@@ -271,7 +295,7 @@ const ProductFormEdit: React.FC<{
                                               className='col-lg-10' rows={4}
                                               ref={register}
                                               placeholder="Type here">
-                                </textarea>
+                                    </textarea>
                                     <div className='row mb-3'>
                                         <div className='col-lg-12'>
                                             <label>Укажите вес</label>
@@ -285,9 +309,15 @@ const ProductFormEdit: React.FC<{
                                                 <div className='col-8'>
                                                     <input name="weightBrutto"
                                                            placeholder="0"
-                                                           ref={register}
+                                                           ref={register(
+                                                               {required: true}
+                                                           )}
                                                            type="number"
                                                            className='w-100'/>
+                                                    {errors.weightBrutto &&
+                                                    <small>
+                                                        Это поле обязательно
+                                                    </small>}
                                                 </div>
                                                 <div className='col-2
                                                 priceSymbol
@@ -306,9 +336,15 @@ const ProductFormEdit: React.FC<{
                                                 <div className='col-8'>
                                                     <input name="weightNetto"
                                                            className='w-100'
-                                                           ref={register}
+                                                           ref={register(
+                                                               {required: true}
+                                                           )}
                                                            type="number"
                                                            placeholder="0"/>
+                                                    {errors.weightNetto &&
+                                                    <small>
+                                                        Это поле обязательно
+                                                    </small>}
                                                 </div>
                                                 <div className='col-2
                                                 priceSymbol

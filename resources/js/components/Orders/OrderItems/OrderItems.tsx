@@ -32,9 +32,9 @@ const OrderItems: React.FC<IOrderItems> =
                                  alt={item.nameRu}/>
                         </div>
                         <div className="col-4">
-                        <span className={classes.productName}>
-                            {item.nameRu}
-                        </span>
+                            <p className={classes.productName}>
+                                {item.nameRu}
+                            </p>
                         </div>
                         <div className="col-2">
                             <input data-id={item.id} min={1}
@@ -43,15 +43,17 @@ const OrderItems: React.FC<IOrderItems> =
                                    onChange={(e) => onChange(e, item.id)}
                                    type="number"/>
                         </div>
-                        <div className={classes.productPrices + ' col-3'}>
-                            {item.price
-                                ? moneyFormatter(item.price)
-                                : null
-                            }
+                        <div className='col-3'>
+                            <p className={classes.productPrices}>
+                                {item.price
+                                    ? moneyFormatter(item.price)
+                                    : null
+                                }
+                            </p>
                         </div>
                         <div className="col-1">
                             <SvgClose onClick={() => onDelete(item.id)}
-                                      className='mt-3 deleteButton'/>
+                                      className='mt-3'/>
                         </div>
                     </div>
                 )
@@ -60,26 +62,29 @@ const OrderItems: React.FC<IOrderItems> =
             : items.map((item: IProduct) => {
                 return (
                     <div key={item.id + item.nameRu}
-                         className={classes.orderProducts + ' row'}>
+                         className={classes.orderProducts + ' row mb-2'}>
                         <div className={classes.productImg + ' col-2'}>
                             <img src={item.image ||
                             '/imgs/placeholder-product-image.png'}
                                  alt={item.nameRu}/>
                         </div>
-                        <div className="col-4 pl-0">
-                        <span className={classes.orderProductsName}>
-                            {item.nameRu}
-                        </span>
+                        <div className="col-4">
+                            <p className={classes.productName}>
+                                {item.nameRu}
+                            </p>
                         </div>
                         <div className="col-2">
-                            <span className={classes.orderProductsCount}>
+                            <p className={classes.orderProductsQty}>
                                 {item.quantity + ' шт'}
-                            </span>
+                            </p>
                         </div>
-                        <div className="col-4">
-                            <span className={classes.orderProductsPrice}>
-                                {item.priceCny}
-                            </span>
+                        <div className='col-4'>
+                            <p className={classes.productPrices}>
+                                {item.price
+                                    ? moneyFormatter(item.price)
+                                    : null
+                                }
+                            </p>
                         </div>
                     </div>
                 )

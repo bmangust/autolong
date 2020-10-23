@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\AutolongRuProduct;
 use App\Http\Resources\ProductResource;
 use App\Order;
 use App\OrderPaymentStatus;
@@ -53,6 +52,7 @@ class OrderController extends Controller
         $order = new Order();
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
+        $order->cargo = $request->input('cargo');
         $order->status = OrderStatus::CREATED;
         $order->status_payment = OrderPaymentStatus::PENDING;
         $order->save();
@@ -85,6 +85,7 @@ class OrderController extends Controller
         $this->orderCreateValidator($request->all())->validate();
         $order->name =$request->input('name');
         $order->provider_id = $request->input('providerId');
+        $order->cargo = $request->input('cargo');
         if ($request->has('status') && $request->input('status') != '') {
             $order->status = $request->input('status');
         }
