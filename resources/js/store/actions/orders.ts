@@ -8,9 +8,13 @@ import {
     FETCH_ORDER_ERROR,
     FETCH_ORDER_PRODUCTS,
     FETCH_ORDER_START,
-    FETCH_ORDER_SUCCESS
+    FETCH_ORDER_SUCCESS,
+    FETCH_ITEMS_BY_VENDOR_START,
+    FETCH_ITEMS_BY_VENDOR_SUCCESS,
+    FETCH_ITEMS_BY_VENDOR_ERROR
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
+import {toast} from 'react-toastify'
 
 export const fetchOrders = () => async dispatch => {
     await dispatch({
@@ -90,4 +94,30 @@ export const fetchProductsByVendor = (data) => async dispatch => {
                 payload: answer.data
             })
         })
+}
+
+export const fetchItemsByVendors = (data) => async dispatch => {
+    await dispatch({
+        type: FETCH_ITEMS_BY_VENDOR_START
+    })
+    const numbers = data.numbers.split('\n').filter(el => {
+        return el != null && el != ''
+    })
+    const url = '/api/orders/checkproductnumberwithus'
+    axios
+        .post(url, {numbers})
+        .then((answer) => {
+            dispatch({
+                type: FETCH_ITEMS_BY_VENDOR_SUCCESS,
+                payload: answer.data
+            })
+            answer.data.filter(el => !('id' in el)).map(({number}) => {
+                toast.warn(`${number} - артикул не найден`)
+            })
+        }).catch((error: AxiosError) => {
+        dispatch({
+            type: FETCH_ITEMS_BY_VENDOR_ERROR,
+            payload: error.response
+        })
+    })
 }

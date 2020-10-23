@@ -1,15 +1,17 @@
 // Types
 import {
-    FETCH_ORDERS_START,
-    FETCH_ORDERS_SUCCESS,
-    FETCH_ORDERS_ERROR,
-    FETCH_ORDER_START,
-    FETCH_ORDER_SUCCESS,
-    FETCH_ORDER_ERROR,
+    CREATE_ORDER_ERROR,
     CREATE_ORDER_START,
     CREATE_ORDER_SUCCESS,
-    CREATE_ORDER_ERROR,
-    FETCH_ORDER_PRODUCTS
+    FETCH_ITEMS_BY_VENDOR_ERROR,
+    FETCH_ITEMS_BY_VENDOR_START,
+    FETCH_ITEMS_BY_VENDOR_SUCCESS,
+    FETCH_ORDER_ERROR,
+    FETCH_ORDER_START,
+    FETCH_ORDER_SUCCESS,
+    FETCH_ORDERS_ERROR,
+    FETCH_ORDERS_START,
+    FETCH_ORDERS_SUCCESS
 } from '../actions/actionTypes'
 
 // Typescript
@@ -63,9 +65,17 @@ export default function ordersReducer(
             return {
                 ...state, loading: false, error: action.payload
             }
-        case FETCH_ORDER_PRODUCTS:
+        case FETCH_ITEMS_BY_VENDOR_START:
+            return {
+                ...state, loading: false
+            }
+        case FETCH_ITEMS_BY_VENDOR_SUCCESS:
             return {
                 ...state, loading: false, orderProducts: action.payload
+            }
+        case FETCH_ITEMS_BY_VENDOR_ERROR:
+            return {
+                ...state, loading: false, error: action.payload
             }
         default:
             return state
