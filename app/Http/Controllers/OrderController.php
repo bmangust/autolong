@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\AutolongRuProduct;
+use App\Http\Resources\ProductResource;
 use App\Order;
 use App\OrderPaymentStatus;
 use App\OrderStatus;
+use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\OrderWithRelationshipsResource;
@@ -127,5 +129,20 @@ class OrderController extends Controller
         $order->status_payment = $request->input('statusPayment');
         $order->save();
         return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
+
+    public function checkProductNUmberWithUs(Request $request)
+    {
+        $numbers = $request->input('numbers');
+        $availableProducts = [];
+        foreach ($numbers as $number) {
+            $product = Product::whereAutolongNumber($number);
+            if ($product->exists()) {
+                $availableProducts[] = new ProductResource($product->first());
+            } else {
+                $availableProducts[] = ['number' => $number];
+            }
+        }
+        return $availableProducts;
     }
 }
