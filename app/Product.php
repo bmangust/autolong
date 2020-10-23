@@ -52,7 +52,7 @@ class Product extends Model
         } catch (\Exception $e) {
             return response()->json('Данной картинки не существует', 404);
         }
-        $imageName = str_replace(AutolongRuProduct::AUTOLONG_LINK_IMAGE, '', $link);
+        $imageName = $this->id . '_' . str_replace(AutolongRuProduct::AUTOLONG_LINK_IMAGE, '', $link);
         file_put_contents($imageName , $image);
         $path = Storage::putFileAs(self::IMAGE_DIRECTORY, $imageName, $imageName);
         $this->image = $path;
