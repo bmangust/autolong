@@ -91,7 +91,7 @@ const Order: React.FC<IOrder> = () => {
                                 : null
                             }
                             <div
-                                className="text-right font-weight-bold mt-5">
+                                className="text-right font-weight-bold mt-3">
                                 Общая стоимость
                                 <span
                                     className="text-orange ml-3"
