@@ -23,7 +23,7 @@ class OrderItemWithRelationshipsResource extends JsonResource
             'price' => (Object)['rub' => $this->product->price_rub,
                                 'usd' => $this->product->price_usd,
                                 'cny' => $this->product->price_cny],
-            'fullPriceCny' => $this->getSum(),
+            'fullPriceCny' => $this->getSumInCny(),
             'order' => new OrderResource($this->order),
             'product' => new ProductResource($this->order),
             'createdAt' => strtotime($this->created_at),

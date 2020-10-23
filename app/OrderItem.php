@@ -18,9 +18,18 @@ class OrderItem extends Model
         return $this->belongsTo('App\Product');
     }
 
-    public function getSum()
+    public function getSumInCny()
     {
         return $this->price_cny * $this->quantity;
     }
 
+    public function getSumInRub()
+    {
+        return $this->price_rub * $this->quantity;
+    }
+
+    public function getSumInUsd()
+    {
+        return $this->price_usd * $this->quantity;
+    }
 }
