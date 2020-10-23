@@ -2,12 +2,20 @@
 
 namespace App;
 
+use App\Http\Resources\AutolongRuProductResource;
 use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\Model;
 
 class AutolongRuProduct extends Model
 {
+    const AUTOLONG_LINK_IMAGE = "https://autolong.ru/images/products/";
+
     protected $table = 'autolong_ru';
+
+    public function getPhotoAttribute()
+    {
+       return (self::AUTOLONG_LINK_IMAGE . $this->attributes['photo']);
+    }
 
     public function checkNumberCodesInDB($numbers): array
     {
@@ -18,7 +26,7 @@ class AutolongRuProduct extends Model
             if ($usProduct->exists()) {
                 $availableProducts[] = new ProductResource($usProduct->first());
             } elseif (!is_null($product) && $product != '') {
-                $availableProducts[] = $product;
+                $availableProducts[] = new AutolongRuProductResource($product);
             } else {
                 $availableProducts[] = ['number' => $number];
             }
