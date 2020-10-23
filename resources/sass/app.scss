@@ -370,7 +370,7 @@ label {
 
 .editButton {
     color: var(--main-color) !important;
-    background: var(--white) url(/svg/edit.svg) no-repeat 0px 4px !important;
+    background: var(--white) url(/svg/edit.svg) no-repeat 0 4px;
     padding-left: 26px;
     font-weight: 500;
     font-size: 12px;
@@ -379,14 +379,14 @@ label {
     padding-bottom: 5px;
 }
 
-button {
-    border-radius: 15px !important;
-    border: none !important;
-    padding-left: 36px !important;
-    font-weight: 600 !important;
-    font-size: 12px !important;
-    line-height: 35px !important;
-    padding-right: 36px !important;
+html button.btn {
+    border-radius: 15px;
+    border: none;
+    padding-left: 36px;
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 35px;
+    padding-right: 36px;
     min-width: 140px;
 }
 

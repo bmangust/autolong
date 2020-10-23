@@ -4,7 +4,7 @@ import React, {useEffect} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 
 // Typescript
 import {IProductsRootState} from '../IProducts'
@@ -13,6 +13,7 @@ import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
 // Actions
 import {createProduct, fetchProductPrice} from '../../../store/actions/products'
 import {fetchProviders} from '../../../store/actions/providers'
+import TextEditor from '../../UI/TextEditor/TextEditor'
 
 interface ICreateProductData {
     nameRu: string
@@ -30,8 +31,13 @@ interface ICreateProductData {
 
 const ProductForm: React.FC = () => {
     const {
-        register, handleSubmit, errors
-    } = useForm<ICreateProductData>()
+        register, handleSubmit, errors, control
+    } = useForm<ICreateProductData>({
+        defaultValues: {
+            aboutEn: '',
+            aboutRu: ''
+        }
+    })
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -101,12 +107,16 @@ const ProductForm: React.FC = () => {
                     <div className='mb-3 row'>
                         <div className="col-lg-6">
                             <label htmlFor='aboutRu'>Описание товара</label>
-                            <textarea
-                                name="aboutRu" id="aboutRu"
-                                className='col-lg-10 mb-3' rows={4}
-                                ref={register({required: true})}
-                                placeholder="Введите описание">
-                            </textarea>
+                            <Controller
+                                name="aboutRu"
+                                control={control}
+                                render={({value, onChange}) => (
+                                    <TextEditor
+                                        value={value}
+                                        onChange={onChange}
+                                    />
+                                )}
+                            />
                             {errors.aboutRu &&
                             <small>Это поле обязательно</small>}
                             <div className='row'>
@@ -167,11 +177,16 @@ const ProductForm: React.FC = () => {
                         </div>
                         <div className="col-lg-6">
                             <label htmlFor='aboutEn'>Description</label>
-                            <textarea name="aboutEn" id="aboutEn"
-                                      className='col-lg-10' rows={4}
-                                      ref={register}
-                                      placeholder="Type here">
-                                </textarea>
+                            <Controller
+                                name="aboutEn"
+                                control={control}
+                                render={({value, onChange}) => (
+                                    <TextEditor
+                                        value={value}
+                                        onChange={onChange}
+                                    />
+                                )}
+                            />
                             <div className='row mb-3'>
                                 <div className='col-lg-12 mb-3'>
                                     <label>Укажите цену</label>

@@ -42,6 +42,7 @@
     },
     "dependencies": {
         "@loadable/component": "^5.13.2",
+        "@tinymce/tinymce-react": "^3.8.1",
         "@types/loadable__component": "^5.13.1",
         "@types/p-min-delay": "^3.0.0",
         "@types/react": "^16.9.46",

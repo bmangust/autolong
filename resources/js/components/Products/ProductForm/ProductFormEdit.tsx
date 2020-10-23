@@ -3,13 +3,14 @@ import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
 
 // Typescript
 import {
     IProduct, IProductAutolong,
     IProductPrice, IProductsRootState
 } from '../IProducts'
+import {IProvider} from '../../Providers/IProviders'
 
 // Actions
 import {
@@ -17,7 +18,7 @@ import {
     fetchProductPrice,
     updateProduct
 } from '../../../store/actions/products'
-import {IProvider} from '../../Providers/IProviders'
+import TextEditor from '../../UI/TextEditor/TextEditor'
 
 interface IEditProductData {
     nameRu: string
@@ -64,11 +65,12 @@ const ProductFormEdit: React.FC<{
                 image: product.photo,
                 vendorCode: product.articul,
                 aboutRu: product.text,
+                aboutEn: '',
                 priceCny: product.price
             }
 
         const {
-            register, handleSubmit, errors
+            register, handleSubmit, errors, control
         } = useForm<IEditProductData>({
             defaultValues
         })
@@ -81,12 +83,13 @@ const ProductFormEdit: React.FC<{
         }
 
         const [show, setShow] = useState(true)
-        const [priceState, setPriceState] = useState<IProductPrice | {}>({})
+        const [priceState, setPriceState] =
+            useState<IProductPrice>({rub: 0, usd: 0, cny: 0})
         const [dirty, setDirty] = useState<boolean>(false)
 
         const dispatch = useDispatch()
 
-        const {price} = useSelector(
+        const {price}:IProductPrice = useSelector(
             (state: IProductsRootState) => ({
                 price: state.productsState.price
             }))
@@ -180,12 +183,16 @@ const ProductFormEdit: React.FC<{
                                 <div className="col-lg-6">
                                     <label htmlFor='aboutRu'>
                                         Описание товара</label>
-                                    <textarea name="aboutRu" id="aboutRu"
-                                              className='col-lg-10 mb-3'
-                                              rows={4}
-                                              ref={register({required: true})}
-                                              placeholder="Введите описание">
-                                        </textarea>
+                                    <Controller
+                                        name="aboutRu"
+                                        control={control}
+                                        render={({value, onChange}) => (
+                                            <TextEditor
+                                                value={value}
+                                                onChange={onChange}
+                                            />
+                                        )}
+                                    />
                                     {errors.aboutRu &&
                                     <small>Это поле обязательно</small>}
                                     <label htmlFor='providerId'>
@@ -238,7 +245,7 @@ const ProductFormEdit: React.FC<{
                                                 disabled
                                                 value={dirty
                                                     ? priceState.usd
-                                                    : null}
+                                                    : 0}
                                                 className='w-100'
                                                 placeholder="0"
                                             />
@@ -258,7 +265,7 @@ const ProductFormEdit: React.FC<{
                                                 disabled
                                                 value={dirty
                                                     ? priceState.rub
-                                                    : null}
+                                                    : 0}
                                                 className='w-100'
                                                 placeholder="0"
                                             />
@@ -291,11 +298,16 @@ const ProductFormEdit: React.FC<{
                                 </div>
                                 <div className="col-lg-6">
                                     <label htmlFor='aboutEn'>Description</label>
-                                    <textarea name="aboutEn" id="aboutEn"
-                                              className='col-lg-10' rows={4}
-                                              ref={register}
-                                              placeholder="Type here">
-                                    </textarea>
+                                    <Controller
+                                        name="aboutEn"
+                                        control={control}
+                                        render={({value, onChange}) => (
+                                            <TextEditor
+                                                value={value}
+                                                onChange={onChange}
+                                            />
+                                        )}
+                                    />
                                     <div className='row mb-3'>
                                         <div className='col-lg-12'>
                                             <label>Укажите вес</label>
@@ -355,13 +367,14 @@ const ProductFormEdit: React.FC<{
 
                                         </div>
                                         <div>
-                                            <button className='btn btn-success'
-                                                    type="submit">
+                                            <button
+                                                className='btn btn-success mr-3'
+                                                type="submit">
                                                 {'id' in product && product.id
                                                     ? 'Обновить'
                                                     : 'Добавить'}
                                             </button>
-                                            <button>
+                                            <button className='btn btn-light'>
                                                 Отменить добавление
                                             </button>
                                         </div>
