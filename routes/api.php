@@ -53,6 +53,7 @@ Route::delete('countries/{country}', 'CountryController@destroy');
 
 Route::get('orders', 'OrderController@index');
 Route::post('orders', 'OrderController@store');
+Route::post('orders/checkproductnumberwithus', 'OrderController@checkProductNUmberWithUs');
 Route::get('orders/{order}', 'OrderController@show');
 Route::put('orders/{order}', 'OrderController@update');
 Route::delete('orders/{order}', 'OrderController@destroy');
