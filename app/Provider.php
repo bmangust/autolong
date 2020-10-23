@@ -43,7 +43,7 @@ class Provider extends Model
 
     public function products()
     {
-        return $this->belongsToMany('App\Product', 'product_provider', 'provider_id', 'product_id');
+        return $this->hasMany('App\Product');
     }
 
 }

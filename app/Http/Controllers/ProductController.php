@@ -25,6 +25,7 @@ class ProductController extends Controller
             'weightBrutto' => 'вес в брутто',
             'vendorCode' => 'артикул',
             'autolongNumber' => 'номер в 1с',
+            'providerId' => 'поставщик'
         ];
 
         return Validator::make($data, [
@@ -35,6 +36,7 @@ class ProductController extends Controller
             'weightBrutto' => ['required'],
             'vendorCode' => ['required'],
             'autolongNumber' => ['required'],
+            'providerId' => ['required'],
         ], $messages, $names);
     }
     /**
@@ -62,7 +64,7 @@ class ProductController extends Controller
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
         $product->about_en = $request->input('aboutEn');
-        $product->providers()->sync($request->input('providersId'));
+        $product->provider_id = $request->input('providerId');
         $product->price_cny = $request->input('priceCny');
         $product->price_rub = $exchangeRate->lastCourse()->rub * $product->price_cny;
         $product->price_usd = $exchangeRate->lastCourse()->usd * $product->price_cny;
@@ -100,7 +102,7 @@ class ProductController extends Controller
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
         $product->about_en = $request->input('aboutEn');
-        $product->providers()->sync($request->input('providersId'));
+        $product->provider_id = $request->input('providerId');
         $product->price_cny = $request->input('priceCny');
         $product->price_rub = round($exchangeRate->lastCourse()->rub * $product->price_cny, 2);
         $product->price_usd = round($exchangeRate->lastCourse()->usd * $product->price_cny, 2);
@@ -148,7 +150,8 @@ class ProductController extends Controller
         return response()->json(['price' => [
             'cny' => $priceCny,
             'rub' => $exchangeRate->lastCourse()->rub * $priceCny,
-            'usd' => $exchangeRate->lastCourse()->usd * $priceCny]], 200);
+            'usd' => $exchangeRate->lastCourse()->usd * $priceCny
+        ]], 200);
     }
 
     public function checkNumberCode(Request $request, AutolongRuProduct $autolongRuProduct)
