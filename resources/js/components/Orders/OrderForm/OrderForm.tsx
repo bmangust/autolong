@@ -71,8 +71,6 @@ const OrderForm: React.FC = () => {
         handleSubmit((formValues: ICreateOrderData) => {
             formValues.cargo = formValues.cargo ? 1 : 0
             formValues.items = items
-            // eslint-disable-next-line no-debugger
-            debugger
             dispatch(createOrder(formValues))
             history.push('/orders')
         })
