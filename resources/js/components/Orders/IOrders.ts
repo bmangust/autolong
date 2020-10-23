@@ -8,7 +8,10 @@ import {
     FETCH_ORDER_ERROR,
     FETCH_ORDER_START,
     FETCH_ORDER_SUCCESS,
-    FETCH_ORDER_PRODUCTS
+    FETCH_ORDER_PRODUCTS,
+    FETCH_ITEMS_BY_VENDOR_START,
+    FETCH_ITEMS_BY_VENDOR_ERROR,
+    FETCH_ITEMS_BY_VENDOR_SUCCESS
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
 import {IProduct} from '../Products/IProducts'
@@ -27,7 +30,7 @@ export interface IOrder {
 export interface IOrdersState {
     orders: IOrder[] | []
     order: IOrder | {}
-    orderProducts: []
+    orderProducts: IProduct[] | []
     loading: boolean;
     error: any
 }
@@ -93,8 +96,26 @@ interface IFetchOrderProducts {
     loading: boolean
 }
 
+interface IFetchItemsByVendorStart {
+    type: typeof FETCH_ITEMS_BY_VENDOR_START
+    loading: boolean
+}
+
+interface IFetchItemsByVendorError {
+    type: typeof FETCH_ITEMS_BY_VENDOR_ERROR
+    payload: any
+    loading: boolean
+}
+
+interface IFetchItemsByVendorSuccess {
+    type: typeof FETCH_ITEMS_BY_VENDOR_SUCCESS
+    payload: IProduct[];
+    loading: boolean
+}
+
 export type IOrdersActionTypes =
     IFetchOrdersStart | IFetchOrdersSuccess | IFetchOrdersError |
     IFetchOrderStart | IFetchOrderSuccess | IFetchOrderError |
     ICreateOrderStart | ICreateOrderSuccess | ICreateOrderError |
-    IFetchOrderProducts
+    IFetchOrderProducts | IFetchItemsByVendorStart | IFetchItemsByVendorError |
+    IFetchItemsByVendorSuccess

@@ -8,12 +8,11 @@ import {useForm} from 'react-hook-form'
 
 // Typescript
 import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
-import {IProduct, IProductsRootState} from '../../Products/IProducts'
+import {IOrdersRootState} from '../IOrders'
 
 // Actions
-import {createOrder} from '../../../store/actions/orders'
+import {createOrder, fetchItemsByVendors} from '../../../store/actions/orders'
 import {fetchProviders} from '../../../store/actions/providers'
-import {fetchProducts} from '../../../store/actions/products'
 
 // App
 import OrderItems from '../OrderItems/OrderItems'
@@ -30,8 +29,9 @@ const OrderForm: React.FC = () => {
         register, handleSubmit
     } = useForm<ICreateOrderData>()
 
-    const [items, setItems] = useState([])
-    const [data, setData] = useState([])
+    const {
+        register: register2, handleSubmit: handleSubmit2
+    } = useForm<ICreateOrderData>()
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -41,145 +41,156 @@ const OrderForm: React.FC = () => {
             providers: state.providersState.providers
         }))
 
-    const {products} = useSelector(
-        (state: IProductsRootState) => ({
-            products: state.productsState.products
+    const {orderProducts} = useSelector(
+        (state: IOrdersRootState) => ({
+            orderProducts: state.ordersState.orderProducts
         }))
+
+    const [items, setItems] = useState([])
 
     useEffect(() => {
         dispatch(fetchProviders())
-        dispatch(fetchProducts())
-    }, [dispatch])
+        const filtered = orderProducts.filter(el => 'id' in el)
+            .map(el => el.id ? {...el, quantity: 1} : el)
+        setItems(filtered)
+    }, [dispatch, orderProducts])
 
     const onChangeQtyHandler = (e, itemId: number) => {
         const value = +e.target.value
-        // @ts-ignore
-        setData(oldData => [...oldData, oldData.find(({id}) =>
-            id === itemId).quantity = value])
-    }
-
-    const onDeleteHandler = (itemId: number) => {
-        const newData = data.filter(el => el.id !== itemId)
-        const newItems = items.filter(el => el.id !== itemId)
-        setData(newData)
+        const newItems = items
+            .map(el => el.id === itemId ? {...el, quantity: value} : el)
         setItems(newItems)
     }
 
-    const onChangeHandler = (e) => {
-        const product = JSON.parse(e.target.value)
-        // @ts-ignore
-        setData(oldData => [...oldData, {id: product.id, quantity: 1}])
-        setItems(oldItems => [...oldItems, product])
+    const onDeleteHandler = (itemId: number) => {
+        const newItems = items.filter(el => el.id !== itemId)
+        setItems(newItems)
     }
 
     const orderFormSubmitHandler =
         handleSubmit((formValues: ICreateOrderData) => {
-            formValues.items = data.filter(el => typeof el === 'object')
             formValues.cargo = formValues.cargo ? 1 : 0
+            formValues.items = items
+            // eslint-disable-next-line no-debugger
+            debugger
             dispatch(createOrder(formValues))
             history.push('/orders')
         })
 
-    return (
-        <form onSubmit={orderFormSubmitHandler}>
-            <div className='card mb-3'>
-                <div className="card-body">
-                    <div className='mb-3 row'>
-                        <div className="col-lg-6">
-                            <label className='w-100' htmlFor='name'>
-                                Название заказа
-                            </label>
-                            <input
-                                className='col-lg-10 mb-3' name="name"
-                                ref={register}
-                                placeholder="Введите название" type="text"/>
+    const getProductSubmitHandler =
+        handleSubmit2((formValues) => {
+            dispatch(fetchItemsByVendors(formValues))
+        })
 
-                            <label className='w-100' htmlFor='provider'>
-                                Выберите поставщика
-                            </label>
-                            <select
-                                ref={register}
-                                name="providerId"
-                                className='col-lg-10'
-                            >
-                                <option disabled
-                                        defaultValue=''>Поставщик
-                                </option>
-                                {providers.map((provider: IProvider) => {
-                                    return (<option
-                                        key={provider.id + provider.name}
-                                        value={provider.id}>
-                                        {provider.name}</option>)
-                                })}
-                            </select>
-                        </div>
-                        <div className="col-lg-6">
-                            <label className='w-100' htmlFor='provider'>
-                                Статус карго
-                            </label>
-                            <div className="custom-control custom-switch">
-                                <input
-                                    type="checkbox"
-                                    name='cargo' ref={register}
-                                    className="custom-control-input"
-                                    id="customSwitch1"
-                                />
-                                <label
-                                    className="custom-control-label"
-                                    htmlFor="customSwitch1">
+    return (
+        <>
+            <div className="card mb-3">
+                <div className="card-body">
+                    <form onSubmit={getProductSubmitHandler}>
+                        <div className='card mb-3'>
+                            <div className="card-body">
+                                <label htmlFor="articles">
+                                    Добавить товар по артикулу
                                 </label>
+                                <textarea
+                                    ref={register2}
+                                    name="numbers" rows={4}
+                                    placeholder='Каждый артикул через enter'>
+                                </textarea>
+                                <button
+                                    className='btn btn-success'
+                                    type='submit'>
+                                    Добавить
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+
+            <form onSubmit={orderFormSubmitHandler}>
+                <div className='card mb-3'>
+                    <div className="card-body">
+                        <div className='mb-3 row'>
+                            <div className="col-lg-6">
+                                <label className='w-100' htmlFor='name'>
+                                    Название заказа
+                                </label>
+                                <input
+                                    className='col-lg-10 mb-3' name="name"
+                                    ref={register}
+                                    placeholder="Введите название" type="text"/>
+
+                                <label className='w-100' htmlFor='provider'>
+                                    Выберите поставщика
+                                </label>
+                                <select
+                                    ref={register}
+                                    name="providerId"
+                                    className='col-lg-10'
+                                >
+                                    <option disabled
+                                            defaultValue=''>Поставщик
+                                    </option>
+                                    {providers.map((provider: IProvider) => {
+                                        return (<option
+                                            key={provider.id + provider.name}
+                                            value={provider.id}>
+                                            {provider.name}</option>)
+                                    })}
+                                </select>
+                            </div>
+                            <div className="col-lg-6">
+                                <label className='w-100' htmlFor='provider'>
+                                    Статус карго
+                                </label>
+                                <div className="custom-control custom-switch">
+                                    <input
+                                        type="checkbox"
+                                        name='cargo' ref={register}
+                                        className="custom-control-input"
+                                        id="customSwitch1"
+                                    />
+                                    <label
+                                        className="custom-control-label"
+                                        htmlFor="customSwitch1">
+                                    </label>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
 
-            <div className='card mb-3'>
-                <div className="card-body">
-                    <h2>Список товаров в заказе</h2>
-                    <select name="addProduct" onChange={onChangeHandler}
-                            className='mb-3'>
-                        <option defaultValue=''>
-                            Выберите товар
-                        </option>
-                        {products.map((product: IProduct) => {
-                            const isFind = items.find(
-                                ({id}) => id === product.id)
-                            if (!isFind) {
-                                return (<option
-                                    key={product.id}
-                                    value={JSON.stringify(product)}>
-                                    {product.nameRu}</option>)
-                            } else {
-                                return null
-                            }
-                        })}
-                    </select>
-                    <OrderItems
-                        onDelete={onDeleteHandler}
-                        onChange={onChangeQtyHandler} items={items}/>
-                    <div className="text-right mb-3">
-                        Итоговая стоимость
-                        <span
-                            className="ml-4 font-weight-bold"
-                        >124 ¥</span>
-                    </div>
-                    <div
-                        className="d-flex justify-content-between mt-4">
-                        <button
-                            onClick={() => {
-                                history.goBack()
-                            }} className='mr-3 btn btn-light'>
-                            Отмена
-                        </button>
-                        <button className='btn btn-success'
-                                type="submit">
-                            Сформировать
-                        </button>
+                <div className='card mb-3'>
+                    <div className="card-body">
+                        <h2>Список товаров в заказе</h2>
+                        <OrderItems
+                            onDelete={onDeleteHandler}
+                            onChange={onChangeQtyHandler}
+                            items={items}/>
+                        <div className="text-right mb-3">
+                            Итоговая стоимость
+                            <span
+                                className="ml-4 font-weight-bold"
+                            >124 ¥</span>
+                        </div>
+                        <div
+                            className="d-flex justify-content-between mt-4">
+                            <button
+                                onClick={() => {
+                                    history.goBack()
+                                }} className='mr-3 btn btn-light'>
+                                Отмена
+                            </button>
+                            <button className='btn btn-success'
+                                    type="submit">
+                                Сформировать
+                            </button>
+                        </div>
                     </div>
                 </div>
-            </div>
-        </form>
+            </form>
+        </>
     )
 }
 
