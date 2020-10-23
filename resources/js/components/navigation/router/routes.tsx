@@ -273,5 +273,16 @@ export const routes: IRoute[] = [
         private: true,
         fallback: <Loader/>,
         icon: <Settings/>
+    },
+    {
+        name: 'Справка по работе с системой',
+        path: '/help',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/Help'), 600)),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>
     }
 ]

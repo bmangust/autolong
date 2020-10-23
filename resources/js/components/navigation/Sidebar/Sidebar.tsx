@@ -3,6 +3,7 @@ import React from 'react';
 
 // Third-party
 import {NavLink} from 'react-router-dom';
+import SvgHelp from '../../UI/iconComponents/Help';
 
 // Styles
 import classes from './Sidebar.module.css';
@@ -25,7 +26,15 @@ const Sidebar: React.FC = () => {
     };
     return (
         <nav className={classes.sidebar + ' nav flex-column'}>
+            <div className="w-100">
             {renderLinks(routes)}
+            </div>
+            <NavLink
+                className={classes.help}
+                to="/help">
+                <SvgHelp/>
+                <span>Справка по работе<br/>с системой</span>
+            </NavLink>
         </nav>
     );
 };
