@@ -57,7 +57,7 @@ const OrderItems: React.FC<IOrderItems> =
             : items.map((item: IProduct) => {
                 return (
                     <div key={item.id + item.nameRu}
-                         className={classes.products + ' row mb-2'}>
+                         className={classes.orderProducts + ' row mb-2'}>
                         <div className={classes.productImg + ' col-2'}>
                             <img src={item.image ||
                             '/imgs/placeholder-product-image.png'}

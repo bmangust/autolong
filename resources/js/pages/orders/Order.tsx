@@ -85,14 +85,20 @@ const Order: React.FC<IOrder> = () => {
 
                     <div className="card mb-3">
                         <div className="card-body-info">
-                            <h2 className="mb-0">Список заказа</h2>
+                            <h2 className="mb-4">Список заказа</h2>
                             {'items' in order
                                 ? <OrderItems items={order.items}/>
                                 : null
                             }
-                            Общая стоимость {'priceCny' in order
-                            ? order.priceCny + ' ¥'
-                            : ''}
+                            <div
+                                className="text-right font-weight-bold mt-4">
+                                Общая стоимость
+                                <span
+                                    className="text-orange ml-3"
+                                >{'priceCny' in order
+                                ? order.priceCny + ' ¥'
+                                    : ''}</span>
+                            </div>
                         </div>
                     </div>
 
