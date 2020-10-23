@@ -54,7 +54,7 @@ class Product extends Model
         }
         $imageName = $this->id . '_' . str_replace(AutolongRuProduct::AUTOLONG_LINK_IMAGE, '', $link);
         file_put_contents($imageName , $image);
-        $path = Storage::putFileAs(self::IMAGE_DIRECTORY, $imageName, $imageName);
+        $path = Storage::disk('main')->putFileAs(self::IMAGE_DIRECTORY, $imageName, $imageName);
         $this->image = $path;
         $this->save();
     }
