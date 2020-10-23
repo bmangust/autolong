@@ -169,8 +169,11 @@ const OrderForm: React.FC = () => {
                         <div className="text-right mb-3">
                             Итоговая стоимость
                             <span
-                                className="ml-4 font-weight-bold"
-                            >124 ¥</span>
+                                className="ml-4 font-weight-bold">
+                                {items
+                                    .map(el => +el.price.cny * el.quantity)
+                                }
+                            </span>
                         </div>
                         <div
                             className="d-flex justify-content-between mt-4">

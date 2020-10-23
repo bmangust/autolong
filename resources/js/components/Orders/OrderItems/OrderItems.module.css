@@ -12,13 +12,27 @@
 }
 
 .productName {
-    display: block;
+    height: 100%;
+    display: flex;
+    align-items: center;
     font-size: 12px;
     line-height: 15px;
     color: #3A405F;
     font-weight: 700;
-    margin-top: 18px;
     padding-left: 15px;
+    margin-bottom: 0;
+}
+
+.orderProductsQty {
+    font-weight: bold;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    margin-bottom: 0;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .products .productCount {
@@ -33,7 +47,10 @@
 }
 
 .productPrices {
-    padding-top: 13px;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 .orderProducts {

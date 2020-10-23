@@ -30,7 +30,7 @@ interface ICreateProductData {
 
 const ProductForm: React.FC = () => {
     const {
-        register, handleSubmit
+        register, handleSubmit, errors
     } = useForm<ICreateProductData>()
 
     const dispatch = useDispatch()
@@ -78,8 +78,10 @@ const ProductForm: React.FC = () => {
                                 </span>
                             </label>
                             <input name="nameRu" className='col-lg-10'
-                                   ref={register}
+                                   ref={register({required: true})}
                                    type="text" placeholder="Введите название"/>
+                            {errors.nameRu &&
+                            <small>Это поле обязательно</small>}
                         </div>
                         <div className="col-lg-6">
                             <label htmlFor='nameEn' className='w-100'>
@@ -99,11 +101,14 @@ const ProductForm: React.FC = () => {
                     <div className='mb-3 row'>
                         <div className="col-lg-6">
                             <label htmlFor='aboutRu'>Описание товара</label>
-                            <textarea name="aboutRu" id="aboutRu"
-                                      className='col-lg-10 mb-3' rows={4}
-                                      ref={register}
-                                      placeholder="Введите описание">
+                            <textarea
+                                name="aboutRu" id="aboutRu"
+                                className='col-lg-10 mb-3' rows={4}
+                                ref={register({required: true})}
+                                placeholder="Введите описание">
                             </textarea>
+                            {errors.aboutRu &&
+                            <small>Это поле обязательно</small>}
                             <div className='row'>
                                 <div className="col-lg-12">
                                     <label htmlFor='vendorCode'
@@ -112,23 +117,28 @@ const ProductForm: React.FC = () => {
                                     </label>
                                     <input className='col-lg-10 mb-3'
                                            name="vendorCode"
-                                           ref={register}
+                                           ref={register({required: true})}
                                            type="text"
                                            placeholder="Введите номер"/>
-                                    <label htmlFor='vendorCode'
+                                    {errors.vendorCode &&
+                                    <small>Это поле обязательно</small>}
+                                    <label htmlFor='autolongNumber'
                                            className='w-100'>
                                         Внутренний номер
                                     </label>
                                     <input className='col-lg-10 mb-3'
                                            name="autolongNumber"
-                                           ref={register}
+                                           ref={register({required: true})}
                                            type="text"
                                            placeholder="Введите номер"/>
+                                    {errors.autolongNumber &&
+                                    <small>Это поле обязательно</small>}
                                     <label htmlFor='providerId'
                                            className='w-100'>
                                         Выберите поставщика
                                     </label>
-                                    <select name="providerId" ref={register}
+                                    <select name="providerId"
+                                            ref={register({required: true})}
                                             className='col-lg-10 mb-3'
                                             id="providerId">
                                         <option disabled defaultValue=''>
@@ -142,6 +152,8 @@ const ProductForm: React.FC = () => {
                                                     {provider.name}</option>)
                                             })}
                                     </select>
+                                    {errors.providerId &&
+                                    <small>Это поле обязательно</small>}
                                     <label htmlFor='image' className='w-100'>
                                         Загрузите изображение товара
                                     </label>
@@ -167,10 +179,14 @@ const ProductForm: React.FC = () => {
                                         <div className='col-10 mb-3'>
                                             <input name="priceCny"
                                                    className='w-100'
-                                                   ref={register}
+                                                   ref={register(
+                                                       {required: true}
+                                                   )}
                                                    onChange={onChangePrice}
                                                    type="number"
                                                    placeholder="0"/>
+                                            {errors.priceCny &&
+                                            <small>Это поле обязательно</small>}
                                         </div>
                                         <div className='col-1 pl-0'>
                                             <span
@@ -233,9 +249,13 @@ const ProductForm: React.FC = () => {
                                         <div className='col-8'>
                                             <input name="weightBrutto"
                                                    placeholder="0"
-                                                   ref={register}
+                                                   ref={register(
+                                                       {required: true}
+                                                   )}
                                                    type="number"
                                                    className='w-100'/>
+                                            {errors.weightBrutto &&
+                                            <small>Это поле обязательно</small>}
                                         </div>
                                         <div className='col-2 priceSymbol
                                             text-main font-weight-bold pl-0'>
@@ -252,9 +272,13 @@ const ProductForm: React.FC = () => {
                                         <div className='col-8'>
                                             <input name="weightNetto"
                                                    className='w-100'
-                                                   ref={register}
+                                                   ref={register(
+                                                       {required: true}
+                                                   )}
                                                    type="number"
                                                    placeholder="0"/>
+                                            {errors.weightNetto &&
+                                            <small>Это поле обязательно</small>}
                                         </div>
                                         <div className='col-2 priceSymbol
                                             text-main font-weight-bold pl-0'>
