@@ -32,9 +32,9 @@ const OrderItems: React.FC<IOrderItems> =
                                  alt={item.nameRu}/>
                         </div>
                         <div className="col-4">
-                        <span className={classes.productName}>
-                            {item.nameRu}
-                        </span>
+                            <p className={classes.productName}>
+                                {item.nameRu}
+                            </p>
                         </div>
                         <div className="col-2">
                             <input data-id={item.id} min={1}
@@ -43,11 +43,13 @@ const OrderItems: React.FC<IOrderItems> =
                                    onChange={(e) => onChange(e, item.id)}
                                    type="number"/>
                         </div>
-                        <div className={classes.productPrices + ' col-3'}>
-                            {item.price
-                                ? moneyFormatter(item.price)
-                                : null
-                            }
+                        <div className='col-3'>
+                            <p className={classes.productPrices}>
+                                {item.price
+                                    ? moneyFormatter(item.price)
+                                    : null
+                                }
+                            </p>
                         </div>
                         <div className="col-1">
                             <SvgClose onClick={() => onDelete(item.id)}
@@ -67,15 +69,22 @@ const OrderItems: React.FC<IOrderItems> =
                                  alt={item.nameRu}/>
                         </div>
                         <div className="col-4">
-                        <span className={classes.productName}>
-                            {item.nameRu}
-                        </span>
+                            <p className={classes.productName}>
+                                {item.nameRu}
+                            </p>
                         </div>
                         <div className="col-2">
-                            {item.quantity + ' шт'}
+                            <p className={classes.orderProductsQty}>
+                                {item.quantity + ' шт'}
+                            </p>
                         </div>
-                        <div className={classes.productPrices + ' col-4'}>
-                            {item.priceCny}
+                        <div className='col-4'>
+                            <p className={classes.productPrices}>
+                                {item.price
+                                    ? moneyFormatter(item.price)
+                                    : null
+                                }
+                            </p>
                         </div>
                     </div>
                 )

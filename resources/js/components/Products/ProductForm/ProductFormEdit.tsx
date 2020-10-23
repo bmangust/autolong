@@ -1,12 +1,15 @@
 // React
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
 
 // Typescript
-import {IProduct, IProductAutolong, IProductsRootState} from '../IProducts'
+import {
+    IProduct, IProductAutolong,
+    IProductPrice, IProductsRootState
+} from '../IProducts'
 
 // Actions
 import {
@@ -39,6 +42,7 @@ const ProductFormEdit: React.FC<{
 }> =
     ({product, providers}) => {
         let defaultValues
+
         'id' in product
             ? defaultValues = {
                 nameRu: product.nameRu,
@@ -60,7 +64,7 @@ const ProductFormEdit: React.FC<{
                 image: product.photo,
                 vendorCode: product.articul,
                 aboutRu: product.text,
-                priceCny: +product.price
+                priceCny: product.price
             }
 
         const {
@@ -77,8 +81,19 @@ const ProductFormEdit: React.FC<{
         }
 
         const [show, setShow] = useState(true)
+        const [priceState, setPriceState] = useState<IProductPrice | {}>({})
+        const [dirty, setDirty] = useState<boolean>(false)
 
         const dispatch = useDispatch()
+
+        const {price} = useSelector(
+            (state: IProductsRootState) => ({
+                price: state.productsState.price
+            }))
+
+        useEffect(() => {
+            setPriceState(price)
+        }, [price])
 
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {
@@ -94,13 +109,9 @@ const ProductFormEdit: React.FC<{
                 setShow(false)
             })
 
-        const {price} = useSelector(
-            (state: IProductsRootState) => ({
-                price: state.productsState.price
-            }))
-
         const onChangePrice = (e) => {
             const value = e.target.value
+            setDirty(true)
             dispatch(fetchProductPrice(value))
         }
 
@@ -213,9 +224,10 @@ const ProductFormEdit: React.FC<{
                                                 name="priceUsd"
                                                 type="number"
                                                 ref={register}
-                                                defaultValue={'usd' in price
-                                                    ? price.usd
-                                                    : 0}
+                                                disabled
+                                                value={dirty
+                                                    ? priceState.usd
+                                                    : null}
                                                 className='w-100'
                                                 placeholder="0"
                                             />
@@ -232,9 +244,10 @@ const ProductFormEdit: React.FC<{
                                                 name="priceRub"
                                                 type="number"
                                                 ref={register}
-                                                defaultValue={'rub' in price
-                                                    ? price.rub
-                                                    : 0}
+                                                disabled
+                                                value={dirty
+                                                    ? priceState.rub
+                                                    : null}
                                                 className='w-100'
                                                 placeholder="0"
                                             />
