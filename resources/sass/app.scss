@@ -54,6 +54,14 @@ a {
     padding-top: 8px;
 }
 
+.deleteButton:hover {
+    cursor: pointer;
+}
+
+.deleteButton:hover svg path {
+    fill: var(--orange);
+}
+
 .react-bootstrap-table {
     .table {
         font-size: 12px;

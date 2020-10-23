@@ -51,7 +51,7 @@ const OrderItems: React.FC<IOrderItems> =
                         </div>
                         <div className="col-1">
                             <SvgClose onClick={() => onDelete(item.id)}
-                                      className='mt-3'/>
+                                      className='mt-3 deleteButton'/>
                         </div>
                     </div>
                 )
@@ -60,22 +60,26 @@ const OrderItems: React.FC<IOrderItems> =
             : items.map((item: IProduct) => {
                 return (
                     <div key={item.id + item.nameRu}
-                         className={classes.orderProducts + ' row mb-2'}>
+                         className={classes.orderProducts + ' row'}>
                         <div className={classes.productImg + ' col-2'}>
                             <img src={item.image ||
                             '/imgs/placeholder-product-image.png'}
                                  alt={item.nameRu}/>
                         </div>
-                        <div className="col-4">
-                        <span className={classes.productName}>
+                        <div className="col-4 pl-0">
+                        <span className={classes.orderProductsName}>
                             {item.nameRu}
                         </span>
                         </div>
                         <div className="col-2">
-                            {item.quantity + ' шт'}
+                            <span className={classes.orderProductsCount}>
+                                {item.quantity + ' шт'}
+                            </span>
                         </div>
-                        <div className={classes.productPrices + ' col-4'}>
-                            {item.priceCny}
+                        <div className="col-4">
+                            <span className={classes.orderProductsPrice}>
+                                {item.priceCny}
+                            </span>
                         </div>
                     </div>
                 )

@@ -38,15 +38,29 @@
 
 .orderProducts {
     background: white;
+    position: relative;
+    margin-bottom: 30px;
 }
 
 .orderProducts:after {
     content: "";
     position: absolute;
-    bottom: -20px;
+    bottom: -22px;
     right: 15px;
     height: 0.5em;
     border-top: 1px solid #EBEBEB;
     z-index: 1;
-    width: 80%;
+    width: 80.5%;
+}
+
+.orderProductsName, .orderProductsCount, .orderProductsPrice {
+    font-weight: bold;
+    font-size: 12px;
+    display: block;
+    position: relative;
+    top: 14px;
+}
+
+.orderProductsPrice {
+    font-weight: 500;
 }
