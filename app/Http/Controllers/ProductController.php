@@ -62,7 +62,7 @@ class ProductController extends Controller
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
         $product->about_en = $request->input('aboutEn');
-        $product->provider_id = $request->input('providerId');
+        $product->providers()->sync($request->input('providersId'));
         $product->price_cny = $request->input('priceCny');
         $product->price_rub = $exchangeRate->lastCourse()->rub * $product->price_cny;
         $product->price_usd = $exchangeRate->lastCourse()->usd * $product->price_cny;
@@ -100,7 +100,7 @@ class ProductController extends Controller
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
         $product->about_en = $request->input('aboutEn');
-        $product->provider_id = $request->input('providerId');
+        $product->providers()->sync($request->input('providersId'));
         $product->price_cny = $request->input('priceCny');
         $product->price_rub = round($exchangeRate->lastCourse()->rub * $product->price_cny, 2);
         $product->price_usd = round($exchangeRate->lastCourse()->usd * $product->price_cny, 2);
