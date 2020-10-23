@@ -35,3 +35,18 @@
 .productPrices {
     padding-top: 13px;
 }
+
+.orderProducts {
+    background: white;
+}
+
+.orderProducts:after {
+    content: "";
+    position: absolute;
+    bottom: -20px;
+    right: 15px;
+    height: 0.5em;
+    border-top: 1px solid #EBEBEB;
+    z-index: 1;
+    width: 80%;
+}
