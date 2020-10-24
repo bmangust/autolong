@@ -82,29 +82,32 @@ const OrderForm: React.FC = () => {
 
     return (
         <>
-            <div className="card mb-3">
-                <div className="card-body">
-                    <form onSubmit={getProductSubmitHandler}>
-                        <div className='card mb-3'>
-                            <div className="card-body">
+
+            <form onSubmit={getProductSubmitHandler}>
+                <div className="card mb-3">
+                    <div className="card-body">
+                        <div className="row">
+                            <div className="col-lg-7">
                                 <label htmlFor="articles">
                                     Добавить товар по артикулу
                                 </label>
                                 <textarea
                                     ref={register2}
                                     name="numbers" rows={4}
-                                    placeholder='Каждый артикул через enter'>
+                                    placeholder='
+                            Добавляйте каждый артикул через enter
+                            '>
                                 </textarea>
-                                <button
-                                    className='btn btn-success'
-                                    type='submit'>
-                                    Добавить
-                                </button>
                             </div>
                         </div>
-                    </form>
+                        <button
+                            className='btn btn-success mt-2'
+                            type='submit'>
+                            Добавить товары
+                        </button>
+                    </div>
                 </div>
-            </div>
+            </form>
 
             <form onSubmit={orderFormSubmitHandler}>
                 <div className='card mb-3'>
@@ -161,17 +164,21 @@ const OrderForm: React.FC = () => {
 
                 <div className='card mb-3'>
                     <div className="card-body">
-                        <h2>Список товаров в заказе</h2>
+                        <h2 className="mb-3">
+                            Список товаров в заказе
+                        </h2>
                         <OrderItems
                             onDelete={onDeleteHandler}
                             onChange={onChangeQtyHandler}
                             items={items}/>
-                        <div className="text-right mb-3">
+                        <div className="text-right mb-3 mt-3">
                             Итоговая стоимость
                             <span
                                 className="ml-4 font-weight-bold">
                                 {items
-                                    .map(el => +el.price.cny * el.quantity)
+                                    .map(
+                                        el => +el.price.cny * el.quantity
+                                    ) + ' ¥'
                                 }
                             </span>
                         </div>
