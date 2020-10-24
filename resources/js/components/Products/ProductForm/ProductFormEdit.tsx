@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
+import bsCustomFileInput from 'bs-custom-file-input';
 
 // Typescript
 import {
@@ -75,7 +76,7 @@ const ProductFormEdit: React.FC<{
             defaultValues
         })
 
-        let img = ''
+        let img = '/imgs/placeholder-product-image.png'
         if ('image' in product && product.image) {
             img = product.image
         } else if ('photo' in product && product.photo) {
@@ -118,38 +119,14 @@ const ProductFormEdit: React.FC<{
             dispatch(fetchProductPrice(value))
         }
 
+        bsCustomFileInput.init()
+
         return (
             show
                 ? <div className='card mb-3'>
                     <div className="card-body">
                         <form onSubmit={productFormSubmitHandler}>
                             <div className='mb-3 row'>
-                                <div className="col-lg-6">
-                                    <label htmlFor='vendorCode'
-                                           className='w-100'>
-                                        Укажите артикул
-                                    </label>
-                                    <input className='col-lg-10 mb-3'
-                                           name="vendorCode"
-                                           ref={register}
-                                           type="text"
-                                           placeholder="Введите номер"/>
-                                    <label htmlFor='nameRu' className='w-100'>
-                                        Укажите название товара
-                                        <span className="float-right
-                                    text-main
-                                    font-weight-bold
-                                    ">
-                                    RU
-                                </span>
-                                    </label>
-                                    <input name="nameRu" className='col-lg-10'
-                                           ref={register({required: true})}
-                                           type="text"
-                                           placeholder="Введите название"/>
-                                    {errors.nameRu &&
-                                    <small>Это поле обязательно</small>}
-                                </div>
                                 <div className="col-lg-6">
                                     <label htmlFor='autolongNumber'
                                            className='w-100'>
@@ -165,36 +142,53 @@ const ProductFormEdit: React.FC<{
                                            placeholder="Введите номер"/>
                                     {errors.autolongNumber &&
                                     <small>Это поле обязательно</small>}
-                                    <label htmlFor='nameEn' className='w-100'>
-                                        Product name
-                                        <span className="float-right
-                                    text-main
-                                    font-weight-bold
-                                    ">
-                                    ENG
-                                </span>
+
+                                    <label htmlFor='vendorCode'
+                                           className='w-100'>
+                                        Укажите артикул
                                     </label>
-                                    <input name="nameEn" className='col-lg-10'
+                                    <input className='col-lg-10'
+                                           name="vendorCode"
                                            ref={register}
-                                           type="text" placeholder="Type here"/>
+                                           type="text"
+                                           placeholder="Введите номер"/>
+
                                 </div>
-                            </div>
-                            <div className='mb-3 row'>
                                 <div className="col-lg-6">
-                                    <label htmlFor='aboutRu'>
-                                        Описание товара</label>
-                                    <Controller
-                                        name="aboutRu"
-                                        control={control}
-                                        render={({value, onChange}) => (
-                                            <TextEditor
-                                                value={value}
-                                                onChange={onChange}
-                                            />
-                                        )}
-                                    />
-                                    {errors.aboutRu &&
-                                    <small>Это поле обязательно</small>}
+
+                                    <div className="row mb-3">
+                                        <div className="col-lg-2 pr-0">
+                                            {img
+                                                ? <img height={65}
+                                                       src={img} alt=""/>
+                                                : <img height={65}
+                                                       src={img} alt=""/>
+                                            }
+                                        </div>
+                                        <div className="col-lg-8">
+                                            <label htmlFor='providerId'>
+                                                Загрузка изображения</label>
+                                            <div className="custom-file">
+                                                <input className='hidden d-none'
+                                                       ref={register}
+                                                       name='image'
+                                                       type="hidden"/>
+                                                <input
+                                                    id="inputGroupFile01"
+                                                    type="file"
+                                                    name="imageFile"
+                                                    ref={register}
+                                                className="custom-file-input"
+                                                />
+                                                <label
+                                                className="custom-file-label"
+                                                    htmlFor="inputGroupFile01"
+                                                >
+                                                    Выберите файл
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
                                     <label htmlFor='providerId'>
                                         Выберите поставщика</label>
                                     <select name="providerId"
@@ -214,6 +208,83 @@ const ProductFormEdit: React.FC<{
                                     </select>
                                     {errors.providerId &&
                                     <small>Это поле обязательно</small>}
+                                </div>
+                            </div>
+
+                            <div className='mb-3 row'>
+                                <div className='col-lg-6'>
+                                    <label htmlFor='nameRu' className='w-100'>
+                                        Укажите название товара
+                                        <span className="float-right
+                                    text-main
+                                    font-weight-bold
+                                    ">
+                                    RU
+                                </span>
+                                    </label>
+                                    <input name="nameRu"
+                                           className='col-lg-10 mb-3'
+                                           ref={register({required: true})}
+                                           type="text"
+                                           placeholder="Введите название"/>
+                                    {errors.nameRu &&
+                                    <small>Это поле обязательно</small>}
+                                    <label htmlFor='aboutRu'>
+                                        Описание товара</label>
+                                    <div className="row">
+
+                                    <div className="col-lg-10">
+                                        <Controller
+                                            name="aboutRu"
+                                            control={control}
+                                            render={({value, onChange}) => (
+                                                <TextEditor
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                        />
+                                        {errors.aboutRu &&
+                                        <small>Это поле обязательно</small>}
+                                    </div>
+                                    </div>
+                                </div>
+                                <div className="col-lg-6">
+                                    <label htmlFor='nameEn' className='w-100'>
+                                        Product name
+                                        <span className="float-right
+                                    text-main
+                                    font-weight-bold
+                                    ">
+                                    ENG
+                                </span>
+                                    </label>
+                                    <input name="nameEn"
+                                           className='col-lg-10 mb-3'
+                                           ref={register}
+                                           type="text" placeholder="Type here"/>
+
+
+                                    <label htmlFor='aboutEn'>Description</label>
+                                    <div className="row">
+
+                                        <div className="col-lg-10">
+                                    <Controller
+                                        name="aboutEn"
+                                        control={control}
+                                        render={({value, onChange}) => (
+                                            <TextEditor
+                                                value={value}
+                                                onChange={onChange}
+                                            />
+                                        )}
+                                    />
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div className='mb-3 row'>
+                                <div className="col-lg-6">
                                     <label>Укажите цену</label>
                                     <div className='row mb-3'>
                                         <div className='col-10'>
@@ -278,36 +349,8 @@ const ProductFormEdit: React.FC<{
                                     </span>
                                         </div>
                                     </div>
-                                    <label htmlFor='image' className='w-100'>
-                                        Загрузите изображение товара
-                                    </label>
-                                    {img
-                                        ? <img width={100} height={100}
-                                               src={img} alt=""/>
-                                        : null
-                                    }
-                                    <input className='hidden d-none'
-                                           ref={register}
-                                           name='image' type="hidden"/>
-                                    <input
-                                        name="imageFile"
-                                        className='col-lg-10 mb-3'
-                                        ref={register}
-                                        type="file"
-                                        placeholder="Путь до изображения"/>
                                 </div>
                                 <div className="col-lg-6">
-                                    <label htmlFor='aboutEn'>Description</label>
-                                    <Controller
-                                        name="aboutEn"
-                                        control={control}
-                                        render={({value, onChange}) => (
-                                            <TextEditor
-                                                value={value}
-                                                onChange={onChange}
-                                            />
-                                        )}
-                                    />
                                     <div className='row mb-3'>
                                         <div className='col-lg-12'>
                                             <label>Укажите вес</label>

@@ -9,7 +9,7 @@ const TextEditor: React.FC<any> = ({value, onChange}: any) => {
     ]
 
     const editorToolsBar =
-        'undo redo | formatselect | bold italic backcolor |' +
+        'formatselect | bold italic backcolor |' +
         ' alignleft aligncenter alignright alignjustify |' +
         ' bullist numlist outdent indent | removeformat'
     return (
@@ -18,7 +18,8 @@ const TextEditor: React.FC<any> = ({value, onChange}: any) => {
                 apiKey={process.env.MIX_TINYMCE_API_KEY}
                 initialValue={value}
                 init={{
-                    height: 400,
+                    height: 220,
+                    placeholder: 'Описание товара...',
                     menubar: false,
                     plugins: editorPlugins,
                     toolbar: editorToolsBar

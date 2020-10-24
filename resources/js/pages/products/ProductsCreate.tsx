@@ -49,18 +49,24 @@ const ProductsCreate: React.FC = () => {
             <form onSubmit={getProductSubmitHandler}>
                 <div className='card mb-3'>
                     <div className="card-body">
-                        <label htmlFor="articles">
-                            Добавить товар по артикулу
-                        </label>
-                        <textarea
-                            ref={register}
-                            name="numbers" rows={4}
-                            placeholder='Каждый артикул через enter'>
+                        <div className="row">
+                            <div className="col-lg-7">
+                                <label htmlFor="articles">
+                                    Добавить товары по артикулу
+                                </label>
+                                <textarea
+                                    ref={register}
+                                    name="numbers" rows={4}
+                                    placeholder='
+                                    Добавляйте каждый артикул через enter
+                                    '>
                         </textarea>
+                            </div>
+                        </div>
                         <button
-                            className='btn btn-success'
+                            className='btn btn-success mt-2'
                             type='submit'>
-                            Добавить
+                            Добавить товары
                         </button>
                     </div>
                 </div>
