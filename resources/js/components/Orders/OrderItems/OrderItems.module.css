@@ -70,3 +70,12 @@
 .orderProductsPrice {
     font-weight: 500;
 }
+
+.orderProductsNoItems {
+    background: #f7f8fa;
+    padding: 11px;
+    text-align: center;
+    border-radius: 10px;
+    color: #b3b5c3;
+    font-size: 12px;
+}

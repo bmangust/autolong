@@ -25,6 +25,7 @@ interface ICreateOrderData {
 }
 
 const OrderForm: React.FC = () => {
+    let totalPrice = 0
     const {
         register, handleSubmit
     } = useForm<ICreateOrderData>()
@@ -77,6 +78,7 @@ const OrderForm: React.FC = () => {
 
     const getProductSubmitHandler =
         handleSubmit2((formValues) => {
+            totalPrice = 0
             dispatch(fetchItemsByVendors(formValues))
         })
 
@@ -176,10 +178,13 @@ const OrderForm: React.FC = () => {
                             <span
                                 className="ml-4 font-weight-bold">
                                 {items
-                                    .map(
-                                        el => +el.price.cny * el.quantity
-                                    ) + ' ¥'
+                                    .map(el => {
+                                        totalPrice = totalPrice
+                                            + el.price.cny
+                                            * el.quantity
+                                    })
                                 }
+                                {totalPrice + ' ¥'}
                             </span>
                         </div>
                         <div

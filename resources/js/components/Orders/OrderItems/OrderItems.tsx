@@ -19,7 +19,12 @@ const OrderItems: React.FC<IOrderItems> =
          onDelete
      }) => {
         if (!items.length) {
-            return null
+            return (
+                <div
+                    className={classes.orderProductsNoItems}>
+                    В этом списке еще нет товаров
+                </div>
+            )
         }
         return onChange && onDelete
             ? items.map((item: IProduct) => {
