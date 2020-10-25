@@ -59,28 +59,72 @@ const Product: React.FC = () => {
                                 />
                             </div>
                             <div className='col-lg-7'>
-                                <div className="row">
-                                    <div className="col-lg-5 infoBlockHeaders">
-                                        <p>Артикул:</p>
-                                        <p>Цена:</p>
-                                        <p>Вес брутто:</p>
-                                        <p>Вес нетто:</p>
-                                    </div>
-                                    <div className="col-lg-7 infoBlockText">
-                                        <p>{'vendorCode' in product
-                                            ? product.vendorCode
-                                            : ''}</p>
-                                        <p>{'price' in product
+                                <table
+                                    className="w-100"
+                                >
+                                    <tbody>
+                                        <tr>
+                                            <td
+                                        className="infoBlockHeaders pb-3">
+                                                Внутренний номер
+                                            </td>
+                                            <td
+                                                className="infoBlockText pb-3">
+                                                {'autolongNumber' in product
+                                                    ? product.autolongNumber
+                                                    : ''}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                        className="infoBlockHeaders pb-3">
+                                                Артикул
+                                            </td>
+                                            <td
+                                                className="infoBlockText pb-3">
+                                                {'vendorCode' in product
+                                                    ? product.vendorCode
+                                                    : ''}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                        className="infoBlockHeaders pb-3">
+                                                Цена
+                                            </td>
+                                            <td
+                                                className="infoBlockText pb-3">
+                                                {'price' in product
                                             ? moneyFormatter(product.price)
-                                            : ''}</p>
-                                        <p>{'weightBrutto' in product
-                                            ? product.weightBrutto
-                                            : ''}</p>
-                                        <p>{'weightNetto' in product
-                                            ? product.weightNetto
-                                            : ''}</p>
-                                    </div>
-                                </div>
+                                                    : ''}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                        className="infoBlockHeaders pb-3">
+                                                Вес брутто
+                                            </td>
+                                            <td
+                                                className="infoBlockText pb-3">
+                                                {'weightBrutto' in product
+                                                    ? product.weightBrutto
+                                                    : ''}
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td
+                                                className="infoBlockHeaders">
+                                                Вес нетто
+                                            </td>
+                                            <td
+                                                className="infoBlockText">
+                                                {'weightNetto' in product
+                                                    ? product.weightNetto
+                                                    : ''}
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
                             </div>
                         </div>
                         <div className='row'>
@@ -103,11 +147,15 @@ const Product: React.FC = () => {
                                 <p className="infoBlockHeaders mb-2">
                                     Описание
                                 </p>
-                                <p className="infoBlockText">
-                                    {'aboutRu' in product
-                                        ? product.aboutRu
-                                        : 'Описание отсутствует'}
-                                </p>
+                                <p
+                                    className="infoBlockText"
+                                    dangerouslySetInnerHTML={
+                                        // @ts-ignore
+                                        {__html: 'aboutRu' in product
+                                                        ? product.aboutRu
+                                                        : 'Описание отсутствует'
+                                        }
+                                    }/>
                             </div>
                             <div className="col-lg-6 pt-2">
                                 <p className="infoBlockHeaders mb-2">
@@ -127,16 +175,20 @@ const Product: React.FC = () => {
                                 <p className="infoBlockHeaders mb-2">
                                     About product
                                 </p>
-                                <p className="infoBlockText">
-                                    {'aboutEn' in product
-                                        ? product.aboutEn
-                                        : 'No description'}
-                                </p>
+                                <p
+                                    className="infoBlockText"
+                                    dangerouslySetInnerHTML={
+                                        // @ts-ignore
+                                        {__html: 'aboutEn' in product
+                                                ? product.aboutEn
+                                                : 'Описание отсутствует'
+                                        }
+                                    }/>
                             </div>
 
                             <div className="col-lg-5 mt-4">
                                 <p className="infoBlockHeaders">
-                                    Дата загрузки
+                                    Дата добавления
                                 </p>
                             </div>
 
@@ -169,10 +221,6 @@ const Product: React.FC = () => {
                         </NavLink>
                     </div>
                 </div>
-                <div className="card">
-                    <div className="card-body">
-                    </div>
-                </div>
             </div>
             <div className='col-lg-4'>
                 <div className="card">
@@ -188,8 +236,8 @@ const Product: React.FC = () => {
                             <p className="infoBlockText">
                                 {'country' in product.provider
                                     ? product.provider.country
-                                        ? product.provider.country.name : ''
-                                    : ''}
+                                        ? product.provider.country.name : '--'
+                                    : '--'}
                             </p>
                             <p className="infoBlockHeaders mb-1">
                                 Почта</p>
