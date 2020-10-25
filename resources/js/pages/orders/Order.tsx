@@ -97,12 +97,11 @@ const Order: React.FC<IOrder> = () => {
                                 <span
                                     className="text-orange ml-3"
                                 >
-                                    {order.items
-                                        .map(el => {
+                                    {order.items ? order.items.map(el => {
                                             totalPrice = totalPrice
                                                 + el.price.cny
                                                 * el.quantity
-                                        })
+                                        }) : null
                                     }
                                     {totalPrice + ' ¥'}
                                 </span>
