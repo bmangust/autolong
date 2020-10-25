@@ -263,6 +263,10 @@ a {
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
 }
 
 .pricesBlock .pricesSymbol {

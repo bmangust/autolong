@@ -51,8 +51,12 @@ export function timeConverter(timestamp) {
 export function moneyFormatter(price: IProductPrice) {
     return (
         <span className="pricesBlock">
-           {Object.entries(price).map(([key, val]) => {
-               return val + ' ' + getSymbolFromCurrency(key) + '   '
+           {Object.entries(price).sort().map(([key, val]) => {
+               return (
+                   <span key={key}>
+                   {Math.round(val)} {getSymbolFromCurrency(key)}
+                   </span>
+           )
            })}
         </span>
     )
