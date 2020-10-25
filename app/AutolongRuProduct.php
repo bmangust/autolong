@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AutolongRuProduct extends Model
 {
-    const AUTOLONG_LINK_IMAGE = "https://autolong.ru/images/products/";
+    const AUTOLONG_LINK_IMAGE = "https://autolong.ru/images/products/thumb/";
 
     protected $table = 'autolong_ru';
 
