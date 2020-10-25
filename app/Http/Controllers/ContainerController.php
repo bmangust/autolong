@@ -35,7 +35,7 @@ class ContainerController extends Controller
      */
     public function index()
     {
-        return response()->json(ContainerResource::collection(Container::all()), 200);
+        return response()->json(ContainerResource::collection(Container::all())->sortByDesc('updated_at'), 200);
     }
 
     /**

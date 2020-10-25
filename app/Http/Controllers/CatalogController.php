@@ -34,7 +34,7 @@ class CatalogController extends Controller
      */
     public function index()
     {
-        return response()->json(CatalogWithRelationshipsResource::collection(Catalog::all(), 200));
+        return response()->json(CatalogWithRelationshipsResource::collection(Catalog::all()->sortByDesc('updated_at'), 200));
     }
 
     /**

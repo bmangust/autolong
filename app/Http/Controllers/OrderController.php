@@ -37,7 +37,7 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return response()->json(OrderWithRelationshipsResource::collection(Order::all(), 200));
+        return response()->json(OrderWithRelationshipsResource::collection(Order::all()->sortByDesc('updated_at'), 200));
     }
 
     /**

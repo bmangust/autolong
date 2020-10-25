@@ -46,7 +46,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json(ProductWithRelationshipsResource::collection(Product::all(), 200));
+        return response()->json(ProductWithRelationshipsResource::collection(Product::all()->sortByDesc('updated_at'), 200));
     }
 
     /**
