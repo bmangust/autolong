@@ -53,6 +53,7 @@ const OrdersTable: React.FC = () => {
             dataField: 'name',
             text: 'Название',
             classes: 'title',
+            headerStyle: {width: '285px'},
             sort: true,
             formatter: (name, row) =>
                 nameToLinkFormatter(name, row, 'order')
