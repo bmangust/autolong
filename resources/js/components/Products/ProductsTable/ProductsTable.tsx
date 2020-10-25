@@ -76,6 +76,7 @@ const ProductsTable: React.FC = () => {
             dataField: 'image',
             text: '',
             classes: 'product-image',
+            headerStyle: {width: '120px'},
             formatter: (image, row) =>
                 imgFormatter(image, row, '/imgs/placeholder-product-image.png')
         },
@@ -84,6 +85,7 @@ const ProductsTable: React.FC = () => {
             text: 'Название',
             classes: 'title',
             sort: true,
+            headerStyle: {width: '370px'},
             formatter: (nameRu, row) =>
                 nameToLinkFormatter(nameRu, row, 'product')
         },
@@ -91,13 +93,13 @@ const ProductsTable: React.FC = () => {
             dataField: 'price',
             text: 'Цена',
             classes: 'price',
-            formatter: moneyFormatter,
-            sort: true
+            formatter: moneyFormatter
         },
         {
             dataField: 'updatedAt',
             text: 'Обновление',
             sort: true,
+            headerStyle: {width: '125px'},
             formatter: timeConverter
         }
     ]

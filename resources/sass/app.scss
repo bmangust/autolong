@@ -132,6 +132,7 @@ a {
             padding-top: 0;
             padding-bottom: 0;
             padding-left: 0;
+            vertical-align: middle;
 
             img {
                 max-width: 80px;
@@ -267,6 +268,11 @@ a {
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
+}
+
+.pricesBlock span:first-child {
+    color: var(--orange);
+    font-weight: bold;
 }
 
 .pricesBlock .pricesSymbol {
