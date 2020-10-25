@@ -47,7 +47,7 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        return response()->json(ProviderWithRelationshipsResource::collection(Provider::all(), 200));
+        return response()->json(ProviderWithRelationshipsResource::collection(Provider::all()->sortBy('name'), 200));
     }
 
     /**
