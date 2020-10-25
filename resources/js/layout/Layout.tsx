@@ -18,7 +18,7 @@ const Layout: React.FC = (props) => {
                         <Sidebar/>
                         <span
                         className="version"
-                        >Версия от 23.10.2020</span>
+                        >Версия от 26.10.2020</span>
                     </div>
                     <main role='main' className="col-lg-10 pl-5">
                         <Header/>
