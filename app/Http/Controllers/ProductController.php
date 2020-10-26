@@ -101,7 +101,6 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product, ExchangeRate $exchangeRate)
     {
-        $this->productCreateValidator($request->all())->validate();
         $product->name_ru = $request->input('nameRu');
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
