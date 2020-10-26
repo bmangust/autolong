@@ -9,20 +9,20 @@ class Status extends Model
 {
     const PATH_STATUSES_FILE = 'statuses/statuses.json';
 
-    public static function includeStatusFile()
+    public static function includeStatusesFile()
     {
         return json_decode(Storage::disk('resources')->get(self::PATH_STATUSES_FILE));
     }
 
     public static function getOrderStatuses()
     {
-        $statuses = self::includeStatusFile();
+        $statuses = self::includeStatusesFile();
         return $statuses->orderStatuses;
     }
 
     public static function getOrderPaymentStatuses()
     {
-        $statuses = self::includeStatusFile();
+        $statuses = self::includeStatusesFile();
         return $statuses->paymentStatuses;
     }
 }
