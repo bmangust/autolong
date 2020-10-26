@@ -6,6 +6,9 @@ import {NavLink} from 'react-router-dom'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import {IProductPrice} from './components/Products/IProducts'
 
+// App
+import statuses from '../statuses/statuses.json'
+
 export function nameToLinkFormatter(name, row, page) {
     return (
         <NavLink to={`/${page}/${row.id}`}>{name}</NavLink>
@@ -56,8 +59,16 @@ export function moneyFormatter(price: IProductPrice) {
                    <span key={key}>
                    {Math.round(val)} {getSymbolFromCurrency(key)}
                    </span>
-           )
+               )
            })}
         </span>
     )
+}
+
+export function getOrderStatusName(key: string) {
+    return statuses.orderStatuses[key]
+}
+
+export function getPaymentStatusName(key: string) {
+    return statuses.paymentStatuses[key]
 }

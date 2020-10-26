@@ -23,6 +23,7 @@ import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import statuses from '../../../statuses/statuses.json'
+import {getOrderStatusName, getPaymentStatusName} from '../../utils'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -79,8 +80,8 @@ const Order: React.FC<IOrder> = () => {
                                             'bg-primary text-white '
                                             + classes.orderStatus}>
                                             {'status' in order
-                                                ? statuses
-                                                    .orderStatuses[order.status]
+                                                ? getOrderStatusName(order
+                                                    .status)
                                                 : ''}
                                         </span>
                                     </div>
@@ -121,9 +122,8 @@ const Order: React.FC<IOrder> = () => {
                                             'bg-primary text-white '
                                             + classes.orderStatus}>
                                             {'status' in order
-                                                ? statuses
-                                                    .paymentStatuses[order
-                                                    .statusPayment]
+                                                ? getPaymentStatusName(order
+                                                    .statusPayment)
                                                 : ''}
                                         </span>
                                     </div>

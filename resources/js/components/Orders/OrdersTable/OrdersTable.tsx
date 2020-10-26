@@ -14,7 +14,7 @@ import {IOrdersRootState} from '../IOrders'
 // App
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import Loader from '../../UI/Loader/Loader'
-import {nameToLinkFormatter} from '../../../utils'
+import {getOrderStatusName, nameToLinkFormatter} from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
@@ -68,6 +68,8 @@ const OrdersTable: React.FC = () => {
             dataField: 'status',
             text: 'Статус',
             classes: 'status',
+            formatter: (status) =>
+                getOrderStatusName(status),
             sort: true
         },
         {
