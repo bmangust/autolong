@@ -27,7 +27,7 @@ class OrderController extends Controller
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'providerId' => ['required', 'integer', 'max:255'],
+            'providerId' => ['required', 'integer'],
         ], $messages, $names);
     }
     /**
