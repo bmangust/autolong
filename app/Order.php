@@ -64,4 +64,26 @@ class Order extends Model
         }
         return $sum;
     }
+
+    public function setOrderStatus($status)
+    {
+        $statuses = Status::getOrderStatuses();
+        if (property_exists( $statuses, $status)) {
+            $this->status = $status;
+            $this->save();
+        } else {
+            return response()->json('Данного статуса не существует', 404);
+        }
+    }
+
+    public function setOrderPaymentStatus($status)
+    {
+        $statuses = Status::getOrderPaymentStatuses();
+        if (property_exists( $statuses, $status)) {
+            $this->status_payment = $status;
+            $this->save();
+        } else {
+            return response()->json('Данного статуса оплаты не существует', 404);
+        }
+    }
 }

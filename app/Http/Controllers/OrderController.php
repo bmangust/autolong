@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\ProductResource;
 use App\Order;
-use App\OrderPaymentStatus;
-use App\OrderStatus;
 use App\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -53,8 +51,8 @@ class OrderController extends Controller
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
         $order->cargo = $request->input('cargo');
-        $order->status = OrderStatus::CREATED;
-        $order->status_payment = OrderPaymentStatus::PENDING;
+        $order->setOrderStatus($request->input('status'));
+        $order->setOrderPaymentStatus($request->input('statusPayment'));
         $order->save();
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
@@ -86,12 +84,8 @@ class OrderController extends Controller
         $order->name =$request->input('name');
         $order->provider_id = $request->input('providerId');
         $order->cargo = $request->input('cargo');
-        if ($request->has('status') && $request->input('status') != '') {
-            $order->status = $request->input('status');
-        }
-        if ($request->has('statusPayment') && $request->input('statusPayment') != '') {
-            $order->status_payment = $request->input('statusPayment');
-        }
+        $order->setOrderStatus($request->input('status'));
+        $order->setOrderPaymentStatus($request->input('statusPayment'));
         $order->save();
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
@@ -117,8 +111,7 @@ class OrderController extends Controller
         $request->validate([
             'status' => 'required',
         ]);
-        $order->status = $request->input('status');
-        $order->save();
+        $order->setOrderStatus($request->input('status'));
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 
@@ -127,8 +120,7 @@ class OrderController extends Controller
         $request->validate([
             'statusPayment' => 'required',
         ]);
-        $order->status_payment = $request->input('statusPayment');
-        $order->save();
+        $order->setOrderPaymentStatus($request->input('statusPayment'));
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 

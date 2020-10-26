@@ -70,6 +70,10 @@ return [
             'root' => public_path(),
         ],
 
+        'resources' => [
+            'driver' => 'local',
+            'root' => resource_path(),
+        ],
     ],
 
     /*
