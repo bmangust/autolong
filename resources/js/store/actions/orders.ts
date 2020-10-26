@@ -11,7 +11,10 @@ import {
     FETCH_ORDER_SUCCESS,
     FETCH_ITEMS_BY_VENDOR_START,
     FETCH_ITEMS_BY_VENDOR_SUCCESS,
-    FETCH_ITEMS_BY_VENDOR_ERROR
+    FETCH_ITEMS_BY_VENDOR_ERROR,
+    CHANGE_ORDER_STATUS_START,
+    CHANGE_ORDER_STATUS_SUCCESS,
+    CHANGE_ORDER_STATUS_ERROR
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -119,5 +122,31 @@ export const fetchItemsByVendors = (data) => async dispatch => {
             type: FETCH_ITEMS_BY_VENDOR_ERROR,
             payload: error.response
         })
+    })
+}
+
+export const changeOrderStatus = (id, data) => async dispatch => {
+    await dispatch({
+        type: CHANGE_ORDER_STATUS_START
+    })
+    let payment = ''
+    if ('statusPayment' in data) {
+        payment = 'Payment'
+    }
+    const url = `/api/orders/${id}/changestatus${payment}`
+    axios
+        .post(url, data)
+        .then((answer) => {
+            dispatch({
+                type: CHANGE_ORDER_STATUS_SUCCESS,
+                payload: answer.data
+            })
+            toast.success(`${answer.data.name} - статус заказа изменен`)
+        }).catch((error: AxiosError) => {
+        dispatch({
+            type: CHANGE_ORDER_STATUS_ERROR,
+            payload: error.response
+        })
+        toast.error(error.message)
     })
 }

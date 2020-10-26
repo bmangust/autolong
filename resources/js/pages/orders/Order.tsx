@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import classes from './Orders.module.css'
 
 // Actions
-import {fetchOrderById} from '../../store/actions/orders'
+import {changeOrderStatus, fetchOrderById} from '../../store/actions/orders'
 
 // Typescript
 import {
@@ -29,17 +29,25 @@ const Order: React.FC<IOrder> = () => {
 
     const dispatch = useDispatch()
 
-    const {order, loading, error} = useSelector(
+    const {order, loading, loadingStatus, error} = useSelector(
         (state: IOrdersRootState) => ({
             error: state.ordersState.error,
             order: state.ordersState.order,
-            loading: state.ordersState.loading
+            loading: state.ordersState.loading,
+            loadingStatus: state.ordersState.loadingStatus
         })
     )
 
     useEffect(() => {
         dispatch(fetchOrderById(id))
     }, [dispatch, id])
+
+    const onChangeHandler = (id, e) => {
+        const value = {
+            [e.target.name]: e.target.value
+        }
+        dispatch(changeOrderStatus(id, value))
+    }
 
     if (error) {
         return <Error/>
@@ -61,14 +69,12 @@ const Order: React.FC<IOrder> = () => {
                                     ? order.name
                                     : ''}
                             </h2>
-
-                            <div className="row">
-
-                                <div className="col-lg-6">
-                                    <p className="infoBlockHeaders mb-2">
-                                        Статус заказа
-                                    </p>
-                                    <div className="d-flex">
+                            <div className='mb-3'>
+                                <p className="infoBlockHeaders">
+                                    Статус заказа
+                                </p>
+                                <div className="row">
+                                    <div className="col-6">
                                         <span className={
                                             'bg-primary text-white '
                                             + classes.orderStatus}>
@@ -78,12 +84,75 @@ const Order: React.FC<IOrder> = () => {
                                                 : ''}
                                         </span>
                                     </div>
+                                    <div className="col-6">
+                                        <select
+                                            className={loadingStatus
+                                                ? 'loading select-mini'
+                                                : 'select-mini'}
+                                            disabled={loadingStatus}
+                                            name="status"
+                                            onChange={(e) =>
+                                                onChangeHandler(order.id, e)}
+                                            id="status">
+                                            <option disabled defaultValue="">
+                                                Выберите статус закза
+                                            </option>
+                                            {Object.entries(
+                                                statuses.orderStatuses)
+                                                .map(([key, value]) => {
+                                                    return (<option
+                                                        key={key}
+                                                        value={key}>
+                                                        {value}
+                                                    </option>)
+                                                })
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
-
-                                <div className="col-lg-6">
-
+                            </div>
+                            <div>
+                                <p className="infoBlockHeaders">
+                                    Статус оплаты
+                                </p>
+                                <div className="row">
+                                    <div className="col-6">
+                                        <span className={
+                                            'bg-primary text-white '
+                                            + classes.orderStatus}>
+                                            {'status' in order
+                                                ? statuses
+                                                    .paymentStatuses[order
+                                                    .statusPayment]
+                                                : ''}
+                                        </span>
+                                    </div>
+                                    <div className="col-6">
+                                        <select
+                                            className={loadingStatus
+                                                ? 'loading select-mini'
+                                                : 'select-mini'}
+                                            disabled={loadingStatus}
+                                            name="statusPayment"
+                                            onChange={(e) =>
+                                                onChangeHandler(order.id, e)}
+                                            id="statusPayment">
+                                            <option disabled defaultValue="">
+                                                Выберите статус оплаты
+                                            </option>
+                                            {Object.entries(
+                                                statuses.paymentStatuses)
+                                                .map(([key, value]) => {
+                                                    return (<option
+                                                        key={key}
+                                                        value={key}>
+                                                        {value}
+                                                    </option>)
+                                                })
+                                            }
+                                        </select>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>
@@ -101,11 +170,12 @@ const Order: React.FC<IOrder> = () => {
                                 <span
                                     className="text-orange ml-3"
                                 >
-                                    {order.items ? order.items.map(el => {
-                                        totalPrice = totalPrice
-                                            + el.price.cny
-                                            * el.quantity
-                                    }) : null
+                                    {'items' in order
+                                        ? order.items.map(el => {
+                                            totalPrice = totalPrice
+                                                + el.price.cny
+                                                * el.quantity
+                                        }) : null
                                     }
                                     {totalPrice + ' ¥'}
                                 </span>

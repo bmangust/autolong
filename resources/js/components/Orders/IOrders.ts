@@ -11,7 +11,10 @@ import {
     FETCH_ORDER_PRODUCTS,
     FETCH_ITEMS_BY_VENDOR_START,
     FETCH_ITEMS_BY_VENDOR_ERROR,
-    FETCH_ITEMS_BY_VENDOR_SUCCESS
+    FETCH_ITEMS_BY_VENDOR_SUCCESS,
+    CHANGE_ORDER_STATUS_START,
+    CHANGE_ORDER_STATUS_SUCCESS,
+    CHANGE_ORDER_STATUS_ERROR
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
 import {IProduct} from '../Products/IProducts'
@@ -20,6 +23,7 @@ export interface IOrder {
     id: number
     name: string
     status: string
+    statusPayment: string
     items: IProduct[]
     priceCny: number
     provider: IProvider
@@ -32,7 +36,9 @@ export interface IOrdersState {
     order: IOrder | {}
     orderProducts: IProduct[] | []
     loading: boolean;
+    loadingStatus: boolean
     error: any
+    statusError: any
 }
 
 export interface IOrdersRootState {
@@ -80,7 +86,7 @@ interface ICreateOrderStart {
 
 interface ICreateOrderSuccess {
     type: typeof CREATE_ORDER_SUCCESS
-    payload: IOrder;
+    payload: IOrder
     loading: boolean
 }
 
@@ -109,8 +115,25 @@ interface IFetchItemsByVendorError {
 
 interface IFetchItemsByVendorSuccess {
     type: typeof FETCH_ITEMS_BY_VENDOR_SUCCESS
-    payload: IProduct[];
+    payload: IProduct[]
     loading: boolean
+}
+
+interface IChangeOrderStatusStart {
+    type: typeof CHANGE_ORDER_STATUS_START
+    loadingStatus: boolean
+}
+
+interface IChangeOrderStatusSuccess {
+    type: typeof CHANGE_ORDER_STATUS_SUCCESS
+    payload: IOrder
+    loadingStatus: boolean
+}
+
+interface IChangeOrderStatusError {
+    type: typeof CHANGE_ORDER_STATUS_ERROR
+    payload: any
+    loadingStatus: boolean
 }
 
 export type IOrdersActionTypes =
@@ -118,4 +141,5 @@ export type IOrdersActionTypes =
     IFetchOrderStart | IFetchOrderSuccess | IFetchOrderError |
     ICreateOrderStart | ICreateOrderSuccess | ICreateOrderError |
     IFetchOrderProducts | IFetchItemsByVendorStart | IFetchItemsByVendorError |
-    IFetchItemsByVendorSuccess
+    IFetchItemsByVendorSuccess | IChangeOrderStatusStart |
+    IChangeOrderStatusSuccess | IChangeOrderStatusError

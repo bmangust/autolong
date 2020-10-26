@@ -1,5 +1,8 @@
 // Types
 import {
+    CHANGE_ORDER_STATUS_ERROR,
+    CHANGE_ORDER_STATUS_START,
+    CHANGE_ORDER_STATUS_SUCCESS,
     CREATE_ORDER_ERROR,
     CREATE_ORDER_START,
     CREATE_ORDER_SUCCESS,
@@ -22,7 +25,9 @@ const initialState: IOrdersState = {
     order: {},
     orderProducts: [],
     loading: true,
-    error: null
+    loadingStatus: false,
+    error: null,
+    statusError: null
 }
 
 export default function ordersReducer(
@@ -76,6 +81,18 @@ export default function ordersReducer(
         case FETCH_ITEMS_BY_VENDOR_ERROR:
             return {
                 ...state, loading: false, error: action.payload
+            }
+        case CHANGE_ORDER_STATUS_START:
+            return {
+                ...state, loadingStatus: true
+            }
+        case CHANGE_ORDER_STATUS_SUCCESS:
+            return {
+                ...state, loadingStatus: false, order: action.payload
+            }
+        case CHANGE_ORDER_STATUS_ERROR:
+            return {
+                ...state, loadingStatus: false, statusError: action.payload
             }
         default:
             return state
