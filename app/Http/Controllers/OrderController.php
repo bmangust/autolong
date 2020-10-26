@@ -52,8 +52,8 @@ class OrderController extends Controller
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
         $order->cargo = $request->input('cargo');
-        $order->status = Status::getOrderStatuses()->orderCreated;
-        $order->status_payment = Status::getOrderPaymentStatuses()->paymentAwaiting;
+        $order->status = array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0];
+        $order->status_payment = array_keys(get_object_vars(Status::getOrderPaymentStatuses()), 'Ожидает оплаты')[0];
         $order->save();
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
