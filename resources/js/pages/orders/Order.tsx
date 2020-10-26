@@ -22,6 +22,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
+import statuses from '../../../statuses/statuses.json'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -71,7 +72,10 @@ const Order: React.FC<IOrder> = () => {
                                         <span className={
                                             'bg-primary text-white '
                                             + classes.orderStatus}>
-                                            Создан
+                                            {'status' in order
+                                                ? statuses
+                                                    .orderStatuses[order.status]
+                                                : ''}
                                         </span>
                                     </div>
                                 </div>
@@ -98,10 +102,10 @@ const Order: React.FC<IOrder> = () => {
                                     className="text-orange ml-3"
                                 >
                                     {order.items ? order.items.map(el => {
-                                            totalPrice = totalPrice
-                                                + el.price.cny
-                                                * el.quantity
-                                        }) : null
+                                        totalPrice = totalPrice
+                                            + el.price.cny
+                                            * el.quantity
+                                    }) : null
                                     }
                                     {totalPrice + ' ¥'}
                                 </span>

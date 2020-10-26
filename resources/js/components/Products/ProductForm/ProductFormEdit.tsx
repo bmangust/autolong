@@ -293,6 +293,8 @@ const ProductFormEdit: React.FC<{
                                                 className='w-100'
                                                 ref={register({required: true})}
                                                 type="number"
+                                                min={0}
+                                                step={0.01}
                                                 onChange={onChangePrice}
                                                 placeholder="0"/>
                                             {errors.priceCny &&
