@@ -26,20 +26,13 @@ class Product extends Model
         return $this->belongsTo('App\Provider');
     }
 
-    public function setImageAttribute($value)
-    {
-        if (strpos($value, '/') != 0) {
-            $this->attributes['image'] = '/' . $value;
-        }
-    }
-
     public function createOrUpdateImage($image)
     {
         if (!is_null($this->image)) {
             $this->deleteImage();
         }
         $path = Storage::disk('main')->putFileAs(Product::IMAGE_DIRECTORY, $image, $this->id . '_' . $this->id . '.' . $image->getClientOriginalExtension());
-        $this->image = $path;
+        $this->image = '/' . $path;
         $this->save();
     }
 
