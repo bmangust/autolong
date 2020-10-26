@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\ProductResource;
 use App\Order;
 use App\Product;
+use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\OrderWithRelationshipsResource;
@@ -51,8 +52,8 @@ class OrderController extends Controller
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
         $order->cargo = $request->input('cargo');
-        $order->setOrderStatus($request->input('status'));
-        $order->setOrderPaymentStatus($request->input('statusPayment'));
+        $order->status = Status::getOrderStatuses()->orderCreated;
+        $order->status_payment = Status::getOrderPaymentStatuses()->paymentAwaiting;
         $order->save();
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
