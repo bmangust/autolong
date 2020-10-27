@@ -338,6 +338,10 @@ input:not([type=checkbox]), textarea {
     color: #424567;
 }
 
+.tox .tox-editor-header {
+    z-index: 0 !important;
+}
+
 textarea {
     height: auto;
     min-height: 112px;
