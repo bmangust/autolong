@@ -61,6 +61,7 @@ const OrdersTable: React.FC = () => {
         {
             dataField: 'id',
             text: 'ID',
+            headerStyle: {width: '85px'},
             classes: 'email',
             sort: true
         },
@@ -74,6 +75,7 @@ const OrdersTable: React.FC = () => {
         },
         {
             dataField: 'dop',
+            headerStyle: {width: '200px'},
             text: 'Дополнительно'
         }
     ]
