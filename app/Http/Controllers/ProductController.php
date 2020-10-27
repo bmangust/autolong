@@ -136,14 +136,6 @@ class ProductController extends Controller
         return response()->json([], 204);
     }
 
-    public function getLastCourse(ExchangeRate $exchangeRate)
-    {
-        return response()->json([
-            'rub' => $exchangeRate->lastCourse()->rub,
-            'usd' => $exchangeRate->lastCourse()->usd
-        ], 200);
-    }
-
     public function checkNumberCode(Request $request, AutolongRuProduct $autolongRuProduct)
     {
         $request->validate([

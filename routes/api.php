@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -32,7 +31,6 @@ Route::put('providers/{provider}', 'ProviderController@update');
 Route::delete('providers/{provider}', 'ProviderController@destroy');
 
 Route::get('products', 'ProductController@index');
-Route::get('products/lastcourse', 'ProductController@getLastCourse');
 Route::post('products', 'ProductController@store');
 Route::post('products/checknumbercode', 'ProductController@checkNumberCode');
 Route::get('products/{product}', 'ProductController@show');
@@ -59,3 +57,5 @@ Route::put('orders/{order}', 'OrderController@update');
 Route::delete('orders/{order}', 'OrderController@destroy');
 Route::post('orders/{order}/changestatus', 'OrderController@changeStatus');
 Route::post('orders/{order}/changestatuspayment', 'OrderController@changeStatusPayment');
+
+Route::get('exchangerate/lastcourse', 'ExchangeRateController@getLastCourse');
