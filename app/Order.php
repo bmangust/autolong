@@ -68,7 +68,7 @@ class Order extends Model
     public function setOrderStatus($status)
     {
         $statuses = Status::getOrderStatuses();
-        if (property_exists( $statuses, $status)) {
+        if (property_exists($statuses, $status)) {
             $this->status = $status;
             $this->save();
         } else {
@@ -79,7 +79,7 @@ class Order extends Model
     public function setOrderPaymentStatus($status)
     {
         $statuses = Status::getOrderPaymentStatuses();
-        if (property_exists( $statuses, $status)) {
+        if (property_exists($statuses, $status)) {
             $this->status_payment = $status;
             $this->save();
         } else {
