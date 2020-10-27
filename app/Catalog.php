@@ -29,7 +29,7 @@ class Catalog extends Model
             $this->deleteFile();
         }
         $path = Storage::disk('main')->putFileAs(Catalog::FILE_DIRECTORY, $file, $this->id . '_' . $this->id . '.' . $file->extension());
-        $this->file = $path;
+        $this->file = '/' . $path;
         $this->save();
     }
 

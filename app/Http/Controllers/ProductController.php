@@ -136,30 +136,12 @@ class ProductController extends Controller
         return response()->json([], 204);
     }
 
-    protected function priceCreateValidator(array $data)
+    public function getLastCourse(ExchangeRate $exchangeRate)
     {
-        $messages = [
-            'required' => 'Поле :attribute обязательно для заполнения.',
-        ];
-
-        $names = [
-            'priceCny' => 'цена в юань',
-        ];
-
-        return Validator::make($data, [
-            'priceCny' => ['required'],
-        ], $messages, $names);
-    }
-
-    public function getPrice(Request $request, ExchangeRate $exchangeRate)
-    {
-        $this->priceCreateValidator($request->all())->validate();
-        $priceCny = $request->input('priceCny');
-        return response()->json(['price' => [
-            'cny' => $priceCny,
-            'rub' => $exchangeRate->lastCourse()->rub * $priceCny,
-            'usd' => $exchangeRate->lastCourse()->usd * $priceCny
-        ]], 200);
+        return response()->json([
+            'rub' => $exchangeRate->lastCourse()->rub,
+            'usd' => $exchangeRate->lastCourse()->usd
+        ], 200);
     }
 
     public function checkNumberCode(Request $request, AutolongRuProduct $autolongRuProduct)
