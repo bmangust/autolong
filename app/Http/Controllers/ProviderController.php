@@ -13,31 +13,26 @@ class ProviderController extends Controller
     {
         $messages = [
             'required' => 'Поле :attribute обязательно для заполнения.',
-            'max' => 'Поле :attribute должно содержать не более :max символов',
         ];
 
         $names = [
             'name' => 'имя поставщика',
             'nameCompany' => 'название компании',
-            'beneficiaryName' => 'имя получателя',
-            'beneficiaryAccountName' => 'название счета получателя',
-            'beneficiaryBankAddress' => 'адрес банка получателя',
-            'beneficiaryAddress' => 'адрес получателя',
-            'beneficiaryBankName' => 'название банка получателя',
-            'beneficiaryBankCode' => 'код банка получателя',
-            'beneficiarySwiftAddress' => 'SWIFT адрес'
+            'email' => 'почта',
+            'website' => 'сайт',
+            'phone' => 'номер телефона',
+            'wechat' => 'wechat',
+            'countryId' => 'страна'
         ];
 
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'nameCompany' => ['required', 'string', 'max:255'],
-            'beneficiaryName' => ['required', 'string', 'max:255'],
-            'beneficiaryAccountName' => ['required', 'string', 'max:255'],
-            'beneficiaryBankAddress' => ['required', 'string', 'max:255'],
-            'beneficiaryAddress' => ['required', 'string', 'max:255'],
-            'beneficiaryBankName' => ['required', 'string', 'max:255'],
-            'beneficiaryBankCode' => ['required', 'string', 'max:255'],
-            'beneficiarySwiftAddress' => ['required']
+            'name' => ['required'],
+            'nameCompany' => ['required'],
+            'email' => ['required'],
+            'website' => ['required'],
+            'phone' => ['required'],
+            'wechat' => ['required'],
+            'countryId' => ['required']
         ], $messages, $names);
     }
     /**
