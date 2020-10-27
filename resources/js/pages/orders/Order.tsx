@@ -101,6 +101,7 @@ const Order: React.FC<IOrder> = () => {
                                     </div>
                                     <div className="col-6">
                                         <Select
+                                            placeholder='Статус заказа'
                                             isSearchable={false}
                                             isLoading={loadingStatus}
                                             isDisabled={loadingStatus}
@@ -131,6 +132,7 @@ const Order: React.FC<IOrder> = () => {
                                     </div>
                                     <div className="col-6">
                                         <Select
+                                            placeholder='Статус оплаты'
                                             isSearchable={false}
                                             isLoading={loadingStatus}
                                             isDisabled={loadingStatus}
