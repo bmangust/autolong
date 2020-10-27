@@ -28,12 +28,15 @@ class Kernel extends ConsoleKernel
     {
          $schedule->call(function(ExchangeRate $exchangeRate) {
              $response = Http::get('https://www.cbr-xml-daily.ru/daily_json.js');
+             $percentageModulBank = ExchangeRate::PERCENTAGE_MODULBANK / 100;
              $rubToCny = json_decode($response->body())->Valute->CNY->Previous;
              $rubToUsd = json_decode($response->body())->Valute->USD->Previous;
-             $cnyToUsd = round($rubToCny / $rubToUsd, 4);
+             $rubToCnyModulBank = $rubToCny + $rubToCny * $percentageModulBank;
+             $rubToUsdModulBank = $rubToUsd + $rubToUsd * $percentageModulBank;
+             $cnyToUsdModulBank = round($rubToCnyModulBank / $rubToUsdModulBank, 8);
              $latesCours = $exchangeRate->latest()->first();
-             if (is_null($latesCours) || $latesCours->rub != $rubToCny || $latesCours->usd != $cnyToUsd) {
-                $exchangeRate->create(['rub' => $rubToCny, 'usd' => $cnyToUsd]);
+             if (is_null($latesCours) || $latesCours->rub != $rubToCnyModulBank || $latesCours->usd != $cnyToUsdModulBank) {
+                $exchangeRate->create(['rub' => $rubToCnyModulBank, 'usd' => $cnyToUsdModulBank]);
              }
          })->dailyAt('10:00');
     }
