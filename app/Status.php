@@ -9,7 +9,7 @@ class Status extends Model
 {
     const PATH_STATUSES_FILE = 'statuses/statuses.json';
 
-    public static function includeStatusesFile()
+    private static function includeStatusesFile()
     {
         return json_decode(Storage::disk('resources')->get(self::PATH_STATUSES_FILE));
     }

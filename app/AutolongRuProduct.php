@@ -19,10 +19,11 @@ class AutolongRuProduct extends Model
 
     public function getTextAttribute()
     {
-        return strtr($this->attributes['text'], [
+        $string =  strtr($this->attributes['text'], [
             '&lt;' => '<',
             '&gt;' => '>']
         );
+        return preg_replace('#<iframe.*<\/iframe>#','', $string);
     }
 
     public function checkNumberCodesInDB($numbers): array
