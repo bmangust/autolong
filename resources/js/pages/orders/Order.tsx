@@ -4,6 +4,7 @@ import React, {useEffect} from 'react'
 // Third-party
 import {NavLink, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
+import Select from 'react-select'
 
 // Css
 import classes from './Orders.module.css'
@@ -43,12 +44,25 @@ const Order: React.FC<IOrder> = () => {
         dispatch(fetchOrderById(id))
     }, [dispatch, id])
 
-    const onChangeHandler = (id, e) => {
+    const onChangeHandler = (id, e, action) => {
         const value = {
-            [e.target.name]: e.target.value
+            [action.name]: e.value
         }
         dispatch(changeOrderStatus(id, value))
     }
+
+    const orderStatuses = Object.entries(
+        statuses.orderStatuses)
+        .map(([key, value]) => {
+            return {label: value, value: key}
+        })
+
+    const paymentStatuses = Object.entries(
+        statuses.paymentStatuses)
+        .map(([key, value]) => {
+            return {label: value, value: key}
+        })
+
 
     if (error) {
         return <Error/>
@@ -75,7 +89,7 @@ const Order: React.FC<IOrder> = () => {
                                     Статус заказа
                                 </p>
                                 <div className="row">
-                                    <div className="col-6">
+                                    <div className="col-6 mt-auto mb-auto">
                                         <span className={
                                             'bg-primary text-white '
                                             + classes.orderStatus}>
@@ -86,29 +100,17 @@ const Order: React.FC<IOrder> = () => {
                                         </span>
                                     </div>
                                     <div className="col-6">
-                                        <select
-                                            className={loadingStatus
-                                                ? 'loading select-mini'
-                                                : 'select-mini'}
-                                            disabled={loadingStatus}
+                                        <Select
+                                            isSearchable={false}
+                                            isLoading={loadingStatus}
+                                            isDisabled={loadingStatus}
+                                            onChange={(e, action) =>
+                                                onChangeHandler(order.id,
+                                                    e, action)}
+                                            classNamePrefix='select-mini'
+                                            className='select-mini'
                                             name="status"
-                                            onChange={(e) =>
-                                                onChangeHandler(order.id, e)}
-                                            id="status">
-                                            <option disabled defaultValue="">
-                                                Выберите статус закза
-                                            </option>
-                                            {Object.entries(
-                                                statuses.orderStatuses)
-                                                .map(([key, value]) => {
-                                                    return (<option
-                                                        key={key}
-                                                        value={key}>
-                                                        {value}
-                                                    </option>)
-                                                })
-                                            }
-                                        </select>
+                                            options={orderStatuses}/>
                                     </div>
                                 </div>
                             </div>
@@ -117,7 +119,7 @@ const Order: React.FC<IOrder> = () => {
                                     Статус оплаты
                                 </p>
                                 <div className="row">
-                                    <div className="col-6">
+                                    <div className="col-6 mt-auto mb-auto">
                                         <span className={
                                             'bg-primary text-white '
                                             + classes.orderStatus}>
@@ -128,29 +130,17 @@ const Order: React.FC<IOrder> = () => {
                                         </span>
                                     </div>
                                     <div className="col-6">
-                                        <select
-                                            className={loadingStatus
-                                                ? 'loading select-mini'
-                                                : 'select-mini'}
-                                            disabled={loadingStatus}
+                                        <Select
+                                            isSearchable={false}
+                                            isLoading={loadingStatus}
+                                            isDisabled={loadingStatus}
+                                            onChange={(e, action) =>
+                                                onChangeHandler(order.id,
+                                                    e, action)}
+                                            classNamePrefix='select-mini'
+                                            className='select-mini'
                                             name="statusPayment"
-                                            onChange={(e) =>
-                                                onChangeHandler(order.id, e)}
-                                            id="statusPayment">
-                                            <option disabled defaultValue="">
-                                                Выберите статус оплаты
-                                            </option>
-                                            {Object.entries(
-                                                statuses.paymentStatuses)
-                                                .map(([key, value]) => {
-                                                    return (<option
-                                                        key={key}
-                                                        value={key}>
-                                                        {value}
-                                                    </option>)
-                                                })
-                                            }
-                                        </select>
+                                            options={paymentStatuses}/>
                                     </div>
                                 </div>
                             </div>

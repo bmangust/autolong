@@ -86,6 +86,7 @@ export const createProduct = (data) => async dispatch => {
                 type: CREATE_PRODUCT_ERROR,
                 payload: error.response
             })
+            toast.error(error.message)
         })
 }
 
@@ -112,6 +113,7 @@ export const updateProduct = (id, data) => async dispatch => {
                 type: UPDATE_PRODUCT_ERROR,
                 payload: error.response
             })
+            toast.error(error.message)
         })
 }
 

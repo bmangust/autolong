@@ -625,8 +625,32 @@ html select.select-mini {
     box-shadow: none;
 }
 
+html .select-mini {
+    &__control {
+        font-weight: normal;
+        font-size: 12px;
+        line-height: 12px;
+        background-color: transparent;
+        padding: 0 12px;
+        height: 24px;
+        max-width: 100%;
+        width: 100%;
+        color: var(--dark-color);
+    }
+
+    &__value-container {
+        height: 100%;
+    }
+
+    &__option {
+        font-size: 12px;
+        line-height: 12px;
+    }
+}
+
+
 html select.select-mini.loading {
-    background-image: url(/svg/select-loading.svg);
+    background-image: url(/svg/select-loading.svçg);
 }
 
 html select.select-mini:focus {
