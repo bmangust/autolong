@@ -14,7 +14,6 @@
     },
     "paymentStatuses": {
         "paymentAwaiting": "Ожидает оплаты",
-        "paymentPaidOn": "Оплачен на",
         "paymentAwaitingRefund": "Ожидает возврата оплаты",
         "paymentRefunded": "Оплата возвращена"
     }
