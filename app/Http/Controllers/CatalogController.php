@@ -48,9 +48,7 @@ class CatalogController extends Controller
     {
        $this->catalogCreateValidator($request->all())->validate();
        $newCatalog = $catalog->create($catalog->dashesToSnakeCase($request->all()));
-       if ($request->has('tags') && is_array($request->input('tags'))) {
-           $newCatalog->checkAndAddTag($request->input('tags'));
-       }
+       $newCatalog->checkAndAddTag(json_decode($request->input('tags')));
        $newCatalog->createOrUpdateFile($request->file('file'));
        return response()->json(new CatalogWithRelationshipsResource($newCatalog), 201);
     }
@@ -77,11 +75,9 @@ class CatalogController extends Controller
     {
        $this->catalogCreateValidator($request->all())->validate();
        $catalog->update($catalog->dashesToSnakeCase($request->all()));
-       if ($request->has('tags') && is_array($request->input('tags'))) {
-           $catalog->checkAndAddTag($request->input('tags'));
-       }
+       $catalog->checkAndAddTag(json_decode($request->input('tags')));
        $catalog->createOrUpdateFile($request->file('file'));
-       return response()->json(new CatalogWithRelationshipsResource($catalog), 201);
+       return response()->json(new CatalogWithRelationshipsResource($catalog), 200);
     }
 
     /**
