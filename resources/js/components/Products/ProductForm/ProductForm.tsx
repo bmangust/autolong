@@ -5,6 +5,7 @@ import React, {useEffect} from 'react'
 import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
 import {Controller, useForm} from 'react-hook-form'
+import Select from 'react-select'
 
 // Typescript
 import {IProductsRootState} from '../IProducts'
@@ -52,6 +53,14 @@ const ProductForm: React.FC = () => {
             price: state.productsState.price
         }))
 
+    const providersOptions = providers.map(
+        (provider: IProvider) => {
+            return {
+                label: provider.name,
+                value: provider.id
+            }
+        })
+
     useEffect(() => {
         dispatch(fetchProviders())
     }, [dispatch])
@@ -59,9 +68,16 @@ const ProductForm: React.FC = () => {
     const productFormSubmitHandler =
         handleSubmit((formValues: ICreateProductData) => {
             formValues.image = formValues.image[0]
+            formValues.providerId = formValues.providerId.value
             dispatch(createProduct(formValues))
             history.push('/products')
         })
+
+    const select = <Select
+        placeholder='Выберите поставщика'
+        classNamePrefix='select-mini'
+        className='select-mini'
+    />
 
     const onChangePrice = (e) => {
         const value = e.target.value
@@ -147,23 +163,17 @@ const ProductForm: React.FC = () => {
                                            className='w-100'>
                                         Выберите поставщика
                                     </label>
-                                    <select name="providerId"
-                                            ref={register({required: true})}
-                                            className='col-lg-10 mb-3'
-                                            id="providerId">
-                                        <option disabled defaultValue=''>
-                                            Выберите поставщика
-                                        </option>
-                                        {providers.map(
-                                            (provider: IProvider) => {
-                                                return (<option
-                                                    key={provider.id}
-                                                    value={provider.id}>
-                                                    {provider.name}</option>)
-                                            })}
-                                    </select>
-                                    {errors.providerId &&
-                                    <small>Это поле обязательно</small>}
+                                    <div className='col-10 mb-3 p-0'>
+                                        <Controller
+                                            name="providerId"
+                                            as={select}
+                                            options={providersOptions}
+                                            control={control}
+                                            rules={{required: true}}
+                                        />
+                                        {errors.providerId &&
+                                        <small>Это поле обязательно</small>}
+                                    </div>
                                     <label htmlFor='image' className='w-100'>
                                         Загрузите изображение товара
                                     </label>

@@ -625,8 +625,63 @@ html select.select-mini {
     box-shadow: none;
 }
 
+html .select-mini, html .select-mini-tags {
+    &__control {
+        font-weight: normal;
+        line-height: 12px;
+        padding: 0 12px;
+        //height: 24px;
+        max-width: 100%;
+        width: 100%;
+        color: var(--dark-color);
+        background: #f7f8fa;
+        font-size: 12px;
+        border: none;
+        border-radius: 10px;
+    }
+
+    &__value-container {
+        height: 100%;
+    }
+
+    &__multi-value {
+        background: #FFFFFF;
+        border: 1px solid #EBEBEB;
+        border-radius: 100px;
+
+        &__label {
+            font-weight: 500;
+            font-size: 10px;
+            line-height: 15px;
+            color: var(--dark-color);
+        }
+
+        &__remove {
+            border-bottom-right-radius: 100px;
+            border-top-right-radius: 100px;
+            cursor: pointer;
+        }
+    }
+
+    &__option {
+        font-size: 12px;
+        line-height: 12px;
+    }
+
+    &__input input {
+        padding: 0 !important;
+        height: auto;
+        border-radius: 0;
+        background: transparent;
+    }
+
+    &__input input:focus {
+        box-shadow: none;
+    }
+}
+
 html select.select-mini.loading {
-    background-image: url(/svg/select-loading.svg);
+    background-image: url(/svg/select-loading.svçg);
 }
 
 html select.select-mini:focus {

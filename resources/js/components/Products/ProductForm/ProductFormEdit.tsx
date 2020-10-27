@@ -4,7 +4,8 @@ import React, {useEffect, useState} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
-import bsCustomFileInput from 'bs-custom-file-input';
+import bsCustomFileInput from 'bs-custom-file-input'
+import Select from 'react-select'
 
 // Typescript
 import {
@@ -19,6 +20,8 @@ import {
     fetchProductPrice,
     updateProduct
 } from '../../../store/actions/products'
+
+// App
 import TextEditor from '../../UI/TextEditor/TextEditor'
 
 interface IEditProductData {
@@ -90,10 +93,18 @@ const ProductFormEdit: React.FC<{
 
         const dispatch = useDispatch()
 
-        const {price}:IProductPrice = useSelector(
+        const {price}: IProductPrice = useSelector(
             (state: IProductsRootState) => ({
                 price: state.productsState.price
             }))
+
+        const providersOptions = providers.map(
+            (provider: IProvider) => {
+                return {
+                    label: provider.name,
+                    value: provider.id
+                }
+            })
 
         useEffect(() => {
             setPriceState(price)
@@ -104,6 +115,7 @@ const ProductFormEdit: React.FC<{
                 if (formValues.imageFile[0]) {
                     formValues.image = formValues.imageFile[0]
                 }
+                formValues.providerId = formValues.providerId.value
                 // @ts-ignore
                 if ('id' in product && product.id) {
                     dispatch(updateProduct(product.id, formValues))
@@ -119,119 +131,119 @@ const ProductFormEdit: React.FC<{
             dispatch(fetchProductPrice(value))
         }
 
+        const providerSelect = <Select
+            placeholder='Выберите поставщика'
+            classNamePrefix='select-mini'
+            className='select-mini'
+        />
+
         bsCustomFileInput.init()
 
-        return (
-            show
-                ? <div className='card mb-3'>
-                    <div className="card-body">
-                        <form onSubmit={productFormSubmitHandler}>
-                            <div className='mb-3 row'>
-                                <div className="col-lg-6">
-                                    <label htmlFor='autolongNumber'
-                                           className='w-100'>
-                                        Внутренний номер
-                                    </label>
-                                    <input className='col-lg-10 mb-3'
-                                           name="autolongNumber"
-                                           ref={register({required: true})}
-                                           type="text"
-                                           defaultValue={'number' in product
-                                               ? product.number
-                                               : ''}
-                                           placeholder="Введите номер"/>
-                                    {errors.autolongNumber &&
-                                    <small>Это поле обязательно</small>}
+        const content =
+            <div className='card mb-3'>
+                <div className="card-body">
+                    <form onSubmit={productFormSubmitHandler}>
+                        <div className='mb-3 row'>
+                            <div className="col-lg-6">
+                                <label htmlFor='autolongNumber'
+                                       className='w-100'>
+                                    Внутренний номер
+                                </label>
+                                <input className='col-lg-10 mb-3'
+                                       name="autolongNumber"
+                                       ref={register({required: true})}
+                                       type="text"
+                                       defaultValue={'number' in product
+                                           ? product.number
+                                           : ''}
+                                       placeholder="Введите номер"/>
+                                {errors.autolongNumber &&
+                                <small>Это поле обязательно</small>}
 
-                                    <label htmlFor='vendorCode'
-                                           className='w-100'>
-                                        Укажите артикул
-                                    </label>
-                                    <input className='col-lg-10'
-                                           name="vendorCode"
-                                           ref={register}
-                                           type="text"
-                                           placeholder="Введите номер"/>
+                                <label htmlFor='vendorCode'
+                                       className='w-100'>
+                                    Укажите артикул
+                                </label>
+                                <input className='col-lg-10'
+                                       name="vendorCode"
+                                       ref={register}
+                                       type="text"
+                                       placeholder="Введите номер"/>
 
-                                </div>
-                                <div className="col-lg-6">
+                            </div>
+                            <div className="col-lg-6">
 
-                                    <div className="row mb-3">
-                                        <div className="col-lg-2 pr-0">
-                                            {img
-                                                ? <img height={65}
-                                                       src={img} alt=""/>
-                                                : <img height={65}
-                                                       src={img} alt=""/>
-                                            }
-                                        </div>
-                                        <div className="col-lg-8">
-                                            <label htmlFor='providerId'>
-                                                Загрузка изображения</label>
-                                            <div className="custom-file">
-                                                <input className='hidden d-none'
-                                                       ref={register}
-                                                       name='image'
-                                                       type="hidden"/>
-                                                <input
-                                                    id="inputGroupFile01"
-                                                    type="file"
-                                                    name="imageFile"
-                                                    ref={register}
+                                <div className="row mb-3">
+                                    <div className="col-lg-2 pr-0">
+                                        {img
+                                            ? <img height={65}
+                                                   src={img} alt=""/>
+                                            : null
+                                        }
+                                    </div>
+                                    <div className="col-lg-8">
+                                        <label htmlFor='image'>
+                                            Загрузка изображения
+                                        </label>
+                                        <div className="custom-file">
+                                            <input className='hidden d-none'
+                                                   ref={register}
+                                                   name='image'
+                                                   type="hidden"/>
+                                            <input
+                                                id="inputGroupFile01"
+                                                type="file"
+                                                name="imageFile"
+                                                ref={register}
                                                 className="custom-file-input"
-                                                />
-                                                <label
+                                            />
+                                            <label
                                                 className="custom-file-label"
-                                                    htmlFor="inputGroupFile01"
-                                                >
-                                                    Выберите файл
-                                                </label>
-                                            </div>
+                                                htmlFor="inputGroupFile01">
+                                                Выберите файл
+                                            </label>
                                         </div>
                                     </div>
-                                    <label htmlFor='providerId'>
-                                        Выберите поставщика</label>
-                                    <select name="providerId"
-                                            ref={register({required: true})}
-                                            className='col-lg-10 mb-3'
-                                            id="providerId">
-                                        <option disabled defaultValue=''>
-                                            Выберите поставщика
-                                        </option>
-                                        {providers.map(
-                                            (provider: IProvider) => {
-                                                return (<option
-                                                    key={provider.id}
-                                                    value={provider.id}>
-                                                    {provider.name}</option>)
-                                            })}
-                                    </select>
+                                </div>
+                                <label htmlFor='providerId'>
+                                    Выберите поставщика
+                                </label>
+                                <div className='col-10 mb-3 p-0'>
+                                    <Controller
+                                        name="providerId"
+                                        as={providerSelect}
+                                        defaultValue=''
+                                        options={providersOptions}
+                                        control={control}
+                                        rules={{required: true}}
+                                    />
                                     {errors.providerId &&
                                     <small>Это поле обязательно</small>}
                                 </div>
                             </div>
+                        </div>
 
-                            <div className='mb-3 row'>
-                                <div className='col-lg-6'>
-                                    <label htmlFor='nameRu' className='w-100'>
-                                        Укажите название товара
-                                        <span className="float-right
+                        <div className='mb-3 row'>
+                            <div className='col-lg-6'>
+                                <label htmlFor='nameRu' className='w-100'>
+                                    Укажите название товара
+                                    <span className="float-right
                                     text-main
                                     font-weight-bold
                                     ">
                                     RU
                                 </span>
-                                    </label>
-                                    <input name="nameRu"
-                                           className='col-lg-10 mb-3'
-                                           ref={register({required: true})}
-                                           type="text"
-                                           placeholder="Введите название"/>
-                                    {errors.nameRu &&
-                                    <small>Это поле обязательно</small>}
-                                    <label htmlFor='aboutRu'>
-                                        Описание товара</label>
-                                    <div className="row">
+                                </label>
+                                <input name="nameRu"
+                                       className='col-lg-10 mb-3'
+                                       ref={register({required: true})}
+                                       type="text"
+                                       placeholder="Введите название"/>
+                                {errors.nameRu &&
+                                <small>Это поле обязательно</small>}
+                                <label htmlFor='aboutRu'>
+                                    Описание товара</label>
+                                <div className="row">
 
                                     <div className="col-lg-10">
                                         <Controller
@@ -247,188 +259,192 @@ const ProductFormEdit: React.FC<{
                                         {errors.aboutRu &&
                                         <small>Это поле обязательно</small>}
                                     </div>
-                                    </div>
                                 </div>
-                                <div className="col-lg-6">
-                                    <label htmlFor='nameEn' className='w-100'>
-                                        Product name
-                                        <span className="float-right
+                            </div>
+                            <div className="col-lg-6">
+                                <label htmlFor='nameEn' className='w-100'>
+                                    Product name
+                                    <span className="float-right
                                     text-main
                                     font-weight-bold
                                     ">
                                     ENG
                                 </span>
-                                    </label>
-                                    <input name="nameEn"
-                                           className='col-lg-10 mb-3'
-                                           ref={register}
-                                           type="text" placeholder="Type here"/>
+                                </label>
+                                <input name="nameEn"
+                                       className='col-lg-10 mb-3'
+                                       ref={register}
+                                       type="text" placeholder="Type here"/>
 
 
-                                    <label htmlFor='aboutEn'>Description</label>
-                                    <div className="row">
+                                <label htmlFor='aboutEn'>Description</label>
+                                <div className="row">
 
-                                        <div className="col-lg-10">
-                                    <Controller
-                                        name="aboutEn"
-                                        control={control}
-                                        render={({value, onChange}) => (
-                                            <TextEditor
-                                                value={value}
-                                                onChange={onChange}
-                                            />
-                                        )}
-                                    />
-                                        </div>
+                                    <div className="col-lg-10">
+                                        <Controller
+                                            name="aboutEn"
+                                            control={control}
+                                            render={({value, onChange}) => (
+                                                <TextEditor
+                                                    value={value}
+                                                    onChange={onChange}
+                                                />
+                                            )}
+                                        />
                                     </div>
                                 </div>
                             </div>
-                            <div className='mb-3 row'>
-                                <div className="col-lg-6">
-                                    <label>Укажите цену</label>
-                                    <div className='row mb-3'>
-                                        <div className='col-10'>
-                                            <input
-                                                name="priceCny"
-                                                className='w-100'
-                                                ref={register({required: true})}
-                                                type="number"
-                                                min={0}
-                                                step={0.01}
-                                                onChange={onChangePrice}
-                                                placeholder="0"/>
-                                            {errors.priceCny &&
-                                            <small>Это поле обязательно</small>}
-                                        </div>
-                                        <div className='col-1 pl-0'>
+                        </div>
+                        <div className='mb-3 row'>
+                            <div className="col-lg-6">
+                                <label>Укажите цену</label>
+                                <div className='row mb-3'>
+                                    <div className='col-10'>
+                                        <input
+                                            name="priceCny"
+                                            className='w-100'
+                                            ref={register({required: true})}
+                                            type="number"
+                                            min={0}
+                                            step={0.01}
+                                            onChange={onChangePrice}
+                                            placeholder="0"/>
+                                        {errors.priceCny &&
+                                        <small>Это поле обязательно</small>}
+                                    </div>
+                                    <div className='col-1 pl-0'>
                                     <span
                                         className='priceSymbol
                                         text-orange
                                         font-weight-bold'>
                                         ¥
                                     </span>
-                                        </div>
                                     </div>
-                                    <div className="row mb-3">
-                                        <div className='col-4'>
-                                            <input
-                                                name="priceUsd"
-                                                type="number"
-                                                ref={register}
-                                                disabled
-                                                value={dirty
-                                                    ? priceState.usd
-                                                    : 0}
-                                                className='w-100'
-                                                placeholder="0"
-                                            />
-                                        </div>
-                                        <div className='col-2 pl-0'>
+                                </div>
+                                <div className="row mb-3">
+                                    <div className='col-4'>
+                                        <input
+                                            name="priceUsd"
+                                            type="number"
+                                            ref={register}
+                                            disabled
+                                            value={dirty
+                                                ? priceState.usd
+                                                : 0}
+                                            className='w-100'
+                                            placeholder="0"
+                                        />
+                                    </div>
+                                    <div className='col-2 pl-0'>
                                     <span
                                         className='priceSymbol text-main
                                          font-weight-bold'>
                                     $
                                     </span>
-                                        </div>
-                                        <div className='col-4'>
-                                            <input
-                                                name="priceRub"
-                                                type="number"
-                                                ref={register}
-                                                disabled
-                                                value={dirty
-                                                    ? priceState.rub
-                                                    : 0}
-                                                className='w-100'
-                                                placeholder="0"
-                                            />
-                                        </div>
-                                        <div className='col-2 pl-0'>
+                                    </div>
+                                    <div className='col-4'>
+                                        <input
+                                            name="priceRub"
+                                            type="number"
+                                            ref={register}
+                                            disabled
+                                            value={dirty
+                                                ? priceState.rub
+                                                : 0}
+                                            className='w-100'
+                                            placeholder="0"
+                                        />
+                                    </div>
+                                    <div className='col-2 pl-0'>
                                     <span
                                         className='priceSymbol text-main
                                         font-weight-bold'>
                                         ₽
                                     </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="col-lg-6">
-                                    <div className='row mb-3'>
-                                        <div className='col-lg-12'>
-                                            <label>Укажите вес</label>
-
-                                            <div className='row mb-3'>
-                                                <div
-                                                    className='col-2 small
-                                                    pt-2 font-weight-bold'>
-                                                    Брутто
-                                                </div>
-                                                <div className='col-8'>
-                                                    <input name="weightBrutto"
-                                                           placeholder="0"
-                                                           ref={register(
-                                                               {required: true}
-                                                           )}
-                                                           type="number"
-                                                           className='w-100'/>
-                                                    {errors.weightBrutto &&
-                                                    <small>
-                                                        Это поле обязательно
-                                                    </small>}
-                                                </div>
-                                                <div className='col-2
-                                                priceSymbol
-                                                text-main
-                                                font-weight-bold pl-0'>
-                                                    кг
-                                                </div>
-                                            </div>
-                                            <div className='row mb-3'>
-                                                <div
-                                                    className='col-2 small
-                                            pt-2 font-weight-bold'
-                                                >
-                                                    Нетто
-                                                </div>
-                                                <div className='col-8'>
-                                                    <input name="weightNetto"
-                                                           className='w-100'
-                                                           ref={register(
-                                                               {required: true}
-                                                           )}
-                                                           type="number"
-                                                           placeholder="0"/>
-                                                    {errors.weightNetto &&
-                                                    <small>
-                                                        Это поле обязательно
-                                                    </small>}
-                                                </div>
-                                                <div className='col-2
-                                                priceSymbol
-                                            text-main font-weight-bold pl-0'>
-                                                    кг
-                                                </div>
-                                            </div>
-
-                                        </div>
-                                        <div>
-                                            <button
-                                                className='btn btn-success mr-3'
-                                                type="submit">
-                                                {'id' in product && product.id
-                                                    ? 'Обновить'
-                                                    : 'Добавить'}
-                                            </button>
-                                            <button className='btn btn-light'>
-                                                Отменить добавление
-                                            </button>
-                                        </div>
                                     </div>
                                 </div>
                             </div>
-                        </form>
-                    </div>
+                            <div className="col-lg-6">
+                                <div className='row mb-3'>
+                                    <div className='col-lg-12'>
+                                        <label>Укажите вес</label>
+
+                                        <div className='row mb-3'>
+                                            <div
+                                                className='col-2 small
+                                                    pt-2 font-weight-bold'>
+                                                Брутто
+                                            </div>
+                                            <div className='col-8'>
+                                                <input name="weightBrutto"
+                                                       placeholder="0"
+                                                       ref={register(
+                                                           {required: true}
+                                                       )}
+                                                       type="number"
+                                                       className='w-100'/>
+                                                {errors.weightBrutto &&
+                                                <small>
+                                                    Это поле обязательно
+                                                </small>}
+                                            </div>
+                                            <div className='col-2
+                                                priceSymbol
+                                                text-main
+                                                font-weight-bold pl-0'>
+                                                кг
+                                            </div>
+                                        </div>
+                                        <div className='row mb-3'>
+                                            <div
+                                                className='col-2 small
+                                            pt-2 font-weight-bold'
+                                            >
+                                                Нетто
+                                            </div>
+                                            <div className='col-8'>
+                                                <input name="weightNetto"
+                                                       className='w-100'
+                                                       ref={register(
+                                                           {required: true}
+                                                       )}
+                                                       type="number"
+                                                       placeholder="0"/>
+                                                {errors.weightNetto &&
+                                                <small>
+                                                    Это поле обязательно
+                                                </small>}
+                                            </div>
+                                            <div className='col-2
+                                                priceSymbol
+                                            text-main font-weight-bold pl-0'>
+                                                кг
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                    <div>
+                                        <button
+                                            className='btn btn-success mr-3'
+                                            type="submit">
+                                            {'id' in product && product.id
+                                                ? 'Обновить'
+                                                : 'Добавить'}
+                                        </button>
+                                        <button className='btn btn-light'>
+                                            Отменить добавление
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
+            </div>
+
+        return (
+            show
+                ? content
                 : null
         )
     }
