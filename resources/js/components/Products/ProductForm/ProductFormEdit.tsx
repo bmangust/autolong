@@ -131,6 +131,12 @@ const ProductFormEdit: React.FC<{
             dispatch(fetchProductPrice(value))
         }
 
+        const providerSelect = <Select
+            placeholder='Выберите поставщика'
+            classNamePrefix='select-mini'
+            className='select-mini'
+        />
+
         bsCustomFileInput.init()
 
         const content =
@@ -176,7 +182,7 @@ const ProductFormEdit: React.FC<{
                                         }
                                     </div>
                                     <div className="col-lg-8">
-                                        <label htmlFor='providerId'>
+                                        <label htmlFor='image'>
                                             Загрузка изображения
                                         </label>
                                         <div className="custom-file">
@@ -205,14 +211,8 @@ const ProductFormEdit: React.FC<{
                                 <div className='col-10 mb-3 p-0'>
                                     <Controller
                                         name="providerId"
-                                        as={
-                                            <Select
-                                                placeholder='Выберите
-                                                поставщика'
-                                                classNamePrefix='select-mini'
-                                                className='select-mini'
-                                            />
-                                        }
+                                        as={providerSelect}
+                                        defaultValue=''
                                         options={providersOptions}
                                         control={control}
                                         rules={{required: true}}
