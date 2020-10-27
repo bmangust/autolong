@@ -1,17 +1,21 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
+import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 
 // Typescript
 import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
 
+
 // Actions
 import {createCatalog} from '../../../store/actions/catalogs'
 import {fetchProviders} from '../../../store/actions/providers'
+import {ITag, ITagsRootState} from '../ITags'
 
 interface ICreateCatalogData {
     name: string
@@ -22,25 +26,65 @@ interface ICreateCatalogData {
 
 const CatalogForm: React.FC = () => {
     const {
-        register, handleSubmit
+        register, handleSubmit, control, errors
     } = useForm<ICreateCatalogData>()
 
     const dispatch = useDispatch()
     const history = useHistory()
+
+    // eslint-disable-next-line no-unused-vars
+    const [tagsState, setTags] = useState([])
 
     const {providers} = useSelector(
         (state: IProvidersRootState) => ({
             providers: state.providersState.providers
         }))
 
+    const {tags} = useSelector(
+        (state: ITagsRootState) => ({
+            tags: state.tagsState.tags
+        }))
+
     useEffect(() => {
         dispatch(fetchProviders())
     }, [dispatch])
 
+    const providersOptions = providers.map(
+        (provider: IProvider) => {
+            return {
+                label: provider.name,
+                value: provider.id
+            }
+        })
+
+    const tagsOptions = tags.map(
+        (tag: ITag) => {
+            return {
+                label: tag.value,
+                value: tag.key
+            }
+        }
+    )
+
+    const onChangeHandler = (newValue: any, actionMeta: any) => {
+        setTags(newValue)
+    }
+
+    const providerSelect = <Select
+        placeholder='Выберите поставщика'
+        classNamePrefix='select-mini'
+        className='select-mini'
+    />
+
     const catalogFormSubmitHandler =
         handleSubmit((formValues: ICreateCatalogData) => {
             formValues.file = formValues.file[0]
-            formValues.tags = [...formValues.tags]
+            formValues.providerId = formValues.providerId.value
+            const newTags = []
+            tagsState.forEach(option => {
+                newTags.push(option.label)
+            })
+            formValues.tags = [...newTags]
             dispatch(createCatalog(formValues))
             history.push('/catalogs')
         })
@@ -55,40 +99,48 @@ const CatalogForm: React.FC = () => {
                                 Укажите название для каталога
                             </label>
                             <input placeholder="Введите название" name='name'
-                                   ref={register}
+                                   ref={register({required: true})}
                                    className='col-lg-10 mb-3' type="text"/>
+                            {errors.name &&
+                            <small>Это поле обязательно</small>}
 
                             <label className='w-100' htmlFor='providerId'>
                                 Выберите поставщика
                             </label>
-                            <select className='col-lg-10'
-                                    ref={register}
-                                    name="providerId" id="providerId">
-                                <option disabled defaultValue=''>
-                                    Выберите поставщика
-                                </option>
-                                {providers.map((provider: IProvider) => {
-                                    return (<option
-                                        key={provider.id}
-                                        value={provider.id}>
-                                        {provider.name}</option>)
-                                })}
-                            </select>
+                            <div className='col-10 mb-3 p-0'>
+                                <Controller
+                                    defaultValue=''
+                                    name="providerId"
+                                    as={providerSelect}
+                                    options={providersOptions}
+                                    control={control}
+                                    rules={{required: true}}
+                                />
+                                {errors.providerId &&
+                                <small>Это поле обязательно</small>}
+                            </div>
 
                             <label className='w-100' htmlFor='file'>
                                 Загрузите файл каталога
                             </label>
                             <input multiple={false} name="file"
-                                   ref={register}
+                                   ref={register({required: true})}
                                    type="file" className='col-lg-10'/>
+                            {errors.file &&
+                            <small>Это поле обязательно</small>}
                         </div>
                         <div className="col-lg-6">
                             <label className='w-100'>
                                 Укажите теги
                             </label>
-                            <input
-                                name='tags' type="text" ref={register}
-                                className='col-lg-10' placeholder="Type here"/>
+                            <CreatableSelect
+                                isMulti={true}
+                                placeholder='Введите теги'
+                                onChange={onChangeHandler}
+                                classNamePrefix='select-mini-tags'
+                                className='select-mini-tags'
+                                options={tagsOptions}
+                            />
                         </div>
                     </div>
                     <div>

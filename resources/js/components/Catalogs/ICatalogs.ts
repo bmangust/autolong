@@ -10,20 +10,16 @@ import {
     FETCH_CATALOG_START,
     FETCH_CATALOG_SUCCESS
 } from '../../store/actions/actionTypes'
+import {ITag} from './ITags'
 
 export interface ICatalog {
     id: number
     name: string
     provider?: IProvider | {}
     file: string
-    tags: ICatalogTag[]
+    tags: ITag[]
     createdAt?: number
     updatedAt?: number
-}
-
-export interface ICatalogTag {
-    key?: string
-    value: string
 }
 
 export interface ICatalogsState {

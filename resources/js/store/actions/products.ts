@@ -66,7 +66,11 @@ export const fetchProductById = (id) => async dispatch => {
 export const createProduct = (data) => async dispatch => {
     const formData = new FormData()
     Object.entries(data).map(([key, val]) => {
-        return formData.append(key, val)
+        if (Array.isArray(val)) {
+            return formData.append(key, JSON.stringify(val))
+        } else {
+            return formData.append(key, val)
+        }
     })
     await dispatch({
         type: CREATE_PRODUCT_START
@@ -93,7 +97,11 @@ export const createProduct = (data) => async dispatch => {
 export const updateProduct = (id, data) => async dispatch => {
     const formData = new FormData()
     Object.entries(data).map(([key, val]) => {
-        return formData.append(key, val)
+        if (Array.isArray(val)) {
+            return formData.append(key, JSON.stringify(val))
+        } else {
+            return formData.append(key, val)
+        }
     })
     await dispatch({
         type: UPDATE_PRODUCT_START

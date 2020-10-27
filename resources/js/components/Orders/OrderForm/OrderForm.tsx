@@ -4,7 +4,8 @@ import React, {useEffect, useState} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
+import Select from 'react-select'
 
 // Typescript
 import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
@@ -27,7 +28,7 @@ interface ICreateOrderData {
 const OrderForm: React.FC = () => {
     let totalPrice = 0
     const {
-        register, handleSubmit
+        register, handleSubmit, control, errors
     } = useForm<ICreateOrderData>()
 
     const {
@@ -68,10 +69,25 @@ const OrderForm: React.FC = () => {
         setItems(newItems)
     }
 
+    const providersOptions = providers.map(
+        (provider: IProvider) => {
+            return {
+                label: provider.name,
+                value: provider.id
+            }
+        })
+
+    const select = <Select
+        placeholder='Выберите поставщика'
+        classNamePrefix='select-mini'
+        className='select-mini'
+    />
+
     const orderFormSubmitHandler =
         handleSubmit((formValues: ICreateOrderData) => {
             formValues.cargo = formValues.cargo ? 1 : 0
             formValues.items = items
+            formValues.providerId = formValues.providerId.value
             dispatch(createOrder(formValues))
             history.push('/orders')
         })
@@ -121,27 +137,26 @@ const OrderForm: React.FC = () => {
                                 </label>
                                 <input
                                     className='col-lg-10 mb-3' name="name"
-                                    ref={register}
+                                    ref={register({required: true})}
                                     placeholder="Введите название" type="text"/>
+                                {errors.name &&
+                                <small>Это поле обязательно</small>}
 
                                 <label className='w-100' htmlFor='provider'>
                                     Выберите поставщика
                                 </label>
-                                <select
-                                    ref={register}
-                                    name="providerId"
-                                    className='col-lg-10'
-                                >
-                                    <option disabled
-                                            defaultValue=''>Поставщик
-                                    </option>
-                                    {providers.map((provider: IProvider) => {
-                                        return (<option
-                                            key={provider.id + provider.name}
-                                            value={provider.id}>
-                                            {provider.name}</option>)
-                                    })}
-                                </select>
+                                <div className='col-10 mb-3 p-0'>
+                                    <Controller
+                                        defaultValue=''
+                                        name="providerId"
+                                        as={select}
+                                        options={providersOptions}
+                                        control={control}
+                                        rules={{required: true}}
+                                    />
+                                    {errors.providerId &&
+                                    <small>Это поле обязательно</small>}
+                                </div>
                             </div>
                             <div className="col-lg-6">
                                 <label className='w-100' htmlFor='provider'>

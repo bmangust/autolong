@@ -10,6 +10,7 @@ import containersReducer from './containers'
 import catalogsReducer from './catalogs'
 import countryReducer from './countries'
 import ordersReducer from './orders'
+import tagsReducer from './tags'
 
 export default combineReducers({
     importersState: importersReducer,
@@ -19,5 +20,6 @@ export default combineReducers({
     containersState: containersReducer,
     catalogsState: catalogsReducer,
     countriesState: countryReducer,
+    tagsState: tagsReducer,
     form: formReducer
 })
