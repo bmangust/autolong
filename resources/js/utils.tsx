@@ -8,6 +8,7 @@ import {IProductPrice} from './components/Products/IProducts'
 
 // App
 import statuses from '../statuses/statuses.json'
+import courses from '../courses/courses.json'
 
 export function nameToLinkFormatter(name, row, page) {
     return (
@@ -71,4 +72,42 @@ export function getOrderStatusName(key: string) {
 
 export function getPaymentStatusName(key: string) {
     return statuses.paymentStatuses[key]
+}
+
+
+/**
+ * Currency conversion by amount and currency code
+ * @param amount
+ * @param currencyCode
+ */
+export function currencyConversion(amount: number, currencyCode: string) {
+    const usdCourse = courses.usd
+    const rubCourse = courses.rub
+    const currency = {
+        rub: 0, usd: 0, cny: 0
+    }
+    switch (currencyCode) {
+        case 'cny': {
+            currency.cny = amount
+            currency.rub = +(amount * rubCourse).toFixed(2)
+            currency.usd = +(amount * usdCourse).toFixed(2)
+            break
+        }
+        case 'rub': {
+            currency.cny = +(amount / rubCourse).toFixed(2)
+            currency.rub = amount
+            currency.usd = +(currency.cny * usdCourse).toFixed(2)
+            break
+        }
+        case 'usd': {
+            currency.cny = +(amount / usdCourse).toFixed(2)
+            currency.rub = +(currency.cny * rubCourse).toFixed(2)
+            currency.usd = amount
+            break
+        }
+        default: {
+            break
+        }
+    }
+    return currency
 }
