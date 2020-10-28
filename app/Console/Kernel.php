@@ -29,7 +29,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
          $schedule->call(function(ExchangeRate $exchangeRate) {
-             $response = Http::get('https://www.cbr-xml-daily.ru/daily_json.js');
+             $response = Http::get(ExchangeRate::CRBF_DAILY_RATE_JSON);
              $percentageModulBank = ExchangeRate::PERCENTAGE_MODULBANK / 100;
              $rubToCny = json_decode($response->body())->Valute->CNY->Previous;
              $rubToUsd = json_decode($response->body())->Valute->USD->Previous;

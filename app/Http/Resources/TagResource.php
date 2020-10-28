@@ -17,8 +17,6 @@ class TagResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'createdAt' => strtotime($this->created_at),
-            'updatedAt' => strtotime($this->updated_at),
         ];
     }
 }
