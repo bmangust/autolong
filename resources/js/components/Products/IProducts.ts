@@ -28,7 +28,7 @@ export interface IProduct {
     priceCny?: number
     vendorCode: string
     quantity?: number
-    autolongNumber: string
+    autolongNumber: number
     image: string
     price: IProductPrice
     weightNetto: number

@@ -21,7 +21,7 @@ interface ICreateProductData {
     nameRu: string
     nameEn: string
     vendorCode: string
-    autolongNumber: string
+    autolongNumber: number
     aboutRu: string
     aboutEn: string
     providerId: number
@@ -154,7 +154,7 @@ const ProductForm: React.FC = () => {
                                     <input className='col-lg-10 mb-3'
                                            name="autolongNumber"
                                            ref={register({required: true})}
-                                           type="text"
+                                           type="number"
                                            placeholder="Введите номер"/>
                                     {errors.autolongNumber &&
                                     <small>Это поле обязательно</small>}
