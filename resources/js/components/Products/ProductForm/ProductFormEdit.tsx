@@ -1,8 +1,8 @@
 // React
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 
 // Third-party
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
 import bsCustomFileInput from 'bs-custom-file-input'
 import Select from 'react-select'
@@ -10,19 +10,19 @@ import Select from 'react-select'
 // Typescript
 import {
     IProduct, IProductAutolong,
-    IProductPrice, IProductsRootState
+    IProductPrice
 } from '../IProducts'
 import {IProvider} from '../../Providers/IProviders'
 
 // Actions
 import {
     createProduct,
-    fetchProductPrice,
     updateProduct
 } from '../../../store/actions/products'
 
 // App
 import TextEditor from '../../UI/TextEditor/TextEditor'
+import {currencyConversion} from '../../../utils'
 
 interface IEditProductData {
     nameRu: string
@@ -48,6 +48,10 @@ const ProductFormEdit: React.FC<{
     ({product, providers}) => {
         let defaultValues
 
+        const [show, setShow] = useState(true)
+        const [priceState, setPriceState] =
+            useState<IProductPrice>({rub: 0, usd: 0, cny: 0})
+
         'id' in product
             ? defaultValues = {
                 nameRu: product.nameRu,
@@ -70,7 +74,7 @@ const ProductFormEdit: React.FC<{
                 vendorCode: product.articul,
                 aboutRu: product.text,
                 aboutEn: '',
-                priceCny: product.price
+                priceRub: product.price
             }
 
         const {
@@ -86,17 +90,7 @@ const ProductFormEdit: React.FC<{
             img = product.photo
         }
 
-        const [show, setShow] = useState(true)
-        const [priceState, setPriceState] =
-            useState<IProductPrice>({rub: 0, usd: 0, cny: 0})
-        const [dirty, setDirty] = useState<boolean>(false)
-
         const dispatch = useDispatch()
-
-        const {price}: IProductPrice = useSelector(
-            (state: IProductsRootState) => ({
-                price: state.productsState.price
-            }))
 
         const providersOptions = providers.map(
             (provider: IProvider) => {
@@ -105,10 +99,6 @@ const ProductFormEdit: React.FC<{
                     value: provider.id
                 }
             })
-
-        useEffect(() => {
-            setPriceState(price)
-        }, [price])
 
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {
@@ -125,10 +115,9 @@ const ProductFormEdit: React.FC<{
                 setShow(false)
             })
 
-        const onChangePrice = (e) => {
+        const onChangePrice = (e, currencyCode) => {
             const value = e.target.value
-            setDirty(true)
-            dispatch(fetchProductPrice(value))
+            setPriceState(currencyConversion(+value, currencyCode))
         }
 
         const providerSelect = <Select
@@ -305,9 +294,11 @@ const ProductFormEdit: React.FC<{
                                             className='w-100'
                                             ref={register({required: true})}
                                             type="number"
+                                            value={priceState.cny}
                                             min={0}
                                             step={0.01}
-                                            onChange={onChangePrice}
+                                            onChange={(e) =>
+                                                onChangePrice(e, 'cny')}
                                             placeholder="0"/>
                                         {errors.priceCny &&
                                         <small>Это поле обязательно</small>}
@@ -327,10 +318,9 @@ const ProductFormEdit: React.FC<{
                                             name="priceUsd"
                                             type="number"
                                             ref={register}
-                                            disabled
-                                            value={dirty
-                                                ? priceState.usd
-                                                : 0}
+                                            onChange={(e) =>
+                                                onChangePrice(e, 'usd')}
+                                            value={priceState.usd}
                                             className='w-100'
                                             placeholder="0"
                                         />
@@ -347,10 +337,9 @@ const ProductFormEdit: React.FC<{
                                             name="priceRub"
                                             type="number"
                                             ref={register}
-                                            disabled
-                                            value={dirty
-                                                ? priceState.rub
-                                                : 0}
+                                            onChange={(e) =>
+                                                onChangePrice(e, 'rub')}
+                                            value={priceState.rub}
                                             className='w-100'
                                             placeholder="0"
                                         />

@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -8,13 +8,14 @@ import {Controller, useForm} from 'react-hook-form'
 import Select from 'react-select'
 
 // Typescript
-import {IProductsRootState} from '../IProducts'
+import {IProductPrice} from '../IProducts'
 import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
 
 // Actions
-import {createProduct, fetchProductPrice} from '../../../store/actions/products'
+import {createProduct} from '../../../store/actions/products'
 import {fetchProviders} from '../../../store/actions/providers'
 import TextEditor from '../../UI/TextEditor/TextEditor'
+import {currencyConversion} from '../../../utils'
 
 interface ICreateProductData {
     nameRu: string
@@ -40,17 +41,15 @@ const ProductForm: React.FC = () => {
         }
     })
 
+    const [priceState, setPriceState] =
+        useState<IProductPrice>({rub: 0, usd: 0, cny: 0})
+
     const dispatch = useDispatch()
     const history = useHistory()
 
     const {providers} = useSelector(
         (state: IProvidersRootState) => ({
             providers: state.providersState.providers
-        }))
-
-    const {price} = useSelector(
-        (state: IProductsRootState) => ({
-            price: state.productsState.price
         }))
 
     const providersOptions = providers.map(
@@ -79,9 +78,9 @@ const ProductForm: React.FC = () => {
         className='select-mini'
     />
 
-    const onChangePrice = (e) => {
+    const onChangePrice = (e, currencyCode) => {
         const value = e.target.value
-        dispatch(fetchProductPrice(value))
+        setPriceState(currencyConversion(+value, currencyCode))
     }
 
     return (
@@ -207,7 +206,11 @@ const ProductForm: React.FC = () => {
                                                    ref={register(
                                                        {required: true}
                                                    )}
-                                                   onChange={onChangePrice}
+                                                   onChange={(e) =>
+                                                       onChangePrice(e, 'cny')}
+                                                   value={priceState.cny}
+                                                   min={0}
+                                                   step={0.01}
                                                    type="number"
                                                    placeholder="0"/>
                                             {errors.priceCny &&
@@ -225,9 +228,11 @@ const ProductForm: React.FC = () => {
                                             <input
                                                 name="priceUsd"
                                                 type="number"
-                                                value={'usd' in price
-                                                    ? price.usd
-                                                    : 0}
+                                                onChange={(e) =>
+                                                    onChangePrice(e, 'usd')}
+                                                value={priceState.usd}
+                                                min={0}
+                                                step={0.01}
                                                 className='w-100'
                                                 placeholder="0"
                                                 disabled
@@ -244,9 +249,11 @@ const ProductForm: React.FC = () => {
                                             <input
                                                 name="priceRub"
                                                 type="number"
-                                                value={'rub' in price
-                                                    ? price.rub
-                                                    : 0}
+                                                onChange={(e) =>
+                                                    onChangePrice(e, 'rub')}
+                                                value={priceState.rub}
+                                                min={0}
+                                                step={0.01}
                                                 className='w-100'
                                                 placeholder="0"
                                                 disabled
