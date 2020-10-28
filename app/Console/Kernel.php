@@ -3,9 +3,11 @@
 namespace App\Console;
 
 use App\ExchangeRate;
+use App\Http\Resources\ExchangeRateResource;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Storage;
 
 class Kernel extends ConsoleKernel
 {
@@ -36,7 +38,9 @@ class Kernel extends ConsoleKernel
              $cnyToUsdModulBank = round($rubToCnyModulBank / $rubToUsdModulBank, 8);
              $latesCours = $exchangeRate->latest()->first();
              if (is_null($latesCours) || $latesCours->rub != $rubToCnyModulBank || $latesCours->usd != $cnyToUsdModulBank) {
-                $exchangeRate->create(['rub' => $rubToCnyModulBank, 'usd' => $cnyToUsdModulBank]);
+                $infoToFile = $exchangeRate->create(['rub' => $rubToCnyModulBank, 'usd' => $cnyToUsdModulBank]);
+                Storage::disk('resources')
+                    ->put(ExchangeRate::FILE_INFO_COURSE, json_encode(new ExchangeRateResource($infoToFile)));
              }
          })->dailyAt('10:00');
     }
