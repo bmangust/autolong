@@ -11,6 +11,13 @@ class Product extends Model
 
     public const IMAGE_DIRECTORY = '/storage/product-images';
 
+    protected static function booted()
+    {
+        static::deleted(function ($product) {
+            $product->orderItems()->delete();
+        });
+    }
+
     public function catalog()
     {
         return $this->belongsTo('App\Catalog');
