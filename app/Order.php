@@ -12,6 +12,13 @@ class Order extends Model
 
     protected $fillable = ['name', 'provider_id'];
 
+    protected static function booted()
+    {
+        static::deleted(function ($order) {
+            $order->orderItems()->delete();
+        });
+    }
+
     public function provider()
     {
         return $this->belongsTo('App\Provider');
