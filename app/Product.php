@@ -38,8 +38,9 @@ class Product extends Model
 
     public function deleteImage()
     {
-        if (!is_null($this->image) && Storage::exists($this->image)) {
-            Storage::disk('main')->delete($this->image);
+        $image = substr($this->image, 1);
+        if (!is_null($image) && Storage::exists($image)) {
+            Storage::disk('main')->delete($image);
         }
         $this->image = null;
         $this->save();
