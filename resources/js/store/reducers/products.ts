@@ -15,7 +15,7 @@ import {
     UPDATE_PRODUCT_ERROR,
     UPDATE_PRODUCT_START,
     UPDATE_PRODUCT_SUCCESS,
-    FETCH_BY_VENDOR_START
+    FETCH_BY_VENDOR_START, DELETE_PRODUCT_BY_ID
 } from '../actions/actionTypes'
 
 // Typescript
@@ -100,6 +100,11 @@ export default function productsReducer(
         case FETCH_PRODUCT_PRICE:
             return {
                 ...state, price: action.payload.price
+            }
+        case DELETE_PRODUCT_BY_ID:
+            return {
+                ...state, products: state.products.filter(({id}) =>
+                    id !== action.payload), product: {}
             }
         default:
             return state

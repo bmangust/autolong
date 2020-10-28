@@ -14,7 +14,7 @@ import {
     UPDATE_PRODUCT_SUCCESS,
     FETCH_BY_VENDOR_SUCCESS,
     FETCH_BY_VENDOR_ERROR,
-    FETCH_BY_VENDOR_START
+    FETCH_BY_VENDOR_START, DELETE_PRODUCT_BY_ID
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
 
@@ -157,10 +157,15 @@ interface IFetchProductPrice {
     loading: boolean
 }
 
+interface IDeleteProductById {
+    type: typeof DELETE_PRODUCT_BY_ID
+    payload: number
+}
+
 export type IProductsActionTypes =
     IFetchProductsStart | IFetchProductsSuccess | IFetchProductsError |
     IFetchProductStart | IFetchProductSuccess | IFetchProductError |
     ICreateProductStart | ICreateProductSuccess | ICreateProductError |
     IUpdateProductStart | IUpdateProductSuccess | IUpdateProductError |
     IFetchProductPrice | IFetchByVendorStart | IFetchByVendorSuccess |
-    IFetchByVendorError
+    IFetchByVendorError | IDeleteProductById

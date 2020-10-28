@@ -6,7 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Actions
-import {fetchProducts} from '../../../store/actions/products'
+import {deleteProductById, fetchProducts} from '../../../store/actions/products'
 
 // Typescript
 import {IProductsRootState} from '../IProducts'
@@ -52,6 +52,19 @@ const ProductsTable: React.FC = () => {
             title='В этом списке ещё нет товаров'/>
     }
 
+    const onDeleteHandler = (id) => {
+        dispatch(deleteProductById(id))
+    }
+
+    const deleteFormatter = (id) => {
+        return (
+            <button onClick={() => onDeleteHandler(id)}
+                    className='btn btn-danger'>
+                Удалить
+            </button>
+        )
+    }
+
     const expandRowTable = [
         {
             dataField: 'vendorCode',
@@ -68,6 +81,11 @@ const ProductsTable: React.FC = () => {
         {
             dataField: 'weightNetto',
             text: 'Нетто'
+        },
+        {
+            dataField: 'id',
+            text: 'Удалить',
+            formatter: deleteFormatter
         }
     ]
 

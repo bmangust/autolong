@@ -3,14 +3,14 @@ import React, {useEffect} from 'react'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 
 // Third-party
-import {NavLink, useParams} from 'react-router-dom'
+import {NavLink, useHistory, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
 // Typescript
 import {IProductsRootState} from '../../components/Products/IProducts'
 
 // Actions
-import {fetchProductById} from '../../store/actions/products'
+import {deleteProductById, fetchProductById} from '../../store/actions/products'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
@@ -20,6 +20,7 @@ const Product: React.FC = () => {
     const {id}: any = useParams()
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const {product, loading, error} = useSelector(
         (state: IProductsRootState) => ({
@@ -38,6 +39,11 @@ const Product: React.FC = () => {
     }
     if (loading) {
         return <Loader/>
+    }
+
+    const onDeleteHandler = (id) => {
+        dispatch(deleteProductById(id))
+        history.push('/products')
     }
 
     const placeholder = '/imgs/placeholder-product-image.png'
@@ -63,66 +69,66 @@ const Product: React.FC = () => {
                                     className="w-100"
                                 >
                                     <tbody>
-                                        <tr>
-                                            <td
-                                        className="infoBlockHeaders pb-3">
-                                                Внутренний номер
-                                            </td>
-                                            <td
-                                                className="infoBlockText pb-3">
-                                                {'autolongNumber' in product
-                                                    ? product.autolongNumber
-                                                    : ''}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                        className="infoBlockHeaders pb-3">
-                                                Артикул
-                                            </td>
-                                            <td
-                                                className="infoBlockText pb-3">
-                                                {'vendorCode' in product
-                                                    ? product.vendorCode
-                                                    : ''}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                        className="infoBlockHeaders pb-3">
-                                                Цена
-                                            </td>
-                                            <td
-                                                className="infoBlockText pb-3">
-                                                {'price' in product
-                                            ? moneyFormatter(product.price)
-                                                    : ''}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                        className="infoBlockHeaders pb-3">
-                                                Вес брутто
-                                            </td>
-                                            <td
-                                                className="infoBlockText pb-3">
-                                                {'weightBrutto' in product
-                                                    ? product.weightBrutto
-                                                    : ''}
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td
-                                                className="infoBlockHeaders">
-                                                Вес нетто
-                                            </td>
-                                            <td
-                                                className="infoBlockText">
-                                                {'weightNetto' in product
-                                                    ? product.weightNetto
-                                                    : ''}
-                                            </td>
-                                        </tr>
+                                    <tr>
+                                        <td
+                                            className="infoBlockHeaders pb-3">
+                                            Внутренний номер
+                                        </td>
+                                        <td
+                                            className="infoBlockText pb-3">
+                                            {'autolongNumber' in product
+                                                ? product.autolongNumber
+                                                : ''}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            className="infoBlockHeaders pb-3">
+                                            Артикул
+                                        </td>
+                                        <td
+                                            className="infoBlockText pb-3">
+                                            {'vendorCode' in product
+                                                ? product.vendorCode
+                                                : ''}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            className="infoBlockHeaders pb-3">
+                                            Цена
+                                        </td>
+                                        <td
+                                            className="infoBlockText pb-3">
+                                            {'price' in product
+                                                ? moneyFormatter(product.price)
+                                                : ''}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            className="infoBlockHeaders pb-3">
+                                            Вес брутто
+                                        </td>
+                                        <td
+                                            className="infoBlockText pb-3">
+                                            {'weightBrutto' in product
+                                                ? product.weightBrutto
+                                                : ''}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            className="infoBlockHeaders">
+                                            Вес нетто
+                                        </td>
+                                        <td
+                                            className="infoBlockText">
+                                            {'weightNetto' in product
+                                                ? product.weightNetto
+                                                : ''}
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -150,10 +156,10 @@ const Product: React.FC = () => {
                                 <p
                                     className="infoBlockText"
                                     dangerouslySetInnerHTML={
-                                        // @ts-ignore
-                                        {__html: 'aboutRu' in product
-                                                        ? product.aboutRu
-                                                        : 'Описание отсутствует'
+                                        {
+                                            __html: 'aboutRu' in product
+                                                ? product.aboutRu
+                                                : 'Описание отсутствует'
                                         }
                                     }/>
                             </div>
@@ -178,8 +184,8 @@ const Product: React.FC = () => {
                                 <p
                                     className="infoBlockText"
                                     dangerouslySetInnerHTML={
-                                        // @ts-ignore
-                                        {__html: 'aboutEn' in product
+                                        {
+                                            __html: 'aboutEn' in product
                                                 ? product.aboutEn
                                                 : 'Описание отсутствует'
                                         }
@@ -215,10 +221,16 @@ const Product: React.FC = () => {
                             </div>
 
                         </div>
-                        <NavLink to={`/productedit/${id}`}
-                                 className='editButton'>
-                            Редактировать информацию
-                        </NavLink>
+                        <div className='d-flex justify-content-between'>
+                            <NavLink to={`/productedit/${id}`}
+                                     className='editButton'>
+                                Редактировать информацию
+                            </NavLink>
+                            <button onClick={() => onDeleteHandler(product.id)}
+                                    className='btn btn-danger'>
+                                Удалить товар
+                            </button>
+                        </div>
                     </div>
                 </div>
             </div>

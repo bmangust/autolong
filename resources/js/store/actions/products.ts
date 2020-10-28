@@ -14,7 +14,7 @@ import {
     FETCH_PRODUCT_PRICE,
     FETCH_BY_VENDOR_START,
     FETCH_BY_VENDOR_SUCCESS,
-    FETCH_BY_VENDOR_ERROR
+    FETCH_BY_VENDOR_ERROR, DELETE_PRODUCT_BY_ID
 } from './actionTypes'
 
 import axios, {AxiosError} from 'axios'
@@ -163,4 +163,17 @@ export const fetchProductsByVendors = (data) => async dispatch => {
             payload: error.response
         })
     })
+}
+
+export const deleteProductById = (id) => async dispatch => {
+    const url = `/api/products/${id}`
+    axios
+        .delete(url)
+        .then((answer) => {
+            dispatch({
+                type: DELETE_PRODUCT_BY_ID,
+                payload: id
+            })
+            toast.success('Товар удален')
+        })
 }
