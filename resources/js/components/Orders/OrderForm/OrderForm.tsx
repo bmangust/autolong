@@ -17,6 +17,7 @@ import {fetchProviders} from '../../../store/actions/providers'
 
 // App
 import OrderItems from '../OrderItems/OrderItems'
+import {currencyConversion} from '../../../utils'
 
 interface ICreateOrderData {
     name: string
@@ -61,6 +62,14 @@ const OrderForm: React.FC = () => {
         const value = +e.target.value
         const newItems = items
             .map(el => el.id === itemId ? {...el, quantity: value} : el)
+        setItems(newItems)
+    }
+
+    const onChangePrice = (e, itemId: number, currencyCode) => {
+        const value = e.target.value
+        const newPrice = currencyConversion(+value, currencyCode)
+        const newItems = items
+            .map(el => el.id === itemId ? {...el, price: newPrice} : el)
         setItems(newItems)
     }
 
@@ -187,6 +196,7 @@ const OrderForm: React.FC = () => {
                         <OrderItems
                             onDelete={onDeleteHandler}
                             onChange={onChangeQtyHandler}
+                            onChangePrice={onChangePrice}
                             items={items}/>
                         <div className="text-right mb-3 mt-3">
                             Итоговая стоимость
