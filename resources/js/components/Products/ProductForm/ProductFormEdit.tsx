@@ -28,7 +28,7 @@ interface IEditProductData {
     nameRu: string
     nameEn: string
     vendorCode: string
-    autolongNumber: string
+    autolongNumber: number
     aboutRu: string
     aboutEn: string
     providerId: number
@@ -60,7 +60,7 @@ const ProductFormEdit: React.FC<{
                 aboutRu: product.aboutRu,
                 aboutEn: product.aboutEn,
                 image: product.image,
-                autolongNumber: product.autolongNumber,
+                autolongNumber: +product.autolongNumber,
                 priceCny: product.price.cny,
                 priceRub: product.price.rub,
                 priceUsd: product.price.usd,
@@ -69,7 +69,7 @@ const ProductFormEdit: React.FC<{
             }
             : defaultValues = {
                 nameRu: product.name,
-                autolongNumber: product.number,
+                autolongNumber: +product.number,
                 image: product.photo,
                 vendorCode: product.articul,
                 aboutRu: product.text,
@@ -141,7 +141,7 @@ const ProductFormEdit: React.FC<{
                                 <input className='col-lg-10 mb-3'
                                        name="autolongNumber"
                                        ref={register({required: true})}
-                                       type="text"
+                                       type="number"
                                        defaultValue={'number' in product
                                            ? product.number
                                            : ''}
