@@ -119,7 +119,6 @@ class ProductController extends Controller
         } elseif ($request->has('image') && is_string($request->input('image'))) {
             $product->loadImageFromAutolong($request->input('image'));
         }
-        $product->createOrUpdateImage($request->file('image'));
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }
 

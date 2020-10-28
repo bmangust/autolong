@@ -57,3 +57,5 @@ Route::put('orders/{order}', 'OrderController@update');
 Route::delete('orders/{order}', 'OrderController@destroy');
 Route::post('orders/{order}/changestatus', 'OrderController@changeStatus');
 Route::post('orders/{order}/changestatuspayment', 'OrderController@changeStatusPayment');
+
+Route::get('tags', 'TagController@index');
