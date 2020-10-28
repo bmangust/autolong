@@ -64,4 +64,13 @@ class Product extends Model
         $this->image = $path;
         $this->save();
     }
+
+    public function changePrices($priceCny)
+    {
+        $exchangeRate = new ExchangeRate();
+        $this->price_cny = $priceCny;
+        $this->price_rub = round($exchangeRate->lastCourse()->rub * $priceCny, 2);
+        $this->price_usd = round($exchangeRate->lastCourse()->usd * $priceCny, 2);
+        $this->save();
+    }
 }

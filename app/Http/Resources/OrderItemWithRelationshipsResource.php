@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\ExchangeRate;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProductResource;
@@ -17,12 +18,13 @@ class OrderItemWithRelationshipsResource extends JsonResource
      */
     public function toArray($request)
     {
+        $exchangeRate = new ExchangeRate();
         return [
             'id' => $this->id,
             'quantity' => $this->quantity,
-            'price' => (Object)['rub' => $this->product->price_rub,
-                                'usd' => $this->product->price_usd,
-                                'cny' => $this->product->price_cny],
+            'price' => (Object)['rub' => $this->price_rub,
+                                'usd' => $this->price_usd,
+                                'cny' => $this->price_cny],
             'fullPriceCny' => $this->getSumInCny(),
             'order' => new OrderResource($this->order),
             'product' => new ProductResource($this->order),

@@ -37,11 +37,16 @@ class Order extends Model
         foreach ($items as $item) {
             $orderItem = new OrderItem();
             $product = Product::findOrFail($item['id']);
-            $orderItem->order_id = $this->id;
             $orderItem->product_id = $product->id;
+            $orderItem->order_id = $this->id;
             $orderItem->quantity = $item['quantity'];
-            $orderItem->price_cny = $product->price_cny;
+            $orderItem->price_cny = $item['price']['cny'];
+            $orderItem->price_rub = $item['price']['rub'];
+            $orderItem->price_usd = $item['price']['usd'];
             $orderItem->save();
+            if ($orderItem->price_cny != $product->price_cny) {
+                $product->changePrices($orderItem->price_cny);
+            }
         }
     }
 
