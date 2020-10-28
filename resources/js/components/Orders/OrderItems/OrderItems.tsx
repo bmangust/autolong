@@ -10,13 +10,15 @@ interface IOrderItems {
     items: IProduct[]
     onChange?: Function
     onDelete?: Function
+    onChangePrice?: Function
 }
 
 const OrderItems: React.FC<IOrderItems> =
     ({
          items,
          onChange,
-         onDelete
+         onDelete,
+         onChangePrice
      }) => {
         if (!items.length) {
             return (
@@ -26,7 +28,7 @@ const OrderItems: React.FC<IOrderItems> =
                 </div>
             )
         }
-        return onChange && onDelete
+        return onChange && onDelete && onChangePrice
             ? items.map((item: IProduct) => {
                 return (
                     <div key={item.id + item.nameRu}
@@ -50,8 +52,18 @@ const OrderItems: React.FC<IOrderItems> =
                         </div>
                         <div className='col-3'>
                             <p className={classes.productPrices}>
+                                <input
+                                    min={0}
+                                    step={0.01}
+                                    className={classes.productCount
+                                    + ' mt-0 pr-1 mr-2'}
+                                    name="priceCny"
+                                    value={item.price.cny}
+                                    onChange={(e) =>
+                                        onChangePrice(e, item.id, 'cny')}
+                                    type="number"/>
                                 {item.price
-                                    ? moneyFormatter(item.price)
+                                    ? moneyFormatter(item.price, 'cny')
                                     : null
                                 }
                             </p>

@@ -51,11 +51,15 @@ export function timeConverter(timestamp) {
 /**
  * Map price object
  * @param price
+ * @param without
  */
-export function moneyFormatter(price: IProductPrice) {
+export function moneyFormatter(price: IProductPrice, without = '') {
     return (
         <span className="pricesBlock">
            {Object.entries(price).sort().map(([key, val]) => {
+               if (key === without) {
+                   return false
+               }
                return (
                    <span key={key}>
                    {Math.round(val)} {getSymbolFromCurrency(key)}
