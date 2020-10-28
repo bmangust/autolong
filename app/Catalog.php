@@ -35,9 +35,7 @@ class Catalog extends Model
 
     public function deleteFile()
     {
-        if (!is_null($this->file) && Storage::disk('main')->exists($this->file)) {
-            Storage::disk('main')->delete($this->file);
-        }
+        Storage::disk('main')->delete($this->file);
         $this->file = null;
         $this->save();
     }
