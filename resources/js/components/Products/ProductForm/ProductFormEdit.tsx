@@ -1,5 +1,5 @@
 // React
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch} from 'react-redux'
@@ -102,6 +102,12 @@ const ProductFormEdit: React.FC<{
         }
 
         const dispatch = useDispatch()
+
+        useEffect(() => {
+            if (!('id' in product && product.id)) {
+                setPriceState(currencyConversion(+product.price, 'rub'))
+            }
+        }, [product])
 
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {
@@ -241,6 +247,7 @@ const ProductFormEdit: React.FC<{
                                         <Controller
                                             name="aboutRu"
                                             control={control}
+                                            defaultValue=''
                                             render={({value, onChange}) => (
                                                 <TextEditor
                                                     value={value}
