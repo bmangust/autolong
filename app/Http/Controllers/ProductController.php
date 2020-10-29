@@ -66,8 +66,8 @@ class ProductController extends Controller
         $product->about_en = $request->input('aboutEn');
         $product->provider_id = $request->input('providerId');
         $product->price_cny = $request->input('priceCny');
-        $product->price_rub = $exchangeRate->lastCourse()->rub * $product->price_cny;
-        $product->price_usd = $exchangeRate->lastCourse()->usd * $product->price_cny;
+        $product->price_rub = $request->input('priceRub');
+        $product->price_usd = $request->input('priceUsd');
         $product->weight_netto = $request->input('weightNetto');
         $product->weight_brutto = $request->input('weightBrutto');
         $product->vendor_code = $request->input('vendorCode');
@@ -107,8 +107,8 @@ class ProductController extends Controller
         $product->about_en = $request->input('aboutEn');
         $product->provider_id = $request->input('providerId');
         $product->price_cny = $request->input('priceCny');
-        $product->price_rub = round($exchangeRate->lastCourse()->rub * $product->price_cny, 2);
-        $product->price_usd = round($exchangeRate->lastCourse()->usd * $product->price_cny, 2);
+        $product->price_rub = $request->input('priceRub');
+        $product->price_usd = $request->input('priceUsd');
         $product->weight_netto = $request->input('weightNetto');
         $product->weight_brutto = $request->input('weightBrutto');
         $product->vendor_code = $request->input('vendorCode');
