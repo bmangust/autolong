@@ -131,7 +131,7 @@ export const changeOrderStatus = (id, data) => async dispatch => {
     })
     let payment = ''
     if ('statusPayment' in data) {
-        payment = 'Payment'
+        payment = 'payment'
     }
     const url = `/api/orders/${id}/changestatus${payment}`
     axios
