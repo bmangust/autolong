@@ -158,7 +158,7 @@ const ProductFormEdit: React.FC<{
                                 </label>
                                 <input className='col-lg-10'
                                        name="vendorCode"
-                                       ref={register}
+                                       ref={register({required: true})}
                                        type="text"
                                        placeholder="Введите номер"/>
 
