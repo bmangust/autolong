@@ -69,8 +69,8 @@ class Product extends Model
     {
         $exchangeRate = new ExchangeRate();
         $this->price_cny = $priceCny;
-        $this->price_rub = round($exchangeRate->lastCourse()->rub * $priceCny, 2);
-        $this->price_usd = round($exchangeRate->lastCourse()->usd * $priceCny, 2);
+        $this->price_rub = $exchangeRate->lastCourse()->rub * $priceCny;
+        $this->price_usd = $exchangeRate->lastCourse()->usd * $priceCny;
         $this->save();
     }
 }
