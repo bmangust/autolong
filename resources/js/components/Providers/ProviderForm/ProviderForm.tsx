@@ -43,7 +43,7 @@ interface ICreateProviderData {
 const ProviderForm: React.FC = () => {
     const {
         register, handleSubmit,
-        getValues, errors, control
+        errors, control
     } = useForm<ICreateProviderData>()
 
     const dispatch = useDispatch()
@@ -66,16 +66,26 @@ const ProviderForm: React.FC = () => {
         dispatch(fetchCatalogs())
     }, [dispatch])
 
-    const onClickHandler = (e) => {
-        e.preventDefault()
-        const {catalogs} = getValues()
-        if (catalogs) {
-            setCatalogsArr(prevState => [...prevState, +catalogs])
-        }
-    }
+    // const onClickHandler = (e) => {
+    //     e.preventDefault()
+    //     const {catalogs} = getValues()
+    //     if (catalogs) {
+    //         setCatalogsArr(prevState => [...prevState, +catalogs])
+    //     }
+    // }
 
     const onDeleteHandler = (catId) => {
         const newCatalogsArr = catalogsArr.filter(el => el !== catId)
+        setCatalogsArr(newCatalogsArr)
+    }
+
+    const onChangeHandler = (newValue: any) => {
+        const newCatalogsArr = []
+        if (newValue) {
+            newValue.forEach(({value}) =>
+                newCatalogsArr.push(value)
+            )
+        }
         setCatalogsArr(newCatalogsArr)
     }
 
@@ -83,8 +93,15 @@ const ProviderForm: React.FC = () => {
         placeholder='Выберите страну'
         classNamePrefix='select-mini'
         className='select-mini'
-        isSearchable={false}
     />
+
+    const catalogsOptions = catalogs.map(
+        (catalog: ICatalog) => {
+            return {
+                label: catalog.name,
+                value: catalog.id
+            }
+        })
 
     const countriesOptions = countries.map(
         (country: ICountry) => {
@@ -314,34 +331,38 @@ const ProviderForm: React.FC = () => {
                             <label className='w-100'>
                                 Выберите каталог
                             </label>
-                            <select
-                                name="catalogs"
-                                ref={register}
-                                className='col-lg-10 mb-3'
-                            >
-                                <option disabled
-                                        defaultValue=''>
-                                    Каталог
-                                </option>
-                                {catalogs.map((catalog: ICatalog) => {
-                                    const isFind =
-                                        catalogsArr.includes(catalog.id)
-                                    if (!isFind) {
-                                        return (<option
-                                            key={catalog.id}
-                                            value={+catalog.id}>
-                                            {catalog.name}</option>)
-                                    } else {
-                                        return null
+                            <div className='col-lg-10 mb-2 p-0'>
+                                <Controller
+                                    name="catalogs"
+                                    render={({onChange}) =>
+                                        <Select
+                                            placeholder='Выберите каталог'
+                                            isMulti={true}
+                                            hideSelectedOptions={true}
+                                            options={catalogsOptions}
+                                            controlShouldRenderValue={false}
+                                            classNamePrefix='select-mini'
+                                            onChange={(value) => {
+                                                onChange(value)
+                                                onChangeHandler(value)
+                                            }}
+                                            className='select-mini'
+                                        />
                                     }
-                                })}
-                            </select>
-                            <button
-                                onClick={onClickHandler}
-                                className='mb-4 d-block small
-                                 btn btn-text'>
-                                + Привязать ещё один каталог
-                            </button>
+                                    defaultValue=''
+                                    control={control}
+                                    rules={{required: true}}
+                                />
+                                {errors.catalogs &&
+                                <small>Это поле обязательно</small>}
+                            </div>
+
+                            {/* <button*/}
+                            {/*    onClick={onClickHandler}*/}
+                            {/*    className='mb-4 d-block small*/}
+                            {/*     btn btn-text'>*/}
+                            {/*    + Привязать ещё один каталог*/}
+                            {/* </button>*/}
                         </div>
 
                     </div>
