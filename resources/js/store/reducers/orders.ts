@@ -14,7 +14,7 @@ import {
     FETCH_ORDER_SUCCESS,
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_START,
-    FETCH_ORDERS_SUCCESS
+    FETCH_ORDERS_SUCCESS, DELETE_ORDER_BY_ID
 } from '../actions/actionTypes'
 
 // Typescript
@@ -93,6 +93,11 @@ export default function ordersReducer(
         case CHANGE_ORDER_STATUS_ERROR:
             return {
                 ...state, loadingStatus: false, statusError: action.payload
+            }
+        case DELETE_ORDER_BY_ID:
+            return {
+                ...state, orders: state.orders.filter(({id}) =>
+                    id !== action.payload), order: {}
             }
         default:
             return state

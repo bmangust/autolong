@@ -2,12 +2,15 @@
 import React, {useEffect} from 'react'
 
 // Third-party
-import {NavLink, useParams} from 'react-router-dom'
+import {NavLink, useHistory, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import Select from 'react-select'
 
 // Actions
-import {changeOrderStatus, fetchOrderById} from '../../store/actions/orders'
+import {
+    changeOrderStatus,
+    deleteOrderById, fetchOrderById
+} from '../../store/actions/orders'
 
 // Typescript
 import {
@@ -26,6 +29,7 @@ const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const {order, loading, loadingStatus, error} = useSelector(
         (state: IOrdersRootState) => ({
@@ -59,6 +63,11 @@ const Order: React.FC<IOrder> = () => {
             return {label: value, value: key}
         })
 
+    const onDeleteHandler = (id) => {
+        dispatch(deleteOrderById(id))
+        history.push('/orders')
+    }
+
 
     if (error) {
         return <Error/>
@@ -79,7 +88,7 @@ const Order: React.FC<IOrder> = () => {
                                     ? order.name
                                     : ''}
                             </h2>
-                            <div className="row">
+                            <div className="row mb-3">
                                 <div className="col-6">
                                     <p className="infoBlockHeaders">
                                         Статус заказа
@@ -121,6 +130,11 @@ const Order: React.FC<IOrder> = () => {
                                         options={paymentStatuses}/>
                                 </div>
                             </div>
+
+                            <button onClick={() => onDeleteHandler(order.id)}
+                                    className='btn btn-danger'>
+                                Удалить заказ
+                            </button>
                         </div>
                     </div>
 

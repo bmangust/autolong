@@ -14,7 +14,8 @@ import {
     FETCH_ITEMS_BY_VENDOR_ERROR,
     CHANGE_ORDER_STATUS_START,
     CHANGE_ORDER_STATUS_SUCCESS,
-    CHANGE_ORDER_STATUS_ERROR
+    CHANGE_ORDER_STATUS_ERROR,
+    DELETE_ORDER_BY_ID
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -149,4 +150,17 @@ export const changeOrderStatus = (id, data) => async dispatch => {
         })
         toast.error(error.message)
     })
+}
+
+export const deleteOrderById = (id) => async dispatch => {
+    const url = `/api/orders/${id}`
+    axios
+        .delete(url)
+        .then((answer) => {
+            dispatch({
+                type: DELETE_ORDER_BY_ID,
+                payload: id
+            })
+            toast.success('Заказ удален')
+        })
 }

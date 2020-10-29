@@ -14,7 +14,8 @@ import {
     UPDATE_PRODUCT_SUCCESS,
     FETCH_BY_VENDOR_SUCCESS,
     FETCH_BY_VENDOR_ERROR,
-    FETCH_BY_VENDOR_START, DELETE_PRODUCT_BY_ID
+    FETCH_BY_VENDOR_START,
+    DELETE_PRODUCT_BY_ID
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
 

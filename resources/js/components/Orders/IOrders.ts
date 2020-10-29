@@ -14,7 +14,8 @@ import {
     FETCH_ITEMS_BY_VENDOR_SUCCESS,
     CHANGE_ORDER_STATUS_START,
     CHANGE_ORDER_STATUS_SUCCESS,
-    CHANGE_ORDER_STATUS_ERROR
+    CHANGE_ORDER_STATUS_ERROR,
+    DELETE_ORDER_BY_ID
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
 import {IProduct, IProductPrice} from '../Products/IProducts'
@@ -137,10 +138,16 @@ interface IChangeOrderStatusError {
     loadingStatus: boolean
 }
 
+interface IDeleteOrderById {
+    type: typeof DELETE_ORDER_BY_ID
+    payload: number
+}
+
 export type IOrdersActionTypes =
     IFetchOrdersStart | IFetchOrdersSuccess | IFetchOrdersError |
     IFetchOrderStart | IFetchOrderSuccess | IFetchOrderError |
     ICreateOrderStart | ICreateOrderSuccess | ICreateOrderError |
     IFetchOrderProducts | IFetchItemsByVendorStart | IFetchItemsByVendorError |
     IFetchItemsByVendorSuccess | IChangeOrderStatusStart |
-    IChangeOrderStatusSuccess | IChangeOrderStatusError
+    IChangeOrderStatusSuccess | IChangeOrderStatusError |
+    IDeleteOrderById
