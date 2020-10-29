@@ -34,15 +34,17 @@ class Order extends Model
         if ($this->orderItems()->count()) {
             $this->orderItems()->delete();
         }
+        $exchangeRate = new ExchangeRate();
         foreach ($items as $item) {
             $orderItem = new OrderItem();
             $product = Product::findOrFail($item['id']);
             $orderItem->product_id = $product->id;
             $orderItem->order_id = $this->id;
             $orderItem->quantity = $item['quantity'];
-            $orderItem->price_cny = $item['price']['cny'];
-            $orderItem->price_rub = $item['price']['rub'];
-            $orderItem->price_usd = $item['price']['usd'];
+            $priceCny = $item['price']['cny'];
+            $orderItem->price_cny = $priceCny;
+            $orderItem->price_rub = $exchangeRate->lastCourse()->rub * $priceCny;
+            $orderItem->price_usd = $exchangeRate->lastCourse()->usd * $priceCny;
             $orderItem->save();
             if ($orderItem->price_cny != $product->price_cny) {
                 $product->changePrices($orderItem->price_cny);
