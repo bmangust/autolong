@@ -66,7 +66,6 @@ const Order: React.FC<IOrder> = () => {
     if (loading) {
         return <Loader/>
     }
-    let totalPrice = 0
     return (
         <div>
             <div className="row">
@@ -138,14 +137,10 @@ const Order: React.FC<IOrder> = () => {
                                 <span
                                     className="text-orange ml-3"
                                 >
-                                    {'items' in order
-                                        ? order.items.map(el => {
-                                            totalPrice = totalPrice
-                                                + el.price.cny
-                                                * el.quantity
-                                        }) : null
+                                    {'price' in order
+                                        ? order.price.cny.toFixed(2) + ' ¥'
+                                        : null
                                     }
-                                    {totalPrice + ' ¥'}
                                 </span>
                             </div>
                         </div>

@@ -17,7 +17,7 @@ import {
     CHANGE_ORDER_STATUS_ERROR
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
-import {IProduct} from '../Products/IProducts'
+import {IProduct, IProductPrice} from '../Products/IProducts'
 
 export interface IOrder {
     id: number
@@ -26,6 +26,7 @@ export interface IOrder {
     statusPayment: string
     items: IProduct[]
     priceCny: number
+    price: IProductPrice
     provider: IProvider
     createdAt?: number
     updatedAt?: number
