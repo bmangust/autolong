@@ -18,7 +18,6 @@ class OrderItemWithRelationshipsResource extends JsonResource
      */
     public function toArray($request)
     {
-        $exchangeRate = new ExchangeRate();
         return [
             'id' => $this->id,
             'quantity' => $this->quantity,
