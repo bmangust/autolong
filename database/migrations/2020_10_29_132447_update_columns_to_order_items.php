@@ -16,7 +16,7 @@ class UpdateColumnsToOrderItems extends Migration
         Schema::table('order_items', function (Blueprint $table) {
             $table->decimal('price_cny', 8, 2)->change();
             $table->decimal('price_rub', 8, 2)->nullable()->change();
-            $table->decimal('price_rub', 8, 2)->nullable()->change();
+            $table->decimal('price_usd', 8, 2)->nullable()->change();
         });
     }
 
