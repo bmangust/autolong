@@ -106,7 +106,6 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
-        $order->orderItems()->delete();
         $order->delete();
         return response()->json([], 204);
     }
