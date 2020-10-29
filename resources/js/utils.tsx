@@ -62,7 +62,8 @@ export function moneyFormatter(price: IProductPrice, without = '') {
                }
                return (
                    <span key={key}>
-                   {Math.round(val)} {getSymbolFromCurrency(key)}
+                       {val ? parseFloat(val).toFixed(2) : +val}
+                       {getSymbolFromCurrency(key)}
                    </span>
                )
            })}

@@ -25,6 +25,7 @@ export interface IProduct {
     aboutRu?: string
     aboutEn?: string
     provider: IProvider
+    providerId?: number
     priceCny?: number
     vendorCode: string
     quantity?: number

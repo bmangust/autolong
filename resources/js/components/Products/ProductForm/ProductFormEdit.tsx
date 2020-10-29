@@ -52,6 +52,14 @@ const ProductFormEdit: React.FC<{
         const [priceState, setPriceState] =
             useState<IProductPrice>({rub: 0, usd: 0, cny: 0})
 
+        const providersOptions = providers.map(
+            (provider: IProvider) => {
+                return {
+                    label: provider.name,
+                    value: provider.id
+                }
+            })
+
         'id' in product
             ? defaultValues = {
                 nameRu: product.nameRu,
@@ -60,6 +68,9 @@ const ProductFormEdit: React.FC<{
                 aboutRu: product.aboutRu,
                 aboutEn: product.aboutEn,
                 image: product.image,
+                providerId: providersOptions
+                    .filter(({value}) =>
+                        value === product.providerId),
                 autolongNumber: +product.autolongNumber,
                 priceCny: product.price.cny,
                 priceRub: product.price.rub,
@@ -91,14 +102,6 @@ const ProductFormEdit: React.FC<{
         }
 
         const dispatch = useDispatch()
-
-        const providersOptions = providers.map(
-            (provider: IProvider) => {
-                return {
-                    label: provider.name,
-                    value: provider.id
-                }
-            })
 
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {

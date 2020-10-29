@@ -1,6 +1,7 @@
 {
     "orderStatuses": {
         "orderCreated": "Создан",
+        "orderConfirmed": "Подтвержден",
         "orderInProduction": "Находится в производстве",
         "orderSentToTheCarrier": "Отправлен грузоперевозчику",
         "orderDeliveredToTheCarrier": "Доставлен грузоперевозчику",
@@ -14,6 +15,8 @@
     },
     "paymentStatuses": {
         "paymentAwaiting": "Ожидает оплаты",
+        "paymentPrepaymentMade": "Сделана предоплата",
+        "paymentPaidInFull": "Оплачен полностью",
         "paymentAwaitingRefund": "Ожидает возврата оплаты",
         "paymentRefunded": "Оплата возвращена"
     }
