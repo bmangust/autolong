@@ -58,7 +58,8 @@ const ProductsCreate: React.FC = () => {
                                     ref={register}
                                     name="numbers" rows={4}
                                     placeholder='
-                                    Добавляйте каждый внутреннему номер через enter
+                                    Добавляйте каждый внутреннему
+                                    номер через enter
                                     '>
                         </textarea>
                             </div>

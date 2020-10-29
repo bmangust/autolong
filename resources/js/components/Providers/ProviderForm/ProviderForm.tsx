@@ -4,17 +4,23 @@ import React, {useEffect, useState} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useHistory} from 'react-router-dom'
-import {useForm} from 'react-hook-form'
+import {Controller, useForm} from 'react-hook-form'
+import Select from 'react-select'
+
 
 // Typescript
 import {ICountriesRootState, ICountry} from '../../Сountries/ICountries'
 import {ICatalog, ICatalogsRootState} from '../../Catalogs/ICatalogs'
+
+// Styles
+import classes from './ProviderForm.module.css'
 
 // Actions
 import {createProvider} from '../../../store/actions/providers'
 import {fetchCountries} from '../../../store/actions/countries'
 import {fetchCatalogs} from '../../../store/actions/catalogs'
 import SvgClose from '../../UI/iconComponents/Close'
+import SvgCatalog from '../../UI/iconComponents/Catalog'
 
 interface ICreateProviderData {
     name: string
@@ -36,7 +42,8 @@ interface ICreateProviderData {
 
 const ProviderForm: React.FC = () => {
     const {
-        register, handleSubmit, getValues
+        register, handleSubmit,
+        getValues, errors, control
     } = useForm<ICreateProviderData>()
 
     const dispatch = useDispatch()
@@ -59,17 +66,6 @@ const ProviderForm: React.FC = () => {
         dispatch(fetchCatalogs())
     }, [dispatch])
 
-    const providerFormSubmitHandler =
-        handleSubmit((formValues: ICreateProviderData) => {
-            if (catalogsArr.length) {
-                formValues.catalogs = catalogsArr
-            } else {
-                formValues.catalogs = [+formValues.catalogs]
-            }
-            dispatch(createProvider(formValues))
-            history.push('/providers')
-        })
-
     const onClickHandler = (e) => {
         e.preventDefault()
         const {catalogs} = getValues()
@@ -83,6 +79,33 @@ const ProviderForm: React.FC = () => {
         setCatalogsArr(newCatalogsArr)
     }
 
+    const countriesSelect = <Select
+        placeholder='Выберите страну'
+        classNamePrefix='select-mini'
+        className='select-mini'
+        isSearchable={false}
+    />
+
+    const countriesOptions = countries.map(
+        (country: ICountry) => {
+            return {
+                label: country.name,
+                value: country.id
+            }
+        })
+
+    const providerFormSubmitHandler =
+        handleSubmit((formValues: ICreateProviderData) => {
+            if (catalogsArr.length) {
+                formValues.catalogs = catalogsArr
+            } else {
+                formValues.catalogs = [+formValues.catalogs]
+            }
+            formValues.countryId = formValues.countryId.value
+            dispatch(createProvider(formValues))
+            history.push('/providers')
+        })
+
     return (
         <div className='card'>
             <div className="card-body">
@@ -93,18 +116,22 @@ const ProviderForm: React.FC = () => {
                                 Укажите поставщика
                             </label>
                             <input name="name" className='col-lg-10'
-                                   ref={register}
+                                   ref={register({required: true})}
                                    type="text"
                                    placeholder="Введите название для системы"/>
+                            {errors.name &&
+                            <small>Это поле обязательно</small>}
                         </div>
                         <div className="col-lg-6">
                             <label className='w-100' htmlFor='nameCompany'>
                                 Укажите название компании
                             </label>
                             <input name="nameCompany" type="text"
-                                   ref={register}
+                                   ref={register({required: true})}
                                    className='col-lg-10'
                                    placeholder="Введите название"/>
+                            {errors.name &&
+                            <small>Это поле обязательно</small>}
                         </div>
 
                         <div className="col-lg-12 mt-4 mb-3">
@@ -116,46 +143,58 @@ const ProviderForm: React.FC = () => {
                                 Укажите почту
                             </label>
                             <input name="email" className='col-lg-10 mb-2'
-                                   ref={register}
+                                   ref={register({required: true})}
                                    type="email" placeholder="Введите почту"/>
+                            {errors.email &&
+                            <small>Это поле обязательно</small>}
 
                             <label className='w-100' htmlFor='phone'>
                                 Укажите телефон
                             </label>
-                            <input name="phone" ref={register}
+                            <input name="phone"
+                                   ref={register({required: true})}
                                    placeholder="Введите номер телефона"
                                    type="tel" className='col-lg-10 mb-2'/>
+                            {errors.phone &&
+                            <small>Это поле обязательно</small>}
 
                             <label className='w-100' htmlFor='countryId'>
                                 Выберите страну
                             </label>
-                            <select name="countryId"
-                                    ref={register}
-                                    className='col-lg-10 mb-2'>
-                                <option disabled defaultValue=''>Страна</option>
-                                {countries.map((country: ICountry) => {
-                                    return (<option
-                                        key={country.id}
-                                        value={country.id}>
-                                        {country.name}</option>)
-                                })}
-                            </select>
+                            <div className='col-lg-10 mb-2 p-0'>
+                                <Controller
+                                    name="countryId"
+                                    as={countriesSelect}
+                                    defaultValue=''
+                                    options={countriesOptions}
+                                    control={control}
+                                    rules={{required: true}}
+                                />
+                                {errors.countryId &&
+                                <small>Это поле обязательно</small>}
+                            </div>
                         </div>
 
                         <div className="col-lg-6">
                             <label className='w-100' htmlFor='website'>
                                 Укажите адрес сайта
                             </label>
-                            <input name="website" ref={register}
+                            <input name="website"
+                                   ref={register({required: true})}
                                    placeholder="Введите адрес сайта"
                                    type="text" className='col-lg-10 mb-2'/>
+                            {errors.website &&
+                            <small>Это поле обязательно</small>}
 
                             <label className='w-100' htmlFor='wechat'>
                                 Укажите Wechat
                             </label>
-                            <input name="wechat" ref={register}
+                            <input name="wechat"
+                                   ref={register({required: true})}
                                    className='col-lg-10 mb-2'
                                    type="text" placeholder="Wechat"/>
+                            {errors.wechat &&
+                            <small>Это поле обязательно</small>}
                         </div>
 
                         <div className="col-lg-12 mt-4 mb-3">
@@ -246,18 +285,30 @@ const ProviderForm: React.FC = () => {
                                 : null}</h2>
                         </div>
 
+
                         {catalogsArr.length
-                            ? catalogsArr.map(catId => {
-                                return (
-                                    <div className='col-12' key={catId}>
-                                        {catalogs.find(({id}) =>
-                                            id === catId)?.name}
-                                        <SvgClose onClick={() =>
-                                            onDeleteHandler(catId)}/>
-                                    </div>
-                                )
-                            })
+                            ?
+                            <div className='col-11'>
+                                <div className={classes.catalogs}>
+                                    {catalogsArr.map(catId => {
+                                        return (
+                                            <div
+                                                className={classes.catalogsItem}
+                                                key={catId}>
+                                                <div>
+                                                    <SvgCatalog/>
+                                                    {catalogs.find(({id}) =>
+                                                        id === catId)?.name}
+                                                </div>
+                                                <SvgClose onClick={() =>
+                                                    onDeleteHandler(catId)}/>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                            </div>
                             : null}
+
 
                         <div className="col-lg-6">
                             <label className='w-100'>
@@ -285,8 +336,10 @@ const ProviderForm: React.FC = () => {
                                     }
                                 })}
                             </select>
-                            <button onClick={onClickHandler}
-                                    className='mb-4 d-block small'>
+                            <button
+                                onClick={onClickHandler}
+                                className='mb-4 d-block small
+                                 btn btn-text'>
                                 + Привязать ещё один каталог
                             </button>
                         </div>
