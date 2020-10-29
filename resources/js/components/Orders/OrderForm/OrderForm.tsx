@@ -116,13 +116,13 @@ const OrderForm: React.FC = () => {
                         <div className="row">
                             <div className="col-lg-7">
                                 <label htmlFor="articles">
-                                    Добавить товар по артикулу
+                                    Добавить товар по внутреннему номер
                                 </label>
                                 <textarea
                                     ref={register2}
                                     name="numbers" rows={4}
                                     placeholder='
-                            Добавляйте каждый артикул через enter
+                            Добавляйте каждый внутреннему номер через enter
                             '>
                                 </textarea>
                             </div>

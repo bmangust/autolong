@@ -52,13 +52,13 @@ const ProductsCreate: React.FC = () => {
                         <div className="row">
                             <div className="col-lg-7">
                                 <label htmlFor="articles">
-                                    Добавить товары по артикулу
+                                    Добавить товары по внутреннему номер
                                 </label>
                                 <textarea
                                     ref={register}
                                     name="numbers" rows={4}
                                     placeholder='
-                                    Добавляйте каждый артикул через enter
+                                    Добавляйте каждый внутреннему номер через enter
                                     '>
                         </textarea>
                             </div>
