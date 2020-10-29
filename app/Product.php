@@ -18,6 +18,14 @@ class Product extends Model
         });
     }
 
+    public function setAboutRuAttribute($value) {
+        $this->attributes['about_ru'] = preg_replace('#<script.*<\/script>#','', $value);
+    }
+
+    public function setAboutEnAttribute($value) {
+        $this->attributes['about_en'] = preg_replace('#<script.*<\/script>#','', $value);
+    }
+
     public function catalog()
     {
         return $this->belongsTo('App\Catalog');
