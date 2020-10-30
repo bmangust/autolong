@@ -18,21 +18,11 @@ class ProviderController extends Controller
         $names = [
             'name' => 'имя поставщика',
             'nameCompany' => 'название компании',
-            'email' => 'почта',
-            'website' => 'сайт',
-            'phone' => 'номер телефона',
-            'wechat' => 'wechat',
-            'countryId' => 'страна'
         ];
 
         return Validator::make($data, [
             'name' => ['required'],
             'nameCompany' => ['required'],
-            'email' => ['required'],
-            'website' => ['required'],
-            'phone' => ['required'],
-            'wechat' => ['required'],
-            'countryId' => ['required']
         ], $messages, $names);
     }
     /**

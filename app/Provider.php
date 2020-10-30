@@ -26,6 +26,14 @@ class Provider extends Model
       'beneficiary_name'
     ];
 
+    protected static function booted()
+    {
+        static::deleted(function ($provider) {
+            $provider->catalogs()->delete();
+            $provider->products()->delete();
+        });
+    }
+
     public function catalogs()
     {
         return $this->hasMany('App\Catalog');
