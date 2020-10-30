@@ -147,7 +147,7 @@ const ProviderForm: React.FC = () => {
                                    ref={register({required: true})}
                                    className='col-lg-10'
                                    placeholder="Введите название"/>
-                            {errors.name &&
+                            {errors.nameCompany &&
                             <small>Это поле обязательно</small>}
                         </div>
 
@@ -160,20 +160,16 @@ const ProviderForm: React.FC = () => {
                                 Укажите почту
                             </label>
                             <input name="email" className='col-lg-10 mb-2'
-                                   ref={register({required: true})}
+                                   ref={register}
                                    type="email" placeholder="Введите почту"/>
-                            {errors.email &&
-                            <small>Это поле обязательно</small>}
 
                             <label className='w-100' htmlFor='phone'>
                                 Укажите телефон
                             </label>
                             <input name="phone"
-                                   ref={register({required: true})}
+                                   ref={register}
                                    placeholder="Введите номер телефона"
                                    type="tel" className='col-lg-10 mb-2'/>
-                            {errors.phone &&
-                            <small>Это поле обязательно</small>}
 
                             <label className='w-100' htmlFor='countryId'>
                                 Выберите страну
@@ -185,10 +181,7 @@ const ProviderForm: React.FC = () => {
                                     defaultValue=''
                                     options={countriesOptions}
                                     control={control}
-                                    rules={{required: true}}
                                 />
-                                {errors.countryId &&
-                                <small>Это поле обязательно</small>}
                             </div>
                         </div>
 
@@ -197,21 +190,17 @@ const ProviderForm: React.FC = () => {
                                 Укажите адрес сайта
                             </label>
                             <input name="website"
-                                   ref={register({required: true})}
+                                   ref={register}
                                    placeholder="Введите адрес сайта"
                                    type="text" className='col-lg-10 mb-2'/>
-                            {errors.website &&
-                            <small>Это поле обязательно</small>}
 
                             <label className='w-100' htmlFor='wechat'>
                                 Укажите Wechat
                             </label>
                             <input name="wechat"
-                                   ref={register({required: true})}
+                                   ref={register}
                                    className='col-lg-10 mb-2'
                                    type="text" placeholder="Wechat"/>
-                            {errors.wechat &&
-                            <small>Это поле обязательно</small>}
                         </div>
 
                         <div className="col-lg-12 mt-4 mb-3">
@@ -351,10 +340,7 @@ const ProviderForm: React.FC = () => {
                                     }
                                     defaultValue=''
                                     control={control}
-                                    rules={{required: true}}
                                 />
-                                {errors.catalogs &&
-                                <small>Это поле обязательно</small>}
                             </div>
 
                             {/* <button*/}
