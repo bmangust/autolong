@@ -33,12 +33,14 @@ const OrderItems: React.FC<IOrderItems> =
                 return (
                     <div key={item.id + item.nameRu}
                          className={classes.products + ' row mb-2'}>
-                        <div className={classes.productImg + ' col-2'}>
+                        <div className={classes.productImg + ' col-1'}>
                             <img src={item.image ||
                             '/imgs/placeholder-product-image.png'}
-                                 alt={item.nameRu}/>
+                                 alt={item.nameRu}
+                                className='pt-2'
+                            />
                         </div>
-                        <div className="col-4">
+                        <div className="col-4 pr-0">
                             <p className={classes.productName}>
                                 {item.nameRu}
                             </p>
@@ -50,13 +52,13 @@ const OrderItems: React.FC<IOrderItems> =
                                    onChange={(e) => onChange(e, item.id)}
                                    type="number"/>
                         </div>
-                        <div className='col-3'>
+                        <div className='col-4 pr-0'>
                             <p className={classes.productPrices}>
                                 <input
                                     min={0}
                                     step={0.01}
                                     className={classes.productCount
-                                    + ' mt-0 pr-1 mr-2'}
+                                    + ' mt-0'}
                                     name="priceCny"
                                     value={item.price.cny}
                                     onChange={(e) =>
@@ -68,9 +70,9 @@ const OrderItems: React.FC<IOrderItems> =
                                 }
                             </p>
                         </div>
-                        <div className="col-1">
+                        <div className="col-1 text-right pr-4">
                             <SvgClose onClick={() => onDelete(item.id)}
-                                      className='mt-3'/>
+                                      className='mt-3 deleteButton'/>
                         </div>
                     </div>
                 )

@@ -19,7 +19,6 @@
     line-height: 15px;
     color: #3A405F;
     font-weight: 700;
-    padding-left: 15px;
     margin-bottom: 0;
 }
 
@@ -39,10 +38,11 @@
     background: white;
     height: 30px;
     margin-top: 10px;
+    margin-right: 25px;
     border: 1px solid #EBEBEB;
     box-sizing: border-box;
     border-radius: 10px;
-    width: 75px;
+    width: 110px;
     padding: 11px 11px !important;
 }
 

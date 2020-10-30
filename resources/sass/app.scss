@@ -60,10 +60,12 @@ a {
 
 .deleteButton:hover {
     cursor: pointer;
+    transition: 0.2s all;
 }
 
-.deleteButton:hover svg path {
-    fill: var(--orange);
+.deleteButton:hover path {
+    color: var(--orange);
+    transition: 0.2s all;
 }
 
 .react-bootstrap-table {
