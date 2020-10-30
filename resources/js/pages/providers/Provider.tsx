@@ -2,14 +2,17 @@
 import React, {useEffect} from 'react'
 
 // Third-party
-import {NavLink, useParams} from 'react-router-dom'
+import {NavLink, useHistory, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
 // Css
 import classes from './Providers.module.css'
 
 // Actions
-import {fetchProviderById} from '../../store/actions/providers'
+import {
+    deleteProviderById,
+    fetchProviderById
+} from '../../store/actions/providers'
 
 // Typescript
 import {
@@ -25,6 +28,7 @@ const Provider: React.FC<IProvider> = () => {
     const {id}: any = useParams()
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const {provider, loading, error} = useSelector(
         (state: IProvidersRootState) => ({
@@ -37,6 +41,11 @@ const Provider: React.FC<IProvider> = () => {
     useEffect(() => {
         dispatch(fetchProviderById(id))
     }, [dispatch, id])
+
+    const onDeleteHandler = (id) => {
+        dispatch(deleteProviderById(id))
+        history.push('/providers')
+    }
 
     if (error) {
         return <Error/>
@@ -138,10 +147,17 @@ const Provider: React.FC<IProvider> = () => {
                                 </div>
                             </div>
 
-                            <NavLink to={`/provideredit/${id}`}
-                                     className='editButton'>
-                                Редактировать информацию
-                            </NavLink>
+                            <div className='d-flex justify-content-between'>
+                                <NavLink to={`/provideredit/${id}`}
+                                         className='editButton'>
+                                    Редактировать информацию
+                                </NavLink>
+                                <button onClick={() =>
+                                    onDeleteHandler(provider.id)}
+                                        className='btn btn-danger'>
+                                    Удалить поставщика
+                                </button>
+                            </div>
                         </div>
                     </div>
                 </div>

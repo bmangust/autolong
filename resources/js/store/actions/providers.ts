@@ -1,4 +1,4 @@
-import axios, {AxiosError} from 'axios';
+import axios, {AxiosError} from 'axios'
 import {
     CREATE_PROVIDER_ERROR,
     CREATE_PROVIDER_START,
@@ -8,8 +8,9 @@ import {
     FETCH_PROVIDERS_SUCCESS,
     FETCH_PROVIDER_ERROR,
     FETCH_PROVIDER_START,
-    FETCH_PROVIDER_SUCCESS
-} from './actionTypes';
+    FETCH_PROVIDER_SUCCESS,
+    DELETE_PROVIDER_BY_ID
+} from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
 
@@ -57,7 +58,7 @@ export const fetchProviderById = (id) => async dispatch => {
 
 export const createProvider = (data) => async dispatch => {
     await dispatch({
-        type: CREATE_PROVIDER_START,
+        type: CREATE_PROVIDER_START
     })
     const url = '/api/providers'
     axios
@@ -75,5 +76,18 @@ export const createProvider = (data) => async dispatch => {
                 type: CREATE_PROVIDER_ERROR,
                 payload: error.response
             })
+        })
+}
+
+export const deleteProviderById = (id) => async dispatch => {
+    const url = `/api/providers/${id}`
+    axios
+        .delete(url)
+        .then((answer) => {
+            dispatch({
+                type: DELETE_PROVIDER_BY_ID,
+                payload: id
+            })
+            toast.success('Поставщик удален')
         })
 }
