@@ -275,13 +275,13 @@ const ProviderForm: React.FC = () => {
 
                             <label className='w-100'
                                    htmlFor='beneficiaryBankCode'>
-                                Beneficiary Bank Code
+                                Bank Account Number
                             </label>
                             <input
                                 name="beneficiaryBankCode"
                                 type="text" ref={register}
                                 className='col-lg-10 mb-2'
-                                placeholder="Beneficiary Bank Code"
+                                placeholder="Bank Account Number"
                             />
                         </div>
 

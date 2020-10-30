@@ -122,7 +122,7 @@ const Provider: React.FC<IProvider> = () => {
                                     <p>Address</p>
                                     <p>Beneficiary Account Name </p>
                                     <p>Beneficiary Bank Address</p>
-                                    <p>Beneficiary Bank Code </p>
+                                    <p>Bank Account Number </p>
                                     <p>SWIFT Address</p>
                                 </div>
                                 <div className="col-lg-7 infoBlockText">
