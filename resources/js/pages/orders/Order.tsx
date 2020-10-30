@@ -162,7 +162,7 @@ const Order: React.FC<IOrder> = () => {
 
                 </div>
 
-                {'provider' in order
+                {'provider' in order && order.provider
                     ? <div className="col-lg-4">
                         <div className="card">
                             <div className="card-body-info">

@@ -236,7 +236,7 @@ const Product: React.FC = () => {
             </div>
             <div className='col-lg-4'>
                 <div className="card">
-                    {'provider' in product
+                    {'provider' in product && product.provider
                         ? <div className="card-body">
                             <p className="infoBlockHeaders mb-1">
                                 Поставщик</p>
