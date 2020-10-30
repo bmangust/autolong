@@ -30,7 +30,6 @@ class Provider extends Model
     {
         static::deleted(function ($provider) {
             $provider->catalogs()->delete();
-            $provider->products()->delete();
         });
     }
 
