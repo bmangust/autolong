@@ -29,7 +29,7 @@ interface ICreateOrderData {
 const OrderForm: React.FC = () => {
     let totalPrice = 0
     const {
-        register, handleSubmit, control, errors
+        register, handleSubmit, control, errors, setValue
     } = useForm<ICreateOrderData>()
 
     const {
@@ -50,6 +50,23 @@ const OrderForm: React.FC = () => {
         }))
 
     const [items, setItems] = useState([])
+
+    const providersOptions = providers.map(
+        (provider: IProvider) => {
+            return {
+                label: provider.name,
+                value: provider.id
+            }
+        })
+
+
+    if (items.length) {
+        setValue('providerId',
+            providersOptions
+                .filter(({value}) =>
+                    value === items[0]
+                        ?.providerId)[0])
+    }
 
     useEffect(() => {
         dispatch(fetchProviders())
@@ -78,14 +95,6 @@ const OrderForm: React.FC = () => {
         setItems(newItems)
     }
 
-    const providersOptions = providers.map(
-        (provider: IProvider) => {
-            return {
-                label: provider.name,
-                value: provider.id
-            }
-        })
-
     const select = <Select
         placeholder='Выберите поставщика'
         classNamePrefix='select-mini'
@@ -109,7 +118,6 @@ const OrderForm: React.FC = () => {
 
     return (
         <>
-
             <form onSubmit={getProductSubmitHandler}>
                 <div className="card mb-3">
                     <div className="card-body">
