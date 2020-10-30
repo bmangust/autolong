@@ -10,6 +10,8 @@ import {
     FETCH_IMPORTER_SUCCESS
 } from './actionTypes';
 import axios, {AxiosError} from 'axios';
+import {toast} from 'react-toastify'
+import {createNotyMsg} from '../../utils'
 
 export const fetchImporters = () => async dispatch => {
     await dispatch({
@@ -67,6 +69,8 @@ export const createImporter = (data) => async dispatch => {
                 type: CREATE_IMPORTER_SUCCESS,
                 payload: answer.data
             })
+            toast.success(
+                createNotyMsg(answer.data.nameRu, 'импортер создан'))
         })
         .catch((error: AxiosError) => {
             dispatch({

@@ -706,3 +706,145 @@ html select.select-mini.loading {
 html select.select-mini:focus {
     box-shadow: none;
 }
+
+.Toastify {
+    &__toast-container {
+        width: 350px;
+    }
+
+    &__title {
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 15px;
+        color: #3A405F;
+        margin-bottom: 3px;
+    }
+
+    &__desc {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 15px;
+        color: #949599;
+        margin-bottom: 0;
+    }
+
+    &__toast {
+        box-shadow: 0 5px 15px #EBEBEB;
+        border-radius: 10px;
+        padding: 14px 15px 14px 40px;
+
+        font-weight: 600;
+        font-size: 12px;
+        line-height: 15px;
+        color: #3A405F;
+        position: relative;
+    }
+
+    &__close-button {
+        color: #3A405F;
+    }
+
+    &__toast--success {
+        background: #fff;
+    }
+
+    &__toast--success:before {
+        content: '';
+        position: absolute;
+        height: 40px;
+        width: 2px;
+        background: #219653;
+        border-radius: 5px;
+        left: 3px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+    }
+
+    &__toast--success:after {
+        content: '';
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background: url("/svg/noty-success.svg");
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+    }
+
+    &__progress-bar--success {
+        background-color: #219653;
+    }
+
+    &__toast--warning {
+        background: #fff;
+    }
+
+    &__toast--warning:before {
+        content: '';
+        position: absolute;
+        height: 40px;
+        width: 2px;
+        background: #F2C94C;
+        border-radius: 5px;
+        left: 3px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+    }
+
+    &__toast--warning:after {
+        content: '';
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background: url("/svg/noty-warning.svg");
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+    }
+
+    &__progress-bar--warning {
+        background-color: #F2C94C;
+    }
+
+    &__toast--error {
+        background: #fff;
+    }
+
+    &__toast--error:before {
+        content: '';
+        position: absolute;
+        height: 40px;
+        width: 2px;
+        background: #EB5757;
+        border-radius: 5px;
+        left: 3px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+    }
+
+    &__toast--error:after {
+        content: '';
+        position: absolute;
+        height: 15px;
+        width: 15px;
+        background: url("/svg/noty-error.svg");
+        left: 10px;
+        top: 0;
+        bottom: 0;
+        margin: auto 0;
+    }
+
+    &__progress-bar--error {
+        background-color: #EB5757;
+    }
+
+    &__toast-body {
+        background: #fff;
+
+    }
+}

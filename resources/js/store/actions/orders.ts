@@ -19,6 +19,7 @@ import {
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
+import {createNotyMsg} from '../../utils'
 
 export const fetchOrders = () => async dispatch => {
     await dispatch({
@@ -116,7 +117,8 @@ export const fetchItemsByVendors = (data) => async dispatch => {
                 payload: answer.data
             })
             answer.data.filter(el => !('id' in el)).map(({number}) => {
-                toast.warn(`${number} - артикул не найден`)
+                toast.warn(createNotyMsg(number,
+                    'артикул не найден'))
             })
         }).catch((error: AxiosError) => {
         dispatch({
@@ -142,7 +144,8 @@ export const changeOrderStatus = (id, data) => async dispatch => {
                 type: CHANGE_ORDER_STATUS_SUCCESS,
                 payload: answer.data
             })
-            toast.success(`${answer.data.name} - статус заказа изменен`)
+            toast.success(createNotyMsg(answer.data.name,
+                'статус заказа изменен'))
         }).catch((error: AxiosError) => {
         dispatch({
             type: CHANGE_ORDER_STATUS_ERROR,

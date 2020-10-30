@@ -116,3 +116,12 @@ export function currencyConversion(amount: number, currencyCode: string) {
     }
     return currency
 }
+
+export const createNotyMsg = (title, desc) => {
+    return (
+        <>
+            <p className='Toastify__title'>{title}</p>
+            <p className='Toastify__desc'>{desc}</p>
+        </>
+    )
+}

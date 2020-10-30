@@ -7,6 +7,8 @@ import {
     FETCH_CONTAINER_SUCCESS
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
+import {toast} from 'react-toastify'
+import {createNotyMsg} from '../../utils'
 
 export const fetchContainers = () => async dispatch => {
     await dispatch({
@@ -43,6 +45,8 @@ export const fetchContainerById = (id) => async dispatch => {
                 type: FETCH_CONTAINER_SUCCESS,
                 payload: answer.data
             })
+            toast.success(
+                createNotyMsg(answer.data.name, 'контейнер создан'))
         })
         .catch((error: AxiosError) => {
             dispatch({

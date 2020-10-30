@@ -10,6 +10,8 @@ import {
     FETCH_PROVIDER_START,
     FETCH_PROVIDER_SUCCESS
 } from './actionTypes';
+import {toast} from 'react-toastify'
+import {createNotyMsg} from '../../utils'
 
 export const fetchProviders = () => async dispatch => {
     await dispatch({
@@ -65,6 +67,8 @@ export const createProvider = (data) => async dispatch => {
                 type: CREATE_PROVIDER_SUCCESS,
                 payload: answer.data
             })
+            toast.success(
+                createNotyMsg(answer.data.name, 'поставщик создан'))
         })
         .catch((error: AxiosError) => {
             dispatch({

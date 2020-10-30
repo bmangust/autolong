@@ -10,6 +10,8 @@ import {
     FETCH_CATALOG_SUCCESS
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
+import {toast} from 'react-toastify'
+import {createNotyMsg} from '../../utils'
 
 export const fetchCatalogs = () => async dispatch => {
     await dispatch({
@@ -75,6 +77,8 @@ export const createCatalog = (data) => async dispatch => {
                 type: CREATE_CATALOG_SUCCESS,
                 payload: answer.data
             })
+            toast.success(
+                createNotyMsg(answer.data.name, 'каталог создан'))
         })
         .catch((error: AxiosError) => {
             dispatch({
