@@ -6,6 +6,7 @@ import {
     CREATE_PROVIDER_ERROR,
     CREATE_PROVIDER_START,
     CREATE_PROVIDER_SUCCESS,
+    DELETE_PROVIDER_BY_ID,
     FETCH_PROVIDERS_ERROR,
     FETCH_PROVIDERS_START,
     FETCH_PROVIDERS_SUCCESS,
@@ -60,6 +61,11 @@ export default function providersReducer(
         case CREATE_PROVIDER_ERROR:
             return {
                 ...state, loading: false, error: action.payload
+            }
+        case DELETE_PROVIDER_BY_ID:
+            return {
+                ...state, providers: state.providers.filter(({id}) =>
+                    id !== action.payload), provider: {}
             }
         default:
             return state

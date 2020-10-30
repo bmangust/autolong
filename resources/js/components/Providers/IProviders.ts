@@ -7,7 +7,7 @@ import {
     FETCH_PROVIDER_ERROR,
     CREATE_PROVIDER_START,
     CREATE_PROVIDER_SUCCESS,
-    CREATE_PROVIDER_ERROR
+    CREATE_PROVIDER_ERROR, DELETE_PROVIDER_BY_ID
 } from '../../store/actions/actionTypes'
 import {ICountry} from '../Сountries/ICountries'
 
@@ -96,7 +96,13 @@ interface ICreateProviderError {
     payload: any
 }
 
+interface IDeleteProviderById {
+    type: typeof DELETE_PROVIDER_BY_ID
+    payload: number
+}
+
 export type IProvidersActionTypes =
     IFetchProvidersStart | IFetchProvidersSuccess | IFetchProvidersError |
     IFetchProviderStart | IFetchProviderSuccess | IFetchProviderError |
-    ICreateProviderStart | ICreateProviderSuccess | ICreateProviderError
+    ICreateProviderStart | ICreateProviderSuccess | ICreateProviderError |
+    IDeleteProviderById

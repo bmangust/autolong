@@ -15,7 +15,9 @@ import {
     UPDATE_PRODUCT_ERROR,
     UPDATE_PRODUCT_START,
     UPDATE_PRODUCT_SUCCESS,
-    FETCH_BY_VENDOR_START, DELETE_PRODUCT_BY_ID
+    FETCH_BY_VENDOR_START,
+    DELETE_PRODUCT_BY_ID,
+    UPDATE_PRODUCT_IMAGE
 } from '../actions/actionTypes'
 
 // Typescript
@@ -105,6 +107,10 @@ export default function productsReducer(
             return {
                 ...state, products: state.products.filter(({id}) =>
                     id !== action.payload), product: {}
+            }
+        case UPDATE_PRODUCT_IMAGE:
+            return {
+                ...state
             }
         default:
             return state

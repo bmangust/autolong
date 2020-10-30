@@ -14,9 +14,10 @@ import {
     FETCH_PRODUCT_PRICE,
     FETCH_BY_VENDOR_START,
     FETCH_BY_VENDOR_SUCCESS,
-    FETCH_BY_VENDOR_ERROR, DELETE_PRODUCT_BY_ID
+    FETCH_BY_VENDOR_ERROR,
+    DELETE_PRODUCT_BY_ID,
+    UPDATE_PRODUCT_IMAGE
 } from './actionTypes'
-
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
@@ -97,20 +98,12 @@ export const createProduct = (data) => async dispatch => {
 }
 
 export const updateProduct = (id, data) => async dispatch => {
-    const formData = new FormData()
-    Object.entries(data).map(([key, val]) => {
-        if (Array.isArray(val)) {
-            return formData.append(key, JSON.stringify(val))
-        } else {
-            return formData.append(key, val)
-        }
-    })
     await dispatch({
         type: UPDATE_PRODUCT_START
     })
     const url = `/api/products/${id}`
     axios
-        .put(url, formData)
+        .put(url, data)
         .then((answer) => {
             dispatch({
                 type: UPDATE_PRODUCT_SUCCESS,
@@ -178,5 +171,25 @@ export const deleteProductById = (id) => async dispatch => {
                 payload: id
             })
             toast.success('Товар удален')
+        })
+}
+
+export const updateProductImageById = (id, data) => async dispatch => {
+    const formData = new FormData()
+    Object.entries(data).forEach(([key, val]) => {
+        if (Array.isArray(val)) {
+            return formData.append(key, JSON.stringify(val))
+        } else {
+            return formData.append(key, val)
+        }
+    })
+    const url = `/api/products/${id}/updateimage`
+    axios
+        .post(url, formData)
+        .then((answer) => {
+            dispatch({
+                type: UPDATE_PRODUCT_IMAGE,
+                payload: {url: answer.data, id}
+            })
         })
 }
