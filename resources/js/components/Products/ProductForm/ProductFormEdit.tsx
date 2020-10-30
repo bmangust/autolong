@@ -17,7 +17,8 @@ import {IProvider} from '../../Providers/IProviders'
 // Actions
 import {
     createProduct,
-    updateProduct
+    updateProduct,
+    updateProductImageById
 } from '../../../store/actions/products'
 
 // App
@@ -50,7 +51,7 @@ const ProductFormEdit: React.FC<{
 
         const [show, setShow] = useState(true)
         const [priceState, setPriceState] =
-            useState<IProductPrice>({rub: 0, usd: 0, cny: 0})
+            useState<IProductPrice>({rub: '0', usd: '0', cny: '0'})
 
         const providersOptions = providers.map(
             (provider: IProvider) => {
@@ -70,7 +71,7 @@ const ProductFormEdit: React.FC<{
                 image: product.image,
                 providerId: providersOptions
                     .filter(({value}) =>
-                        value === product.providerId),
+                        value === product.providerId)[0],
                 autolongNumber: +product.autolongNumber,
                 priceCny: product.price.cny,
                 priceRub: product.price.rub,
@@ -111,14 +112,17 @@ const ProductFormEdit: React.FC<{
 
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {
-                if (formValues.imageFile[0]) {
-                    formValues.image = formValues.imageFile[0]
-                }
                 formValues.providerId = formValues.providerId.value
-                // @ts-ignore
                 if ('id' in product && product.id) {
                     dispatch(updateProduct(product.id, formValues))
+                    if (formValues.imageFile[0]) {
+                        dispatch(updateProductImageById(product.id,
+                            {image: formValues.imageFile[0]}))
+                    }
                 } else if ('number' in product) {
+                    if (formValues.imageFile[0]) {
+                        formValues.image = formValues.imageFile[0]
+                    }
                     dispatch(createProduct(formValues))
                 }
                 setShow(false)
@@ -128,6 +132,14 @@ const ProductFormEdit: React.FC<{
             const value = e.target.value
             setPriceState(currencyConversion(+value, currencyCode))
         }
+
+        const fileInput =
+            <input
+                type="file"
+                name="imageFile"
+                ref={register}
+                className="custom-file-input"
+            />
 
         const providerSelect = <Select
             placeholder='Выберите поставщика'
@@ -188,16 +200,10 @@ const ProductFormEdit: React.FC<{
                                                    ref={register}
                                                    name='image'
                                                    type="hidden"/>
-                                            <input
-                                                id="inputGroupFile01"
-                                                type="file"
-                                                name="imageFile"
-                                                ref={register}
-                                                className="custom-file-input"
-                                            />
+                                            {fileInput}
                                             <label
                                                 className="custom-file-label"
-                                                htmlFor="inputGroupFile01">
+                                                htmlFor="imageFile">
                                                 Выберите файл
                                             </label>
                                         </div>
@@ -331,6 +337,8 @@ const ProductFormEdit: React.FC<{
                                             onChange={(e) =>
                                                 onChangePrice(e, 'usd')}
                                             value={priceState.usd}
+                                            min={0}
+                                            step={0.01}
                                             className='w-100'
                                             placeholder="0"
                                         />
@@ -350,6 +358,8 @@ const ProductFormEdit: React.FC<{
                                             onChange={(e) =>
                                                 onChangePrice(e, 'rub')}
                                             value={priceState.rub}
+                                            min={0}
+                                            step={0.01}
                                             className='w-100'
                                             placeholder="0"
                                         />

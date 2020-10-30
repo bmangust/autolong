@@ -15,7 +15,7 @@ import {
     FETCH_BY_VENDOR_SUCCESS,
     FETCH_BY_VENDOR_ERROR,
     FETCH_BY_VENDOR_START,
-    DELETE_PRODUCT_BY_ID
+    DELETE_PRODUCT_BY_ID, UPDATE_PRODUCT_IMAGE
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
 
@@ -40,9 +40,9 @@ export interface IProduct {
 }
 
 export interface IProductPrice {
-    rub?: number
-    usd?: number
-    cny: number
+    rub?: string
+    usd?: string
+    cny: string
 }
 
 export interface IProductAutolong {
@@ -164,10 +164,18 @@ interface IDeleteProductById {
     payload: number
 }
 
+interface IUpdateProductImage {
+    type: typeof UPDATE_PRODUCT_IMAGE
+    payload: {
+        id: number
+        url: string
+    }
+}
+
 export type IProductsActionTypes =
     IFetchProductsStart | IFetchProductsSuccess | IFetchProductsError |
     IFetchProductStart | IFetchProductSuccess | IFetchProductError |
     ICreateProductStart | ICreateProductSuccess | ICreateProductError |
     IUpdateProductStart | IUpdateProductSuccess | IUpdateProductError |
     IFetchProductPrice | IFetchByVendorStart | IFetchByVendorSuccess |
-    IFetchByVendorError | IDeleteProductById
+    IFetchByVendorError | IDeleteProductById | IUpdateProductImage
