@@ -99,73 +99,76 @@ const Catalog: React.FC<ICatalog> = () => {
                    rel="noreferrer">
                     Скачать
                 </a>
-                <div className="card">
-                    <div className="card-body-info">
-                        <p className="infoBlockHeaders mb-1">
-                            Поставщик
-                        </p>
-                        <p className="infoBlockText">
-                            {'name' in provider
-                                ? provider.name
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Страна
-                        </p>
-                        <p className="infoBlockText">
-                            {'country' in provider
-                                ? provider.country
-                                    ? provider.country.name : ''
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Почта
-                        </p>
-                        <p className="infoBlockText">
-                            {'email' in provider
-                                ? provider.email
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Телефон
-                        </p>
-                        <p className="infoBlockText">
-                            {'phone' in provider
-                                ? provider.phone
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Wechat
-                        </p>
-                        <p className="infoBlockText">
-                            {'wechat' in provider
-                                ? provider.wechat
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Сайт
-                        </p>
-                        <p className="infoBlockText">
-                            <a href={'website' in provider
-                                ? provider.website
-                                : ''}
-                               target="_blank"
-                               rel="noreferrer">
-                                {'website' in provider
+                {'provider' in catalog && catalog.provider
+                    ? <div className="card">
+                        <div className="card-body-info">
+                            <p className="infoBlockHeaders mb-1">
+                                Поставщик
+                            </p>
+                            <p className="infoBlockText">
+                                {'name' in provider
+                                    ? provider.name
+                                    : ''}
+                            </p>
+                            <p className="infoBlockHeaders mb-1">
+                                Страна
+                            </p>
+                            <p className="infoBlockText">
+                                {'country' in provider
+                                    ? provider.country
+                                        ? provider.country.name : ''
+                                    : ''}
+                            </p>
+                            <p className="infoBlockHeaders mb-1">
+                                Почта
+                            </p>
+                            <p className="infoBlockText">
+                                {'email' in provider
+                                    ? provider.email
+                                    : ''}
+                            </p>
+                            <p className="infoBlockHeaders mb-1">
+                                Телефон
+                            </p>
+                            <p className="infoBlockText">
+                                {'phone' in provider
+                                    ? provider.phone
+                                    : ''}
+                            </p>
+                            <p className="infoBlockHeaders mb-1">
+                                Wechat
+                            </p>
+                            <p className="infoBlockText">
+                                {'wechat' in provider
+                                    ? provider.wechat
+                                    : ''}
+                            </p>
+                            <p className="infoBlockHeaders mb-1">
+                                Сайт
+                            </p>
+                            <p className="infoBlockText">
+                                <a href={'website' in provider
                                     ? provider.website
                                     : ''}
-                            </a>
-                        </p>
-                        <p className="infoBlockHeaders mb-1 mt-5">
-                            Перейти на страницу поставщика
-                        </p>
-                        <NavLink to={'id' in provider
-                            ? '/provider/' + provider.id
-                            : ''}>
-                            <SvgArrowRight/>
-                        </NavLink>
+                                   target="_blank"
+                                   rel="noreferrer">
+                                    {'website' in provider
+                                        ? provider.website
+                                        : ''}
+                                </a>
+                            </p>
+                            <p className="infoBlockHeaders mb-1 mt-5">
+                                Перейти на страницу поставщика
+                            </p>
+                            <NavLink to={'id' in provider
+                                ? '/provider/' + provider.id
+                                : ''}>
+                                <SvgArrowRight/>
+                            </NavLink>
+                        </div>
                     </div>
-                </div>
+                    : null
+                }
             </div>
 
         </div>
