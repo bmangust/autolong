@@ -8,10 +8,10 @@
     <title>Autolong</title>
     <link rel="shortcut icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml"/>
     <link rel="icon" href="{{ asset('favicon.svg') }}" type="image/svg+xml"/>
-    <link href="{{mix('css/app.css')}}" rel="stylesheet" type="text/css">
+    <link href="{{asset('css/app.css?v=0.1.1')}}" rel="stylesheet" type="text/css">
 </head>
 <body>
 <div id="root"></div>
-<script src="{{asset('js/app.js')}}"></script>
+<script src="{{asset('js/app.js?v=0.1.1')}}"></script>
 </body>
 </html>
