@@ -16,9 +16,6 @@ const Layout: React.FC = (props) => {
                 <div className="row">
                     <div className='col-lg-2 p-0'>
                         <Sidebar/>
-                        <span
-                        className="version"
-                        >Версия от 26.10.2020</span>
                     </div>
                     <main role='main' className="col-lg-10 pl-5">
                         <Header/>
