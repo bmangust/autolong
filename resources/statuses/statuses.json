@@ -3,6 +3,7 @@
         "orderCreated": "Создан",
         "orderConfirmed": "Подтвержден",
         "orderInProduction": "Находится в производстве",
+        "orderReadyForSent": "Готов к отгрузке",
         "orderSentToTheCarrier": "Отправлен грузоперевозчику",
         "orderDeliveredToTheCarrier": "Доставлен грузоперевозчику",
         "orderInTransit": "В транзите",
