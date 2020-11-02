@@ -129,7 +129,7 @@ const ProviderForm: React.FC = () => {
                 <form onSubmit={providerFormSubmitHandler}>
                     <div className='mb-3 row'>
                         <div className="col-lg-6">
-                            <label className='w-100' htmlFor='name'>
+                            <label className='w-100 required' htmlFor='name'>
                                 Укажите поставщика
                             </label>
                             <input name="name" className='col-lg-10'
@@ -140,7 +140,8 @@ const ProviderForm: React.FC = () => {
                             <small>Это поле обязательно</small>}
                         </div>
                         <div className="col-lg-6">
-                            <label className='w-100' htmlFor='nameCompany'>
+                            <label className='w-100 required'
+                                   htmlFor='nameCompany'>
                                 Укажите название компании
                             </label>
                             <input name="nameCompany" type="text"

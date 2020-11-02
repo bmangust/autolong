@@ -36,7 +36,7 @@ const ImporterForm: React.FC = () => {
                 <form onSubmit={importerFormSubmitHandler}>
                     <div className='mb-3 row'>
                         <div className="col-lg-6">
-                            <label htmlFor='nameRu' className='w-100'>
+                            <label htmlFor='nameRu' className='w-100 required'>
                                 Укажите название
                                 <span className="float-right
                                     text-main
@@ -52,7 +52,7 @@ const ImporterForm: React.FC = () => {
                             <small>Это поле обязательно</small>}
                         </div>
                         <div className="col-lg-6">
-                            <label htmlFor='nameEn' className='w-100'>
+                            <label htmlFor='nameEn' className='w-100 required'>
                                 Name
                                 <span className="float-right
                                     text-main
@@ -61,7 +61,7 @@ const ImporterForm: React.FC = () => {
                                     ENG
                                 </span>
                             </label>
-                            <input name="nameEn" className='col-lg-10'
+                            <input name="nameEn" className='col-lg-10 required'
                                    ref={register({required: true})}
                                    type="text" placeholder="Type here"/>
                             {errors.nameEn &&
@@ -70,7 +70,8 @@ const ImporterForm: React.FC = () => {
                     </div>
                     <div className='mb-5 row'>
                         <div className="col-lg-6">
-                            <label htmlFor='address'>Укажите адрес</label>
+                            <label className='required'
+                                   htmlFor='address'>Укажите адрес</label>
                             <input
                                 name="address" type="text"
                                 className='col-lg-10'
@@ -81,6 +82,7 @@ const ImporterForm: React.FC = () => {
                         </div>
                         <div className="col-lg-6">
                             <label
+                                className='required'
                                 htmlFor='phone'>Укажите номер телефона</label>
                             <input
                                 name="phone" type="tel"

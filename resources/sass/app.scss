@@ -165,6 +165,69 @@ a {
             padding-left: 48px;
         }
     }
+
+    .reset-expansion-style {
+        padding: 0;
+
+        .table {
+            margin-bottom: 0;
+
+            td, th {
+                padding: 0;
+            }
+
+            tr {
+                &:hover {
+                    box-shadow: none;
+                }
+            }
+
+            tbody {
+                tr {
+                    background: #fafbfc;
+                    border-radius: 10px;
+                    transition: all .3s;
+
+                    &:hover {
+                        box-shadow: none;
+                    }
+                }
+
+                td {
+                    border-radius: 0;
+                }
+            }
+
+            .tags {
+                display: flex;
+                flex-direction: row;
+                flex-wrap: wrap;
+            }
+
+            .tags-th {
+                width: 70%;
+            }
+
+            thead {
+                th {
+                    border: none;
+                    color: #949599;
+                    font-weight: 500;
+                    font-size: 12px;
+                    line-height: 15px;
+                    padding-bottom: 15px;
+                }
+
+                th:focus {
+                    outline: 0;
+                }
+            }
+
+            td {
+                border: none;
+            }
+        }
+    }
 }
 
 .react-bootstrap-table-pagination {
@@ -411,6 +474,11 @@ label {
     font-size: 12px;
     color: var(--gray);
     display: block;
+}
+
+label.required:after {
+    content: ' *';
+    color: var(--orange);
 }
 
 .addButton {

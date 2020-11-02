@@ -97,7 +97,8 @@ const CatalogForm: React.FC = () => {
                 <form onSubmit={catalogFormSubmitHandler}>
                     <div className='mb-3 row'>
                         <div className="col-lg-6">
-                            <label className='w-100' htmlFor='name'>
+                            <label className='w-100 required'
+                                   htmlFor='name'>
                                 Укажите название для каталога
                             </label>
                             <input placeholder="Введите название" name='name'
@@ -106,7 +107,8 @@ const CatalogForm: React.FC = () => {
                             {errors.name &&
                             <small>Это поле обязательно</small>}
 
-                            <label className='w-100' htmlFor='providerId'>
+                            <label className='w-100 required'
+                                   htmlFor='providerId'>
                                 Выберите поставщика
                             </label>
                             <div className='col-10 mb-3 p-0'>
@@ -122,7 +124,8 @@ const CatalogForm: React.FC = () => {
                                 <small>Это поле обязательно</small>}
                             </div>
 
-                            <label className='w-100' htmlFor='file'>
+                            <label className='w-100 required'
+                                   htmlFor='file'>
                                 Загрузите файл каталога
                             </label>
                             <input multiple={false} name="file"
