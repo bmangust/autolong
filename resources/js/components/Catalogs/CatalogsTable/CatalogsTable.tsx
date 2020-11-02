@@ -69,6 +69,8 @@ const CatalogsTable: React.FC = () => {
         {
             dataField: 'tags',
             text: 'Все теги',
+            classNameTd: 'tags',
+            classNameTh: 'tags-th',
             formatter: tagsConverter
         }
     ]

@@ -16,6 +16,7 @@ import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
 import {createCatalog} from '../../../store/actions/catalogs'
 import {fetchProviders} from '../../../store/actions/providers'
 import {ITag, ITagsRootState} from '../ITags'
+import {fetchTags} from '../../../store/actions/tags'
 
 interface ICreateCatalogData {
     name: string
@@ -47,6 +48,7 @@ const CatalogForm: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchProviders())
+        dispatch(fetchTags())
     }, [dispatch])
 
     const providersOptions = providers.map(
@@ -60,8 +62,8 @@ const CatalogForm: React.FC = () => {
     const tagsOptions = tags.map(
         (tag: ITag) => {
             return {
-                label: tag.value,
-                value: tag.key
+                label: tag.name,
+                value: tag.id
             }
         }
     )

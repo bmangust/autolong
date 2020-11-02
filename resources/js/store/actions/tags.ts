@@ -10,7 +10,7 @@ export const fetchTags = () => async dispatch => {
     await dispatch({
         type: FETCH_TAGS_START
     })
-    const url = '/api/catalogs/tags'
+    const url = '/api/tags'
     axios
         .get(url)
         .then((answer) => {

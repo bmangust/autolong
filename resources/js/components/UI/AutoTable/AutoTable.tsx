@@ -11,6 +11,8 @@ import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit'
 interface expandRow<T extends object = any, E = any> {
     dataField: string,
     text: string,
+    classNameTd: string,
+    classNameTh: string,
     formatter?: ColumnFormatter<T, E>
 }
 
@@ -49,7 +51,8 @@ const AutoTable: React.FC<IAutoTable> =
             const tableHead = expandRowTable
                 ?.map((item, index) => {
                     return (
-                        <th key={`${item.text}-${index}`}>
+                        <th className={item.classNameTh}
+                            key={`${item.text}-${index}`}>
                             {item.text}
                         </th>
                     )
@@ -57,7 +60,8 @@ const AutoTable: React.FC<IAutoTable> =
             const tableBody = expandRowTable
                 ?.map((item, index) => {
                     return (
-                        <td key={`${item.dataField}-${index}`}>
+                        <td className={item.classNameTd}
+                            key={`${item.dataField}-${index}`}>
                             {
                                 item.formatter
                                     ? item.formatter(row[item.dataField],
