@@ -5,8 +5,8 @@ import {
 } from '../../store/actions/actionTypes'
 
 export interface ITag {
-    key?: string
-    value: string
+    id?: string
+    name: string
 }
 
 export interface ITagsState {

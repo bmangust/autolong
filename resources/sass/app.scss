@@ -850,3 +850,23 @@ html select.select-mini:focus {
 
     }
 }
+
+.tag {
+    background: #FFFFFF;
+    border: 1px solid #EBEBEB;
+    border-radius: 100px;
+    padding: 4px 12px;
+    margin-right: 15px;
+    margin-bottom: 5px;
+
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #000000;
+}
+
+.tag.tag-first {
+    color: #EB5E28;
+    border: 1px solid rgba(235, 94, 40, 0.25);
+    margin: 0;
+}

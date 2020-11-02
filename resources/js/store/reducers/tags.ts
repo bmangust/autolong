@@ -6,7 +6,7 @@ import {
 import {ITagsActionTypes, ITagsState} from '../../components/Catalogs/ITags'
 
 const initialState: ITagsState = {
-    tags: [{key: 'tagTest', value: 'tagTest'}],
+    tags: [],
     loading: true,
     error: null
 }

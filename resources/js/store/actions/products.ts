@@ -86,7 +86,8 @@ export const createProduct = (data) => async dispatch => {
                 payload: answer.data
             })
             toast.success(
-                createNotyMsg(answer.data.nameRu, 'товар создан'))
+                createNotyMsg(answer.data.nameRu,
+                    `товар ${answer.data.autolongNumber} создан`))
         })
         .catch((error: AxiosError) => {
             dispatch({
