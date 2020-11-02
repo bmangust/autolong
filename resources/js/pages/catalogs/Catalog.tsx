@@ -26,7 +26,7 @@ import {
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
-import {timeConverter} from '../../utils'
+import {tagsConverter, timeConverter} from '../../utils'
 
 const Catalog: React.FC<ICatalog> = () => {
     const {id}: any = useParams()
@@ -64,7 +64,7 @@ const Catalog: React.FC<ICatalog> = () => {
                 <div className="card mb-3">
                     <div className="card-body-info">
 
-                        <div className="row mb-3">
+                        <div className="row">
                             <div className="col-lg-5 infoBlockHeaders">
                                 <p>Название каталога</p>
                                 <p>Дата загрузки</p>
@@ -83,6 +83,9 @@ const Catalog: React.FC<ICatalog> = () => {
                                     : ''}</p>
                             </div>
                         </div>
+                        <p>{'tags' in catalog
+                            ? tagsConverter(catalog.tags)
+                            : ''}</p>
 
                     </div>
                 </div>
