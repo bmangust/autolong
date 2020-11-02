@@ -164,6 +164,7 @@ const ProductForm: React.FC = () => {
                                     </label>
                                     <div className='col-10 mb-3 p-0'>
                                         <Controller
+                                            defaultValue=''
                                             name="providerId"
                                             as={select}
                                             options={providersOptions}

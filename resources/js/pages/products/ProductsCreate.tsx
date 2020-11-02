@@ -16,7 +16,6 @@ import {IProvidersRootState} from '../../components/Providers/IProviders'
 
 // Actions
 import {
-    clearVendorProducts,
     fetchProductsByVendors
 } from '../../store/actions/products'
 import {fetchProviders} from '../../store/actions/providers'
@@ -36,7 +35,6 @@ const ProductsCreate: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchProviders())
-        dispatch(clearVendorProducts())
     }, [dispatch])
 
     const {vendorProducts} = useSelector(

@@ -59,6 +59,15 @@ const OrderForm: React.FC = () => {
             }
         })
 
+    useEffect(() => {
+        dispatch(fetchProviders())
+    }, [dispatch])
+
+    useEffect(() => {
+        const filtered = orderProducts.filter(el => 'id' in el)
+            .map(el => el.id ? {...el, quantity: 1} : el)
+        setItems(filtered)
+    }, [orderProducts])
 
     if (items.length) {
         setValue('providerId',
@@ -67,13 +76,6 @@ const OrderForm: React.FC = () => {
                     value === items[0]
                         ?.providerId)[0])
     }
-
-    useEffect(() => {
-        dispatch(fetchProviders())
-        const filtered = orderProducts.filter(el => 'id' in el)
-            .map(el => el.id ? {...el, quantity: 1} : el)
-        setItems(filtered)
-    }, [dispatch, orderProducts])
 
     const onChangeQtyHandler = (e, itemId: number) => {
         const value = +e.target.value

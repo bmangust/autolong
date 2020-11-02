@@ -7,7 +7,7 @@ export interface IRoute {
     hide: boolean
     exact: boolean
     fallback: NonNullable<ReactNode> | null
-    component?: LoadableComponent<any>
+    component?: any
     pageName?: string
     routes?: IRoute[]
     redirect?: string

@@ -17,9 +17,9 @@ import {
     UPDATE_PRODUCT_SUCCESS,
     FETCH_BY_VENDOR_START,
     DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_IMAGE,
-    CLEAR_VENDOR_PRODUCTS
+    UPDATE_PRODUCT_IMAGE
 } from '../actions/actionTypes'
+import {LOCATION_CHANGE} from 'connected-react-router'
 
 // Typescript
 import {
@@ -113,7 +113,7 @@ export default function productsReducer(
             return {
                 ...state
             }
-        case CLEAR_VENDOR_PRODUCTS:
+        case LOCATION_CHANGE:
             return {
                 ...state, vendorProducts: []
             }
