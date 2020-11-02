@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Tag;
 use Illuminate\Http\Request;
 use App\Http\Resources\CatalogWithRelationshipsResource;
 use Illuminate\Support\Facades\Validator;
@@ -19,12 +18,14 @@ class CatalogController extends Controller
 
         $names = [
             'name' => 'название контейнера',
-            'file' => 'файл'
+            'file' => 'файл',
+            'providerId' => 'поставщик'
         ];
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'file' => ['required', 'mimes:pdf,xlsx,zip']
+            'file' => ['required', 'mimes:pdf,xlsx,zip'],
+            'providerId' => ['required']
         ], $messages, $names);
     }
     /**

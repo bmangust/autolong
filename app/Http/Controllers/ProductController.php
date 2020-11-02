@@ -19,22 +19,14 @@ class ProductController extends Controller
 
         $names = [
             'nameRu' => 'название продукта',
-            'aboutRu' => 'о продукте',
             'priceCny' => 'цена в юань',
-            'weightNetto' => 'вес в нет то',
-            'weightBrutto' => 'вес в брутто',
-            'vendorCode' => 'артикул',
-            'autolongNumber' => 'номер в 1с',
+            'autolongNumber' => 'внутренний номер',
             'providerId' => 'поставщик'
         ];
 
         return Validator::make($data, [
             'nameRu' => ['required'],
-            'aboutRu' => ['required'],
             'priceCny' => ['required'],
-            'weightNetto' => ['required'],
-            'weightBrutto' => ['required'],
-            'vendorCode' => ['required'],
             'autolongNumber' => ['required'],
             'providerId' => ['required'],
         ], $messages, $names);
