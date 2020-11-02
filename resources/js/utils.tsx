@@ -6,17 +6,20 @@ import {NavLink} from 'react-router-dom'
 import getSymbolFromCurrency from 'currency-symbol-map'
 import {IProductPrice} from './components/Products/IProducts'
 
+// Typescript
+import {ITag} from './components/Catalogs/ITags'
+
 // App
 import statuses from '../statuses/statuses.json'
 import courses from '../courses/courses.json'
 
-export function nameToLinkFormatter(name, row, page) {
+export function nameToLinkFormatter(name: string, row, page: string) {
     return (
         <NavLink to={`/${page}/${row.id}`}>{name}</NavLink>
     )
 }
 
-export function imgFormatter(img, row, placeholder) {
+export function imgFormatter(img: string, row, placeholder: string) {
     return (
         <img src={img || placeholder}
              alt={row.nameRu}/>
@@ -28,7 +31,7 @@ export function imgFormatter(img, row, placeholder) {
  * @param value
  * @param length
  */
-export function substringOut(value, length) {
+export function substringOut(value: string, length: number) {
     if (value.length > length) {
         return `${value.substring(0, length)}...`
     } else {
@@ -79,7 +82,6 @@ export function getPaymentStatusName(key: string) {
     return statuses.paymentStatuses[key]
 }
 
-
 /**
  * Currency conversion by amount and currency code
  * @param amount
@@ -117,11 +119,30 @@ export function currencyConversion(amount: number, currencyCode: string) {
     return currency
 }
 
-export const createNotyMsg = (title, desc) => {
+/**
+ * Create notification messages by title and description
+ * @param title
+ * @param desc
+ */
+export const createNotyMsg = (title: string, desc: string) => {
     return (
         <>
             <p className='Toastify__title'>{title}</p>
             <p className='Toastify__desc'>{desc}</p>
         </>
+    )
+}
+
+/**
+ * Tags converter to string
+ * @param tags
+ */
+export const tagsConverter = (tags: ITag[]) => {
+    return (
+        tags.map((tag: ITag) => {
+            return <span
+                key={tag.id + tag.name}
+                className='tag'>{tag.name}</span>
+        })
     )
 }

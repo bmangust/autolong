@@ -149,7 +149,8 @@ const OrderForm: React.FC = () => {
                     <div className="card-body">
                         <div className='mb-3 row'>
                             <div className="col-lg-6">
-                                <label className='w-100' htmlFor='name'>
+                                <label className='w-100 required'
+                                       htmlFor='name'>
                                     Название заказа
                                 </label>
                                 <input
@@ -159,7 +160,8 @@ const OrderForm: React.FC = () => {
                                 {errors.name &&
                                 <small>Это поле обязательно</small>}
 
-                                <label className='w-100' htmlFor='provider'>
+                                <label className='w-100 required'
+                                       htmlFor='provider'>
                                     Выберите поставщика
                                 </label>
                                 <div className='col-10 mb-3 p-0'>

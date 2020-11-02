@@ -15,7 +15,10 @@ import {
 import {IProvidersRootState} from '../../components/Providers/IProviders'
 
 // Actions
-import {fetchProductsByVendors} from '../../store/actions/products'
+import {
+    clearVendorProducts,
+    fetchProductsByVendors
+} from '../../store/actions/products'
 import {fetchProviders} from '../../store/actions/providers'
 
 
@@ -33,6 +36,7 @@ const ProductsCreate: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchProviders())
+        dispatch(clearVendorProducts())
     }, [dispatch])
 
     const {vendorProducts} = useSelector(
@@ -55,7 +59,7 @@ const ProductsCreate: React.FC = () => {
                                     Добавить товары по внутреннему номер
                                 </label>
                                 <textarea
-                                    ref={register}
+                                    ref={register({required: true})}
                                     name="numbers" rows={4}
                                     placeholder='
                                     Добавляйте каждый внутреннему

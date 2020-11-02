@@ -156,7 +156,7 @@ const ProductFormEdit: React.FC<{
                         <div className='mb-3 row'>
                             <div className="col-lg-6">
                                 <label htmlFor='autolongNumber'
-                                       className='w-100'>
+                                       className='w-100 required'>
                                     Внутренний номер
                                 </label>
                                 <input className='col-lg-10 mb-3'
@@ -176,7 +176,7 @@ const ProductFormEdit: React.FC<{
                                 </label>
                                 <input className='col-lg-10'
                                        name="vendorCode"
-                                       ref={register({required: true})}
+                                       ref={register}
                                        type="text"
                                        placeholder="Введите номер"/>
 
@@ -209,7 +209,8 @@ const ProductFormEdit: React.FC<{
                                         </div>
                                     </div>
                                 </div>
-                                <label htmlFor='providerId'>
+                                <label className='required'
+                                       htmlFor='providerId'>
                                     Выберите поставщика
                                 </label>
                                 <div className='col-10 mb-3 p-0'>
@@ -229,7 +230,8 @@ const ProductFormEdit: React.FC<{
 
                         <div className='mb-3 row'>
                             <div className='col-lg-6'>
-                                <label htmlFor='nameRu' className='w-100'>
+                                <label htmlFor='nameRu'
+                                       className='w-100 required'>
                                     Укажите название товара
                                     <span className="float-right
                                     text-main
@@ -302,7 +304,8 @@ const ProductFormEdit: React.FC<{
                         </div>
                         <div className='mb-3 row'>
                             <div className="col-lg-6">
-                                <label>Укажите цену</label>
+                                <label className='required'>
+                                    Укажите цену</label>
                                 <div className='row mb-3'>
                                     <div className='col-10'>
                                         <input
@@ -387,9 +390,7 @@ const ProductFormEdit: React.FC<{
                                             <div className='col-8'>
                                                 <input name="weightBrutto"
                                                        placeholder="0"
-                                                       ref={register(
-                                                           {required: true}
-                                                       )}
+                                                       ref={register}
                                                        type="number"
                                                        className='w-100'/>
                                                 {errors.weightBrutto &&
@@ -414,9 +415,7 @@ const ProductFormEdit: React.FC<{
                                             <div className='col-8'>
                                                 <input name="weightNetto"
                                                        className='w-100'
-                                                       ref={register(
-                                                           {required: true}
-                                                       )}
+                                                       ref={register}
                                                        type="number"
                                                        placeholder="0"/>
                                                 {errors.weightNetto &&

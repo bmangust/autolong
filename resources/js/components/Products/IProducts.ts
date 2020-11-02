@@ -15,7 +15,9 @@ import {
     FETCH_BY_VENDOR_SUCCESS,
     FETCH_BY_VENDOR_ERROR,
     FETCH_BY_VENDOR_START,
-    DELETE_PRODUCT_BY_ID, UPDATE_PRODUCT_IMAGE
+    DELETE_PRODUCT_BY_ID,
+    UPDATE_PRODUCT_IMAGE,
+    CLEAR_VENDOR_PRODUCTS
 } from '../../store/actions/actionTypes'
 import {IProvider} from '../Providers/IProviders'
 
@@ -172,10 +174,15 @@ interface IUpdateProductImage {
     }
 }
 
+interface IClearVendorProducts {
+    type: typeof CLEAR_VENDOR_PRODUCTS
+}
+
 export type IProductsActionTypes =
     IFetchProductsStart | IFetchProductsSuccess | IFetchProductsError |
     IFetchProductStart | IFetchProductSuccess | IFetchProductError |
     ICreateProductStart | ICreateProductSuccess | ICreateProductError |
     IUpdateProductStart | IUpdateProductSuccess | IUpdateProductError |
     IFetchProductPrice | IFetchByVendorStart | IFetchByVendorSuccess |
-    IFetchByVendorError | IDeleteProductById | IUpdateProductImage
+    IFetchByVendorError | IDeleteProductById | IUpdateProductImage |
+    IClearVendorProducts

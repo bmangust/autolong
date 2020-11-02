@@ -15,7 +15,7 @@ import {ICatalogsRootState} from '../ICatalogs'
 import Loader from '../../UI/Loader/Loader'
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
-import {nameToLinkFormatter, timeConverter} from '../../../utils'
+import {nameToLinkFormatter, tagsConverter, timeConverter} from '../../../utils'
 import Error from '../../UI/Error/Error'
 
 const CatalogsTable: React.FC = () => {
@@ -32,6 +32,16 @@ const CatalogsTable: React.FC = () => {
             loading: state.catalogsState.loading
         })
     )
+
+    const tagsFirst = (tags) => {
+        if (tags.length) {
+            return <span className='tag tag-first'>
+            {tags[tags.length - 1].name}</span>
+        } else {
+            return null
+        }
+    }
+
     if (error) {
         return <Error/>
     }
@@ -45,6 +55,25 @@ const CatalogsTable: React.FC = () => {
             link='/catalogcreate' linkName='Добавить каталог'
             title='В этом списке ещё нет каталогов'/>
     }
+
+    const expandRowTable = [
+        {
+            dataField: 'updatedAt',
+            text: 'Дата загрузки',
+            formatter: timeConverter
+        },
+        {
+            dataField: 'id',
+            text: 'ID'
+        },
+        {
+            dataField: 'tags',
+            text: 'Все теги',
+            classNameTd: 'tags',
+            classNameTh: 'tags-th',
+            formatter: tagsConverter
+        }
+    ]
 
     const columns: ColumnDescription[] = [
         {
@@ -69,12 +98,13 @@ const CatalogsTable: React.FC = () => {
         {
             dataField: 'tags',
             text: 'Теги',
-            sort: true
+            formatter: tagsFirst
         }
     ]
 
     return (
         <AutoTable
+            expandRowTable={expandRowTable}
             keyField='id' data={catalogs} columns={columns}
             button={{link: 'catalogcreate', text: 'Добавить каталог'}}/>
     )

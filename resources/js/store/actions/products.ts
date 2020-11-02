@@ -16,7 +16,7 @@ import {
     FETCH_BY_VENDOR_SUCCESS,
     FETCH_BY_VENDOR_ERROR,
     DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_IMAGE
+    UPDATE_PRODUCT_IMAGE, CLEAR_VENDOR_PRODUCTS
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -86,7 +86,8 @@ export const createProduct = (data) => async dispatch => {
                 payload: answer.data
             })
             toast.success(
-                createNotyMsg(answer.data.nameRu, 'товар создан'))
+                createNotyMsg(answer.data.nameRu,
+                    `товар ${answer.data.autolongNumber} создан`))
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -192,4 +193,10 @@ export const updateProductImageById = (id, data) => async dispatch => {
                 payload: {url: answer.data, id}
             })
         })
+}
+
+export const clearVendorProducts = () => dispatch => {
+    dispatch({
+        type: CLEAR_VENDOR_PRODUCTS
+    })
 }
