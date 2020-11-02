@@ -34,8 +34,12 @@ const CatalogsTable: React.FC = () => {
     )
 
     const tagsFirst = (tags) => {
-        return <span className='tag tag-first'>
+        if (tags.length) {
+            return <span className='tag tag-first'>
             {tags[tags.length - 1].name}</span>
+        } else {
+            return null
+        }
     }
 
     if (error) {
