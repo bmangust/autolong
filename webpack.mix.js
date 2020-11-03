@@ -29,5 +29,8 @@ mix.reactTypeScript('resources/js/app.tsx', 'public/js')
             ]
         },
     })
+    .babelConfig({
+        plugins: ['@babel/plugin-syntax-dynamic-import'],
+    })
     .reactCSSModules('[path]__[name]___[hash:base64]')
     .version()
