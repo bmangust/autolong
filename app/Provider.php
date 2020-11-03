@@ -3,10 +3,12 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Provider extends Model
 {
     use TranslateToSnakeCase;
+    use SoftDeletes;
 
     protected $fillable = [
       'name',
@@ -25,13 +27,6 @@ class Provider extends Model
       'beneficiary_swift_address',
       'beneficiary_name'
     ];
-
-    protected static function booted()
-    {
-        static::deleted(function ($provider) {
-            $provider->catalogs()->delete();
-        });
-    }
 
     public function catalogs()
     {

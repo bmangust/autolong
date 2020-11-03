@@ -15,7 +15,7 @@ class Catalog extends Model
 
     public function provider()
     {
-        return $this->belongsTo('App\Provider');
+        return $this->belongsTo('App\Provider')->withTrashed();
     }
 
     public function tags()

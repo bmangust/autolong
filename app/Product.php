@@ -3,20 +3,15 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
     use TranslateToSnakeCase;
+    use SoftDeletes;
 
     public const IMAGE_DIRECTORY = '/storage/product-images';
-
-    protected static function booted()
-    {
-        static::deleted(function ($product) {
-            $product->orderItems()->delete();
-        });
-    }
 
     public function setAboutRuAttribute($value) {
         $this->attributes['about_ru'] = preg_replace('#<script.*<\/script>#','', $value);

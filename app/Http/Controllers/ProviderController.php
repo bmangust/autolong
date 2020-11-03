@@ -32,7 +32,7 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        return response()->json(ProviderWithRelationshipsResource::collection(Provider::all()->sortBy('name'), 200));
+        return response()->json(ProviderWithRelationshipsResource::collection(Provider::withoutTrashed()->orderBy('name', 'asc')->get(), 200));
     }
 
     /**

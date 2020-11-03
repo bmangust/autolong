@@ -30,7 +30,6 @@ class ProductWithRelationshipsResource extends JsonResource
             'weightNetto' => $this->weight_netto,
             'weightBrutto' => $this->weight_brutto,
             'catalog' => new CatalogResource($this->catalog),
-            'orderItems' => OrderItemResource::collection($this->orderitems),
             'vendorCode' => $this->vendor_code,
             'autolongNumber' => $this->autolong_number,
             'createdAt' => strtotime($this->created_at),
