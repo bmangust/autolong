@@ -16,7 +16,7 @@ import {
     FETCH_BY_VENDOR_SUCCESS,
     FETCH_BY_VENDOR_ERROR,
     DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_IMAGE, CLEAR_VENDOR_PRODUCTS
+    UPDATE_PRODUCT_IMAGE
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -193,10 +193,4 @@ export const updateProductImageById = (id, data) => async dispatch => {
                 payload: {url: answer.data, id}
             })
         })
-}
-
-export const clearVendorProducts = () => dispatch => {
-    dispatch({
-        type: CLEAR_VENDOR_PRODUCTS
-    })
 }

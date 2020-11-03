@@ -16,6 +16,7 @@ import {
     FETCH_ORDERS_START,
     FETCH_ORDERS_SUCCESS, DELETE_ORDER_BY_ID
 } from '../actions/actionTypes'
+import {LOCATION_CHANGE} from 'connected-react-router'
 
 // Typescript
 import {IOrdersActionTypes, IOrdersState} from '../../components/Orders/IOrders'
@@ -98,6 +99,10 @@ export default function ordersReducer(
             return {
                 ...state, orders: state.orders.filter(({id}) =>
                     id !== action.payload), order: {}
+            }
+        case LOCATION_CHANGE:
+            return {
+                ...state, orderProducts: []
             }
         default:
             return state

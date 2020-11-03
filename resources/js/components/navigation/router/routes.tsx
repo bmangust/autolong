@@ -1,7 +1,6 @@
 // React
-import React from 'react'
+import React, {lazy} from 'react'
 
-import {lazy} from '@loadable/component'
 import pMinDelay from 'p-min-delay'
 
 // Typescript

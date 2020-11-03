@@ -1,6 +1,7 @@
 // Third-party
 import {combineReducers} from 'redux'
 import {reducer as formReducer} from 'redux-form'
+import {connectRouter} from 'connected-react-router'
 
 // Reducers
 import importersReducer from './importers'
@@ -12,7 +13,8 @@ import countryReducer from './countries'
 import ordersReducer from './orders'
 import tagsReducer from './tags'
 
-export default combineReducers({
+const createRootReducer = (history) => combineReducers({
+    router: connectRouter(history),
     importersState: importersReducer,
     productsState: productsReducer,
     providersState: providersReducer,
@@ -23,3 +25,5 @@ export default combineReducers({
     tagsState: tagsReducer,
     form: formReducer
 })
+
+export default createRootReducer

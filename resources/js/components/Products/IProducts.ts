@@ -16,9 +16,9 @@ import {
     FETCH_BY_VENDOR_ERROR,
     FETCH_BY_VENDOR_START,
     DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_IMAGE,
-    CLEAR_VENDOR_PRODUCTS
+    UPDATE_PRODUCT_IMAGE
 } from '../../store/actions/actionTypes'
+import {LOCATION_CHANGE} from 'connected-react-router'
 import {IProvider} from '../Providers/IProviders'
 
 export interface IProduct {
@@ -175,7 +175,7 @@ interface IUpdateProductImage {
 }
 
 interface IClearVendorProducts {
-    type: typeof CLEAR_VENDOR_PRODUCTS
+    type: typeof LOCATION_CHANGE
 }
 
 export type IProductsActionTypes =
