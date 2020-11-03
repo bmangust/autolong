@@ -119,8 +119,7 @@ const ProviderForm: React.FC = () => {
                 formValues.catalogs = [+formValues.catalogs]
             }
             formValues.countryId = formValues.countryId.value
-            dispatch(createProvider(formValues))
-            history.push('/providers')
+            dispatch(createProvider(formValues, '/providers'))
         })
 
     return (

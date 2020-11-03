@@ -12,6 +12,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchCatalogs = () => async dispatch => {
     await dispatch({
@@ -57,7 +58,7 @@ export const fetchCatalogById = (id) => async dispatch => {
         })
 }
 
-export const createCatalog = (data) => async dispatch => {
+export const createCatalog = (data, redirect = '') => async dispatch => {
     const formData = new FormData()
     Object.entries(data).map(([key, val]) => {
         if (Array.isArray(val)) {
@@ -79,6 +80,7 @@ export const createCatalog = (data) => async dispatch => {
             })
             toast.success(
                 createNotyMsg(answer.data.name, 'каталог создан'))
+            dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
             dispatch({

@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
-import {useHistory} from 'react-router-dom'
 import {Controller, useForm} from 'react-hook-form'
 import Select from 'react-select'
 
@@ -37,7 +36,6 @@ const OrderForm: React.FC = () => {
     } = useForm<ICreateOrderData>()
 
     const dispatch = useDispatch()
-    const history = useHistory()
 
     const {providers} = useSelector(
         (state: IProvidersRootState) => ({
@@ -108,8 +106,7 @@ const OrderForm: React.FC = () => {
             formValues.cargo = formValues.cargo ? 1 : 0
             formValues.items = items
             formValues.providerId = formValues.providerId.value
-            dispatch(createOrder(formValues))
-            history.push('/orders')
+            dispatch(createOrder(formValues, '/orders'))
         })
 
     const getProductSubmitHandler =

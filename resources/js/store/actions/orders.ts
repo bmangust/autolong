@@ -20,6 +20,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchOrders = () => async dispatch => {
     await dispatch({
@@ -65,7 +66,7 @@ export const fetchOrderById = (id) => async dispatch => {
         })
 }
 
-export const createOrder = (data) => async dispatch => {
+export const createOrder = (data, redirect = '') => async dispatch => {
     await dispatch({
         type: CREATE_ORDER_START
     })
@@ -77,6 +78,7 @@ export const createOrder = (data) => async dispatch => {
                 type: CREATE_ORDER_SUCCESS,
                 payload: answer.data
             })
+            dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
             dispatch({

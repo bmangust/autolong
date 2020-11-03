@@ -13,6 +13,7 @@ import {
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchProviders = () => async dispatch => {
     await dispatch({
@@ -56,7 +57,7 @@ export const fetchProviderById = (id) => async dispatch => {
         })
 }
 
-export const createProvider = (data) => async dispatch => {
+export const createProvider = (data, redirect = '') => async dispatch => {
     await dispatch({
         type: CREATE_PROVIDER_START
     })
@@ -70,6 +71,7 @@ export const createProvider = (data) => async dispatch => {
             })
             toast.success(
                 createNotyMsg(answer.data.name, 'поставщик создан'))
+            dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
             dispatch({

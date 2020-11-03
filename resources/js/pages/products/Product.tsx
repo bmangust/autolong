@@ -14,7 +14,7 @@ import {deleteProductById, fetchProductById} from '../../store/actions/products'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
-import {moneyFormatter, timeConverter} from '../../utils'
+import {imgFormatter, moneyFormatter, timeConverter} from '../../utils'
 
 const Product: React.FC = () => {
     const {id}: any = useParams()
@@ -46,7 +46,6 @@ const Product: React.FC = () => {
         history.push('/products')
     }
 
-    const placeholder = '/imgs/placeholder-product-image.png'
     return (
         <div className='row'>
             <div className='col-lg-8'>
@@ -54,15 +53,11 @@ const Product: React.FC = () => {
                     <div className="card-body-info">
                         <div className='row mb-4'>
                             <div className="col-lg-5">
-                                <img
-                                    src={'image' in product
-                                        ? product.image
-                                        : placeholder}
-                                    alt={'nameRu' in product
-                                        ? product.nameRu
-                                        : 'product'}
-                                    className="border rounded p-2"
-                                />
+                                {imgFormatter(
+                                    product.image,
+                                    null,
+                                    product.nameRu,
+                                    'border rounded p-2')}
                             </div>
                             <div className='col-lg-7'>
                                 <table

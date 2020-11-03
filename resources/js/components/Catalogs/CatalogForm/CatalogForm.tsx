@@ -3,7 +3,6 @@ import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
-import {useHistory} from 'react-router-dom'
 import {Controller, useForm} from 'react-hook-form'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
@@ -31,7 +30,6 @@ const CatalogForm: React.FC = () => {
     } = useForm<ICreateCatalogData>()
 
     const dispatch = useDispatch()
-    const history = useHistory()
 
     // eslint-disable-next-line no-unused-vars
     const [tagsState, setTags] = useState([])
@@ -87,8 +85,7 @@ const CatalogForm: React.FC = () => {
                 newTags.push(option.label)
             })
             formValues.tags = [...newTags]
-            dispatch(createCatalog(formValues))
-            history.push('/catalogs')
+            dispatch(createCatalog(formValues, '/catalogs'))
         })
 
     return (
