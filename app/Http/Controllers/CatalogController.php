@@ -89,7 +89,7 @@ class CatalogController extends Controller
      */
     public function destroy(Catalog $catalog)
     {
-        $catalog->deleteImage();
+        $catalog->deleteFile();
         $catalog->delete();
         return response()->json([], 204);
     }
