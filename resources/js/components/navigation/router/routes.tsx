@@ -158,6 +158,16 @@ export const routes: IRoute[] = [
         fallback: <Loader/>
     },
     {
+        name: 'Редактирование информации о товаре',
+        path: '/productedit/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/products/ProductEdit'), 600)),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>
+    },
+    {
         name: 'Добавление нового товара',
         path: '/productcreate',
         component: lazy(() =>

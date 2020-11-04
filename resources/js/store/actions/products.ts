@@ -100,7 +100,7 @@ export const createProduct = (data, redirect) => async dispatch => {
         })
 }
 
-export const updateProduct = (id, data) => async dispatch => {
+export const updateProduct = (id, data, redirect = '') => async dispatch => {
     await dispatch({
         type: UPDATE_PRODUCT_START
     })
@@ -114,6 +114,9 @@ export const updateProduct = (id, data) => async dispatch => {
             })
             toast.success(
                 createNotyMsg(answer.data.nameRu, 'товар обновлен'))
+            if (redirect) {
+                dispatch(push(redirect))
+            }
         })
         .catch((error: AxiosError) => {
             dispatch({
