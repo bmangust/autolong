@@ -2,8 +2,8 @@
 import React, {useEffect} from 'react'
 
 // Third-party
-import ProductFormEdit
-    from '../../components/Products/ProductForm/ProductFormEdit'
+import ProductsFormEdit
+    from '../../components/Products/ProductForm/ProductsFormEdit'
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
 
@@ -75,7 +75,7 @@ const ProductsCreate: React.FC = () => {
                 </div>
             </form>
             {vendorProducts.map((product: IProduct | IProductAutolong) => {
-                return <ProductFormEdit
+                return <ProductsFormEdit
                     providers={providers}
                     key={'id' in product
                         ? product.id

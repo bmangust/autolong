@@ -9,13 +9,14 @@ import Select from 'react-select'
 
 // Typescript
 import {
-    IProduct,
+    IProduct, IProductAutolong,
     IProductPrice
 } from '../IProducts'
 import {IProvider} from '../../Providers/IProviders'
 
 // Actions
 import {
+    createProduct,
     updateProduct,
     updateProductImageById
 } from '../../../store/actions/products'
@@ -41,11 +42,14 @@ interface IEditProductData {
     weightBrutto: number
 }
 
-const ProductFormEdit: React.FC<{
-    product: IProduct,
+const ProductsFormEdit: React.FC<{
+    product: IProduct | IProductAutolong,
     providers: IProvider[]
 }> =
     ({product, providers}) => {
+        let defaultValues
+
+        const [show, setShow] = useState(true)
         const [priceState, setPriceState] =
             useState<IProductPrice>({rub: '0', usd: '0', cny: '0'})
 
@@ -57,29 +61,33 @@ const ProductFormEdit: React.FC<{
                 }
             })
 
-        const defaultValues = {
-            nameRu: product.nameRu,
-            nameEn: product.nameEn,
-            vendorCode: product.vendorCode,
-            aboutRu: product.aboutRu,
-            aboutEn: product.aboutEn,
-            image: product.image,
-            providerId:
-                product.provider && product.provider.id
-                    ? providersOptions.filter(({value}) =>
-                    value === product.provider.id)[0]
-                    : null,
-            autolongNumber: +product.autolongNumber,
-            priceCny: product.price.cny,
-            priceRub: product.price.rub,
-            priceUsd: product.price.usd,
-            weightNetto: product.weightNetto,
-            weightBrutto: product.weightBrutto
-        }
-
-        useEffect(() => {
-            setPriceState(currencyConversion(product.price.cny, 'cny'))
-        }, [product.price.cny])
+        'id' in product
+            ? defaultValues = {
+                nameRu: product.nameRu,
+                nameEn: product.nameEn,
+                vendorCode: product.vendorCode,
+                aboutRu: product.aboutRu,
+                aboutEn: product.aboutEn,
+                image: product.image,
+                providerId: providersOptions
+                    .filter(({value}) =>
+                        value === product.providerId)[0],
+                autolongNumber: +product.autolongNumber,
+                priceCny: product.price.cny,
+                priceRub: product.price.rub,
+                priceUsd: product.price.usd,
+                weightNetto: product.weightNetto,
+                weightBrutto: product.weightBrutto
+            }
+            : defaultValues = {
+                nameRu: product.name,
+                autolongNumber: +product.number,
+                image: product.photo,
+                vendorCode: product.articul,
+                aboutRu: product.text,
+                aboutEn: '',
+                priceRub: product.price
+            }
 
         const {
             register, handleSubmit, errors, control
@@ -90,19 +98,38 @@ const ProductFormEdit: React.FC<{
         let img = '/imgs/placeholder-product-image.png'
         if ('image' in product && product.image) {
             img = product.image
+        } else if ('photo' in product && product.photo) {
+            img = product.photo
         }
 
         const dispatch = useDispatch()
 
+        useEffect(() => {
+            if (!('id' in product && product.id)) {
+                product.price
+                    ? setPriceState(currencyConversion(+product.price, 'rub'))
+                    : setPriceState(currencyConversion(0, 'cny'))
+            } else {
+                setPriceState(currencyConversion(product.price.cny, 'cny'))
+            }
+        }, [product])
+
         const productFormSubmitHandler =
             handleSubmit((formValues: IEditProductData) => {
                 formValues.providerId = formValues.providerId.value
-                dispatch(updateProduct(product.id, formValues,
-                    `/product/${product.id}`))
-                if (formValues.imageFile[0]) {
-                    dispatch(updateProductImageById(product.id,
-                        {image: formValues.imageFile[0]}))
+                if ('id' in product && product.id) {
+                    dispatch(updateProduct(product.id, formValues))
+                    if (formValues.imageFile[0]) {
+                        dispatch(updateProductImageById(product.id,
+                            {image: formValues.imageFile[0]}))
+                    }
+                } else if ('number' in product) {
+                    if (formValues.imageFile[0]) {
+                        formValues.image = formValues.imageFile[0]
+                    }
+                    dispatch(createProduct(formValues))
                 }
+                setShow(false)
             })
 
         const onChangePrice = (e, currencyCode) => {
@@ -140,7 +167,9 @@ const ProductFormEdit: React.FC<{
                                        name="autolongNumber"
                                        ref={register({required: true})}
                                        type="number"
-                                       defaultValue={product.autolongNumber}
+                                       defaultValue={'number' in product
+                                           ? product.number
+                                           : ''}
                                        placeholder="Введите номер"/>
                                 {errors.autolongNumber &&
                                 <small>Это поле обязательно</small>}
@@ -410,7 +439,9 @@ const ProductFormEdit: React.FC<{
                                         <button
                                             className='btn btn-success mr-3'
                                             type="submit">
-                                            Обновить
+                                            {'id' in product && product.id
+                                                ? 'Обновить'
+                                                : 'Добавить'}
                                         </button>
                                         <button className='btn btn-light'>
                                             Отменить добавление
@@ -423,7 +454,11 @@ const ProductFormEdit: React.FC<{
                 </div>
             </div>
 
-        return (content)
+        return (
+            show
+                ? content
+                : null
+        )
     }
 
-export default ProductFormEdit
+export default ProductsFormEdit

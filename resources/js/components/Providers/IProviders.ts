@@ -10,6 +10,8 @@ import {
     CREATE_PROVIDER_ERROR, DELETE_PROVIDER_BY_ID
 } from '../../store/actions/actionTypes'
 import {ICountry} from '../Сountries/ICountries'
+import {IOrder} from '../Orders/IOrders'
+import {ICatalog} from '../Catalogs/ICatalogs'
 
 export interface IProvider {
     id: number
@@ -27,8 +29,8 @@ export interface IProvider {
     beneficiaryBankName: string
     beneficiaryBankCode: string
     beneficiarySwiftAddress: string
-    catalogs: [] // Здесь будет массив объектов Каталоги
-    orders: [] // Здесь будет массив объектов Заказы
+    catalogs: ICatalog[] | []
+    orders: IOrder[] | []
     createdAt?: number;
     updatedAt?: number;
 }

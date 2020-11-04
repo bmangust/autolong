@@ -5,9 +5,64 @@
     color: var(--orange);
     margin-bottom: 10px;
 }
+
 .price {
     font-weight: 600;
     font-size: 13px;
     line-height: 16px;
     margin-bottom: 10px;
+}
+
+.orders {
+    font-size: 12px;
+    margin-bottom: 8px;
+}
+
+.catalogsItem {
+    border-bottom: 1px solid #EBEBEB;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    margin-bottom: 15px;
+    padding-bottom: 15px;
+}
+
+.catalogsItem a {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #B4B6BD;
+    display: flex;
+    align-items: center;
+}
+
+.catalogsItem a svg {
+    width: 16px;
+    height: 7px;
+    margin-left: 10px;
+}
+
+.catalogsItem a svg path {
+    fill: #3A405F;
+}
+
+.catalogsItem div > svg {
+    margin-right: 15px;
+    width: 25px;
+    height: 25px;
+}
+
+.catalogsItem > svg {
+    cursor: pointer;
+}
+
+.catalogsItem:last-of-type {
+    border-bottom: 0;
+    margin-bottom: 0;
+    padding-bottom: 0;
 }
