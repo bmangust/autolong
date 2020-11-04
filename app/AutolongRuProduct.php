@@ -23,8 +23,7 @@ class AutolongRuProduct extends Model
             '&lt;' => '<',
             '&gt;' => '>',
             '&quot;' => '"'
-            ]
-        );
+        ]);
         return preg_replace('#<iframe.*<\/iframe>#','', $string);
     }
 
