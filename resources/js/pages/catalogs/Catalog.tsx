@@ -82,7 +82,7 @@ const Catalog: React.FC<ICatalog> = () => {
 
             <div className="col-lg-4">
                 <a href={'file' in catalog
-                    ? '/' + catalog.file
+                    ? catalog.file
                     : ''}
                    target="_blank"
                    download
