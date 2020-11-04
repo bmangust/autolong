@@ -8,10 +8,11 @@ import {
     FETCH_IMPORTER_ERROR,
     FETCH_IMPORTER_START,
     FETCH_IMPORTER_SUCCESS
-} from './actionTypes';
-import axios, {AxiosError} from 'axios';
+} from './actionTypes'
+import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchImporters = () => async dispatch => {
     await dispatch({
@@ -37,7 +38,7 @@ export const fetchImporters = () => async dispatch => {
 
 export const fetchImporterById = (id) => async dispatch => {
     await dispatch({
-        type: FETCH_IMPORTER_START,
+        type: FETCH_IMPORTER_START
     })
 
     const url = `/api/importers/${id}`
@@ -57,9 +58,9 @@ export const fetchImporterById = (id) => async dispatch => {
         })
 }
 
-export const createImporter = (data) => async dispatch => {
+export const createImporter = (data, redirect = '') => async dispatch => {
     await dispatch({
-        type: CREATE_IMPORTER_START,
+        type: CREATE_IMPORTER_START
     })
     const url = '/api/importers'
     axios
@@ -71,6 +72,7 @@ export const createImporter = (data) => async dispatch => {
             })
             toast.success(
                 createNotyMsg(answer.data.nameRu, 'импортер создан'))
+            dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
             dispatch({

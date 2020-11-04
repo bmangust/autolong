@@ -106,7 +106,9 @@ const ProductFormEdit: React.FC<{
 
         useEffect(() => {
             if (!('id' in product && product.id)) {
-                setPriceState(currencyConversion(+product.price, 'rub'))
+                product.price
+                    ? setPriceState(currencyConversion(+product.price, 'rub'))
+                    : setPriceState(currencyConversion(0, 'cny'))
             }
         }, [product])
 

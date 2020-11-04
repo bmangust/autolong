@@ -1,7 +1,7 @@
 // React
 import React from 'react'
 import {IProduct} from '../../Products/IProducts'
-import {moneyFormatter} from '../../../utils'
+import {imgFormatter, moneyFormatter} from '../../../utils'
 
 import classes from '../OrderItems/OrderItems.module.css'
 import SvgClose from '../../UI/iconComponents/Close'
@@ -34,11 +34,11 @@ const OrderItems: React.FC<IOrderItems> =
                     <div key={item.id + item.nameRu}
                          className={classes.products + ' row mb-2'}>
                         <div className={classes.productImg + ' col-1'}>
-                            <img src={item.image ||
-                            '/imgs/placeholder-product-image.png'}
-                                 alt={item.nameRu}
-                                className='pt-2'
-                            />
+                            {imgFormatter(
+                                item.image,
+                                null,
+                                item.nameRu,
+                                'pt-2')}
                         </div>
                         <div className="col-4 pr-0">
                             <p className={classes.productName}>
@@ -83,9 +83,11 @@ const OrderItems: React.FC<IOrderItems> =
                     <div key={item.id + item.nameRu}
                          className={classes.orderProducts + ' row mb-2'}>
                         <div className={classes.productImg + ' col-2'}>
-                            <img src={item.image ||
-                            '/imgs/placeholder-product-image.png'}
-                                 alt={item.nameRu}/>
+                            {imgFormatter(
+                                item.image,
+                                null,
+                                item.nameRu,
+                                'pt-2')}
                         </div>
                         <div className="col-4 pl-0 pr-0">
                             <p className={classes.orderProductsName}>

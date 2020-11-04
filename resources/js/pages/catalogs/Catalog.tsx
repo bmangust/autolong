@@ -10,17 +10,12 @@ import {useDispatch, useSelector} from 'react-redux'
 
 // Actions
 import {fetchCatalogById} from '../../store/actions/catalogs'
-import {fetchProviderById} from '../../store/actions/providers'
 
 // Typescript
 import {
     ICatalog,
     ICatalogsRootState
 } from '../../components/Catalogs/ICatalogs'
-
-import {
-    IProvidersRootState
-} from '../../components/Providers/IProviders'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
@@ -41,15 +36,8 @@ const Catalog: React.FC<ICatalog> = () => {
         })
     )
 
-    const {provider} = useSelector(
-        (state: IProvidersRootState) => ({
-            provider: state.providersState.provider
-        })
-    )
-
     useEffect(() => {
         dispatch(fetchCatalogById(id))
-        dispatch(fetchProviderById(id))
     }, [dispatch, id])
 
     if (error) {
@@ -109,62 +97,62 @@ const Catalog: React.FC<ICatalog> = () => {
                                 Поставщик
                             </p>
                             <p className="infoBlockText">
-                                {'name' in provider
-                                    ? provider.name
+                                {'name' in catalog.provider
+                                    ? catalog.provider.name
                                     : ''}
                             </p>
                             <p className="infoBlockHeaders mb-1">
                                 Страна
                             </p>
                             <p className="infoBlockText">
-                                {'country' in provider
-                                    ? provider.country
-                                        ? provider.country.name : ''
+                                {'country' in catalog.provider
+                                    ? catalog.provider.country
+                                        ? catalog.provider.country.name : ''
                                     : ''}
                             </p>
                             <p className="infoBlockHeaders mb-1">
                                 Почта
                             </p>
                             <p className="infoBlockText">
-                                {'email' in provider
-                                    ? provider.email
+                                {'email' in catalog.provider
+                                    ? catalog.provider.email
                                     : ''}
                             </p>
                             <p className="infoBlockHeaders mb-1">
                                 Телефон
                             </p>
                             <p className="infoBlockText">
-                                {'phone' in provider
-                                    ? provider.phone
+                                {'phone' in catalog.provider
+                                    ? catalog.provider.phone
                                     : ''}
                             </p>
                             <p className="infoBlockHeaders mb-1">
                                 Wechat
                             </p>
                             <p className="infoBlockText">
-                                {'wechat' in provider
-                                    ? provider.wechat
+                                {'wechat' in catalog.provider
+                                    ? catalog.provider.wechat
                                     : ''}
                             </p>
                             <p className="infoBlockHeaders mb-1">
                                 Сайт
                             </p>
                             <p className="infoBlockText">
-                                <a href={'website' in provider
-                                    ? provider.website
+                                <a href={'website' in catalog.provider
+                                    ? catalog.provider.website
                                     : ''}
                                    target="_blank"
                                    rel="noreferrer">
-                                    {'website' in provider
-                                        ? provider.website
+                                    {'website' in catalog.provider
+                                        ? catalog.provider.website
                                         : ''}
                                 </a>
                             </p>
                             <p className="infoBlockHeaders mb-1 mt-5">
                                 Перейти на страницу поставщика
                             </p>
-                            <NavLink to={'id' in provider
-                                ? '/provider/' + provider.id
+                            <NavLink to={'id' in catalog.provider
+                                ? '/provider/' + catalog.provider.id
                                 : ''}>
                                 <SvgArrowRight/>
                             </NavLink>

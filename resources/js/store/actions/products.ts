@@ -21,6 +21,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchProducts = () => async dispatch => {
     await dispatch({
@@ -65,7 +66,7 @@ export const fetchProductById = (id) => async dispatch => {
         })
 }
 
-export const createProduct = (data) => async dispatch => {
+export const createProduct = (data, redirect) => async dispatch => {
     const formData = new FormData()
     Object.entries(data).map(([key, val]) => {
         if (Array.isArray(val)) {
@@ -88,6 +89,7 @@ export const createProduct = (data) => async dispatch => {
             toast.success(
                 createNotyMsg(answer.data.nameRu,
                     `товар ${answer.data.autolongNumber} создан`))
+            dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
             dispatch({

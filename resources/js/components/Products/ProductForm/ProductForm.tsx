@@ -68,8 +68,7 @@ const ProductForm: React.FC = () => {
         handleSubmit((formValues: ICreateProductData) => {
             formValues.image = formValues.image[0]
             formValues.providerId = formValues.providerId.value
-            dispatch(createProduct(formValues))
-            history.push('/products')
+            dispatch(createProduct(formValues, '/products'))
         })
 
     const select = <Select

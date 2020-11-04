@@ -4,10 +4,10 @@ import React from 'react'
 // Third-party
 import {NavLink} from 'react-router-dom'
 import getSymbolFromCurrency from 'currency-symbol-map'
-import {IProductPrice} from './components/Products/IProducts'
 
 // Typescript
 import {ITag} from './components/Catalogs/ITags'
+import {IProductPrice} from './components/Products/IProducts'
 
 // App
 import statuses from '../statuses/statuses.json'
@@ -19,10 +19,18 @@ export function nameToLinkFormatter(name: string, row, page: string) {
     )
 }
 
-export function imgFormatter(img: string, row, placeholder: string) {
+export function imgFormatter(
+    img: any,
+    row: any,
+    alt: string,
+    className: string,
+    placeholder = '/imgs/placeholder-product-image.png') {
     return (
-        <img src={img || placeholder}
-             alt={row.nameRu}/>
+        row
+            ? <img className={className} src={img || placeholder}
+                   alt={row.nameRu}/>
+            : <img className={className} src={img || placeholder}
+                   alt={alt}/>
     )
 }
 

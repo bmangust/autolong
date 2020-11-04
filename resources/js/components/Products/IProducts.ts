@@ -30,13 +30,13 @@ export interface IProduct {
     provider: IProvider
     providerId?: number
     priceCny?: number
-    vendorCode: string
+    vendorCode?: string
     quantity?: number
     autolongNumber: number
-    image: string
+    image?: string
     price: IProductPrice
-    weightNetto: number
-    weightBrutto: number
+    weightNetto?: number
+    weightBrutto?: number
     createdAt?: number
     updatedAt?: number
 }
