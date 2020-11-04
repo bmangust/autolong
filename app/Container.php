@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Resources\ContainerResource;
 use Illuminate\Database\Eloquent\Model;
 
 class Container extends Model
@@ -21,7 +22,8 @@ class Container extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_CREATED,
-                    'model' => get_class($container),
+                    'model' => json_encode(new ContainerResource($container)),
+                    'model_name' => get_class($container)
                 ]);
             }
         });
@@ -33,7 +35,8 @@ class Container extends Model
                 $after = $container->toArray();
                 $log->create([
                     'action' => Log::ACTION_UPDATED,
-                    'model' => get_class($container),
+                    'model' => json_encode(new ContainerResource($container)),
+                    'model_name' => get_class($container),
                     'before' => json_encode(array_diff($before, $after)),
                     'after' => json_encode(array_diff($after, $before)),
                 ]);
@@ -45,7 +48,8 @@ class Container extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_DELETED,
-                    'model' => get_class($container),
+                    'model' => json_encode(new ContainerResource($container)),
+                    'model_name' => get_class($container)
                 ]);
             }
         });

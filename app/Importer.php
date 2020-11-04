@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Resources\ImporterResource;
 use Illuminate\Database\Eloquent\Model;
 
 class Importer extends Model
@@ -22,7 +23,8 @@ class Importer extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_CREATED,
-                    'model' => get_class($importer),
+                    'model' => json_encode(new ImporterResource($importer)),
+                    'model_name' => get_class($importer)
                 ]);
             }
         });
@@ -34,7 +36,8 @@ class Importer extends Model
                 $after = $importer->toArray();
                 $log->create([
                     'action' => Log::ACTION_UPDATED,
-                    'model' => get_class($importer),
+                    'model' => json_encode(new ImporterResource($importer)),
+                    'model_name' => get_class($importer),
                     'before' => json_encode(array_diff($before, $after)),
                     'after' => json_encode(array_diff($after, $before)),
                 ]);
@@ -46,7 +49,8 @@ class Importer extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_DELETED,
-                    'model' => get_class($importer),
+                    'model' => json_encode(new ImporterResource($importer)),
+                    'model_name' => get_class($importer)
                 ]);
             }
         });

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProviderWithRelationshipsResource;
 use App\Provider;
@@ -46,6 +47,8 @@ class ProviderController extends Controller
     {
         $this->providerCreateValidator($request->all())->validate();
         $newProvider = $provider->create($provider->dashesToSnakeCase($request->all()));
+        Log::$write = false;
+        $newProvider->addCatalogs($request->input('catalogs'));
         return response()->json(new ProviderWithRelationshipsResource($newProvider), 201);
     }
 

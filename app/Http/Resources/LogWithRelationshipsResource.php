@@ -18,6 +18,7 @@ class LogWithRelationshipsResource extends JsonResource
             'user' => $this->user_id,
             'action' => $this->action,
             'model' => $this->model,
+            'modelName' => $this->model_name,
             'before' => $this->before,
             'after' => $this->after,
             'createdAt' => strtotime($this->created_at),

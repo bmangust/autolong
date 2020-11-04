@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Resources\CatalogResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,7 +20,8 @@ class Catalog extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_CREATED,
-                    'model' => get_class($catalog),
+                    'model' => json_encode(new CatalogResource($catalog)),
+                    'model_name' => get_class($catalog),
                 ]);
             }
         });
@@ -31,7 +33,8 @@ class Catalog extends Model
                 $after = $catalog->toArray();
                 $log->create([
                     'action' => Log::ACTION_UPDATED,
-                    'model' => get_class($catalog),
+                    'model' => json_encode(new CatalogResource($catalog)),
+                    'model_name' => get_class($catalog),
                     'before' => json_encode(array_diff($before, $after)),
                     'after' => json_encode(array_diff($after, $before)),
                 ]);
@@ -43,7 +46,8 @@ class Catalog extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_DELETED,
-                    'model' => get_class($catalog),
+                    'model' => json_encode(new CatalogResource($catalog)),
+                    'model_name' => get_class($catalog),
                 ]);
             }
         });

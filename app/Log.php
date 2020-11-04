@@ -16,6 +16,7 @@ class Log extends Model
         'user_id',
         'action',
         'model',
+        'model_name',
         'before',
         'after'
     ];

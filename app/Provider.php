@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Resources\ProviderResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -35,7 +36,8 @@ class Provider extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_CREATED,
-                    'model' => get_class($provider),
+                    'model' => json_encode(new ProviderResource($provider)),
+                    'model_name' => get_class($provider)
                 ]);
             }
         });
@@ -47,7 +49,8 @@ class Provider extends Model
                 $after = $provider->toArray();
                 $log->create([
                     'action' => Log::ACTION_UPDATED,
-                    'model' => get_class($provider),
+                    'model' => json_encode(new ProviderResource($provider)),
+                    'model_name' => get_class($provider),
                     'before' => json_encode(array_diff($before, $after)),
                     'after' => json_encode(array_diff($after, $before)),
                 ]);
@@ -59,7 +62,8 @@ class Provider extends Model
                 $log = new Log();
                 $log->create([
                     'action' => Log::ACTION_DELETED,
-                    'model' => get_class($provider),
+                    'model' => json_encode(new ProviderResource($provider)),
+                    'model_name' => get_class($provider)
                 ]);
             }
         });
@@ -85,4 +89,11 @@ class Provider extends Model
         return $this->hasMany('App\Product');
     }
 
+    public function addCatalogs($catalogs)
+    {
+        foreach ($catalogs as $id) {
+            $catalog = Catalog::findOrFail($id);
+            $this->catalogs()->save($catalog);
+        }
+    }
 }
