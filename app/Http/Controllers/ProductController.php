@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\AutolongRuProduct;
 use App\ExchangeRate;
+use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Product;
@@ -38,7 +39,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()->orderBy('updated_at', 'asc')->get(), 200));
+        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()->orderBy('updated_at', 'desc')->get(), 200));
     }
 
     /**
@@ -66,6 +67,7 @@ class ProductController extends Controller
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
         $product->save();
+        Log::$write = false;
         if ($request->has('image') && $request->hasFile('image')){
             $product->createOrUpdateImage($request->file('image'));
         } elseif ($request->has('image') && is_string($request->input('image'))) {
@@ -119,7 +121,9 @@ class ProductController extends Controller
      */
     public function destroy(Product $product)
     {
+        Log::$write = false;
         $product->deleteImage();
+        Log::$write = true;
         $product->delete();
         return response()->json([], 204);
     }

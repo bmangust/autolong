@@ -28,6 +28,43 @@ class Provider extends Model
       'beneficiary_name'
     ];
 
+    protected static function booted()
+    {
+        static::created(function (Provider $provider) {
+            if (Log::$write) {
+                $log = new Log();
+                $log->create([
+                    'action' => Log::ACTION_CREATED,
+                    'model' => get_class($provider),
+                ]);
+            }
+        });
+
+        static::updated(function (Provider $provider) {
+            if (Log::$write) {
+                $log = new Log();
+                $before = $provider->getOriginal();
+                $after = $provider->toArray();
+                $log->create([
+                    'action' => Log::ACTION_UPDATED,
+                    'model' => get_class($provider),
+                    'before' => json_encode(array_diff($before, $after)),
+                    'after' => json_encode(array_diff($after, $before)),
+                ]);
+            }
+        });
+
+        static::deleted(function (Provider $provider){
+            if (Log::$write) {
+                $log = new Log();
+                $log->create([
+                    'action' => Log::ACTION_DELETED,
+                    'model' => get_class($provider),
+                ]);
+            }
+        });
+    }
+
     public function catalogs()
     {
         return $this->hasMany('App\Catalog');
