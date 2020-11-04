@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\CatalogWithRelationshipsResource;
 use Illuminate\Support\Facades\Validator;
@@ -49,6 +50,7 @@ class CatalogController extends Controller
     {
        $this->catalogCreateValidator($request->all())->validate();
        $newCatalog = $catalog->create($catalog->dashesToSnakeCase($request->all()));
+       Log::$write = false;
        $newCatalog->checkAndAddTag(json_decode($request->input('tags')));
        $newCatalog->createOrUpdateFile($request->file('file'));
        return response()->json(new CatalogWithRelationshipsResource($newCatalog), 201);

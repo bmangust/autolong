@@ -62,3 +62,5 @@ Route::post('orders/{order}/changestatuspayment', 'OrderController@changeStatusP
 Route::get('tags', 'TagController@index');
 
 Route::put('/orderitems/{orderitem}', 'OrderItemController@update');
+
+Route::get('logs', 'LogController@index');

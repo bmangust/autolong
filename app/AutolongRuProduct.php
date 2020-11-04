@@ -21,7 +21,9 @@ class AutolongRuProduct extends Model
     {
         $string =  strtr($this->attributes['text'], [
             '&lt;' => '<',
-            '&gt;' => '>']
+            '&gt;' => '>',
+            '&quot;' => '"'
+            ]
         );
         return preg_replace('#<iframe.*<\/iframe>#','', $string);
     }

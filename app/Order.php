@@ -14,8 +14,39 @@ class Order extends Model
 
     protected static function booted()
     {
-        static::deleted(function ($order) {
+        static::created(function (Order $order) {
+            if (Log::$write) {
+                $log = new Log();
+                $log->create([
+                    'action' => Log::ACTION_CREATED,
+                    'model' => get_class($order),
+                ]);
+            }
+        });
+
+        static::updated(function (Order $order) {
+            if (Log::$write) {
+                $log = new Log();
+                $before = $order->getOriginal();
+                $after = $order->toArray();
+                $log->create([
+                    'action' => Log::ACTION_UPDATED,
+                    'model' => get_class($order),
+                    'before' => json_encode(array_diff($before, $after)),
+                    'after' => json_encode(array_diff($after, $before)),
+                ]);
+            }
+        });
+
+        static::deleted(function (Order $order){
             $order->orderItems()->delete();
+            if (Log::$write) {
+                $log = new Log();
+                $log->create([
+                    'action' => Log::ACTION_DELETED,
+                    'model' => get_class($order),
+                ]);
+            }
         });
     }
 

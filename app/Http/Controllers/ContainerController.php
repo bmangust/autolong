@@ -72,7 +72,7 @@ class ContainerController extends Controller
      */
     public function update(Request $request, Container $container)
     {
-      $this->containerCreateValidator($request->all())->validate();
+        $this->containerCreateValidator($request->all())->validate();
         $container->update($container->dashesToSnakeCase($request->all()));
         return response()->json(new ContainerResource($container), 200);
     }
