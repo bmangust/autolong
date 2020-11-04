@@ -12,7 +12,10 @@ import {
     FETCH_PROVIDERS_SUCCESS,
     FETCH_PROVIDER_ERROR,
     FETCH_PROVIDER_START,
-    FETCH_PROVIDER_SUCCESS
+    FETCH_PROVIDER_SUCCESS,
+    UPDATE_PROVIDER_ERROR,
+    UPDATE_PROVIDER_START,
+    UPDATE_PROVIDER_SUCCESS
 } from '../actions/actionTypes'
 
 const initialState: IProvidersState = {
@@ -66,6 +69,18 @@ export default function providersReducer(
             return {
                 ...state, providers: state.providers.filter(({id}) =>
                     id !== action.payload), provider: {}
+            }
+        case UPDATE_PROVIDER_START:
+            return {
+                ...state, loading: true
+            }
+        case UPDATE_PROVIDER_SUCCESS:
+            return {
+                ...state, provider: action.payload, loading: false
+            }
+        case UPDATE_PROVIDER_ERROR:
+            return {
+                ...state, error: action.payload, loading: false
             }
         default:
             return state

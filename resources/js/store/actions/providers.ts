@@ -9,7 +9,10 @@ import {
     FETCH_PROVIDER_ERROR,
     FETCH_PROVIDER_START,
     FETCH_PROVIDER_SUCCESS,
-    DELETE_PROVIDER_BY_ID
+    DELETE_PROVIDER_BY_ID,
+    UPDATE_PROVIDER_SUCCESS,
+    UPDATE_PROVIDER_ERROR,
+    UPDATE_PROVIDER_START
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
@@ -80,6 +83,31 @@ export const createProvider = (data, redirect = '') => async dispatch => {
             })
         })
 }
+
+export const updateProvider = (data, providerId, redirect = '') =>
+    async dispatch => {
+        await dispatch({
+            type: UPDATE_PROVIDER_START
+        })
+        const url = `/api/providers/${providerId}`
+        axios
+            .put(url, data)
+            .then((answer) => {
+                dispatch({
+                    type: UPDATE_PROVIDER_SUCCESS,
+                    payload: answer.data
+                })
+                toast.success(
+                    createNotyMsg(answer.data.name, 'поставщик обновлен'))
+                dispatch(push(redirect))
+            })
+            .catch((error: AxiosError) => {
+                dispatch({
+                    type: UPDATE_PROVIDER_ERROR,
+                    payload: error.response
+                })
+            })
+    }
 
 export const deleteProviderById = (id) => async dispatch => {
     const url = `/api/providers/${id}`

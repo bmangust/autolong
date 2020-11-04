@@ -7,7 +7,11 @@ import {
     FETCH_PROVIDER_ERROR,
     CREATE_PROVIDER_START,
     CREATE_PROVIDER_SUCCESS,
-    CREATE_PROVIDER_ERROR, DELETE_PROVIDER_BY_ID
+    CREATE_PROVIDER_ERROR,
+    DELETE_PROVIDER_BY_ID,
+    UPDATE_PROVIDER_START,
+    UPDATE_PROVIDER_SUCCESS,
+    UPDATE_PROVIDER_ERROR
 } from '../../store/actions/actionTypes'
 import {ICountry} from '../Сountries/ICountries'
 import {IOrder} from '../Orders/IOrders'
@@ -98,6 +102,23 @@ interface ICreateProviderError {
     payload: any
 }
 
+interface IUpdateProviderStart {
+    type: typeof UPDATE_PROVIDER_START
+    loading: boolean
+}
+
+interface IUpdateProviderSuccess {
+    type: typeof UPDATE_PROVIDER_SUCCESS
+    loading: boolean
+    payload: IProvider
+}
+
+interface IUpdateProviderError {
+    type: typeof UPDATE_PROVIDER_ERROR
+    loading: boolean
+    payload: any
+}
+
 interface IDeleteProviderById {
     type: typeof DELETE_PROVIDER_BY_ID
     payload: number
@@ -107,4 +128,5 @@ export type IProvidersActionTypes =
     IFetchProvidersStart | IFetchProvidersSuccess | IFetchProvidersError |
     IFetchProviderStart | IFetchProviderSuccess | IFetchProviderError |
     ICreateProviderStart | ICreateProviderSuccess | ICreateProviderError |
-    IDeleteProviderById
+    IDeleteProviderById | IUpdateProviderStart | IUpdateProviderSuccess |
+    IUpdateProviderError

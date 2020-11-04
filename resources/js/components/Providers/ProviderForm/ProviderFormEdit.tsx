@@ -2,11 +2,13 @@
 import React, {useState} from 'react'
 
 // Third-party
-import {useHistory} from 'react-router-dom'
-import {Controller, useForm} from 'react-hook-form'
 import Select from 'react-select'
+import {Controller, useForm} from 'react-hook-form'
+import {useDispatch} from 'react-redux'
+import {useHistory} from 'react-router-dom'
 
 // Typescript
+import {IProvider} from '../IProviders'
 import {ICountry} from '../../Сountries/ICountries'
 import {ICatalog} from '../../Catalogs/ICatalogs'
 
@@ -14,14 +16,13 @@ import {ICatalog} from '../../Catalogs/ICatalogs'
 import classes from './ProviderForm.module.css'
 
 // Actions
-import {createProvider} from '../../../store/actions/providers'
+import {updateProvider} from '../../../store/actions/providers'
 
 // App
-import SvgClose from '../../UI/iconComponents/Close'
 import SvgCatalog from '../../UI/iconComponents/Catalog'
-import {useDispatch} from 'react-redux'
+import SvgClose from '../../UI/iconComponents/Close'
 
-interface ICreateProviderData {
+interface IEditProviderData {
     name: string
     nameCompany: string
     email: string
@@ -39,16 +40,34 @@ interface ICreateProviderData {
     beneficiarySwiftAddress: string
 }
 
-const ProviderForm: React.FC<{
-    countries: ICountry[], catalogs: ICatalog[]
-}> = ({countries, catalogs}) => {
-    const {
-        register, handleSubmit,
-        errors, control
-    } = useForm<ICreateProviderData>()
-
-    const history = useHistory()
+const ProviderFormEdit: React.FC<{
+    provider: IProvider, countries: ICountry[], catalogs: ICatalog[]
+}> = ({provider, countries, catalogs}) => {
     const dispatch = useDispatch()
+    const history = useHistory()
+
+    const defaultValues = {
+        name: provider.name,
+        nameCompany: provider.nameCompany,
+        email: provider.email,
+        website: provider.website,
+        phone: provider.phone,
+        wechat: provider.wechat,
+        country: provider.country,
+        beneficiaryName: provider.beneficiaryName,
+        beneficiaryAccountName: provider.beneficiaryAccountName,
+        beneficiaryBankAddress: provider.beneficiaryBankAddress,
+        beneficiaryAddress: provider.beneficiaryAddress,
+        beneficiaryBankName: provider.beneficiaryBankName,
+        beneficiaryBankCode: provider.beneficiaryBankCode,
+        beneficiarySwiftAddress: provider.beneficiarySwiftAddress
+    }
+
+    const {
+        register, handleSubmit, errors, control
+    } = useForm<IEditProviderData>({
+        defaultValues
+    })
 
     const [catalogsArr] =
         useState<Array<{ label: string, value: number }>>(() => {
@@ -62,7 +81,15 @@ const ProviderForm: React.FC<{
         })
 
     const [activeCatalogsArr, setActiveCatalogsArr] =
-        useState<Array<{ label: string, value: number }>>([])
+        useState<Array<{ label: string, value: number }>>(() => {
+            return provider.catalogs.map(
+                (catalog: ICatalog) => {
+                    return {
+                        label: catalog.name,
+                        value: catalog.id
+                    }
+                })
+        })
 
     const onDeleteHandler = (catId) => {
         const newCatalogsArr = activeCatalogsArr
@@ -80,23 +107,24 @@ const ProviderForm: React.FC<{
         className='select-mini'
     />
 
-    const countriesOptions = countries.map(
-        (country: ICountry) => {
-            return {
-                label: country.name,
-                value: country.id
-            }
-        })
-
     const providerFormSubmitHandler =
-        handleSubmit((formValues: ICreateProviderData) => {
+        handleSubmit((formValues: IEditProviderData) => {
             const newCatalogsArr = []
             activeCatalogsArr.forEach(catalog => {
                 newCatalogsArr.push(catalog.value)
             })
             formValues.catalogs = newCatalogsArr
             formValues.countryId = formValues.countryId.value
-            dispatch(createProvider(formValues, '/providers'))
+            dispatch(updateProvider(formValues, provider.id,
+                `/provider/${provider.id}`))
+        })
+
+    const countriesOptions = countries.map(
+        (country: ICountry) => {
+            return {
+                label: country.name,
+                value: country.id
+            }
         })
 
     return <div className='card'>
@@ -273,7 +301,8 @@ const ProviderForm: React.FC<{
                         <div className='col-11'>
                             <div className={classes.catalogs}>
                                 {activeCatalogsArr.map(catalog => {
-                                    return (<div
+                                    return (
+                                        <div
                                             className={classes.catalogsItem}
                                             key={catalog.value}>
                                             <div>
@@ -289,6 +318,7 @@ const ProviderForm: React.FC<{
                             </div>
                         </div>
                         : null}
+
 
                     <div className="col-lg-6">
                         <label className='w-100'>
@@ -330,7 +360,7 @@ const ProviderForm: React.FC<{
                     </button>
                     <button className='btn btn-success'
                             type="submit">
-                        Сохранить
+                        Обновить
                     </button>
                 </div>
             </form>
@@ -338,4 +368,4 @@ const ProviderForm: React.FC<{
     </div>
 }
 
-export default ProviderForm
+export default ProviderFormEdit
