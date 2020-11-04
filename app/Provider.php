@@ -89,8 +89,11 @@ class Provider extends Model
         return $this->hasMany('App\Product');
     }
 
-    public function addCatalogs($catalogs)
+    public function addOrUpdateCatalogs($catalogs)
     {
+        if ($this->catalogs()->count()) {
+            $this->catalogs()->update(['provider_id' => null]);
+        }
         foreach ($catalogs as $id) {
             $catalog = Catalog::findOrFail($id);
             $this->catalogs()->save($catalog);
