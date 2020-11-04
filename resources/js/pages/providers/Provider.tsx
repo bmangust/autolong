@@ -23,6 +23,8 @@ import {
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
+import SvgCatalog from '../../components/UI/iconComponents/Catalog'
+import {ArrowRight} from '../../components/UI/iconComponents'
 
 const Provider: React.FC<IProvider> = () => {
     const {id}: any = useParams()
@@ -47,6 +49,27 @@ const Provider: React.FC<IProvider> = () => {
         history.push('/providers')
     }
 
+    let ordersPrice = <p>Заказов нет</p>
+
+    if ('orders' in provider && provider.orders.length) {
+        let totalCny = 0
+        let totalRub = 0
+        let totalUsd = 0
+        provider.orders.map((order) => {
+            totalCny += +order.price.cny
+            totalRub += +order.price.rub
+            totalUsd += +order.price.usd
+        })
+        ordersPrice =
+            <>
+                <p className={classes.priceMain}>{totalCny.toFixed(2)} ¥</p>
+                <p className={classes.price}>{totalRub.toFixed(2)} ₽</p>
+                <p className={classes.price}>{totalUsd.toFixed(2)} $</p>
+                <img className='mt-5' alt='' src='/imgs/box.jpg'/>
+            </>
+    }
+
+
     if (error) {
         return <Error/>
     }
@@ -57,24 +80,28 @@ const Provider: React.FC<IProvider> = () => {
         <div>
             <div className="card mb-3">
                 <div className="card-body-info">
-                       <span
-                           className="infoBlockHeaders mr-3">
-                           Название
-                       </span>
-                    <span className="infoBlockText mr-5">
-                                    {'name' in provider
-                                        ? provider.name
-                                        : ''}
-                        </span>
-                    <span
-                        className="infoBlockHeaders mr-3">
-                            Название компании
-                        </span>
-                    <span className="infoBlockText">
-                                    {'nameCompany' in provider
-                                        ? provider.nameCompany
-                                        : ''}
-                        </span>
+                    <div className="row">
+                        <div className="col-6 d-flex">
+                            <p className='infoBlockHeaders mb-0 mr-5'>
+                                Название
+                            </p>
+                            <p className='infoBlockText mb-0'>
+                                {'name' in provider
+                                    ? provider.name
+                                    : ''}
+                            </p>
+                        </div>
+                        <div className="col-6 d-flex">
+                            <p className='infoBlockHeaders mb-0 mr-5'>
+                                Название компании
+                            </p>
+                            <p className='infoBlockText mb-0'>
+                                {'nameCompany' in provider
+                                    ? provider.nameCompany
+                                    : ''}
+                            </p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -147,6 +174,33 @@ const Provider: React.FC<IProvider> = () => {
                                 </div>
                             </div>
 
+                            {provider.catalogs.length
+                                ? <div className='mb-5'>
+                                    <h2 className='mb-4'>
+                                        Каталоги поставщика
+                                        ({provider.catalogs.length})
+                                    </h2>
+                                    {provider.catalogs.map(catalog => {
+                                        const catId = catalog.id
+                                        return (
+                                            <div
+                                                className={classes.catalogsItem}
+                                                key={catId + catalog.name}>
+                                                <div>
+                                                    <SvgCatalog/>
+                                                    {catalog.name}
+                                                </div>
+                                                <NavLink
+                                                    to={`/catalog/${catId}`}>
+                                                    Перейти в каталог
+                                                    <ArrowRight/>
+                                                </NavLink>
+                                            </div>
+                                        )
+                                    })}
+                                </div>
+                                : <p>Каталогов нет</p>}
+
                             <div className='d-flex justify-content-between'>
                                 <NavLink to={`/provideredit/${id}`}
                                          className='editButton'>
@@ -163,13 +217,27 @@ const Provider: React.FC<IProvider> = () => {
                 </div>
 
                 <div className="col-lg-4">
-                    <div className="card">
+                    <div className="card mb-3">
                         <div className="card-body-info">
                             <h2>Сумма всех заказов</h2>
-                            <p className={classes.priceMain}>30 890 ¥</p>
-                            <p className={classes.price}>343 280 ₽</p>
-                            <p className={classes.price}>50 733 $</p>
-                            <img className='mt-5' src='/imgs/box.jpg'/>
+                            {ordersPrice}
+                        </div>
+                    </div>
+                    <div className="card">
+                        <div className="card-body-info">
+                            <h2>Список заказов</h2>
+                            {provider.orders.length
+                                ? provider.orders.map((order) => (
+                                    <p className={classes.orders}
+                                       key={order.id + order.name}>
+                                        <NavLink
+                                            to={`/order/${order.id}`}>
+                                            {order.name}
+                                        </NavLink>
+                                    </p>
+                                ))
+                                : 'Заказов нет'
+                            }
                         </div>
                     </div>
                 </div>
