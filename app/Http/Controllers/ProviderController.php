@@ -48,7 +48,7 @@ class ProviderController extends Controller
         $this->providerCreateValidator($request->all())->validate();
         $newProvider = $provider->create($provider->dashesToSnakeCase($request->all()));
         Log::$write = false;
-        $newProvider->addCatalogs($request->input('catalogs'));
+        $newProvider->addOrUpdateCatalogs($request->input('catalogs'));
         return response()->json(new ProviderWithRelationshipsResource($newProvider), 201);
     }
 
@@ -74,6 +74,8 @@ class ProviderController extends Controller
     {
         $this->providerCreateValidator($request->all())->validate();
         $provider->update($provider->dashesToSnakeCase($request->all()));
+        Log::$write = false; //пока не пишем в логи, надо доработать
+        $provider->addOrUpdateCatalogs($request->input('catalogs'));
         return response()->json(new ProviderWithRelationshipsResource($provider), 200);
     }
 
