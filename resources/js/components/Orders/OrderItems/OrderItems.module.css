@@ -1,5 +1,5 @@
 .products {
-    background: #FAFBFC;
+    background: #fafbfc;
     min-height: 50px;
 }
 
@@ -17,7 +17,7 @@
     align-items: center;
     font-size: 12px;
     line-height: 15px;
-    color: #3A405F;
+    color: #3a405f;
     font-weight: 700;
     margin-bottom: 0;
 }
@@ -26,7 +26,7 @@
     font-weight: bold;
     font-size: 12px;
     line-height: 15px;
-    color: #3A405F;
+    color: #3a405f;
     margin-bottom: 0;
     height: 100%;
     display: flex;
@@ -39,7 +39,7 @@
     height: 30px;
     margin-top: 10px;
     margin-right: 25px;
-    border: 1px solid #EBEBEB;
+    border: 1px solid #ebebeb;
     box-sizing: border-box;
     border-radius: 10px;
     width: 110px;
@@ -59,7 +59,9 @@
     margin-bottom: 30px;
 }
 
-.orderProductsName, .orderProductsCount, .orderProductsPrice {
+.orderProductsName,
+.orderProductsCount,
+.orderProductsPrice {
     font-weight: bold;
     font-size: 12px;
     display: block;

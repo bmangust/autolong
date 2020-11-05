@@ -19,7 +19,7 @@ module.exports = {
         'operator-linebreak': 'off',
         'valid-jsdoc': 'off',
         'space-before-function-paren': 'off',
-        'react/prop-types': 'off'
+        'react/prop-types': 'off',
     },
     'plugins': [
         'react',
