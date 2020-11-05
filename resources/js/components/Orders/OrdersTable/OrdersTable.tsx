@@ -82,11 +82,9 @@ const OrdersTable: React.FC = () => {
     ]
 
     return (
-        <Desktop>
-            <AutoTable
-                keyField='id' data={orders} columns={columns}
-                button={{link: 'ordercreate', text: 'Новый заказ'}}/>
-        </Desktop>
+        <AutoTable
+            keyField='id' data={orders} columns={columns}
+            button={{link: 'ordercreate', text: 'Новый заказ'}}/>
     )
 }
 
