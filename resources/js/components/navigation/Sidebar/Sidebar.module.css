@@ -81,3 +81,34 @@ a.help:hover {
     line-height: 12px;
     text-align: center;
 }
+
+
+@media (max-width: 991px) {
+
+    .sidebar {
+        height: auto;
+        min-height: 500px;
+        max-height: 500px;
+    }
+
+    .help {
+        padding: 15px 15px 15px 15px;
+        margin-top: 30px;
+    }
+
+    .help span br {
+        display: none;
+    }
+
+    .help svg {
+        top: -15px;
+        left: 15px;
+        height: 50px;
+    }
+
+    .navLink {
+        padding: 10px 15px 10px;
+        margin-bottom: 5px;
+    }
+}
+

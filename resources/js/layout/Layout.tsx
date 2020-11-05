@@ -14,10 +14,10 @@ const Layout: React.FC = (props) => {
         <div className={classes.Layout}>
             <div className="container">
                 <div className="row">
-                    <div className='col-lg-2 p-0'>
+                    <div className='col-xl-2 col-lg-3 p-lg-0'>
                         <Sidebar/>
                     </div>
-                    <main role='main' className="col-lg-10 pl-5">
+                    <main role='main' className="col-xl-10 col-lg-9 pl-lg-5">
                         <Header/>
                         {props.children}
                     </main>

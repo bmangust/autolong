@@ -129,7 +129,7 @@ const AutoTable: React.FC<IAutoTable> =
                                 <SearchBar {...props.searchProps}
                                            placeholder="Поиск по названию"/>
                             </div>
-                            <div>
+                            {/* <div> */}
                                 {secondBtn
                                     ?
                                     <NavLink to={`/${secondBtn.link}`}
@@ -146,7 +146,7 @@ const AutoTable: React.FC<IAutoTable> =
                                     </NavLink>
                                     : null
                                 }
-                            </div>
+                            {/* </div> */}
                         </div>
                         <div className='card'>
                             <div className="card-body text-muted">
