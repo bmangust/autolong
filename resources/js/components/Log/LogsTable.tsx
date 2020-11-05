@@ -16,6 +16,7 @@ import Error from '../UI/Error/Error'
 import Loader from '../UI/Loader/Loader'
 import AutoTable from '../UI/AutoTable/AutoTable'
 import {timeConverter} from '../../utils'
+import logsTranslate from '../../../logs/logsTranslate.json'
 
 const LogsTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -33,7 +34,10 @@ const LogsTable: React.FC = () => {
     )
 
     const logActionFormatter = (modelName, row) => {
-        return `${row.action} ${modelName}`
+        const item = JSON.parse(row.model)
+        const itemLink = item.name || item.nameRu
+        return `${logsTranslate.actions[row.action]}
+         ${logsTranslate.classes[modelName]} "${itemLink}"`
     }
 
     const logBeforeFormatter = (before) => {
@@ -93,8 +97,8 @@ const LogsTable: React.FC = () => {
         {
             dataField: 'modelName',
             text: 'Действие',
-            classes: 'email',
             sort: true,
+            headerClasses: 'w-50',
             formatter: logActionFormatter
         },
         {
@@ -113,7 +117,7 @@ const LogsTable: React.FC = () => {
 
     return <AutoTable
         expandRowTable={expandRowTable}
-        keyField='createdAt' data={log} columns={columns}
+        keyField='id' data={log} columns={columns}
     />
 }
 
