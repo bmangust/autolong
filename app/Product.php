@@ -80,7 +80,8 @@ class Product extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document', 'document_product', 'product_id', 'document_id');
+        return $this->belongsToMany('App\Document', 'document_product', 'product_id', 'document_id')
+            ->withTimestamps();
     }
 
     public function createOrUpdateImage($image)

@@ -64,6 +64,12 @@ class Catalog extends Model
        return $this->belongsToMany('App\Tag', 'catalog_tag', 'catalog_id', 'tag_id');
     }
 
+    public function documents()
+    {
+        return $this->belongsToMany('App\Document', 'catalog_document', 'catalog_id', 'document_id')
+            ->withTimestamps();
+    }
+
     public function createOrUpdateFile($file)
     {
         if (!is_null($this->file)) {
@@ -89,10 +95,5 @@ class Catalog extends Model
             array_push($newRequest, $availableTag->id);
         }
         $this->tags()->sync($newRequest);
-    }
-
-    public function documents()
-    {
-        return $this->belongsToMany('App\Document', 'catalog_document', 'catalog_id', 'document_id');
     }
 }

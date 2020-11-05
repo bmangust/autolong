@@ -68,7 +68,8 @@ class Order extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document', 'document_order', 'order_id', 'document_id');
+        return $this->belongsToMany('App\Document', 'document_order', 'order_id', 'document_id')
+            ->withTimestamps();
     }
 
     public function addOrderItems($items)

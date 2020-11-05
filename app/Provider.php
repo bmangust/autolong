@@ -93,7 +93,8 @@ class Provider extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document', 'document_provider', 'provider_id', 'document_id');
+        return $this->belongsToMany('App\Document', 'document_provider', 'provider_id', 'document_id')
+            ->withTimestamps();
     }
 
     public function addOrUpdateCatalogs($catalogs)
