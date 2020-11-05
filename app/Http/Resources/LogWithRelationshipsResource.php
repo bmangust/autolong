@@ -15,6 +15,7 @@ class LogWithRelationshipsResource extends JsonResource
     public function toArray($request)
     {
         return [
+            'id' => $this->id,
             'user' => $this->user_id,
             'action' => $this->action,
             'model' => $this->model,
