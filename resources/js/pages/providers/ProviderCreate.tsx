@@ -15,6 +15,7 @@ import {fetchCatalogs} from '../../store/actions/catalogs'
 // App
 import ProviderForm from '../../components/Providers/ProviderForm/ProviderForm'
 import Loader from '../../components/UI/Loader/Loader'
+import Error from '../../components/UI/Error/Error'
 
 const ProviderCreate: React.FC = () => {
     const dispatch = useDispatch()
@@ -39,9 +40,7 @@ const ProviderCreate: React.FC = () => {
         }))
 
     if (errorCountries || errorCatalogs) {
-        return <div>
-            Error! {errorCountries.message || errorCatalogs.message}
-        </div>
+        return <Error/>
     }
     if (loadingCountries || loadingCatalogs) {
         return <Loader/>

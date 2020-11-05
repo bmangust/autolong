@@ -19,6 +19,7 @@ import {fetchProviderById} from '../../store/actions/providers'
 import ProviderFormEdit
     from '../../components/Providers/ProviderForm/ProviderFormEdit'
 import Loader from '../../components/UI/Loader/Loader'
+import Error from '../../components/UI/Error/Error'
 
 const ProviderEdit: React.FC = () => {
     const {id}: any = useParams()
@@ -52,7 +53,7 @@ const ProviderEdit: React.FC = () => {
     }, [dispatch, id])
 
     if (error || errorCountries || errorCatalogs) {
-        return <div>Error! {error.message}</div>
+        return <Error/>
     }
     if (loading || loadingCountries || loadingCatalogs) {
         return <Loader/>

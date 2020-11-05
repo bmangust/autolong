@@ -3,6 +3,7 @@ import React, {useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
+import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Actions
 import {fetchProviders} from '../../../store/actions/providers'
@@ -15,7 +16,6 @@ import Loader from '../../UI/Loader/Loader'
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {nameToLinkFormatter} from '../../../utils'
-import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
 
 const ProvidersTable: React.FC = () => {

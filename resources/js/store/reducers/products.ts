@@ -33,6 +33,7 @@ const initialState: IProductsState = {
     product: {},
     price: {},
     loading: true,
+    vendorLoading: false,
     error: null
 }
 
@@ -90,15 +91,15 @@ export default function productsReducer(
             }
         case FETCH_BY_VENDOR_START:
             return {
-                ...state, loading: true
+                ...state, vendorLoading: true
             }
         case FETCH_BY_VENDOR_SUCCESS:
             return {
-                ...state, loading: false, vendorProducts: action.payload
+                ...state, vendorLoading: false, vendorProducts: action.payload
             }
         case FETCH_BY_VENDOR_ERROR:
             return {
-                ...state, loading: false, error: action.payload
+                ...state, vendorLoading: false, error: action.payload
             }
         case FETCH_PRODUCT_PRICE:
             return {

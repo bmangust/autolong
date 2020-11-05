@@ -62,6 +62,7 @@ export interface IProductsState {
     product: IProduct | {}
     price: IProductPrice | {}
     loading: boolean
+    vendorLoading: boolean
     error: any
 }
 

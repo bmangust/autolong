@@ -2,23 +2,19 @@
 import React, {useEffect} from 'react'
 
 // Third-party
-import ProductsFormEdit
-    from '../../components/Products/ProductForm/ProductsFormEdit'
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
 
 // Typescript
-import {
-    IProduct, IProductAutolong,
-    IProductsRootState
-} from '../../components/Products/IProducts'
+import {IProductsRootState} from '../../components/Products/IProducts'
 import {IProvidersRootState} from '../../components/Providers/IProviders'
 
 // Actions
-import {
-    fetchProductsByVendors
-} from '../../store/actions/products'
+import {fetchProductsByVendors} from '../../store/actions/products'
 import {fetchProviders} from '../../store/actions/providers'
+import ProductsForms from '../../components/Products/ProductForm/ProductsForms'
+import Error from '../../components/UI/Error/Error'
+import Loader from '../../components/UI/Loader/Loader'
 
 
 const ProductsCreate: React.FC = () => {
@@ -37,15 +33,36 @@ const ProductsCreate: React.FC = () => {
         dispatch(fetchProviders())
     }, [dispatch])
 
-    const {vendorProducts} = useSelector(
+    const {vendorProducts, vendorLoading, error} = useSelector(
         (state: IProductsRootState) => ({
-            vendorProducts: state.productsState.vendorProducts
+            vendorProducts: state.productsState.vendorProducts,
+            vendorLoading: state.productsState.vendorLoading,
+            error: state.productsState.error
         }))
 
     const getProductSubmitHandler =
         handleSubmit((formValues) => {
             dispatch(fetchProductsByVendors(formValues))
         })
+
+    let contentProduct =
+        <div className='card card-body text-center'>
+            Выберите товары по внутреннему номеру
+        </div>
+
+    if (error) {
+        contentProduct = <Error/>
+    }
+    if (vendorLoading) {
+        contentProduct = <Loader/>
+    }
+    if (!vendorLoading && !error && vendorProducts.length) {
+        contentProduct = <ProductsForms
+            vendorProducts={vendorProducts}
+            providers={providers}
+        />
+    }
+
     return (
         <>
             <form onSubmit={getProductSubmitHandler}>
@@ -74,14 +91,7 @@ const ProductsCreate: React.FC = () => {
                     </div>
                 </div>
             </form>
-            {vendorProducts.map((product: IProduct | IProductAutolong) => {
-                return <ProductsFormEdit
-                    providers={providers}
-                    key={'id' in product
-                        ? product.id
-                        : product.number + product.articul}
-                    product={product}/>
-            })}
+            {contentProduct}
         </>
     )
 }

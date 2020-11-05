@@ -938,3 +938,29 @@ html select.select-mini:focus {
     border: 1px solid rgba(235, 94, 40, 0.25);
     margin: 0;
 }
+
+.fade-enter {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0)
+}
+
+.fade-enter-active {
+    opacity: 1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+    transition: 750ms;
+}
+
+.fade-exit {
+    opacity: 1;
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+}
+
+.fade-exit-active {
+    opacity: 0;
+    -webkit-transform: translate3d(100%, 0, 0);
+    transform: translate3d(100%, 0, 0);
+    transition: 750ms;
+}
