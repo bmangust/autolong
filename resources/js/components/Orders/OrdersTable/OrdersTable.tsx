@@ -18,6 +18,7 @@ import {getOrderStatusName, nameToLinkFormatter} from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
+import {Desktop} from '../../responsive'
 
 const OrdersTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -81,9 +82,11 @@ const OrdersTable: React.FC = () => {
     ]
 
     return (
-        <AutoTable
-            keyField='id' data={orders} columns={columns}
-            button={{link: 'ordercreate', text: 'Новый заказ'}}/>
+        <Desktop>
+            <AutoTable
+                keyField='id' data={orders} columns={columns}
+                button={{link: 'ordercreate', text: 'Новый заказ'}}/>
+        </Desktop>
     )
 }
 
