@@ -18,7 +18,6 @@ import {getOrderStatusName, nameToLinkFormatter} from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
-import {Desktop} from '../../responsive'
 
 const OrdersTable: React.FC = () => {
     const dispatch = useDispatch()
