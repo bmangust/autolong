@@ -50,7 +50,7 @@
     font-weight: 700;
     border-radius: 15px;
     position: relative;
-    transition: all .4s ease-in-out;
+    transition: all 0.4s ease-in-out;
     margin-top: 50px;
 }
 
@@ -59,19 +59,19 @@
     top: -28px;
     left: 48px;
     pointer-events: none;
-    transition: all .4s;
+    transition: all 0.4s;
     height: 73px;
     width: 69px;
 }
 
 .help:hover svg {
     transform: translateY(-5px);
-    transition: all .3s;
+    transition: all 0.3s;
 }
 
 a.help:hover {
     text-decoration: none;
-    color: #3A405F;
+    color: #3a405f;
 }
 
 .help span {
@@ -82,9 +82,7 @@ a.help:hover {
     text-align: center;
 }
 
-
 @media (max-width: 991px) {
-
     .sidebar {
         height: auto;
         min-height: 500px;
@@ -111,4 +109,3 @@ a.help:hover {
         margin-bottom: 5px;
     }
 }
-
