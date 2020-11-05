@@ -273,9 +273,9 @@ export const routes: IRoute[] = [
     },
     {
         name: 'Лог',
-        path: '/log',
+        path: '/logs',
         component: lazy(() =>
-            pMinDelay(import('../../../pages/Log'), 600)),
+            pMinDelay(import('../../../pages/Logs'), 600)),
         hide: false,
         exact: false,
         private: true,
