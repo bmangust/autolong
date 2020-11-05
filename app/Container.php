@@ -60,6 +60,6 @@ class Container extends Model
     public function documents()
     {
         return $this->belongsToMany('App\Document', 'container_document', 'container_id', 'document_id')
-            ->withTimestamps();;
+            ->withTimestamps();
     }
 }

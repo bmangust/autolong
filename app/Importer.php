@@ -60,6 +60,6 @@ class Importer extends Model
     public function documents()
     {
         return $this->belongsToMany('App\Importer', 'document_importer', 'importer_id', 'document_id')
-            ->withTimestamps();;
+            ->withTimestamps();
     }
 };
