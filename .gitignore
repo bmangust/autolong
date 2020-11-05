@@ -19,3 +19,4 @@ tsconfig.json
 .DS_Store
 /public/*.js
 /resources/courses/
+.vscode/settings.json
