@@ -11,6 +11,8 @@ class Order extends Model
 {
     use TranslateToSnakeCase;
 
+    public const SANDBOX_DIRECTORY = '/orders/';
+
     protected $fillable = ['name', 'provider_id'];
 
     protected static function booted()
@@ -62,6 +64,11 @@ class Order extends Model
     public function orderItems()
     {
        return $this->hasMany('App\OrderItem');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Document', 'document_order', 'order_id', 'document_id');
     }
 
     public function addOrderItems($items)

@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Importer extends Model
 {
     use TranslateToSnakeCase;
+    public const SANDBOX_DIRECTORY = '/importers/';
 
     protected $fillable = [
       'name_ru',
@@ -54,5 +55,10 @@ class Importer extends Model
                 ]);
             }
         });
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Importer', 'document_importer', 'importer_id', 'document_id');
     }
 };

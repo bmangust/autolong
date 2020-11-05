@@ -11,6 +11,8 @@ class Provider extends Model
     use TranslateToSnakeCase;
     use SoftDeletes;
 
+    public const SANDBOX_DIRECTORY = '/providers/';
+
     protected $fillable = [
       'name',
       'name_company',
@@ -87,6 +89,11 @@ class Provider extends Model
     public function products()
     {
         return $this->hasMany('App\Product');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Document', 'document_provider', 'provider_id', 'document_id');
     }
 
     public function addOrUpdateCatalogs($catalogs)

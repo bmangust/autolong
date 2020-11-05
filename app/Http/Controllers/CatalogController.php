@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
+use App\Importer;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\CatalogWithRelationshipsResource;
@@ -94,5 +96,17 @@ class CatalogController extends Controller
         $catalog->deleteFile();
         $catalog->delete();
         return response()->json([], 204);
+    }
+
+    public function saveFile(Request $request, Importer $importer, Document $document)
+    {
+        $request->validate([
+            'file' => 'required'
+        ]);
+        $file = $request->file('file');
+        $path = Catalog::SANDBOX_DIRECTORY . $importer->id;
+        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $document->catalogs()->sync($importer->id);
+        return response()->json($newDocumentPath, 200);
     }
 }

@@ -13,6 +13,7 @@ class Product extends Model
     use SoftDeletes;
 
     public const IMAGE_DIRECTORY = '/storage/product-images';
+    public const SANDBOX_DIRECTORY = '/products/';
 
     protected static function booted()
     {
@@ -75,6 +76,11 @@ class Product extends Model
     public function provider()
     {
         return $this->belongsTo('App\Provider');
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Document', 'document_product', 'product_id', 'document_id');
     }
 
     public function createOrUpdateImage($image)

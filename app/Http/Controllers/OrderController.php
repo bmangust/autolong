@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use App\Http\Resources\ProductResource;
 use App\Order;
 use App\Product;
@@ -144,5 +145,17 @@ class OrderController extends Controller
             }
         }
         return $availableProducts;
+    }
+
+    public function saveFile(Request $request, Order $order, Document $document)
+    {
+        $request->validate([
+            'file' => 'required'
+        ]);
+        $file = $request->file('file');
+        $path = Order::SANDBOX_DIRECTORY . $order->id;
+        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $document->orders()->sync($order->id);
+        return response()->json($newDocumentPath, 200);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProviderWithRelationshipsResource;
@@ -89,5 +90,17 @@ class ProviderController extends Controller
     {
         $provider->delete();
         return response()->json([], 204);
+    }
+
+    public function saveFile(Request $request, Provider $provider, Document $document)
+    {
+        $request->validate([
+            'file' => 'required'
+        ]);
+        $file = $request->file('file');
+        $path = Provider::SANDBOX_DIRECTORY . $provider->id;
+        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $document->providers()->sync($provider->id);
+        return response()->json($newDocumentPath, 200);
     }
 }

@@ -15,6 +15,8 @@ class Container extends Model
         'city'
     ];
 
+    public const SANDBOX_DIRECTORY = '/container/';
+
     protected static function booted()
     {
         static::created(function (Container $container) {
@@ -53,5 +55,10 @@ class Container extends Model
                 ]);
             }
         });
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Document', 'container_document', 'container_id', 'document_id');
     }
 }

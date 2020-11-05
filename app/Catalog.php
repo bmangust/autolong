@@ -10,6 +10,7 @@ class Catalog extends Model
 {
     use TranslateToSnakeCase;
     public const FILE_DIRECTORY = '/storage/catalogs-files';
+    public const SANDBOX_DIRECTORY = '/catalogs/';
 
     protected $fillable = ['name', 'provider_id'];
 
@@ -88,5 +89,10 @@ class Catalog extends Model
             array_push($newRequest, $availableTag->id);
         }
         $this->tags()->sync($newRequest);
+    }
+
+    public function documents()
+    {
+        return $this->belongsToMany('App\Document', 'catalog_document', 'catalog_id', 'document_id');
     }
 }
