@@ -16,22 +16,22 @@ class Document extends Model
         static::deleted(function (Document $document) {
             switch ($document) {
                 case $document->catalogs()->exists():
-                    $document->catalogs()->delete();
+                    $document->catalogs()->detach();
                     break;
                 case $document->containers()->exists():
-                    $document->containers()->delete();
+                    $document->containers()->detach();
                     break;
                 case $document->importers()->exists():
-                    $document->importers()->delete();
+                    $document->importers()->detach();
                     break;
                 case $document->orders()->exists():
-                    $document->orders()->delete();
+                    $document->orders()->detach();
                     break;
                 case $document->products()->exists():
-                    $document->products()->delete();
+                    $document->products()->detach();
                     break;
                 case $document->providers()->exists():
-                    $document->providers()->delete();
+                    $document->providers()->detach();
                     break;
             }
         });
