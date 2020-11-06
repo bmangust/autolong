@@ -5,9 +5,11 @@ namespace App\Observers;
 use App\Catalog;
 use App\Http\Resources\CatalogResource;
 use App\Log;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class CatalogObserver
 {
+    use HasEvents;
     /**
      * Handle the catalog "created" event.
      *
@@ -23,6 +25,14 @@ class CatalogObserver
                 'model' => json_encode(new CatalogResource($catalog)),
                 'model_name' => get_class($catalog),
             ]);
+        }
+    }
+
+    public function deleting(Catalog $catalog)
+    {
+        foreach ($catalog->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 

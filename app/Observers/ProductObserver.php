@@ -5,9 +5,11 @@ namespace App\Observers;
 use App\Http\Resources\ProductResource;
 use App\Log;
 use App\Product;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class ProductObserver
 {
+    use HasEvents;
     /**
      * Handle the product "created" event.
      *
@@ -45,6 +47,14 @@ class ProductObserver
                 'before' => json_encode(array_diff($before, $after)),
                 'after' => json_encode(array_diff($after, $before)),
             ]);
+        }
+    }
+
+    public function deleting(Product $product)
+    {
+        foreach ($product->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 

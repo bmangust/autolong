@@ -3,9 +3,11 @@
 namespace App\Observers;
 
 use App\Document;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class DocumentObserver
 {
+    use HasEvents;
     /**
      * Handle the document "created" event.
      *

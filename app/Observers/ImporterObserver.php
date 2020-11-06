@@ -5,9 +5,11 @@ namespace App\Observers;
 use App\Http\Resources\ImporterResource;
 use App\Importer;
 use App\Log;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class ImporterObserver
 {
+    use HasEvents;
     /**
      * Handle the importer "created" event.
      *
@@ -63,6 +65,14 @@ class ImporterObserver
                 'model' => json_encode(new ImporterResource($importer)),
                 'model_name' => get_class($importer)
             ]);
+        }
+    }
+
+    public function deleting(Importer $importer)
+    {
+        foreach ($importer->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 

@@ -5,9 +5,11 @@ namespace App\Observers;
 use App\Http\Resources\ProviderResource;
 use App\Log;
 use App\Provider;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class ProviderObserver
 {
+    use HasEvents;
     /**
      * Handle the provider "created" event.
      *
@@ -45,6 +47,14 @@ class ProviderObserver
                 'before' => json_encode(array_diff($before, $after)),
                 'after' => json_encode(array_diff($after, $before)),
             ]);
+        }
+    }
+
+    public function deleting(Provider $provider)
+    {
+        foreach ($provider->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 

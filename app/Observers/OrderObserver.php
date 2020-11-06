@@ -5,9 +5,11 @@ namespace App\Observers;
 use App\Http\Resources\OrderResource;
 use App\Log;
 use App\Order;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class OrderObserver
 {
+    use HasEvents;
     /**
      * Handle the order "created" event.
      *
@@ -45,6 +47,14 @@ class OrderObserver
                 'before' => json_encode(array_diff($before, $after)),
                 'after' => json_encode(array_diff($after, $before)),
             ]);
+        }
+    }
+
+    public function deleting(Order $order)
+    {
+        foreach ($order->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 

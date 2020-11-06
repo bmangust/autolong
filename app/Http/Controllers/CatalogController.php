@@ -96,9 +96,6 @@ class CatalogController extends Controller
     {
         Log::$write = false;
         $catalog->deleteFile();
-        foreach ($catalog->documents as $document) {
-            $document->delete();
-        }
         Log::$write = true;
         $catalog->delete();
         return response()->json([], 204);
