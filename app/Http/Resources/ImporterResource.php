@@ -20,6 +20,7 @@ class ImporterResource extends JsonResource
             'nameEn' => $this->name_en,
             'address' => $this->address,
             'phone' => $this->phone,
+            'documents' => DocumentResource::collection($this->documents),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
