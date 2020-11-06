@@ -134,7 +134,7 @@ class ProductController extends Controller
         $request->validate([
             'numbers' => 'required'
         ]);
-        $numbers = $request->input('numbers');
+        $numbers = $autolongRuProduct->cleanSpaceInArrayItems($request->input('numbers'));
         $availableProducts = $autolongRuProduct->checkNumberCodesInDB($numbers);
         return response()->json($availableProducts, 200);
     }
