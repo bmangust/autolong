@@ -16,7 +16,7 @@ Route::get('importers', 'ImporterController@index');
 Route::post('importers', 'ImporterController@store');
 Route::get('importers/{importer}', 'ImporterController@show');
 Route::put('importers/{importer}', 'ImporterController@update');
-Route::post('importers/{importers}/savefile', 'ImporterController@importers');
+Route::post('importers/{importer}/savefile', 'ImporterController@importers');
 Route::delete('importers/{importer}', 'ImporterController@destroy');
 
 Route::get('containers', 'ContainerController@index');
@@ -30,7 +30,7 @@ Route::get('providers', 'ProviderController@index');
 Route::post('providers', 'ProviderController@store');
 Route::get('providers/{provider}', 'ProviderController@show');
 Route::put('providers/{provider}', 'ProviderController@update');
-Route::post('providers/{providers}/savefile', 'ProviderController@saveFile');
+Route::post('providers/{provider}/savefile', 'ProviderController@saveFile');
 Route::delete('providers/{provider}', 'ProviderController@destroy');
 
 Route::get('products', 'ProductController@index');
@@ -46,7 +46,7 @@ Route::get('catalogs', 'CatalogController@index');
 Route::post('catalogs', 'CatalogController@store');
 Route::get('catalogs/{catalog}', 'CatalogController@show');
 Route::put('catalogs/{catalog}', 'CatalogController@update');
-Route::post('catalogs/{catalogs}/savefile', 'CatalogController@saveFile');
+Route::post('catalogs/{catalog}/savefile', 'CatalogController@saveFile');
 Route::delete('catalogs/{catalog}', 'CatalogController@destroy');
 
 Route::get('countries', 'CountryController@index');
