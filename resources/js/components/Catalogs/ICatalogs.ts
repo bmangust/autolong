@@ -11,6 +11,7 @@ import {
     FETCH_CATALOG_SUCCESS
 } from '../../store/actions/actionTypes'
 import {ITag} from './ITags'
+import {IDocuments} from '../DocumentsCard/DocumentsCard'
 
 export interface ICatalog {
     id: number
@@ -18,6 +19,7 @@ export interface ICatalog {
     provider?: IProvider | {}
     file: string
     tags: ITag[]
+    documents: IDocuments[]
     createdAt?: number
     updatedAt?: number
 }

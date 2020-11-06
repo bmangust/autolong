@@ -45,7 +45,6 @@ const DocumentsCard: React.FC<{
                 toast.success(
                     createNotyMsg(answer.data.name, 'файл сохранен'))
                 setDocumentsState((state) => {
-                    console.log([...state, answer.data])
                     return [...state, answer.data]
                 })
             })

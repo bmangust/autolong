@@ -17,6 +17,7 @@ import {
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
+import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
 
 const Importer: React.FC<IImporter> = () => {
     const {id}: any = useParams()
@@ -44,7 +45,7 @@ const Importer: React.FC<IImporter> = () => {
     return (
         <div className='row'>
             <div className='col-lg-8'>
-                <div className="card">
+                <div className="card mb-3">
                     <div className="card-body-info">
                         <div className="row mb-3">
                             <div className="col-lg-5 infoBlockHeaders">
@@ -74,6 +75,11 @@ const Importer: React.FC<IImporter> = () => {
                         </NavLink>
                     </div>
                 </div>
+                <DocumentsCard
+                    id={importer.id}
+                    documents={importer.documents}
+                    page='importers'
+                />
             </div>
             <div className='col-lg-4'>
                 <div className="card">

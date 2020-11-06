@@ -22,6 +22,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import {tagsConverter, timeConverter} from '../../utils'
+import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
 
 const Catalog: React.FC<ICatalog> = () => {
     const {id}: any = useParams()
@@ -77,7 +78,11 @@ const Catalog: React.FC<ICatalog> = () => {
 
                     </div>
                 </div>
-
+                <DocumentsCard
+                    id={catalog.id}
+                    documents={catalog.documents}
+                    page='catalogs'
+                />
             </div>
 
             <div className="col-lg-4">

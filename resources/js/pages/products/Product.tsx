@@ -15,6 +15,7 @@ import {deleteProductById, fetchProductById} from '../../store/actions/products'
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import {imgFormatter, moneyFormatter, timeConverter} from '../../utils'
+import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
 
 const Product: React.FC = () => {
     const {id}: any = useParams()
@@ -49,7 +50,7 @@ const Product: React.FC = () => {
     return (
         <div className='row'>
             <div className='col-lg-8'>
-                <div className="card mb-4">
+                <div className="card mb-3">
                     <div className="card-body-info">
                         <div className='row mb-4'>
                             <div className="col-lg-5">
@@ -228,6 +229,11 @@ const Product: React.FC = () => {
                         </div>
                     </div>
                 </div>
+                <DocumentsCard
+                    id={product.id}
+                    documents={product.documents}
+                    page='products'
+                />
             </div>
             <div className='col-lg-4'>
                 <div className="card">

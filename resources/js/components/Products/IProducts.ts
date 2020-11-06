@@ -20,6 +20,7 @@ import {
 } from '../../store/actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 import {IProvider} from '../Providers/IProviders'
+import {IDocuments} from '../DocumentsCard/DocumentsCard'
 
 export interface IProduct {
     id: number
@@ -30,6 +31,7 @@ export interface IProduct {
     provider: IProvider
     providerId?: number
     priceCny?: number
+    documents: IDocuments[]
     vendorCode?: string
     quantity?: number
     autolongNumber: number

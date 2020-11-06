@@ -25,6 +25,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgCatalog from '../../components/UI/iconComponents/Catalog'
 import {ArrowRight} from '../../components/UI/iconComponents'
+import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
 
 const Provider: React.FC<IProvider> = () => {
     const {id}: any = useParams()
@@ -108,7 +109,7 @@ const Provider: React.FC<IProvider> = () => {
             <div className="row">
 
                 <div className="col-lg-8">
-                    <div className="card">
+                    <div className="card mb-3">
                         <div className="card-body-info">
 
                             <h2 className="mb-3">Общая информация</h2>
@@ -214,6 +215,11 @@ const Provider: React.FC<IProvider> = () => {
                             </div>
                         </div>
                     </div>
+                    <DocumentsCard
+                        id={provider.id}
+                        documents={provider.documents}
+                        page='providers'
+                    />
                 </div>
 
                 <div className="col-lg-4">

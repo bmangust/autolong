@@ -16,6 +16,7 @@ import {
 import {ICountry} from '../Сountries/ICountries'
 import {IOrder} from '../Orders/IOrders'
 import {ICatalog} from '../Catalogs/ICatalogs'
+import {IDocuments} from '../DocumentsCard/DocumentsCard'
 
 export interface IProvider {
     id: number
@@ -33,6 +34,7 @@ export interface IProvider {
     beneficiaryBankName: string
     beneficiaryBankCode: string
     beneficiarySwiftAddress: string
+    documents: IDocuments[]
     catalogs: ICatalog[] | []
     orders: IOrder[] | []
     createdAt?: number;
