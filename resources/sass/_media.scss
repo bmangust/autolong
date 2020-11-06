@@ -44,7 +44,6 @@
         overflow-x: auto !important;
     }
 
-
     .react-bootstrap-table .table td,
     .react-bootstrap-table .table th {
         width: auto;
@@ -58,11 +57,9 @@
     //     min-width: 200px;
     //     max-width: 200px;
     // }
-
 }
 
 @media (max-width: 575px) {
-
     .searchBar label {
         margin-bottom: 15px;
     }
@@ -85,7 +82,24 @@
 
         .dropdown-menu {
             min-width: 4rem;
-            font-size: .7rem;
+            font-size: 0.7rem;
         }
+    }
+
+    .btn {
+        padding: 0.15rem 0.5rem;
+    }
+
+    .btn-success {
+        width: 100%;
+    }
+
+    input:not([type='checkbox']),
+    textarea {
+        font-size: 12px;
+    }
+
+    .card-body .text-right {
+        font-size: 14px;
     }
 }

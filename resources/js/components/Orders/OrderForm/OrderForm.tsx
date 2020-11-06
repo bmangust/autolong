@@ -173,7 +173,7 @@ const OrderForm: React.FC = () => {
                                 >
                                     Выберите поставщика
                                 </label>
-                                <div className='col-10 mb-3 p-0'>
+                                <div className='col-lg-10 mb-3 p-0'>
                                     <Controller
                                         defaultValue=''
                                         name='providerId'
@@ -228,12 +228,14 @@ const OrderForm: React.FC = () => {
                                 {totalPrice + ' ¥'}
                             </span>
                         </div>
-                        <div className='d-flex justify-content-between mt-4'>
+                        <div className='flex-sm-row flex-column
+                        d-flex justify-content-between mt-4'>
                             <button
                                 onClick={() => {
                                     history.goBack()
                                 }}
-                                className='mr-3 btn btn-light'
+                                className='mr-lg-3 btn btn-light
+                                 mb-lg-0 mb-3 mr-0'
                             >
                                 Отмена
                             </button>

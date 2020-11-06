@@ -6,7 +6,7 @@ import {NavLink} from 'react-router-dom'
 import BootstrapTable, {
     BootstrapTableProps,
     ColumnFormatter,
-    ExpandRowProps
+    ExpandRowProps,
 } from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit'
@@ -30,15 +30,14 @@ interface IAutoTable extends BootstrapTableProps {
     expandRowTable?: expandRow[] | undefined
 }
 
-const AutoTable: React.FC<IAutoTable> = (
-    {
-        data,
-        columns,
-        keyField,
-        secondBtn,
-        button,
-        expandRowTable = undefined
-    }) => {
+const AutoTable: React.FC<IAutoTable> = ({
+    data,
+    columns,
+    keyField,
+    secondBtn,
+    button,
+    expandRowTable = undefined,
+}) => {
     const {SearchBar} = Search
 
     const expandRow: ExpandRowProps<any> = {
@@ -46,7 +45,7 @@ const AutoTable: React.FC<IAutoTable> = (
         renderer: renderer,
         showExpandColumn: true,
         expandHeaderColumnRenderer: expandHeaderColumnRenderer,
-        expandColumnRenderer: expandColumnRenderer
+        expandColumnRenderer: expandColumnRenderer,
     }
 
     function renderer(row: any, rowIndex: number) {
@@ -72,10 +71,10 @@ const AutoTable: React.FC<IAutoTable> = (
         return (
             <table className='table'>
                 <thead>
-                <tr>{tableHead}</tr>
+                    <tr>{tableHead}</tr>
                 </thead>
                 <tbody>
-                <tr>{tableBody}</tr>
+                    <tr>{tableBody}</tr>
                 </tbody>
             </table>
         )
@@ -95,9 +94,9 @@ const AutoTable: React.FC<IAutoTable> = (
                     fill='none'
                     xmlns='http://www.w3.org/2000/svg'
                 >
-                    <circle cx='2.75' cy='2.75' r='1.75' stroke='#3A405F'/>
-                    <circle cx='2.75' cy='8.75' r='1.75' stroke='#3A405F'/>
-                    <circle cx='2.75' cy='14.75' r='1.75' stroke='#3A405F'/>
+                    <circle cx='2.75' cy='2.75' r='1.75' stroke='#3A405F' />
+                    <circle cx='2.75' cy='8.75' r='1.75' stroke='#3A405F' />
+                    <circle cx='2.75' cy='14.75' r='1.75' stroke='#3A405F' />
                 </svg>
             )
         }
@@ -144,8 +143,10 @@ const AutoTable: React.FC<IAutoTable> = (
         >
             {(props) => (
                 <div>
-                    <div className='flex-sm-row d-flex
-                    justify-content-between mb-2 flex-column '>
+                    <div
+                        className='flex-sm-row d-flex
+                    justify-content-between mb-2 flex-column '
+                    >
                         <div className='searchBar'>
                             <SearchBar
                                 {...props.searchProps}
