@@ -99,15 +99,15 @@ class CatalogController extends Controller
         return response()->json([], 204);
     }
 
-    public function saveFile(Request $request, Importer $importer, Document $document)
+    public function saveFile(Request $request, Catalog $catalog, Document $document)
     {
         $request->validate([
             'file' => 'required'
         ]);
         $file = $request->file('file');
-        $path = Catalog::SANDBOX_DIRECTORY . $importer->id;
+        $path = Catalog::SANDBOX_DIRECTORY . $catalog->id;
         $newDocument = $document->putFileInFolder($file, $path);
-        $document->catalogs()->sync($importer->id);
+        $document->catalogs()->sync($catalog->id);
         return response()->json(new DocumentResource($newDocument), 200);
     }
 }
