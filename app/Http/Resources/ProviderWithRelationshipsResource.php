@@ -37,7 +37,7 @@ class ProviderWithRelationshipsResource extends JsonResource
             'catalogs' => CatalogResource::collection($this->catalogs),
             'orders' => OrderResource::collection($this->orders),
             'products' => ProductResource::collection($this->products),
-            'documents' => $this->documents,
+            'documents' => DocumentResource::collection($this->documents),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\Http\Resources\CatalogResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -9,6 +10,32 @@ class Document extends Model
 {
 
     const PARENT_DIRECTORY = '/storage/sandbox';
+
+    protected static function booted()
+    {
+        static::deleted(function (Document $document) {
+            switch ($document) {
+                case $document->catalogs()->exists():
+                    $document->catalogs()->delete();
+                    break;
+                case $document->containers()->exists():
+                    $document->containers()->delete();
+                    break;
+                case $document->importers()->exists():
+                    $document->importers()->delete();
+                    break;
+                case $document->orders()->exists():
+                    $document->orders()->delete();
+                    break;
+                case $document->products()->exists():
+                    $document->products()->delete();
+                    break;
+                case $document->providers()->exists():
+                    $document->providers()->delete();
+                    break;
+            }
+        });
+    }
 
     public function orders()
     {
@@ -54,5 +81,12 @@ class Document extends Model
         $this->name = $name;
         $this->save();
         return $this;
+    }
+
+    public function deleteFile()
+    {
+        if (Storage::disk('main')->exists($this->file)) {
+            Storage::disk('main')->delete($this->file);
+        }
     }
 }

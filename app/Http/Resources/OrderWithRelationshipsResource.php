@@ -27,7 +27,7 @@ class OrderWithRelationshipsResource extends JsonResource
             'provider' => new ProviderResource($this->provider),
             'items' => OrderItemResource::collection($this->orderItems),
             'cargo' => $this->cargo,
-            'documents' => $this->documents,
+            'documents' => DocumentResource::collection($this->documents),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

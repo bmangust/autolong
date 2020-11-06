@@ -70,3 +70,5 @@ Route::get('tags', 'TagController@index');
 Route::put('/orderitems/{orderitem}', 'OrderItemController@update');
 
 Route::get('logs', 'LogController@index');
+
+Route::delete('documents/{document}', 'DocumentController@destroy');
