@@ -67,8 +67,8 @@ const ProductItemForm: React.FC<{
         const schema = yup.object().shape({
             autolongNumber: yup.string().required(),
             providerId: yup.object().required(),
-            nameRu: yup.string().required(),
-            priceCny: yup.number().positive().integer().required()
+            nameRu: yup.string().required()
+            // priceCny: yup.number().positive().integer().required()
         })
 
         'id' in product
