@@ -109,12 +109,14 @@ const OrdersTable: React.FC = () => {
         },
         {
             dataField: 'items',
-            text: 'Кол-во наименований',
+            text: 'Кол.наим.',
+            headerStyle: {width: '88px'},
             formatter: itemsFormatter
         },
         {
             dataField: 'price',
             text: 'Сумма',
+            headerStyle: {width: '90px'},
             formatter: orderMoneyFormatter
         }
     ]
