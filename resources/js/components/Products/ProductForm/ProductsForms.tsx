@@ -18,19 +18,16 @@ const ProductsForms: React.FC<{
         return vendorProducts
     })
 
-    const onHideHandler = (id) => {
-        const newState = productsState.filter((product) => {
-            const productId = product.number || product.autolongNumber
-            if (id !== productId) {
-                return product
-            }
-        })
-        setProductsState(newState)
+    const onHideHandler = (number) => {
+        setProductsState((oldState) =>
+            oldState.filter((product) =>
+                (product.number || product.autolongNumber) != number)
+        )
     }
 
     return <TransitionGroup>
-        {productsState.map((product: IProduct | IProductAutolong) => {
-            return <CSSTransition
+        {productsState.map((product: IProduct | IProductAutolong) => (
+            <CSSTransition
                 key={product.number || product.autolongNumber}
                 unmountOnExit
                 timeout={750}
@@ -38,12 +35,9 @@ const ProductsForms: React.FC<{
                 <ProductItemForm
                     onHide={onHideHandler}
                     providers={providers}
-                    key={'id' in product
-                        ? product.id
-                        : product.number + product.articul}
                     product={product}/>
             </CSSTransition>
-        })}
+        ))}
     </TransitionGroup>
 }
 

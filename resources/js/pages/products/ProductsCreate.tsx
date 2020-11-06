@@ -46,21 +46,16 @@ const ProductsCreate: React.FC = () => {
         })
 
     let contentProduct =
-        <div className='card card-body text-center'>
-            Выберите товары по внутреннему номеру
-        </div>
+        <ProductsForms
+            vendorProducts={vendorProducts}
+            providers={providers}
+        />
 
     if (error) {
         contentProduct = <Error/>
     }
     if (vendorLoading) {
         contentProduct = <Loader/>
-    }
-    if (!vendorLoading && !error && vendorProducts.length) {
-        contentProduct = <ProductsForms
-            vendorProducts={vendorProducts}
-            providers={providers}
-        />
     }
 
     return (

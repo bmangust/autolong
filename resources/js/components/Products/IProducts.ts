@@ -50,12 +50,12 @@ export interface IProductPrice {
 }
 
 export interface IProductAutolong {
-    number: string
-    name: string
-    articul: string
-    text: string
-    price: string
-    photo: string
+    number: number
+    name?: string
+    articul?: string
+    text?: string
+    price?: string
+    photo?: string
 }
 
 export interface IProductsState {
