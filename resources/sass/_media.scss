@@ -2,6 +2,11 @@
     .react-bootstrap-table .table {
         table-layout: auto;
     }
+
+    .react-bootstrap-table .table td:first-child,
+    .react-bootstrap-table .table th:first-child {
+        padding-left: 15px;
+    }
 }
 
 @media (max-width: 991px) {
@@ -86,12 +91,14 @@
         }
     }
 
-    .btn {
+    .btn-success {
+        width: 100%;
         padding: 0.15rem 0.5rem;
     }
 
-    .btn-success {
+    .btn-light {
         width: 100%;
+        padding: 0.15rem 0.5rem;
     }
 
     input:not([type='checkbox']),
@@ -101,5 +108,9 @@
 
     .card-body .text-right {
         font-size: 14px;
+    }
+
+    .card-body.text-center {
+        font-size: 12px;
     }
 }

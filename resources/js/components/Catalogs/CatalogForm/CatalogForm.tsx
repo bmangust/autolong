@@ -112,7 +112,7 @@ const CatalogForm: React.FC = () => {
                                    htmlFor='providerId'>
                                 Выберите поставщика
                             </label>
-                            <div className='col-10 mb-3 p-0'>
+                            <div className='col-lg-10 mb-3 p-0'>
                                 <Controller
                                     defaultValue=''
                                     name="providerId"
@@ -129,7 +129,7 @@ const CatalogForm: React.FC = () => {
                                    htmlFor='file'>
                                 Загрузите файл каталога
                             </label>
-                            <div className="custom-file col-10">
+                            <div className="custom-file col-lg-10 mb-3 mb-lg-0">
                                 <input multiple={false} name="file"
                                        ref={register({required: true})}
                                        className="custom-file-input"
@@ -152,7 +152,7 @@ const CatalogForm: React.FC = () => {
                                 placeholder='Введите теги'
                                 onChange={onChangeHandler}
                                 classNamePrefix='select-mini-tags'
-                                className='select-mini-tags p-0 col-10 '
+                                className='select-mini-tags p-0 col-lg-10 '
                                 options={tagsOptions}
                             />
                         </div>
@@ -161,7 +161,7 @@ const CatalogForm: React.FC = () => {
                         <button
                             onClick={() => {
                                 history.goBack()
-                            }} className='mr-3 btn btn-light'>
+                            }} className='mr-3 btn btn-light mb-3 mb-sm-0'>
                             Назад
                         </button>
                         <button

@@ -31,8 +31,8 @@ const ImporterForm: React.FC = () => {
         <div className='card'>
             <div className="card-body">
                 <form onSubmit={importerFormSubmitHandler}>
-                    <div className='mb-3 row'>
-                        <div className="col-lg-6">
+                    <div className='mb-0 row mb-lg-3'>
+                        <div className="col-lg-6 mb-3 mb-lg-0">
                             <label htmlFor='nameRu' className='w-100 required'>
                                 Укажите название
                                 <span className="float-right
@@ -48,7 +48,7 @@ const ImporterForm: React.FC = () => {
                             {errors.nameRu &&
                             <small>Это поле обязательно</small>}
                         </div>
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 mb-3 mb-lg-0">
                             <label htmlFor='nameEn' className='w-100 required'>
                                 Name
                                 <span className="float-right
@@ -65,8 +65,8 @@ const ImporterForm: React.FC = () => {
                             <small>Это поле обязательно</small>}
                         </div>
                     </div>
-                    <div className='mb-5 row'>
-                        <div className="col-lg-6">
+                    <div className='mb-3 row mb-lg-5'>
+                        <div className="col-lg-6 mb-3 mb-lg-0">
                             <label className='required'
                                    htmlFor='address'>Укажите адрес</label>
                             <input
@@ -77,7 +77,7 @@ const ImporterForm: React.FC = () => {
                             {errors.address &&
                             <small>Это поле обязательно</small>}
                         </div>
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 mb-3 mb-lg-0">
                             <label
                                 className='required'
                                 htmlFor='phone'>Укажите номер телефона</label>
@@ -94,7 +94,7 @@ const ImporterForm: React.FC = () => {
                         <button
                             onClick={() => {
                                 history.goBack()
-                            }} className='mr-3 btn btn-light'>
+                            }} className='mr-3 btn btn-light mb-3 mb-sm-0'>
                             Назад
                         </button>
                         <button

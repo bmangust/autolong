@@ -5,6 +5,7 @@
     margin-bottom: 15px;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
 
 .header h1 {
@@ -63,5 +64,16 @@
 @media (max-width: 767px) {
     .header h1 {
         font-size: 12px;
+        margin-top: 0;
+    }
+}
+
+@media (max-width: 575px) {
+    .header h1 {
+        margin-top: 0;
+    }
+
+    .HeaderBlockUserPic {
+        margin-right: 10px;
     }
 }

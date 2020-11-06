@@ -53,3 +53,30 @@
     line-height: 16px;
     max-width: 370px;
 }
+
+@media (max-width: 767px) {
+    .placeholder img {
+        margin: 0 auto 15px;
+    }
+
+    .placeholderBody {
+        padding: 0 30px;
+        justify-content: center;
+    }
+
+    .placeholder .title {
+        margin-bottom: 10px;
+        text-align: center;
+        font-size: 12px;
+    }
+
+    .placeholder .description {
+        font-size: 10px;
+        text-align: center;
+    }
+
+    .placeholderAdd {
+        font-size: 14px;
+        padding: 0.5rem;
+    }
+}
