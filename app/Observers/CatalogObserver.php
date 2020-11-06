@@ -28,14 +28,6 @@ class CatalogObserver
         }
     }
 
-    public function deleting(Catalog $catalog)
-    {
-        foreach ($catalog->documents as $document) {
-            $document->deleteFile();
-            $document->delete();
-        }
-    }
-
     /**
      * Handle the catalog "updated" event.
      *
@@ -55,6 +47,14 @@ class CatalogObserver
                 'before' => json_encode(array_diff($before, $after)),
                 'after' => json_encode(array_diff($after, $before)),
             ]);
+        }
+    }
+
+    public function deleting(Catalog $catalog)
+    {
+        foreach ($catalog->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Document;
 use App\Http\Resources\DocumentResource;
-use App\Importer;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\CatalogWithRelationshipsResource;
