@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class AutolongRuProduct extends Model
 {
+    use CleaningSpaceTrait;
+
     protected $table = 'autolong_ru';
 
     const AUTOLONG_LINK_IMAGE = "https://autolong.ru/images/products/thumb/";

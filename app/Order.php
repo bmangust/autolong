@@ -10,6 +10,7 @@ use App\OrderItem;
 class Order extends Model
 {
     use TranslateToSnakeCase;
+    use CleaningSpaceTrait;
 
     public const SANDBOX_DIRECTORY = '/orders/';
 

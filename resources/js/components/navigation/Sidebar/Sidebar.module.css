@@ -109,3 +109,11 @@ a.help:hover {
         margin-bottom: 5px;
     }
 }
+
+@media (max-width: 575px) {
+    .help svg {
+        top: 3px;
+        left: -7px;
+        height: 30px;
+    }
+}

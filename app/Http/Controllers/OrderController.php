@@ -129,12 +129,12 @@ class OrderController extends Controller
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 
-    public function checkProductNUmberWithUs(Request $request)
+    public function checkProductNUmberWithUs(Request $request, Order $order)
     {
         $request->validate([
             'numbers' => 'required'
         ]);
-        $numbers = $request->input('numbers');
+        $numbers = $order->cleanSpaceInArrayItems($request->input('numbers'));
         $availableProducts = [];
         foreach ($numbers as $number) {
             $product = Product::whereAutolongNumber($number);
