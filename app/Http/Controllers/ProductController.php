@@ -125,9 +125,6 @@ class ProductController extends Controller
     {
         Log::$write = false;
         $product->deleteImage();
-        foreach ($product->documents as $document) {
-            $document->delete();
-        }
         Log::$write = true;
         $product->delete();
         return response()->json([], 204);

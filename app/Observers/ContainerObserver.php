@@ -5,9 +5,11 @@ namespace App\Observers;
 use App\Container;
 use App\Http\Resources\ContainerResource;
 use App\Log;
+use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class ContainerObserver
 {
+    use HasEvents;
     /**
      * Handle the container "created" event.
      *
@@ -45,6 +47,15 @@ class ContainerObserver
                 'before' => json_encode(array_diff($before, $after)),
                 'after' => json_encode(array_diff($after, $before)),
             ]);
+        }
+    }
+
+
+    public function deleting(Container $container)
+    {
+        foreach ($container->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 
