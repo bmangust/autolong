@@ -24,6 +24,7 @@ import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import statuses from '../../../statuses/statuses.json'
+import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -159,6 +160,12 @@ const Order: React.FC<IOrder> = () => {
                             </div>
                         </div>
                     </div>
+
+                    <DocumentsCard
+                        id={order.id}
+                        documents={order.documents}
+                        page='orders'
+                    />
 
                 </div>
 
