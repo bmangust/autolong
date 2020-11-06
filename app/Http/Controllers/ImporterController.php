@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Http\Resources\DocumentResource;
 use App\Importer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -100,8 +101,8 @@ class ImporterController extends Controller
         ]);
         $file = $request->file('file');
         $path = Importer::SANDBOX_DIRECTORY . $importer->id;
-        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $newDocument = $document->putFileInFolder($file, $path);
         $document->importers()->sync($importer->id);
-        return response()->json($newDocumentPath, 200);
+        return response()->json(new DocumentResource($newDocument), 200);
     }
 }

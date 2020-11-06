@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Http\Resources\DocumentResource;
 use App\Importer;
 use App\Log;
 use Illuminate\Http\Request;
@@ -105,8 +106,8 @@ class CatalogController extends Controller
         ]);
         $file = $request->file('file');
         $path = Catalog::SANDBOX_DIRECTORY . $importer->id;
-        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $newDocument = $document->putFileInFolder($file, $path);
         $document->catalogs()->sync($importer->id);
-        return response()->json($newDocumentPath, 200);
+        return response()->json(new DocumentResource($newDocument), 200);
     }
 }

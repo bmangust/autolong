@@ -48,9 +48,11 @@ class Document extends Model
 
     public function putFileInFolder($file, $path)
     {
-        $path = Storage::disk('main')->putFileAs(self::PARENT_DIRECTORY . $path, $file,  uniqid() . '.' . $file->extension());
+        $name = uniqid() . '.' . $file->extension();
+        $path = Storage::disk('main')->putFileAs(self::PARENT_DIRECTORY . $path, $file, $name);
         $this->file = $path;
+        $this->name = $name;
         $this->save();
-        return $path;
+        return $this;
     }
 }

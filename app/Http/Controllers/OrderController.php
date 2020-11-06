@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Http\Resources\DocumentResource;
 use App\Http\Resources\ProductResource;
 use App\Order;
 use App\Product;
@@ -154,8 +155,8 @@ class OrderController extends Controller
         ]);
         $file = $request->file('file');
         $path = Order::SANDBOX_DIRECTORY . $order->id;
-        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $newDocument = $document->putFileInFolder($file, $path);
         $document->orders()->sync($order->id);
-        return response()->json($newDocumentPath, 200);
+        return response()->json(new DocumentResource($newDocument), 200);
     }
 }

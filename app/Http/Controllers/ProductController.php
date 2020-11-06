@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AutolongRuProduct;
 use App\Document;
 use App\ExchangeRate;
+use App\Http\Resources\DocumentResource;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
@@ -155,8 +156,8 @@ class ProductController extends Controller
         ]);
         $file = $request->file('file');
         $path = Product::SANDBOX_DIRECTORY . $product->id;
-        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $newDocument = $document->putFileInFolder($file, $path);
         $document->products()->sync($product->id);
-        return response()->json($newDocumentPath, 200);
+        return response()->json(new DocumentResource($newDocument), 200);
     }
 }

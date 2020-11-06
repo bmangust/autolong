@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Document;
+use App\Http\Resources\DocumentResource;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProviderWithRelationshipsResource;
@@ -99,8 +100,8 @@ class ProviderController extends Controller
         ]);
         $file = $request->file('file');
         $path = Provider::SANDBOX_DIRECTORY . $provider->id;
-        $newDocumentPath = $document->putFileInFolder($file, $path);
+        $newDocument = $document->putFileInFolder($file, $path);
         $document->providers()->sync($provider->id);
-        return response()->json($newDocumentPath, 200);
+        return response()->json(new DocumentResource($newDocument), 200);
     }
 }
