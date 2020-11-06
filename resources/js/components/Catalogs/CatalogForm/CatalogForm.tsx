@@ -6,15 +6,16 @@ import {useDispatch, useSelector} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
+import bsCustomFileInput from 'bs-custom-file-input'
+import {useHistory} from 'react-router-dom'
 
 // Typescript
 import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
-
+import {ITag, ITagsRootState} from '../ITags'
 
 // Actions
 import {createCatalog} from '../../../store/actions/catalogs'
 import {fetchProviders} from '../../../store/actions/providers'
-import {ITag, ITagsRootState} from '../ITags'
 import {fetchTags} from '../../../store/actions/tags'
 
 interface ICreateCatalogData {
@@ -30,6 +31,7 @@ const CatalogForm: React.FC = () => {
     } = useForm<ICreateCatalogData>()
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     // eslint-disable-next-line no-unused-vars
     const [tagsState, setTags] = useState([])
@@ -88,6 +90,8 @@ const CatalogForm: React.FC = () => {
             dispatch(createCatalog(formValues, '/catalogs'))
         })
 
+    bsCustomFileInput.init()
+
     return (
         <div className='card'>
             <div className="card-body">
@@ -125,9 +129,17 @@ const CatalogForm: React.FC = () => {
                                    htmlFor='file'>
                                 Загрузите файл каталога
                             </label>
-                            <input multiple={false} name="file"
-                                   ref={register({required: true})}
-                                   type="file" className='col-lg-10'/>
+                            <div className="custom-file col-10">
+                                <input multiple={false} name="file"
+                                       ref={register({required: true})}
+                                       className="custom-file-input"
+                                       type="file"/>
+                                <label
+                                    className="custom-file-label"
+                                    htmlFor="file">
+                                    Выберите файл
+                                </label>
+                            </div>
                             {errors.file &&
                             <small>Это поле обязательно</small>}
                         </div>
@@ -140,7 +152,7 @@ const CatalogForm: React.FC = () => {
                                 placeholder='Введите теги'
                                 onChange={onChangeHandler}
                                 classNamePrefix='select-mini-tags'
-                                className='select-mini-tags'
+                                className='select-mini-tags p-0 col-10 '
                                 options={tagsOptions}
                             />
                         </div>

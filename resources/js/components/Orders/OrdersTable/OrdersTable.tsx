@@ -10,13 +10,15 @@ import {fetchOrders} from '../../../store/actions/orders'
 
 // Typescript
 import {IOrdersRootState} from '../IOrders'
+import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // App
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import Loader from '../../UI/Loader/Loader'
-import {getOrderStatusName, nameToLinkFormatter} from '../../../utils'
+import {
+    getOrderStatusName, nameToLinkFormatter
+} from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
-import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
 
 const OrdersTable: React.FC = () => {
@@ -50,6 +52,38 @@ const OrdersTable: React.FC = () => {
         )
     }
 
+    const itemsFormatter = (items) => {
+        return items.length
+    }
+
+    const providerFormatter = (provider) => {
+        return 'name' in provider
+            ? provider.name
+            : null
+    }
+
+    const orderMoneyFormatter = (price) => {
+        if ('cny' in price) {
+            return <span className='pricesBlock'>
+            <span>{price.cny} ¥</span>
+        </span>
+        } else {
+            return null
+        }
+    }
+
+    const expandRowTable = [
+        {
+            dataField: 'provider',
+            text: 'Поставщик',
+            formatter: providerFormatter
+        },
+        {
+            dataField: 'dop',
+            text: 'Дополнительно'
+        }
+    ]
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
@@ -74,17 +108,21 @@ const OrdersTable: React.FC = () => {
             sort: true
         },
         {
-            dataField: 'dop',
-            headerStyle: {width: '200px'},
-            text: 'Дополнительно'
+            dataField: 'items',
+            text: 'Кол-во наименований',
+            formatter: itemsFormatter
+        },
+        {
+            dataField: 'price',
+            text: 'Сумма',
+            formatter: orderMoneyFormatter
         }
     ]
 
     return (
         <AutoTable
-            keyField='id'
-            data={orders}
-            columns={columns}
+            expandRowTable={expandRowTable}
+            keyField='id' data={orders} columns={columns}
             button={{link: 'ordercreate', text: 'Новый заказ'}}
         />
     )
