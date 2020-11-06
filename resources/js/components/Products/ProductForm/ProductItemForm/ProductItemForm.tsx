@@ -117,7 +117,7 @@ const ProductItemForm: React.FC<{
         useEffect(() => {
             if (!('id' in product && product.id)) {
                 product.price
-                    ? setPriceState(currencyConversion(+product.price, 'rub'))
+                    ? setPriceState(currencyConversion(product.price, 'rub'))
                     : setPriceState(currencyConversion(0, 'cny'))
             } else {
                 setPriceState(currencyConversion(product.price.cny, 'cny'))
@@ -325,7 +325,6 @@ const ProductItemForm: React.FC<{
                                         className='w-100'
                                         ref={register}
                                         type="number"
-                                        lang="en-150"
                                         value={priceState.cny}
                                         min={0}
                                         step={0.01}
@@ -350,7 +349,6 @@ const ProductItemForm: React.FC<{
                                         name="priceUsd"
                                         type="number"
                                         ref={register}
-                                        lang="en-150"
                                         onChange={(e) =>
                                             onChangePrice(e, 'usd')}
                                         value={priceState.usd}
@@ -372,7 +370,6 @@ const ProductItemForm: React.FC<{
                                         name="priceRub"
                                         type="number"
                                         ref={register}
-                                        lang="en-150"
                                         onChange={(e) =>
                                             onChangePrice(e, 'rub')}
                                         value={priceState.rub}
