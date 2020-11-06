@@ -143,7 +143,7 @@ const AutoTable: React.FC<IAutoTable> = ({
         >
             {(props) => (
                 <div>
-                    <div className='d-flex justify-content-between mb-2'>
+                    <div className='flex-sm-row d-flex justify-content-between mb-2 flex-column '>
                         <div className='searchBar'>
                             <SearchBar
                                 {...props.searchProps}
