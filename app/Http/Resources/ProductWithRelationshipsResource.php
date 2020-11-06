@@ -32,6 +32,7 @@ class ProductWithRelationshipsResource extends JsonResource
             'catalog' => new CatalogResource($this->catalog),
             'vendorCode' => $this->vendor_code,
             'autolongNumber' => $this->autolong_number,
+            'documents' => $this->documents,
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
