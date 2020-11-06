@@ -90,6 +90,9 @@ class ProviderController extends Controller
     public function destroy(Provider $provider)
     {
         $provider->delete();
+        foreach ($provider->documents as $document) {
+            $document->delete();
+        }
         return response()->json([], 204);
     }
 

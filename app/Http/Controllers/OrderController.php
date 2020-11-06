@@ -5,10 +5,12 @@ namespace App\Http\Controllers;
 use App\Document;
 use App\Http\Resources\DocumentResource;
 use App\Http\Resources\ProductResource;
+use App\Importer;
 use App\Order;
 use App\Product;
 use App\Status;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\OrderWithRelationshipsResource;
 
@@ -108,6 +110,9 @@ class OrderController extends Controller
      */
     public function destroy(Order $order)
     {
+        foreach ($order->documents as $document) {
+            $document->delete();
+        }
         $order->delete();
         return response()->json([], 204);
     }
@@ -158,5 +163,21 @@ class OrderController extends Controller
         $newDocument = $document->putFileInFolder($file, $path);
         $document->orders()->sync($order->id);
         return response()->json(new DocumentResource($newDocument), 200);
+    }
+
+    public function getPdfInvoice(Order $order)
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $importer = Importer::first();
+        $newPdf = $pdf->loadView('pdf.invoice', compact('order','importer'));
+        return response()->file($newPdf);
+    }
+
+    public function getPdfProforma(Order $order)
+    {
+        $pdf = App::make('dompdf.wrapper');
+        $importer = Importer::first();
+        $newPdf = $pdf->loadView('pdf.proforma', compact('order','importer'));
+        return response()->file($newPdf);
     }
 }

@@ -8,34 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Document extends Model
 {
-
     const PARENT_DIRECTORY = '/storage/sandbox';
-
-    protected static function booted()
-    {
-        static::deleted(function (Document $document) {
-            switch ($document) {
-                case $document->catalogs()->exists():
-                    $document->catalogs()->detach();
-                    break;
-                case $document->containers()->exists():
-                    $document->containers()->detach();
-                    break;
-                case $document->importers()->exists():
-                    $document->importers()->detach();
-                    break;
-                case $document->orders()->exists():
-                    $document->orders()->detach();
-                    break;
-                case $document->products()->exists():
-                    $document->products()->detach();
-                    break;
-                case $document->providers()->exists():
-                    $document->providers()->detach();
-                    break;
-            }
-        });
-    }
 
     public function orders()
     {

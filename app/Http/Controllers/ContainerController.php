@@ -87,6 +87,9 @@ class ContainerController extends Controller
      */
     public function destroy(Container $container)
     {
+        foreach ($container->documents as $document) {
+            $document->delete();
+        }
         $container->delete();
         return response()->json([], 204);
     }

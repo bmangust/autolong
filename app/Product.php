@@ -15,46 +15,6 @@ class Product extends Model
     public const IMAGE_DIRECTORY = '/storage/product-images';
     public const SANDBOX_DIRECTORY = '/products/';
 
-    protected static function booted()
-    {
-        static::created(function (Product $product) {
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_CREATED,
-                    'model' => json_encode(new ProductResource($product)),
-                    'model_name' => get_class($product)
-                ]);
-            }
-        });
-
-        static::updated(function (Product $product) {
-            if (Log::$write) {
-                $log = new Log();
-                $before = $product->getOriginal();
-                $after = $product->toArray();
-                $log->create([
-                    'action' => Log::ACTION_UPDATED,
-                    'model' => json_encode(new ProductResource($product)),
-                    'model_name' => get_class($product),
-                    'before' => json_encode(array_diff($before, $after)),
-                    'after' => json_encode(array_diff($after, $before)),
-                ]);
-            }
-        });
-
-        static::deleted(function (Product $product){
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_DELETED,
-                    'model' => json_encode(new ProductResource($product)),
-                    'model_name' => get_class($product)
-                ]);
-            }
-        });
-    }
-
     public function setAboutRuAttribute($value) {
         $this->attributes['about_ru'] = preg_replace('#<script.*<\/script>#','', $value);
     }

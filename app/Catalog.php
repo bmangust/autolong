@@ -14,46 +14,6 @@ class Catalog extends Model
 
     protected $fillable = ['name', 'provider_id'];
 
-    protected static function booted()
-    {
-        static::created(function (Catalog $catalog) {
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_CREATED,
-                    'model' => json_encode(new CatalogResource($catalog)),
-                    'model_name' => get_class($catalog),
-                ]);
-            }
-        });
-
-        static::updated(function (Catalog $catalog) {
-            if (Log::$write) {
-                $log = new Log();
-                $before = $catalog->getOriginal();
-                $after = $catalog->toArray();
-                $log->create([
-                    'action' => Log::ACTION_UPDATED,
-                    'model' => json_encode(new CatalogResource($catalog)),
-                    'model_name' => get_class($catalog),
-                    'before' => json_encode(array_diff($before, $after)),
-                    'after' => json_encode(array_diff($after, $before)),
-                ]);
-            }
-        });
-
-        static::deleted(function (Catalog $catalog){
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_DELETED,
-                    'model' => json_encode(new CatalogResource($catalog)),
-                    'model_name' => get_class($catalog),
-                ]);
-            }
-        });
-    }
-
     public function provider()
     {
         return $this->belongsTo('App\Provider')->withTrashed();

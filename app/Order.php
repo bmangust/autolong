@@ -16,47 +16,6 @@ class Order extends Model
 
     protected $fillable = ['name', 'provider_id'];
 
-    protected static function booted()
-    {
-        static::created(function (Order $order) {
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_CREATED,
-                    'model' => json_encode(new OrderResource($order)),
-                    'model_name' => get_class($order)
-                ]);
-            }
-        });
-
-        static::updated(function (Order $order) {
-            if (Log::$write) {
-                $log = new Log();
-                $before = $order->getOriginal();
-                $after = $order->toArray();
-                $log->create([
-                    'action' => Log::ACTION_UPDATED,
-                    'model' => json_encode(new OrderResource($order)),
-                    'model_name' => get_class($order),
-                    'before' => json_encode(array_diff($before, $after)),
-                    'after' => json_encode(array_diff($after, $before)),
-                ]);
-            }
-        });
-
-        static::deleted(function (Order $order){
-            $order->orderItems()->delete();
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_DELETED,
-                    'model' => json_encode(new OrderResource($order)),
-                    'model_name' => get_class($order)
-                ]);
-            }
-        });
-    }
-
     public function provider()
     {
         return $this->belongsTo('App\Provider');

@@ -90,6 +90,9 @@ class ImporterController extends Controller
      */
     public function destroy(Importer $importer)
     {
+        foreach ($importer->documents as $document) {
+            $document->delete();
+        }
         $importer->delete();
         return response()->json([], 204);
     }

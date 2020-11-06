@@ -94,7 +94,12 @@ class CatalogController extends Controller
      */
     public function destroy(Catalog $catalog)
     {
+        Log::$write = false;
         $catalog->deleteFile();
+        foreach ($catalog->documents as $document) {
+            $document->delete();
+        }
+        Log::$write = true;
         $catalog->delete();
         return response()->json([], 204);
     }

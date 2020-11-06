@@ -17,46 +17,6 @@ class Importer extends Model
       'phone'
     ];
 
-    protected static function booted()
-    {
-        static::created(function (Importer $importer) {
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_CREATED,
-                    'model' => json_encode(new ImporterResource($importer)),
-                    'model_name' => get_class($importer)
-                ]);
-            }
-        });
-
-        static::updated(function (Importer $importer) {
-            if (Log::$write) {
-                $log = new Log();
-                $before = $importer->getOriginal();
-                $after = $importer->toArray();
-                $log->create([
-                    'action' => Log::ACTION_UPDATED,
-                    'model' => json_encode(new ImporterResource($importer)),
-                    'model_name' => get_class($importer),
-                    'before' => json_encode(array_diff($before, $after)),
-                    'after' => json_encode(array_diff($after, $before)),
-                ]);
-            }
-        });
-
-        static::deleted(function (Importer $importer){
-            if (Log::$write) {
-                $log = new Log();
-                $log->create([
-                    'action' => Log::ACTION_DELETED,
-                    'model' => json_encode(new ImporterResource($importer)),
-                    'model_name' => get_class($importer)
-                ]);
-            }
-        });
-    }
-
     public function documents()
     {
         return $this->belongsToMany('App\Importer', 'document_importer', 'importer_id', 'document_id')
