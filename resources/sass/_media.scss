@@ -1,0 +1,91 @@
+@media (max-width: 1199px) {
+    .react-bootstrap-table .table {
+        table-layout: auto;
+    }
+}
+
+@media (max-width: 991px) {
+    .react-bootstrap-table .table thead th {
+        padding-bottom: 10px;
+    }
+
+    .react-bootstrap-table .table td:first-child,
+    .react-bootstrap-table .table th:first-child {
+        padding-left: 15px;
+    }
+
+    .react-bootstrap-table .table td,
+    .react-bootstrap-table .table th {
+        padding: 1rem;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .searchBar input {
+        padding-left: 50px !important;
+        padding-right: 10px !important;
+        background: white url(/svg/search.svg) no-repeat 15px center / 20px !important;
+    }
+    .addButton {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: var(--white) url(/svg/plus.svg) no-repeat 15px center / 20px !important;
+        padding-left: 50px;
+        line-height: 1;
+        padding-right: 10px;
+    }
+}
+
+@media (max-width: 767px) {
+    .react-bootstrap-table {
+        overflow-x: auto !important;
+    }
+
+
+    .react-bootstrap-table .table td,
+    .react-bootstrap-table .table th {
+        width: auto;
+        min-width: 150px;
+        max-width: 250px;
+    }
+
+    // .react-bootstrap-table .table td:first-child,
+    // .react-bootstrap-table .table th:first-child {
+    //     width: 200px;
+    //     min-width: 200px;
+    //     max-width: 200px;
+    // }
+
+}
+
+@media (max-width: 575px) {
+
+    .searchBar label {
+        margin-bottom: 15px;
+    }
+
+    .searchBar input {
+        text-align: center;
+    }
+
+    .addButton {
+        margin-bottom: 7px;
+        padding: 19px 10px 19px 50px;
+    }
+
+    .react-bootstrap-table-pagination {
+        flex-wrap: nowrap !important;
+
+        #pageDropDown {
+            margin-left: 0;
+        }
+
+        .dropdown-menu {
+            min-width: 4rem;
+            font-size: .7rem;
+        }
+    }
+}

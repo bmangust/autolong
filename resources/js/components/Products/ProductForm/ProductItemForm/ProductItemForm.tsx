@@ -6,6 +6,8 @@ import {useDispatch} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
 import bsCustomFileInput from 'bs-custom-file-input'
 import Select from 'react-select'
+import {yupResolver} from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 // Typescript
 import {IProduct, IProductAutolong, IProductPrice} from '../../IProducts'
@@ -62,6 +64,13 @@ const ProductItemForm: React.FC<{
                 }
             })
 
+        const schema = yup.object().shape({
+            autolongNumber: yup.string().required(),
+            providerId: yup.object().required(),
+            nameRu: yup.string().required(),
+            priceCny: yup.number().positive().integer().required()
+        })
+
         'id' in product
             ? defaultValues = {
                 nameRu: product.nameRu,
@@ -93,7 +102,7 @@ const ProductItemForm: React.FC<{
         const {
             register, handleSubmit, errors, control
         } = useForm<IEditProductData>({
-            defaultValues
+            defaultValues, resolver: yupResolver(schema)
         })
 
         let img = '/imgs/placeholder-product-image.png'
@@ -165,7 +174,7 @@ const ProductItemForm: React.FC<{
                             </label>
                             <input className='col-lg-10 mb-3'
                                    name="autolongNumber"
-                                   ref={register({required: true})}
+                                   ref={register}
                                    type="number"
                                    defaultValue={'number' in product
                                        ? product.number
@@ -224,7 +233,6 @@ const ProductItemForm: React.FC<{
                                     defaultValue=''
                                     options={providersOptions}
                                     control={control}
-                                    rules={{required: true}}
                                 />
                                 {errors.providerId &&
                                 <small>Это поле обязательно</small>}
@@ -246,7 +254,7 @@ const ProductItemForm: React.FC<{
                             </label>
                             <input name="nameRu"
                                    className='col-lg-10 mb-3'
-                                   ref={register({required: true})}
+                                   ref={register}
                                    type="text"
                                    placeholder="Введите название"/>
                             {errors.nameRu &&
@@ -315,8 +323,9 @@ const ProductItemForm: React.FC<{
                                     <input
                                         name="priceCny"
                                         className='w-100'
-                                        ref={register({required: true})}
+                                        ref={register}
                                         type="number"
+                                        lang="en-150"
                                         value={priceState.cny}
                                         min={0}
                                         step={0.01}
@@ -341,6 +350,7 @@ const ProductItemForm: React.FC<{
                                         name="priceUsd"
                                         type="number"
                                         ref={register}
+                                        lang="en-150"
                                         onChange={(e) =>
                                             onChangePrice(e, 'usd')}
                                         value={priceState.usd}
@@ -362,6 +372,7 @@ const ProductItemForm: React.FC<{
                                         name="priceRub"
                                         type="number"
                                         ref={register}
+                                        lang="en-150"
                                         onChange={(e) =>
                                             onChangePrice(e, 'rub')}
                                         value={priceState.rub}

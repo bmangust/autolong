@@ -955,67 +955,6 @@ html select.select-mini:focus {
     margin: 0;
 }
 
-// Media
-
-@media (max-width: 1199px) {
-    .react-bootstrap-table .table thead th {
-        width: auto !important;
-    }
-}
-
-@media (max-width: 991px) {
-    .react-bootstrap-table .table thead th {
-        padding-bottom: 10px;
-    }
-
-    .react-bootstrap-table .table td:first-child,
-    .react-bootstrap-table .table th:first-child {
-        padding-left: 15px;
-    }
-
-    .react-bootstrap-table .table td,
-    .react-bootstrap-table .table th {
-        padding: 0.5rem;
-    }
-
-    .card-body {
-        padding: 15px;
-    }
-
-    .searchBar {
-        min-width: 48%;
-        max-width: 48%;
-    }
-
-    .searchBar input {
-        min-width: 48%;
-        padding-left: 35px !important;
-        padding-right: 10px !important;
-        background: white url(/svg/search.svg) no-repeat 10px 17px !important;
-    }
-    .addButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        min-width: 48%;
-        max-width: 48%;
-        background: var(--white) url(/svg/plus.svg) no-repeat 10px center / 20px !important;
-        padding-left: 35px;
-        line-height: 1;
-        padding-right: 10px;
-    }
-}
-
-@media (max-width: 575px) {
-    .searchBar input {
-        // font-size: 10px !important;
-    }
-
-    .addButton {
-        // font-size: 10px;
-    }
-}
-
 .fade-enter {
     opacity: 0;
     -webkit-transform: translate3d(100%, 0, 0);
@@ -1041,3 +980,6 @@ html select.select-mini:focus {
     transform: translate3d(100%, 0, 0);
     transition: 750ms;
 }
+
+// Media
+@import 'media';

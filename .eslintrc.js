@@ -20,6 +20,7 @@ module.exports = {
         'valid-jsdoc': 'off',
         'space-before-function-paren': 'off',
         'react/prop-types': 'off',
+        'linebreak-style': 'off'
     },
     'plugins': [
         'react',
