@@ -2,7 +2,7 @@
 
 namespace App\Observers;
 
-use App\Http\Resources\ImporterResource;
+use App\Http\Resources\ImporterWithRelationshipsResource;
 use App\Importer;
 use App\Log;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
@@ -22,7 +22,7 @@ class ImporterObserver
             $log = new Log();
             $log->create([
                 'action' => Log::ACTION_CREATED,
-                'model' => json_encode(new ImporterResource($importer)),
+                'model' => json_encode(new ImporterWithRelationshipsResource($importer)),
                 'model_name' => get_class($importer)
             ]);
         }
@@ -42,11 +42,19 @@ class ImporterObserver
             $after = $importer->toArray();
             $log->create([
                 'action' => Log::ACTION_UPDATED,
-                'model' => json_encode(new ImporterResource($importer)),
+                'model' => json_encode(new ImporterWithRelationshipsResource($importer)),
                 'model_name' => get_class($importer),
                 'before' => json_encode(array_diff($before, $after)),
                 'after' => json_encode(array_diff($after, $before)),
             ]);
+        }
+    }
+
+    public function deleting(Importer $importer)
+    {
+        foreach ($importer->documents as $document) {
+            $document->deleteFile();
+            $document->delete();
         }
     }
 
@@ -62,17 +70,9 @@ class ImporterObserver
             $log = new Log();
             $log->create([
                 'action' => Log::ACTION_DELETED,
-                'model' => json_encode(new ImporterResource($importer)),
+                'model' => json_encode(new ImporterWithRelationshipsResource($importer)),
                 'model_name' => get_class($importer)
             ]);
-        }
-    }
-
-    public function deleting(Importer $importer)
-    {
-        foreach ($importer->documents as $document) {
-            $document->deleteFile();
-            $document->delete();
         }
     }
 

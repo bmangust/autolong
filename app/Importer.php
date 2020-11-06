@@ -2,7 +2,7 @@
 
 namespace App;
 
-use App\Http\Resources\ImporterResource;
+use App\Http\Resources\ImporterWithRelationshipsResource;
 use Illuminate\Database\Eloquent\Model;
 
 class Importer extends Model
@@ -19,7 +19,7 @@ class Importer extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Importer', 'document_importer', 'importer_id', 'document_id')
+        return $this->belongsToMany('App\Document', 'document_importer', 'importer_id', 'document_id')
             ->withTimestamps();
     }
 };

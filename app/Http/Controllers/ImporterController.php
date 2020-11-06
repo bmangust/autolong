@@ -7,7 +7,7 @@ use App\Http\Resources\DocumentResource;
 use App\Importer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
-use App\Http\Resources\ImporterResource;
+use App\Http\Resources\ImporterWithRelationshipsResource;
 
 class ImporterController extends Controller
 {
@@ -39,7 +39,7 @@ class ImporterController extends Controller
      */
     public function index()
     {
-        return response()->json(ImporterResource::collection(Importer::all()), 200);
+        return response()->json(ImporterWithRelationshipsResource::collection(Importer::all()), 200);
     }
 
     /**
@@ -52,7 +52,7 @@ class ImporterController extends Controller
     {
        $this->importerCreateValidator($request->all())->validate();
        $newImporter = $importer->create($importer->dashesToSnakeCase($request->all()));
-       return response()->json(new ImporterResource($newImporter), 201);
+       return response()->json(new ImporterWithRelationshipsResource($newImporter), 201);
     }
 
     /**
@@ -63,7 +63,7 @@ class ImporterController extends Controller
      */
     public function show(Importer $importer)
     {
-        return response()->json(new ImporterResource($importer), 200);
+        return response()->json(new ImporterWithRelationshipsResource($importer), 200);
     }
 
     /**
@@ -78,7 +78,7 @@ class ImporterController extends Controller
     {
         $this->importerCreateValidator($request->all())->validate();
         $importer->update($importer->dashesToSnakeCase($request->all()));
-        return response()->json(new ImporterResource($importer), 200);
+        return response()->json(new ImporterWithRelationshipsResource($importer), 200);
     }
 
     /**

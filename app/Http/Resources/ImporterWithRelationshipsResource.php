@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ImporterResource extends JsonResource
+class ImporterWithRelationshipsResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
