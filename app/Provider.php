@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Http\Resources\ProviderResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -53,8 +52,7 @@ class Provider extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document', 'document_provider', 'provider_id', 'document_id')
-            ->withTimestamps();
+        return $this->morphMany('App\Document', 'documented');
     }
 
     public function addOrUpdateCatalogs($catalogs)

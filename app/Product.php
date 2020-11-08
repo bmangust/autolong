@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Http\Resources\ProductResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
@@ -40,8 +39,7 @@ class Product extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document', 'document_product', 'product_id', 'document_id')
-            ->withTimestamps();
+        return $this->morphMany('App\Document', 'documented');
     }
 
     public function createOrUpdateImage($image)

@@ -38,32 +38,7 @@ class DocumentObserver
      */
     public function deleted(Document $document)
     {
-        switch ($document) {
-            case $document->catalogs()->exists():
-                $document->deleteFile();
-                $document->catalogs()->detach();
-                break;
-            case $document->containers()->exists():
-                $document->deleteFile();
-                $document->containers()->detach();
-                break;
-            case $document->importers()->exists():
-                $document->deleteFile();
-                $document->importers()->detach();
-                break;
-            case $document->orders()->exists():
-                $document->deleteFile();
-                $document->orders()->detach();
-                break;
-            case $document->products()->exists():
-                $document->deleteFile();
-                $document->products()->detach();
-                break;
-            case $document->providers()->exists():
-                $document->deleteFile();
-                $document->providers()->detach();
-                break;
-        }
+        $document->deleteFile();
     }
 
     /**

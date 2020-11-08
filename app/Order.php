@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Http\Resources\OrderResource;
 use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\OrderItem;
@@ -28,8 +27,7 @@ class Order extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document', 'document_order', 'order_id', 'document_id')
-            ->withTimestamps();
+        return $this->morphMany('App\Document', 'documented');
     }
 
     public function addOrderItems($items)

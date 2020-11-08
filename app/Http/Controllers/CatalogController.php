@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
-use App\Http\Resources\DocumentResource;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\CatalogWithRelationshipsResource;
@@ -98,17 +96,5 @@ class CatalogController extends Controller
         Log::$write = true;
         $catalog->delete();
         return response()->json([], 204);
-    }
-
-    public function saveFile(Request $request, Catalog $catalog, Document $document)
-    {
-        $request->validate([
-            'file' => 'required'
-        ]);
-        $file = $request->file('file');
-        $path = Catalog::SANDBOX_DIRECTORY . $catalog->id;
-        $newDocument = $document->putFileInFolder($file, $path);
-        $document->catalogs()->sync($catalog->id);
-        return response()->json(new DocumentResource($newDocument), 200);
     }
 }

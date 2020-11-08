@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
-use App\Http\Resources\DocumentResource;
 use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
@@ -148,18 +146,6 @@ class OrderController extends Controller
             }
         }
         return $availableProducts;
-    }
-
-    public function saveFile(Request $request, Order $order, Document $document)
-    {
-        $request->validate([
-            'file' => 'required'
-        ]);
-        $file = $request->file('file');
-        $path = Order::SANDBOX_DIRECTORY . $order->id;
-        $newDocument = $document->putFileInFolder($file, $path);
-        $document->orders()->sync($order->id);
-        return response()->json(new DocumentResource($newDocument), 200);
     }
 
     public function getPdfInvoice(Order $order)

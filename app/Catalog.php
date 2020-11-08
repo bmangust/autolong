@@ -2,7 +2,6 @@
 
 namespace App;
 
-use App\Http\Resources\CatalogResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\Storage;
 
@@ -26,8 +25,7 @@ class Catalog extends Model
 
     public function documents()
     {
-        return $this->belongsToMany('App\Document', 'catalog_document', 'catalog_id', 'document_id')
-            ->withTimestamps();
+        return $this->morphMany('App\Document', 'documented');
     }
 
     public function createOrUpdateFile($file)

@@ -50,7 +50,6 @@ class ContainerObserver
         }
     }
 
-
     public function deleting(Container $container)
     {
         foreach ($container->documents as $document) {

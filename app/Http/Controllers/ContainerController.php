@@ -3,8 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Container;
-use App\Document;
-use App\Http\Resources\DocumentResource;
 use Illuminate\Http\Request;
 use App\Http\Resources\ContainerResource;
 use Illuminate\Support\Facades\Validator;
@@ -89,17 +87,5 @@ class ContainerController extends Controller
     {
         $container->delete();
         return response()->json([], 204);
-    }
-
-    public function saveFile(Request $request, Container $container, Document $document)
-    {
-        $request->validate([
-            'file' => 'required'
-        ]);
-        $file = $request->file('file');
-        $path = Container::SANDBOX_DIRECTORY . $container->id;
-        $newDocument = $document->putFileInFolder($file, $path);
-        $document->containers()->sync($container->id);
-        return response()->json(new DocumentResource($newDocument), 200);
     }
 }

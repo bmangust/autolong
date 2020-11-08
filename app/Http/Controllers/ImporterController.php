@@ -2,8 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Document;
-use App\Http\Resources\DocumentResource;
 use App\Importer;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Http\Request;
@@ -92,17 +90,5 @@ class ImporterController extends Controller
     {
         $importer->delete();
         return response()->json([], 204);
-    }
-
-    public function saveFile(Request $request, Importer $importer, Document $document)
-    {
-        $request->validate([
-            'file' => 'required'
-        ]);
-        $file = $request->file('file');
-        $path = Importer::SANDBOX_DIRECTORY . $importer->id;
-        $newDocument = $document->putFileInFolder($file, $path);
-        $document->importers()->sync($importer->id);
-        return response()->json(new DocumentResource($newDocument), 200);
     }
 }

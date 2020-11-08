@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AutolongRuProduct;
-use App\Document;
 use App\ExchangeRate;
-use App\Http\Resources\DocumentResource;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
@@ -147,17 +145,5 @@ class ProductController extends Controller
         ]);
         $product->createOrUpdateImage($request->file('image'));
         return response()->json($product->image, 200);
-    }
-
-    public function saveFile(Request $request, Product $product, Document $document)
-    {
-        $request->validate([
-            'file' => 'required'
-        ]);
-        $file = $request->file('file');
-        $path = Product::SANDBOX_DIRECTORY . $product->id;
-        $newDocument = $document->putFileInFolder($file, $path);
-        $document->products()->sync($product->id);
-        return response()->json(new DocumentResource($newDocument), 200);
     }
 }
