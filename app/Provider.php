@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\SoftDeletes;
 
 class Provider extends Model
 {
-    use TranslateToSnakeCase;
+    use TranslateToSnakeCaseTrait;
     use SoftDeletes;
 
     public const SANDBOX_DIRECTORY = '/providers/';

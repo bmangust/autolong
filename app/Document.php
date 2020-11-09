@@ -3,6 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
 class Document extends Model
@@ -11,7 +12,8 @@ class Document extends Model
 
     protected $fillable = [
       'file',
-      'name'
+      'name',
+      'description'
     ];
 
     public function documented()
@@ -34,5 +36,10 @@ class Document extends Model
         if (Storage::disk('main')->exists($this->file)) {
             Storage::disk('main')->delete($this->file);
         }
+    }
+
+    public function getNewFileName($name)
+    {
+        return $name . '.' . File::extension($this->file);;
     }
 }

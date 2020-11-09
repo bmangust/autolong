@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Importer extends Model
 {
-    use TranslateToSnakeCase;
+    use TranslateToSnakeCaseTrait;
     public const SANDBOX_DIRECTORY = '/importers/';
 
     protected $fillable = [

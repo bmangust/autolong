@@ -8,7 +8,7 @@ use App\OrderItem;
 
 class Order extends Model
 {
-    use TranslateToSnakeCase;
+    use TranslateToSnakeCaseTrait;
     use CleaningSpaceTrait;
 
     public const SANDBOX_DIRECTORY = '/orders/';

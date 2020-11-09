@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Document;
 use App\Http\Resources\DocumentResource;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class DocumentController extends Controller
 {
@@ -28,5 +29,23 @@ class DocumentController extends Controller
             'name' => $name
         ]);
         return response()->json(new DocumentResource($newDocument), 200);
+    }
+
+    public function update(Request $request, Document $document)
+    {
+        $request->validate([
+            'name' => 'required',
+            'description' => 'required'
+        ]);
+        $name = $request->input('name');
+        $description = $request->input('description');
+        $newName = $document->getNewFileName($name);
+        $newPath = str_replace($document->name, $newName, $document->file);
+        if (!Storage::disk('main')->exists($newPath)) {
+            Storage::disk('main')->rename($document->file, $newPath);
+            $document->update(['name' => $newName, 'description' => $description, 'file' => $newPath]);
+            return response()->json(new DocumentResource($document), 200);
+        }
+        return response()->json('Такое имя уже существует', 404);
     }
 }

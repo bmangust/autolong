@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Container extends Model
 {
-    use TranslateToSnakeCase;
+    use TranslateToSnakeCaseTrait;
 
     protected $fillable = [
         'name',

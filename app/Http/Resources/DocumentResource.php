@@ -18,6 +18,7 @@ class DocumentResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'file' => $this->file,
+            'description' => $this->description,
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

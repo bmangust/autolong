@@ -74,22 +74,22 @@
     </head>
     <body>
         <div class="center">
-            <h1>{Название поставщика}</h1>
+            <h1>{{ $order->provider->name }}</h1>
             <h3>{Адрес поставщика}</h3>
-            <a href="#">{Телефон поставщика}</a>
+            <a href="#">{{ $order->provider->phone }}</a>
             <h2>Proforma invoice</h2>
         </div>
         <div class="group">
-            <span>Seller: {Название поставщика} </span>
-            <span>number: {???} </span>
+            <span>Seller: {{ $order->provider->name }} </span>
+            <span>number: {{ $order->provider->phone }} </span>
         </div>
         <div class="group">
             <span>{Адрес поставщика}</span>
             <span>date: {???} </span>
         </div>
-        <div class="solo">TEL: {Телефон поставщика}</div>
+        <div class="solo">TEL: {{ $order->provider->phone }}</div>
         <div class="solo">
-            TO:{Название импортера} {Адрес импортера} INN/KPP {ИНН и КПП
+            TO:{{ $importer->name_ru }} {{ $importer->address }} INN/KPP {ИНН и КПП
             импортера}
         </div>
         <table>
@@ -109,66 +109,18 @@
                 <td>{Цена за единицу}</td>
                 <td>{Сумма}</td>
             </tr>
+            @foreach($order->orderItems as $item)
             <tr>
-                <td>PL-420 (D-110, H-230)</td>
+                <td>{{ $item->product->name }}</td>
                 <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
+                    <img src="{{ asset($item->product->image) }}" alt="" />
                 </td>
-                <td>12354655656</td>
-                <td>1000</td>
-                <td>16</td>
-                <td>16000</td>
+                <td>126465656546</td>
+                <td>{{ $item->quantity }}</td>
+                <td>{{ $item->price_cny }}</td>
+                <td>{{ $item->getSumInCny() }}</td>
             </tr>
-            <tr>
-                <td>PL-270 Filter with cup D-110, H-150</td>
-                <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
-                </td>
-                <td>124455656456</td>
-                <td>1000</td>
-                <td>17</td>
-                <td>17000</td>
-            </tr>
-            <tr>
-                <td>PL-420 Filter with cup D-110, H-230</td>
-                <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
-                </td>
-                <td>12443654656</td>
-                <td>3000</td>
-                <td>20</td>
-                <td>60000</td>
-            </tr>
-            <tr>
-                <td>Filter PL-270S with base and cup</td>
-                <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
-                </td>
-                <td>123455456</td>
-                <td>100</td>
-                <td>63</td>
-                <td>6300</td>
-            </tr>
-            <tr>
-                <td>Filter PL-420S with base and cup</td>
-                <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
-                </td>
-                <td>12345464</td>
-                <td>100</td>
-                <td>66</td>
-                <td>6600</td>
-            </tr>
-            <tr>
-                <td>Separator base PL-270/420 УС</td>
-                <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
-                </td>
-                <td>12434545656</td>
-                <td>150</td>
-                <td>49,5</td>
-                <td>7425</td>
-            </tr>
+            @endforeach
             <tr>
                 <td>Total</td>
                 <td></td>

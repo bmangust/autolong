@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Country extends Model
 {
-    use TranslateToSnakeCase;
+    use TranslateToSnakeCaseTrait;
 
     protected $fillable = ['name'];
 

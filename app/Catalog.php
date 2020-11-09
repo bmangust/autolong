@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Catalog extends Model
 {
-    use TranslateToSnakeCase;
+    use TranslateToSnakeCaseTrait;
     public const FILE_DIRECTORY = '/storage/catalogs-files';
     public const SANDBOX_DIRECTORY = '/catalogs/';
 

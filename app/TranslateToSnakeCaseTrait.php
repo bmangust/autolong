@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Support\Str;
 
-trait TranslateToSnakeCase
+trait TranslateToSnakeCaseTrait
 {
     public function dashesToSnakeCase($request)
     {

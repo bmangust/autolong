@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Product extends Model
 {
-    use TranslateToSnakeCase;
+    use TranslateToSnakeCaseTrait;
     use SoftDeletes;
 
     public const IMAGE_DIRECTORY = '/storage/product-images';
