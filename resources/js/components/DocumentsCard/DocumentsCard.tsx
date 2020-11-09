@@ -22,7 +22,7 @@ export interface IDocument {
     id: number | null
     file: string
     description: string | ''
-    createdAt: number | null
+    updatedAt: number | null
 }
 
 const DocumentsCard: React.FC<{
@@ -36,7 +36,7 @@ const DocumentsCard: React.FC<{
         id: null,
         description: '',
         file: '',
-        createdAt: null
+        updatedAt: null
     }
 
     const [isOpen, setIsOpen] = useState(false)
@@ -153,7 +153,7 @@ const DocumentsCard: React.FC<{
                                 {`${document.description
                                     ? document.description + ' |'
                                     : ''}
-                                 ${timeConverter(document.createdAt)}`}
+                                 ${timeConverter(document.updatedAt)}`}
                             </div>
                         </div>
                         <div className={classes.icons}>
