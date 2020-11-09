@@ -77,7 +77,11 @@ const DocumentsCard: React.FC<{
                     setIsOpen(false)
                 })
                 .catch((error: AxiosError) => {
-                    toast.error(error.message)
+                    if (error.response?.status === 400) {
+                        toast.error(error.response?.data)
+                    } else {
+                        toast.error(error.message)
+                    }
                 })
         })
 
@@ -96,14 +100,17 @@ const DocumentsCard: React.FC<{
                         }
                         return item
                     })
-                    console.log(newState)
                     setDocumentsState(newState)
                     setEditState(initialEditState)
                     setIsOpen(false)
                     reset2()
                 })
                 .catch((error: AxiosError) => {
-                    toast.error(error.message)
+                    if (error.response?.status === 400) {
+                        toast.error(error.response?.data)
+                    } else {
+                        toast.error(error.message)
+                    }
                 })
             setIsOpen(false)
         })
