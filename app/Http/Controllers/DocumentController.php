@@ -34,7 +34,7 @@ class DocumentController extends Controller
     public function update(Request $request, Document $document)
     {
         $request->validate([
-            'name' => 'required',
+            'name' => 'required|string|min:1|max:255',
             'description' => 'required'
         ]);
         $name = $request->input('name');
