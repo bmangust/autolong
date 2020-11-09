@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Document;
 use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
@@ -148,12 +149,12 @@ class OrderController extends Controller
         return $availableProducts;
     }
 
-    public function getPdfInvoice(Order $order)
+    public function getPdfInvoice(Order $order, Document $document)
     {
         $pdf = App::make('dompdf.wrapper');
         $importer = Importer::first();
         $newPdf = $pdf->loadView('pdf.invoice', compact('order','importer'));
-        return response()->file($newPdf);
+        return $newPdf->download();
     }
 
     public function getPdfProforma(Order $order)

@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Document;
 use App\Http\Resources\DocumentResource;
-use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -19,16 +18,20 @@ class DocumentController extends Controller
     public function saveFile(Request $request, $model, Document $document)
     {
         $request->validate([
-            'file' => 'required',
+            'file' => 'required|file',
             'name' => 'required|string|min:1|max:255',
-            'description' => 'required'
         ]);
         $file = $request->file('file');
         if (!$file->isValid()) {
             return response()->json('Ошибка загружаемого файла', 400);
         }
+
         $path = $model::SANDBOX_DIRECTORY . $model->id;
-        $name = $request->input('name') . '.' . $file->getClientOriginalExtension();
+        $name = $document->getClearName($request->input('name')) . '.' . $file->getClientOriginalExtension();
+        if ($document->checkFileInFolder($document->getPathWithParentDirectory($path . '/' . $name))) {
+            return response()->json('Файл с таким именем существует', 400);
+        }
+
         $description = $request->input('description');
         $newPath = $document->putFileInFolder($file, $path, $name);
         $newDocument = $model->documents()->create([
@@ -43,17 +46,16 @@ class DocumentController extends Controller
     {
         $request->validate([
             'name' => 'required|string|min:1|max:255',
-            'description' => 'required'
         ]);
-        $name = $request->input('name');
+        $name = $document->getClearName($request->input('name'));
         $description = $request->input('description');
         $newName = $document->getNewFileName($name);
         $newPath = str_replace($document->name, $newName, $document->file);
-        if (!Storage::disk('main')->exists($newPath)) {
-            Storage::disk('main')->rename($document->file, $newPath);
-            $document->update(['name' => $newName, 'description' => $description, 'file' => $newPath]);
-            return response()->json(new DocumentResource($document), 200);
+        if ($document->checkFileInFolder($newPath)) {
+            return response()->json('Файл с таким именем существует', 400);
         }
-        return response()->json('Такое имя уже существует', 404);
+        Storage::disk('main')->rename($document->file, $newPath);
+        $document->update(['file' => $newPath, 'name' => $newName, 'description' => $description]);
+        return response()->json(new DocumentResource($document), 200);
     }
 }
