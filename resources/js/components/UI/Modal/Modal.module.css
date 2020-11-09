@@ -1,0 +1,63 @@
+.modal {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1050;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    outline: 0;
+    overflow-y: auto;
+}
+
+.modalDialog {
+    margin: 5.75rem auto;
+    max-width: 560px;
+    width: 100%;
+    box-shadow: 0 5px 10px 2px rgba(195, 192, 192, .5);
+}
+
+.modalContent {
+    background: #FFFFFF;
+    box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25), 0 24px 8px 5px rgba(0, 0, 0, 0.12);
+    border-radius: 15px;
+    border: 0;
+
+    position: relative;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    width: 100%;
+    pointer-events: auto;
+    background-clip: padding-box;
+    outline: 0;
+}
+
+.modalBody {
+    position: relative;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    padding: 1rem;
+    text-align: left;
+}
+
+.modalBody h2 {
+    font-size: 18px;
+    line-height: 18px;
+}
+
+.backDrop.show {
+    opacity: .5;
+    transition: opacity .15s linear;
+}
+
+.backDrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 1040;
+    width: 100vw;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, .7);
+}

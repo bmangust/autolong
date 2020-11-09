@@ -1,5 +1,4 @@
 import {ReactNode} from 'react'
-import {LoadableComponent} from '@loadable/component'
 
 export interface IRoute {
     name: string
