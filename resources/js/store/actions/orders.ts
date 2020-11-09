@@ -15,7 +15,7 @@ import {
     CHANGE_ORDER_STATUS_START,
     CHANGE_ORDER_STATUS_SUCCESS,
     CHANGE_ORDER_STATUS_ERROR,
-    DELETE_ORDER_BY_ID
+    DELETE_ORDER_BY_ID, FETCH_ORDER_INVOICE
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -167,5 +167,23 @@ export const deleteOrderById = (id) => async dispatch => {
                 payload: id
             })
             toast.success('Заказ удален')
+        })
+}
+
+
+export const createOrderInvoice = (id) => async dispatch => {
+    const url = `/api/orders/${id}/getpdfinvoice`
+    axios
+        .get(url)
+        .then((answer) => {
+            dispatch({
+                type: FETCH_ORDER_INVOICE,
+                payload: id
+            })
+            console.log(answer)
+            toast.success('Документ сформирован')
+        })
+        .catch((error: AxiosError) => {
+            toast.error(error.message)
         })
 }

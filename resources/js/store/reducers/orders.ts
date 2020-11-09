@@ -14,7 +14,7 @@ import {
     FETCH_ORDER_SUCCESS,
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_START,
-    FETCH_ORDERS_SUCCESS, DELETE_ORDER_BY_ID
+    FETCH_ORDERS_SUCCESS, DELETE_ORDER_BY_ID, FETCH_ORDER_INVOICE
 } from '../actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -103,6 +103,10 @@ export default function ordersReducer(
         case LOCATION_CHANGE:
             return {
                 ...state, orderProducts: []
+            }
+        case FETCH_ORDER_INVOICE:
+            return {
+                ...state
             }
         default:
             return state

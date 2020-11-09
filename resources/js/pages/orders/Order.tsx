@@ -9,6 +9,7 @@ import Select from 'react-select'
 // Actions
 import {
     changeOrderStatus,
+    createOrderInvoice,
     deleteOrderById, fetchOrderById
 } from '../../store/actions/orders'
 
@@ -17,6 +18,9 @@ import {
     IOrder,
     IOrdersRootState
 } from '../../components/Orders/IOrders'
+
+// Styles
+import classes from './Orders.module.css'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
@@ -52,6 +56,10 @@ const Order: React.FC<IOrder> = () => {
         dispatch(changeOrderStatus(id, value))
     }
 
+    const createInvoiceHandler = (id) => {
+        dispatch(createOrderInvoice(id))
+    }
+
     const orderStatuses = Object.entries(
         statuses.orderStatuses)
         .map(([key, value]) => {
@@ -68,7 +76,6 @@ const Order: React.FC<IOrder> = () => {
         dispatch(deleteOrderById(id))
         history.push('/orders')
     }
-
 
     if (error) {
         return <Error/>
@@ -157,6 +164,26 @@ const Order: React.FC<IOrder> = () => {
                                         : null
                                     }
                                 </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div className="card mb-3">
+                        <div className="card-body">
+                            <h2 className="mb-4">Документы</h2>
+                            <div className={classes.invoiceBtnBlock}>
+                                <button
+                                    onClick={() =>
+                                        createInvoiceHandler(order.id)}
+                                    className={classes.invoiceBtn}>
+                                    Invoice
+                                </button>
+                                <button className={classes.invoiceBtn}>
+                                    Proforma
+                                </button>
+                                <button className={classes.invoiceBtn}>
+                                    Контракт
+                                </button>
                             </div>
                         </div>
                     </div>

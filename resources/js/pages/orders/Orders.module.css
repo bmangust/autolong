@@ -11,3 +11,27 @@ h2 {
     font-size: 12px;
     line-height: 15px;
 }
+
+.invoiceBtnBlock {
+    display: flex;
+    justify-content: space-between;
+}
+
+.invoiceBtnBlock .invoiceBtn {
+    border: 1px dashed #3A405F;
+    border-radius: 10px;
+
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    text-align: center;
+    margin-right: 30px;
+    padding: 10px 20px;
+    width: 100%;
+    background: transparent;
+}
+
+.invoiceBtnBlock .invoiceBtn:last-of-type {
+    margin-right: 0;
+}
