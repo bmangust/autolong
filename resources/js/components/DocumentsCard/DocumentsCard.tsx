@@ -46,11 +46,12 @@ const DocumentsCard: React.FC<{
     )
 
     const {
-        register, handleSubmit, reset
+        register, handleSubmit, reset, errors
     } = useForm()
 
     const {
-        register: register2, handleSubmit: handleSubmit2, reset: reset2
+        register: register2, handleSubmit: handleSubmit2,
+        reset: reset2, errors: errors2
     } = useForm()
 
     const documentFormSubmitHandler =
@@ -189,7 +190,10 @@ const DocumentsCard: React.FC<{
                 <form onSubmit={documentEditFormSubmitHandler}>
                     <label htmlFor='description'>Укажите название файла</label>
                     <input className='mb-3' defaultValue={editState.name}
-                           type='text' name='name' ref={register2}/>
+                           type='text' name='name'
+                           ref={register2({required: true})}/>
+                    {errors2.name &&
+                    <small>Это поле обязательно</small>}
                     <label htmlFor='description'>Укажите описание файла</label>
                     <input className='mb-3' type='text'
                            defaultValue={editState.description}
@@ -207,21 +211,25 @@ const DocumentsCard: React.FC<{
             </Modal>
             : <Modal title='Добавить новый файл' isOpen={isOpen}>
                 <form onSubmit={documentFormSubmitHandler}>
-                    <label htmlFor='description'>Укажите название файла</label>
+                    <label htmlFor='name'>Укажите название файла</label>
                     <input className='mb-3' type='text'
-                           name='name' ref={register}/>
+                           name='name' ref={register({required: true})}/>
+                    {errors.name &&
+                    <small>Это поле обязательно</small>}
                     <label htmlFor='description'>Укажите описание файла</label>
                     <input className='mb-3' type='text'
-                           name='description' ref={register}/>
+                           name='description' ref={register({required: true})}/>
                     <label className={classes.upload + ' mb-3'} htmlFor="file">
                         Загрузить файл
                         <input
                             id='file'
                             name='file'
                             type="file"
-                            ref={register}
+                            ref={register({required: true})}
                         />
                     </label>
+                    {errors.file &&
+                    <small>Это поле обязательно</small>}
                     <div className='d-flex justify-content-between'>
                         <button onClick={onCancelHandler}
                                 type='button' className='btn btn-light'>
