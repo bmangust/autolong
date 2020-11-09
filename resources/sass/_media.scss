@@ -15,14 +15,24 @@
     }
 
     .react-bootstrap-table .table td:first-child,
-    .react-bootstrap-table .table th:first-child {
+    .react-bootstrap-table .table th:first-child,
+    .row-expansion-style table td:first-child,
+    .row-expansion-style table th:first-child  {
         padding-left: 15px;
     }
 
     .react-bootstrap-table .table td,
-    .react-bootstrap-table .table th {
+    .react-bootstrap-table .table th,
+    .row-expansion-style table td,
+    .row-expansion-style table th  {
         padding: 1rem;
     }
+
+    .row-expansion-style table td:first-child,
+    .row-expansion-style table th:first-child {
+        padding-left: 0 !important;
+    }
+
 
     .card-body {
         padding: 15px;
@@ -49,19 +59,9 @@
         overflow-x: auto !important;
     }
 
-    .react-bootstrap-table .table td,
-    .react-bootstrap-table .table th {
-        width: auto;
-        min-width: 150px;
-        max-width: 250px;
+    .row-expansion-style {
+        overflow-x: auto !important;
     }
-
-    // .react-bootstrap-table .table td:first-child,
-    // .react-bootstrap-table .table th:first-child {
-    //     width: 200px;
-    //     min-width: 200px;
-    //     max-width: 200px;
-    // }
 }
 
 @media (max-width: 575px) {
@@ -91,11 +91,8 @@
         }
     }
 
-    .btn-success {
-        width: 100%;
-        padding: 0.15rem 0.5rem;
-    }
-
+    .btn-success,
+    .btn-danger,
     .btn-light {
         width: 100%;
         padding: 0.15rem 0.5rem;
