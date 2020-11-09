@@ -9,7 +9,7 @@ import {
     FETCH_IMPORTER_START,
     FETCH_IMPORTER_SUCCESS
 } from '../../store/actions/actionTypes'
-import {IDocuments} from '../DocumentsCard/DocumentsCard'
+import {IDocument} from '../DocumentsCard/DocumentsCard'
 
 export interface IImporter {
     id: number | null
@@ -17,7 +17,7 @@ export interface IImporter {
     nameEn: string
     address: string
     phone: string
-    documents: IDocuments[]
+    documents: IDocument[]
     createdAt?: number
     updatedAt?: number
 }

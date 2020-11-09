@@ -26,6 +26,10 @@
     margin-right: 15px;
 }
 
+.item > svg:last-of-type {
+    margin-right: 0;
+}
+
 .desc {
     font-weight: normal;
     font-size: 12px;
@@ -72,5 +76,17 @@
 .icons {
     display: flex;
     align-items: center;
+}
+
+.icons svg {
+    cursor: pointer;
+}
+
+.icons svg:not(:last-of-type) {
+    margin-right: 15px;
+}
+
+.edit path {
+    fill: #3A405F;
 }
 
