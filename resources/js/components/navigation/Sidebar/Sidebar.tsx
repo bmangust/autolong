@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useState} from 'react'
 
 // Third-party
 import {NavLink} from 'react-router-dom'
@@ -26,16 +26,30 @@ const Sidebar: React.FC = () => {
             ) : null
         )
     }
+
+    const [open, setOpen] = useState(false)
+
     return (
-        <nav className={classes.sidebar + ' nav flex-column'}>
-            <div className='w-100'>{renderLinks(routes)}</div>
-            <NavLink className={classes.help} to='/help'>
-                <SvgHelp />
-                <span>
-                    Справка по работе <br />с системой
-                </span>
-            </NavLink>
-        </nav>
+        <>
+            <div
+                className={classes.burger}
+                open={open}
+                onClick={() => setOpen(!open)}
+            >
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+            <nav className={classes.sidebar + ' nav flex-column'} open={open}>
+                <div className='w-100'>{renderLinks(routes)}</div>
+                <NavLink className={classes.help} to='/help'>
+                    <SvgHelp />
+                    <span>
+                        Справка по работе <br />с системой
+                    </span>
+                </NavLink>
+            </nav>
+        </>
     )
 }
 
