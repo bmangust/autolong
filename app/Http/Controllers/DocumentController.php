@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Document;
 use App\Http\Resources\DocumentResource;
+use http\Env\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -18,15 +19,22 @@ class DocumentController extends Controller
     public function saveFile(Request $request, $model, Document $document)
     {
         $request->validate([
-            'file' => 'required'
+            'file' => 'required',
+            'name' => 'required|string|min:1|max:255',
+            'description' => 'required'
         ]);
         $file = $request->file('file');
+        if (!$file->isValid()) {
+            return response()->json('Ошибка загружаемого файла', 400);
+        }
         $path = $model::SANDBOX_DIRECTORY . $model->id;
-        $name = $document->getUniqueFileName($file);
+        $name = $request->input('name') . '.' . $file->getClientOriginalExtension();
+        $description = $request->input('description');
         $newPath = $document->putFileInFolder($file, $path, $name);
         $newDocument = $model->documents()->create([
             'file' => $newPath,
-            'name' => $name
+            'name' => $name,
+            'description' => $description
         ]);
         return response()->json(new DocumentResource($newDocument), 200);
     }
