@@ -29,6 +29,7 @@ import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import statuses from '../../../statuses/statuses.json'
 import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
+import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -144,6 +145,7 @@ const Order: React.FC<IOrder> = () => {
                                 Удалить заказ
                             </button>
                         </div>
+                        <OrderStatuses id={order.id} status={order.status}/>
                     </div>
 
                     <div className="card mb-3 pb-4">
