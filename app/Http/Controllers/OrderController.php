@@ -32,6 +32,7 @@ class OrderController extends Controller
             'providerId' => ['required', 'integer'],
         ], $messages, $names);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -45,7 +46,7 @@ class OrderController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
@@ -67,7 +68,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Order $order)
@@ -78,14 +79,14 @@ class OrderController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Order $order)
     {
         $this->orderCreateValidator($request->all())->validate();
-        $order->name =$request->input('name');
+        $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
         $order->cargo = $request->input('cargo');
         if ($order->status != $request->input('status')) {
@@ -104,7 +105,7 @@ class OrderController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Order $order)
@@ -153,7 +154,7 @@ class OrderController extends Controller
     {
         $pdf = App::make('dompdf.wrapper');
         $importer = Importer::first();
-        $newPdf = $pdf->loadView('pdf.invoice', compact('order','importer'));
+        $newPdf = $pdf->loadView('pdf.invoice', compact('order', 'importer'));
         return $newPdf->download();
     }
 
@@ -161,7 +162,7 @@ class OrderController extends Controller
     {
         $pdf = App::make('dompdf.wrapper');
         $importer = Importer::first();
-        $newPdf = $pdf->loadView('pdf.proforma', compact('order','importer'));
+        $newPdf = $pdf->loadView('pdf.proforma', compact('order', 'importer'));
         return response()->file($newPdf);
     }
 
