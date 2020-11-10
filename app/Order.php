@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\OrderItem;
@@ -112,5 +113,14 @@ class Order extends Model
         } else {
             return response()->json('Данного статуса оплаты не существует', 404);
         }
+    }
+
+    public function checkActualDate(string $date): bool
+    {
+        $nowDay = Carbon::now()->toDateString();
+        if ($nowDay > $date) {
+            return false;
+        }
+        return true;
     }
 }
