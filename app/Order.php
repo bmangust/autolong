@@ -91,11 +91,11 @@ class Order extends Model
         return $sum;
     }
 
-    public function setOrderStatus($status, $city = null, $arrivalDate = null)
+    public function setOrderStatus(string $status, int $city = null, string $arrivalDate = null)
     {
         $statuses = Status::getOrderStatuses();
         if (property_exists($statuses, $status)) {
-            $this->city = $city;
+            $this->city_id = $city;
             $this->arrival_date = $arrivalDate;
             $this->status = $status;
             $this->save();

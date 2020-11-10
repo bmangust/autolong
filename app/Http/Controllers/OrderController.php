@@ -127,7 +127,7 @@ class OrderController extends Controller
         } elseif ($request->has('arrivalDate') && $order->checkActualDate($request->input('arrivalDate')) && $request->has('city')) {
             $city = City::firstOrCreate(['name' => City::translateUcFirstCyrillicAndOtherLc($request->input('city'))]);
             $arrivalDate = $request->input('arrivalDate');
-            $order->setOrderStatus($status, $city, $arrivalDate);
+            $order->setOrderStatus($status, $city->id, $arrivalDate);
         } else {
             return response()->json('Заполнена не вся информация для статуса "Находится в производстве"', 400);
         }
