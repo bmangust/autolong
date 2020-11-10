@@ -10,7 +10,7 @@ class CityController extends Controller
 {
     public function index()
     {
-        return response()->json(new CityResource(City::all()->sortByDesc('name')), 200);
+        return response()->json(CityResource::collection(City::all()->sortByDesc('name')), 200);
     }
 
     public function store(Request $request, City $city)
