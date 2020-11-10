@@ -169,6 +169,6 @@ class OrderController extends Controller
     {
         $unappliedOrders = Order::all()->where('container_id', '=', null)
             ->sortByDesc('updated_at');
-        return OrderWithRelationshipsResource::collection($unappliedOrders, 200);
+        return response()->json(OrderWithRelationshipsResource::collection($unappliedOrders, 200));
     }
 }
