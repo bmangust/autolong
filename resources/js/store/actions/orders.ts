@@ -184,7 +184,7 @@ export const createOrderInvoice = (id) => async dispatch => {
         .then(answer => {
             const blob = new Blob([answer.data], {type: 'application/pdf'})
             toast.success('Инвойс сгенерирован')
-            saveAs(blob, 'invoice')
+            saveAs(blob, 'invoice.pdf')
         })
         .catch((error: AxiosError) => {
             toast.error(error.message)
