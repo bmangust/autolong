@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ProviderResource;
 use App\Http\Resources\OrderItemResource;
+use App\Http\Resources\ContainerResource;
 
 class OrderWithRelationshipsResource extends JsonResource
 {
@@ -28,6 +29,7 @@ class OrderWithRelationshipsResource extends JsonResource
             'items' => OrderItemResource::collection($this->orderItems),
             'cargo' => $this->cargo,
             'documents' => DocumentResource::collection($this->documents),
+            'container' => new ContainerResource($this->container),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

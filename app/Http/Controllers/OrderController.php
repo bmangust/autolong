@@ -164,4 +164,11 @@ class OrderController extends Controller
         $newPdf = $pdf->loadView('pdf.proforma', compact('order','importer'));
         return response()->file($newPdf);
     }
+
+    public function indexUnapplied()
+    {
+        $unappliedOrders = Order::all()->where('container_id', '=', null)
+            ->sortByDesc('updated_at');
+        return OrderWithRelationshipsResource::collection($unappliedOrders, 200);
+    }
 }

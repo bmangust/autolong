@@ -30,6 +30,11 @@ class Order extends Model
         return $this->morphMany('App\Document', 'documented');
     }
 
+    public function container()
+    {
+        return $this->belongsTo('App\Container');
+    }
+
     public function addOrderItems($items)
     {
         if ($this->orderItems()->count()) {

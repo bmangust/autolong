@@ -3,8 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Container;
+use App\Log;
 use Illuminate\Http\Request;
-use App\Http\Resources\ContainerResource;
+use App\Http\Resources\ContainerWithRelationshipsResource;
 use Illuminate\Support\Facades\Validator;
 
 class ContainerController extends Controller
@@ -35,7 +36,7 @@ class ContainerController extends Controller
      */
     public function index()
     {
-        return response()->json(ContainerResource::collection(Container::all())->sortByDesc('updated_at'), 200);
+        return response()->json(ContainerWithRelationshipsResource::collection(Container::all())->sortByDesc('updated_at'), 200);
     }
 
     /**
@@ -49,7 +50,12 @@ class ContainerController extends Controller
     {
         $this->containerCreateValidator($request->all())->validate();
         $newContainer = $container->create($container->dashesToSnakeCase($request->all()));
-        return response()->json(new ContainerResource($newContainer), 201);
+        $orderIds = $request->input('orders');
+        $newContainer->addOrders($orderIds);
+        Log::$write = false;
+        $newContainer->quantity_order_items = $newContainer->getQuantityOrderItems($orderIds);
+        $newContainer->save();
+        return response()->json(new ContainerWithRelationshipsResource($newContainer), 201);
     }
 
     /**
@@ -60,7 +66,7 @@ class ContainerController extends Controller
      */
     public function show(Container $container)
     {
-        return response()->json(new ContainerResource($container), 200);
+        return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
 
     /**
@@ -74,7 +80,7 @@ class ContainerController extends Controller
     {
         $this->containerCreateValidator($request->all())->validate();
         $container->update($container->dashesToSnakeCase($request->all()));
-        return response()->json(new ContainerResource($container), 200);
+        return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
 
     /**

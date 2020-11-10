@@ -20,4 +20,30 @@ class Container extends Model
     {
         return $this->morphMany('App\Document', 'documented');
     }
+
+    public function orders()
+    {
+        return $this->hasMany('App\Order');
+    }
+
+    public function addOrders(array $ids) :bool
+    {
+        foreach ($ids as $id) {
+            $order = Order::findOrFail($id);
+            $this->orders()->save($order);
+        }
+        return true;
+    }
+
+    public function getQuantityOrderItems(array $ordersIds) :int
+    {
+        $quantity = 0;
+        foreach ($ordersIds as $id) {
+            $order = Order::findOrFail($id);
+            foreach ($order->orderItems as $item) {
+                $quantity += $item->quantity;
+            }
+        }
+        return $quantity;
+    }
 }
