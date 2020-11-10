@@ -7,6 +7,7 @@ import {ColumnDescription, SelectRowProps} from 'react-bootstrap-table-next'
 
 // Actions
 import {
+    createContainer,
     fetchUnappliedOrders
 } from '../../../store/actions/containers'
 
@@ -40,7 +41,7 @@ const UnappliedOrdersTable: React.FC = () => {
 
     const createContainerHandler = () => {
         if (selectedRows.length) {
-            dispatch(createContaine(selectedRows))
+            dispatch(createContainer(selectedRows))
         } else {
             toast.error('Выберите заказ для создания контейнера')
         }
