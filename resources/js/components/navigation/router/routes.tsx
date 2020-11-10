@@ -93,7 +93,7 @@ export const routes: IRoute[] = [
         fallback: <Loader/>
     },
     {
-        name: 'Добавление нового контейнера',
+        name: 'Сформировать контейнер',
         path: '/containercreate',
         component: lazy(() =>
             pMinDelay(import('../../../pages/containers/ContainerCreate'),

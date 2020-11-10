@@ -3,9 +3,12 @@ import React, {useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
+import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Actions
-import {fetchContainers} from '../../../store/actions/containers'
+import {
+    fetchContainers
+} from '../../../store/actions/containers'
 
 // Typescript
 import {IContainersRootState} from '../IContainers'
@@ -15,7 +18,6 @@ import Loader from '../../UI/Loader/Loader'
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {nameToLinkFormatter} from '../../../utils'
-import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
 
 const ContainersTable: React.FC = () => {
@@ -25,13 +27,15 @@ const ContainersTable: React.FC = () => {
         dispatch(fetchContainers())
     }, [dispatch])
 
-    const {containers, loading, error} = useSelector(
-        (state: IContainersRootState) => ({
-            error: state.containersState.error,
-            containers: state.containersState.containers,
-            loading: state.containersState.loading
-        })
-    )
+    const {containers, loading, error} =
+        useSelector(
+            (state: IContainersRootState) => ({
+                error: state.containersState.error,
+                containers: state.containersState.containers,
+                loading: state.containersState.loading
+            })
+        )
+
     if (error) {
         return <Error/>
     }

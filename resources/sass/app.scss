@@ -166,6 +166,12 @@ a {
         th:first-child {
             padding-left: 48px;
         }
+
+        .selection-cell, .selection-cell-header {
+            text-align: center;
+            padding-left: 0.75rem !important;
+            background: #fff;
+        }
     }
 
     .reset-expansion-style {
@@ -343,6 +349,7 @@ a {
 .pricesBlock {
     span {
         margin-right: 20px;
+
         &:last-of-type {
             margin-right: 0;
         }

@@ -7,8 +7,12 @@ import {
     FETCH_CONTAINERS_SUCCESS,
     FETCH_CONTAINER_ERROR,
     FETCH_CONTAINER_START,
-    FETCH_CONTAINER_SUCCESS
+    FETCH_CONTAINER_SUCCESS,
+    FETCH_UNAPPLIED_ORDERS_START,
+    FETCH_UNAPPLIED_ORDERS_SUCCESS,
+    FETCH_UNAPPLIED_ORDERS_ERROR
 } from '../../store/actions/actionTypes'
+import {IOrder} from '../Orders/IOrders'
 
 export interface IContainer {
     id: number | null
@@ -22,6 +26,8 @@ export interface IContainer {
 export interface IContainersState {
     containers: IContainer[] | []
     container: IContainer | {}
+    unappliedOrders: IOrder[] | []
+    loadingUnapplied: boolean
     loading: boolean
     error: any
 }
@@ -81,7 +87,26 @@ interface ICreateContainerError {
     loading: boolean
 }
 
+interface IFetchUnappliedOrdersStart {
+    type: typeof FETCH_UNAPPLIED_ORDERS_START
+    loadingUnapplied: boolean
+}
+
+interface IFetchUnappliedOrdersSuccess {
+    type: typeof FETCH_UNAPPLIED_ORDERS_SUCCESS
+    payload: IOrder[]
+    loadingUnapplied: boolean
+}
+
+interface IFetchUnappliedOrdersError {
+    type: typeof FETCH_UNAPPLIED_ORDERS_ERROR
+    payload: any
+    loadingUnapplied: boolean
+}
+
 export type IContainersActionTypes =
     IFetchContainersStart | IFetchContainersSuccess | IFetchContainersError |
     IFetchContainerStart | IFetchContainerSuccess | IFetchContainerError |
-    ICreateContainerStart | ICreateContainerSuccess | ICreateContainerError
+    ICreateContainerStart | ICreateContainerSuccess | ICreateContainerError |
+    IFetchUnappliedOrdersStart | IFetchUnappliedOrdersSuccess |
+    IFetchUnappliedOrdersError

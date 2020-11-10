@@ -4,7 +4,10 @@ import {
     FETCH_CONTAINERS_SUCCESS,
     FETCH_CONTAINER_ERROR,
     FETCH_CONTAINER_START,
-    FETCH_CONTAINER_SUCCESS
+    FETCH_CONTAINER_SUCCESS,
+    FETCH_UNAPPLIED_ORDERS_ERROR,
+    FETCH_UNAPPLIED_ORDERS_START,
+    FETCH_UNAPPLIED_ORDERS_SUCCESS
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -32,6 +35,28 @@ export const fetchContainers = () => async dispatch => {
         })
 }
 
+export const fetchUnappliedOrders = () => async dispatch => {
+    await dispatch({
+        type: FETCH_UNAPPLIED_ORDERS_START
+    })
+
+    const url = '/api/orders/unapplied'
+    axios
+        .get(url)
+        .then((answer) => {
+            dispatch({
+                type: FETCH_UNAPPLIED_ORDERS_SUCCESS,
+                payload: answer.data
+            })
+        })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_UNAPPLIED_ORDERS_ERROR,
+                payload: error.response
+            })
+        })
+}
+
 export const fetchContainerById = (id) => async dispatch => {
     await dispatch({
         type: FETCH_CONTAINER_START
@@ -51,6 +76,28 @@ export const fetchContainerById = (id) => async dispatch => {
         .catch((error: AxiosError) => {
             dispatch({
                 type: FETCH_CONTAINER_ERROR,
+                payload: error.response
+            })
+        })
+}
+
+export const createContainer = (data) => async dispatch => {
+    await dispatch({
+        type: FETCH_UNAPPLIED_ORDERS_START
+    })
+
+    const url = '/api/orders/unapplied'
+    axios
+        .get(url)
+        .then((answer) => {
+            dispatch({
+                type: FETCH_UNAPPLIED_ORDERS_SUCCESS,
+                payload: answer.data
+            })
+        })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_UNAPPLIED_ORDERS_ERROR,
                 payload: error.response
             })
         })
