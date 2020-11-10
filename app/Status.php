@@ -25,4 +25,10 @@ class Status extends Model
         $statuses = self::includeStatusesFile();
         return $statuses->paymentStatuses;
     }
+
+    public static function getContainerStatuses()
+    {
+        $statuses = self::includeStatusesFile();
+        return $statuses->containerStatuses;
+    }
 }

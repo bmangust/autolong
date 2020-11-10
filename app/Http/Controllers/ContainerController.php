@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Container;
-use App\Log;
+use App\Status;
 use Illuminate\Http\Request;
 use App\Http\Resources\ContainerWithRelationshipsResource;
 use Illuminate\Support\Facades\Validator;
@@ -19,13 +19,11 @@ class ContainerController extends Controller
 
         $names = [
             'name' => 'название контейнера',
-            'status' => 'статус',
             'city' => 'город',
         ];
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'status' => ['required', 'string', 'max:255'],
             'city' => ['required', 'string', 'max:255'],
         ], $messages, $names);
     }
@@ -50,13 +48,13 @@ class ContainerController extends Controller
     public function store(Request $request, Container $container)
     {
         $this->containerCreateValidator($request->all())->validate();
-        $newContainer = $container->create($container->dashesToSnakeCase($request->all()));
+        $container->name = $request->input('name');
+        $container->status = array_keys(get_object_vars(Status::getContainerStatuses()), 'Создан')[0];
         $orderIds = $request->input('orders');
-        $newContainer->addOrders($orderIds);
-        Log::$write = false;
-        $newContainer->quantity_order_items = $newContainer->getQuantityOrderItems($orderIds);
-        $newContainer->save();
-        return response()->json(new ContainerWithRelationshipsResource($newContainer), 201);
+        $container->quantity_order_items = $container->getQuantityOrderItems($orderIds);
+        $container->save();
+        $container->addOrders($orderIds);
+        return response()->json(new ContainerWithRelationshipsResource($container), 201);
     }
 
     /**

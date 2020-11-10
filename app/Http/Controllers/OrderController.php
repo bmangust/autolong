@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\City;
 use App\Document;
 use App\Http\Resources\ProductResource;
 use App\Importer;
@@ -119,7 +120,17 @@ class OrderController extends Controller
         $request->validate([
             'status' => 'required',
         ]);
-        $order->setOrderStatus($request->input('status'));
+        $status = $request->input('status');
+        $statusOrderInProduction = array_keys(get_object_vars(Status::getOrderStatuses()), 'Находится в производстве')[0];
+        if ($status != $statusOrderInProduction) {
+            $order->setOrderStatus($status);
+        } elseif ($request->has('arrivalDate') && $request->has('city')) {
+            $city = City::findOrCreate(['name' => City::ucFirstCyrillic($request->input('city'))]);
+            $arrivalDate = date($request->input('arrivalDate'));
+            $order->setOrderStatus($status, $city, $arrivalDate);
+        } else {
+            return response()->json('Заполнена не вся информация для статуса "Находится в производстве"', 400);
+        }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 
@@ -169,6 +180,7 @@ class OrderController extends Controller
     public function indexUnapplied()
     {
         $unappliedOrders = Order::all()->where('container_id', '=', null)
+            ->where('status', '!=', array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0])
             ->sortByDesc('updated_at');
         return response()->json(OrderWithRelationshipsResource::collection($unappliedOrders, 200));
     }

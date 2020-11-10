@@ -35,6 +35,11 @@ class Order extends Model
         return $this->belongsTo('App\Container');
     }
 
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
+
     public function addOrderItems($items)
     {
         if ($this->orderItems()->count()) {
@@ -85,10 +90,12 @@ class Order extends Model
         return $sum;
     }
 
-    public function setOrderStatus($status)
+    public function setOrderStatus($status, $city = null, $arrivalDate = null)
     {
         $statuses = Status::getOrderStatuses();
         if (property_exists($statuses, $status)) {
+            $this->city = $city;
+            $this->arrival_date = $arrivalDate;
             $this->status = $status;
             $this->save();
         } else {
