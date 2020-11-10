@@ -125,7 +125,7 @@ class OrderController extends Controller
         if ($status != $statusOrderInProduction) {
             $order->setOrderStatus($status);
         } elseif ($request->has('arrivalDate') && $request->has('city')) {
-            $city = City::findOrCreate(['name' => City::ucFirstCyrillic($request->input('city'))]);
+            $city = City::firstOrCreate(['name' => City::translateUcFirstCyrillicAndOtherLc($request->input('city'))]);
             $arrivalDate = date($request->input('arrivalDate'));
             $order->setOrderStatus($status, $city, $arrivalDate);
         } else {
