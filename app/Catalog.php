@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\Storage;
 class Catalog extends Model
 {
     use TranslateToSnakeCaseTrait;
+
     public const FILE_DIRECTORY = '/storage/catalogs-files';
     public const SANDBOX_DIRECTORY = '/catalogs/';
 
@@ -20,7 +21,7 @@ class Catalog extends Model
 
     public function tags()
     {
-       return $this->belongsToMany('App\Tag', 'catalog_tag', 'catalog_id', 'tag_id');
+        return $this->belongsToMany('App\Tag', 'catalog_tag', 'catalog_id', 'tag_id');
     }
 
     public function documents()

@@ -14,12 +14,14 @@ class Product extends Model
     public const IMAGE_DIRECTORY = '/storage/product-images';
     public const SANDBOX_DIRECTORY = '/products/';
 
-    public function setAboutRuAttribute($value) {
-        $this->attributes['about_ru'] = preg_replace('#<script.*<\/script>#','', $value);
+    public function setAboutRuAttribute($value)
+    {
+        $this->attributes['about_ru'] = preg_replace('#<script.*<\/script>#', '', $value);
     }
 
-    public function setAboutEnAttribute($value) {
-        $this->attributes['about_en'] = preg_replace('#<script.*<\/script>#','', $value);
+    public function setAboutEnAttribute($value)
+    {
+        $this->attributes['about_en'] = preg_replace('#<script.*<\/script>#', '', $value);
     }
 
     public function catalog()
@@ -29,7 +31,7 @@ class Product extends Model
 
     public function orderItems()
     {
-       return $this->hasMany('App\OrderItem');
+        return $this->hasMany('App\OrderItem');
     }
 
     public function provider()
@@ -62,12 +64,12 @@ class Product extends Model
     public function loadImageFromAutolong($link)
     {
         try {
-           $image = file_get_contents($link);
+            $image = file_get_contents($link);
         } catch (\Exception $e) {
             return response()->json('Данной картинки не существует', 404);
         }
         $imageName = $this->id . '_' . str_replace(AutolongRuProduct::AUTOLONG_LINK_IMAGE, '', $link);
-        file_put_contents($imageName , $image);
+        file_put_contents($imageName, $image);
         $path = self::IMAGE_DIRECTORY . '/' . $imageName;
         Storage::disk('main')->move($imageName, $path);
         $this->image = $path;

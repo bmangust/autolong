@@ -22,7 +22,7 @@ class Order extends Model
 
     public function orderItems()
     {
-       return $this->hasMany('App\OrderItem');
+        return $this->hasMany('App\OrderItem');
     }
 
     public function documents()

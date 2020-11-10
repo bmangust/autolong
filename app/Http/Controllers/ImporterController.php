@@ -30,6 +30,7 @@ class ImporterController extends Controller
             'address' => ['required', 'string', 'max:255'],
         ], $messages, $names);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,9 +49,9 @@ class ImporterController extends Controller
      */
     public function store(Request $request, Importer $importer)
     {
-       $this->importerCreateValidator($request->all())->validate();
-       $newImporter = $importer->create($importer->dashesToSnakeCase($request->all()));
-       return response()->json(new ImporterWithRelationshipsResource($newImporter), 201);
+        $this->importerCreateValidator($request->all())->validate();
+        $newImporter = $importer->create($importer->dashesToSnakeCase($request->all()));
+        return response()->json(new ImporterWithRelationshipsResource($newImporter), 201);
     }
 
     /**

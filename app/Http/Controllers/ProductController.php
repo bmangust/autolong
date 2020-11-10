@@ -32,6 +32,7 @@ class ProductController extends Controller
             'providerId' => ['required'],
         ], $messages, $names);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -49,7 +50,7 @@ class ProductController extends Controller
      * @param Product $product
      * @return void
      */
-    public function store(Request $request,ExchangeRate $exchangeRate)
+    public function store(Request $request, ExchangeRate $exchangeRate)
     {
         $this->productCreateValidator($request->all())->validate();
         $product = new Product();
@@ -68,7 +69,7 @@ class ProductController extends Controller
         $product->autolong_number = $request->input('autolongNumber');
         $product->save();
         Log::$write = false;
-        if ($request->has('image') && $request->hasFile('image')){
+        if ($request->has('image') && $request->hasFile('image')) {
             $product->createOrUpdateImage($request->file('image'));
         } elseif ($request->has('image') && is_string($request->input('image'))) {
             $product->loadImageFromAutolong($request->input('image'));
@@ -79,7 +80,7 @@ class ProductController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show(Product $product)
@@ -90,8 +91,8 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param \Illuminate\Http\Request $request
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product, ExchangeRate $exchangeRate)
@@ -116,7 +117,7 @@ class ProductController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function destroy(Product $product)

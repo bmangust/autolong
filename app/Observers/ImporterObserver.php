@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Concerns\HasEvents;
 class ImporterObserver
 {
     use HasEvents;
+
     /**
      * Handle the importer "created" event.
      *
-     * @param  \App\Importer  $importer
+     * @param \App\Importer $importer
      * @return void
      */
     public function created(Importer $importer)
@@ -31,7 +32,7 @@ class ImporterObserver
     /**
      * Handle the importer "updated" event.
      *
-     * @param  \App\Importer  $importer
+     * @param \App\Importer $importer
      * @return void
      */
     public function updated(Importer $importer)
@@ -61,7 +62,7 @@ class ImporterObserver
     /**
      * Handle the importer "deleted" event.
      *
-     * @param  \App\Importer  $importer
+     * @param \App\Importer $importer
      * @return void
      */
     public function deleted(Importer $importer)
@@ -79,7 +80,7 @@ class ImporterObserver
     /**
      * Handle the importer "restored" event.
      *
-     * @param  \App\Importer  $importer
+     * @param \App\Importer $importer
      * @return void
      */
     public function restored(Importer $importer)
@@ -90,7 +91,7 @@ class ImporterObserver
     /**
      * Handle the importer "force deleted" event.
      *
-     * @param  \App\Importer  $importer
+     * @param \App\Importer $importer
      * @return void
      */
     public function forceDeleted(Importer $importer)

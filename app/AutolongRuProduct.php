@@ -16,17 +16,17 @@ class AutolongRuProduct extends Model
 
     public function getPhotoAttribute()
     {
-       return (self::AUTOLONG_LINK_IMAGE . $this->attributes['photo']);
+        return (self::AUTOLONG_LINK_IMAGE . $this->attributes['photo']);
     }
 
     public function getTextAttribute()
     {
-        $string =  strtr($this->attributes['text'], [
+        $string = strtr($this->attributes['text'], [
             '&lt;' => '<',
             '&gt;' => '>',
             '&quot;' => '"'
         ]);
-        return preg_replace('#<iframe.*<\/iframe>#','', $string);
+        return preg_replace('#<iframe.*<\/iframe>#', '', $string);
     }
 
     public function checkNumberCodesInDB($numbers): array

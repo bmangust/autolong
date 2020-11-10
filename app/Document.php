@@ -25,7 +25,7 @@ class Document extends Model
     public function setFileAttribute($value)
     {
         if (strpos($value, '/') != 0) {
-            return $this->attributes['file'] =  '/' . $value;
+            return $this->attributes['file'] = '/' . $value;
         }
         return $this->attributes['file'] = $value;
     }
@@ -54,17 +54,17 @@ class Document extends Model
         return $response;
     }
 
-    public function checkFileInFolder(string $path) : bool
+    public function checkFileInFolder(string $path): bool
     {
         return Storage::disk('main')->exists($path);
     }
 
-    public function getPathWithParentDirectory(string $path) : string
+    public function getPathWithParentDirectory(string $path): string
     {
         return preg_replace('#^/#', '', self::PARENT_DIRECTORY . $path);
     }
 
-    public function getClearName(string $name) : string
+    public function getClearName(string $name): string
     {
         $position = strpos($name, '.');
         if ($position) {

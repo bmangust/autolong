@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Concerns\HasEvents;
 class OrderObserver
 {
     use HasEvents;
+
     /**
      * Handle the order "created" event.
      *
-     * @param  \App\Order  $order
+     * @param \App\Order $order
      * @return void
      */
     public function created(Order $order)
@@ -31,7 +32,7 @@ class OrderObserver
     /**
      * Handle the order "updated" event.
      *
-     * @param  \App\Order  $order
+     * @param \App\Order $order
      * @return void
      */
     public function updated(Order $order)
@@ -61,7 +62,7 @@ class OrderObserver
     /**
      * Handle the order "deleted" event.
      *
-     * @param  \App\Order  $order
+     * @param \App\Order $order
      * @return void
      */
     public function deleted(Order $order)
@@ -80,7 +81,7 @@ class OrderObserver
     /**
      * Handle the order "restored" event.
      *
-     * @param  \App\Order  $order
+     * @param \App\Order $order
      * @return void
      */
     public function restored(Order $order)
@@ -91,7 +92,7 @@ class OrderObserver
     /**
      * Handle the order "force deleted" event.
      *
-     * @param  \App\Order  $order
+     * @param \App\Order $order
      * @return void
      */
     public function forceDeleted(Order $order)

@@ -26,6 +26,7 @@ class ProviderController extends Controller
             'nameCompany' => ['required'],
         ], $messages, $names);
     }
+
     /**
      * Display a listing of the resource.
      *

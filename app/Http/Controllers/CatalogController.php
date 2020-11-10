@@ -29,6 +29,7 @@ class CatalogController extends Controller
             'providerId' => ['required']
         ], $messages, $names);
     }
+
     /**
      * Display a listing of the resource.
      *
@@ -48,12 +49,12 @@ class CatalogController extends Controller
      */
     public function store(Request $request, Catalog $catalog)
     {
-       $this->catalogCreateValidator($request->all())->validate();
-       $newCatalog = $catalog->create($catalog->dashesToSnakeCase($request->all()));
-       Log::$write = false;
-       $newCatalog->checkAndAddTag(json_decode($request->input('tags')));
-       $newCatalog->createOrUpdateFile($request->file('file'));
-       return response()->json(new CatalogWithRelationshipsResource($newCatalog), 201);
+        $this->catalogCreateValidator($request->all())->validate();
+        $newCatalog = $catalog->create($catalog->dashesToSnakeCase($request->all()));
+        Log::$write = false;
+        $newCatalog->checkAndAddTag(json_decode($request->input('tags')));
+        $newCatalog->createOrUpdateFile($request->file('file'));
+        return response()->json(new CatalogWithRelationshipsResource($newCatalog), 201);
     }
 
     /**
@@ -76,11 +77,11 @@ class CatalogController extends Controller
      */
     public function update(Request $request, Catalog $catalog)
     {
-       $this->catalogCreateValidator($request->all())->validate();
-       $catalog->update($catalog->dashesToSnakeCase($request->all()));
-       $catalog->checkAndAddTag(json_decode($request->input('tags')));
-       $catalog->createOrUpdateFile($request->file('file'));
-       return response()->json(new CatalogWithRelationshipsResource($catalog), 200);
+        $this->catalogCreateValidator($request->all())->validate();
+        $catalog->update($catalog->dashesToSnakeCase($request->all()));
+        $catalog->checkAndAddTag(json_decode($request->input('tags')));
+        $catalog->createOrUpdateFile($request->file('file'));
+        return response()->json(new CatalogWithRelationshipsResource($catalog), 200);
     }
 
     /**

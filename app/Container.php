@@ -26,7 +26,7 @@ class Container extends Model
         return $this->hasMany('App\Order');
     }
 
-    public function addOrders(array $ids) :bool
+    public function addOrders(array $ids): bool
     {
         foreach ($ids as $id) {
             $order = Order::findOrFail($id);
@@ -35,7 +35,7 @@ class Container extends Model
         return true;
     }
 
-    public function getQuantityOrderItems(array $ordersIds) :int
+    public function getQuantityOrderItems(array $ordersIds): int
     {
         $quantity = 0;
         foreach ($ordersIds as $id) {

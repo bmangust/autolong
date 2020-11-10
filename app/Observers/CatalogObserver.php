@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Concerns\HasEvents;
 class CatalogObserver
 {
     use HasEvents;
+
     /**
      * Handle the catalog "created" event.
      *
-     * @param  \App\Catalog  $catalog
+     * @param \App\Catalog $catalog
      * @return void
      */
     public function created(Catalog $catalog)
@@ -31,7 +32,7 @@ class CatalogObserver
     /**
      * Handle the catalog "updated" event.
      *
-     * @param  \App\Catalog  $catalog
+     * @param \App\Catalog $catalog
      * @return void
      */
     public function updated(Catalog $catalog)
@@ -61,7 +62,7 @@ class CatalogObserver
     /**
      * Handle the catalog "deleted" event.
      *
-     * @param  \App\Catalog  $catalog
+     * @param \App\Catalog $catalog
      * @return void
      */
     public function deleted(Catalog $catalog)
@@ -79,7 +80,7 @@ class CatalogObserver
     /**
      * Handle the catalog "restored" event.
      *
-     * @param  \App\Catalog  $catalog
+     * @param \App\Catalog $catalog
      * @return void
      */
     public function restored(Catalog $catalog)
@@ -90,7 +91,7 @@ class CatalogObserver
     /**
      * Handle the catalog "force deleted" event.
      *
-     * @param  \App\Catalog  $catalog
+     * @param \App\Catalog $catalog
      * @return void
      */
     public function forceDeleted(Catalog $catalog)

@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Concerns\HasEvents;
 class ContainerObserver
 {
     use HasEvents;
+
     /**
      * Handle the container "created" event.
      *
-     * @param  \App\Container  $container
+     * @param \App\Container $container
      * @return void
      */
     public function created(Container $container)
@@ -31,7 +32,7 @@ class ContainerObserver
     /**
      * Handle the container "updated" event.
      *
-     * @param  \App\Container  $container
+     * @param \App\Container $container
      * @return void
      */
     public function updated(Container $container)
@@ -61,7 +62,7 @@ class ContainerObserver
     /**
      * Handle the container "deleted" event.
      *
-     * @param  \App\Container  $container
+     * @param \App\Container $container
      * @return void
      */
     public function deleted(Container $container)
@@ -79,7 +80,7 @@ class ContainerObserver
     /**
      * Handle the container "restored" event.
      *
-     * @param  \App\Container  $container
+     * @param \App\Container $container
      * @return void
      */
     public function restored(Container $container)
@@ -90,7 +91,7 @@ class ContainerObserver
     /**
      * Handle the container "force deleted" event.
      *
-     * @param  \App\Container  $container
+     * @param \App\Container $container
      * @return void
      */
     public function forceDeleted(Container $container)

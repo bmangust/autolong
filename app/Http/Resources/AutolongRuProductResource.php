@@ -9,7 +9,7 @@ class AutolongRuProductResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -18,7 +18,7 @@ class AutolongRuProductResource extends JsonResource
             'number' => $this->number,
             'articul' => $this->articul,
             'name' => $this->name,
-            'price' =>  $this->price,
+            'price' => $this->price,
             'h_price' => $this->h_price,
             'text' => $this->text,
             'photo' => $this->photo

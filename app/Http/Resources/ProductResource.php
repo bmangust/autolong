@@ -9,7 +9,7 @@ class ProductResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -22,7 +22,7 @@ class ProductResource extends JsonResource
             'aboutEn' => $this->about_en,
             'providerId' => $this->provider_id,
             'image' => $this->image,
-            'price' => (Object)['rub' => $this->price_rub, 'usd' => $this->price_usd, 'cny' => $this->price_cny],
+            'price' => (object)['rub' => $this->price_rub, 'usd' => $this->price_usd, 'cny' => $this->price_cny],
             'weightNetto' => $this->weight_netto,
             'weightBrutto' => $this->weight_brutto,
             'vendorCode' => $this->vendor_code,

@@ -13,21 +13,21 @@ class Provider extends Model
     public const SANDBOX_DIRECTORY = '/providers/';
 
     protected $fillable = [
-      'name',
-      'name_company',
-      'email',
-      'website',
-      'phone',
-      'wechat',
-      'country_id',
-      'beneficiary_name',
-      'beneficiary_address',
-      'beneficiary_account_name',
-      'beneficiary_bank_address',
-      'beneficiary_bank_name',
-      'beneficiary_bank_code',
-      'beneficiary_swift_address',
-      'beneficiary_name'
+        'name',
+        'name_company',
+        'email',
+        'website',
+        'phone',
+        'wechat',
+        'country_id',
+        'beneficiary_name',
+        'beneficiary_address',
+        'beneficiary_account_name',
+        'beneficiary_bank_address',
+        'beneficiary_bank_name',
+        'beneficiary_bank_code',
+        'beneficiary_swift_address',
+        'beneficiary_name'
     ];
 
     public function catalogs()

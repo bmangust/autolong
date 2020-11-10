@@ -29,6 +29,7 @@ class ContainerController extends Controller
             'city' => ['required', 'string', 'max:255'],
         ], $messages, $names);
     }
+
     /**
      * Display a listing of the resource.
      *

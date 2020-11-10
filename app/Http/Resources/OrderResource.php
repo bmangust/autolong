@@ -9,7 +9,7 @@ class OrderResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -21,7 +21,7 @@ class OrderResource extends JsonResource
             'statusPayment' => $this->status_payment,
             'providerId' => $this->provider_id,
             'items' => OrderItemResource::collection($this->orderItems),
-            'price' => (Object)['rub' => $this->getOrderSumInRub(),
+            'price' => (object)['rub' => $this->getOrderSumInRub(),
                                 'usd' => $this->getOrderSumInUsd(),
                                 'cny' => $this->getOrderSumInCny()],
             'cargo' => $this->cargo,

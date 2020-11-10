@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\Concerns\HasEvents;
 class ProviderObserver
 {
     use HasEvents;
+
     /**
      * Handle the provider "created" event.
      *
-     * @param  \App\Provider  $provider
+     * @param \App\Provider $provider
      * @return void
      */
     public function created(Provider $provider)
@@ -31,7 +32,7 @@ class ProviderObserver
     /**
      * Handle the provider "updated" event.
      *
-     * @param  \App\Provider  $provider
+     * @param \App\Provider $provider
      * @return void
      */
     public function updated(Provider $provider)
@@ -61,7 +62,7 @@ class ProviderObserver
     /**
      * Handle the provider "deleted" event.
      *
-     * @param  \App\Provider  $provider
+     * @param \App\Provider $provider
      * @return void
      */
     public function deleted(Provider $provider)
@@ -79,7 +80,7 @@ class ProviderObserver
     /**
      * Handle the provider "restored" event.
      *
-     * @param  \App\Provider  $provider
+     * @param \App\Provider $provider
      * @return void
      */
     public function restored(Provider $provider)
@@ -90,7 +91,7 @@ class ProviderObserver
     /**
      * Handle the provider "force deleted" event.
      *
-     * @param  \App\Provider  $provider
+     * @param \App\Provider $provider
      * @return void
      */
     public function forceDeleted(Provider $provider)

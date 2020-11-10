@@ -12,7 +12,7 @@ class OrderItemWithRelationshipsResource extends JsonResource
     /**
      * Transform the resource into an array.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return array
      */
     public function toArray($request)
@@ -21,7 +21,7 @@ class OrderItemWithRelationshipsResource extends JsonResource
             'id' => $this->id,
             'quantity' => $this->quantity,
             'nameRu' => $this->product->name_ru,
-            'price' => (Object)['rub' => $this->price_rub,
+            'price' => (object)['rub' => $this->price_rub,
                                 'usd' => $this->price_usd,
                                 'cny' => $this->price_cny],
             'fullPriceCny' => $this->getSumInCny(),
