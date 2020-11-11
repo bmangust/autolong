@@ -32,7 +32,7 @@ const Sidebar: React.FC<{ isOpen: boolean }> = ({isOpen}) => {
     const cls = [classes.sidebar]
 
     if (isOpen) {
-        cls.push('show')
+        cls.push(classes.show)
     }
 
     return (

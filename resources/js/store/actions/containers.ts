@@ -73,8 +73,6 @@ export const fetchContainerById = (id) => async dispatch => {
                 type: FETCH_CONTAINER_SUCCESS,
                 payload: answer.data
             })
-            toast.success(
-                createNotyMsg(answer.data.name, 'контейнер создан'))
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -97,6 +95,8 @@ export const createContainer = (data) => async dispatch => {
                 type: CREATE_CONTAINER_SUCCESS,
                 payload: answer.data
             })
+            toast.success(
+                createNotyMsg(answer.data.name, 'контейнер создан'))
         })
         .catch((error: AxiosError) => {
             dispatch({
