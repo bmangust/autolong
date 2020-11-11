@@ -32,6 +32,7 @@ class ProductWithRelationshipsResource extends JsonResource
             'vendorCode' => $this->vendor_code,
             'autolongNumber' => $this->autolong_number,
             'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
+            'orders' => OrderItemResource::collection($this->orderItems),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
