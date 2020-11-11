@@ -6,7 +6,8 @@ import classes from './Header.module.css'
 import {useLocation} from 'react-router-dom'
 import MenuButton from '../MenuButton/MenuButton'
 
-const Header: React.FC = () => {
+const Header: React.FC<{ isOpen: boolean, setIsOpen: Function }> = (
+    {isOpen, setIsOpen}) => {
     const [pageName, setPageName]: any = useState('')
     const location = useLocation()
     // @todo Оптимизировать
@@ -30,7 +31,7 @@ const Header: React.FC = () => {
                             Администратор
                         </span>
                     </div>
-                    <MenuButton open={open} setOpen={setOpen} />
+                    <MenuButton isOpen={isOpen} setIsOpen={setIsOpen}/>
                 </div>
             </div>
         </>

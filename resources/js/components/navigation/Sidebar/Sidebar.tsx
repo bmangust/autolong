@@ -9,7 +9,7 @@ import SvgHelp from '../../UI/iconComponents/Help'
 import classes from './Sidebar.module.css'
 import {routes} from '../router/routes'
 
-const Sidebar: React.FC = () => {
+const Sidebar: React.FC<{ isOpen: boolean }> = ({isOpen}) => {
     const renderLinks = (routes) => {
         return routes.map((route, index) =>
             !route.hide ? (
@@ -31,9 +31,9 @@ const Sidebar: React.FC = () => {
         <nav className={classes.sidebar + ' nav flex-column'}>
             <div className='w-100'>{renderLinks(routes)}</div>
             <NavLink className={classes.help} to='/help'>
-                <SvgHelp />
+                <SvgHelp/>
                 <span>
-                    Справка по работе <br />с системой
+                    Справка по работе <br/>с системой
                 </span>
             </NavLink>
         </nav>
