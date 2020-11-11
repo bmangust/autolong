@@ -15,6 +15,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchContainers = () => async dispatch => {
     await dispatch({
@@ -82,7 +83,7 @@ export const fetchContainerById = (id) => async dispatch => {
         })
 }
 
-export const createContainer = (data) => async dispatch => {
+export const createContainer = (data, redirect) => async dispatch => {
     await dispatch({
         type: CREATE_CONTAINER_START
     })
@@ -97,6 +98,7 @@ export const createContainer = (data) => async dispatch => {
             })
             toast.success(
                 createNotyMsg(answer.data.name, 'контейнер создан'))
+            dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
             dispatch({

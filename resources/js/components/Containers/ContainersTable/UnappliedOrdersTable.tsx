@@ -20,6 +20,7 @@ import Loader from '../../UI/Loader/Loader'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {getOrderStatusName, nameToLinkFormatter} from '../../../utils'
 import Error from '../../UI/Error/Error'
+import Placeholder from '../../UI/Placeholder/Placeholder'
 
 const UnappliedOrdersTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -41,17 +42,10 @@ const UnappliedOrdersTable: React.FC = () => {
 
     const createContainerHandler = () => {
         if (selectedRows.length) {
-            dispatch(createContainer(selectedRows))
+            dispatch(createContainer(selectedRows, '/containers'))
         } else {
             toast.error('Выберите заказ для создания контейнера')
         }
-    }
-
-    if (error) {
-        return <Error/>
-    }
-    if (loadingUnapplied) {
-        return <Loader/>
     }
 
     const nonSelectable: number[] = []
@@ -119,6 +113,20 @@ const UnappliedOrdersTable: React.FC = () => {
         clickToSelect: true,
         hideSelectAll: true,
         onSelect: onRowSelect
+    }
+
+    if (error) {
+        return <Error/>
+    }
+    if (loadingUnapplied) {
+        return <Loader/>
+    }
+    if (!unappliedOrders.length) {
+        return <Placeholder
+            description='Добавьте новые заказы или поменяйте
+            статус у существующих'
+            link='/orders' linkName='Перейти к заказам'
+            title='Доступных заказов нет'/>
     }
 
     return (

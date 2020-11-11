@@ -21,6 +21,7 @@ import {
 import {LOCATION_CHANGE} from 'connected-react-router'
 import {IProvider} from '../Providers/IProviders'
 import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
+import {IOrder} from '../Orders/IOrders'
 
 export interface IProduct {
     id: number
@@ -34,6 +35,7 @@ export interface IProduct {
     sandboxFiles: ISandboxFile[]
     vendorCode: string
     quantity: number
+    orders: IOrder[] | null
     autolongNumber: number
     image: string
     price: IProductPrice
