@@ -19,6 +19,6 @@ class Importer extends Model
 
     public function sandboxFiles()
     {
-        return $this->morphMany('App\SandboxFile', 'sandboxFiled');
+        return $this->morphMany('App\SandboxFile', 'sandbox_filed');
     }
 }
