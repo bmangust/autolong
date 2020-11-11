@@ -21,7 +21,7 @@ class CatalogWithRelationshipsResource extends JsonResource
             'provider' => new ProviderResource($this->provider),
             'file' => $this->file,
             'tags' => TagResource::collection($this->tags),
-            'documents' => DocumentResource::collection($this->documents),
+            'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

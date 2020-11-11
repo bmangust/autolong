@@ -24,6 +24,7 @@ class ProviderResource extends JsonResource
             'phone' => $this->phone,
             'wechat' => $this->wechat,
             'country' => $this->country,
+            'manufacturer' => $this->manufacturer,
             'beneficiaryName' => $this->beneficiary_name,
             'beneficiaryAddress' => $this->beneficiary_address,
             'beneficiaryAccountName' => $this->beneficiary_account_name,

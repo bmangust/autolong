@@ -25,9 +25,9 @@ class Order extends Model
         return $this->hasMany('App\OrderItem');
     }
 
-    public function documents()
+    public function sandboxFiles()
     {
-        return $this->morphMany('App\Document', 'documented');
+        return $this->morphMany('App\SandboxFile', 'sandboxFiled');
     }
 
     public function container()
@@ -83,6 +83,15 @@ class Order extends Model
             $sum += $orderItem->getSumInUsd();
         }
         return $sum;
+    }
+
+    public function getOrderItemsQuantity()
+    {
+        $quantity = 0;
+        foreach ($this->orderItems as $orderItem) {
+            $quantity += $orderItem->quantity;
+        }
+        return $quantity;
     }
 
     public function setOrderStatus($status)

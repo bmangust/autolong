@@ -20,7 +20,7 @@ class ImporterWithRelationshipsResource extends JsonResource
             'nameEn' => $this->name_en,
             'address' => $this->address,
             'phone' => $this->phone,
-            'documents' => DocumentResource::collection($this->documents),
+            'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

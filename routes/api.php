@@ -69,9 +69,9 @@ Route::put('/orderitems/{orderitem}', 'OrderItemController@update');
 
 Route::get('logs', 'LogController@index');
 
-Route::put('documents/{document}', 'DocumentController@update');
-Route::delete('documents/{document}', 'DocumentController@destroy');
-Route::post('{model}/{id}/savefile','DocumentController@saveFile')
+Route::put('sandboxfiles/{sandboxfile}', 'SandboxFileController@update');
+Route::delete('sandboxfiles/{sandboxfile}', 'SandboxFileController@destroy');
+Route::post('{model}/{id}/savefile','SandboxFileController@saveFile')
     ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе
 Route::bind('id', function ($id, $route) {
     $model = preg_replace('#s$#','' ,$route->parameter('model'));

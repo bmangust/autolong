@@ -53,9 +53,9 @@ class OrderObserver
 
     public function deleting(Order $order)
     {
-        foreach ($order->documents as $document) {
-            $document->deleteFile();
-            $document->delete();
+        foreach ($order->documents as $sandboxFile) {
+            $sandboxFile->deleteFile();
+            $sandboxFile->delete();
         }
     }
 

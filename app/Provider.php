@@ -50,9 +50,9 @@ class Provider extends Model
         return $this->hasMany('App\Product');
     }
 
-    public function documents()
+    public function sandboxFiles()
     {
-        return $this->morphMany('App\Document', 'documented');
+        return $this->morphMany('App\SandboxFile', 'sandboxFiled');
     }
 
     public function addOrUpdateCatalogs($catalogs)

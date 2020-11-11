@@ -27,6 +27,7 @@ class ProviderWithRelationshipsResource extends JsonResource
             'phone' => $this->phone,
             'wechat' => $this->wechat,
             'country' => new CountryResource($this->country),
+            'manufacturer' => $this->manufacturer,
             'beneficiaryName' => $this->beneficiary_name,
             'beneficiaryAddress' => $this->beneficiary_address,
             'beneficiaryAccountName' => $this->beneficiary_account_name,
@@ -37,7 +38,7 @@ class ProviderWithRelationshipsResource extends JsonResource
             'catalogs' => CatalogResource::collection($this->catalogs),
             'orders' => OrderResource::collection($this->orders),
             'products' => ProductResource::collection($this->products),
-            'documents' => DocumentResource::collection($this->documents),
+            'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
