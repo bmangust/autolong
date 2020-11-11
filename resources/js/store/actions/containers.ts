@@ -88,7 +88,7 @@ export const createContainer = (data) => async dispatch => {
 
     const url = '/api/containers'
     axios
-        .post(url, data)
+        .post(url, {orders: data})
         .then((answer) => {
             dispatch({
                 type: FETCH_UNAPPLIED_ORDERS_SUCCESS,

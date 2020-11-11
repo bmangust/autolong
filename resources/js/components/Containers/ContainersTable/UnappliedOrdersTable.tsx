@@ -80,6 +80,12 @@ const UnappliedOrdersTable: React.FC = () => {
         }
     }
 
+    const cityFormatter = (city) => {
+        return city
+            ? city.name
+            : null
+    }
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
@@ -98,7 +104,13 @@ const UnappliedOrdersTable: React.FC = () => {
             dataField: 'status',
             text: 'Статус',
             classes: 'status',
-            formatter: (status) => getOrderStatusName(status),
+            formatter: getOrderStatusName,
+            sort: true
+        },
+        {
+            dataField: 'city',
+            text: 'Город',
+            formatter: cityFormatter,
             sort: true
         }
     ]

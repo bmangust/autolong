@@ -12,13 +12,14 @@ import {
     FETCH_UNAPPLIED_ORDERS_SUCCESS,
     FETCH_UNAPPLIED_ORDERS_ERROR
 } from '../../store/actions/actionTypes'
+import {ICity} from '../Cities/ICities'
 import {IOrder} from '../Orders/IOrders'
 
 export interface IContainer {
     id: number | null
     name: string
     status: string // Нужно переписать под все возможные статусы
-    city: string
+    city: ICity
     createdAt?: number
     updatedAt?: number
 }

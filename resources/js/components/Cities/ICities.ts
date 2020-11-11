@@ -5,8 +5,10 @@ import {
 } from '../../store/actions/actionTypes'
 
 export interface ICity {
-    id: number,
+    id: number
     name: string
+    createdAt: string
+    updatedAt: string
 }
 
 export interface ICitiesState {
