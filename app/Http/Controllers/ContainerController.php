@@ -31,7 +31,7 @@ class ContainerController extends Controller
     public function store(Request $request, Container $container)
     {
         $container->name = $request->input('name');
-        $container->status = array_keys(get_object_vars(Status::getContainerStatuses()), 'Создан')[0];
+        $container->status = array_keys(get_object_vars(Status::getContainerStatuses()), 'Собирается')[0];
         $orderIds = $request->input('orders');
         $container->quantity_order_items = $container->getQuantityOrderItems($orderIds);
         $container->save();
