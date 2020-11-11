@@ -65,7 +65,7 @@ const OrderItems: React.FC<IOrderItems> =
                                         onChangePrice(e, item.id, 'cny')}
                                     type="number"/>
                                 {item.price
-                                    ? moneyFormatter(item.price, 'cny')
+                                    ? moneyFormatter(item.price, ['cny'])
                                     : null
                                 }
                             </p>
