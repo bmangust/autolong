@@ -26,6 +26,7 @@ interface ICreateProductData {
     aboutEn: string
     providerId: number
     image: string
+    hsCode: string
     priceCny: number
     weightNetto: number
     weightBrutto: number
@@ -146,6 +147,7 @@ const ProductForm: React.FC = () => {
                                            placeholder="Введите номер"/>
                                     {errors.vendorCode &&
                                     <small>Это поле обязательно</small>}
+
                                     <label htmlFor='autolongNumber'
                                            className='w-100'>
                                         Внутренний номер
@@ -157,6 +159,17 @@ const ProductForm: React.FC = () => {
                                            placeholder="Введите номер"/>
                                     {errors.autolongNumber &&
                                     <small>Это поле обязательно</small>}
+
+                                    <label htmlFor='hsCode'
+                                           className='w-100'>
+                                        HS code
+                                    </label>
+                                    <input className='col-lg-10 mb-3'
+                                           name="hsCode"
+                                           ref={register}
+                                           type="string"
+                                           placeholder="Введите HS code"/>
+
                                     <label htmlFor='providerId'
                                            className='w-100'>
                                         Выберите поставщика
@@ -173,6 +186,7 @@ const ProductForm: React.FC = () => {
                                         {errors.providerId &&
                                         <small>Это поле обязательно</small>}
                                     </div>
+
                                     <label htmlFor='image' className='w-100'>
                                         Загрузите изображение товара
                                     </label>

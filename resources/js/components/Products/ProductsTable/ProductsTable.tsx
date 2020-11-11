@@ -103,7 +103,7 @@ const ProductsTable: React.FC = () => {
             text: 'Название',
             classes: 'title',
             sort: true,
-            headerStyle: {width: '370px'},
+            headerStyle: {width: '260px'},
             formatter: (nameRu, row) =>
                 nameToLinkFormatter(nameRu, row, 'product')
         },

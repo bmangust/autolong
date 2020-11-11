@@ -80,6 +80,18 @@ const Product: React.FC = () => {
                                     <tr>
                                         <td
                                             className="infoBlockHeaders pb-3">
+                                            HS code
+                                        </td>
+                                        <td
+                                            className="infoBlockText pb-3">
+                                            {'hsCode' in product
+                                                ? product.hsCode
+                                                : ''}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td
+                                            className="infoBlockHeaders pb-3">
                                             Артикул
                                         </td>
                                         <td
