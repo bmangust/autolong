@@ -15,7 +15,7 @@ import {deleteProductById, fetchProductById} from '../../store/actions/products'
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import {imgFormatter, moneyFormatter, timeConverter} from '../../utils'
-import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
+import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 
 const Product: React.FC = () => {
     const {id}: any = useParams()
@@ -229,9 +229,9 @@ const Product: React.FC = () => {
                         </div>
                     </div>
                 </div>
-                <DocumentsCard
+                <SandboxFilesCard
                     id={product.id}
-                    documents={product.documents}
+                    sandboxFiles={product.sandboxFiles}
                     page='products'
                 />
             </div>

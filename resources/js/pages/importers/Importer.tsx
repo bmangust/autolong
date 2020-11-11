@@ -17,7 +17,7 @@ import {
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
-import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
+import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 
 const Importer: React.FC<IImporter> = () => {
     const {id}: any = useParams()
@@ -75,9 +75,9 @@ const Importer: React.FC<IImporter> = () => {
                         </NavLink>
                     </div>
                 </div>
-                <DocumentsCard
+                <SandboxFilesCard
                     id={importer.id}
-                    documents={importer.documents}
+                    sandboxFiles={importer.sandboxFiles}
                     page='importers'
                 />
             </div>

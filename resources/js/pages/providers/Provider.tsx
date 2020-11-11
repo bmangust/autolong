@@ -25,7 +25,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgCatalog from '../../components/UI/iconComponents/Catalog'
 import {ArrowRight} from '../../components/UI/iconComponents'
-import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
+import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 
 const Provider: React.FC<IProvider> = () => {
     const {id}: any = useParams()
@@ -151,6 +151,7 @@ const Provider: React.FC<IProvider> = () => {
                                     <p>Beneficiary Account Name </p>
                                     <p>Beneficiary Bank Address</p>
                                     <p>Bank Account Number </p>
+                                    <p>Bank Account Number </p>
                                     <p>SWIFT Address</p>
                                 </div>
                                 <div className="col-lg-7 infoBlockText">
@@ -168,6 +169,9 @@ const Provider: React.FC<IProvider> = () => {
                                         : ''}</p>
                                     <p>{'beneficiaryBankCode' in provider
                                         ? provider.beneficiaryBankCode
+                                        : ''}</p>
+                                    <p>{'manufacturer' in provider
+                                        ? provider.manufacturer
                                         : ''}</p>
                                     <p>{'beneficiarySwiftAddress' in provider
                                         ? provider.beneficiarySwiftAddress
@@ -215,9 +219,9 @@ const Provider: React.FC<IProvider> = () => {
                             </div>
                         </div>
                     </div>
-                    <DocumentsCard
+                    <SandboxFilesCard
                         id={provider.id}
-                        documents={provider.documents}
+                        sandboxFiles={provider.sandboxFiles}
                         page='providers'
                     />
                 </div>

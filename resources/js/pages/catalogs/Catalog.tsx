@@ -22,7 +22,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import {tagsConverter, timeConverter} from '../../utils'
-import DocumentsCard from '../../components/DocumentsCard/DocumentsCard'
+import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 
 const Catalog: React.FC<ICatalog> = () => {
     const {id}: any = useParams()
@@ -78,9 +78,9 @@ const Catalog: React.FC<ICatalog> = () => {
 
                     </div>
                 </div>
-                <DocumentsCard
+                <SandboxFilesCard
                     id={catalog.id}
-                    documents={catalog.documents}
+                    sandboxFiles={catalog.sandboxFiles}
                     page='catalogs'
                 />
             </div>

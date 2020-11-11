@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\OrderItem;
@@ -33,6 +34,11 @@ class Order extends Model
     public function container()
     {
         return $this->belongsTo('App\Container');
+    }
+
+    public function city()
+    {
+        return $this->belongsTo('App\City');
     }
 
     public function addOrderItems($items)
@@ -85,10 +91,12 @@ class Order extends Model
         return $sum;
     }
 
-    public function setOrderStatus($status)
+    public function setOrderStatus(string $status, int $city = null, string $arrivalDate = null)
     {
         $statuses = Status::getOrderStatuses();
         if (property_exists($statuses, $status)) {
+            $this->city_id = $city;
+            $this->arrival_date = $arrivalDate;
             $this->status = $status;
             $this->save();
         } else {
@@ -105,5 +113,14 @@ class Order extends Model
         } else {
             return response()->json('Данного статуса оплаты не существует', 404);
         }
+    }
+
+    public function checkActualDate(string $date): bool
+    {
+        $nowDay = Carbon::now()->toDateString();
+        if ($nowDay > $date) {
+            return false;
+        }
+        return true;
     }
 }
