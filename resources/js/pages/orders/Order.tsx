@@ -57,8 +57,8 @@ const Order: React.FC<IOrder> = () => {
         dispatch(changeOrderStatus(id, value))
     }
 
-    const createInvoiceHandler = (id) => {
-        dispatch(createOrderInvoice(id))
+    const createInvoiceHandler = (id, type) => {
+        dispatch(createOrderInvoice(id, type))
     }
 
     const orderStatuses = Object.entries(
@@ -176,14 +176,23 @@ const Order: React.FC<IOrder> = () => {
                             <div className={classes.invoiceBtnBlock}>
                                 <button
                                     onClick={() =>
-                                        createInvoiceHandler(order.id)}
+                                        createInvoiceHandler(
+                                            order.id, 'invoice')}
                                     className={classes.invoiceBtn}>
                                     Invoice
                                 </button>
-                                <button className={classes.invoiceBtn}>
+                                <button
+                                    onClick={() =>
+                                        createInvoiceHandler(
+                                            order.id, 'proforma')}
+                                    className={classes.invoiceBtn}>
                                     Proforma
                                 </button>
-                                <button className={classes.invoiceBtn}>
+                                <button
+                                    onClick={() =>
+                                        createInvoiceHandler(
+                                            order.id, 'contract')}
+                                    className={classes.invoiceBtn}>
                                     Контракт
                                 </button>
                             </div>
