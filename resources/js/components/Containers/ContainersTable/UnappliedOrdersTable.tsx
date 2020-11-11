@@ -4,6 +4,7 @@ import React, {useEffect, useState} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {ColumnDescription, SelectRowProps} from 'react-bootstrap-table-next'
+import {toast} from 'react-toastify'
 
 // Actions
 import {
@@ -19,7 +20,6 @@ import Loader from '../../UI/Loader/Loader'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {getOrderStatusName, nameToLinkFormatter} from '../../../utils'
 import Error from '../../UI/Error/Error'
-import {toast} from 'react-toastify'
 
 const UnappliedOrdersTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -54,7 +54,18 @@ const UnappliedOrdersTable: React.FC = () => {
         return <Loader/>
     }
 
+    const nonSelectable: number[] = []
+
     function onRowSelect(row, isSelect) {
+        if (row.city) {
+            const cityId = row.city.id
+            unappliedOrders.forEach((order, index) => {
+                if (order.city && (order.city.id !== cityId)) {
+                    nonSelectable.push(index)
+                }
+            })
+        }
+        console.log(nonSelectable)
         if (isSelect) {
             setSelectedRows((oldState) => (
                 [...oldState, row.id]
@@ -64,18 +75,6 @@ const UnappliedOrdersTable: React.FC = () => {
                 oldState.filter((rowId) => (
                     rowId !== row.id
                 ))
-            ))
-        }
-    }
-
-    function onRowSelectAll(row, isSelect) {
-        if (isSelect) {
-            setSelectedRows((oldState) => (
-                [...oldState, row.id]
-            ))
-        } else {
-            selectedRows.filter((rowId) => (
-                rowId !== row.id
             ))
         }
     }
@@ -118,8 +117,8 @@ const UnappliedOrdersTable: React.FC = () => {
     const selectRow: SelectRowProps<any> = {
         mode: 'checkbox',
         clickToSelect: true,
-        onSelect: onRowSelect,
-        onSelectAll: onRowSelectAll
+        hideSelectAll: true,
+        onSelect: onRowSelect
     }
 
     return (
