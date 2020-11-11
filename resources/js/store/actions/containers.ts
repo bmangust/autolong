@@ -7,7 +7,10 @@ import {
     FETCH_CONTAINER_SUCCESS,
     FETCH_UNAPPLIED_ORDERS_ERROR,
     FETCH_UNAPPLIED_ORDERS_START,
-    FETCH_UNAPPLIED_ORDERS_SUCCESS
+    FETCH_UNAPPLIED_ORDERS_SUCCESS,
+    CREATE_CONTAINER_SUCCESS,
+    CREATE_CONTAINER_ERROR,
+    CREATE_CONTAINER_START
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -83,7 +86,7 @@ export const fetchContainerById = (id) => async dispatch => {
 
 export const createContainer = (data) => async dispatch => {
     await dispatch({
-        type: FETCH_UNAPPLIED_ORDERS_START
+        type: CREATE_CONTAINER_START
     })
 
     const url = '/api/containers'
@@ -91,14 +94,19 @@ export const createContainer = (data) => async dispatch => {
         .post(url, {orders: data})
         .then((answer) => {
             dispatch({
-                type: FETCH_UNAPPLIED_ORDERS_SUCCESS,
+                type: CREATE_CONTAINER_SUCCESS,
                 payload: answer.data
             })
         })
         .catch((error: AxiosError) => {
             dispatch({
-                type: FETCH_UNAPPLIED_ORDERS_ERROR,
+                type: CREATE_CONTAINER_ERROR,
                 payload: error.response
             })
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.response)
+            }
         })
 }
