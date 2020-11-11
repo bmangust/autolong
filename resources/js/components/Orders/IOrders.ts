@@ -22,7 +22,7 @@ import {LOCATION_CHANGE} from 'connected-react-router'
 
 import {IProvider} from '../Providers/IProviders'
 import {IProduct, IProductPrice} from '../Products/IProducts'
-import {IDocument} from '../DocumentsCard/DocumentsCard'
+import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 
 export interface IOrder {
     id: number
@@ -31,7 +31,7 @@ export interface IOrder {
     statusPayment: string
     items: IProduct[]
     priceCny: number
-    documents: IDocument[]
+    sandboxFiles: ISandboxFile[]
     price: IProductPrice
     provider: IProvider
     createdAt?: number

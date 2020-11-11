@@ -7,7 +7,7 @@ import {toast} from 'react-toastify'
 import {useForm} from 'react-hook-form'
 
 // Styles
-import classes from './DocumentsCard.module.css'
+import classes from './SandboxFilesCard.module.css'
 
 // App
 import SvgCatalog from '../UI/iconComponents/Catalog'
@@ -17,7 +17,7 @@ import {createNotyMsg, timeConverter} from '../../utils'
 import Modal from '../UI/Modal/Modal'
 import SvgEdit from '../UI/iconComponents/Edit'
 
-export interface IDocument {
+export interface ISandboxFile {
     name: string
     id: number | null
     file: string
@@ -25,11 +25,11 @@ export interface IDocument {
     updatedAt: number | null
 }
 
-const DocumentsCard: React.FC<{
-    documents: IDocument[], id: number, page: string
-}> = ({documents, id, page}) => {
-    const [documentsState, setDocumentsState] = useState(() => {
-        return documents
+const SandboxFilesCard: React.FC<{
+    sandboxFiles: ISandboxFile[], id: number, page: string
+}> = ({sandboxFiles, id, page}) => {
+    const [sandboxFilesState, setSandboxFilesState] = useState(() => {
+        return sandboxFiles
     })
     const initialEditState = {
         name: '',
@@ -41,7 +41,7 @@ const DocumentsCard: React.FC<{
 
     const [isOpen, setIsOpen] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
-    const [editState, setEditState] = useState<IDocument>(
+    const [editState, setEditState] = useState<ISandboxFile>(
         initialEditState
     )
 
@@ -54,7 +54,7 @@ const DocumentsCard: React.FC<{
         reset: reset2, errors: errors2
     } = useForm()
 
-    const documentFormSubmitHandler =
+    const sandboxFormSubmitHandler =
         handleSubmit((formValues) => {
             formValues.file = formValues.file[0]
             const url = `/api/${page}/${id}/savefile`
@@ -71,7 +71,7 @@ const DocumentsCard: React.FC<{
                 .then((answer) => {
                     toast.success(
                         createNotyMsg(answer.data.name, 'файл сохранен'))
-                    setDocumentsState((state) => {
+                    setSandboxFilesState((state) => {
                         return [...state, answer.data]
                     })
                     reset()
@@ -86,22 +86,22 @@ const DocumentsCard: React.FC<{
                 })
         })
 
-    const documentEditFormSubmitHandler =
+    const sandboxEditFormSubmitHandler =
         handleSubmit2((formValues) => {
-            const url = `/api/documents/${editState.id}`
+            const url = `/api/sandboxfiles/${editState.id}`
             axios
                 .put(url, formValues)
-                .then((answer: AxiosResponse<IDocument>) => {
+                .then((answer: AxiosResponse<ISandboxFile>) => {
                     toast.success(
                         createNotyMsg(answer.data.name, 'файл обновлен'))
-                    const newState = documentsState.map((item) => {
+                    const newState = sandboxFilesState.map((item) => {
                         if (item.id === editState.id) {
                             item.name = answer.data.name
                             item.description = answer.data.description
                         }
                         return item
                     })
-                    setDocumentsState(newState)
+                    setSandboxFilesState(newState)
                     setEditState(initialEditState)
                     setIsOpen(false)
                     reset2()
@@ -121,8 +121,8 @@ const DocumentsCard: React.FC<{
         setIsOpen(true)
     }
 
-    const onEditHandler = (document: IDocument) => {
-        setEditState(document)
+    const onEditHandler = (file: ISandboxFile) => {
+        setEditState(file)
         setIsEdit(true)
         setIsOpen(true)
     }
@@ -131,15 +131,15 @@ const DocumentsCard: React.FC<{
         setIsOpen(false)
     }
 
-    const onDeleteHandler = (document: IDocument) => {
-        const url = `/api/documents/${document.id}`
+    const onDeleteHandler = (file: ISandboxFile) => {
+        const url = `/api/sandboxfiles/${file.id}`
         axios
             .delete(url)
             .then((answer) => {
                 toast.success(
-                    createNotyMsg(document.name, 'файл удален'))
-                setDocumentsState((oldState) =>
-                    oldState.filter(({id}) => id !== document.id)
+                    createNotyMsg(file.name, 'файл удален'))
+                setSandboxFilesState((oldState) =>
+                    oldState.filter(({id}) => id !== file.id)
                 )
             })
             .catch((error: AxiosError) => {
@@ -149,33 +149,33 @@ const DocumentsCard: React.FC<{
 
     return <>
         <div className='card card-body'>
-            {documentsState
-                ? documentsState.map((document) => {
+            {sandboxFilesState
+                ? sandboxFilesState.map((file) => {
                     return <div
                         className={classes.item}
-                        key={document.id}>
+                        key={file.id}>
                         <div className={classes.desc}>
                             <SvgCatalog className={classes.cat}/>
                             <div>
-                                <p>{document.name}</p>
-                                {`${document.description
-                                    ? document.description + ' |'
+                                <p>{file.name}</p>
+                                {`${file.description
+                                    ? file.description + ' |'
                                     : ''}
-                                 ${timeConverter(document.updatedAt)}`}
+                                 ${timeConverter(file.updatedAt)}`}
                             </div>
                         </div>
                         <div className={classes.icons}>
-                            <a href={document.file}
+                            <a href={file.file}
                                rel="noreferrer"
                                download>
                                 <SvgDownload/>
                             </a>
                             <SvgEdit
                                 onClick={() =>
-                                    onEditHandler(document)}
+                                    onEditHandler(file)}
                                 className={classes.edit}/>
                             <SvgDelete onClick={() =>
-                                onDeleteHandler(document)}/>
+                                onDeleteHandler(file)}/>
                         </div>
                     </div>
                 })
@@ -187,7 +187,7 @@ const DocumentsCard: React.FC<{
         </div>
         {isEdit
             ? <Modal title='Изменить информацию о файле' isOpen={isOpen}>
-                <form onSubmit={documentEditFormSubmitHandler}>
+                <form onSubmit={sandboxEditFormSubmitHandler}>
                     <label htmlFor='description'>Укажите название файла</label>
                     <input className='mb-3' defaultValue={editState.name}
                            type='text' name='name'
@@ -210,7 +210,7 @@ const DocumentsCard: React.FC<{
                 </form>
             </Modal>
             : <Modal title='Добавить новый файл' isOpen={isOpen}>
-                <form onSubmit={documentFormSubmitHandler}>
+                <form onSubmit={sandboxFormSubmitHandler}>
                     <label htmlFor='name'>Укажите название файла</label>
                     <input className='mb-3' type='text'
                            name='name' ref={register({required: true})}/>
@@ -245,4 +245,4 @@ const DocumentsCard: React.FC<{
     </>
 }
 
-export default DocumentsCard
+export default SandboxFilesCard
