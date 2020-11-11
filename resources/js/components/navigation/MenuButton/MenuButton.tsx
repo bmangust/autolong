@@ -14,7 +14,7 @@ const MenuButton: React.FC<{isOpen: boolean; setIsOpen: Function}> = ({
 
     const cls = [classes.burger]
     if (isOpen) {
-        cls.push('show')
+        cls.push(classes.show)
     }
 
     return (
