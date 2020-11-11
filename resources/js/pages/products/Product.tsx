@@ -241,6 +241,28 @@ const Product: React.FC = () => {
                         </div>
                     </div>
                 </div>
+
+                {product.orders.length
+                    ? <div className="card card-body mb-3">
+                        {product.orders.map(order => (
+                            <div key={order.id + order.name}
+                                 className='row'>
+                                <div className="col-8">
+                                    <NavLink to={`/order/${order.id}`}>
+                                        {order.name}
+                                    </NavLink>
+                                </div>
+                                <div className="col-4">
+                                    {order.items.find(({productId}) =>
+                                        productId === product.id
+                                    )?.quantity}
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    : null
+                }
+
                 <SandboxFilesCard
                     id={product.id}
                     sandboxFiles={product.sandboxFiles}
