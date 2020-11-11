@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Proforma</title>
+    <title>Contract</title>
 </head>
 
 <body style="font-family: 'Times New Roman', Times, serif; line-height: 1.2;">
