@@ -3,11 +3,11 @@ import React from 'react'
 
 // Third-party
 import {NavLink} from 'react-router-dom'
-import SvgHelp from '../../UI/iconComponents/Help'
 
 // Styles
 import classes from './Sidebar.module.css'
 import {routes} from '../router/routes'
+import SvgHelp from '../../UI/iconComponents/Help'
 
 const Sidebar: React.FC<{ isOpen: boolean }> = ({isOpen}) => {
     const renderLinks = (routes) => {
