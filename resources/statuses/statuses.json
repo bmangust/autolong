@@ -20,5 +20,12 @@
         "paymentPaidInFull": "Оплачен полностью",
         "paymentAwaitingRefund": "Ожидает возврата оплаты",
         "paymentRefunded": "Оплата возвращена"
+    },
+    "containerStatuses": {
+        "containerAssemble": "Собирается",
+        "containerInTransit": "В транзите",
+        "containerArrivedAtCustoms": "Прибыл на таможню",
+        "containerRelease": "Выпуск",
+        "containerInStock": "На складе"
     }
 }
