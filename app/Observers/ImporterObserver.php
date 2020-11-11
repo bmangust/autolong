@@ -53,9 +53,9 @@ class ImporterObserver
 
     public function deleting(Importer $importer)
     {
-        foreach ($importer->documents as $document) {
-            $document->deleteFile();
-            $document->delete();
+        foreach ($importer->documents as $sandboxFile) {
+            $sandboxFile->deleteFile();
+            $sandboxFile->delete();
         }
     }
 

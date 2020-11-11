@@ -53,9 +53,9 @@ class ProviderObserver
 
     public function deleting(Provider $provider)
     {
-        foreach ($provider->documents as $document) {
-            $document->deleteFile();
-            $document->delete();
+        foreach ($provider->documents as $sandboxFile) {
+            $sandboxFile->deleteFile();
+            $sandboxFile->delete();
         }
     }
 

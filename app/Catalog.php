@@ -24,9 +24,9 @@ class Catalog extends Model
         return $this->belongsToMany('App\Tag', 'catalog_tag', 'catalog_id', 'tag_id');
     }
 
-    public function documents()
+    public function sandboxFiles()
     {
-        return $this->morphMany('App\Document', 'documented');
+        return $this->morphMany('App\SandboxFile', 'sandboxFiled');
     }
 
     public function createOrUpdateFile($file)

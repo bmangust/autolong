@@ -161,11 +161,18 @@ class OrderController extends Controller
         return $availableProducts;
     }
 
-    public function getPdfInvoice(Order $order, Document $document)
+    public function getPdfInvoice(Order $order)
     {
         $pdf = App::make('dompdf.wrapper');
         $importer = Importer::first();
-        $newPdf = $pdf->loadView('pdf.invoice', compact('order', 'importer'));
+        $orderItems = $order->orderItems;
+        $provider = $order->provider;
+        $newPdf = $pdf->loadView('pdf.invoice', [
+            'order' => $order,
+            'importer' => $importer,
+            'orderItems' => $orderItems,
+            'provider' => $provider
+        ]);
         return $newPdf->download();
     }
 

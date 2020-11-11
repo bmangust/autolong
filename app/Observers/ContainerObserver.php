@@ -53,9 +53,9 @@ class ContainerObserver
 
     public function deleting(Container $container)
     {
-        foreach ($container->documents as $document) {
-            $document->deleteFile();
-            $document->delete();
+        foreach ($container->documents as $sandboxFile) {
+            $sandboxFile->deleteFile();
+            $sandboxFile->delete();
         }
     }
 

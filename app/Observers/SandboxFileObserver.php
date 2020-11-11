@@ -2,20 +2,20 @@
 
 namespace App\Observers;
 
-use App\Document;
+use App\SandboxFile;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
-class DocumentObserver
+class SandboxFileObserver
 {
     use HasEvents;
 
     /**
      * Handle the document "created" event.
      *
-     * @param \App\Document $document
+     * @param \App\SandboxFile $sandboxFile
      * @return void
      */
-    public function created(Document $document)
+    public function created(SandboxFile $sandboxFile)
     {
         //
     }
@@ -23,10 +23,10 @@ class DocumentObserver
     /**
      * Handle the document "updated" event.
      *
-     * @param \App\Document $document
+     * @param \App\SandboxFile $sandboxFile
      * @return void
      */
-    public function updated(Document $document)
+    public function updated(SandboxFile $sandboxFile)
     {
         //
     }
@@ -34,21 +34,21 @@ class DocumentObserver
     /**
      * Handle the document "deleted" event.
      *
-     * @param \App\Document $document
+     * @param \App\SandboxFile $sandboxFile
      * @return void
      */
-    public function deleted(Document $document)
+    public function deleted(SandboxFile $sandboxFile)
     {
-        $document->deleteFile();
+        $sandboxFile->deleteFile();
     }
 
     /**
      * Handle the document "restored" event.
      *
-     * @param \App\Document $document
+     * @param \App\SandboxFile $sandboxFile
      * @return void
      */
-    public function restored(Document $document)
+    public function restored(SandboxFile $sandboxFile)
     {
         //
     }
@@ -56,10 +56,10 @@ class DocumentObserver
     /**
      * Handle the document "force deleted" event.
      *
-     * @param \App\Document $document
+     * @param \App\SandboxFile $sandboxFile
      * @return void
      */
-    public function forceDeleted(Document $document)
+    public function forceDeleted(SandboxFile $sandboxFile)
     {
         //
     }

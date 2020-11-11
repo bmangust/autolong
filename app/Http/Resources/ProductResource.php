@@ -22,6 +22,7 @@ class ProductResource extends JsonResource
             'aboutEn' => $this->about_en,
             'providerId' => $this->provider_id,
             'image' => $this->image,
+            'hsCode' => $this->hs_code,
             'price' => (object)['rub' => $this->price_rub, 'usd' => $this->price_usd, 'cny' => $this->price_cny],
             'weightNetto' => $this->weight_netto,
             'weightBrutto' => $this->weight_brutto,

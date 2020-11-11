@@ -39,9 +39,9 @@ class Product extends Model
         return $this->belongsTo('App\Provider');
     }
 
-    public function documents()
+    public function sandboxFiles()
     {
-        return $this->morphMany('App\Document', 'documented');
+        return $this->morphMany('App\SandboxFile', 'sandboxFiled');
     }
 
     public function createOrUpdateImage($image)

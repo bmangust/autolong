@@ -17,8 +17,8 @@ class Importer extends Model
         'phone'
     ];
 
-    public function documents()
+    public function sandboxFiles()
     {
-        return $this->morphMany('App\Document', 'documented');
+        return $this->morphMany('App\SandboxFile', 'sandboxFiled');
     }
 }

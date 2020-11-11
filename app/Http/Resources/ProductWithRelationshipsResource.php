@@ -6,7 +6,6 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CatalogResource;
 use App\Http\Resources\OrderItemResource;
 use App\Http\Resources\ProviderResource;
-use phpDocumentor\Reflection\Types\Object_;
 
 class ProductWithRelationshipsResource extends JsonResource
 {
@@ -32,7 +31,7 @@ class ProductWithRelationshipsResource extends JsonResource
             'catalog' => new CatalogResource($this->catalog),
             'vendorCode' => $this->vendor_code,
             'autolongNumber' => $this->autolong_number,
-            'documents' => DocumentResource::collection($this->documents),
+            'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
 
-class Document extends Model
+class SandboxFile extends Model
 {
     const PARENT_DIRECTORY = '/storage/sandbox';
 
@@ -17,7 +17,7 @@ class Document extends Model
         'description'
     ];
 
-    public function documented()
+    public function sandboxFiled()
     {
         return $this->morphTo();
     }

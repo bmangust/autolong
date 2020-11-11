@@ -16,9 +16,9 @@ class Container extends Model
 
     public const SANDBOX_DIRECTORY = '/container/';
 
-    public function documents()
+    public function sandboxFiles()
     {
-        return $this->morphMany('App\Document', 'documented');
+        return $this->morphMany('App\SandboxFile', 'sandboxFiled');
     }
 
     public function orders()

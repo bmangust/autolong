@@ -4,11 +4,11 @@ namespace App\Providers;
 
 use App\Catalog;
 use App\Container;
-use App\Document;
+use App\SandboxFile;
 use App\Importer;
 use App\Observers\CatalogObserver;
 use App\Observers\ContainerObserver;
-use App\Observers\DocumentObserver;
+use App\Observers\SandboxFileObserver;
 use App\Observers\ImporterObserver;
 use App\Observers\OrderObserver;
 use App\Observers\ProductObserver;
@@ -37,7 +37,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Document::observe(DocumentObserver::class);
+        SandboxFile::observe(SandboxFileObserver::class);
         Product::observe(ProductObserver::class);
         Importer::observe(ImporterObserver::class);
         Container::observe(ContainerObserver::class);
