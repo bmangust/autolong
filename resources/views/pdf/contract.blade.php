@@ -2,16 +2,16 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract</title>
 </head>
 
-<body style="font-family: 'Times New Roman', Times, serif; line-height: 1.2;">
+<body style="font-family: DejaVu Sans, sans-serif; line-height: 1.2;">
     <table style="margin: 0 auto; border-collapse: collapse; vertical-align: baseline;">
         <tr>
             <th style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
-                <span style="display: block; text-align: center;">Контракт № 20LH</span>
+                <span style="display: block; text-align: center;">Контракт № {{ \Carbon\Carbon::now()->format('Y/m/d') }}-{{ $document->id }}</span>
                 <span style="display: block; text-align: left;">г. Москва</span>
                 <span
                     style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">«20»
@@ -798,12 +798,12 @@
                 </p>
             </td>
         </tr>
-        <tr style=" font-family: Arial, Helvetica, sans-serif;">
+        <tr style="">
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
-                <h4 style="text-align: left; margin: 0; font-family: 'Times New Roman', Times, serif;">
+                <h4 style="text-align: left; margin: 0; ">
                     14. Юридические адреса и банковские реквизиты сторон:
                 </h4>
-                <p style="margin: 0; font-family: 'Times New Roman', Times, serif;">
+                <p style="margin: 0; ">
                     <span style="font-weight: bold; border-bottom: 2px solid #000;">14.1.
                         ПОКУПАТЕЛЬ:</span>
                 </p>
@@ -847,22 +847,22 @@
                 <p style="margin: 0;">
                     БИК 044525225
                 </p>
-                <p style="margin: 0; font-family: 'Times New Roman', Times, serif;">
+                <p style="margin: 0; ">
                     ПОКУПАТЕЛЬ/THE BUYER
                 </p>
-                <p style="margin: 0; font-family: 'Times New Roman', Times, serif;">
+                <p style="margin: 0; ">
                     Директор/Director
                 </p>
-                <p style="margin: 0; font-family: 'Times New Roman', Times, serif;">
+                <p style="margin: 0; ">
                     _Kholodenko A.G.___
                 </p>
             </td>
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
-                <h4 style="text-align: left; margin: 0; font-family: 'Times New Roman', Times, serif;">
+                <h4 style="text-align: left; margin: 0; ">
                     14. Legal addresses and bank details of the parties:
                 </h4>
                 <p style="margin: 0;">
-                    <span style="font-weight: bold; border-bottom: 2px solid #000; font-family: 'Times New Roman', Times, serif;">14.1. THE
+                    <span style="font-weight: bold; border-bottom: 2px solid #000; ">14.1. THE
                         BUYER:</span>
                 </p>
                 <p style="margin: 0;">
