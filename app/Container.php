@@ -26,6 +26,11 @@ class Container extends Model
         return $this->hasMany('App\Order');
     }
 
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
+
     public function addOrders(array $ids): bool
     {
         foreach ($ids as $id) {
@@ -56,5 +61,19 @@ class Container extends Model
         } else {
             return response()->json('Данного статуса оплаты не существует', 404);
         }
+    }
+
+    public function compareOrderCityAndChooseCity(array $ordersIds)
+    {
+        $mainCity = Order::findOrFail(head($ordersIds))->city;
+        foreach ($ordersIds as $id) {
+            $city = Order::findOrFail($id)->city;
+            if ($mainCity == $city) {
+                continue;
+            } else {
+                return response()->json('Города в заказах отличаются', 400);
+            }
+        }
+        return $mainCity->id;
     }
 }

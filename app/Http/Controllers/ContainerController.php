@@ -11,6 +11,20 @@ use Illuminate\Support\Facades\Validator;
 
 class ContainerController extends Controller
 {
+    protected function containerCreateValidator(array $data)
+    {
+        $messages = [
+            'required' => 'Поле :attribute обязательно для заполнения.',
+        ];
+
+        $names = [
+            'orders' => 'заказы',
+        ];
+
+        return Validator::make($data, [
+            'orders' => ['required'],
+        ], $messages, $names);
+    }
     /**
      * Display a listing of the resource.
      *
@@ -30,15 +44,17 @@ class ContainerController extends Controller
      */
     public function store(Request $request, Container $container)
     {
+        $this->containerCreateValidator($request->all())->validate();
         $container->name = $request->input('name');
         $container->status = array_keys(get_object_vars(Status::getContainerStatuses()), 'Собирается')[0];
         $orderIds = $request->input('orders');
         $container->quantity_order_items = $container->getQuantityOrderItems($orderIds);
+        $container->city = $container->compareOrderCityAndChooseCity();
         $container->save();
         $container->addOrders($orderIds);
         Log::$write = false;
         $container->name = $container->id;
-        $this->save();
+        $container->save();
         return response()->json(new ContainerWithRelationshipsResource($container), 201);
     }
 

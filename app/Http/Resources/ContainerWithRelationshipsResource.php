@@ -18,7 +18,7 @@ class ContainerWithRelationshipsResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
-            'city' => $this->city,
+            'city' => new CityResource($this->city),
             'orders' => OrderResource::collection($this->orders),
             'quantityItems' => $this->quantity_order_items,
             'createdAt' => strtotime($this->created_at),
