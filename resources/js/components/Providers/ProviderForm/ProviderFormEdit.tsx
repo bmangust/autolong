@@ -38,6 +38,7 @@ interface IEditProviderData {
     beneficiaryBankName: string
     beneficiaryBankCode: string
     beneficiarySwiftAddress: string
+    manufacturer: string
 }
 
 const ProviderFormEdit: React.FC<{
@@ -60,7 +61,8 @@ const ProviderFormEdit: React.FC<{
         beneficiaryAddress: provider.beneficiaryAddress,
         beneficiaryBankName: provider.beneficiaryBankName,
         beneficiaryBankCode: provider.beneficiaryBankCode,
-        beneficiarySwiftAddress: provider.beneficiarySwiftAddress
+        beneficiarySwiftAddress: provider.beneficiarySwiftAddress,
+        manufacturer: provider.manufacturer
     }
 
     const {
@@ -286,6 +288,17 @@ const ProviderFormEdit: React.FC<{
                             type="text" ref={register}
                             className='col-lg-10 mb-2'
                             placeholder="Bank Account Number"
+                        />
+
+                        <label className='w-100'
+                               htmlFor='manufacturer'>
+                            Manufacturer
+                        </label>
+                        <input
+                            name="manufacturer"
+                            type="text" ref={register}
+                            className='col-lg-10 mb-2'
+                            placeholder="Manufacturer"
                         />
                     </div>
 

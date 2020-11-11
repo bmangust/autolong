@@ -80,3 +80,6 @@ Route::bind('id', function ($id, $route) {
     $route->forgetParameter('model');
     return $instance;
 });
+
+Route::get('cities', 'CityController@index');
+Route::post('cities', 'CityController@create');

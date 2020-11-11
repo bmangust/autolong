@@ -20,27 +20,28 @@ import {
 } from '../../store/actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 import {IProvider} from '../Providers/IProviders'
-import {IDocument} from '../DocumentsCard/DocumentsCard'
+import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 
 export interface IProduct {
     id: number
     nameRu: string
-    nameEn?: string
-    aboutRu?: string
-    aboutEn?: string
+    nameEn: string
+    aboutRu: string
+    aboutEn: string
     provider: IProvider
-    providerId?: number
-    priceCny?: number
-    documents: IDocument[]
-    vendorCode?: string
-    quantity?: number
+    providerId: number
+    priceCny: number
+    sandboxFiles: ISandboxFile[]
+    vendorCode: string
+    quantity: number
     autolongNumber: number
-    image?: string
+    image: string
     price: IProductPrice
-    weightNetto?: number
-    weightBrutto?: number
-    createdAt?: number
-    updatedAt?: number
+    hsCode: string
+    weightNetto: number
+    weightBrutto: number
+    createdAt: number
+    updatedAt: number
 }
 
 export interface IProductPrice {

@@ -29,7 +29,7 @@ interface ICreateProviderData {
     phone: string
     wechat: string
     countryId: string
-    catalogs: [number]
+    catalogs: any
     beneficiaryName: string
     beneficiaryAccountName: string
     beneficiaryBankAddress: string
@@ -37,6 +37,7 @@ interface ICreateProviderData {
     beneficiaryBankName: string
     beneficiaryBankCode: string
     beneficiarySwiftAddress: string
+    manufacturer: string
 }
 
 const ProviderForm: React.FC<{
@@ -258,6 +259,17 @@ const ProviderForm: React.FC<{
                             type="text" ref={register}
                             className='col-lg-10 mb-2'
                             placeholder="Bank Account Number"
+                        />
+
+                        <label className='w-100'
+                               htmlFor='manufacturer'>
+                            Manufacturer
+                        </label>
+                        <input
+                            name="manufacturer"
+                            type="text" ref={register}
+                            className='col-lg-10 mb-2'
+                            placeholder="Manufacturer"
                         />
                     </div>
 

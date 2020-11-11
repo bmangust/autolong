@@ -1,0 +1,48 @@
+.status {
+    background: #FFFFFF;
+    border: 1px solid #EB5E28;
+    box-sizing: border-box;
+    border-radius: 15px;
+    padding: 23px 48px;
+}
+
+.status .statusBody {
+    display: flex;
+    align-items: center;
+}
+
+.statusBody svg {
+    width: 70px;
+    height: 70px;
+    margin-right: 35px;
+}
+
+.statusTitle {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #EB5E28;
+    margin-bottom: 10px;
+}
+
+.statusText {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    margin-bottom: 23px;
+}
+
+.inputs {
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: 30px;
+}
+
+.inputs > div {
+    width: 100%;
+}
+
+.inputs > input {
+    margin-right: 6px;
+}

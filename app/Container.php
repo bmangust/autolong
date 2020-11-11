@@ -46,4 +46,15 @@ class Container extends Model
         }
         return $quantity;
     }
+
+    public function setContainerStatus($status)
+    {
+        $statuses = Status::getContainerStatuses();
+        if (property_exists($statuses, $status)) {
+            $this->status = $status;
+            $this->save();
+        } else {
+            return response()->json('Данного статуса оплаты не существует', 404);
+        }
+    }
 }

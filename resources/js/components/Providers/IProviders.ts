@@ -16,17 +16,17 @@ import {
 import {ICountry} from '../Сountries/ICountries'
 import {IOrder} from '../Orders/IOrders'
 import {ICatalog} from '../Catalogs/ICatalogs'
-import {IDocument} from '../DocumentsCard/DocumentsCard'
+import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 
 export interface IProvider {
     id: number
     name: string
     nameCompany: string
-    email?: string
-    website?: string
-    phone?: string
-    wechat?: string
-    country: ICountry | null // код страны(Чуть позже здесь будет объект Страна)
+    email: string
+    website: string
+    phone: string
+    wechat: string
+    country: ICountry | null
     beneficiaryName: string
     beneficiaryAccountName: string
     beneficiaryBankAddress: string
@@ -34,7 +34,8 @@ export interface IProvider {
     beneficiaryBankName: string
     beneficiaryBankCode: string
     beneficiarySwiftAddress: string
-    documents: IDocument[]
+    manufacturer: string
+    sandboxFiles: ISandboxFile[]
     catalogs: ICatalog[] | []
     orders: IOrder[] | []
     createdAt?: number;

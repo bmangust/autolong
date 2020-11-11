@@ -35,6 +35,11 @@ class Order extends Model
         return $this->belongsTo('App\Container');
     }
 
+    public function city()
+    {
+        return $this->belongsTo('App\City');
+    }
+
     public function addOrderItems($items)
     {
         if ($this->orderItems()->count()) {
@@ -94,10 +99,12 @@ class Order extends Model
         return $quantity;
     }
 
-    public function setOrderStatus($status)
+    public function setOrderStatus(string $status, int $city = null, string $arrivalDate = null)
     {
         $statuses = Status::getOrderStatuses();
         if (property_exists($statuses, $status)) {
+            $this->city_id = $city;
+            $this->arrival_date = $arrivalDate;
             $this->status = $status;
             $this->save();
         } else {
@@ -114,5 +121,14 @@ class Order extends Model
         } else {
             return response()->json('Данного статуса оплаты не существует', 404);
         }
+    }
+
+    public function checkActualDate(string $date): bool
+    {
+        $nowDay = Carbon::now()->toDateString();
+        if ($nowDay > $date) {
+            return false;
+        }
+        return true;
     }
 }

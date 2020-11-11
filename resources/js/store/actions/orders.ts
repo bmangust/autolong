@@ -131,32 +131,37 @@ export const fetchItemsByVendors = (data) => async dispatch => {
     })
 }
 
-export const changeOrderStatus = (id, data) => async dispatch => {
-    await dispatch({
-        type: CHANGE_ORDER_STATUS_START
-    })
-    let payment = ''
-    if ('statusPayment' in data) {
-        payment = 'payment'
-    }
-    const url = `/api/orders/${id}/changestatus${payment}`
-    axios
-        .post(url, data)
-        .then((answer) => {
-            dispatch({
-                type: CHANGE_ORDER_STATUS_SUCCESS,
-                payload: answer.data
-            })
-            toast.success(createNotyMsg(answer.data.name,
-                'статус заказа изменен'))
-        }).catch((error: AxiosError) => {
-        dispatch({
-            type: CHANGE_ORDER_STATUS_ERROR,
-            payload: error.response
+export const changeOrderStatus = (id, data) =>
+    async dispatch => {
+        await dispatch({
+            type: CHANGE_ORDER_STATUS_START
         })
-        toast.error(error.message)
-    })
-}
+        let payment = ''
+        if ('statusPayment' in data) {
+            payment = 'payment'
+        }
+        const url = `/api/orders/${id}/changestatus${payment}`
+        axios
+            .post(url, data)
+            .then((answer) => {
+                dispatch({
+                    type: CHANGE_ORDER_STATUS_SUCCESS,
+                    payload: answer.data
+                })
+                toast.success(createNotyMsg(answer.data.name,
+                    'статус заказа изменен'))
+            }).catch((error: AxiosError) => {
+            dispatch({
+                type: CHANGE_ORDER_STATUS_ERROR,
+                payload: error.response
+            })
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+    }
 
 export const deleteOrderById = (id) => async dispatch => {
     const url = `/api/orders/${id}`
