@@ -1,5 +1,6 @@
 // React
 import React from 'react'
+
 // Style
 import classes from './MenuButton.module.css'
 

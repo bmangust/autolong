@@ -6,6 +6,8 @@ import {NavLink} from 'react-router-dom'
 
 // Styles
 import classes from './Sidebar.module.css'
+
+// App
 import {routes} from '../router/routes'
 import SvgHelp from '../../UI/iconComponents/Help'
 
