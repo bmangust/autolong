@@ -27,7 +27,8 @@ class Provider extends Model
         'beneficiary_bank_name',
         'beneficiary_bank_code',
         'beneficiary_swift_address',
-        'beneficiary_name'
+        'beneficiary_name',
+        'manufacturer'
     ];
 
     public function catalogs()

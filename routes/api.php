@@ -62,6 +62,7 @@ Route::post('orders/{order}/changestatus', 'OrderController@changeStatus');
 Route::post('orders/{order}/changestatuspayment', 'OrderController@changeStatusPayment');
 Route::get('orders/{order}/getpdfinvoice', 'OrderController@getPdfInvoice');
 Route::get('orders/{order}/getpdfproforma', 'OrderController@getPdfProforma');
+Route::get('orders/{order}/getpdfcontract', 'OrderController@getPdfContract');
 
 Route::get('tags', 'TagController@index');
 
