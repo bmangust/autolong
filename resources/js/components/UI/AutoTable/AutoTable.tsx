@@ -152,7 +152,7 @@ const AutoTable: React.FC<IAutoTable> = (
                         <div className='searchBar'>
                             <SearchBar
                                 {...props.searchProps}
-                                placeholder='Поиск по названию'
+                                placeholder='Поиск...'
                             />
                         </div>
                         {secondBtn ? (

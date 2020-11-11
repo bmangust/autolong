@@ -73,8 +73,8 @@ const ProductsTable: React.FC = () => {
             formatter: moneyFormatter
         },
         {
-            dataField: 'aboutRu',
-            text: 'Описание'
+            dataField: 'vendorCode',
+            text: 'Артикул'
         },
         {
             dataField: 'weightBrutto',
@@ -105,7 +105,7 @@ const ProductsTable: React.FC = () => {
             text: 'Название',
             classes: 'title',
             sort: true,
-            headerStyle: {width: '260px'},
+            headerStyle: {width: '390px'},
             formatter: (nameRu, row) =>
                 nameToLinkFormatter(nameRu, row, 'product')
         },
