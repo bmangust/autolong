@@ -32,7 +32,7 @@ class ContainerController extends Controller
      */
     public function index()
     {
-        return response()->json(ContainerWithRelationshipsResource::collection(Container::all())->sortByDesc('updated_at'), 200);
+        return response()->json(ContainerWithRelationshipsResource::collection(Container::all()->sortByDesc('updated_at'), 200));
     }
 
     /**

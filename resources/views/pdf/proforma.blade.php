@@ -11,7 +11,7 @@
 
     <h1
         style="margin: 50px 0 0 5px; text-transform: uppercase; text-align: center; font-size: 16px;font-weight: normal">
-        {{ $provider->name_company}}
+        {{ $provider->name_company ? $provider->name_company : '-'}}
     </h1>
     <h2 style="margin: 0 0 0 5px; font-weight: normal; font-size: 12px; text-transform: uppercase; text-align: center;">
         {{ $provider->beneficiary_address ? $provider->beneficiary_address : '-' }}
