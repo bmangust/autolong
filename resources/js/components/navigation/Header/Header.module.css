@@ -66,6 +66,10 @@
         font-size: 12px;
         margin-top: 0;
     }
+
+    .HeaderBlockUserNameRole {
+        display: none;
+    }
 }
 
 @media (max-width: 575px) {
