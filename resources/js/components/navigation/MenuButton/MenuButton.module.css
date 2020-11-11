@@ -32,15 +32,15 @@
         display: flex;
     }
 
-    .burger[open] span:first-of-type {
+    .burger.show span:first-of-type {
         transform: rotate(45deg) translate(4px, 4px);
     }
 
-    .burger[open] span:nth-of-type(2) {
+    .burger.show span:nth-of-type(2) {
         transform: scale(0);
     }
 
-    .burger[open] span:last-of-type {
+    .burger.show span:last-of-type {
         transform: rotate(-45deg) translate(4.5px, -4.5px);
     }
 }
