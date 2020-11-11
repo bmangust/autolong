@@ -53,7 +53,7 @@ class ProductObserver
 
     public function deleting(Product $product)
     {
-        foreach ($product->documents as $sandboxFile) {
+        foreach ($product->sandboxFiles as $sandboxFile) {
             $sandboxFile->deleteFile();
             $sandboxFile->delete();
         }

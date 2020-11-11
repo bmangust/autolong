@@ -53,7 +53,7 @@ class CatalogObserver
 
     public function deleting(Catalog $catalog)
     {
-        foreach ($catalog->documents as $sandboxFile) {
+        foreach ($catalog->sandboxFiles as $sandboxFile) {
             $sandboxFile->deleteFile();
             $sandboxFile->delete();
         }
