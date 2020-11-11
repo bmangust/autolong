@@ -2,7 +2,6 @@
 
 namespace App;
 
-use Illuminate\Support\Facades\Response;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Storage;
@@ -45,13 +44,6 @@ class SandboxFile extends Model
     public function getNewFileName($name)
     {
         return $name . '.' . File::extension($this->file);
-    }
-
-    public function sendFile($file)
-    {
-        $response = Response::make($file, 200);
-        $response->header('Content-Type', 'application/pdf');
-        return $response;
     }
 
     public function checkFileInFolder(string $path): bool

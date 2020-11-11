@@ -3,14 +3,11 @@
 namespace App\Observers;
 
 use App\SandboxFile;
-use Illuminate\Database\Eloquent\Concerns\HasEvents;
 
 class SandboxFileObserver
 {
-    use HasEvents;
-
     /**
-     * Handle the document "created" event.
+     * Handle the sandbox file "created" event.
      *
      * @param \App\SandboxFile $sandboxFile
      * @return void
@@ -21,7 +18,7 @@ class SandboxFileObserver
     }
 
     /**
-     * Handle the document "updated" event.
+     * Handle the sandbox file "updated" event.
      *
      * @param \App\SandboxFile $sandboxFile
      * @return void
@@ -32,7 +29,7 @@ class SandboxFileObserver
     }
 
     /**
-     * Handle the document "deleted" event.
+     * Handle the sandbox file "deleted" event.
      *
      * @param \App\SandboxFile $sandboxFile
      * @return void
@@ -43,7 +40,7 @@ class SandboxFileObserver
     }
 
     /**
-     * Handle the document "restored" event.
+     * Handle the sandbox file "restored" event.
      *
      * @param \App\SandboxFile $sandboxFile
      * @return void
@@ -54,7 +51,7 @@ class SandboxFileObserver
     }
 
     /**
-     * Handle the document "force deleted" event.
+     * Handle the sandbox file "force deleted" event.
      *
      * @param \App\SandboxFile $sandboxFile
      * @return void

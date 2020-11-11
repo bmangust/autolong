@@ -62,7 +62,7 @@ Route::post('orders/{order}/changestatus', 'OrderController@changeStatus');
 Route::post('orders/{order}/changestatuspayment', 'OrderController@changeStatusPayment');
 Route::get('orders/{order}/getpdfinvoice', 'OrderController@getPdfInvoice');
 Route::get('orders/{order}/getpdfproforma', 'OrderController@getPdfProforma');
-Route::get('orders/{order}/getpdfcontract', 'OrderController@getPdfContract');
+//Route::get('orders/{order}/getpdfcontract', 'OrderController@getPdfContract');
 
 Route::get('tags', 'TagController@index');
 
@@ -70,8 +70,8 @@ Route::put('/orderitems/{orderitem}', 'OrderItemController@update');
 
 Route::get('logs', 'LogController@index');
 
-Route::put('sandboxfiles/{sandboxfile}', 'SandboxFileController@update');
-Route::delete('sandboxfiles/{sandboxfile}', 'SandboxFileController@destroy');
+Route::put('sandboxfiles/{sandboxFile}', 'SandboxFileController@update');
+Route::delete('sandboxfiles/{sandboxFile}', 'SandboxFileController@destroy');
 Route::post('{model}/{id}/savefile','SandboxFileController@saveFile')
     ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе
 Route::bind('id', function ($id, $route) {
