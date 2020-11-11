@@ -23,7 +23,7 @@ export function imgFormatter(
     img: any,
     row: any,
     alt: string,
-    className: string,
+    className = '',
     placeholder = '/imgs/placeholder-product-image.png') {
     return (
         row

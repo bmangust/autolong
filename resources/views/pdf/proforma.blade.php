@@ -1,177 +1,141 @@
 <!DOCTYPE html>
 <html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Proforma</title>
-        <style>
 
-            table {
-                border-collapse: collapse;
-                margin-bottom: 20px;
-            }
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Proforma Invoice</title>
+</head>
 
-            th,
-            td {
-                padding: 15px;
-                border: 1px solid #000;
-            }
+<body style="font-family: DejaVu Sans, sans-serif; line-height: 1.5;">
 
-            span {
-                display: block;
-                margin-bottom: 5px;
-            }
+    <h1
+        style="margin: 50px 0 0 5px; text-transform: uppercase; text-align: center; font-size: 16px;font-weight: normal">
+        {{ $provider->name_company}}
+    </h1>
+    <h2 style="margin: 0 0 0 5px; font-weight: normal; font-size: 12px; text-transform: uppercase; text-align: center;">
+        {{ $provider->beneficiary_address ? $provider->beneficiary_address : '-' }}
+    </h2>
+    <h2 style="text-align: center; font-weight: normal; margin: 0 0 5px; font-size: 10px;">TEL:
+        {{ $provider->phone ? $provider->phone : '-' }}
+    </h2>
+    <h2 style="margin: 0 0 0 5px; font-size: 16px; text-align: center;font-weight: normal">
+        Proforma invoice
+    </h2>
+    <table style="text-align: left; border-collapse: collapse; font-size: 10px;">
+        <tr>
+            <td style="width: 500px">
+                Seller: {{ $provider->name}}
+                <br />
+                {{ $provider->beneficiary_address ? $provider->beneficiary_address : '-' }}
+                <br />
+                TEL: {{ $provider->phone ? $provider->phone : '-' }}
+            </td>
+            <td style="width: 500px">
+                number: {{ $order->id }}
+                <br />
+                date: {{ \Carbon\Carbon::now()->format('d F Y') }}
+            </td>
+        </tr>
+    </table>
+    <p style="display: block; text-align: left; margin-top: 20px; margin-bottom: 25px; font-size: 10px;">
+        TO: {{ $importer->name_ru ? $importer->name_ru : '-' }} {{ $importer->address ? $importer->address : '-' }}
+        INN/KPP 7721305869/ 772101001
+    </p>
+    <table style="border-collapse: collapse; text-align: center; font-size: 10px;" border="1" width="100%">
+        <tr>
+            <th style="border: 1px solid #000;">
+                filters and accessories<br />for agricultural system
+            </th>
+            <th style="padding: 10px; border: 1px solid #000;">
+                PICTURES
+            </th>
+            <th style="padding: 10px; border: 1px solid #000;">
+                QUANTITY
+            </th>
+            <th style="padding: 10px; border: 1px solid #000;">
+                PRICE (RMB)
+            </th>
+            <th style="padding: 10px; border: 1px solid #000;">
+                AMOUNT (RMB)
+            </th>
+        </tr>
+        @foreach($orderItems as $item)
+        <tr>
+            <td style="padding: 10px; border: 1px solid #000;">
+                {{ $item->product->name_en }} {{ $item->product->vendor_code }}
+            </td>
+            <td style="padding: 10px; border: 1px solid #000;">
+                <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset($item->product->image) }}"
+                    alt="" />
+            </td>
+            <td style="padding: 10px; border: 1px solid #000;">
+                {{ $item->quantity }}
+            </td>
+            <td style="padding: 10px; border: 1px solid #000;">
+                {{ $item->price_cny }}
+            </td>
+            <td style="padding: 10px; border: 1px solid #000;">
+                {{ $item->getSumInCny() }}
+            </td>
+        </tr>
+        @endforeach
+        <tr>
+            <td style="padding: 10px; border: 1px solid #000;">
+                Total
+            </td>
+            <td style="padding: 10px; border: 1px solid #000;"></td>
+            <td style="padding: 10px; border: 1px solid #000;">{{ $order->getOrderItemsQuantity() }}</td>
+            <td style="padding: 10px; border: 1px solid #000;"></td>
+            <td style="padding: 10px; border: 1px solid #000;">
+                {{ $order->getOrderSumInCny() }}
+            </td>
+        </tr>
+    </table>
 
-            .center {
-                max-width: 550px;
-                text-align: center;
-                margin-bottom: 5px;
-            }
+    <table style="border-collapse: collapse; text-align: left; font-size: 10px;">
+        <tr>
+            <td style="font-size: 12px;">Manufacturing: {{ $provider->manufacturer ? $provider->manufacturer : '-' }}
+            </td>
+        </tr>
+        <tr>
+            <td>
+                PAYMENT TERMS: ?
+            </td>
+        </tr>
+        <tr>
+            <td>Contract ?</td>
+        </tr>
+        <tr>
+            <td>Terms of delivery: ?</td>
+        </tr>
+    </table>
 
-            .group {
-                max-width: 550px;
-                display: flex;
-                justify-content: space-between;
-                margin-bottom: 5px;
-            }
+    <table style="border-collapse: collapse; text-align: left; margin-top: 25px; font-size: 10px;">
+        <tr>
+            <td style="width: 150px;">Bank</td>
+            <td style="width: 350px;">
+                {{ ($order->provider->beneficiary_bank_name) ? $order->provider->beneficiary_bank_name : '-' }}</td>
+        </tr>
+        <tr>
+            <td style="width: 150px;">Number account</td>
+            <td style="width: 350px;">
+                {{ ($order->provider->beneficiary_account_name) ? $order->provider->beneficiary_account_name : '-' }}
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 150px;">SWIFT:</td>
+            <td style="width: 350px;">
+                {{ ($order->provider->beneficiary_swift_address) ? $order->provider->beneficiary_swift_address : '-' }}
+            </td>
+        </tr>
+        <tr>
+            <td style="width: 150px;">Address of bank</td>
+            <td style="width: 350px;">
+                {{ ($order->provider->beneficiary_bank_address) ? $order->provider->beneficiary_bank_address : '-' }}
+            </td>
+        </tr>
+    </table>
+</body>
 
-            .solo {
-                margin-bottom: 15px;
-            }
-
-            .solo:last-of-type {
-                margin-top: 10px;
-                margin-bottom: 25px;
-            }
-
-            .group-bottom {
-                max-width: 300px;
-                display: flex;
-                justify-content: space-between;
-            }
-
-            .group-bottom span {
-                width: 50%;
-            }
-
-            .mt {
-                margin-top: 20px;
-            }
-
-        </style>
-    </head>
-    <body>
-        <div class="center">
-            <h1>{Название поставщика}</h1>
-            <h3>{Адрес поставщика}</h2>
-            <a href="#">{Телефон поставщика}</h3>
-            <h2>Proforma invoice</h4>
-        </div>
-        <div class="group">
-            <span>Seller: {Название поставщика} </span>
-            <span>number: {???} </span>
-        </div>
-        <div class="group">
-            <span>{Адрес поставщика}</span>
-            <span>date: {???} </span>
-        </div>
-        <div class="solo">TEL: {Телефон поставщика}</div>
-        <div class="solo">
-            TO:{Название импортера} {Адрес импортера} INN/KPP {ИНН и КПП
-            импортера}
-        </div>
-        <table>
-            <tr>
-                <th>filters and accessories for agricultural system</th>
-                <th>PICTURES</th>
-                <th>QUANTITY</th>
-                <th>FOB PRICE (RMB)</th>
-                <th>AMOUNT (RMB)</th>
-            </tr>
-            <tr>
-                <td>{Артикул товара}</td>
-                <td>{Изображение товара}</td>
-                <td>{кол-во товара}</td>
-                <td>{Цена за единицу}</td>
-                <td>{Сумма}</td>
-            </tr>
-            <tr>
-                <td>PL-420 (D-110, H-230)</td>
-                <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
-                </td>
-                <td>1000</td>
-                <td>16</td>
-                <td>16000</td>
-            </tr>
-            <tr>
-                <td>PL-270 Filter with cup D-110, H-150</td>
-                <td>
-                    <img src="https://via.placeholder.com/150x50" alt="" />
-                </td>
-                <td>1000</td>
-                <td>17</td>
-                <td>17000</td>
-            </tr>
-            <tr>
-                <td>PL-420 Filter with cup D-110, H-230</td>
-                <td><img src="https://via.placeholder.com/150x50" alt="" /></td>
-                <td>3000</td>
-                <td>20</td>
-                <td>60000</td>
-            </tr>
-            <tr>
-                <td>Filter PL-270S with base and cup</td>
-                <td><img src="https://via.placeholder.com/150x50" alt="" /></td>
-                <td>100</td>
-                <td>63</td>
-                <td>6300</td>
-            </tr>
-            <tr>
-                <td>Filter PL-420S with base and cup</td>
-                <td><img src="https://via.placeholder.com/150x50" alt="" /></td>
-                <td>100</td>
-                <td>66</td>
-                <td>6600</td>
-            </tr>
-            <tr>
-                <td>Separator base PL-270/420 УС</td>
-                <td><img src="https://via.placeholder.com/150x50" alt="" /></td>
-                <td>150</td>
-                <td>49,5</td>
-                <td>7425</td>
-            </tr>
-            <tr>
-                <td>Total</td>
-                <td></td>
-                <td>5350</td>
-                <td></td>
-                <td>113325</td>
-            </tr>
-        </table>
-
-        <span>Manufacturing: {Название поставщика} </span>
-        <span>PAYMENT TERMS: 100% prepayment </span>
-        <span>Contract # 20LH dated 20.05.2020 </span>
-        <span>Terms of delivery: EXW-Wenzhou </span>
-
-        <div class="group-bottom mt">
-            <span>Bank </span>
-            <span>{Название банка} </span>
-        </div>
-        <div class="group-bottom">
-            <span>Number account </span>
-            <span>{Номер счета} </span>
-        </div>
-        <div class="group-bottom">
-            <span>SWIFT: </span>
-            <span>{Свифт код} </span>
-        </div>
-        <div class="group-bottom">
-            <span>Address of bank </span>
-            <span>{Адрес банка} </span>
-        </div>
-
-    </body>
 </html>
-
