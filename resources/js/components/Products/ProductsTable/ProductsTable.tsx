@@ -67,8 +67,10 @@ const ProductsTable: React.FC = () => {
 
     const expandRowTable = [
         {
-            dataField: 'autolongNumber',
-            text: 'Внутренний номер'
+            dataField: 'price',
+            text: 'Цена',
+            classes: 'price',
+            formatter: moneyFormatter
         },
         {
             dataField: 'aboutRu',
@@ -108,10 +110,14 @@ const ProductsTable: React.FC = () => {
                 nameToLinkFormatter(nameRu, row, 'product')
         },
         {
+            dataField: 'autolongNumber',
+            text: 'Номер'
+        },
+        {
             dataField: 'price',
             text: 'Цена',
             classes: 'price',
-            formatter: moneyFormatter
+            formatter: (price) => moneyFormatter(price, ['rub', 'usd'])
         },
         {
             dataField: 'updatedAt',
