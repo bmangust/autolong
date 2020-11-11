@@ -68,7 +68,7 @@ const Product: React.FC = () => {
                                     <tr>
                                         <td
                                             className="infoBlockHeaders pb-3">
-                                            Внутренний номер
+                                            Внут.номер
                                         </td>
                                         <td
                                             className="infoBlockText pb-3">
@@ -244,18 +244,19 @@ const Product: React.FC = () => {
 
                 {product.orders.length
                     ? <div className="card card-body mb-3">
+                        <h2 className='mb-3'>Список заказов</h2>
                         {product.orders.map(order => (
                             <div key={order.id + order.name}
                                  className='row'>
-                                <div className="col-8">
+                                <div className="col-8 font-weight-bold">
                                     <NavLink to={`/order/${order.id}`}>
                                         {order.name}
                                     </NavLink>
                                 </div>
-                                <div className="col-4">
+                                <div className="col-4 text-orange">
                                     {order.items.find(({productId}) =>
                                         productId === product.id
-                                    )?.quantity}
+                                    )?.quantity} шт
                                 </div>
                             </div>
                         ))}
