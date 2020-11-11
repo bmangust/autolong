@@ -50,6 +50,12 @@ const ContainersTable: React.FC = () => {
             title='В этом списке ещё нет контейнеров'/>
     }
 
+    const cityFormatter = (city) => {
+        return city
+            ? city.name
+            : null
+    }
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
@@ -67,7 +73,8 @@ const ContainersTable: React.FC = () => {
         },
         {
             dataField: 'city',
-            text: 'Дополнительно'
+            text: 'Дополнительно',
+            formatter: cityFormatter
         }
     ]
 
