@@ -177,8 +177,8 @@ export const deleteOrderById = (id) => async dispatch => {
 }
 
 
-export const createOrderInvoice = (id) => async dispatch => {
-    const url = `/api/orders/${id}/getpdfinvoice`
+export const createOrderInvoice = (id, type) => async dispatch => {
+    const url = `/api/orders/${id}/getpdf${type}`
     axios
         .get(url, {
             headers: {
@@ -188,8 +188,8 @@ export const createOrderInvoice = (id) => async dispatch => {
         })
         .then(answer => {
             const blob = new Blob([answer.data], {type: 'application/pdf'})
-            toast.success('Инвойс сгенерирован')
-            saveAs(blob, 'invoice.pdf')
+            toast.success('Документ сгенерирован')
+            saveAs(blob, `${type}.pdf`)
         })
         .catch((error: AxiosError) => {
             toast.error(error.message)
