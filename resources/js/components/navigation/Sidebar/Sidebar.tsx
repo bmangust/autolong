@@ -27,8 +27,14 @@ const Sidebar: React.FC<{ isOpen: boolean }> = ({isOpen}) => {
         )
     }
 
+    const cls = [classes.sidebar]
+
+    if (isOpen) {
+        cls.push('show')
+    }
+
     return (
-        <nav className={classes.sidebar + ' nav flex-column'}>
+        <nav className={cls.join(' ') + ' nav flex-column'}>
             <div className='w-100'>{renderLinks(routes)}</div>
             <NavLink className={classes.help} to='/help'>
                 <SvgHelp/>
