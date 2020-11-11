@@ -83,6 +83,7 @@ const ProductItemForm: React.FC<{
                     .filter(({value}) =>
                         value === product.providerId)[0],
                 autolongNumber: +product.autolongNumber,
+                hsCode: product.hsCode,
                 priceCny: product.price.cny,
                 priceRub: product.price.rub,
                 priceUsd: product.price.usd,
@@ -182,6 +183,16 @@ const ProductItemForm: React.FC<{
                                    placeholder="Введите номер"/>
                             {errors.autolongNumber &&
                             <small>Это поле обязательно</small>}
+
+                            <label htmlFor='hsCode'
+                                   className='w-100'>
+                                HS code
+                            </label>
+                            <input className='col-lg-10 mb-3'
+                                   name="hsCode"
+                                   ref={register}
+                                   type="string"
+                                   placeholder="Введите HS code"/>
 
                             <label htmlFor='vendorCode'
                                    className='w-100'>
