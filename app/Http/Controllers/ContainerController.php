@@ -49,7 +49,7 @@ class ContainerController extends Controller
         $container->status = array_keys(get_object_vars(Status::getContainerStatuses()), 'Собирается')[0];
         $orderIds = $request->input('orders');
         $container->quantity_order_items = $container->getQuantityOrderItems($orderIds);
-        $container->city = $container->compareOrderCityAndChooseCity($orderIds);
+        $container->city_id = $container->compareOrderCityAndChooseCity($orderIds);
         $container->save();
         $container->addOrders($orderIds);
         Log::$write = false;
