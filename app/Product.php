@@ -84,4 +84,13 @@ class Product extends Model
         $this->price_usd = $exchangeRate->lastCourse()->usd * $priceCny;
         $this->save();
     }
+
+    public function getOrders(): array
+    {
+        $orders = [];
+        foreach ($this->orderItems as $item) {
+            $orders[] = $item->order;
+        }
+        return $orders;
+    }
 }

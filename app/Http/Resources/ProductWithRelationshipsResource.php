@@ -4,7 +4,7 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\CatalogResource;
-use App\Http\Resources\OrderItemResource;
+use App\Http\Resources\OrderResource;
 use App\Http\Resources\ProviderResource;
 
 class ProductWithRelationshipsResource extends JsonResource
@@ -31,8 +31,9 @@ class ProductWithRelationshipsResource extends JsonResource
             'catalog' => new CatalogResource($this->catalog),
             'vendorCode' => $this->vendor_code,
             'autolongNumber' => $this->autolong_number,
+            'hsCode' => $this->hs_code,
             'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
-            'orders' => OrderItemResource::collection($this->orderItems),
+            'orders' => OrderResource::collection($this->getOrders()),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
