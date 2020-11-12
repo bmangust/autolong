@@ -59,7 +59,7 @@ const Container: React.FC<IContainer> = () => {
                                 : ''}</h2>
                             <div className="d-flex">
                                     <span className="infoBlockHeaders mr-3">
-                                        Статус заказа
+                                        Статус контейнера
                                     </span>
                                 <span className={
                                     'bg-primary text-white '
