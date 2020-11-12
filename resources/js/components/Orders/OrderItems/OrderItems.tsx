@@ -78,41 +78,40 @@ const OrderItems: React.FC<IOrderItems> =
                 )
             })
 
-            : items.map((item: IProduct) => {
-                return (
-                    <div key={item.id + item.nameRu}
-                         className={classes.orderProducts + ' row mb-2'}>
-                        <div className={classes.productImg + ' col-2'}>
-                            {imgFormatter(
-                                item.image,
-                                null,
-                                item.nameRu,
-                                'pt-2')}
+            : <div>
+                {items.map((item: IProduct) => {
+                    return (
+                        <div key={item.id + item.nameRu}
+                             className={classes.orderProducts + ' row'}>
+                            <div className={classes.productImg + ' col-2'}>
+                                {imgFormatter(
+                                    item.image,
+                                    null,
+                                    item.nameRu,
+                                    'pt-2')}
+                            </div>
+                            <div className="col-4 pl-0 pr-0">
+                                <p className={classes.orderProductsName}>
+                                    {item.nameRu}
+                                </p>
+                            </div>
+                            <div className="col-2">
+                                <p className={classes.orderProductsCount}>
+                                    {item.quantity + ' шт'}
+                                </p>
+                            </div>
+                            <div className='col-4 text-right'>
+                                <p className={classes.orderProductsPrice}>
+                                    {item.price
+                                        ? moneyFormatter(item.price)
+                                        : null
+                                    }
+                                </p>
+                            </div>
                         </div>
-                        <div className="col-4 pl-0 pr-0">
-                            <p className={classes.orderProductsName}>
-                                {item.nameRu}
-                            </p>
-                        </div>
-                        <div className="col-2">
-                            <p className={classes.orderProductsCount}>
-                                {item.quantity + ' шт'}
-                            </p>
-                        </div>
-                        <div className='col-4 text-right'>
-                            <p className={classes.orderProductsPrice}>
-                                {item.price
-                                    ? moneyFormatter(item.price)
-                                    : null
-                                }
-                            </p>
-                        </div>
-                        <div className='col-10 offset-2 pl-0'>
-                            <hr/>
-                        </div>
-                    </div>
-                )
-            })
+                    )
+                })}
+            </div>
     }
 
 export default OrderItems

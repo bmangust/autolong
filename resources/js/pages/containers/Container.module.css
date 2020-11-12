@@ -13,3 +13,63 @@ h2 {
     height: 24px;
     margin-top: -5px;
 }
+
+.order {
+    border: 1px solid #EBEBEB;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.order:last-of-type {
+    margin-bottom: 0;
+}
+
+.order .orderHeader {
+    border-bottom: 1px solid #EBEBEB;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+    padding: 12px 30px;
+}
+
+.order .orderHeader span:before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    background: #EB5E28;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.order .orderBody {
+    padding: 10px 30px;
+}
+
+.order .orderFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 30px 30px;
+}
+
+.order .orderItemsQrt {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #B4B6BD;
+    margin-bottom: 0;
+}
+
+.order .orderPrice {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3A405F;
+    margin-bottom: 0;
+}
+
+.order .orderPrice span {
+    color: #EB5E28;
+    margin-left: 19px;
+}

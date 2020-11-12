@@ -14,12 +14,15 @@ import {
 } from '../../store/actions/actionTypes'
 import {ICity} from '../Cities/ICities'
 import {IOrder} from '../Orders/IOrders'
+import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 
 export interface IContainer {
     id: number | null
     name: string
-    status: string // Нужно переписать под все возможные статусы
+    status: string
     city: ICity
+    orders: IOrder[] | []
+    sandboxFiles: ISandboxFile[] | []
     createdAt?: number
     updatedAt?: number
 }
