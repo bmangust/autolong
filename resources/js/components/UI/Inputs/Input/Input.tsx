@@ -4,20 +4,29 @@ import React, {forwardRef} from 'react'
 // Styles
 import classes from './Input.module.css'
 
-interface IInput {
-    props: any
-    ref: any
-    required: boolean
+type InputElement = HTMLInputElement | HTMLTextAreaElement;
+
+interface ITextFieldProps {
+    value: string
+    onChange: (val: string) => void
     label: string
-    helperText: string
-    error: boolean
+    name: string
+    id: string
+    helperText?: string
+    placeholder?: string
+    autoFocus?: boolean
+    type?: 'email' | 'password' | 'text'
+    textarea?: boolean
+    required?: boolean
+    error?: boolean
 }
 
-const Input: React.FC<IInput> = (
+// eslint-disable-next-line react/display-name
+const Input: React.FC = forwardRef<InputElement, ITextFieldProps>((
     {
-        props, ref, required = false, label = '',
-        helperText = '', error = false
-    }) => {
+        required, label, id,
+        helperText, error, ...rest
+    }, ref) => {
     let labelNode
     let errorNode
 
@@ -31,7 +40,7 @@ const Input: React.FC<IInput> = (
     if (label) {
         labelNode =
             <label className={labelCls.join(' ')}
-                   htmlFor={props.id}>
+                   htmlFor={id}>
                 {label}
             </label>
     }
@@ -49,12 +58,12 @@ const Input: React.FC<IInput> = (
             {labelNode}
             <input
                 className={inputCls.join(' ')}
-                {...props}
-                ref={ref}
+                {...rest}
+                ref={ref as any}
             />
             {errorNode}
         </div>
     )
-}
+})
 
-export default forwardRef(Input)
+export default Input

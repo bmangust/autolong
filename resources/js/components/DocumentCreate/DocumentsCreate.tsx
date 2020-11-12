@@ -11,7 +11,7 @@ import classes from './DocumentsCreate.module.css'
 import {IOrdersRootState} from '../Orders/IOrders'
 
 // Actions
-import {fetchOrderInvoice} from '../../store/actions/orders'
+import {createOrderInvoice, fetchOrderInvoice} from '../../store/actions/orders'
 
 // App
 import Modal from '../UI/Modal/Modal'
@@ -25,6 +25,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const dispatch = useDispatch()
 
     const [isOpen, setIsOpen] = useState(false)
+    const [type, setType] = useState('')
 
     let modal
 
@@ -36,17 +37,24 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
         }))
 
     const {
-        register, handleSubmit, errors
+        register, handleSubmit
     } = useForm()
 
     const fetchInvoiceHandler = (id, type) => {
+        setType(type)
         setIsOpen(true)
         dispatch(fetchOrderInvoice(id, type))
     }
 
+    const onCloseModalHandler = () => {
+        setIsOpen(false)
+    }
+
     const documentCreateSubmitHandler =
         handleSubmit((formValues) => {
+            dispatch(createOrderInvoice(id, formValues, type))
             console.log(formValues)
+            console.log(type)
         })
 
     if (error) {
@@ -58,13 +66,24 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     if (invoiceInputs) {
         modal = <>
             <Form onSubmit={documentCreateSubmitHandler}>
-                {Object.entries(invoiceInputs).map(([key, value]) => (
-                    <Input key={key} ref={register} id={key}
-                           value={value}
-                           label={key} error={!!errors}/>
-                ))}
-                <button className='btn btn-success'>
+                <div className='row'>
+                    {Object.entries(invoiceInputs).map(([key, value]) => (
+                        <Input key={key} id={key} ref={register} name={key}
+                               defaultValue={value} label={key}/>
+                    ))}
+                    {type === 'contract'
+                        ? <Input id='contractEndDate' type='date'
+                                 label='contractEndDate'
+                                 ref={register} name='contractEndDate'/>
+                        : null
+                    }
+                </div>
+                <button className='btn btn-success mr-4'>
                     Создать
+                </button>
+                <button onClick={onCloseModalHandler}
+                        className='btn btn-light'>
+                    Отменить
                 </button>
             </Form>
         </>
@@ -95,7 +114,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     Контракт
                 </button>
             </div>
-            <Modal title='Генерация документов' isOpen={isOpen}>
+            <Modal title={`Генерация документа ${type}`} isOpen={isOpen}>
                 {modal}
             </Modal>
         </>
