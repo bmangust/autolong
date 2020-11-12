@@ -709,7 +709,7 @@
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">12.2.</span>
-                    Срок действия настоящего Контракта истекает «31» декабря 2020г. Срок действия Контракта может быть
+                    Срок действия настоящего Контракта истекает {{ $contractEndDate ? $contractEndDate :'«31» декабря 2020г'}}. Срок действия Контракта может быть
                     изменен по взаимному соглашению сторон, что оформляется документально.
                 </p>
                 <p style="margin: 0;">
@@ -740,7 +740,7 @@
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">12.2.</span>
-                    The Contract expires on December 31, 2020. The term of the Contract may be changed as mutually
+                    The Contract expires on {{ $contractEndDate ? $contractEndDate :'December 31, 2020'}}. The term of the Contract may be changed as mutually
                     agreed by the parties, which shall be executed in writing.
                 </p>
                 <p style="margin: 0;">

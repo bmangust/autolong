@@ -104,10 +104,10 @@
             </td>
         </tr>
         <tr>
-            <td>Contract ?</td>
+            <td>Contract {{ $contract }}</td>
         </tr>
         <tr>
-            <td>Terms of delivery: ?</td>
+            <td>Terms of delivery: {{ $supply }}</td>
         </tr>
     </table>
 

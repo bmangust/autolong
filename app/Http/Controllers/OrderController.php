@@ -176,7 +176,7 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
-        $order->contract->saveInfoWithJson(array($request->all()));
+        $order->contract->saveInfoWithJson($request->all());
         $contract = $order->contract->getInfo();
 
         $pdf = App::make('dompdf.wrapper');
@@ -186,9 +186,10 @@ class OrderController extends Controller
             'supply' => $contract->supply,
             'importer' => $importer,
             'provider' => $provider,
-            'orderPrice' => $contract->orderPrice,
+            'orderPrice' => $order->getOrderSumInCny(),
             'classification' => $contract->classification,
             'providerCountry' => $order->provider->country->name,
+            'contractEndDate' => $contract->contractEndDate
         ]);
         return $newPdf->download();
     }
@@ -206,8 +207,9 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
-        $order->proforma->saveInfoWithJson(array($request->all()));
+        $order->proforma->saveInfoWithJson($request->all());
         $proforma = $order->proforma->getInfo();
+        $contract = $order->contract->getInfo();
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.proforma', [
@@ -215,7 +217,8 @@ class OrderController extends Controller
             'supply' => $proforma->supply,
             'importer' => $importer,
             'provider' => $provider,
-            'orderItems' => $this->orderItems,
+            'contract' => $contract->name,
+            'orderItems' => $order->orderItems,
             'statusPayment' => $proforma->statusPayment,
         ]);
         return $newPdf->download();
@@ -234,15 +237,21 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
-        $order->invoice->saveInfoWithJson(array($request->all()));
+        $order->invoice->saveInfoWithJson($request->all());
         $invoice = $order->invoice->getInfo();
+        $proforma = $order->proforma->getInfo();
+        $contract = $order->contract->getInfo();
+
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
             'order' => $this,
             'supply' => $invoice->supply,
             'importer' => $importer,
             'provider' => $provider,
+            'contract' => $contract->name,
             'orderItems' => $order->orderItems,
+            'proformaDate' => $proforma->date,
+            'proformaNumber' => $proforma->proformaNumber,
             'proformaStatusPayment' => $invoice->proformaStatusPayment,
         ]);
         return $newPdf->download();

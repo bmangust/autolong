@@ -4,7 +4,7 @@ namespace App;
 
 trait UseInfoWIthJsonInDocumentsTrait
 {
-    public function saveInfoWithJson(array $info)
+    public function saveInfoWithJson($info)
     {
         $this->info = json_encode($info);
         $this->save();

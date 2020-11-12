@@ -166,12 +166,14 @@ class Order extends Model
         $proformaInfo = $this->proforma->getInfo();
         $proformaStatusPayment = $proformaInfo->statusPayment;
         $proformaNumber = $proformaInfo->proformaNumber;
+        $date = Carbon::now()->format('Y/m/d');
 
         $invoice->saveInfoWithJson([
             'supply' => $supply,
             'proformaNumber' => $proformaNumber,
             'contractNumber' => $contractNumber,
             'proformaStatusPayment' => $proformaStatusPayment,
+            'date' => $date
         ]);
         return true;
     }
@@ -189,12 +191,14 @@ class Order extends Model
         $supply = $contractInfo->supply;
         $statusPayment = $this->status_payment;
         $contractNumber = $contractInfo->name;
+        $date = Carbon::now()->format('Y/m/d');
 
         $proforma->saveInfoWithJson([
             'supply' => $supply,
             'statusPayment' => $statusPayment,
             'contractNumber' => $contractNumber,
             'proformaNumber' => $proforma->id,
+            'date' => $date
         ]);
         return true;
     }
