@@ -165,7 +165,7 @@ class OrderController extends Controller
     public function getPdfContract(Order $order)
     {
         if ($order->contract != null) {
-            return $order->contract->getInfo();
+            return response()->json($order->contract->getInfo(), 200);
         }
         return response()->json('Для данного заказа не сформирован автоматически контракт', 400);
     }
@@ -191,7 +191,7 @@ class OrderController extends Controller
     public function getPdfProforma(Order $order)
     {
         if ($order->proforma != null) {
-            return $order->proforma->getInfo();
+            return response()->json($order->proforma->getInfo());
         }
         return response()->json('Для данного заказа не сформирована автоматически проформа', 400);
     }
@@ -215,7 +215,7 @@ class OrderController extends Controller
     public function getPdfInvoice(Order $order)
     {
         if ($order->invoice != null) {
-            return $order->invoice->getInfo();
+            return response()->json($order->invoice->getInfo());
         }
         return response()->json('Для данного заказа не сформирован автоматически инвойс', 400);
     }
