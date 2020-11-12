@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\Http\Resources\ProductResource;
+use App\Importer;
 use App\Order;
 use App\Product;
 use App\Status;
@@ -172,15 +173,19 @@ class OrderController extends Controller
 
     public function generatePdfContract(Request $request, Order $order)
     {
-        $contract = $order->contract->saveInfoWithJson(array($request->all()));
-        $contract = $contract->getInfo();
+        $importer = Importer::first();
+        $provider = $order->provider;
+
+        $order->contract->saveInfoWithJson(array($request->all()));
+        $contract = $order->contract->getInfo();
+
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
             'name' => $contract->name,
             'date' => $contract->date,
             'supply' => $contract->supply,
-            'importer' => $contract->importer,
-            'provider' => $contract->provider,
+            'importer' => $importer,
+            'provider' => $provider,
             'orderPrice' => $contract->orderPrice,
             'classification' => $contract->classification,
             'providerCountry' => $order->provider->country->name,
@@ -198,14 +203,18 @@ class OrderController extends Controller
 
     public function generatePdfProforma(Request $request, Order $order)
     {
-        $proforma = $order->proforma->saveInfoWithJson(array($request->all()));
-        $proforma = $proforma->getInfo();
+        $importer = Importer::first();
+        $provider = $order->provider;
+
+        $order->proforma->saveInfoWithJson(array($request->all()));
+        $proforma = $order->proforma->getInfo();
+
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.proforma', [
             'order' => $this,
             'supply' => $proforma->supply,
-            'importer' => $proforma->importer,
-            'provider' => $proforma->provider,
+            'importer' => $importer,
+            'provider' => $provider,
             'orderItems' => $this->orderItems,
             'statusPayment' => $proforma->statusPayment,
         ]);
@@ -222,14 +231,17 @@ class OrderController extends Controller
 
     public function generatePdfInvoice(Request $request, Order $order)
     {
-        $invoice = $order->invoice->saveInfoWithJson(array($request->all()));
-        $invoice = $invoice->getInfo();
+        $importer = Importer::first();
+        $provider = $order->provider;
+
+        $order->invoice->saveInfoWithJson(array($request->all()));
+        $invoice = $order->invoice->getInfo();
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
             'order' => $this,
             'supply' => $invoice->supply,
-            'importer' => $invoice->importer,
-            'provider' => $invoice->provider,
+            'importer' => $importer,
+            'provider' => $provider,
             'orderItems' => $order->orderItems,
             'proformaStatusPayment' => $invoice->proformaStatusPayment,
         ]);

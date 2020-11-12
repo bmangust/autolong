@@ -76,7 +76,7 @@ Route::get('logs', 'LogController@index');
 Route::put('sandboxfiles/{sandboxFile}', 'SandboxFileController@update');
 Route::delete('sandboxfiles/{sandboxFile}', 'SandboxFileController@destroy');
 Route::post('{model}/{id}/savefile','SandboxFileController@saveFile')
-    ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе
+    ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе не работает для слов оканчивающиеся на y
 Route::bind('id', function ($id, $route) {
     $model = preg_replace('#s$#','' ,$route->parameter('model'));
     $class = 'App\\' . ucfirst(Str::camel($model));
