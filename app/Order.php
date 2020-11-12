@@ -215,7 +215,6 @@ class Order extends Model
             'name' => $contractName,
             'supply' => $supply,
             'date' => $date,
-            'orderPrice' => $this->getOrderSumInCny(),
         ]);
         return true;
     }
