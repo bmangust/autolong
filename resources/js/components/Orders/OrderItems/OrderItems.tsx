@@ -13,12 +13,13 @@ interface IOrderItems {
     onChangePrice?: Function
 }
 
-const OrderItems: React.FC<IOrderItems> = ({
-    items,
-    onChange,
-    onDelete,
-    onChangePrice,
-}) => {
+const OrderItems: React.FC<IOrderItems> = (
+    {
+        items,
+        onChange,
+        onDelete,
+        onChangePrice
+    }) => {
     if (!items.length) {
         return (
             <div className={classes.orderProductsNoItems}>
@@ -26,15 +27,13 @@ const OrderItems: React.FC<IOrderItems> = ({
             </div>
         )
     }
-    return onChange && onDelete && onChangePrice ? (
-        items.map((item: IProduct) => {
-            return (
-                <div
-                    key={item.id + item.nameRu}
-                    className={classes.products + ' row mb-2'}
-                >
+    return onChange && onDelete && onChangePrice
+        ? (items.map((item: IProduct) =>
+            (<div key={item.id + item.nameRu}
+                  className={classes.products + ' row mb-2'}>
                     <div className={classes.productImg + ' col-1'}>
-                        {imgFormatter(item.image, null, item.nameRu, 'pt-2')}
+                        {imgFormatter(item.image, null,
+                            item.nameRu, 'pt-2')}
                     </div>
                     <div className='col-4 pr-0'>
                         <p className={classes.productName}>{item.nameRu}</p>
@@ -75,16 +74,12 @@ const OrderItems: React.FC<IOrderItems> = ({
                     </div>
                 </div>
             )
-        })
-    ) : (
-        <div>
-            {items.map((item: IProduct) => {
-                return (
-                    <div
-                        key={item.id + item.nameRu}
-                        className={classes.orderProducts + ' row'}
-                    >
-                        <div className={classes.productImg + ' col-lg-2 col-6'}>
+        ))
+        : (<div>{items.map((item: IProduct) => (
+                (<div key={item.id + item.nameRu}
+                      className={classes.orderProducts + ' row'}>
+                        <div className={classes.productImg +
+                        ' col-lg-2 col-6'}>
                             {imgFormatter(
                                 item.image,
                                 null,
@@ -104,14 +99,15 @@ const OrderItems: React.FC<IOrderItems> = ({
                         </div>
                         <div className='col-lg-4 col-6 text-right'>
                             <p className={classes.orderProductsPrice}>
-                                {item.price ? moneyFormatter(item.price) : null}
+                                {item.price
+                                    ? moneyFormatter(item.price)
+                                    : null}
                             </p>
                         </div>
                     </div>
                 )
-            })}
-        </div>
-    )
+            ))}</div>
+        )
 }
 
 export default OrderItems
