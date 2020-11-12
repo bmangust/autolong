@@ -35,3 +35,11 @@ h2 {
 .invoiceBtnBlock .invoiceBtn:last-of-type {
     margin-right: 0;
 }
+
+
+@media (max-width: 767px) {
+    .invoiceBtnBlock .invoiceBtn {
+        margin-right: 10px;
+        padding: 10px 10px;
+    }
+}
