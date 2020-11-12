@@ -5,6 +5,8 @@ import React, {useState} from 'react'
 import axios, {AxiosError, AxiosResponse} from 'axios'
 import {toast} from 'react-toastify'
 import {useForm} from 'react-hook-form'
+import {yupResolver} from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 // Styles
 import classes from './SandboxFilesCard.module.css'
@@ -16,6 +18,7 @@ import SvgDownload from '../UI/iconComponents/Download'
 import {createNotyMsg, timeConverter} from '../../utils'
 import Modal from '../UI/Modal/Modal'
 import SvgEdit from '../UI/iconComponents/Edit'
+import FileInput from '../UI/Inputs/FileInput/FileInput'
 
 export interface ISandboxFile {
     name: string
@@ -39,6 +42,11 @@ const SandboxFilesCard: React.FC<{
         updatedAt: null
     }
 
+    const schemaCreate = yup.object().shape({
+        name: yup.string().required(),
+        file: yup.array().required()
+    })
+
     const [isOpen, setIsOpen] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
     const [editState, setEditState] = useState<ISandboxFile>(
@@ -46,8 +54,10 @@ const SandboxFilesCard: React.FC<{
     )
 
     const {
-        register, handleSubmit, reset, errors
-    } = useForm()
+        register, handleSubmit, reset, errors, control
+    } = useForm({
+        resolver: yupResolver(schemaCreate)
+    })
 
     const {
         register: register2, handleSubmit: handleSubmit2,
@@ -218,16 +228,8 @@ const SandboxFilesCard: React.FC<{
                     <small>Это поле обязательно</small>}
                     <label htmlFor='description'>Укажите описание файла</label>
                     <input className='mb-3' type='text'
-                           name='description' ref={register({required: true})}/>
-                    <label className={classes.upload + ' mb-3'} htmlFor="file">
-                        Загрузить файл
-                        <input
-                            id='file'
-                            name='file'
-                            type="file"
-                            ref={register({required: true})}
-                        />
-                    </label>
+                           name='description' ref={register}/>
+                    <FileInput name='file' control={control}/>
                     {errors.file &&
                     <small>Это поле обязательно</small>}
                     <div className='d-flex justify-content-between'>
