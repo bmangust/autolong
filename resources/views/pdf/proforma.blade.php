@@ -100,7 +100,7 @@
         </tr>
         <tr>
             <td>
-                PAYMENT TERMS: ?
+                PAYMENT TERMS: {{ $statusPayment }}
             </td>
         </tr>
         <tr>

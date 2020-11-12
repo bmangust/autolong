@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class AutolongRuProduct extends Model
 {
-    use CleaningSpaceTrait;
+    use CleaningSpaceTrait, TranslateHtmlCodesToTagsTrait;
 
     protected $table = 'autolong_ru';
 
@@ -21,12 +21,13 @@ class AutolongRuProduct extends Model
 
     public function getTextAttribute()
     {
-        $string = strtr($this->attributes['text'], [
-            '&lt;' => '<',
-            '&gt;' => '>',
-            '&quot;' => '"'
-        ]);
+        $string = $this->translateHtmlCodesToTags($this->attributes['text']);
         return preg_replace('#<iframe.*<\/iframe>#', '', $string);
+    }
+
+    public function getArticulAttribute()
+    {
+        return $this->translateHtmlCodesToTags($this->attributes['articul']);
     }
 
     public function checkNumberCodesInDB($numbers): array

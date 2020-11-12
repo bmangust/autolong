@@ -4,10 +4,12 @@ namespace App\Console;
 
 use App\ExchangeRate;
 use App\Http\Resources\ExchangeRateResource;
+use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Storage;
+use Spatie\DbDumper\Databases\MySql;
 
 class Kernel extends ConsoleKernel
 {
@@ -23,26 +25,36 @@ class Kernel extends ConsoleKernel
     /**
      * Define the application's command schedule.
      *
-     * @param  \Illuminate\Console\Scheduling\Schedule  $schedule
+     * @param \Illuminate\Console\Scheduling\Schedule $schedule
      * @return void
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->call(function(ExchangeRate $exchangeRate) {
-             $response = Http::get(ExchangeRate::CRBF_DAILY_RATE_JSON);
-             $percentageModulBank = ExchangeRate::PERCENTAGE_MODULBANK / 100;
-             $rubToCny = json_decode($response->body())->Valute->CNY->Previous;
-             $rubToUsd = json_decode($response->body())->Valute->USD->Previous;
-             $rubToCnyModulBank = $rubToCny + $rubToCny * $percentageModulBank;
-             $rubToUsdModulBank = $rubToUsd + $rubToUsd * $percentageModulBank;
-             $cnyToUsdModulBank = round($rubToCnyModulBank / $rubToUsdModulBank, 8);
-             $latesCours = $exchangeRate->latest()->first();
-             if (is_null($latesCours) || $latesCours->rub != $rubToCnyModulBank || $latesCours->usd != $cnyToUsdModulBank) {
+        $schedule->call(function (ExchangeRate $exchangeRate) {
+            $response = Http::get(ExchangeRate::CRBF_DAILY_RATE_JSON);
+            $percentageModulBank = ExchangeRate::PERCENTAGE_MODULBANK / 100;
+            $rubToCny = json_decode($response->body())->Valute->CNY->Previous;
+            $rubToUsd = json_decode($response->body())->Valute->USD->Previous;
+            $rubToCnyModulBank = $rubToCny + $rubToCny * $percentageModulBank;
+            $rubToUsdModulBank = $rubToUsd + $rubToUsd * $percentageModulBank;
+            $cnyToUsdModulBank = round($rubToCnyModulBank / $rubToUsdModulBank, 8);
+            $latesCours = $exchangeRate->latest()->first();
+            if (is_null($latesCours) || $latesCours->rub != $rubToCnyModulBank || $latesCours->usd != $cnyToUsdModulBank) {
                 $infoToFile = $exchangeRate->create(['rub' => $rubToCnyModulBank, 'usd' => $cnyToUsdModulBank]);
                 Storage::disk('resources')
                     ->put(ExchangeRate::FILE_INFO_COURSE, json_encode(new ExchangeRateResource($infoToFile)));
-             }
-         })->dailyAt('10:00');
+            }
+        })->dailyAt('10:00');
+
+        $schedule->call(function () {
+            $name = Carbon::now()->format('d-m-Y') . '-dump.sql';
+            MySql::create()
+                ->setDbName(env('DB_DATABASE'))
+                ->setUserName(env('DB_USERNAME'))
+                ->setPassword(env('DB_PASSWORD'))
+                ->dumpToFile($name);
+            Storage::disk('base')->move($name, '/public/dumps/' . $name);
+        })->dailyAt('03:00');
     }
 
     /**
@@ -52,7 +64,7 @@ class Kernel extends ConsoleKernel
      */
     protected function commands()
     {
-        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__ . '/Commands');
 
         require base_path('routes/console.php');
     }

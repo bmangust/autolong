@@ -3,9 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
-use App\Document;
 use App\Http\Resources\ProductResource;
-use App\Importer;
 use App\Order;
 use App\Product;
 use App\Status;
@@ -63,6 +61,9 @@ class OrderController extends Controller
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
         }
+        $order->generateContract();
+        $order->generateProforma();
+        $order->generateInvoice();
         return response()->json(new OrderWithRelationshipsResource($order), 201);
     }
 
@@ -161,27 +162,101 @@ class OrderController extends Controller
         return $availableProducts;
     }
 
-    public function getPdfInvoice(Order $order)
+    public function getPdfContract(Order $order)
     {
+        $contract = $order->contract->getInfo();
         $pdf = App::make('dompdf.wrapper');
-        $importer = Importer::first();
-        $orderItems = $order->orderItems;
-        $provider = $order->provider;
-        $newPdf = $pdf->loadView('pdf.invoice', [
-            'order' => $order,
-            'importer' => $importer,
-            'orderItems' => $orderItems,
-            'provider' => $provider
+        $newPdf = $pdf->loadView('pdf.contract', [
+            'name' => $contract->name,
+            'date' => $contract->date,
+            'supply' => $contract->supply,
+            'importer' => $contract->importer,
+            'provider' => $contract->provider,
+            'orderPrice' => $contract->orderPrice,
+            'classification' => $contract->classification,
+            'providerCountry' => $order->provider->country->name,
+        ]);
+        return $newPdf->download();
+    }
+
+    public function generatePdfContract(Request $request, Order $order)
+    {
+        $contract = $order->contract->saveInfoWithJson(array($request->all()));
+        $contract = $contract->getInfo();
+        $pdf = App::make('dompdf.wrapper');
+        $newPdf = $pdf->loadView('pdf.contract', [
+            'name' => $contract->name,
+            'date' => $contract->date,
+            'supply' => $contract->supply,
+            'importer' => $contract->importer,
+            'provider' => $contract->provider,
+            'orderPrice' => $contract->orderPrice,
+            'classification' => $contract->classification,
+            'providerCountry' => $order->provider->country->name,
         ]);
         return $newPdf->download();
     }
 
     public function getPdfProforma(Order $order)
     {
+        $proforma = $order->proforma->getInfo();
         $pdf = App::make('dompdf.wrapper');
-        $importer = Importer::first();
-        $newPdf = $pdf->loadView('pdf.proforma', compact('order', 'importer'));
-        return response()->file($newPdf);
+        $newPdf = $pdf->loadView('pdf.proforma', [
+            'order' => $this,
+            'supply' => $proforma->supply,
+            'importer' => $proforma->importer,
+            'provider' => $proforma->provider,
+            'orderItems' => $this->orderItems,
+            'statusPayment' => $proforma->statusPayment,
+        ]);
+        return $newPdf->download();
+    }
+
+    public function generatePdfProforma(Request $request, Order $order)
+    {
+        $proforma = $order->proforma->saveInfoWithJson(array($request->all()));
+        $proforma = $proforma->getInfo();
+        $pdf = App::make('dompdf.wrapper');
+        $newPdf = $pdf->loadView('pdf.proforma', [
+            'order' => $this,
+            'supply' => $proforma->supply,
+            'importer' => $proforma->importer,
+            'provider' => $proforma->provider,
+            'orderItems' => $this->orderItems,
+            'statusPayment' => $proforma->statusPayment,
+        ]);
+        return $newPdf->download();
+    }
+
+    public function getPdfInvoice(Order $order)
+    {
+        $invoice = $order->invoice->getInfo();
+        $pdf = App::make('dompdf.wrapper');
+        $newPdf = $pdf->loadView('pdf.contract', [
+            'order' => $this,
+            'supply' => $invoice->supply,
+            'importer' => $invoice->importer,
+            'provider' => $invoice->provider,
+            'orderItems' => $order->orderItems,
+            'proformaStatusPayment' => $invoice->proformaStatusPayment,
+        ]);
+        return $newPdf->download();
+    }
+
+    public function generatePdfInvoice(Request $request, Order $order)
+    {
+        $invoice = $order->invoice->saveInfoWithJson(array($request->all()));
+        $invoice = $invoice->getInfo();
+        $pdf = App::make('dompdf.wrapper');
+        $newPdf = $pdf->loadView('pdf.contract', [
+            'order' => $this,
+            'supply' => $invoice->supply,
+            'importer' => $invoice->importer,
+            'provider' => $invoice->provider,
+            'orderItems' => $order->orderItems,
+            'proformaStatusPayment' => $invoice->proformaStatusPayment,
+        ]);
+        return $newPdf->download();
     }
 
     public function indexUnapplied()

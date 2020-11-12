@@ -11,25 +11,24 @@
     <table style="margin: 0 auto; border-collapse: collapse; vertical-align: baseline;">
         <tr>
             <th style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
-                <span style="display: block; text-align: center;">Контракт № {{ \Carbon\Carbon::now()->format('Y/m/d') }}-{{ $document->id }}</span>
+                <span style="display: block; text-align: center;">Контракт № {{ $name }}</span>
                 <span style="display: block; text-align: left;">г. Москва</span>
                 <span
-                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">«20»
-                    мая 2020</span>
+                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $date }}</span>
             </th>
             <th style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
-                <span style="display: block; text-align: center;">Contract No. 20LH</span>
+                <span style="display: block; text-align: center;">Contract {{ $name }}</span>
                 <span style="display: block; text-align: left;">Moscow</span>
                 <span
-                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">«20»
-                    May 2020</span>
+                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $date }}</span>
             </th>
         </tr>
         <tr>
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
-                    WENZHOU BOYE CO., LTD., Китай, именуемое в дальнейшем
-                    <i>Продавец</i>, в лице Директора Chi Ning, и Общество с
+                    {{ $provider->name_company ? $provider->name_company : '-' }}
+                    {{ $provider->country ? $provider->country : '-' }}, именуемое в дальнейшем
+                    <i>Продавец</i>, в лице Директора !ИМЯ ДИРЕКТОРА!, и Общество с
                     ограниченной ответственностью «Деталь поставка», Россия,
                     именуемое в дальнейшем <i>Покупатель</i>, в лице Директора
                     Холоденко Андрея Геннадьевича, действующего на основании
@@ -39,8 +38,9 @@
             </td>
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
-                    WENZHOU BOYE CO., LTD., China, hereinafter referred to
-                    as <i>‘the Seller’</i>, represented by the Director Chi Ning,
+                    {{ $provider->name_company ? $provider->name_company : '-' }}
+                    {{ $provider->country ? $provider->country : '-' }} hereinafter referred to
+                    as <i>‘the Seller’</i>, represented by the Director !ИМЯ ДИРЕКТОРА!,
                     on the one part, and LLC «Component Supply»(«СS LLC»,
                     Russia, hereinafter referred to as <i><i>‘the Buyer’</i></i>, on
                     behalf of Director Kholodenko Andrey Gennadyevich,
@@ -57,12 +57,12 @@
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">1.1.</span>
                     <i>Продавец</i>
-                    продал, а <i>Покупатель</i> купил на условиях EXW-Wenzhou
+                    продал, а <i>Покупатель</i> купил на условиях {{ $supply }}
                     согласно Инкотермс-2010, дополнительные приборы
                     освещения для сельскохозяйственной техники, (далее –
-                    Товар), производства Wenzhou Lihao Filter Co.,ltd, China
-                    Китай. Товар ввозится на территорию Российской
-                    Федерации.
+                    Товар), производства {{ $provider->name_company ? $provider->name_company : '-' }}
+                    {{ $provider->country ? $provider->country : '-' }}.
+                    Товар ввозится на территорию Российской Федерации.
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">1.2.</span>
@@ -81,8 +81,8 @@
                     sold and the <i>Buyer</i> has bought on terms EXW-Wenzhou in
                     accordance with Incoterms 2010, additional lighting
                     devices for agricultural machinery, (hereinafter -
-                    Goods), manufacturing Wenzhou Lihao Filter Co.,ltd,
-                    China (China). Goods are being imported into the
+                    Goods), {{ $provider->name_company ? $provider->name_company : '-' }}
+                    {{ $provider->country ? $provider->country : '-' }}. Goods are being imported into the
                     territory of the Russian Federation.
                 </p>
                 <p style="margin: 0;">
@@ -103,7 +103,7 @@
                     <span style="font-weight: bold;">2.1.</span>
                     <i>Продавец</i> обязуется поставить <i>Покупателю</i> товар на общую
                     сумму Контракта. Общая сумма настоящего Контракта
-                    составляет 126 325 китайских юаней. Согласованная
+                    составляет {{ $orderPrice }}китайских юаней. Согласованная
                     сторонами цена Товара устанавливается в CNY и
                     указывается Инвойсах.
                 </p>
@@ -149,7 +149,7 @@
                     <span style="font-weight: bold;">2.1.</span>
                     The <i>Seller</i> undertakes to supply to <i>Buyer</i> with the Goods
                     in the total amount of the Contract. The total value of
-                    the contract is 126 325 CNY. The parties have agreed the
+                    the contract is {{ $orderPrice }} CNY. The parties have agreed the
                     price of the goods is set in CNY and stated in invoices.
                 </p>
                 <p style="margin: 0;">
@@ -199,7 +199,7 @@
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">3.1.</span>
                     Поставка
-                    Товара производится в соответствии ИНКОТЕРМС EXW-Wenzhou
+                    Товара производится в соответствии ИНКОТЕРМС {{ $supply }}.
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">3.2.</span>
@@ -218,7 +218,7 @@
                     <span style="font-weight: bold;">3.1.</span>
                     The Goods
                     shall be delivered in accordance with INCOTERMS
-                    EXW-Wenzhou.
+                    {{ $supply }}.
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">3.2.</span>
@@ -808,7 +808,7 @@
                         ПОКУПАТЕЛЬ:</span>
                 </p>
                 <p style="margin: 0;">
-                    ПОКУПАТЕЛЬ: ООО «Деталь Поставка»
+                    ПОКУПАТЕЛЬ: {{ $importer->name_ru }}
                 </p>
                 <p style="margin: 0;">
                     ОГРН 1157746416960
@@ -820,7 +820,7 @@
                     ОКПО 45086890
                 </p>
                 <p style="margin: 0;">
-                    Юр. Адрес.: 127247 г. Москва, Дмитровское шоссе, д. 105, корп.6, кв. 3
+                    {{ $importer->address }}
                 </p>
                 <p style="margin: 0;">
                     Обособленное подразделение: 142715, Московская область, Ленинский район, Городское поселение Видное
@@ -867,7 +867,7 @@
                         BUYER:</span>
                 </p>
                 <p style="margin: 0;">
-                    Name: «Wenzhou Lihao Filter Co.,ltd.»
+                    Name: «{{ $provider->name_company ? $provider->name_company : '-'}}»
                 </p>
                 <p style="margin: 0;">
                     Address: TONG YANG VILLAGE BAI ZHANG JI TOWN, WENZHOU,CN
@@ -876,22 +876,22 @@
                     Beneficiary:
                 </p>
                 <p style="margin: 0;">
-                    Bank: Agricultural  Bank  of  China ,Zhejiang Branch
+                    Bank: {{ $provider->beneficiary_bank_name ? $provider->beneficiary_bank_name : '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Number account  19245101040020662
+                    Number account  {{ $provider->beneficiary_account_name ? $provider->beneficiary_account_name : '-' }}
                 </p>
                 <p style="margin: 0;">
-                    SWIFT: ABOCCNBJ110
+                    SWIFT: {{ $provider->beneficiary_swift_address ? $provider->beneficiary_swift_address : '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Address of bank NO55. CHANGQING STREET, HANGZHOU ZHEJIANG PROVINCE,CHINA.
+                    Address of bank {{ $provider->beneficiary_bank_address ? $provider->beneficiary_bank_address : '-' }}
                 </p>
                 <p style="margin: 0;">
                     Директор/Director
                 </p>
                 <p style="margin: 0;">
-                    Chi Ning
+                    Chi Ning !{ИМЯ ДИРЕКТОРА}!
                 </p>
                 <img style="max-width: 300px; max-height: 300px;" src="{{ asset('imgs/seal.jpg') }}" alt="">
             </td>

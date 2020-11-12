@@ -6,6 +6,7 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\OrderItem;
+use Illuminate\Support\Facades\App;
 
 class Order extends Model
 {
@@ -13,6 +14,7 @@ class Order extends Model
     use CleaningSpaceTrait;
 
     public const SANDBOX_DIRECTORY = '/orders/';
+    public const CONTRACT_DIRECTORY = '/orders/';
 
     protected $fillable = ['name', 'provider_id'];
 
@@ -39,6 +41,21 @@ class Order extends Model
     public function city()
     {
         return $this->belongsTo('App\City');
+    }
+
+    public function contract()
+    {
+        return $this->hasOne('App\ContractDocument');
+    }
+
+    public function invoice()
+    {
+        return $this->hasOne('App\InvoiceDocument');
+    }
+
+    public function proforma()
+    {
+        return $this->hasOne('App\ProformaDocument');
     }
 
     public function addOrderItems($items)
@@ -130,6 +147,82 @@ class Order extends Model
         if ($nowDay > $date) {
             return false;
         }
+        return true;
+    }
+
+    public function generateInvoice(): bool
+    {
+        $invoice = new InvoiceDocument();
+        $importer = Importer::first();
+        $provider = $this->provider;
+
+        $invoice->order_id = $this->id;
+        $invoice = $invoice->save();
+
+        $contractInfo = $this->contract->getInfo();
+        $supply = $contractInfo->supply;
+        $contractNumber = $contractInfo->name;
+
+        $proformaInfo = $this->proforma->getInfo();
+        $proformaStatusPayment = $proformaInfo->statusPayment;
+        $proformaNumber = $proformaInfo->proformaNumber;
+
+        $invoice->saveInfoWithJson([
+            'supply' => $supply,
+            'provider' => $provider,
+            'importer' => $importer,
+            'proformaNumber' => $proformaNumber,
+            'contractNumber' => $contractNumber,
+            'proformaStatusPayment' => $proformaStatusPayment,
+        ]);
+        return true;
+    }
+
+    public function generateProforma(): bool
+    {
+        $proforma = new ProformaDocument();
+        $provider = $this->provider;
+        $importer = Importer::first();
+
+        $proforma->order_id = $this->id;
+        $proforma = $proforma->save();
+
+        $contractInfo = $this->contract->getInfo();
+        $supply = $contractInfo->supply;
+        $statusPayment = $this->status_payment;
+        $contractNumber = $contractInfo->name;
+
+        $proforma->saveInfoWithJson([
+            'supply' => $supply,
+            'importer' => $importer,
+            'provider' => $provider,
+            'statusPayment' => $statusPayment,
+            'contractNumber' => $contractNumber,
+            'proformaNumber' => $proforma->id,
+        ]);
+        return true;
+    }
+
+    public function generateContract(): bool
+    {
+        $contract = new ContractDocument();
+        $importer = Importer::first();
+        $provider = $this->provider;
+
+        $contract->order_id = $this->id;
+        $contract = $contract->save();
+
+        $date = Carbon::now()->format('Y/m/d');
+        $contractName = $date . '-' . $contract->id;
+        $supply = Supply::fob();
+        $contract->saveInfoWithJson([
+            'importer' => $importer,
+            'provider' => $provider,
+            'name' => $contractName,
+            'supply' => $supply,
+            'date' => $date,
+            'orderPrice' => $this->getOrderSumInCny(),
+        ]);
         return true;
     }
 }

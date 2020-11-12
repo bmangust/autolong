@@ -74,6 +74,11 @@ return [
             'driver' => 'local',
             'root' => resource_path(),
         ],
+
+        'base' => [
+            'driver' => 'local',
+            'root' => base_path(),
+        ],
     ],
 
     /*
