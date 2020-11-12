@@ -7,7 +7,10 @@ import {
     FETCH_IMPORTERS_SUCCESS,
     FETCH_IMPORTER_ERROR,
     FETCH_IMPORTER_START,
-    FETCH_IMPORTER_SUCCESS
+    FETCH_IMPORTER_SUCCESS,
+    UPDATE_IMPORTER_ERROR,
+    UPDATE_IMPORTER_START,
+    UPDATE_IMPORTER_SUCCESS
 } from '../../store/actions/actionTypes'
 import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 
@@ -84,7 +87,25 @@ interface ICreateImporterError {
     loading: boolean
 }
 
+interface IUpdateImporterStart {
+    type: typeof UPDATE_IMPORTER_START
+    loading: boolean
+}
+
+interface IUpdateImporterSuccess {
+    type: typeof UPDATE_IMPORTER_SUCCESS
+    payload: IImporter;
+    loading: boolean
+}
+
+interface IUpdateImporterError {
+    type: typeof UPDATE_IMPORTER_ERROR
+    payload: any
+    loading: boolean
+}
+
 export type IImportersActionTypes =
     IFetchImportersStart | IFetchImportersSuccess | IFetchImportersError |
     IFetchImporterStart | IFetchImporterSuccess | IFetchImporterError |
-    ICreateImporterStart | ICreateImporterSuccess | ICreateImporterError
+    ICreateImporterStart | ICreateImporterSuccess | ICreateImporterError |
+    IUpdateImporterStart | IUpdateImporterSuccess | IUpdateImporterError

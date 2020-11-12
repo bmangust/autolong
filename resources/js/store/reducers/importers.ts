@@ -1,21 +1,23 @@
 // Types
 import {
-    FETCH_IMPORTERS_SUCCESS,
-    FETCH_IMPORTERS_START,
-    FETCH_IMPORTERS_ERROR,
+    CREATE_IMPORTER_ERROR,
+    CREATE_IMPORTER_START,
+    CREATE_IMPORTER_SUCCESS,
+    FETCH_IMPORTER_ERROR,
     FETCH_IMPORTER_START,
     FETCH_IMPORTER_SUCCESS,
-    FETCH_IMPORTER_ERROR,
-    CREATE_IMPORTER_SUCCESS,
-    CREATE_IMPORTER_ERROR,
-    CREATE_IMPORTER_START
-} from '../actions/actionTypes';
+    FETCH_IMPORTERS_ERROR,
+    FETCH_IMPORTERS_START,
+    FETCH_IMPORTERS_SUCCESS,
+    UPDATE_IMPORTER_ERROR,
+    UPDATE_IMPORTER_SUCCESS, UPDATE_IMPORTER_START
+} from '../actions/actionTypes'
 
 // Typescript
 import {
-    IImportersState,
-    IImportersActionTypes
-} from '../../components/Importers/IImporters';
+    IImportersActionTypes,
+    IImportersState
+} from '../../components/Importers/IImporters'
 
 const initialState: IImportersState = {
     importers: [],
@@ -61,6 +63,18 @@ export default function importersReducer(
                 ...state, loading: false, importer: action.payload
             }
         case CREATE_IMPORTER_ERROR:
+            return {
+                ...state, loading: false, error: action.payload
+            }
+        case UPDATE_IMPORTER_START:
+            return {
+                ...state, loading: true
+            }
+        case UPDATE_IMPORTER_SUCCESS:
+            return {
+                ...state, loading: false, importer: action.payload
+            }
+        case UPDATE_IMPORTER_ERROR:
             return {
                 ...state, loading: false, error: action.payload
             }
