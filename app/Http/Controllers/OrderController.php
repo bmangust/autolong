@@ -164,19 +164,10 @@ class OrderController extends Controller
 
     public function getPdfContract(Order $order)
     {
-        $contract = $order->contract->getInfo();
-        $pdf = App::make('dompdf.wrapper');
-        $newPdf = $pdf->loadView('pdf.contract', [
-            'name' => $contract->name,
-            'date' => $contract->date,
-            'supply' => $contract->supply,
-            'importer' => $contract->importer,
-            'provider' => $contract->provider,
-            'orderPrice' => $contract->orderPrice,
-            'classification' => $contract->classification,
-            'providerCountry' => $order->provider->country->name,
-        ]);
-        return $newPdf->download();
+        if ($order->contract != null) {
+            return $order->contract->getInfo();
+        }
+        return response()->json('Для данного заказа не сформирован автоматически контракт', 400);
     }
 
     public function generatePdfContract(Request $request, Order $order)
@@ -199,17 +190,10 @@ class OrderController extends Controller
 
     public function getPdfProforma(Order $order)
     {
-        $proforma = $order->proforma->getInfo();
-        $pdf = App::make('dompdf.wrapper');
-        $newPdf = $pdf->loadView('pdf.proforma', [
-            'order' => $this,
-            'supply' => $proforma->supply,
-            'importer' => $proforma->importer,
-            'provider' => $proforma->provider,
-            'orderItems' => $this->orderItems,
-            'statusPayment' => $proforma->statusPayment,
-        ]);
-        return $newPdf->download();
+        if ($order->proforma != null) {
+            return $order->proforma->getInfo();
+        }
+        return response()->json('Для данного заказа не сформирована автоматически проформа', 400);
     }
 
     public function generatePdfProforma(Request $request, Order $order)
@@ -230,17 +214,10 @@ class OrderController extends Controller
 
     public function getPdfInvoice(Order $order)
     {
-        $invoice = $order->invoice->getInfo();
-        $pdf = App::make('dompdf.wrapper');
-        $newPdf = $pdf->loadView('pdf.contract', [
-            'order' => $this,
-            'supply' => $invoice->supply,
-            'importer' => $invoice->importer,
-            'provider' => $invoice->provider,
-            'orderItems' => $order->orderItems,
-            'proformaStatusPayment' => $invoice->proformaStatusPayment,
-        ]);
-        return $newPdf->download();
+        if ($order->invoice != null) {
+            return $order->invoice->getInfo();
+        }
+        return response()->json('Для данного заказа не сформирован автоматически инвойс', 400);
     }
 
     public function generatePdfInvoice(Request $request, Order $order)
