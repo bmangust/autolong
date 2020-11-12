@@ -346,16 +346,6 @@ a {
     width: 100%;
 }
 
-.pricesBlock {
-    span {
-        margin-right: 20px;
-
-        &:last-of-type {
-            margin-right: 0;
-        }
-    }
-}
-
 .pricesBlock span:first-child {
     color: var(--orange);
     font-weight: bold;

@@ -10,14 +10,12 @@ import Select from 'react-select'
 import {
     changeOrderStatus,
     createOrderInvoice,
-    deleteOrderById, fetchOrderById
+    deleteOrderById,
+    fetchOrderById,
 } from '../../store/actions/orders'
 
 // Typescript
-import {
-    IOrder,
-    IOrdersRootState
-} from '../../components/Orders/IOrders'
+import {IOrder, IOrdersRootState} from '../../components/Orders/IOrders'
 
 // Styles
 import classes from './Orders.module.css'
@@ -42,7 +40,7 @@ const Order: React.FC<IOrder> = () => {
             error: state.ordersState.error,
             order: state.ordersState.order,
             loading: state.ordersState.loading,
-            loadingStatus: state.ordersState.loadingStatus
+            loadingStatus: state.ordersState.loadingStatus,
         })
     )
 
@@ -52,7 +50,7 @@ const Order: React.FC<IOrder> = () => {
 
     const onChangeHandler = (id, e, action) => {
         const value = {
-            [action.name]: e.value
+            [action.name]: e.value,
         }
         dispatch(changeOrderStatus(id, value))
     }
@@ -61,17 +59,17 @@ const Order: React.FC<IOrder> = () => {
         dispatch(createOrderInvoice(id, type))
     }
 
-    const orderStatuses = Object.entries(
-        statuses.orderStatuses)
-        .map(([key, value]) => {
+    const orderStatuses = Object.entries(statuses.orderStatuses).map(
+        ([key, value]) => {
             return {label: value, value: key}
-        })
+        }
+    )
 
-    const paymentStatuses = Object.entries(
-        statuses.paymentStatuses)
-        .map(([key, value]) => {
+    const paymentStatuses = Object.entries(statuses.paymentStatuses).map(
+        ([key, value]) => {
             return {label: value, value: key}
-        })
+        }
+    )
 
     const onDeleteHandler = (id) => {
         dispatch(deleteOrderById(id))
@@ -79,120 +77,128 @@ const Order: React.FC<IOrder> = () => {
     }
 
     if (error) {
-        return <Error/>
+        return <Error />
     }
     if (loading) {
-        return <Loader/>
+        return <Loader />
     }
     return (
         <div>
-            <div className="row">
-
-                <div className="col-lg-8">
-                    <div className="card mb-3">
-                        <div className="card-body-info">
-
-                            <h2 className="mb-3">
-                                {'name' in order
-                                    ? order.name
-                                    : ''}
+            <div className='row'>
+                <div className='col-lg-8'>
+                    <div className='card mb-3'>
+                        <div className='card-body-info'>
+                            <h2 className='mb-3'>
+                                {'name' in order ? order.name : ''}
                             </h2>
-                            <div className="row mb-3">
-                                <div className="col-6">
-                                    <p className="infoBlockHeaders">
+                            <div className='row mb-3'>
+                                <div className='col-md-6 mb-lg-0 mb-3'>
+                                    <p className='infoBlockHeaders'>
                                         Статус заказа
                                     </p>
                                     <Select
                                         placeholder='Выберите статус заказа'
                                         isSearchable={false}
-                                        value={orderStatuses
-                                            .filter(({value}) =>
-                                                value === order.status)}
+                                        value={orderStatuses.filter(
+                                            ({value}) => value === order.status
+                                        )}
                                         isLoading={loadingStatus}
                                         isDisabled={loadingStatus}
                                         onChange={(e, action) =>
-                                            onChangeHandler(order.id,
-                                                e, action)}
+                                            onChangeHandler(order.id, e, action)
+                                        }
                                         classNamePrefix='select-mini'
                                         className='select-mini'
-                                        name="status"
-                                        options={orderStatuses}/>
+                                        name='status'
+                                        options={orderStatuses}
+                                    />
                                 </div>
-                                <div className="col-6">
-                                    <p className="infoBlockHeaders">
+                                <div className='col-md-6'>
+                                    <p className='infoBlockHeaders'>
                                         Статус оплаты
                                     </p>
                                     <Select
                                         placeholder='Выберите статус оплаты'
                                         isSearchable={false}
-                                        value={paymentStatuses
-                                            .filter(({value}) =>
-                                                value === order.statusPayment)}
+                                        value={paymentStatuses.filter(
+                                            ({value}) =>
+                                                value === order.statusPayment
+                                        )}
                                         isLoading={loadingStatus}
                                         isDisabled={loadingStatus}
                                         onChange={(e, action) =>
-                                            onChangeHandler(order.id,
-                                                e, action)}
+                                            onChangeHandler(order.id, e, action)
+                                        }
                                         classNamePrefix='select-mini'
                                         className='select-mini'
-                                        name="statusPayment"
-                                        options={paymentStatuses}/>
+                                        name='statusPayment'
+                                        options={paymentStatuses}
+                                    />
                                 </div>
                             </div>
 
-                            <button onClick={() => onDeleteHandler(order.id)}
-                                    className='btn btn-danger'>
+                            <button
+                                onClick={() => onDeleteHandler(order.id)}
+                                className='btn btn-danger'
+                            >
                                 Удалить заказ
                             </button>
                         </div>
-                        <OrderStatuses id={order.id} status={order.status}/>
+                        <OrderStatuses id={order.id} status={order.status} />
                     </div>
 
-                    <div className="card mb-3 pb-4">
-                        <div className="card-body-info">
-                            <h2 className="mb-4">Список заказа</h2>
-                            {'items' in order
-                                ? <OrderItems items={order.items}/>
-                                : null
-                            }
-                            <div
-                                className="text-right font-weight-bold mt-3">
+                    <div className='card mb-3 pb-lg-4 pb-0'>
+                        <div className='card-body-info'>
+                            <h2 className='mb-lg-4 mb-2'>Список заказа</h2>
+                            {'items' in order ? (
+                                <OrderItems items={order.items} />
+                            ) : null}
+                            <div className='text-right font-weight-bold mt-3'>
                                 Общая стоимость
-                                <span
-                                    className="text-orange ml-3"
-                                >
+                                <span className='text-orange ml-3'>
                                     {'price' in order
                                         ? order.price.cny.toFixed(2) + ' ¥'
-                                        : null
-                                    }
+                                        : null}
                                 </span>
                             </div>
                         </div>
                     </div>
 
-                    <div className="card mb-3">
-                        <div className="card-body">
-                            <h2 className="mb-4">Документы</h2>
+                    <div className='card mb-3'>
+                        <div className='card-body'>
+                            <h2 className='mb-4'>Документы</h2>
                             <div className={classes.invoiceBtnBlock}>
                                 <button
                                     onClick={() =>
                                         createInvoiceHandler(
-                                            order.id, 'invoice')}
-                                    className={classes.invoiceBtn}>
+                                            order.id,
+                                            'invoice'
+                                        )
+                                    }
+                                    className={classes.invoiceBtn}
+                                >
                                     Invoice
                                 </button>
                                 <button
                                     onClick={() =>
                                         createInvoiceHandler(
-                                            order.id, 'proforma')}
-                                    className={classes.invoiceBtn}>
+                                            order.id,
+                                            'proforma'
+                                        )
+                                    }
+                                    className={classes.invoiceBtn}
+                                >
                                     Proforma
                                 </button>
                                 <button
                                     onClick={() =>
                                         createInvoiceHandler(
-                                            order.id, 'contract')}
-                                    className={classes.invoiceBtn}>
+                                            order.id,
+                                            'contract'
+                                        )
+                                    }
+                                    className={classes.invoiceBtn}
+                                >
                                     Контракт
                                 </button>
                             </div>
@@ -204,67 +210,57 @@ const Order: React.FC<IOrder> = () => {
                         sandboxFiles={order.sandboxFiles}
                         page='orders'
                     />
-
                 </div>
 
-                {'provider' in order && order.provider
-                    ? <div className="col-lg-4">
-                        <div className="card">
-                            <div className="card-body-info">
-                                <p className="infoBlockHeaders mb-1">
+                {'provider' in order && order.provider ? (
+                    <div className='col-lg-4'>
+                        <div className='card'>
+                            <div className='card-body-info'>
+                                <p className='infoBlockHeaders mb-1'>
                                     Поставщик
                                 </p>
-                                <p className="infoBlockText">
+                                <p className='infoBlockText'>
                                     {order.provider.name}
                                 </p>
-                                <p className="infoBlockHeaders mb-1">
-                                    Страна
+                                <p className='infoBlockHeaders mb-1'>Страна</p>
+                                <p className='infoBlockText'>
+                                    {order.provider.country
+                                        ? order.provider.country.name
+                                        : null}
                                 </p>
-                                <p className="infoBlockText">
-                                    {order.provider.country ?
-                                        order.provider.country.name
-                                        : null
-                                    }
-                                </p>
-                                <p className="infoBlockHeaders mb-1">
-                                    Почта
-                                </p>
-                                <p className="infoBlockText">
+                                <p className='infoBlockHeaders mb-1'>Почта</p>
+                                <p className='infoBlockText'>
                                     {order.provider.email}
                                 </p>
-                                <p className="infoBlockHeaders mb-1">
-                                    Телефон
-                                </p>
-                                <p className="infoBlockText">
+                                <p className='infoBlockHeaders mb-1'>Телефон</p>
+                                <p className='infoBlockText'>
                                     {order.provider.phone}
                                 </p>
-                                <p className="infoBlockHeaders mb-1">
-                                    Wechat
-                                </p>
-                                <p className="infoBlockText">
+                                <p className='infoBlockHeaders mb-1'>Wechat</p>
+                                <p className='infoBlockText'>
                                     {order.provider.wechat}
                                 </p>
-                                <p className="infoBlockHeaders mb-1">
-                                    Сайт
-                                </p>
-                                <p className="infoBlockText">
-                                    <a href={order.provider.website}
-                                       target="_blank"
-                                       rel="noreferrer">
+                                <p className='infoBlockHeaders mb-1'>Сайт</p>
+                                <p className='infoBlockText'>
+                                    <a
+                                        href={order.provider.website}
+                                        target='_blank'
+                                        rel='noreferrer'
+                                    >
                                         {order.provider.website}
                                     </a>
                                 </p>
-                                <p className="infoBlockHeaders mb-1 mt-5">
+                                <p className='infoBlockHeaders mb-1 mt-lg-5
+                                 mt-3'>
                                     Перейти на страницу поставщика
                                 </p>
                                 <NavLink to={'/provider/' + order.provider.id}>
-                                    <SvgArrowRight/>
+                                    <SvgArrowRight />
                                 </NavLink>
                             </div>
                         </div>
                     </div>
-                    : null
-                }
+                ) : null}
             </div>
         </div>
     )

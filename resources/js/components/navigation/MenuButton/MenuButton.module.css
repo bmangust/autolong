@@ -27,10 +27,6 @@
     transition: all 0.3s;
 }
 
-.burger span:not(:last-child) {
-    /* margin-bottom: 4px; */
-}
-
 @media (max-width: 767px) {
     .burger {
         display: flex;
