@@ -153,8 +153,6 @@ class Order extends Model
     public function generateInvoice(): bool
     {
         $invoice = new InvoiceDocument();
-        $importer = Importer::first();
-        $provider = $this->provider;
 
         $invoice->order_id = $this->id;
         $invoice->save();
@@ -171,8 +169,6 @@ class Order extends Model
 
         $invoice->saveInfoWithJson([
             'supply' => $supply,
-            'provider' => $provider,
-            'importer' => $importer,
             'proformaNumber' => $proformaNumber,
             'contractNumber' => $contractNumber,
             'proformaStatusPayment' => $proformaStatusPayment,
@@ -183,8 +179,6 @@ class Order extends Model
     public function generateProforma(): bool
     {
         $proforma = new ProformaDocument();
-        $provider = $this->provider;
-        $importer = Importer::first();
 
         $proforma->order_id = $this->id;
         $proforma->save();
@@ -198,8 +192,6 @@ class Order extends Model
 
         $proforma->saveInfoWithJson([
             'supply' => $supply,
-            'importer' => $importer,
-            'provider' => $provider,
             'statusPayment' => $statusPayment,
             'contractNumber' => $contractNumber,
             'proformaNumber' => $proforma->id,
@@ -210,8 +202,6 @@ class Order extends Model
     public function generateContract(): bool
     {
         $contract = new ContractDocument();
-        $importer = Importer::first();
-        $provider = $this->provider;
 
         $contract->order_id = $this->id;
         $contract->save();
@@ -222,8 +212,6 @@ class Order extends Model
         $contractName = $date . '-' . $contract->id;
         $supply = Supply::fob();
         $contract->saveInfoWithJson([
-            'importer' => $importer,
-            'provider' => $provider,
             'name' => $contractName,
             'supply' => $supply,
             'date' => $date,
