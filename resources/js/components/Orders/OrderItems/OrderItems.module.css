@@ -67,7 +67,7 @@
     width: 100%;
     max-width: 450px;
     height: 1px;
-    background: #EBEBEB;
+    background: #ebebeb;
 }
 
 .orderProducts:last-of-type:before {
@@ -95,4 +95,10 @@
     border-radius: 10px;
     color: #b3b5c3;
     font-size: 12px;
+}
+
+@media (max-width: 991px) {
+    .orderProducts:before {
+        max-width: 100%;
+    }
 }

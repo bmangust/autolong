@@ -64,7 +64,7 @@ Route::get('orders/{order}/getpdfinvoice', 'OrderController@getPdfInvoice');
 Route::post('orders/{order}/generatepdfinvoice', 'OrderController@generatePdfInvoice');
 Route::get('orders/{order}/getpdfproforma', 'OrderController@getPdfProforma');
 Route::post('orders/{order}/generatepdfproforma', 'OrderController@generatePdfProforma');
-Route::get('orders/{order}/generatepdfcontract', 'OrderController@getPdfContract');
+Route::get('orders/{order}/getpdfcontract', 'OrderController@getPdfContract');
 Route::post('orders/{order}/generatepdfcontract', 'OrderController@generatePdfContract');
 
 Route::get('tags', 'TagController@index');

@@ -46,3 +46,15 @@
 .inputs > input {
     margin-right: 6px;
 }
+
+@media (max-width: 1199px) {
+    .status {
+        padding: 15px;
+    }
+}
+
+@media (max-width: 991px) {
+    .status .statusBody {
+        justify-content: center;
+    }
+}

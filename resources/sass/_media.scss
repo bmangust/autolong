@@ -7,6 +7,17 @@
     .react-bootstrap-table .table th:first-child {
         padding-left: 15px;
     }
+
+    .card-body-info {
+        padding: 15px;
+    }
+
+    html .select-mini,
+    html .select-mini-tags {
+        &__control {
+            padding: 0 8px;
+        }
+    }
 }
 
 @media (max-width: 991px) {
@@ -17,14 +28,14 @@
     .react-bootstrap-table .table td:first-child,
     .react-bootstrap-table .table th:first-child,
     .row-expansion-style table td:first-child,
-    .row-expansion-style table th:first-child  {
+    .row-expansion-style table th:first-child {
         padding-left: 15px;
     }
 
     .react-bootstrap-table .table td,
     .react-bootstrap-table .table th,
     .row-expansion-style table td,
-    .row-expansion-style table th  {
+    .row-expansion-style table th {
         padding: 1rem;
     }
 
@@ -32,7 +43,6 @@
     .row-expansion-style table th:first-child {
         padding-left: 0 !important;
     }
-
 
     .card-body {
         padding: 15px;
