@@ -15,7 +15,10 @@ import {
     CHANGE_ORDER_STATUS_START,
     CHANGE_ORDER_STATUS_SUCCESS,
     CHANGE_ORDER_STATUS_ERROR,
-    DELETE_ORDER_BY_ID
+    DELETE_ORDER_BY_ID,
+    FETCH_ORDER_INVOICE_SUCCESS,
+    FETCH_ORDER_INVOICE_START,
+    FETCH_ORDER_INVOICE_ERROR
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -131,37 +134,36 @@ export const fetchItemsByVendors = (data) => async dispatch => {
     })
 }
 
-export const changeOrderStatus = (id, data) =>
-    async dispatch => {
-        await dispatch({
-            type: CHANGE_ORDER_STATUS_START
-        })
-        let payment = ''
-        if ('statusPayment' in data) {
-            payment = 'payment'
-        }
-        const url = `/api/orders/${id}/changestatus${payment}`
-        axios
-            .post(url, data)
-            .then((answer) => {
-                dispatch({
-                    type: CHANGE_ORDER_STATUS_SUCCESS,
-                    payload: answer.data
-                })
-                toast.success(createNotyMsg(answer.data.name,
-                    'статус заказа изменен'))
-            }).catch((error: AxiosError) => {
-            dispatch({
-                type: CHANGE_ORDER_STATUS_ERROR,
-                payload: error.response
-            })
-            if (error.response?.status === 400) {
-                toast.error(error.response.data)
-            } else {
-                toast.error(error.message)
-            }
-        })
+export const changeOrderStatus = (id, data) => async dispatch => {
+    await dispatch({
+        type: CHANGE_ORDER_STATUS_START
+    })
+    let payment = ''
+    if ('statusPayment' in data) {
+        payment = 'payment'
     }
+    const url = `/api/orders/${id}/changestatus${payment}`
+    axios
+        .post(url, data)
+        .then((answer) => {
+            dispatch({
+                type: CHANGE_ORDER_STATUS_SUCCESS,
+                payload: answer.data
+            })
+            toast.success(createNotyMsg(answer.data.name,
+                'статус заказа изменен'))
+        }).catch((error: AxiosError) => {
+        dispatch({
+            type: CHANGE_ORDER_STATUS_ERROR,
+            payload: error.response
+        })
+        if (error.response?.status === 400) {
+            toast.error(error.response.data)
+        } else {
+            toast.error(error.message)
+        }
+    })
+}
 
 export const deleteOrderById = (id) => async dispatch => {
     const url = `/api/orders/${id}`
@@ -177,10 +179,36 @@ export const deleteOrderById = (id) => async dispatch => {
 }
 
 
-export const createOrderInvoice = (id, type) => async dispatch => {
+export const fetchOrderInvoice = (id, type) => async dispatch => {
+    await dispatch({
+        type: FETCH_ORDER_INVOICE_START
+    })
     const url = `/api/orders/${id}/getpdf${type}`
     axios
-        .get(url, {
+        .get(url)
+        .then(answer => {
+            dispatch({
+                type: FETCH_ORDER_INVOICE_SUCCESS,
+                payload: answer.data
+            })
+        })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_ORDER_INVOICE_ERROR,
+                payload: error.message
+            })
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+}
+
+export const createOrderInvoice = (id, data, type) => {
+    const url = `/api/orders/${id}/generatepdf${type}`
+    axios
+        .post(url, data, {
             headers: {
                 'Content-Type': 'application/pdf'
             },

@@ -9,7 +9,6 @@ import Select from 'react-select'
 // Actions
 import {
     changeOrderStatus,
-    createOrderInvoice,
     deleteOrderById, fetchOrderById
 } from '../../store/actions/orders'
 
@@ -19,9 +18,6 @@ import {
     IOrdersRootState
 } from '../../components/Orders/IOrders'
 
-// Styles
-import classes from './Orders.module.css'
-
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
@@ -30,6 +26,7 @@ import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import statuses from '../../../statuses/statuses.json'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
+import DocumentsCreate from '../../components/DocumentCreate/DocumentsCreate'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -55,10 +52,6 @@ const Order: React.FC<IOrder> = () => {
             [action.name]: e.value
         }
         dispatch(changeOrderStatus(id, value))
-    }
-
-    const createInvoiceHandler = (id, type) => {
-        dispatch(createOrderInvoice(id, type))
     }
 
     const orderStatuses = Object.entries(
@@ -173,29 +166,7 @@ const Order: React.FC<IOrder> = () => {
                     <div className="card mb-3">
                         <div className="card-body">
                             <h2 className="mb-4">Документы</h2>
-                            <div className={classes.invoiceBtnBlock}>
-                                <button
-                                    onClick={() =>
-                                        createInvoiceHandler(
-                                            order.id, 'invoice')}
-                                    className={classes.invoiceBtn}>
-                                    Invoice
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        createInvoiceHandler(
-                                            order.id, 'proforma')}
-                                    className={classes.invoiceBtn}>
-                                    Proforma
-                                </button>
-                                <button
-                                    onClick={() =>
-                                        createInvoiceHandler(
-                                            order.id, 'contract')}
-                                    className={classes.invoiceBtn}>
-                                    Контракт
-                                </button>
-                            </div>
+                            <DocumentsCreate id={order.id}/>
                         </div>
                     </div>
 

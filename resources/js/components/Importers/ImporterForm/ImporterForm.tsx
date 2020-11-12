@@ -4,6 +4,7 @@ import React from 'react'
 // Third-party
 import {useDispatch} from 'react-redux'
 import {useForm} from 'react-hook-form'
+import {useHistory} from 'react-router-dom'
 
 // Actions
 import {createImporter} from '../../../store/actions/importers'
@@ -21,6 +22,7 @@ const ImporterForm: React.FC = () => {
     } = useForm<ICreateImporterData>()
 
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const importerFormSubmitHandler =
         handleSubmit((formValues: ICreateImporterData) => {

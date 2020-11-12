@@ -16,7 +16,9 @@ import {
     CHANGE_ORDER_STATUS_SUCCESS,
     CHANGE_ORDER_STATUS_ERROR,
     DELETE_ORDER_BY_ID,
-    FETCH_ORDER_INVOICE
+    FETCH_ORDER_INVOICE_START,
+    FETCH_ORDER_INVOICE_SUCCESS,
+    FETCH_ORDER_INVOICE_ERROR
 } from '../../store/actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -46,6 +48,8 @@ export interface IOrdersState {
     orderProducts: IProduct[] | []
     loading: boolean;
     loadingStatus: boolean
+    loadingInvoice: boolean
+    invoiceInputs: any
     error: any
     statusError: any
 }
@@ -154,8 +158,21 @@ interface IClearOrderProducts {
     type: typeof LOCATION_CHANGE
 }
 
-interface IFetchOrderInvoice {
-    type: typeof FETCH_ORDER_INVOICE
+interface IFetchOrderInvoiceStart {
+    type: typeof FETCH_ORDER_INVOICE_START
+    loadingInvoice: boolean
+}
+
+interface IFetchOrderInvoiceSuccess {
+    type: typeof FETCH_ORDER_INVOICE_SUCCESS
+    payload: any
+    loadingInvoice: boolean
+}
+
+interface IFetchOrderInvoiceError {
+    type: typeof FETCH_ORDER_INVOICE_ERROR
+    payload: any
+    loadingInvoice: boolean
 }
 
 export type IOrdersActionTypes =
@@ -165,4 +182,5 @@ export type IOrdersActionTypes =
     IFetchOrderProducts | IFetchItemsByVendorStart | IFetchItemsByVendorError |
     IFetchItemsByVendorSuccess | IChangeOrderStatusStart |
     IChangeOrderStatusSuccess | IChangeOrderStatusError |
-    IDeleteOrderById | IClearOrderProducts | IFetchOrderInvoice
+    IDeleteOrderById | IClearOrderProducts | IFetchOrderInvoiceStart |
+    IFetchOrderInvoiceSuccess | IFetchOrderInvoiceError

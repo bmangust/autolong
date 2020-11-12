@@ -84,7 +84,6 @@
         "react-transition-group": "^4.4.1",
         "redux": "^4.0.5",
         "redux-devtools-extension": "^2.13.8",
-        "redux-form": "^8.3.6",
         "redux-thunk": "^2.3.0",
         "typescript-plugin-css-modules": "^2.4.0",
         "yup": "^0.29.3"

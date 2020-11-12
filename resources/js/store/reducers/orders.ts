@@ -6,15 +6,19 @@ import {
     CREATE_ORDER_ERROR,
     CREATE_ORDER_START,
     CREATE_ORDER_SUCCESS,
+    DELETE_ORDER_BY_ID,
     FETCH_ITEMS_BY_VENDOR_ERROR,
     FETCH_ITEMS_BY_VENDOR_START,
     FETCH_ITEMS_BY_VENDOR_SUCCESS,
     FETCH_ORDER_ERROR,
+    FETCH_ORDER_INVOICE_ERROR,
+    FETCH_ORDER_INVOICE_START,
+    FETCH_ORDER_INVOICE_SUCCESS,
     FETCH_ORDER_START,
     FETCH_ORDER_SUCCESS,
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_START,
-    FETCH_ORDERS_SUCCESS, DELETE_ORDER_BY_ID, FETCH_ORDER_INVOICE
+    FETCH_ORDERS_SUCCESS
 } from '../actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -27,6 +31,8 @@ const initialState: IOrdersState = {
     orderProducts: [],
     loading: true,
     loadingStatus: false,
+    loadingInvoice: true,
+    invoiceInputs: [],
     error: null,
     statusError: null
 }
@@ -104,9 +110,17 @@ export default function ordersReducer(
             return {
                 ...state, orderProducts: []
             }
-        case FETCH_ORDER_INVOICE:
+        case FETCH_ORDER_INVOICE_START:
             return {
-                ...state
+                ...state, loadingInvoice: true
+            }
+        case FETCH_ORDER_INVOICE_SUCCESS:
+            return {
+                ...state, loadingInvoice: false, invoiceInputs: action.payload
+            }
+        case FETCH_ORDER_INVOICE_ERROR:
+            return {
+                ...state, loadingInvoice: false, error: action.payload
             }
         default:
             return state
