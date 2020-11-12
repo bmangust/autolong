@@ -157,7 +157,9 @@ class Order extends Model
         $provider = $this->provider;
 
         $invoice->order_id = $this->id;
-        $invoice = $invoice->save();
+        $invoice->save();
+
+        $invoice = $this->invoice;
 
         $contractInfo = $this->contract->getInfo();
         $supply = $contractInfo->supply;
@@ -185,7 +187,9 @@ class Order extends Model
         $importer = Importer::first();
 
         $proforma->order_id = $this->id;
-        $proforma = $proforma->save();
+        $proforma->save();
+
+        $proforma = $this->proforma;
 
         $contractInfo = $this->contract->getInfo();
         $supply = $contractInfo->supply;
@@ -210,7 +214,9 @@ class Order extends Model
         $provider = $this->provider;
 
         $contract->order_id = $this->id;
-        $contract = $contract->save();
+        $contract->save();
+
+        $contract = $this->contract;
 
         $date = Carbon::now()->format('Y/m/d');
         $contractName = $date . '-' . $contract->id;
