@@ -11,11 +11,19 @@ import classes from './Sidebar.module.css'
 import {routes} from '../router/routes'
 import SvgHelp from '../../UI/iconComponents/Help'
 
-const Sidebar: React.FC<{ isOpen: boolean }> = ({isOpen}) => {
+const Sidebar: React.FC<{ isOpen: boolean, setIsOpen: Function }> = (
+    {isOpen, setIsOpen}) => {
+    const onHideMenuHandler = () => {
+        if (isOpen) {
+            setIsOpen(false)
+        }
+    }
+
     const renderLinks = (routes) => {
         return routes.map((route, index) =>
             !route.hide ? (
                 <NavLink
+                    onClick={onHideMenuHandler}
                     key={index}
                     to={route.path}
                     className={classes.navLink}

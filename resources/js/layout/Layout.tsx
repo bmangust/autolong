@@ -17,7 +17,7 @@ const Layout: React.FC = (props) => {
             <div className='container'>
                 <div className='row'>
                     <div className='col-xl-2 col-lg-3 p-lg-0'>
-                        <Sidebar isOpen={isOpen}/>
+                        <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}/>
                     </div>
                     <main role='main' className='col-xl-10 col-lg-9 pl-lg-5'>
                         <Header isOpen={isOpen} setIsOpen={setIsOpen}/>
