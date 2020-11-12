@@ -244,16 +244,17 @@ const Product: React.FC = () => {
 
                 {product.orders.length
                     ? <div className="card card-body mb-3">
-                        <h2 className='mb-3'>Список заказов</h2>
+                        <h2 className='mb-2'>Список заказов</h2>
                         {product.orders.map(order => (
                             <div key={order.id + order.name}
-                                 className='row'>
-                                <div className="col-8 font-weight-bold">
+                                 className='row infoBlockText mb-2'>
+                                <div className="col-8">
                                     <NavLink to={`/order/${order.id}`}>
                                         {order.name}
                                     </NavLink>
                                 </div>
-                                <div className="col-4 text-orange">
+                                <div
+                                    className="col-4 text-orange">
                                     {order.items.find(({productId}) =>
                                         productId === product.id
                                     )?.quantity} шт
