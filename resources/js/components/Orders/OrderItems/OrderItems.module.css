@@ -56,7 +56,22 @@
 .orderProducts {
     background: white;
     position: relative;
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+}
+
+.orderProducts:before {
+    content: '';
+    position: absolute;
+    right: 0;
+    bottom: -7px;
+    width: 100%;
+    max-width: 450px;
+    height: 1px;
+    background: #EBEBEB;
+}
+
+.orderProducts:last-of-type:before {
+    content: none;
 }
 
 .orderProductsName,

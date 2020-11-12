@@ -75,6 +75,11 @@ const ContainersTable: React.FC = () => {
             dataField: 'city',
             text: 'Дополнительно',
             formatter: cityFormatter
+        },
+        {
+            dataField: 'quantityItems',
+            text: 'Кол-во товаров',
+            sort: true
         }
     ]
 
