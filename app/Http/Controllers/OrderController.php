@@ -151,8 +151,8 @@ class OrderController extends Controller
             'numbers' => 'required'
         ]);
         $numbers = array_unique($order->cleanSpaceInArrayItems($request->input('numbers')));
-        $availableProducts = [];
-        $unknownKey = 'number';
+        $unknownProductsKey = 'number';
+        $availableProducts = [$unknownProductsKey => []];
         foreach ($numbers as $number) {
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
@@ -165,13 +165,9 @@ class OrderController extends Controller
                     $availableProducts[$providerId] = array(new ProductResource($product->first()));
                 }
             } else {
-                if (array_key_exists($unknownKey, $availableProducts)) {
-                    $value = $availableProducts[$unknownKey];
-                    $value[] = $number;
-                    $availableProducts[$unknownKey] = $value;
-                } else {
-                    $availableProducts[$unknownKey] = array($number);
-                }
+                $value = $availableProducts[$unknownProductsKey];
+                $value[] = $number;
+                $availableProducts[$unknownProductsKey] = $value;
             }
         }
         return response()->json($availableProducts);
