@@ -213,7 +213,7 @@ class OrderController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.proforma', [
-            'order' => $this,
+            'order' => $order,
             'supply' => $proforma->supply,
             'importer' => $importer,
             'provider' => $provider,
