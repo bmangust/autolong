@@ -157,11 +157,21 @@ class OrderController extends Controller
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
                 $provider = $product->first()->provider->id;
-                $availableProducts[$provider] =  new ProductResource($product->first());
+                $arrayProducts = [];
+                if (empty($arrayProducts)) {
+                    $arrayProducts[] = new ProductResource($product->first());
+                    $availableProducts[$provider] = [];
+                }
+                if (prev($availableProducts) == $provider) {
+                    $arrayProducts[] = new ProductResource($product->first());
+                } else {
+                    $availableProducts[$provider ] = $arrayProducts;
+                }
             } else {
                 $availableProducts[] = ['number' => $number];
             }
         }
+        dd($availableProducts);
         return response()->json($availableProducts, 200);
     }
 
