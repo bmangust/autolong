@@ -6,12 +6,7 @@ trait TranslateHtmlCodesToTagsTrait
 {
     public function translateHtmlCodesToTags(string $text): string
     {
-        $string = strtr($text, [
-            '&lt;' => '<',
-            '&gt;' => '>',
-            '&quot;' => '"'
-        ]);
-        return $string;
+        return htmlspecialchars($text);
     }
 
     public function cutScriptTagsInText(string $text): string

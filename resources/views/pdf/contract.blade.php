@@ -27,7 +27,7 @@
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
                     {{ $importer->name_ru ? $importer->name_ru : '-' }}, именуемое в дальнейшем
-                    <i>Продавец</i>, в лице Директора !ИМЯ ДИРЕКТОРА!, и Общество с
+                    <i>Продавец</i>, в лице Директора {{ $directorRu }}, и Общество с
                     ограниченной ответственностью «Деталь поставка», Россия,
                     именуемое в дальнейшем <i>Покупатель</i>, в лице Директора
                     Холоденко Андрея Геннадьевича, действующего на основании
@@ -38,7 +38,7 @@
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
                     {{ $importer->name_en ? $importer->name_en : '-' }} hereinafter referred to
-                    as <i>‘the Seller’</i>, represented by the Director !ИМЯ ДИРЕКТОРА!,
+                    as <i>‘the Seller’</i>, represented by the Director {{ $directorEn }},
                     on the one part, and LLC «Component Supply»(«СS LLC»,
                     Russia, hereinafter referred to as <i><i>‘the Buyer’</i></i>, on
                     behalf of Director Kholodenko Andrey Gennadyevich,
@@ -806,7 +806,7 @@
                 <p style="margin: 0;">
                     ПОКУПАТЕЛЬ: {{ $importer->name_ru }}
                 </p>
-                {{ $requisites }}
+                {!! $requisites !!}
             </td>
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">
@@ -841,7 +841,7 @@
                     Директор/Director
                 </p>
                 <p style="margin: 0;">
-                    Chi Ning !{ИМЯ ДИРЕКТОРА}!
+                    Chi Ning {{ $directorEn }}
                 </p>
                 <img style="max-width: 300px; max-height: 300px;" src="{{ asset('imgs/seal.jpg') }}" alt="">
             </td>
