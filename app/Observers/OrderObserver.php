@@ -68,6 +68,9 @@ class OrderObserver
     public function deleted(Order $order)
     {
         $order->orderItems()->delete();
+        $order->contract()->delete();
+        $order->proforma()->delete();
+        $order->invoice()->delete();
         if (Log::$write) {
             $log = new Log();
             $log->create([
