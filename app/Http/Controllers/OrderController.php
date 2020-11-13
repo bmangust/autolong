@@ -7,7 +7,6 @@ use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
 use App\Product;
-use App\Provider;
 use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -153,6 +152,7 @@ class OrderController extends Controller
         ]);
         $numbers = array_unique($order->cleanSpaceInArrayItems($request->input('numbers')));
         $availableProducts = [];
+        $unknownKey = 'number';
         foreach ($numbers as $number) {
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
@@ -162,15 +162,15 @@ class OrderController extends Controller
                     $value[] = new ProductResource($product->first());
                     $availableProducts[$providerId] = $value;
                 } else {
-                    $availableProducts[$providerId] =  array(new ProductResource($product->first()));
+                    $availableProducts[$providerId] = array(new ProductResource($product->first()));
                 }
             } else {
-                if (array_key_exists('number', $availableProducts)) {
-                    $value = $availableProducts['number'];
+                if (array_key_exists($unknownKey, $availableProducts)) {
+                    $value = $availableProducts[$unknownKey];
                     $value[] = $number;
-                    $availableProducts['number'] = $value;
-                }  else {
-                    $availableProducts['number'] = array($number);
+                    $availableProducts[$unknownKey] = $value;
+                } else {
+                    $availableProducts[$unknownKey] = array($number);
                 }
             }
         }
