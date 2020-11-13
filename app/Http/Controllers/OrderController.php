@@ -171,7 +171,6 @@ class OrderController extends Controller
                 $availableProducts[] = ['number' => $number];
             }
         }
-        dd($availableProducts);
         return response()->json($availableProducts, 200);
     }
 
