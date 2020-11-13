@@ -66,7 +66,7 @@ export const fetchProductById = (id) => async dispatch => {
         })
 }
 
-export const createProduct = (data, redirect) => async dispatch => {
+export const createProduct = (data, redirect = '') => async dispatch => {
     const formData = new FormData()
     Object.entries(data).map(([key, val]) => {
         if (Array.isArray(val)) {
@@ -89,7 +89,9 @@ export const createProduct = (data, redirect) => async dispatch => {
             toast.success(
                 createNotyMsg(answer.data.nameRu,
                     `товар ${answer.data.autolongNumber} создан`))
-            dispatch(push(redirect))
+            if (redirect) {
+                dispatch(push(redirect))
+            }
         })
         .catch((error: AxiosError) => {
             dispatch({

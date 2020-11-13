@@ -17,7 +17,7 @@ import {IContainersRootState} from '../IContainers'
 import Loader from '../../UI/Loader/Loader'
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
-import {nameToLinkFormatter} from '../../../utils'
+import {getContainerStatusName, nameToLinkFormatter} from '../../../utils'
 import Error from '../../UI/Error/Error'
 
 const ContainersTable: React.FC = () => {
@@ -69,6 +69,7 @@ const ContainersTable: React.FC = () => {
             dataField: 'status',
             text: 'Статус',
             classes: 'status',
+            formatter: getContainerStatusName,
             sort: true
         },
         {

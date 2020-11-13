@@ -65,15 +65,22 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                            defaultValue={value} label={key}/>
                 ))}
                 {type === 'contract'
-                && !('contractEndDate' in invoiceInputs)
-                && !('classification' in invoiceInputs)
                     ? <>
-                        <Input id='contractEndDate' type='date'
-                               label='contractEndDate'
-                               ref={register} name='contractEndDate'/>
-                        <Input id='classification' type='text'
-                               label='classification'
-                               ref={register} name='classification'/>
+                        {!('contractEndDate' in invoiceInputs)
+                            ? <Input id='contractEndDate' type='date'
+                                     label='contractEndDate'
+                                     ref={register} name='contractEndDate'/>
+                            : null}
+                        {!('classificationEn' in invoiceInputs)
+                            ? <Input id='classificationEn' type='text'
+                                     label='classificationEn'
+                                     ref={register} name='classificationEn'/>
+                            : null}
+                        {!('classificationRu' in invoiceInputs)
+                            ? <Input id='classificationRu' type='text'
+                                     label='classificationRu'
+                                     ref={register} name='classificationRu'/>
+                            : null}
                     </>
                     : null
                 }
