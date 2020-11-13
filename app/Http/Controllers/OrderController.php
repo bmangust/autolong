@@ -174,7 +174,6 @@ class OrderController extends Controller
                 }
             }
         }
-        dd($availableProducts);
         return $availableProducts;
     }
 
