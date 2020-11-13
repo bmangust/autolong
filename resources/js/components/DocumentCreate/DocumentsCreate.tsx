@@ -118,6 +118,18 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 label='classificationRu'
                                 ref={register} name='classificationRu'/>
                             : null}
+                        {!('directorRu' in invoiceInputs)
+                            ? <Input
+                                id='directorRu' type='text'
+                                label='directorRu'
+                                ref={register} name='directorRu'/>
+                            : null}
+                        {!('directorEn' in invoiceInputs)
+                            ? <Input
+                                id='directorEn' type='text'
+                                label='directorEn'
+                                ref={register} name='directorEn'/>
+                            : null}
                     </>
                     : null
                 }
