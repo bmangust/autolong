@@ -58,7 +58,7 @@ const Product: React.FC = () => {
                                     product.image,
                                     null,
                                     product.nameRu,
-                                    'border rounded p-2')}
+                                    'border rounded p-2 mb-lg-0 mb-3')}
                             </div>
                             <div className='col-lg-7'>
                                 <table
@@ -200,13 +200,13 @@ const Product: React.FC = () => {
                                     }/>
                             </div>
 
-                            <div className="col-lg-5 mt-4">
+                            <div className="col-lg-5 mt-lg-4 mt-0">
                                 <p className="infoBlockHeaders">
                                     Дата добавления
                                 </p>
                             </div>
 
-                            <div className="col-lg-7 mt-4">
+                            <div className="col-lg-7 mt-lg-4 mt-0">
                                 <p className="infoBlockText">
                                     {'createdAt' in product
                                         ? timeConverter(product.createdAt)
@@ -229,7 +229,7 @@ const Product: React.FC = () => {
                             </div>
 
                         </div>
-                        <div className='d-flex justify-content-between'>
+                        <div className='d-flex justify-content-between flex-lg-row flex-column'>
                             <NavLink to={`/productedit/${id}`}
                                      className='editButton'>
                                 Редактировать информацию

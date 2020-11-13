@@ -42,3 +42,11 @@
     margin-right: 13px;
     width: 15px;
 }
+
+
+@media (max-width: 767px) {
+    .Error span {
+        padding: 6px 30px;
+        text-align: center;
+    }
+}
