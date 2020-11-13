@@ -158,7 +158,7 @@ const SandboxFilesCard: React.FC<{
     }
 
     return <>
-        <div className='card card-body'>
+        <div className='card card-body mb-lg-0 mb-3'>
             {sandboxFilesState
                 ? sandboxFilesState.map((file) => {
                     return <div

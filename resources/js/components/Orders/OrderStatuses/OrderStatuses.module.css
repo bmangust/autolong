@@ -58,3 +58,17 @@
         justify-content: center;
     }
 }
+
+
+@media (max-width: 767px) {
+    .inputs {
+        flex-direction: column;
+        margin-bottom: 15px;
+    }
+
+    .inputs > input {
+        margin-right: 0;
+        margin-bottom: 6px;
+    }
+}
+
