@@ -152,25 +152,26 @@ class OrderController extends Controller
         ]);
         $numbers = array_unique($order->cleanSpaceInArrayItems($request->input('numbers')));
         $unknownProductsKey = 'number';
-        $availableProducts = [$unknownProductsKey => []];
+        $availableAndUnknownProducts = [$unknownProductsKey => []];
         foreach ($numbers as $number) {
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
                 $providerId = $product->first()->provider->id;
-                if (array_key_exists($providerId, $availableProducts)) {
-                    $value = $availableProducts[$providerId];
+                if (array_key_exists($providerId, $availableAndUnknownProducts)) {
+                    $value = $availableAndUnknownProducts[$providerId];
                     $value[] = new ProductResource($product->first());
-                    $availableProducts[$providerId] = $value;
+                    $availableAndUnknownProducts[$providerId] = $value;
                 } else {
-                    $availableProducts[$providerId] = array(new ProductResource($product->first()));
+                    $availableAndUnknownProducts[$providerId] = array(new ProductResource($product->first()));
                 }
             } else {
-                $value = $availableProducts[$unknownProductsKey];
+                $value = $availableAndUnknownProducts[$unknownProductsKey];
                 $value[] = $number;
-                $availableProducts[$unknownProductsKey] = $value;
+                $availableAndUnknownProducts[$unknownProductsKey] = $value;
             }
         }
-        return response()->json($availableProducts);
+        dd($availableAndUnknownProducts);
+        return response()->json($availableAndUnknownProducts);
     }
 
     public function getPdfContract(Order $order)
