@@ -806,7 +806,7 @@
                 <p style="margin: 0;">
                     ПОКУПАТЕЛЬ: {{ $importer->name_ru }}
                 </p>
-                {!! $requisites !!}
+                {!! $requisites ? $requisites : '-' !!}
             </td>
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">

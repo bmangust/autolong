@@ -151,16 +151,30 @@ class OrderController extends Controller
         $request->validate([
             'numbers' => 'required'
         ]);
-        $numbers = $order->cleanSpaceInArrayItems($request->input('numbers'));
+        $numbers = array_unique($order->cleanSpaceInArrayItems($request->input('numbers')));
         $availableProducts = [];
         foreach ($numbers as $number) {
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
-                $availableProducts[] =  new ProductResource($product->first());
+                $providerId = $product->first()->provider->id;
+                if (array_key_exists($providerId, $availableProducts)) {
+                    $value = $availableProducts[$providerId];
+                    $value[] = new ProductResource($product->first());
+                    $availableProducts[$providerId] = $value;
+                } else {
+                    $availableProducts[$providerId] =  array(new ProductResource($product->first()));
+                }
             } else {
-                $availableProducts[] = ['number' => $number];
+                if (array_key_exists('number', $availableProducts)) {
+                    $value = $availableProducts['number'];
+                    $value[] = $number;
+                    $availableProducts['number'] = $value;
+                }  else {
+                    $availableProducts['number'] = array($number);
+                }
             }
         }
+        dd($availableProducts);
         return $availableProducts;
     }
 
