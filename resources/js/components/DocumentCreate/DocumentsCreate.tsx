@@ -42,7 +42,6 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
 
     const fetchInvoiceHandler = (id, type) => {
         setType(type)
-        console.log(type)
         setIsOpen(true)
         dispatch(fetchOrderInvoice(id, type))
     }
@@ -56,37 +55,36 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
             dispatch(createOrderInvoice(id, formValues, type))
         })
 
+    modal = <>
+        <Form onSubmit={documentCreateSubmitHandler}>
+            <div className='row'>
+                {Object.entries(invoiceInputs).map(([key, value]) => (
+                    <Input key={key} id={key}
+                           ref={register} name={key}
+                           defaultValue={value} label={key}/>
+                ))}
+                {type === 'contract'
+                    ? <Input id='contractEndDate' type='date'
+                             label='contractEndDate'
+                             ref={register} name='contractEndDate'/>
+                    : null
+                }
+            </div>
+            <button className='btn btn-success mr-4'>
+                Создать
+            </button>
+            <button onClick={onCloseModalHandler}
+                    className='btn btn-light'>
+                Отменить
+            </button>
+        </Form>
+    </>
+
     if (error) {
         modal = <Error/>
     }
     if (loadingInvoice) {
         modal = <Loader/>
-    }
-    if (invoiceInputs) {
-        modal = <>
-            <Form onSubmit={documentCreateSubmitHandler}>
-                <div className='row'>
-                    {Object.entries(invoiceInputs).map(([key, value]) => (
-                        <Input key={key} id={key}
-                               ref={register} name={key}
-                               defaultValue={value} label={key}/>
-                    ))}
-                    {type === 'contract'
-                        ? <Input id='contractEndDate' type='date'
-                                 label='contractEndDate'
-                                 ref={register} name='contractEndDate'/>
-                        : null
-                    }
-                </div>
-                <button className='btn btn-success mr-4'>
-                    Создать
-                </button>
-                <button onClick={onCloseModalHandler}
-                        className='btn btn-light'>
-                    Отменить
-                </button>
-            </Form>
-        </>
     }
 
     return (

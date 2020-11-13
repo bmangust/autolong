@@ -208,10 +208,12 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
 export const createOrderInvoice = (id, data, type) => {
     const url = `/api/orders/${id}/generatepdf${type}`
     axios
-        .post(url, data)
+        .post(url, data, {
+            responseType: 'blob'
+        })
         .then(answer => {
             const blob = new Blob([answer.data], {type: 'application/pdf'})
-            toast.success('Документ сгенерирован')
+            toast.success(`${type} сгенерирован`)
             saveAs(blob, `${type}.pdf`)
         })
         .catch((error: AxiosError) => {
