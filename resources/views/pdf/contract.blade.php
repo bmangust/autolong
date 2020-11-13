@@ -26,8 +26,7 @@
         <tr>``
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
-                    {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country->name : '-' }}, именуемое в дальнейшем
+                    {{ $importer->name_ru ? $importer->name_ru : '-' }}, именуемое в дальнейшем
                     <i>Продавец</i>, в лице Директора !ИМЯ ДИРЕКТОРА!, и Общество с
                     ограниченной ответственностью «Деталь поставка», Россия,
                     именуемое в дальнейшем <i>Покупатель</i>, в лице Директора
@@ -38,8 +37,7 @@
             </td>
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
-                    {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country->name : '-' }} hereinafter referred to
+                    {{ $importer->name_en ? $importer->name_en : '-' }} hereinafter referred to
                     as <i>‘the Seller’</i>, represented by the Director !ИМЯ ДИРЕКТОРА!,
                     on the one part, and LLC «Component Supply»(«СS LLC»,
                     Russia, hereinafter referred to as <i><i>‘the Buyer’</i></i>, on
@@ -808,53 +806,7 @@
                 <p style="margin: 0;">
                     ПОКУПАТЕЛЬ: {{ $importer->name_ru }}
                 </p>
-                <p style="margin: 0;">
-                    ОГРН 1157746416960
-                </p>
-                <p style="margin: 0;">
-                    ИНН/КПП 7721305869/ 772101001
-                </p>
-                <p style="margin: 0;">
-                    ОКПО 45086890
-                </p>
-                <p style="margin: 0;">
-                    {{ $importer->address }}
-                </p>
-                <p style="margin: 0;">
-                    Обособленное подразделение: 142715, Московская область, Ленинский район, Городское поселение Видное
-                    (пгт), д. Апаринки, вл. 11
-                </p>
-                <p style="margin: 0;">
-                    Р/сч в Юанях: 40702156438000000728
-                </p>
-                <p style="margin: 0;">
-                    В <b>ПАО Сбербанк</b>
-                </p>
-                <p style="margin: 0;">
-                    К/с 30101810400000000225
-                </p>
-                <p style="margin: 0;">
-                    SWIFT: SABRRUMM
-                </p>
-                <p style="margin: 0;">
-                    АДРЕС БАНКА:
-                </p>
-                <p style="margin: 0;">
-                    Российская Федерация г.Москва, ул. Вавилова, д.19
-                </p>
-                <p style="margin: 0;">
-                    БИК 044525225
-                </p>
-                <p style="margin: 0; ">
-                    ПОКУПАТЕЛЬ/THE BUYER
-                </p>
-                <p style="margin: 0; ">
-                    Директор/Director
-                </p>
-                <p style="margin: 0; ">
-                    _Kholodenko A.G.___
-                </p>
-                <img style="max-width: 300px; max-height: 300px;" src="{{ asset('imgs/seal.png') }}" alt="">
+                {{ $requisites }}
             </td>
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">
