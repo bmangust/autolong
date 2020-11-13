@@ -170,7 +170,6 @@ class OrderController extends Controller
                 $availableAndUnknownProducts[$unknownProductsKey] = $value;
             }
         }
-        dd($availableAndUnknownProducts);
         return response()->json($availableAndUnknownProducts);
     }
 
