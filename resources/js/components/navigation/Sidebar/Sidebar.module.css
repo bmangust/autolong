@@ -82,6 +82,12 @@ a.help:hover {
     text-align: center;
 }
 
+@media (max-width: 1199px) {
+    .help svg {
+        left: 50%;
+        transform: translateX(-50%);
+    }
+}
 
 @media (max-width: 991px) {
     .sidebar {
@@ -125,8 +131,6 @@ a.help:hover {
 
     .help svg {
         top: -30px;
-        left: 50%;
-        transform: translateX(-50%);
     }
 
     .navLink {
