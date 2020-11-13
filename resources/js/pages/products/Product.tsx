@@ -229,7 +229,8 @@ const Product: React.FC = () => {
                             </div>
 
                         </div>
-                        <div className='d-flex justify-content-between flex-lg-row flex-column'>
+                        <div className='d-flex justify-content-between
+                         flex-lg-row flex-column'>
                             <NavLink to={`/productedit/${id}`}
                                      className='editButton'>
                                 Редактировать информацию
