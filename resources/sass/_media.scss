@@ -23,6 +23,7 @@
 @media (max-width: 991px) {
     .react-bootstrap-table .table thead th {
         padding-bottom: 10px;
+        white-space: nowrap;
     }
 
     .react-bootstrap-table .table td:first-child,
@@ -62,6 +63,14 @@
         line-height: 1;
         padding-right: 10px;
     }
+
+    .border-right {
+        border-color: transparent !important;
+    }
+
+    .custom-switch {
+        z-index: 0;
+    }
 }
 
 @media (max-width: 767px) {
@@ -73,10 +82,24 @@
         overflow-x: auto !important;
     }
 
-    .infoBlockText span {
+    .infoBlockText > span {
         font-size: 12px !important;
     }
 
+    .email,
+    .phone,
+    .status {
+        white-space: nowrap;
+    }
+
+    input:not([type='checkbox']),
+    textarea {
+        font-size: 12px;
+
+        &::placeholder {
+            font-size: 12px;
+        }
+    }
 }
 
 @media (max-width: 575px) {
