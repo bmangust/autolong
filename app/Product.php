@@ -16,12 +16,12 @@ class Product extends Model
 
     public function setAboutRuAttribute($value)
     {
-        $this->attributes['about_ru'] = preg_replace('#<script.*<\/script>#', '', $value);
+        $this->attributes['about_ru'] = $this->cutScriptTagsInText($value);
     }
 
     public function setAboutEnAttribute($value)
     {
-        $this->attributes['about_en'] = preg_replace('#<script.*<\/script>#', '', $value);
+        $this->attributes['about_en'] = $this->cutScriptTagsInText($value);
     }
 
     public function catalog()

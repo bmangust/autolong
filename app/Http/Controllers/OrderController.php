@@ -186,7 +186,7 @@ class OrderController extends Controller
             'supply' => $contract->supply,
             'importer' => $importer,
             'provider' => $provider,
-            'requisites' => $contract->requisites,
+            'requisites' => $order->cutScriptTagsInText($contract->requisites),
             'orderPrice' => $order->getOrderSumInCny(),
             'classificationRu' => $contract->classificationRu,
             'classificationEn' => $contract->classificationEn,

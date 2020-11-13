@@ -10,8 +10,7 @@ use Illuminate\Support\Facades\App;
 
 class Order extends Model
 {
-    use TranslateToSnakeCaseTrait;
-    use CleaningSpaceTrait;
+    use TranslateToSnakeCaseTrait, TranslateHtmlCodesToTagsTrait, CleaningSpaceTrait;
 
     public const SANDBOX_DIRECTORY = '/orders/';
     public const CONTRACT_DIRECTORY = '/orders/';

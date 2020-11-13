@@ -13,4 +13,9 @@ trait TranslateHtmlCodesToTagsTrait
         ]);
         return $string;
     }
+
+    public function cutScriptTagsInText(string $text): string
+    {
+       return preg_replace('#<script.*<\/script>#', '', $text);
+    }
 }
