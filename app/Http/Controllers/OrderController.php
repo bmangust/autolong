@@ -157,12 +157,12 @@ class OrderController extends Controller
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
                 $provider = $product->first()->provider->id;
-                $availableProducts[$provider] = ['product' => new ProductResource($product->first())];
+                $availableProducts[$provider] =  new ProductResource($product->first());
             } else {
                 $availableProducts[] = ['number' => $number];
             }
         }
-        return $availableProducts;
+        return response()->json($availableProducts, 200);
     }
 
     public function getPdfContract(Order $order)
