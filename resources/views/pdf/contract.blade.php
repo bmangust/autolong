@@ -23,11 +23,11 @@
                     style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $date }}</span>
             </th>
         </tr>
-        <tr>
+        <tr>``
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
                     {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country : '-' }}, именуемое в дальнейшем
+                    {{ $provider->country ? $provider->country->name : '-' }}, именуемое в дальнейшем
                     <i>Продавец</i>, в лице Директора !ИМЯ ДИРЕКТОРА!, и Общество с
                     ограниченной ответственностью «Деталь поставка», Россия,
                     именуемое в дальнейшем <i>Покупатель</i>, в лице Директора
@@ -39,7 +39,7 @@
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
                     {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country : '-' }} hereinafter referred to
+                    {{ $provider->country ? $provider->country->name : '-' }} hereinafter referred to
                     as <i>‘the Seller’</i>, represented by the Director !ИМЯ ДИРЕКТОРА!,
                     on the one part, and LLC «Component Supply»(«СS LLC»,
                     Russia, hereinafter referred to as <i><i>‘the Buyer’</i></i>, on
@@ -58,10 +58,9 @@
                     <span style="font-weight: bold;">1.1.</span>
                     <i>Продавец</i>
                     продал, а <i>Покупатель</i> купил на условиях {{ $supply }}
-                    согласно Инкотермс-2010, дополнительные приборы
-                    освещения для сельскохозяйственной техники, (далее –
+                    согласно Инкотермс-2010, {{ $classification }}, (далее –
                     Товар), производства {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country : '-' }}.
+                    {{ $provider->country ? $provider->country->name : '-' }}.
                     Товар ввозится на территорию Российской Федерации.
                 </p>
                 <p style="margin: 0;">
@@ -78,11 +77,11 @@
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">1.1.</span>
                     <i>Seller</i> has
-                    sold and the <i>Buyer</i> has bought on terms EXW-Wenzhou in
+                    sold and the <i>Buyer</i> has bought on terms {{ $supply }} in
                     accordance with Incoterms 2010, additional lighting
                     devices for agricultural machinery, (hereinafter -
                     Goods), {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country : '-' }}. Goods are being imported into the
+                    {{ $provider->country ? $provider->country->name : '-' }}. Goods are being imported into the
                     territory of the Russian Federation.
                 </p>
                 <p style="margin: 0;">

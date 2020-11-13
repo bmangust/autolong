@@ -187,8 +187,8 @@ class OrderController extends Controller
             'importer' => $importer,
             'provider' => $provider,
             'orderPrice' => $order->getOrderSumInCny(),
-            'classification' => $contract->classification,
-            'providerCountry' => $order->provider->country->name,
+            'classificationRu' => $contract->classificationRu,
+            'classificationEn' => $contract->classificationEn,
             'contractEndDate' => $contract->contractEndDate
         ]);
         return $newPdf->download();
