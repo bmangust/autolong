@@ -174,7 +174,7 @@ class OrderController extends Controller
                 }
             }
         }
-        return $availableProducts;
+        return response()->json($availableProducts);
     }
 
     public function getPdfContract(Order $order)
