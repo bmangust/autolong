@@ -64,9 +64,14 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                            defaultValue={value} label={key}/>
                 ))}
                 {type === 'contract'
-                    ? <Input id='contractEndDate' type='date'
-                             label='contractEndDate'
-                             ref={register} name='contractEndDate'/>
+                    ? <><
+                        Input id='contractEndDate' type='date'
+                              label='contractEndDate'
+                              ref={register} name='contractEndDate'/>
+                        <Input id='classification' type='text'
+                               label='classification'
+                               ref={register} name='classification'/>
+                    </>
                     : null
                 }
             </div>
