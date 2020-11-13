@@ -106,7 +106,7 @@ class Order extends Model
         return $sum;
     }
 
-    public function getOrderItemsQuantity()
+    public function getOrderItemsQuantity(): int
     {
         $quantity = 0;
         foreach ($this->orderItems as $orderItem) {
@@ -115,7 +115,7 @@ class Order extends Model
         return $quantity;
     }
 
-    public function getFullBruttoWeight()
+    public function getFullBruttoWeight(): int
     {
         $weight = 0;
         foreach ($this->orderItems as $orderItem) {
@@ -124,7 +124,7 @@ class Order extends Model
         return $weight;
     }
 
-    public function getFullNettoWeight()
+    public function getFullNettoWeight(): int
     {
         $weight = 0;
         foreach ($this->orderItems as $orderItem) {
