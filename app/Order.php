@@ -6,7 +6,6 @@ use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\OrderItem;
-use Illuminate\Support\Facades\App;
 
 class Order extends Model
 {
@@ -114,6 +113,24 @@ class Order extends Model
             $quantity += $orderItem->quantity;
         }
         return $quantity;
+    }
+
+    public function getFullBruttoWeight()
+    {
+        $weight = 0;
+        foreach ($this->orderItems as $orderItem) {
+            $weight += $orderItem->product->weight_brutto;
+        }
+        return $weight;
+    }
+
+    public function getFullNettoWeight()
+    {
+        $weight = 0;
+        foreach ($this->orderItems as $orderItem) {
+            $weight += $orderItem->product->weight_netto;
+        }
+        return $weight;
     }
 
     public function setOrderStatus(string $status, int $city = null, string $arrivalDate = null)
