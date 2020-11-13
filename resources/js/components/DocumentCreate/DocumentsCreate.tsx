@@ -3,6 +3,7 @@ import React, {useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
+import {useForm} from 'react-hook-form'
 
 // Styles
 import classes from './DocumentsCreate.module.css'
@@ -19,7 +20,6 @@ import Error from '../UI/Error/Error'
 import Loader from '../UI/Loader/Loader'
 import Form from '../UI/Form/Form'
 import Input from '../UI/Inputs/Input/Input'
-import {useForm} from 'react-hook-form'
 
 const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const dispatch = useDispatch()
@@ -42,6 +42,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
 
     const fetchInvoiceHandler = (id, type) => {
         setType(type)
+        console.log(type)
         setIsOpen(true)
         dispatch(fetchOrderInvoice(id, type))
     }
@@ -53,8 +54,6 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const documentCreateSubmitHandler =
         handleSubmit((formValues) => {
             dispatch(createOrderInvoice(id, formValues, type))
-            console.log(formValues)
-            console.log(type)
         })
 
     if (error) {
@@ -68,7 +67,8 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
             <Form onSubmit={documentCreateSubmitHandler}>
                 <div className='row'>
                     {Object.entries(invoiceInputs).map(([key, value]) => (
-                        <Input key={key} id={key} ref={register} name={key}
+                        <Input key={key} id={key}
+                               ref={register} name={key}
                                defaultValue={value} label={key}/>
                     ))}
                     {type === 'contract'
