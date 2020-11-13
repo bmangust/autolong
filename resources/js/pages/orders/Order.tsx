@@ -83,7 +83,7 @@ const Order: React.FC<IOrder> = () => {
                     <h2 className='mb-3'>
                         {'name' in order ? order.name : ''}
                     </h2>
-                    <div className='row mb-3'>
+                    <div className='row mb-3 flex-lg-row flex-column'>
                         <div className='col-md-6 mb-lg-0 mb-3'>
                             <p className='infoBlockHeaders'>
                                 Статус заказа
