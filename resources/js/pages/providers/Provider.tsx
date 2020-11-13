@@ -66,7 +66,7 @@ const Provider: React.FC<IProvider> = () => {
                 <p className={classes.priceMain}>{totalCny.toFixed(2)} ¥</p>
                 <p className={classes.price}>{totalRub.toFixed(2)} ₽</p>
                 <p className={classes.price}>{totalUsd.toFixed(2)} $</p>
-                <img className='mt-5' alt='' src='/imgs/box.jpg'/>
+                <img className='mt-lg-5 mt-2' alt='' src='/imgs/box.jpg'/>
             </>
     }
 
@@ -82,7 +82,7 @@ const Provider: React.FC<IProvider> = () => {
             <div className="card mb-3">
                 <div className="card-body-info">
                     <div className="row">
-                        <div className="col-6 d-flex">
+                        <div className="col-lg-6 d-flex mb-lg-0 mb-3">
                             <p className='infoBlockHeaders mb-0 mr-5'>
                                 Название
                             </p>
@@ -92,7 +92,7 @@ const Provider: React.FC<IProvider> = () => {
                                     : ''}
                             </p>
                         </div>
-                        <div className="col-6 d-flex">
+                        <div className="col-lg-6 d-flex">
                             <p className='infoBlockHeaders mb-0 mr-5'>
                                 Название компании
                             </p>
@@ -206,7 +206,8 @@ const Provider: React.FC<IProvider> = () => {
                                 </div>
                                 : <p>Каталогов нет</p>}
 
-                            <div className='d-flex justify-content-between'>
+                            <div className='d-flex justify-content-between
+                            flex-lg-row flex-column'>
                                 <NavLink to={`/provideredit/${id}`}
                                          className='editButton'>
                                     Редактировать информацию

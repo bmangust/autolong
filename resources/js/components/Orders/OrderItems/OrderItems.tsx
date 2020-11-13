@@ -79,7 +79,7 @@ const OrderItems: React.FC<IOrderItems> = (
                 (<div key={item.id + item.nameRu}
                       className={classes.orderProducts + ' row'}>
                         <div className={classes.productImg +
-                        ' col-lg-2 col-6'}>
+                        ' col-xl-2 col-4'}>
                             {imgFormatter(
                                 item.image,
                                 null,
@@ -87,17 +87,17 @@ const OrderItems: React.FC<IOrderItems> = (
                                 'pt-2'
                             )}
                         </div>
-                        <div className='col-lg-4 col-6 pl-0 pr-0'>
+                        <div className='col-xl-4 col-8 p-xl-0'>
                             <p className={classes.orderProductsName}>
                                 {item.nameRu}
                             </p>
                         </div>
-                        <div className='col-lg-2 col-6'>
+                        <div className='col-xl-2 col-4'>
                             <p className={classes.orderProductsCount}>
                                 {item.quantity + ' шт'}
                             </p>
                         </div>
-                        <div className='col-lg-4 col-6 text-right'>
+                        <div className='col-xl-4 col-8 text-right'>
                             <p className={classes.orderProductsPrice}>
                                 {item.price
                                     ? moneyFormatter(item.price)

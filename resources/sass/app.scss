@@ -101,6 +101,7 @@ a {
             td:first-child {
                 border-top-left-radius: 10px;
                 border-bottom-left-radius: 10px;
+                padding-right: 10px;
             }
 
             td:last-child {
@@ -344,6 +345,7 @@ a {
     justify-content: space-between;
     align-items: center;
     width: 100%;
+    white-space: nowrap;
 }
 
 .pricesBlock span:first-child {
@@ -423,6 +425,7 @@ textarea {
 textarea {
     height: auto;
     min-height: 112px;
+    resize: none;
 }
 
 .custom-file-label {

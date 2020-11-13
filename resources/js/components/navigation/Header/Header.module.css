@@ -75,6 +75,7 @@
 @media (max-width: 575px) {
     .header h1 {
         margin-top: 0;
+        margin-right: 10px;
     }
 
     .HeaderBlockUserPic {
