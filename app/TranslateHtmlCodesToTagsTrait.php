@@ -6,10 +6,11 @@ trait TranslateHtmlCodesToTagsTrait
 {
     public function translateHtmlCodesToTags(string $text): string
     {
-        return $string = strtr($text, [
+        $string = strtr($text, [
             '&lt;' => '<',
             '&gt;' => '>',
             '&quot;' => '"'
         ]);
+        return $string;
     }
 }

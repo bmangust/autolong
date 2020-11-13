@@ -66,7 +66,7 @@
         @foreach($orderItems as $item)
         <tr>
             <td style="padding: 10px; border: 1px solid #000;">
-                {{ $item->translateHtmlCodesToTags($item->product->name_en) }} {{ $item->product->vendor_code }}
+                {{ $item->translateHtmlCodesToTags($item->product->name_ru) ??  '-'}} {{ $item->product->vendor_code }}
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
                 <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset($item->product->image) }}"

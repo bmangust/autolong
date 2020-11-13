@@ -243,8 +243,8 @@ class OrderController extends Controller
         $contract = $order->contract->getInfo();
 
         $pdf = App::make('dompdf.wrapper');
-        $newPdf = $pdf->loadView('pdf.contract', [
-            'order' => $this,
+        $newPdf = $pdf->loadView('pdf.invoice', [
+            'order' => $order,
             'supply' => $invoice->supply,
             'importer' => $importer,
             'provider' => $provider,
