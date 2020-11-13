@@ -70,14 +70,17 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                             ? <Input id='contractEndDate' type='date'
                                      label='contractEndDate'
                                      ref={register} name='contractEndDate'/>
-                            : null
-                        }
-                        {!('classification' in invoiceInputs)
-                            ? <Input id='classification' type='text'
-                                     label='classification'
-                                     ref={register} name='classification'/>
-                            : null
-                        }
+                            : null}
+                        {!('classificationEn' in invoiceInputs)
+                            ? <Input id='classificationEn' type='text'
+                                     label='classificationEn'
+                                     ref={register} name='classificationEn'/>
+                            : null}
+                        {!('classificationRu' in invoiceInputs)
+                            ? <Input id='classificationRu' type='text'
+                                     label='classificationRu'
+                                     ref={register} name='classificationRu'/>
+                            : null}
                     </>
                     : null
                 }
