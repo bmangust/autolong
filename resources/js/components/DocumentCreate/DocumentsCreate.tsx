@@ -52,6 +52,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
 
     const documentCreateSubmitHandler =
         handleSubmit((formValues) => {
+            setIsOpen(false)
             dispatch(createOrderInvoice(id, formValues, type))
         })
 
@@ -64,10 +65,12 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                            defaultValue={value} label={key}/>
                 ))}
                 {type === 'contract'
-                    ? <><
-                        Input id='contractEndDate' type='date'
-                              label='contractEndDate'
-                              ref={register} name='contractEndDate'/>
+                && !('contractEndDate' in invoiceInputs)
+                && !('classification' in invoiceInputs)
+                    ? <>
+                        <Input id='contractEndDate' type='date'
+                               label='contractEndDate'
+                               ref={register} name='contractEndDate'/>
                         <Input id='classification' type='text'
                                label='classification'
                                ref={register} name='classification'/>
