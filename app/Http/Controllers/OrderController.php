@@ -156,22 +156,12 @@ class OrderController extends Controller
         foreach ($numbers as $number) {
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
-                $provider = $product->first()->provider->id;
-                $arrayProducts = [];
-                if (empty($arrayProducts)) {
-                    $arrayProducts[] = new ProductResource($product->first());
-                    $availableProducts[$provider] = [];
-                }
-                if (prev($availableProducts) == $provider) {
-                    $arrayProducts[] = new ProductResource($product->first());
-                } else {
-                    $availableProducts[$provider ] = $arrayProducts;
-                }
+                $availableProducts[] =  new ProductResource($product->first());
             } else {
                 $availableProducts[] = ['number' => $number];
             }
         }
-        return response()->json($availableProducts, 200);
+        return $availableProducts;
     }
 
     public function getPdfContract(Order $order)
