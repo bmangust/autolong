@@ -212,7 +212,8 @@ export const createOrderInvoice = (id, data, type) => {
             responseType: 'blob'
         })
         .then(answer => {
-            const blob = new Blob([answer.data], {type: 'application/pdf'})
+            const blob = new Blob([answer.data],
+                {type: 'application/pdf;charset=utf-8'})
             toast.success(`${type} сгенерирован`)
             saveAs(blob, `${type}.pdf`)
         })
