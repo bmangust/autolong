@@ -21,8 +21,6 @@ import Loader from '../UI/Loader/Loader'
 import Form from '../UI/Form/Form'
 import Input from '../UI/Inputs/Input/Input'
 import TextEditor from '../UI/TextEditor/TextEditor'
-import {Simulate} from 'react-dom/test-utils'
-import ended = Simulate.ended
 
 const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const dispatch = useDispatch()
