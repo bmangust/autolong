@@ -58,7 +58,7 @@
                     <span style="font-weight: bold;">1.1.</span>
                     <i>Продавец</i>
                     продал, а <i>Покупатель</i> купил на условиях {{ $supply }}
-                    согласно Инкотермс-2010, {{ $classification }}, (далее –
+                    согласно Инкотермс-2010, {{ $classificationRu }}, (далее –
                     Товар), производства {{ $provider->name_company ? $provider->name_company : '-' }}
                     {{ $provider->country ? $provider->country->name : '-' }}.
                     Товар ввозится на территорию Российской Федерации.
@@ -78,8 +78,7 @@
                     <span style="font-weight: bold;">1.1.</span>
                     <i>Seller</i> has
                     sold and the <i>Buyer</i> has bought on terms {{ $supply }} in
-                    accordance with Incoterms 2010, additional lighting
-                    devices for agricultural machinery, (hereinafter -
+                    accordance with Incoterms 2010, {{ $classificationEn }}, (hereinafter -
                     Goods), {{ $provider->name_company ? $provider->name_company : '-' }}
                     {{ $provider->country ? $provider->country->name : '-' }}. Goods are being imported into the
                     territory of the Russian Federation.
