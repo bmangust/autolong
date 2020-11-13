@@ -7,6 +7,7 @@ use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
 use App\Product;
+use App\Provider;
 use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -145,7 +146,7 @@ class OrderController extends Controller
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 
-    public function checkProductNUmberWithUs(Request $request, Order $order)
+    public function checkProductNumberWithUs(Request $request, Order $order)
     {
         $request->validate([
             'numbers' => 'required'
@@ -155,7 +156,8 @@ class OrderController extends Controller
         foreach ($numbers as $number) {
             $product = Product::whereAutolongNumber($number);
             if ($product->exists()) {
-                $availableProducts[] = new ProductResource($product->first());
+                $provider = $product->first()->provider->id;
+                $availableProducts[$provider] = ['product' => new ProductResource($product->first())];
             } else {
                 $availableProducts[] = ['number' => $number];
             }

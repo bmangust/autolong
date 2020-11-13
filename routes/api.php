@@ -54,7 +54,7 @@ Route::delete('countries/{country}', 'CountryController@destroy');
 Route::get('orders', 'OrderController@index');
 Route::post('orders', 'OrderController@store');
 Route::get('orders/unapplied', 'OrderController@indexUnapplied');
-Route::post('orders/checkproductnumberwithus', 'OrderController@checkProductNUmberWithUs');
+Route::post('orders/checkproductnumberwithus', 'OrderController@checkProductNumberWithUs');
 Route::get('orders/{order}', 'OrderController@show');
 Route::put('orders/{order}', 'OrderController@update');
 Route::delete('orders/{order}', 'OrderController@destroy');
