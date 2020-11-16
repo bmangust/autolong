@@ -27,22 +27,20 @@ interface ICreateOrderData {
 
 const OrderForm: React.FC = () => {
     let totalPrice = 0
-    const {register, handleSubmit, control, errors, setValue} = useForm<
-        ICreateOrderData
-    >()
+    const {register, handleSubmit, control, errors, setValue} =
+        useForm<ICreateOrderData>()
 
-    const {register: register2, handleSubmit: handleSubmit2} = useForm<
-        ICreateOrderData
-    >()
+    const {register: register2, handleSubmit: handleSubmit2} =
+        useForm<ICreateOrderData>()
 
     const dispatch = useDispatch()
 
     const {providers} = useSelector((state: IProvidersRootState) => ({
-        providers: state.providersState.providers,
+        providers: state.providersState.providers
     }))
 
     const {orderProducts} = useSelector((state: IOrdersRootState) => ({
-        orderProducts: state.ordersState.orderProducts,
+        orderProducts: state.ordersState.orderProducts
     }))
 
     const [items, setItems] = useState([])
@@ -50,7 +48,7 @@ const OrderForm: React.FC = () => {
     const providersOptions = providers.map((provider: IProvider) => {
         return {
             label: provider.name,
-            value: provider.id,
+            value: provider.id
         }
     })
 
@@ -134,8 +132,7 @@ const OrderForm: React.FC = () => {
                                     rows={4}
                                     placeholder='
                             Добавляйте каждый внутреннему номер через enter
-                            '
-                                ></textarea>
+                            '/>
                             </div>
                         </div>
                         <button className='btn btn-success mt-2' type='submit'>
@@ -199,10 +196,6 @@ const OrderForm: React.FC = () => {
                                         className='custom-control-input'
                                         id='customSwitch1'
                                     />
-                                    <label
-                                        className='custom-control-label'
-                                        htmlFor='customSwitch1'
-                                    ></label>
                                 </div>
                             </div>
                         </div>

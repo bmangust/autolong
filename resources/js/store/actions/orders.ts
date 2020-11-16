@@ -82,7 +82,9 @@ export const createOrder = (data, redirect = '') => async dispatch => {
                 type: CREATE_ORDER_SUCCESS,
                 payload: answer.data
             })
-            dispatch(push(redirect))
+            if (redirect) {
+                dispatch(push(redirect))
+            }
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -118,13 +120,18 @@ export const fetchItemsByVendors = (data) => async dispatch => {
     axios
         .post(url, {numbers})
         .then((answer) => {
+            Object.entries(answer.data).forEach(([key, value]) => {
+                if (key === 'number') {
+                    value.forEach(item => {
+                        toast.warn(createNotyMsg(item,
+                            'артикул не найден'))
+                    })
+                }
+            })
+            delete answer.data.number
             dispatch({
                 type: FETCH_ITEMS_BY_VENDOR_SUCCESS,
                 payload: answer.data
-            })
-            answer.data.filter(el => !('id' in el)).map(({number}) => {
-                toast.warn(createNotyMsg(number,
-                    'артикул не найден'))
             })
         }).catch((error: AxiosError) => {
         dispatch({

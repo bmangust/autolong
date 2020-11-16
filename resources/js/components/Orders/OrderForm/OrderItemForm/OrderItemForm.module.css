@@ -1,0 +1,66 @@
+.form {
+    border: 1px solid #EB5E28;
+    padding: 25px 30px;
+    border-radius: 10px;
+}
+
+.hr {
+    border: 0;
+    border-top: 1px solid #ebebeb;
+    margin: 0 0 36px;
+}
+
+.formFooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.formFooter > div {
+    width: 50%;
+}
+
+.formFooter > div:first-of-type {
+    padding-right: 30px;
+}
+
+.formFooter > div:last-of-type {
+    padding-left: 15px;
+}
+
+.submit {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.quantity {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #949599;
+}
+
+.submitPrice {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3A405F;
+    margin-right: 26px;
+}
+
+.submitPrice span {
+    font-size: 14px;
+    line-height: 17px;
+    font-weight: bold;
+    color: #3A405F;
+    margin-left: 10px;
+}
+
+.provider {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #949599;
+    margin-bottom: 20px;
+}
