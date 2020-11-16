@@ -205,17 +205,17 @@ const ProductItemForm: React.FC<{
                                placeholder="Введите номер"/>
 
                     </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 mt-lg-0 mt-3">
 
                         <div className="row mb-3">
-                            <div className="col-lg-2 pr-0">
+                            <div className="col-lg-2 col-2 pr-0">
                                 {img
                                     ? <img height={65}
                                            src={img} alt=""/>
                                     : null
                                 }
                             </div>
-                            <div className="col-lg-8">
+                            <div className="col-lg-8 mt-lg-0 mt-2">
                                 <label htmlFor='image'>
                                     Загрузка изображения
                                 </label>
@@ -291,7 +291,7 @@ const ProductItemForm: React.FC<{
                             </div>
                         </div>
                     </div>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 mt-lg-0 mt-3">
                         <label htmlFor='nameEn' className='w-100'>
                             Product name
                             <span className="float-right
@@ -355,7 +355,7 @@ const ProductItemForm: React.FC<{
                             </div>
                         </div>
                         <div className="row mb-3">
-                            <div className='col-4'>
+                            <div className='col-xl-4 col-10'>
                                 <input
                                     name="priceUsd"
                                     type="number"
@@ -369,14 +369,14 @@ const ProductItemForm: React.FC<{
                                     placeholder="0"
                                 />
                             </div>
-                            <div className='col-2 pl-0'>
+                            <div className='col-xl-2 col-2 pl-0'>
                                     <span
                                         className='priceSymbol text-main
                                          font-weight-bold'>
                                     $
                                     </span>
                             </div>
-                            <div className='col-4'>
+                            <div className='col-xl-4 col-10 mt-xl-0 mt-3'>
                                 <input
                                     name="priceRub"
                                     type="number"
@@ -390,7 +390,7 @@ const ProductItemForm: React.FC<{
                                     placeholder="0"
                                 />
                             </div>
-                            <div className='col-2 pl-0'>
+                            <div className='col-xl-2 col-2 pl-0'>
                                     <span
                                         className='priceSymbol text-main
                                         font-weight-bold'>
@@ -406,11 +406,11 @@ const ProductItemForm: React.FC<{
 
                                 <div className='row mb-3'>
                                     <div
-                                        className='col-2 small
+                                        className='col-xl-2 col-3 small
                                                     pt-2 font-weight-bold'>
                                         Брутто
                                     </div>
-                                    <div className='col-8'>
+                                    <div className='col-xl-8 col-7'>
                                         <input name="weightBrutto"
                                                placeholder="0"
                                                ref={register}
@@ -421,7 +421,7 @@ const ProductItemForm: React.FC<{
                                             Это поле обязательно
                                         </small>}
                                     </div>
-                                    <div className='col-2
+                                    <div className='col-xl-2 col-2
                                                 priceSymbol
                                                 text-main
                                                 font-weight-bold pl-0'>
@@ -430,12 +430,12 @@ const ProductItemForm: React.FC<{
                                 </div>
                                 <div className='row mb-3'>
                                     <div
-                                        className='col-2 small
+                                        className='col-xl-2 col-3 small
                                             pt-2 font-weight-bold'
                                     >
                                         Нетто
                                     </div>
-                                    <div className='col-8'>
+                                    <div className='col-xl-8 col-7'>
                                         <input name="weightNetto"
                                                className='w-100'
                                                ref={register}
@@ -446,7 +446,7 @@ const ProductItemForm: React.FC<{
                                             Это поле обязательно
                                         </small>}
                                     </div>
-                                    <div className='col-2
+                                    <div className='col-xl-2 col-2
                                                 priceSymbol
                                             text-main font-weight-bold pl-0'>
                                         кг
@@ -456,13 +456,14 @@ const ProductItemForm: React.FC<{
                             </div>
                             <div>
                                 <button
-                                    className='btn btn-success mr-3'
+                                    className='btn btn-success mr-0 mr-sm-3
+                                    mb-xl-0 mb-lg-3'
                                     type="submit">
                                     {'id' in product && product.id
                                         ? 'Обновить'
                                         : 'Добавить'}
                                 </button>
-                                <button className='btn btn-light'>
+                                <button className='btn btn-light mt-sm-0 mt-3'>
                                     Отменить добавление
                                 </button>
                             </div>
