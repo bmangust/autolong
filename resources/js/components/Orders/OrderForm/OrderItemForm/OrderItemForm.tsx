@@ -136,12 +136,9 @@ const OrderItemForm: React.FC<{
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className='mb-4'>
                         <hr className={classes.hr}/>
                         <div className={classes.formFooter}>
-                            <div className={classes.quantity}>
-                                Всего товаров поставщика ({items.length})
-                            </div>
                             <div className={classes.submit}>
                                 <div className={classes.submitPrice}>
                                     Итоговая стоимость
@@ -149,13 +146,16 @@ const OrderItemForm: React.FC<{
                                         {totalPrice + ' ¥'}
                                     </span>
                                 </div>
-                                <button className='btn btn-success'
-                                        type='submit'>
-                                    Сформировать
-                                </button>
+                            </div>
+                            <div className={classes.quantity}>
+                                Всего товаров поставщика ({items.length})
                             </div>
                         </div>
                     </div>
+                    <button className='btn btn-success'
+                            type='submit'>
+                        Сформировать
+                    </button>
                 </div>
             </form>
         </div>
