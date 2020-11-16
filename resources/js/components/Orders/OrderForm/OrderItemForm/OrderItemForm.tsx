@@ -87,8 +87,11 @@ const OrderItemForm: React.FC<{
                 <div className="card-body mb-4 pb-0">
                     <h2 className={classes.provider}>
                         Поставщик:
+                        <span
+                            className='ml-1 text-main font-weight-bold'>
                         {providers.find(({id}) =>
                             id === providerId).name}
+                        </span>
                     </h2>
                     <OrderItems
                         onDelete={onDeleteHandler}

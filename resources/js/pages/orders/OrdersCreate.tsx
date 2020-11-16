@@ -63,7 +63,7 @@ const OrdersCreate: React.FC = () => {
         {
             Object.keys(orderProducts).length
                 ? <>
-                    <h2>Товары</h2>
+                    <h2 className='mb-3'>Товары</h2>
                     <OrdersForms
                         items={orderProducts}
                         providers={providers}
