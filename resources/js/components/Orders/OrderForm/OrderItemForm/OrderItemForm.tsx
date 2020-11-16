@@ -119,7 +119,7 @@ const OrderItemForm: React.FC<{
                             )}
                         </div>
                         <div className='col-lg-6'>
-                            <label className='w-100' htmlFor='provider'>
+                            <label className='w-100' htmlFor='cargo'>
                                 Статус карго
                             </label>
                             <div className='custom-control custom-switch'>
@@ -127,8 +127,12 @@ const OrderItemForm: React.FC<{
                                     type='checkbox'
                                     name='cargo'
                                     ref={register}
+                                    id={providerId + 'cargo'}
                                     className='custom-control-input'
                                 />
+                                <label className="custom-control-label"
+                                       htmlFor={providerId + 'cargo'}>
+                                </label>
                             </div>
                         </div>
                     </div>
