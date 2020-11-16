@@ -32,4 +32,19 @@ class OrderItem extends Model
     {
         return $this->price_usd * $this->quantity;
     }
+
+    public function fullWeightNettoOrderItem()
+    {
+        return $this->quantity * $this->product->weight_netto;
+    }
+
+    public function fullWeightBruttoOrderItem()
+    {
+        return $this->quantity * $this->product->weight_brutto;
+    }
+
+    public function getVolumeBox()
+    {
+        return array_product(json_decode($this->meas));
+    }
 }

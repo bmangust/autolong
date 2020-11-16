@@ -238,4 +238,13 @@ class Order extends Model
         ]);
         return true;
     }
+
+    public function generateNamePackageListIfNull(string $nameContract)
+    {
+        if ($this->packing_list_name) {
+            $packingListName = $nameContract . '-' . $this->id . ' dated' . Carbon::now()->format('d F Y');
+            $this->packing_list_name = $packingListName;
+            $this->save();
+        }
+    }
 }

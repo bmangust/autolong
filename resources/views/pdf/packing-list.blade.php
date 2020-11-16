@@ -11,13 +11,13 @@
 
     <table style="margin: 0 auto; border-collapse: collapse; text-align: center;">
         <tr>
-            <th style="font-size: 24px; font-weight: normal;">WENZHOU BOYE CO., LTD</th>
+            <th style="font-size: 24px; font-weight: normal;">{{ $provider->name_company }}</th>
         </tr>
         <tr>
             <td>TONG YANG VILLAGE BAI ZHANG JI TOWN, WENZHOU,CN</td>
         </tr>
         <tr>
-            <td>TEL:+86-0577-67788222</td>
+            <td>TEL: {{ $provider->phone }}</td>
         </tr>
     </table>
 
@@ -26,7 +26,7 @@
             <td>TO: LLC «Component Supply»</td>
         </tr>
         <tr>
-            <td>127247 Moscow, Dmitrovskoe shosse, 105-6-3</td>
+            <td>{{ $importer->address }}</td>
         </tr>
         <tr>
             <td>INN/KPP 7721305869/ 772101001</td>
@@ -34,7 +34,7 @@
     </table>
 
     <table style="border-collapse: collapse; text-align: center; margin: 0 auto;">
-        <caption style="font-weight: bold; font-size: 20px;">PACKING LIST  20LH006-1 dated 06 September 2020</caption>
+        <caption style="font-weight: bold; font-size: 20px;">{{ $order->packing_list_name }}</caption>
         <tr>
             <th style="font-weight: normal; padding: 5px 15px; border: 1px solid #000;">filters and accessories for <br> agricultural system</th>
             <th style="font-weight: normal; padding: 5px 15px; border: 1px solid #000;">HS</th>
@@ -48,98 +48,50 @@
             <th style="font-weight: normal; padding: 5px 15px; border: 1px solid #000;">G.W(KGS)</th>
             <th style="font-weight: normal; padding: 5px 15px; border: 1px solid #000;">VOLUME</th>
         </tr>
-        <tr>
-            <td style="padding: 5px 15px; border: 1px solid #000;">PL-270 (D-110, H-150)</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">8421990008</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">1000</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">20</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">50</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">59</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">47</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">17</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">16</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">18,15</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">800</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">907,5</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">2,357</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">PL-270 (D-110, H-150)</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">8421990008</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">100</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">6</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">16</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">56,5</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">36</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">32,5</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">14</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">15</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">224</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">240</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">1,058</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px 15px; border: 1px solid #000;">4</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">1</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">10</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">11</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">10</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">11</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">0,666</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">PL-270 (D-110, H-150)</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">8421990008</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;" rowspan="2">100</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">6</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">16</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">56,5</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">36</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">32,5</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">14</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">15</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">224</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">240</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">1,058</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px 15px; border: 1px solid #000;">4</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">1</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">10</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">10</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">10</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">10</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">11</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">10</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">11</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">0,666</td>
-        </tr>
-        <tr>
-            <td style="padding: 5px 15px; border: 1px solid #000;">Total</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">6350</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">130</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">342</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
-            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
-            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
-            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
-            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">6663</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">7522,5</td>
-            <td style="padding: 5px 15px; border: 1px solid #000;">26,729</td>
-        </tr>
+        @foreach($orderItems as $item)
+            <tr>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->name }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->hs_code }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->quantity }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->pcs_ctn) as $pcsCtn)
+                        <table>
+                            <tr>
+                                <td>{{ $pcsCtn }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->ctns) as $ctns)
+                        <table>
+                            <tr>
+                                <td>{{ $ctns }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->height }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->length }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->width }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_netto }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_brutto }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000000;">{{ $item->fullWeightNettoOrderItem() }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->fullWeightBruttoOrderItem() }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->getVolumeBox() }}</td>
+            </tr>
+        @endforeach
     </table>
 
     <table style="border-collapse: collapse; margin: 20px auto 0;">
         <tr>
             <td>
-                Contract # 20LH dated 20.05.2020
+                {{ $contract->name }}
             </td>
         </tr>
         <tr>
             <td>
-                Terms of delivery: EXW-Wenzhou
+                Terms of delivery: {{ $contract->supply }}
             </td>
         </tr>
     </table>

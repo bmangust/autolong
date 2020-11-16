@@ -6,6 +6,8 @@ use App\City;
 use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
+use App\OrderItem;
+use App\PackingListDocument;
 use App\Product;
 use App\Status;
 use Illuminate\Http\Request;
@@ -178,7 +180,7 @@ class OrderController extends Controller
         if ($order->contract != null) {
             return response()->json($order->contract->getInfo(), 200);
         }
-        return response()->json('Для данного заказа не сформирован автоматически контракт', 400);
+        return response()->json([], 200);
     }
 
     public function generatePdfContract(Request $request, Order $order)
@@ -212,7 +214,7 @@ class OrderController extends Controller
         if ($order->proforma != null) {
             return response()->json($order->proforma->getInfo());
         }
-        return response()->json('Для данного заказа не сформирована автоматически проформа', 400);
+        return response()->json([], 200);
     }
 
     public function generatePdfProforma(Request $request, Order $order)
@@ -242,7 +244,7 @@ class OrderController extends Controller
         if ($order->invoice != null) {
             return response()->json($order->invoice->getInfo());
         }
-        return response()->json('Для данного заказа не сформирован автоматически инвойс', 400);
+        return response()->json([], 200);
     }
 
     public function generatePdfInvoice(Request $request, Order $order)
@@ -266,6 +268,39 @@ class OrderController extends Controller
             'proformaDate' => $proforma->date,
             'proformaNumber' => $proforma->proformaNumber,
             'proformaStatusPayment' => $invoice->proformaStatusPayment,
+        ]);
+        return $newPdf->download();
+    }
+
+
+    public function generatePdfPackingList(Request $request, Order $order)
+    {
+        $orderItemsInfo = $request->all();
+        foreach ($orderItemsInfo as $key => $info) {
+            $orderItem = OrderItem::findOrFail($key);
+            $orderItem->pcs_ctn = json_encode($info['pcsCtn']);
+            $orderItem->ctns = json_encode($info['ctns']);
+            $orderItem->meas = json_encode($info['meas']);
+            $orderItem->save();
+        }
+
+        $importer = Importer::first();
+        $provider = $order->provider;
+        $orderItems = $order->orderItems;
+        if ($order->contract) {
+            $contract = $order->contract->getInfo();
+            $order->generateNamePackageListIfNull($contract->name);
+        } else {
+            $contract = null;
+        }
+
+        $pdf = App::make('dompdf.wrapper');
+        $newPdf = $pdf->loadView('pdf.packing-list', [
+            'order' => $order,
+            'importer' => $importer,
+            'provider' => $provider,
+            'orderItems' => $orderItems,
+            'contract' => $contract
         ]);
         return $newPdf->download();
     }
