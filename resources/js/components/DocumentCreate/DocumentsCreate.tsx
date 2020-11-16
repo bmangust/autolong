@@ -68,7 +68,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 <Controller
                                     name="requisites"
                                     control={control}
-                                    defaultValue={value}
+                                    defaultValue={value || ''}
                                     render={({value, onChange}) => (
                                         <TextEditor
                                             value={value}

@@ -200,13 +200,13 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
             })
         })
         .catch((error: AxiosError) => {
-            dispatch({
-                type: FETCH_ORDER_INVOICE_ERROR,
-                payload: error.message
-            })
             if (error.response?.status === 400) {
-                toast.error(error.response.data)
+                toast.warn(error.response.data)
             } else {
+                dispatch({
+                    type: FETCH_ORDER_INVOICE_ERROR,
+                    payload: error.message
+                })
                 toast.error(error.message)
             }
         })
