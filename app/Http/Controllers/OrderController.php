@@ -177,7 +177,20 @@ class OrderController extends Controller
 
     public function getPdfContract(Order $order)
     {
-        return response()->json($order->contract->getInfo(), 200);;
+        if ($order->contract != null) {
+            return response()->json($order->contract->getInfo(), 200);
+        }
+        return response()->json([
+            'name' => null,
+            'date' => null,
+            'supply' => null,
+            'directorRu' => null,
+            'directorEn' => null,
+            'requisites' => null,
+            'classificationRu' => null,
+            'classificationEn' => null,
+            'contractEndDate' => null
+        ], 200);
     }
 
     public function generatePdfContract(Request $request, Order $order)
@@ -208,7 +221,16 @@ class OrderController extends Controller
 
     public function getPdfProforma(Order $order)
     {
-        return response()->json($order->proforma->getInfo());
+        if ($order->proforma != null) {
+            return response()->json($order->proforma->getInfo());
+        }
+        return response()->json([
+            'supply' => null,
+            'proformaNumber' => null,
+            'contractNumber' => null,
+            'statusPayment' => null,
+            'date' => null,
+        ], 200);
     }
 
     public function generatePdfProforma(Request $request, Order $order)
@@ -235,7 +257,16 @@ class OrderController extends Controller
 
     public function getPdfInvoice(Order $order)
     {
-        return response()->json($order->invoice->getInfo());
+        if ($order->invoice != null) {
+            return response()->json($order->invoice->getInfo());
+        }
+        return response()->json([
+            'supply' => null,
+            'proformaNumber' => null,
+            'contractNumber' => null,
+            'proformaStatusPayment' => null,
+            'date' => null,
+        ], 200);
     }
 
     public function generatePdfInvoice(Request $request, Order $order)
