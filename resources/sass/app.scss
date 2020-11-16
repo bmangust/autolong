@@ -267,6 +267,7 @@ a {
         text-align: center;
         height: 22px;
         font-weight: 500;
+        line-height: inherit;
         color: #3a3d61;
         min-width: 22px !important;
     }
@@ -346,6 +347,10 @@ a {
     align-items: center;
     width: 100%;
     white-space: nowrap;
+}
+
+.pricesBlock span:first-child {
+    margin-right: 10px;
 }
 
 .pricesBlock span:first-child {
@@ -517,8 +522,9 @@ label.required:after {
     padding-left: 67px;
     font-weight: 500;
     font-size: 12px;
-    line-height: 35px;
+    line-height: 38px;
     padding-right: 30px;
+    min-height: 50px;
 }
 
 .border-primary {
