@@ -7,7 +7,6 @@ use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
 use App\OrderItem;
-use App\PackingListDocument;
 use App\Product;
 use App\Status;
 use Illuminate\Http\Request;
@@ -299,8 +298,7 @@ class OrderController extends Controller
         $orderItemsInfo = $request->all();
         foreach ($orderItemsInfo as $key => $info) {
             $orderItem = OrderItem::findOrFail($key);
-            $orderItem->pcs_ctn = json_encode($info['pcsCtn']);
-            $orderItem->ctns = json_encode($info['ctns']);
+            $orderItem->pcs_ctn_ctns = json_encode($info['PcsCtnCtns']);
             $orderItem->meas = json_encode($info['meas']);
             $orderItem->save();
         }

@@ -26,7 +26,7 @@ class AddPackingListNameColumnToOrdersTable extends Migration
     public function down()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->dropColumn();
+            $table->dropColumn('packing_list_name');
         });
     }
 }
