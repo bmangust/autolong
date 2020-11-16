@@ -60,9 +60,11 @@
                                 <td>{{ $pcsCtn }}</td>
                             </tr>
                         </table>
+                    @endforeach
                 </td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                        <table>
+                    @foreach(json_decode($item->pcs_ctn_ctns) as $pcsCtn => $ctns)
+                    <table>
                             <tr>
                                 <td>{{ $ctns }}</td>
                             </tr>
