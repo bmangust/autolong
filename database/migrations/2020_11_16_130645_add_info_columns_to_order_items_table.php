@@ -14,8 +14,7 @@ class AddInfoColumnsToOrderItemsTable extends Migration
     public function up()
     {
         Schema::table('order_items', function (Blueprint $table) {
-            $table->json('pcs_ctn')->nullable();
-            $table->json('ctns')->nullable();
+            $table->json('pcs_ctn_ctns')->nullable();
             $table->json('meas')->nullable();
         });
     }

@@ -3,12 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\ContractDocument;
 use App\Http\Resources\ProductResource;
 use App\Importer;
+use App\InvoiceDocument;
 use App\Order;
 use App\OrderItem;
-use App\PackingListDocument;
 use App\Product;
+use App\ProformaDocument;
 use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
@@ -198,6 +200,11 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
+        if (!$order->contract) {
+            $contract = new ContractDocument();
+            $contract->order_id = $order->id;
+            $contract->save();
+        }
         $order->contract->saveInfoWithJson($request->all());
         $contract = $order->contract->getInfo();
 
@@ -238,6 +245,11 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
+        if (!$order->proforma) {
+            $proforma = new ProformaDocument();
+            $proforma->order_id = $order->id;
+            $proforma->save();
+        }
         $order->proforma->saveInfoWithJson($request->all());
         $proforma = $order->proforma->getInfo();
         $contract = $order->contract->getInfo();
@@ -274,6 +286,11 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
+        if (!$order->invoice) {
+            $invoice = new InvoiceDocument();
+            $invoice->order_id = $order->id;
+            $invoice->save();
+        }
         $order->invoice->saveInfoWithJson($request->all());
         $invoice = $order->invoice->getInfo();
         $proforma = $order->proforma->getInfo();
@@ -299,8 +316,7 @@ class OrderController extends Controller
         $orderItemsInfo = $request->all();
         foreach ($orderItemsInfo as $key => $info) {
             $orderItem = OrderItem::findOrFail($key);
-            $orderItem->pcs_ctn = json_encode($info['pcsCtn']);
-            $orderItem->ctns = json_encode($info['ctns']);
+            $orderItem->pcs_ctn_ctns = json_encode($info['PcsCtnCtns']);
             $orderItem->meas = json_encode($info['meas']);
             $orderItem->save();
         }
