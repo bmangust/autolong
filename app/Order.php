@@ -239,7 +239,7 @@ class Order extends Model
         return true;
     }
 
-    public function generateNamePackageListIfNull(string $nameContract)
+    public function generateNamePackingListIfNull(string $nameContract)
     {
         if ($this->packing_list_name) {
             $packingListName = $nameContract . '-' . $this->id . ' dated' . Carbon::now()->format('d F Y');

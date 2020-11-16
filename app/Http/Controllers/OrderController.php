@@ -311,9 +311,9 @@ class OrderController extends Controller
         $orderItems = $order->orderItems;
         if ($order->contract) {
             $contract = $order->contract->getInfo();
-            $order->generateNamePackageListIfNull($contract->name);
+            $order->generateNamePackingListIfNull($contract->name);
         } else {
-            $contract = null;
+            $contract = '';
         }
 
         $pdf = App::make('dompdf.wrapper');
