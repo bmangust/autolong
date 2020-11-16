@@ -64,3 +64,52 @@
     color: #949599;
     margin-bottom: 20px;
 }
+
+
+@media (max-width: 1199px) {
+
+    .formFooter > div {
+        width: auto;
+    }
+
+    .submitPrice {
+        margin-right: 16px;
+    }
+}
+
+@media (max-width: 767px) {
+
+    .form {
+        padding: 15px;
+    }
+
+    .formFooter {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .formFooter > div:first-of-type {
+        padding-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .formFooter > div:last-of-type {
+        padding-left: 0;
+        width: 100%;
+    }
+}
+
+@media (max-width: 575px) {
+
+    .submitPrice {
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+
+    .formFooter > div:last-of-type {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+}
