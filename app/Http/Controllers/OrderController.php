@@ -3,14 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\City;
-use App\ContractDocument;
 use App\Http\Resources\ProductResource;
 use App\Importer;
-use App\InvoiceDocument;
 use App\Order;
 use App\OrderItem;
 use App\Product;
-use App\ProformaDocument;
 use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
