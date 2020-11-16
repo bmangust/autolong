@@ -155,22 +155,24 @@ const AutoTable: React.FC<IAutoTable> = (
                                 placeholder='Поиск...'
                             />
                         </div>
-                        {secondBtn ? (
-                            <NavLink
-                                to={`/${secondBtn.link}`}
-                                className='btn addButton mr-3'
-                            >
-                                {secondBtn.text}
-                            </NavLink>
-                        ) : null}
-                        {button ? (
-                            <NavLink
-                                to={`/${button.link}`}
-                                className='btn addButton'
-                            >
-                                {button.text}
-                            </NavLink>
-                        ) : null}
+                        <div>
+                            {secondBtn ? (
+                                <NavLink
+                                    to={`/${secondBtn.link}`}
+                                    className='btn addButton mr-3'
+                                >
+                                    {secondBtn.text}
+                                </NavLink>
+                            ) : null}
+                            {button ? (
+                                <NavLink
+                                    to={`/${button.link}`}
+                                    className='btn addButton'
+                                >
+                                    {button.text}
+                                </NavLink>
+                            ) : null}
+                        </div>
                     </div>
                     <div className='card'>
                         <div className='card-body text-muted'>

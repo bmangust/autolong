@@ -81,6 +81,16 @@ export const routes: IRoute[] = [
         fallback: <Loader />,
     },
     {
+        name: 'Инициализация нескольких новых заказов',
+        path: '/orderscreate',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/orders/OrdersCreate'), 600)),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>
+    },
+    {
         name: 'Контейнеры',
         pageName: 'Список контейнеров',
         path: '/containers',
