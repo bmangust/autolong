@@ -4,13 +4,13 @@ namespace App;
 
 trait TranslateHtmlCodesToTagsTrait
 {
-    public function translateHtmlCodesToTags(string $text): string
+    public function translateHtmlCodesToTags($text): string
     {
         return htmlspecialchars_decode($text);
     }
 
-    public function cutScriptTagsInText(string $text): string
+    public function cutScriptTagsInText($text): string
     {
-       return preg_replace('#<script.*<\/script>#', '', $text);
+        return preg_replace('#<script.*<\/script>#', '', $text);
     }
 }
