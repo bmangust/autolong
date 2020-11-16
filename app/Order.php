@@ -247,4 +247,13 @@ class Order extends Model
             $this->save();
         }
     }
+
+    public function getProductsHsCode(): array
+    {
+        $hsCodes = [];
+        foreach ($this->orderItems as $item) {
+            $hsCodes[] = $item->product->hs_code;
+        }
+        return $hsCodes;
+    }
 }

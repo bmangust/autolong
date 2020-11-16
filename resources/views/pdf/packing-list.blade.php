@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Packing List</title>
 </head>
 
@@ -14,7 +14,7 @@
             <th style="font-size: 24px; font-weight: normal;">{{ $provider->name_company }}</th>
         </tr>
         <tr>
-            <td>TONG YANG VILLAGE BAI ZHANG JI TOWN, WENZHOU,CN</td>
+            <td>{{ $provider->manufacturing ? $provider->manufacturing : '-' }}/td>
         </tr>
         <tr>
             <td>TEL: {{ $provider->phone }}</td>

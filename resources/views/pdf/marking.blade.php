@@ -2,8 +2,8 @@
 <html lang="en">
 
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Marking</title>
 </head>
 
@@ -16,10 +16,10 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom: 10px;">RCJLED CO.,LIMITED</td>
+            <td style="padding-bottom: 10px;">{{ $provider->name_company }}</td>
         </tr>
         <tr>
-            <td style="padding-bottom: 10px;">Address: Building NO.1, 11th New industry zone of Xiamao, Baiyun district, Guangzhou, China</td>
+            <td style="padding-bottom: 10px;">Address: {{ $provider->address ? $provider->address : '-' }}</td>
         </tr>
         <tr>
             <td style="padding-bottom: 10px;">
@@ -27,7 +27,7 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom: 10px;">RCJLED CO.,LIMITE, China.</td>
+            <td style="padding-bottom: 10px;">{{ $provider->manufacturing ? $provider->manufacturing : '-' }}</td>
         </tr>
         <tr>
             <td style="padding-bottom: 10px;">
@@ -35,18 +35,20 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom: 10px;">LLC «Component Supply», Russia</td>
+            <td style="padding-bottom: 10px;">{{ $importer->name_en }}</td>
         </tr>
         <tr>
-            <td style="padding-bottom: 30px;">127247 Moscow, Dmitrovskoe shosse, 105-6-3</td>
+            <td style="padding-bottom: 30px;">{{ $importer->address }}</td>
         </tr>
         <tr>
             <td style="padding-bottom: 10px;">MODEL OF GOODS</td>
         </tr>
         <tr>
+            @foreach($hsCodes as $hsCode)
             <td>
-                <span style="border-bottom: 1px dotted #000">Lorem, ipsum dolor.</span>
+                <span style="border-bottom: 1px dotted #000">{{ $hsCode }}</span>
             </td>
+            @endforeach
         </tr>
         <tr>
             <td></td>

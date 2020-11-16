@@ -294,7 +294,6 @@ class OrderController extends Controller
         return $newPdf->download();
     }
 
-
     public function generatePdfPackingList(Request $request, Order $order)
     {
         $orderItemsInfo = $request->all();
@@ -323,6 +322,21 @@ class OrderController extends Controller
             'provider' => $provider,
             'orderItems' => $orderItems,
             'contract' => $contract
+        ]);
+        return $newPdf->download();
+    }
+
+    public function getMarkingList(Order $order)
+    {
+        $importer = Importer::first();
+        $provider = $order->provider;
+        $hsCodes = $order->getProductsHsCode();
+        $pdf = App::make('dompdf.wrapper');
+        $newPdf = $pdf->loadView('pdf.packing-list', [
+            'order' => $order,
+            'importer' => $importer,
+            'provider' => $provider,
+            'hsCodes' => $hsCodes,
         ]);
         return $newPdf->download();
     }
