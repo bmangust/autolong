@@ -32,7 +32,7 @@ export const routes: IRoute[] = [
         name: 'Логин',
         path: '/login',
         component: lazy(() =>
-            pMinDelay(import('../../../pages/Login'), 600)),
+            pMinDelay(import('../../../pages/login/Login'), 600)),
         hide: true,
         exact: false,
         private: false,
