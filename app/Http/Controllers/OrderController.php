@@ -177,10 +177,7 @@ class OrderController extends Controller
 
     public function getPdfContract(Order $order)
     {
-        if ($order->contract != null) {
-            return response()->json($order->contract->getInfo(), 200);
-        }
-        return response()->json([], 200);
+        return response()->json($order->contract->getInfo(), 200);;
     }
 
     public function generatePdfContract(Request $request, Order $order)
@@ -211,10 +208,7 @@ class OrderController extends Controller
 
     public function getPdfProforma(Order $order)
     {
-        if ($order->proforma != null) {
-            return response()->json($order->proforma->getInfo());
-        }
-        return response()->json([], 200);
+        return response()->json($order->proforma->getInfo());
     }
 
     public function generatePdfProforma(Request $request, Order $order)
@@ -241,10 +235,7 @@ class OrderController extends Controller
 
     public function getPdfInvoice(Order $order)
     {
-        if ($order->invoice != null) {
-            return response()->json($order->invoice->getInfo());
-        }
-        return response()->json([], 200);
+        return response()->json($order->invoice->getInfo());
     }
 
     public function generatePdfInvoice(Request $request, Order $order)
