@@ -391,6 +391,15 @@ a {
     white-space: nowrap;
 }
 
+.pricesBlock span {
+    width: 100%;
+}
+
+.priceOne .pricesBlock {
+    display: inline;
+    padding-left: 5px;
+}
+
 .pricesBlock span:first-child {
     margin-right: 10px;
 }
