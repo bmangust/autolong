@@ -201,8 +201,9 @@ class OrderController extends Controller
         $order->contract->saveInfoWithJson($request->all());
         $contract = $order->contract->getInfo();
 
-        $providerStamp = $order->saveProviderStamp($request->file('providerStamp'));
-        $importerStamp = $order->saveImporterStamp($request->file('importerStamp'));
+        $stampDirectory = Order::STAMP_DIRECTORY;
+        $providerStamp = $order->saveStamp($stampDirectory, Order::STAMP_PROVIDER_NAME, $request->file('providerStamp'));
+        $importerStamp = $order->saveStamp($stampDirectory, Order::STAMP_IMPORTER_NAME, $request->file('importerStamp'));
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [

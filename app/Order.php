@@ -14,7 +14,8 @@ class Order extends Model
 
     public const SANDBOX_DIRECTORY = '/orders/';
     public const CONTRACT_DIRECTORY = '/orders/';
-    public const STAMP_DIRECTORY = '/stamps/';
+    public const CHECK_DIRECTORY = '/checks/';
+    public const STAMP_DIRECTORY = '/storage/stamps/';
     public const STAMP_PROVIDER_NAME = 'provider-stamp';
     public const STAMP_IMPORTER_NAME = 'importer-stamp';
 
@@ -274,15 +275,9 @@ class Order extends Model
         }
     }
 
-    public function saveImporterStamp($image)
+    public function saveStamp(string $directory, string $name, $image): string
     {
         return Storage::disk('main')
-            ->putFileAs(self::STAMP_DIRECTORY, $image, self::STAMP_IMPORTER_NAME . $image->getClientOriginalExtension());
-    }
-
-    public function saveProviderStamp($image)
-    {
-        return Storage::disk('main')
-            ->putFileAs(self::STAMP_DIRECTORY, $image, self::STAMP_PROVIDER_NAME . $image->getClientOriginalExtension());
+            ->putFileAs($directory, $image, $name . $image->getClientOriginalExtension());
     }
 }
