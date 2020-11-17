@@ -57,7 +57,7 @@ class Container extends Model
     {
         $statuses = (array) Status::getContainerStatuses();
         $statusContainerInStock = head(array_keys($statuses, "На складе"));
-        if (in_array($status, $statuses)) {
+        if (array_key_exists($status, $statuses)) {
             $this->status = $status;
             $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->timestamp : $this->arrival_date = null;
             $this->save();
@@ -69,6 +69,9 @@ class Container extends Model
     public function compareOrderCityAndChooseCity(array $ordersIds)
     {
         $mainCity = Order::findOrFail(head($ordersIds))->city;
+        if (is_null($mainCity)) {
+            return response()->json('У заказа не указан город', 400);
+        }
         foreach ($ordersIds as $id) {
             $city = Order::findOrFail($id)->city;
             if ($mainCity == $city) {
