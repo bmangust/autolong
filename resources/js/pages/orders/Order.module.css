@@ -1,0 +1,75 @@
+.cardBody {
+    padding: 20px 30px;
+}
+
+.title {
+    margin-bottom: 0;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+}
+
+.dropdownWrap {
+    display: flex;
+    align-items: center;
+}
+
+.dropdownWrap select {
+    height: 22px;
+    padding: 0 20px 0 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3a405f;
+    border: 1px solid #3a405f;
+    background-color: transparent;
+    background-position: right 6px bottom 7px;
+    background-size: 8px;
+    border-radius: 5px;
+}
+
+.dropdownTitle {
+    display: block;
+    margin-right: 10px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #b4b6bd;
+}
+
+.orderDate,
+.orderRateRub,
+.orderRateUSD {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #b4b6bd;
+}
+
+.orderPriceTotal {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3a405f;
+}
+
+.orderDate {
+    padding-right: 15px;
+    border-right: 1px solid #EBEBEB;
+}
+
+.orderRateRub {
+    padding-right: 15px;
+    border-right: 1px solid #EBEBEB;
+}
+
+.orderInfo {
+    display: flex;
+    justify-content: space-between;
+}
+
+@media (max-width: 1199px) {
+    .orderPriceTotal {
+        margin-top: 10px;
+    }
+}
