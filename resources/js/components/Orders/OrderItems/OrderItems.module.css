@@ -20,7 +20,6 @@
     line-height: 15px;
     color: #3a405f;
     font-weight: 700;
-    margin-bottom: 0;
 }
 
 .orderProductsQty {
@@ -58,6 +57,7 @@
     background: white;
     position: relative;
     margin-bottom: 15px;
+    align-items: center;
 }
 
 .orderProducts:before {
@@ -81,8 +81,10 @@
     font-weight: bold;
     font-size: 12px;
     display: block;
-    position: relative;
-    top: 14px;
+    /* position: relative; */
+    /* top: 14px; */
+    /* margin-bottom: 6px; */
+    margin-bottom: 0;
 }
 
 .orderProductsPrice {
@@ -96,6 +98,16 @@
     border-radius: 10px;
     color: #b3b5c3;
     font-size: 12px;
+}
+
+.orderProductsArticle,
+.orderProductsItemPrice {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #b4b6bd;
+    margin-bottom: 0;
+    white-space: nowrap;
 }
 
 @media (max-width: 1199px) {
@@ -138,10 +150,16 @@
     }
 }
 
+@media (max-width: 1199px) {
+    .orderProductsName,
+    .orderProductsArticle,
+    .orderProductsItemPrice {
+        margin-bottom: 10px;
+    }
+}
+
 @media (max-width: 991px) {
     .orderProducts:before {
         max-width: 100%;
     }
-
-
 }

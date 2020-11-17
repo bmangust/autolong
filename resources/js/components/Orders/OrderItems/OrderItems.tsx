@@ -84,26 +84,40 @@ const OrderItems: React.FC<IOrderItems> = ({
                     key={item.id + item.nameRu}
                     className={classes.orderProducts + ' row'}
                 >
-                    <div className={classes.productImg + ' col-xl-2 col-4'}>
-                        {imgFormatter(item.image, null, item.nameRu, 'pt-2')}
+                    <div className={classes.productImg + ' col-xl-2'}>
+                        {imgFormatter(item.image, null, item.nameRu, 'pt-0')}
                     </div>
-                    <div className='col-xl-4 col-8 p-xl-0'>
+                    <div className='col-xl-10 p-xl-0'>
                         <p className={classes.orderProductsName}>
                             {item.nameRu}
                             <span className='ml-2 text-orange'>
-                            {item.autolongNumber}
+                                {item.autolongNumber}
                             </span>
                         </p>
-                    </div>
-                    <div className='col-xl-2 col-4'>
-                        <p className={classes.orderProductsCount}>
-                            {item.quantity + ' шт'}
-                        </p>
-                    </div>
-                    <div className='col-xl-4 col-8 text-right'>
-                        <p className={classes.orderProductsPrice}>
-                            {item.price ? moneyFormatter(item.price) : null}
-                        </p>
+                        <div className='row align-items-center'>
+                        <div className='col-xl-3 col-6'>
+                                <p className={classes.orderProductsArticle}>
+                                01459
+                                </p>
+                            </div>
+                            <div className='col-xl-3 col-6'>
+                                <p className={classes.orderProductsItemPrice}>
+                                Цена за шт: 25 ¥
+                                </p>
+                            </div>
+                            <div className='col-xl-3 col-6'>
+                                <p className={classes.orderProductsCount}>
+                                    {item.quantity + ' шт'}
+                                </p>
+                            </div>
+                            <div className='col-xl-3 col-6 text-right'>
+                                <p className={classes.orderProductsPrice}>
+                                    {item.price
+                                        ? moneyFormatter(item.price)
+                                        : null}
+                                </p>
+                            </div>
+                        </div>
                     </div>
                 </div>
             ))}

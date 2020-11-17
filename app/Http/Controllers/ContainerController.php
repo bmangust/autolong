@@ -103,10 +103,10 @@ class ContainerController extends Controller
         $status = $request->input('status');
         $container->setContainerStatus($status);
 
-        $containerStatus = (array) Status::getContainerStatuses()->$status;
+        $containerStatus = head((array) Status::getContainerStatuses()->$status);
         $orderStatuses = (array) Status::getOrderStatuses();
         if (in_array($containerStatus, $orderStatuses)) {
-            $orderStatus = head(array_keys($containerStatus, $orderStatuses));
+            $orderStatus = head(array_keys($orderStatuses, $containerStatus));
             $container->changeStatusInOrders($orderStatus);
         }
         return response()->json(new ContainerWithRelationshipsResource($container), 200);

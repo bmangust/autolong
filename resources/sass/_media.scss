@@ -71,6 +71,11 @@
     .custom-switch {
         z-index: 0;
     }
+
+    .priceSymbol {
+        font-size: 12px;
+        white-space: nowrap;
+    }
 }
 
 @media (max-width: 767px) {

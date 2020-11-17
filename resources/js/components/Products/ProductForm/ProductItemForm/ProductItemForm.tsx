@@ -237,7 +237,7 @@ const ProductItemForm: React.FC<{
                                htmlFor='providerId'>
                             Выберите поставщика
                         </label>
-                        <div className='col-10 mb-3 p-0'>
+                        <div className='col-lg-10 mb-3 p-0'>
                             <Controller
                                 name="providerId"
                                 as={providerSelect}
@@ -411,7 +411,7 @@ const ProductItemForm: React.FC<{
                                                     pt-2 font-weight-bold'>
                                         Брутто
                                     </div>
-                                    <div className='col-xl-8 col-7'>
+                                    <div className='col-xl-8 col-lg-7 col-8'>
                                         <input name="weightBrutto"
                                                placeholder="0"
                                                ref={register}
@@ -422,7 +422,7 @@ const ProductItemForm: React.FC<{
                                             Это поле обязательно
                                         </small>}
                                     </div>
-                                    <div className='col-xl-2 col-2
+                                    <div className='col-xl-2 col-lg-2 col-1
                                                 priceSymbol
                                                 text-main
                                                 font-weight-bold pl-0'>
@@ -436,7 +436,7 @@ const ProductItemForm: React.FC<{
                                     >
                                         Нетто
                                     </div>
-                                    <div className='col-xl-8 col-7'>
+                                    <div className='col-xl-8 col-lg-7 col-8'>
                                         <input name="weightNetto"
                                                className='w-100'
                                                ref={register}
@@ -447,7 +447,7 @@ const ProductItemForm: React.FC<{
                                             Это поле обязательно
                                         </small>}
                                     </div>
-                                    <div className='col-xl-2 col-2
+                                    <div className='col-xl-2 col-lg-2 col-1
                                                 priceSymbol
                                             text-main font-weight-bold pl-0'>
                                         кг

@@ -10,11 +10,15 @@ import {useForm} from 'react-hook-form'
 // Actions
 import {
     changeOrderStatus,
-    deleteOrderById, fetchOrderById
+    deleteOrderById,
+    fetchOrderById
 } from '../../store/actions/orders'
 
 // Typescript
 import {IOrder, IOrdersRootState} from '../../components/Orders/IOrders'
+
+// Styles
+import classes from './Order.module.css'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
@@ -22,7 +26,6 @@ import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
-import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 import DocumentsCreate from '../../components/DocumentCreate/DocumentsCreate'
 import {getOrderStatusName, getPaymentStatusName} from '../../utils'
 import Form from '../../components/UI/Form/Form'
@@ -51,7 +54,6 @@ const Order: React.FC<IOrder> = () => {
     useEffect(() => {
         dispatch(fetchOrderById(id))
     }, [dispatch, id])
-
 
     const showPaymentHandler = () => {
         setIsShow(oldState => !oldState)
@@ -158,32 +160,60 @@ const Order: React.FC<IOrder> = () => {
                     </button>
                 </div>
             </div>
-
-            <OrderStatuses
-                container={order.container}
-                id={order.id}
-                status={order.status}/>
-
             <div className='card mb-3 pb-lg-4 pb-0'>
-                <div className='card-body-info'>
-                    <h2 className='mb-lg-4 mb-2'>Список заказа</h2>
+                <div className={classes.cardBody + ' card-body-info'}>
+                    <div
+                        className='mb-lg-4 mb-2
+                        d-flex justify-content-between align-items-center'
+                    >
+                        <h2 className={classes.title}>Список заказа</h2>
+                        <div className={classes.dropdownWrap}>
+                                <span className={classes.dropdownTitle}>
+                                    Валюта
+                                </span>
+                            <select>
+                                <option value='1' selected>
+                                    ¥
+                                </option>
+                                <option value='2'>₽</option>
+                                <option value='3'>$</option>
+                            </select>
+                        </div>
+                    </div>
                     {'items' in order ? (
                         <OrderItems items={order.items}/>
                     ) : null}
-                    <div className='text-right font-weight-bold mt-3'>
-                        Общая стоимость
-                        <span className='text-orange ml-3'>
-                            {'price' in order
-                                ? order.price.cny.toFixed(2) + ' ¥'
-                                : null}
-                        </span>
+                    <div className='row align-items-center mt-3'>
+                        <div className='col-xl-6'>
+                            <div className={classes.orderInfo}>
+                                    <span className={classes.orderDate}>
+                                        12.11.2020
+                                    </span>
+                                <span className={classes.orderRateRub}>
+                                        1 ¥ = 11,84 ₽
+                                    </span>
+                                <span className={classes.orderRateUSD}>
+                                        1 ¥ = 11,84 $
+                                    </span>
+                            </div>
+                        </div>
+                        <div className='col-xl-6'>
+                            <div className={classes.orderPriceTotal}>
+                                Общая стоимость
+                                <span className='text-orange ml-3'>
+                                        {'price' in order
+                                            ? order.price.cny.toFixed(2) + ' ¥'
+                                            : null}
+                                    </span>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
 
-            <div className="card mb-3">
-                <div className="card-body">
-                    <h2 className="mb-4">Документы</h2>
+            <div className='card mb-3'>
+                <div className='card-body'>
+                    <h2 className='mb-4'>Документы</h2>
                     <DocumentsCreate id={order.id}/>
                 </div>
             </div>
@@ -194,14 +224,11 @@ const Order: React.FC<IOrder> = () => {
                 page='orders'
             />
         </div>
-
         {'provider' in order && order.provider ? (
             <div className='col-lg-4'>
                 <div className='card'>
                     <div className='card-body-info'>
-                        <p className='infoBlockHeaders mb-1'>
-                            Поставщик
-                        </p>
+                        <p className='infoBlockHeaders mb-1'>Поставщик</p>
                         <p className='infoBlockText'>
                             {order.provider.name}
                         </p>
@@ -233,8 +260,10 @@ const Order: React.FC<IOrder> = () => {
                                 {order.provider.website}
                             </a>
                         </p>
-                        <p className='infoBlockHeaders mb-1 mt-lg-5
-                                 mt-3'>
+                        <p
+                            className='infoBlockHeaders mb-1 mt-lg-5
+                                 mt-3'
+                        >
                             Перейти на страницу поставщика
                         </p>
                         <NavLink to={'/provider/' + order.provider.id}>
