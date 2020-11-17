@@ -201,6 +201,9 @@ class OrderController extends Controller
         $order->contract->saveInfoWithJson($request->all());
         $contract = $order->contract->getInfo();
 
+        $providerStamp = $order->saveProviderStamp($request->file('providerStamp'));
+        $importerStamp = $order->saveImporterStamp($request->file('importerStamp'));
+
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
             'name' => $contract->name,
@@ -212,9 +215,11 @@ class OrderController extends Controller
             'directorEn' => $contract->directorEn,
             'requisites' => $order->cutScriptTagsInText($contract->requisites),
             'orderPrice' => $order->getOrderSumInCny(),
+            'providerStamp' => $providerStamp,
+            'importerStamp' => $importerStamp,
+            'contractEndDate' => $contract->contractEndDate,
             'classificationRu' => $contract->classificationRu,
-            'classificationEn' => $contract->classificationEn,
-            'contractEndDate' => $contract->contractEndDate
+            'classificationEn' => $contract->classificationEn
         ]);
         return $newPdf->download();
     }
