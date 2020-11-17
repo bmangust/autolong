@@ -94,7 +94,7 @@ const Order: React.FC<IOrder> = () => {
                             <p className='infoBlockHeaders'>
                                 Статус заказа
                             </p>
-                            <span className='status'>
+                            <span className='statusOrder'>
                                 {getOrderStatusName(order.status)}</span>
                         </div>
                         <div className='col-md-7'>
