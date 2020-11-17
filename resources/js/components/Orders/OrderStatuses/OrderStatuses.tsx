@@ -15,18 +15,24 @@ import classes from './OrderStatuses.module.css'
 import {changeOrderStatus} from '../../../store/actions/orders'
 import {fetchCities} from '../../../store/actions/cities'
 
+// Typescript
+import {IContainer} from '../../Containers/IContainers'
+
 // App
 import {toast} from 'react-toastify'
 import SvgInProduction from '../../UI/iconComponents/InProduction'
 import SvgReadyForSent from '../../UI/iconComponents/ReadyForSent'
-import SvgInTransit from '../../UI/iconComponents/InTransit'
 import SvgDeliveryBox from '../../UI/iconComponents/DeliveryBox'
-import SvgToTheCarrier from '../../UI/iconComponents/ToTheCarrier'
-import SvgArrivedAtCustoms from '../../UI/iconComponents/ArrivedAtCustoms'
-import SvgRelease from '../../UI/iconComponents/Release'
+import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
+import {NavLink} from 'react-router-dom'
+import {getContainerStatusName} from '../../../utils'
 
-const OrderStatuses: React.FC<{ id: number, status: string }> =
-    ({id, status}) => {
+const OrderStatuses: React.FC<{
+    id: number,
+    status: string,
+    container?: IContainer
+}> =
+    ({id, status, container}) => {
         const dispatch = useDispatch()
 
         const [date, setDate] = useState('')
@@ -77,6 +83,8 @@ const OrderStatuses: React.FC<{ id: number, status: string }> =
                     }
                 })
         }
+
+        const cls = [classes.status]
 
         let orderStatus
         switch (status) {
@@ -150,95 +158,6 @@ const OrderStatuses: React.FC<{ id: number, status: string }> =
                         <p className={classes.statusTitle}>
                             Заказ готов к отгрузке
                         </p>
-                        <p className={classes.statusText}>
-                            Подтвердите, что заказ отправлен к грузоперевозчику
-                        </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('orderSentToTheCarrier')}
-                            className='btn btn-success'>
-                            Подтвердить
-                        </button>
-                    </div>
-                </div>
-                break
-            }
-            case 'orderSentToTheCarrier': {
-                orderStatus = <div className={classes.statusBody}>
-                    <SvgToTheCarrier/>
-                    <div>
-                        <p className={classes.statusTitle}>
-                            Заказ прибыл к грузоперевозчику
-                        </p>
-                        <p className={classes.statusText}>
-                            Подтвердите, что заказ в транзите
-                        </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('orderInTransit')}
-                            className='btn btn-success'>
-                            Подтвердить
-                        </button>
-                    </div>
-                </div>
-                break
-            }
-            case 'orderInTransit': {
-                orderStatus = <div className={classes.statusBody}>
-                    <SvgInTransit/>
-                    <div>
-                        <p className={classes.statusTitle}>
-                            Заказ в транзите
-                        </p>
-                        <p className={classes.statusText}>
-                            Подтвердите, что заказ прибыл на таможню
-                        </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('orderArrivedAtCustoms')}
-                            className='btn btn-success'>
-                            Подтвердить
-                        </button>
-                    </div>
-                </div>
-                break
-            }
-            case 'orderArrivedAtCustoms': {
-                orderStatus = <div className={classes.statusBody}>
-                    <SvgArrivedAtCustoms/>
-                    <div>
-                        <p className={classes.statusTitle}>
-                            Заказ прибыл на таможню
-                        </p>
-                        <p className={classes.statusText}>
-                            Подтвердите, что заказ прошёл таможню
-                        </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('orderRelease')}
-                            className='btn btn-success'>
-                            Подтвердить
-                        </button>
-                    </div>
-                </div>
-                break
-            }
-            case 'orderRelease': {
-                orderStatus = <div className={classes.statusBody}>
-                    <SvgRelease/>
-                    <div>
-                        <p className={classes.statusTitle}>
-                            Заказ выпущен
-                        </p>
-                        <p className={classes.statusText}>
-                            Подтвердите, что заказ на складе
-                        </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('orderInStock')}
-                            className='btn btn-success'>
-                            Подтвердить
-                        </button>
                     </div>
                 </div>
                 break
@@ -265,11 +184,48 @@ const OrderStatuses: React.FC<{ id: number, status: string }> =
             }
         }
 
-        return orderStatus
-            ? <div className={classes.status}>
-                {orderStatus}
+        let containerBlock
+
+        if (container && Object.keys(container).length) {
+            cls.push(classes.black, 'mt-3 mb-3')
+            containerBlock = <div className={classes.statusBody}>
+                <SvgOrderInContainer/>
+                <div>
+                    <p className={classes.statusTitle}>
+                        Заказ привязан к контейнеру
+                    </p>
+                    <div className={classes.orderContainer}>
+                        <div>
+                            <p>Номер контейнера</p>
+                            <NavLink to={`/container/${container?.id}`}>
+                                {container?.id}
+                            </NavLink>
+                        </div>
+                        <div>
+                            <p>Статус контейнера</p>
+                            <span>
+                                {getContainerStatusName(container?.status)}
+                            </span>
+                        </div>
+                    </div>
+                </div>
             </div>
-            : null
+        }
+
+        return (
+            orderStatus
+                ? <>
+                    <div className={classes.status}>
+                        {orderStatus}
+                    </div>
+                    {containerBlock
+                        ? <div className={cls.join(' ')}>
+                            {containerBlock}
+                        </div>
+                        : null}
+                </>
+                : null
+        )
     }
 
 export default OrderStatuses

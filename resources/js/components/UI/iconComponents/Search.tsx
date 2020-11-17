@@ -7,6 +7,7 @@ function SvgSearch(props: React.SVGProps<SVGSVGElement>) {
             height="1em"
             viewBox="0 0 15 15"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
             <g clipPath="url(#search_svg__clip0)" fill="#3a3d61">

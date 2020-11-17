@@ -7,6 +7,7 @@ function SvgCatalog(props: React.SVGProps<SVGSVGElement>) {
             height="1em"
             viewBox="0 0 26 25"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
             <path

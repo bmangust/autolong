@@ -7,6 +7,7 @@ function SvgArrivedAtCustoms(props: React.SVGProps<SVGSVGElement>) {
             height="1em"
             viewBox="0 0 70 66"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
             <path
