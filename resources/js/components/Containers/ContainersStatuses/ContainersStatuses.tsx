@@ -115,7 +115,7 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                 break
             }
             case 'containerInStock': {
-                cls.push(classes.black, 'mt-3 mb-3')
+                cls.push(classes.black)
                 containerStatus = <div className={classes.statusBody}>
                     <SvgOrderInContainer/>
                     <div>
@@ -141,7 +141,7 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
         }
 
         return containerStatus
-            ? <div className={classes.status}>
+            ? <div className={cls.join(' ')}>
                 {containerStatus}
             </div>
             : null
