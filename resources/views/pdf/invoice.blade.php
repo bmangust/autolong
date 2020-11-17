@@ -106,9 +106,15 @@
             </td>
         </tr>
         <tr>
+            @if(!isset($paymentTerms))
             <td>
                 PAYMENT TERMS: {{ $proformaStatusPayment }}  by proforma invoice {{ $proformaNumber }} dated {{ $proformaDate }}
             </td>
+            @else
+            <td>
+               {{ isset($paymentTerms) }}
+            </td>
+            @endif
         </tr>
         <tr>
             <td>Contract {{ $contract }}</td>
