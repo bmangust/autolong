@@ -60,7 +60,7 @@ class Container extends Model
         $statusContainerInStock = head(array_keys($statuses, "На складе"));
         if (array_key_exists($status, $statuses)) {
             $this->status = $status;
-            $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->timestamp : $this->arrival_date = null;
+            $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->format('d/m/Y') : $this->arrival_date = null;
             $this->save();
         } else {
             throw new HttpException(404,'Данного статуса контейнера не существует');
@@ -71,7 +71,7 @@ class Container extends Model
     {
         $mainCity = Order::findOrFail(head($ordersIds))->city;
         if (is_null($mainCity)) {
-            throw new HttpException(400,'В заказе не указан город');
+            throw new HttpException(400,'В выбранном заказе не указан город');
         }
         foreach ($ordersIds as $id) {
             $city = Order::findOrFail($id)->city;
