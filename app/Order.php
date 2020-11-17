@@ -279,6 +279,6 @@ class Order extends Model
     public function saveStamp(string $directory, string $name, $image): string
     {
         return Storage::disk('main')
-            ->putFileAs($directory, $image, $name . $image->getClientOriginalExtension());
+            ->putFileAs($directory, $image, $name . '.' . $image->getClientOriginalExtension());
     }
 }

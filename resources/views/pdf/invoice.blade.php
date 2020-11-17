@@ -42,6 +42,9 @@
         TO: {{ $importer->name_ru ? $importer->name_ru : '-' }} {{ $importer->address ? $importer->address : '-' }}
         INN/KPP 7721305869/ 772101001
     </p>
+        <p style="display: block; text-align: left; margin-top: 20px; margin-bottom: 25px; font-size: 10px;">
+            {{ isset($additionalField) ? isset($additionalField) : '' }}
+        </p>
     <table style="border-collapse: collapse; text-align: center; font-size: 10px;" border="1" width="100%">
         <tr>
             <th style="border: 1px solid #000;">
@@ -69,7 +72,7 @@
                 {{ $item->translateHtmlCodesToTags($item->product->name_ru) ??  '-'}} {{ $item->product->vendor_code }}
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
-                <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset($item->product->image) }}"
+                <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset(is_null($item->product->image) ? $item->product->image : '/public/imgs/placeholder-product-image.png') }}"
                     alt="" />
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
@@ -106,14 +109,14 @@
             </td>
         </tr>
         <tr>
-            @if(!isset($paymentTerms))
-            <td>
-                PAYMENT TERMS: {{ $proformaStatusPayment }}  by proforma invoice {{ $proformaNumber }} dated {{ $proformaDate }}
-            </td>
+            @if(isset($paymentTerms))
+                <td>
+                    {{ isset($paymentTerms) }}
+                </td>
             @else
-            <td>
-               {{ isset($paymentTerms) }}
-            </td>
+                <td>
+                    PAYMENT TERMS: {{ $proformaStatusPayment }}  by proforma invoice {{ $proformaNumber }} dated {{ $proformaDate }}
+                </td>
             @endif
         </tr>
         <tr>

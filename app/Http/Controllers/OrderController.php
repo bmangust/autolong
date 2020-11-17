@@ -202,8 +202,16 @@ class OrderController extends Controller
         $contract = $order->contract->getInfo();
 
         $stampDirectory = Order::STAMP_DIRECTORY;
-        $providerStamp = $order->saveStamp($stampDirectory, Order::STAMP_PROVIDER_NAME, $request->file('providerStamp'));
-        $importerStamp = $order->saveStamp($stampDirectory, Order::STAMP_IMPORTER_NAME, $request->file('importerStamp'));
+        if ($request->hasFile('providerStamp')) {
+            $providerStamp = $order->saveStamp($stampDirectory, Order::STAMP_PROVIDER_NAME, $request->file('providerStamp'));
+        } else {
+            $providerStamp = null;
+        }
+        if ($request->hasFile('importerStamp')) {
+            $importerStamp = $order->saveStamp($stampDirectory, Order::STAMP_IMPORTER_NAME, $request->file('importerStamp'));
+        } else {
+            $importerStamp = null;
+        }
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
@@ -249,15 +257,34 @@ class OrderController extends Controller
         $proforma = $order->proforma->getInfo();
         $contract = $order->contract->getInfo();
 
+        if (isset($proforma->date)) {
+            $date = $proforma->date;
+        } else {
+            $date = null;
+        }
+        if (isset($proforma->contractNumber)) {
+            $contractNumber = $proforma->contractNumber;
+        } else {
+            $contractNumber = null;
+        }
+        if (isset($proforma->proformaNumber)) {
+            $proformaNumber = $proforma->proformaNumber;
+        } else {
+            $proformaNumber = null;
+        }
+
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.proforma', [
             'order' => $order,
             'supply' => $proforma->supply,
             'importer' => $importer,
             'provider' => $provider,
+            'contractNumber' => $contractNumber,
+            'proformaNumber' => $proformaNumber,
             'contract' => $contract->name,
             'orderItems' => $order->orderItems,
             'statusPayment' => $proforma->statusPayment,
+            'date' => $date
         ]);
         return $newPdf->download();
     }
@@ -285,6 +312,17 @@ class OrderController extends Controller
         $order->invoice->saveInfoWithJson($request->all());
         $invoice = $order->invoice->getInfo();
 
+        if (isset($invoice->paymentTerms)) {
+            $paymentTerms = $invoice->paymentTerms;
+        } else {
+            $paymentTerms = null;
+        }
+        if (isset($invoice->additionalField)) {
+            $additionalField = $invoice->additionalField;
+        } else {
+            $additionalField = null;
+        }
+
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.invoice', [
             'order' => $order,
@@ -296,6 +334,8 @@ class OrderController extends Controller
             'proformaDate' => $invoice->date,
             'proformaNumber' => $invoice->proformaNumber,
             'proformaStatusPayment' => $invoice->proformaStatusPayment,
+            'paymentTerms' => $paymentTerms,
+            'additionalField' => $additionalField
         ]);
         return $newPdf->download();
     }

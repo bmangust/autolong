@@ -32,9 +32,17 @@
                 TEL: {{ $provider->phone ? $provider->phone : '-' }}
             </td>
             <td style="width: 500px">
-                number: {{ $order->id }}
+                @if(isset($proformaNumber))
+                    number: {{ $proformaNumber }}
+                @else
+                    number: {{ $order->id }}
+                @endif
                 <br />
-                date: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                @if(isset($date))
+                    date: {{ $date }}
+                @else
+                    date: {{ \Carbon\Carbon::now()->format('d F Y') }}
+                @endif
             </td>
         </tr>
     </table>
@@ -104,7 +112,11 @@
             </td>
         </tr>
         <tr>
-            <td>Contract {{ $contract }}</td>
+            @if(isset($contractNumber))
+                <td>Contract {{ $contractNumber }}</td>
+            @else
+                <td>Contract {{ $contract }}</td>
+            @endif
         </tr>
         <tr>
             <td>Terms of delivery: {{ $supply }}</td>

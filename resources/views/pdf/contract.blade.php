@@ -794,6 +794,7 @@
                 </p>
             </td>
         </tr>
+        <br>
         <tr style="">
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">
@@ -807,7 +808,9 @@
                     ПОКУПАТЕЛЬ: {{ $importer->name_ru }}
                 </p>
                 {!! $requisites ? $requisites : '-' !!}
+                @if(isset($importerStamp))
                 <img style="max-width: 300px; max-height: 300px;" src="{{ asset($importerStamp) }}" alt="">
+                @endif
             </td>
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">
@@ -844,7 +847,9 @@
                 <p style="margin: 0;">
                     Chi Ning {{ $directorEn }}
                 </p>
+                @if(isset($providerStamp))
                 <img style="max-width: 300px; max-height: 300px;" src="{{ asset($providerStamp) }}" alt="">
+                @endif
             </td>
         </tr>
     </table>
