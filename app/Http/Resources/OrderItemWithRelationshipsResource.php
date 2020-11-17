@@ -21,6 +21,7 @@ class OrderItemWithRelationshipsResource extends JsonResource
             'id' => $this->id,
             'quantity' => $this->quantity,
             'nameRu' => $this->product->name_ru,
+            'autolongNumber' => $this->product->autolong_number,
             'price' => (object)['rub' => $this->price_rub,
                                 'usd' => $this->price_usd,
                                 'cny' => $this->price_cny],
