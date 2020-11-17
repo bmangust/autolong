@@ -26,8 +26,9 @@ export interface IContainer {
     city: ICity
     orders: IOrder[] | []
     sandboxFiles: ISandboxFile[] | []
-    createdAt?: number
-    updatedAt?: number
+    arrivalDate: number | null
+    createdAt: number
+    updatedAt: number
 }
 
 export interface IContainersState {

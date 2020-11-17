@@ -33,7 +33,14 @@ h2 {
     padding: 12px 30px;
 }
 
-.order .orderHeader span:before {
+.order .orderHeader a {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+}
+
+.order .orderHeader a:before {
     content: '';
     width: 10px;
     height: 10px;

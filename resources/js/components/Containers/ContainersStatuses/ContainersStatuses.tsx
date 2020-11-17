@@ -10,26 +10,30 @@ import classes from './ContainersStatuses.module.css'
 // Actions
 import {changeContainerStatus} from '../../../store/actions/containers'
 
+// Typescript
+import {IContainer} from '../IContainers'
+
 // App
 import SvgInTransit from '../../UI/iconComponents/InTransit'
 import SvgArrivedAtCustoms from '../../UI/iconComponents/ArrivedAtCustoms'
 import SvgRelease from '../../UI/iconComponents/Release'
 import SvgToTheCarrier from '../../UI/iconComponents/ToTheCarrier'
 import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
+import {timeConverter} from '../../../utils'
 
-const ContainersStatuses: React.FC<{ id: number, status: string }> =
-    (({id, status}) => {
+const ContainersStatuses: React.FC<{ container: IContainer }> =
+    (({container}) => {
         const dispatch = useDispatch()
 
         const onClickHandler = (status) => {
-            dispatch(changeContainerStatus(id, {status}))
+            dispatch(changeContainerStatus(container?.id, {status}))
         }
 
         const cls = [classes.status]
 
         let containerStatus
 
-        switch (status) {
+        switch (container.status) {
             case 'containerAssemble': {
                 containerStatus = <div className={classes.statusBody}>
                     <SvgToTheCarrier/>
@@ -116,12 +120,14 @@ const ContainersStatuses: React.FC<{ id: number, status: string }> =
                     <SvgOrderInContainer/>
                     <div>
                         <p className={classes.statusTitle}>
-                            Заказ привязан к контейнеру
+                            Контейнер на складе
                         </p>
                         <div className={classes.orderContainer}>
                             <div>
                                 <p>Дата прибытия</p>
-                                <span>тут дата</span>
+                                <span>
+                                    {timeConverter(container.arrivalDate)}
+                                </span>
                             </div>
                         </div>
                     </div>

@@ -29,8 +29,18 @@ export interface ISandboxFile {
 }
 
 const SandboxFilesCard: React.FC<{
-    sandboxFiles: ISandboxFile[], id: number, page: string
-}> = ({sandboxFiles, id, page}) => {
+    sandboxFiles: ISandboxFile[]
+    id: number
+    label?: string
+    page: string
+    isShowFiles?: boolean
+    isCheck?: boolean
+}> = (
+    {
+        sandboxFiles, id,
+        page, label = '+ Новый файл',
+        isShowFiles = true, isCheck = false
+    }) => {
     const [sandboxFilesState, setSandboxFilesState] = useState(() => {
         return sandboxFiles
     })
@@ -42,10 +52,18 @@ const SandboxFilesCard: React.FC<{
         updatedAt: null
     }
 
-    const schemaCreate = yup.object().shape({
-        name: yup.string().required(),
-        file: yup.array().required()
-    })
+    let schemaCreate
+
+    if (isCheck) {
+        schemaCreate = yup.object().shape({
+            file: yup.array().required()
+        })
+    } else {
+        schemaCreate = yup.object().shape({
+            name: yup.string().required(),
+            file: yup.array().required()
+        })
+    }
 
     const [isOpen, setIsOpen] = useState(false)
     const [isEdit, setIsEdit] = useState(false)
@@ -66,6 +84,9 @@ const SandboxFilesCard: React.FC<{
 
     const sandboxFormSubmitHandler =
         handleSubmit((formValues) => {
+            if (isCheck) {
+                formValues.check = isCheck ? 1 : 0
+            }
             formValues.file = formValues.file[0]
             const url = `/api/${page}/${id}/savefile`
             const formData = new FormData()
@@ -158,43 +179,51 @@ const SandboxFilesCard: React.FC<{
     }
 
     return <>
-        <div className='card card-body mb-lg-0 mb-3'>
-            {sandboxFilesState
-                ? sandboxFilesState.map((file) => {
-                    return <div
-                        className={classes.item}
-                        key={file.id}>
-                        <div className={classes.desc}>
-                            <SvgCatalog className={classes.cat}/>
-                            <div>
-                                <p>{file.name}</p>
-                                {`${file.description
-                                    ? file.description + ' |'
-                                    : ''}
+        {isShowFiles
+            ? <div className='card card-body mb-lg-0 mb-3'>
+                {sandboxFilesState
+                    ? sandboxFilesState.map((file) => {
+                        return <div
+                            className={classes.item}
+                            key={file.id}>
+                            <div className={classes.desc}>
+                                <SvgCatalog className={classes.cat}/>
+                                <div>
+                                    <p>{file.name}</p>
+                                    {`${file.description
+                                        ? file.description + ' |'
+                                        : ''}
                                  ${timeConverter(file.updatedAt)}`}
+                                </div>
+                            </div>
+                            <div className={classes.icons}>
+                                <a href={file.file}
+                                   rel="noreferrer"
+                                   download>
+                                    <SvgDownload/>
+                                </a>
+                                {!isCheck
+                                    ? <SvgEdit
+                                        onClick={() =>
+                                            onEditHandler(file)}
+                                        className={classes.edit}/>
+                                    : null
+                                }
+                                <SvgDelete onClick={() =>
+                                    onDeleteHandler(file)}/>
                             </div>
                         </div>
-                        <div className={classes.icons}>
-                            <a href={file.file}
-                               rel="noreferrer"
-                               download>
-                                <SvgDownload/>
-                            </a>
-                            <SvgEdit
-                                onClick={() =>
-                                    onEditHandler(file)}
-                                className={classes.edit}/>
-                            <SvgDelete onClick={() =>
-                                onDeleteHandler(file)}/>
-                        </div>
-                    </div>
-                })
-                : null
-            }
-            <label onClick={onClickHandler} className={classes.upload}>
-                + Новый файл
+                    })
+                    : null
+                }
+                <label onClick={onClickHandler} className={classes.upload}>
+                    {label}
+                </label>
+            </div>
+            : <label onClick={onClickHandler} className={classes.upload}>
+                {label}
             </label>
-        </div>
+        }
         {isEdit
             ? <Modal title='Изменить информацию о файле' isOpen={isOpen}>
                 <form onSubmit={sandboxEditFormSubmitHandler}>
@@ -221,14 +250,23 @@ const SandboxFilesCard: React.FC<{
             </Modal>
             : <Modal title='Добавить новый файл' isOpen={isOpen}>
                 <form onSubmit={sandboxFormSubmitHandler}>
-                    <label htmlFor='name'>Укажите название файла</label>
-                    <input className='mb-3' type='text'
-                           name='name' ref={register({required: true})}/>
-                    {errors.name &&
-                    <small>Это поле обязательно</small>}
-                    <label htmlFor='description'>Укажите описание файла</label>
-                    <input className='mb-3' type='text'
-                           name='description' ref={register}/>
+                    {!isCheck
+                        ? <>
+                            <label htmlFor='name'>
+                                Укажите название файла</label>
+                            <input className='mb-3' type='text'
+                                   name='name'
+                                   ref={register({required: true})}/>
+                            {errors.name &&
+                            <small>Это поле обязательно</small>}
+                            <label htmlFor='description'>
+                                Укажите описание файла</label>
+                            <input className='mb-3' type='text'
+                                   name='description' ref={register}/>
+                        </>
+                        : <p>Название и описание файла
+                            сгенерируются автоматически</p>
+                    }
                     <FileInput name='file' control={control}/>
                     {errors.file &&
                     <small>Это поле обязательно</small>}

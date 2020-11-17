@@ -4,6 +4,8 @@ import React, {useEffect, useState} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import CreatableSelect from 'react-select/creatable'
+import {NavLink} from 'react-router-dom'
+import {toast} from 'react-toastify'
 
 // Typescript
 import {ICity, ICitiesRootState} from '../../Cities/ICities'
@@ -19,12 +21,10 @@ import {fetchCities} from '../../../store/actions/cities'
 import {IContainer} from '../../Containers/IContainers'
 
 // App
-import {toast} from 'react-toastify'
 import SvgInProduction from '../../UI/iconComponents/InProduction'
 import SvgReadyForSent from '../../UI/iconComponents/ReadyForSent'
 import SvgDeliveryBox from '../../UI/iconComponents/DeliveryBox'
 import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
-import {NavLink} from 'react-router-dom'
 import {getContainerStatusName} from '../../../utils'
 
 const OrderStatuses: React.FC<{

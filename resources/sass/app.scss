@@ -63,6 +63,40 @@ a {
     transition: 0.2s all;
 }
 
+.status {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #EB5E28;
+    padding: 4px 16px;
+    background: rgba(235, 94, 40, 0.1);
+    border-radius: 100px;
+    display: inline-block;
+}
+
+.statusPayment {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    padding: 4px 16px;
+    background: rgba(58, 64, 95, 0.1);
+    border-radius: 100px;
+    display: inline-flex;
+    align-items: center;
+    margin-right: 15px;
+}
+
+.paymentCollapse {
+    font-size: 10px;
+    line-height: 12px;
+    color: #3A405F;
+    font-weight: normal;
+    display: inline-flex;
+    align-items: center;
+    cursor: pointer;
+}
+
 .deleteButton:hover path {
     color: var(--orange);
     transition: 0.2s all;
@@ -559,6 +593,23 @@ html button.btn {
     line-height: 35px;
     padding-right: 36px;
     min-width: 140px;
+    width: fit-content;
+    text-align: left;
+}
+
+html button.btn-link {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-decoration-line: underline;
+    color: #EB5E28;
+    padding-left: 0;
+    padding-right: 0;
+}
+
+html button.btn-link:focus, html button.btn-link:active {
+    outline: none;
+    box-shadow: none;
 }
 
 .btn-primary {

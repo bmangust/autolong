@@ -1,10 +1,11 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {NavLink, useHistory, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
-import Select from 'react-select'
+import Collapse from 'react-bootstrap/esm/Collapse'
+import {useForm} from 'react-hook-form'
 
 // Actions
 import {
@@ -20,18 +21,25 @@ import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
-import statuses from '../../../statuses/statuses.json'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 import DocumentsCreate from '../../components/DocumentCreate/DocumentsCreate'
+import {getOrderStatusName, getPaymentStatusName} from '../../utils'
+import Form from '../../components/UI/Form/Form'
+import Input from '../../components/UI/Inputs/Input/Input'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
+    const [isShow, setIsShow] = useState(false)
 
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const {order, loading, loadingStatus, error} = useSelector(
+    const {
+        register, handleSubmit
+    } = useForm()
+
+    const {order, loading, error} = useSelector(
         (state: IOrdersRootState) => ({
             error: state.ordersState.error,
             order: state.ordersState.order,
@@ -44,30 +52,26 @@ const Order: React.FC<IOrder> = () => {
         dispatch(fetchOrderById(id))
     }, [dispatch, id])
 
-    const onChangeHandler = (id, e, action) => {
-        const value = {
-            [action.name]: e.value
-        }
-        dispatch(changeOrderStatus(id, value))
+
+    const showPaymentHandler = () => {
+        setIsShow(oldState => !oldState)
     }
 
-    const orderStatuses = Object.entries(
-        statuses.orderStatuses).map(
-        ([key, value]) => {
-            return {label: value, value: key}
-        }
-    )
-
-    const paymentStatuses = Object.entries(
-        statuses.paymentStatuses).map(
-        ([key, value]) => {
-            return {label: value, value: key}
-        }
-    )
+    const changePaymentStatus =
+        handleSubmit((formValues) => {
+            formValues.statusPayment = order.statusPayment
+            dispatch(changeOrderStatus(id, formValues))
+        })
 
     const onDeleteHandler = (id) => {
         dispatch(deleteOrderById(id))
         history.push('/orders')
+    }
+
+    const cls = ['paymentCollapse']
+
+    if (isShow) {
+        cls.push('active')
     }
 
     if (error) {
@@ -84,55 +88,72 @@ const Order: React.FC<IOrder> = () => {
                         {'name' in order ? order.name : ''}
                     </h2>
                     <div className='row mb-3 flex-lg-row flex-column'>
-                        <div className='col-md-6 mb-lg-0 mb-3'>
+                        <div className='col-md-5 mb-lg-0 mb-3'>
                             <p className='infoBlockHeaders'>
                                 Статус заказа
                             </p>
-                            <Select
-                                placeholder='Выберите статус заказа'
-                                isSearchable={false}
-                                value={orderStatuses.filter(
-                                    ({value}) => value === order.status
-                                )}
-                                isLoading={loadingStatus}
-                                isDisabled={loadingStatus}
-                                onChange={(e, action) =>
-                                    onChangeHandler(order.id, e, action)
-                                }
-                                classNamePrefix='select-mini'
-                                className='select-mini'
-                                name='status'
-                                options={orderStatuses}
-                            />
+                            <span className='status'>
+                                {getOrderStatusName(order.status)}</span>
                         </div>
-                        <div className='col-md-6'>
+                        <div className='col-md-7'>
                             <p className='infoBlockHeaders'>
                                 Статус оплаты
                             </p>
-                            <Select
-                                placeholder='Выберите статус оплаты'
-                                isSearchable={false}
-                                value={paymentStatuses.filter(
-                                    ({value}) =>
-                                        value === order.statusPayment
-                                )}
-                                isLoading={loadingStatus}
-                                isDisabled={loadingStatus}
-                                onChange={(e, action) =>
-                                    onChangeHandler(order.id, e, action)
-                                }
-                                classNamePrefix='select-mini'
-                                className='select-mini'
-                                name='statusPayment'
-                                options={paymentStatuses}
-                            />
+                            <span className='statusPayment'>
+                                {getPaymentStatusName(order.statusPayment)}
+                            </span>
+                            <span className={cls.join(' ')}
+                                  onClick={showPaymentHandler}>
+                                Сменить статус
+                            </span>
                         </div>
                     </div>
+                    <Collapse in={isShow}>
+                        <div>
+                            <hr className='m-0'/>
+                            <Form className='mb-4'
+                                  onSubmit={changePaymentStatus}>
+                                <div className="row">
+                                    <Input
+                                        id='paymentAmount' type='number'
+                                        label='Укажите сумму оплаты ¥'
+                                        ref={register} name='paymentAmount'
+                                    />
+                                    <Input
+                                        id='surchargeAmount' type='number'
+                                        label='* Укажите сумму доплаты ¥'
+                                        ref={register} name='surchargeAmount'
+                                    />
 
+                                </div>
+                                <div className="row mb-3">
+                                    <div className="col-6">
+                                        <label>Оплачено</label>
+                                        <h2 className='m-0'>0 % + 12.800 ¥</h2>
+                                    </div>
+                                    <div className="col-6 m-auto">
+                                        <SandboxFilesCard
+                                            id={order.id}
+                                            isCheck={true}
+                                            isShowFiles={false}
+                                            label='+ Добавить чек'
+                                            sandboxFiles={
+                                                order.sandboxFiles}
+                                            page='orders'
+                                        />
+                                    </div>
+                                </div>
+                                <button
+                                    type='submit'
+                                    className='btn btn-link'>
+                                    Подтвердить оплату
+                                </button>
+                            </Form>
+                        </div>
+                    </Collapse>
                     <button
                         onClick={() => onDeleteHandler(order.id)}
-                        className='btn btn-danger'
-                    >
+                        className='btn btn-danger'>
                         Удалить заказ
                     </button>
                 </div>

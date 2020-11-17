@@ -104,13 +104,13 @@ export const createContainer = (data, redirect) => async dispatch => {
             dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
-            dispatch({
-                type: CREATE_CONTAINER_ERROR,
-                payload: error.response
-            })
             if (error.response?.status === 400) {
-                toast.error(error.response.data)
+                toast.error(error.response.data.message)
             } else {
+                dispatch({
+                    type: CREATE_CONTAINER_ERROR,
+                    payload: error.response
+                })
                 toast.error(error.response)
             }
         })

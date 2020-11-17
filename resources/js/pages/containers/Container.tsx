@@ -2,7 +2,7 @@
 import React, {useEffect} from 'react'
 
 // Third-party
-import {useParams} from 'react-router-dom'
+import {NavLink, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
 // Styles
@@ -75,8 +75,7 @@ const Container: React.FC<IContainer> = () => {
 
                     <div className='mb-3'>
                         <ContainersStatuses
-                            id={container.id}
-                            status={container.status}/>
+                            container={container}/>
                     </div>
 
                     <div className="card mb-3">
@@ -89,7 +88,9 @@ const Container: React.FC<IContainer> = () => {
                             <div key={order.id + order.name}
                                  className={classes.order}>
                                 <div className={classes.orderHeader}>
-                                    <span>Заказ {order.id}</span>
+                                    <NavLink to={`/order/${order.id}`}>
+                                        Заказ {order.id}
+                                    </NavLink>
                                 </div>
                                 <div className={classes.orderBody}>
                                     <OrderItems items={order.items}/>
