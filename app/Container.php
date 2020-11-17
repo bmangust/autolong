@@ -2,6 +2,7 @@
 
 namespace App;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
 
 class Container extends Model
@@ -55,11 +56,13 @@ class Container extends Model
     public function setContainerStatus($status)
     {
         $statuses = Status::getContainerStatuses();
+        $statusContainerInStock = head(array_keys($statuses, "На складе"));
         if (property_exists($statuses, $status)) {
             $this->status = $status;
+            $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->timestamp : $this->arrival_date = null;
             $this->save();
         } else {
-            return response()->json('Данного статуса оплаты не существует', 404);
+            return response()->json('Данного статуса контейнера не существует', 404);
         }
     }
 
@@ -75,5 +78,13 @@ class Container extends Model
             }
         }
         return $mainCity->id;
+    }
+
+    public function changeStatusInOrders($status): bool
+    {
+        foreach ($this->orders as $order) {
+            $order->setOrderStatus($status);
+        }
+        return true;
     }
 }
