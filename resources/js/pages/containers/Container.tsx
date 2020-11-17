@@ -55,7 +55,8 @@ const Container: React.FC<IContainer> = () => {
             <div className="row">
                 <div className="col-lg-8">
                     <div className="card mb-3 card-body">
-                        <div className="d-flex justify-content-between">
+                        <div className="d-flex justify-content-between
+                         align-items-baseline">
                             <h2 className="mb-0">{'name' in container
                                 ? container.name
                                 : ''}</h2>

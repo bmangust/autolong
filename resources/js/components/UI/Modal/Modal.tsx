@@ -15,15 +15,14 @@ interface IModal {
     onClose?: () => void
 }
 
-const Modal: React.FC<IModal> = (
-    {
-        title,
-        isOpen,
-        onSuccessNode,
-        onClose,
-        onCloseNode,
-        children
-    }) => {
+const Modal: React.FC<IModal> = ({
+    title,
+    isOpen,
+    onSuccessNode,
+    onClose,
+    onCloseNode,
+    children,
+}) => {
     const cls = [classes.backDrop]
 
     if (isOpen) {
@@ -37,26 +36,20 @@ const Modal: React.FC<IModal> = (
             <div className={classes.modal}>
                 <div className={classes.modalDialog}>
                     <div className={classes.modalContent}>
+                        <div className={classes.modalClose}>&times;</div>
                         <div className={classes.modalBody}>
                             <h2 className='mb-3'>{title}</h2>
                             {children}
-                            {
-                                onSuccessNode
-                                    ? onSuccessNode
-                                    : null
-                            }
-                            {
-                                onCloseNode
-                                    ? onCloseNode
-                                    : onClose
-                            }
+                            {onSuccessNode ? onSuccessNode : null}
+                            {onCloseNode ? onCloseNode : onClose}
                         </div>
                     </div>
                 </div>
             </div>
-            <div className={cls.join(' ')}/>
-        </>
-        , document.body)
+            <div className={cls.join(' ')} />
+        </>,
+        document.body
+    )
 }
 
 export default Modal

@@ -93,4 +93,21 @@ class ContainerController extends Controller
         $container->delete();
         return response()->json([], 204);
     }
+
+    public function changeStatus(Request $request, Container $container)
+    {
+        $request->validate([
+            'status' => 'required'
+        ]);
+        $status = $request->input('status');
+        $container->setContainerStatus($status);
+
+        $containerStatus = (array) Status::getContainerStatuses()->$status;
+        $orderStatuses = (array) Status::getOrderStatuses();
+        if (in_array($containerStatus, $orderStatuses)) {
+            $orderStatus = head(array_keys($containerStatus, $orderStatuses));
+            $container->changeStatusInOrders($orderStatus);
+        }
+        return response()->json(new ContainerWithRelationshipsResource($container), 200);
+    }
 }

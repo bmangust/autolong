@@ -114,7 +114,7 @@
             <td>Contract {{ $contract }}</td>
         </tr>
         <tr>
-            <td>Terms of delivery: {{ $supply }}</td>
+            <td>{{ $supply }}</td>
         </tr>
     </table>
 

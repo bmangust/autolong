@@ -7,7 +7,7 @@
         "orderSentToTheCarrier": "Отправлен грузоперевозчику",
         "orderDeliveredToTheCarrier": "Доставлен грузоперевозчику",
         "orderInTransit": "В транзите",
-        "orderArrivedAtCustoms": "Прибыло на таможню",
+        "orderArrivedAtCustoms": "Прибыл на таможню",
         "orderRelease": "Выпуск",
         "orderInStock": "На складе",
         "orderCanceled": "Отменен",

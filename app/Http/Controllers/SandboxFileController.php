@@ -26,13 +26,18 @@ class SandboxFileController extends Controller
             return response()->json('Ошибка загружаемого файла', 400);
         }
 
-        $path = $model::SANDBOX_DIRECTORY . $model->id;
-        $name = $sandboxFile->getClearName($request->input('name')) . '.' . $file->getClientOriginalExtension();
-        if ($sandboxFile->checkFileInFolder($sandboxFile->getPathWithParentDirectory($path . '/' . $name))) {
-            return response()->json('Файл с таким именем существует', 400);
+        if ($request->input('check')) {
+            $path = $model::CHECK_DIRECTORY . $model->id;
+            $name = 'check-' . $model->id . '-' . uniqid() . $file->getClientOriginalExtension();
+            $description = 'Чек об оплате';
+        } else {
+            $path = $model::SANDBOX_DIRECTORY . $model->id;
+            $name = $sandboxFile->getClearName($request->input('name')) . '.' . $file->getClientOriginalExtension();
+            if ($sandboxFile->checkFileInFolder($sandboxFile->getPathWithParentDirectory($path . '/' . $name))) {
+                return response()->json('Файл с таким именем существует', 400);
+            }
+            $description = $request->input('description');
         }
-
-        $description = $request->input('description');
         $newPath = $sandboxFile->putFileInFolder($file, $path, $name);
         $newDocument = $model->sandboxFiles()->create([
             'file' => $newPath,

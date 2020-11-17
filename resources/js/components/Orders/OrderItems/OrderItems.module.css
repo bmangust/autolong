@@ -5,6 +5,7 @@
 
 .productImg {
     background: white;
+    overflow: hidden;
 }
 
 .productImg img {
@@ -111,8 +112,29 @@
     }
 
     .deleteButton {
+        position: absolute;
+        top: 5px;
+        right: 5px;
+        width: 30px;
+        font-size: 12px;
         order: -1;
-        background-color: #fff;
+        background-color: transparent;
+    }
+
+    .productPrices {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .products .productCount {
+        width: 100%;
+        max-width: 300px;
+        margin-bottom: 15px;
+    }
+
+    .products .productCount + span {
+        max-width: 100px;
     }
 }
 
@@ -121,13 +143,5 @@
         max-width: 100%;
     }
 
-    .productPrices {
-        justify-content: flex-start;
-        /* flex-direction: column;
-        align-items: flex-start; */
-    }
 
-    /* .products .productCount {
-        margin-bottom: 10px;
-    } */
 }
