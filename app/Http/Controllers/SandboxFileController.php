@@ -17,10 +17,16 @@ class SandboxFileController extends Controller
 
     public function saveFile(Request $request, $model, SandboxFile $sandboxFile)
     {
-        $request->validate([
-            'file' => 'required|file',
-            'name' => 'required|string|min:1|max:255',
-        ]);
+        if ($request->input('check')) {
+            $request->validate([
+                'file' => 'required|file',
+            ]);
+        } else {
+            $request->validate([
+                'file' => 'required|file',
+                'name' => 'required|string|min:1|max:255',
+            ]);
+        }
         $file = $request->file('file');
         if (!$file->isValid()) {
             return response()->json('Ошибка загружаемого файла', 400);
@@ -28,7 +34,7 @@ class SandboxFileController extends Controller
 
         if ($request->input('check')) {
             $path = $model::CHECK_DIRECTORY . $model->id;
-            $name = 'check-' . $model->id . '-' . uniqid() . $file->getClientOriginalExtension();
+            $name = 'check-' . $model->id . '-' . uniqid() . '.' .$file->getClientOriginalExtension();
             $description = 'Чек об оплате';
         } else {
             $path = $model::SANDBOX_DIRECTORY . $model->id;
