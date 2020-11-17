@@ -9,8 +9,12 @@ import {Control} from 'react-hook-form/dist/types'
 // Styles
 import classes from './FileInput.module.css'
 
-const FileInput: React.FC<{ control: Control, name: string }> = (
-    {control, name}) => {
+const FileInput: React.FC<{ control: Control, name: string, label: string }> = (
+    {
+        control,
+        name,
+        label = 'Перенесите сюда файл или кликните для выбора файла'
+    }) => {
     return (
         <Controller
             control={control}
@@ -23,8 +27,7 @@ const FileInput: React.FC<{ control: Control, name: string }> = (
                               {...getRootProps()}>
                             <input {...getInputProps()} onBlur={onBlur}
                                    name={name}/>
-                            <p className='mb-0'>Перенесите сюда файл или
-                                кликните для выбора файла</p>
+                            <p className='mb-0'>{label}</p>
                         </div>)}
                 </Dropzone>
                 <ul>

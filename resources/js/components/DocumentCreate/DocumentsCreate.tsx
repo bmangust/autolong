@@ -21,6 +21,7 @@ import Loader from '../UI/Loader/Loader'
 import Form from '../UI/Form/Form'
 import Input from '../UI/Inputs/Input/Input'
 import TextEditor from '../UI/TextEditor/TextEditor'
+import FileInput from '../UI/Inputs/FileInput/FileInput'
 
 const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const dispatch = useDispatch()
@@ -53,6 +54,12 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
 
     const documentCreateSubmitHandler =
         handleSubmit((formValues) => {
+            if ('providerStamp' in formValues) {
+                formValues.providerStamp = formValues.providerStamp[0] || ''
+            }
+            if ('importerStamp' in formValues) {
+                formValues.importerStamp = formValues.importerStamp[0] || ''
+            }
             setIsOpen(false)
             dispatch(createOrderInvoice(id, formValues, type))
         })
@@ -77,6 +84,14 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                     )}/>
                             </label>
                         </>
+                    } else if (key === 'providerStamp') {
+                        return <FileInput
+                            label='providerStamp'
+                            control={control} name='providerStamp'/>
+                    } else if (key === 'importerStamp') {
+                        return <FileInput
+                            label='importerStamp'
+                            control={control} name='importerStamp'/>
                     } else {
                         return <Input
                             key={key} id={key}
@@ -130,6 +145,33 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 id='directorEn' type='text'
                                 label='directorEn'
                                 ref={register} name='directorEn'/>
+                            : null}
+                        {!('providerStamp' in invoiceInputs)
+                            ? <FileInput
+                                label='providerStamp'
+                                control={control} name='providerStamp'/>
+                            : null}
+                        {!('importerStamp' in invoiceInputs)
+                            ? <FileInput
+                                label='importerStamp'
+                                control={control} name='importerStamp'/>
+                            : null}
+                    </>
+                    : null
+                }
+                {type === 'invoice'
+                    ? <>
+                        {!('paymentTerms' in invoiceInputs)
+                            ? <Input
+                                id='paymentTerms' type='text'
+                                label='paymentTerms'
+                                ref={register} name='paymentTerms'/>
+                            : null}
+                        {!('additionalField' in invoiceInputs)
+                            ? <Input
+                                id='additionalField' type='text'
+                                label='additionalField'
+                                ref={register} name='additionalField'/>
                             : null}
                     </>
                     : null
