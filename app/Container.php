@@ -55,9 +55,9 @@ class Container extends Model
 
     public function setContainerStatus($status)
     {
-        $statuses = Status::getContainerStatuses();
+        $statuses = (array) Status::getContainerStatuses();
         $statusContainerInStock = head(array_keys($statuses, "На складе"));
-        if (property_exists($statuses, $status)) {
+        if (in_array($status, $statuses)) {
             $this->status = $status;
             $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->timestamp : $this->arrival_date = null;
             $this->save();
