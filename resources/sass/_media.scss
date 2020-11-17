@@ -148,4 +148,12 @@
     .card-body.text-center {
         font-size: 12px;
     }
+
+    .Toastify {
+        &__toast-container {
+            width: 300px;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+    }
 }

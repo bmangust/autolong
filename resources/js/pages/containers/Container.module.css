@@ -9,7 +9,7 @@ h2 {
     padding: 4px 15px;
     font-weight: 500;
     font-size: 12px;
-    line-height: 15px;
+    line-height: 17px;
     height: 24px;
     margin-top: -5px;
 }
@@ -72,4 +72,15 @@ h2 {
 .order .orderPrice span {
     color: #EB5E28;
     margin-left: 19px;
+}
+
+@media (max-width: 767px) {
+    .order .orderFooter {
+        padding: 15px;
+        flex-direction: column;
+    }
+
+    .order .orderItemsQrt {
+        margin-bottom: 10px;
+    }
 }
