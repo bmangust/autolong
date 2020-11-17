@@ -78,7 +78,7 @@
                     <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset($item->product->image) }}"
                          alt="" />
                 @else
-                    <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset('/public/imgs/placeholder-product-image.png' }}"
+                    <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset('/public/imgs/placeholder-product-image.png') }}"
                          alt="" />
                 @endif
             </td>
