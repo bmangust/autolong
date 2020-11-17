@@ -10,7 +10,10 @@ import {
     FETCH_CONTAINER_SUCCESS,
     FETCH_UNAPPLIED_ORDERS_START,
     FETCH_UNAPPLIED_ORDERS_SUCCESS,
-    FETCH_UNAPPLIED_ORDERS_ERROR
+    FETCH_UNAPPLIED_ORDERS_ERROR,
+    CHANGE_CONTAINER_STATUS_START,
+    CHANGE_CONTAINER_STATUS_SUCCESS,
+    CHANGE_CONTAINER_STATUS_ERROR
 } from '../../store/actions/actionTypes'
 import {ICity} from '../Cities/ICities'
 import {IOrder} from '../Orders/IOrders'
@@ -33,7 +36,9 @@ export interface IContainersState {
     unappliedOrders: IOrder[] | []
     loadingUnapplied: boolean
     loading: boolean
+    loadingStatus: boolean
     error: any
+    statusError: any
 }
 
 export interface IContainersRootState {
@@ -108,9 +113,27 @@ interface IFetchUnappliedOrdersError {
     loadingUnapplied: boolean
 }
 
+interface IChangeContainerStatusStart {
+    type: typeof CHANGE_CONTAINER_STATUS_START
+    loadingStatus: boolean
+}
+
+interface IChangeContainerStatusSuccess {
+    type: typeof CHANGE_CONTAINER_STATUS_SUCCESS
+    payload: any
+    loadingStatus: boolean
+}
+
+interface IChangeContainerStatusError {
+    type: typeof CHANGE_CONTAINER_STATUS_ERROR
+    payload: any
+    loadingStatus: boolean
+}
+
 export type IContainersActionTypes =
     IFetchContainersStart | IFetchContainersSuccess | IFetchContainersError |
     IFetchContainerStart | IFetchContainerSuccess | IFetchContainerError |
     ICreateContainerStart | ICreateContainerSuccess | ICreateContainerError |
     IFetchUnappliedOrdersStart | IFetchUnappliedOrdersSuccess |
-    IFetchUnappliedOrdersError
+    IFetchUnappliedOrdersError | IChangeContainerStatusStart |
+    IChangeContainerStatusSuccess | IChangeContainerStatusError

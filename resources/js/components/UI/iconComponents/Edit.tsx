@@ -7,6 +7,7 @@ function SvgEdit(props: React.SVGProps<SVGSVGElement>) {
             height="1em"
             viewBox="0 0 16 16"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
             <g clipPath="url(#edit_svg__clip0)" fill="#EB5E28">

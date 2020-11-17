@@ -10,7 +10,10 @@ import {
     FETCH_UNAPPLIED_ORDERS_SUCCESS,
     CREATE_CONTAINER_SUCCESS,
     CREATE_CONTAINER_ERROR,
-    CREATE_CONTAINER_START
+    CREATE_CONTAINER_START,
+    CHANGE_CONTAINER_STATUS_START,
+    CHANGE_CONTAINER_STATUS_SUCCESS,
+    CHANGE_CONTAINER_STATUS_ERROR
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -111,4 +114,31 @@ export const createContainer = (data, redirect) => async dispatch => {
                 toast.error(error.response)
             }
         })
+}
+
+export const changeContainerStatus = (id, data) => async dispatch => {
+    await dispatch({
+        type: CHANGE_CONTAINER_STATUS_START
+    })
+    const url = `/api/containers/${id}/changestatus`
+    axios
+        .post(url, data)
+        .then((answer) => {
+            dispatch({
+                type: CHANGE_CONTAINER_STATUS_SUCCESS,
+                payload: answer.data
+            })
+            toast.success(createNotyMsg(answer.data.name,
+                'статус контейнера изменен'))
+        }).catch((error: AxiosError) => {
+        dispatch({
+            type: CHANGE_CONTAINER_STATUS_ERROR,
+            payload: error.response
+        })
+        if (error.response?.status === 400) {
+            toast.error(error.response.data)
+        } else {
+            toast.error(error.message)
+        }
+    })
 }

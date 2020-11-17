@@ -6,6 +6,17 @@
     padding: 23px 48px;
 }
 
+.status .statusBody {
+    display: flex;
+    align-items: center;
+}
+
+.statusBody svg {
+    width: 70px;
+    height: 70px;
+    margin-right: 35px;
+}
+
 .status.black {
     border: 1px solid #3A405F;
 }
@@ -49,12 +60,6 @@
     line-height: 15px;
     color: #3A405F;
     text-decoration: none;
-}
-
-.statusBody svg {
-    width: 70px;
-    height: 70px;
-    margin-right: 35px;
 }
 
 .statusTitle {

@@ -5,7 +5,7 @@ import React, {useEffect} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
-// Css
+// Styles
 import classes from './Container.module.css'
 
 // Actions
@@ -16,14 +16,16 @@ import {
     IContainer,
     IContainersRootState
 } from '../../components/Containers/IContainers'
+import {IOrder} from '../../components/Orders/IOrders'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import {getContainerStatusName} from '../../utils'
-import {IOrder} from '../../components/Orders/IOrders'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
+import ContainersStatuses
+    from '../../components/Containers/ContainersStatuses/ContainersStatuses'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -68,6 +70,12 @@ const Container: React.FC<IContainer> = () => {
                                 </span>
                             </div>
                         </div>
+                    </div>
+
+                    <div className='mb-3'>
+                        <ContainersStatuses
+                            id={container.id}
+                            status={container.status}/>
                     </div>
 
                     <div className="card mb-3">

@@ -136,8 +136,12 @@ const Order: React.FC<IOrder> = () => {
                         Удалить заказ
                     </button>
                 </div>
-                <OrderStatuses id={order.id} status={order.status}/>
             </div>
+
+            <OrderStatuses
+                container={order.container}
+                id={order.id}
+                status={order.status}/>
 
             <div className='card mb-3 pb-lg-4 pb-0'>
                 <div className='card-body-info'>

@@ -11,7 +11,10 @@ import {
     CREATE_CONTAINER_START,
     FETCH_UNAPPLIED_ORDERS_SUCCESS,
     FETCH_UNAPPLIED_ORDERS_START,
-    FETCH_UNAPPLIED_ORDERS_ERROR
+    FETCH_UNAPPLIED_ORDERS_ERROR,
+    CHANGE_CONTAINER_STATUS_START,
+    CHANGE_CONTAINER_STATUS_SUCCESS,
+    CHANGE_CONTAINER_STATUS_ERROR
 } from '../actions/actionTypes'
 
 // Typescript
@@ -26,7 +29,9 @@ const initialState: IContainersState = {
     unappliedOrders: [],
     loadingUnapplied: true,
     loading: true,
-    error: null
+    loadingStatus: true,
+    error: null,
+    statusError: null
 }
 
 export default function containersReducer(
@@ -81,6 +86,18 @@ export default function containersReducer(
         case FETCH_UNAPPLIED_ORDERS_ERROR:
             return {
                 ...state, loadingUnapplied: false, error: action.payload
+            }
+        case CHANGE_CONTAINER_STATUS_START:
+            return {
+                ...state, loadingStatus: true
+            }
+        case CHANGE_CONTAINER_STATUS_SUCCESS:
+            return {
+                ...state, loadingStatus: false, container: action.payload
+            }
+        case CHANGE_CONTAINER_STATUS_ERROR:
+            return {
+                ...state, loadingStatus: false, statusError: action.payload
             }
         default:
             return state

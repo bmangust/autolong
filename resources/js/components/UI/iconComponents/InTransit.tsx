@@ -7,6 +7,7 @@ function SvgInTransit(props: React.SVGProps<SVGSVGElement>) {
             height="1em"
             viewBox="0 0 80 58"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
             <path

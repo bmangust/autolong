@@ -7,6 +7,7 @@ function SvgImporters(props: React.SVGProps<SVGSVGElement>) {
             height="1em"
             viewBox="0 0 15 11"
             fill="none"
+            xmlns="http://www.w3.org/2000/svg"
             {...props}
         >
             <path

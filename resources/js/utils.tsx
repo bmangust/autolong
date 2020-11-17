@@ -90,8 +90,10 @@ export function getPaymentStatusName(key: string) {
     return statuses.paymentStatuses[key]
 }
 
-export function getContainerStatusName(key: string) {
-    return statuses.containerStatuses[key]
+export function getContainerStatusName(key: string | undefined) {
+    if (key) {
+        return statuses.containerStatuses[key]
+    }
 }
 
 /**

@@ -1,0 +1,144 @@
+// React
+import React from 'react'
+
+// Third-party
+import {useDispatch} from 'react-redux'
+
+// Styles
+import classes from './ContainersStatuses.module.css'
+
+// Actions
+import {changeContainerStatus} from '../../../store/actions/containers'
+
+// App
+import SvgInTransit from '../../UI/iconComponents/InTransit'
+import SvgArrivedAtCustoms from '../../UI/iconComponents/ArrivedAtCustoms'
+import SvgRelease from '../../UI/iconComponents/Release'
+import SvgToTheCarrier from '../../UI/iconComponents/ToTheCarrier'
+import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
+
+const ContainersStatuses: React.FC<{ id: number, status: string }> =
+    (({id, status}) => {
+        const dispatch = useDispatch()
+
+        const onClickHandler = (status) => {
+            dispatch(changeContainerStatus(id, {status}))
+        }
+
+        const cls = [classes.status]
+
+        let containerStatus
+
+        switch (status) {
+            case 'containerAssemble': {
+                containerStatus = <div className={classes.statusBody}>
+                    <SvgToTheCarrier/>
+                    <div>
+                        <p className={classes.statusTitle}>
+                            Контейнер собирается
+                        </p>
+                        <p className={classes.statusText}>
+                            Подтвердите, что контейнер в транзите
+                        </p>
+                        <button
+                            onClick={() =>
+                                onClickHandler('containerInTransit')}
+                            className='btn btn-success'>
+                            Подтвердить
+                        </button>
+                    </div>
+                </div>
+                break
+            }
+            case 'containerInTransit': {
+                containerStatus = <div className={classes.statusBody}>
+                    <SvgInTransit/>
+                    <div>
+                        <p className={classes.statusTitle}>
+                            Контейнер в транзите
+                        </p>
+                        <p className={classes.statusText}>
+                            Подтвердите, что контейнер прибыл на таможню
+                        </p>
+                        <button
+                            onClick={() =>
+                                onClickHandler('containerArrivedAtCustoms')}
+                            className='btn btn-success'>
+                            Подтвердить
+                        </button>
+                    </div>
+                </div>
+                break
+            }
+            case 'containerArrivedAtCustoms': {
+                containerStatus = <div className={classes.statusBody}>
+                    <SvgArrivedAtCustoms/>
+                    <div>
+                        <p className={classes.statusTitle}>
+                            Контейнер прибыл на таможню
+                        </p>
+                        <p className={classes.statusText}>
+                            Подтвердите, что контейнер прошёл таможню
+                        </p>
+                        <button
+                            onClick={() =>
+                                onClickHandler('containerRelease')}
+                            className='btn btn-success'>
+                            Подтвердить
+                        </button>
+                    </div>
+                </div>
+                break
+            }
+            case 'containerRelease': {
+                containerStatus = <div className={classes.statusBody}>
+                    <SvgRelease/>
+                    <div>
+                        <p className={classes.statusTitle}>
+                            Контейнер выпущен
+                        </p>
+                        <p className={classes.statusText}>
+                            Подтвердите, что контейнер на складе
+                        </p>
+                        <button
+                            onClick={() =>
+                                onClickHandler('containerInStock')}
+                            className='btn btn-success'>
+                            Подтвердить
+                        </button>
+                    </div>
+                </div>
+                break
+            }
+            case 'containerInStock': {
+                cls.push(classes.black, 'mt-3 mb-3')
+                containerStatus = <div className={classes.statusBody}>
+                    <SvgOrderInContainer/>
+                    <div>
+                        <p className={classes.statusTitle}>
+                            Заказ привязан к контейнеру
+                        </p>
+                        <div className={classes.orderContainer}>
+                            <div>
+                                <p>Дата прибытия</p>
+                                <span>тут дата</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                break
+            }
+            default: {
+                containerStatus = null
+                break
+            }
+        }
+
+        return containerStatus
+            ? <div className={classes.status}>
+                {containerStatus}
+            </div>
+            : null
+    })
+
+export default ContainersStatuses
