@@ -90,6 +90,9 @@ const OrderItems: React.FC<IOrderItems> = ({
                     <div className='col-xl-4 col-8 p-xl-0'>
                         <p className={classes.orderProductsName}>
                             {item.nameRu}
+                            <span className='ml-2 text-orange'>
+                            {item.autolongNumber}
+                            </span>
                         </p>
                     </div>
                     <div className='col-xl-2 col-4'>
