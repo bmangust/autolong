@@ -48,7 +48,7 @@ const OrderItems: React.FC<IOrderItems> = ({
                         type='number'
                     />
                 </div>
-                <div className='col-xl-4 col-6 pr-xl-0'>
+                <div className='col-xl-4 pr-xl-0'>
                     <p className={classes.productPrices}>
                         <input
                             min={0}
@@ -67,7 +67,7 @@ const OrderItems: React.FC<IOrderItems> = ({
                 <div
                     className={
                         classes.deleteButton +
-                        ' col-xl-1 text-xl-right pr-xl-4 pr-2'
+                        ' col-xl-1 text-right pr-xl-4 pr-2'
                     }
                 >
                     <SvgClose

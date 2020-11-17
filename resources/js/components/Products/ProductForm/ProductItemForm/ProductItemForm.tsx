@@ -330,7 +330,7 @@ const ProductItemForm: React.FC<{
                         <label className='required'>
                             Укажите цену</label>
                         <div className='row mb-3'>
-                            <div className='col-10'>
+                            <div className='col-lg-10 col-11'>
                                 <input
                                     name="priceCny"
                                     className='w-100'
@@ -355,7 +355,7 @@ const ProductItemForm: React.FC<{
                             </div>
                         </div>
                         <div className="row mb-3">
-                            <div className='col-xl-4 col-10'>
+                            <div className='col-xl-4 col-lg-10 col-11'>
                                 <input
                                     name="priceUsd"
                                     type="number"
@@ -369,14 +369,15 @@ const ProductItemForm: React.FC<{
                                     placeholder="0"
                                 />
                             </div>
-                            <div className='col-xl-2 col-2 pl-0'>
+                            <div className='col-xl-2 col-1 pl-0'>
                                     <span
                                         className='priceSymbol text-main
                                          font-weight-bold'>
                                     $
                                     </span>
                             </div>
-                            <div className='col-xl-4 col-10 mt-xl-0 mt-3'>
+                            <div className='col-xl-4 col-lg-10
+                             col-11 mt-xl-0 mt-3'>
                                 <input
                                     name="priceRub"
                                     type="number"
@@ -390,7 +391,7 @@ const ProductItemForm: React.FC<{
                                     placeholder="0"
                                 />
                             </div>
-                            <div className='col-xl-2 col-2 pl-0'>
+                            <div className='col-xl-2 col-1 pl-0 mt-xl-0 mt-3'>
                                     <span
                                         className='priceSymbol text-main
                                         font-weight-bold'>

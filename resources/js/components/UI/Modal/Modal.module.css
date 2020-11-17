@@ -34,11 +34,22 @@
     outline: 0;
 }
 
+.modalClose {
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    font-size: 30px;
+    line-height: 1;
+    color: var(--dark-color);
+    cursor: pointer;
+    z-index: 123;
+}
+
 .modalBody {
     position: relative;
     -ms-flex: 1 1 auto;
     flex: 1 1 auto;
-    padding: 1rem;
+    padding: 2rem;
     text-align: left;
 }
 
