@@ -4,6 +4,7 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Container extends Model
 {
@@ -62,7 +63,7 @@ class Container extends Model
             $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->timestamp : $this->arrival_date = null;
             $this->save();
         } else {
-            return response()->json('Данного статуса контейнера не существует', 404);
+            throw new HttpException(404,'Данного статуса контейнера не существует');
         }
     }
 
@@ -70,14 +71,14 @@ class Container extends Model
     {
         $mainCity = Order::findOrFail(head($ordersIds))->city;
         if (is_null($mainCity)) {
-            return response()->json('У заказа не указан город', 400);
+            throw new HttpException(400,'В заказе не указан город');
         }
         foreach ($ordersIds as $id) {
             $city = Order::findOrFail($id)->city;
             if ($mainCity == $city) {
                 continue;
             } else {
-                return response()->json('Города в заказах отличаются', 400);
+                throw new HttpException(400,'Города в заказах отличаются');
             }
         }
         return $mainCity->id;

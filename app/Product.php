@@ -5,6 +5,7 @@ namespace App;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Product extends Model
 {
@@ -66,7 +67,7 @@ class Product extends Model
         try {
             $image = file_get_contents($link);
         } catch (\Exception $e) {
-            return response()->json('Данной картинки не существует', 404);
+            throw new HttpException(404,'Данной картинки не существует');
         }
         $imageName = $this->id . '_' . str_replace(AutolongRuProduct::AUTOLONG_LINK_IMAGE, '', $link);
         file_put_contents($imageName, $image);

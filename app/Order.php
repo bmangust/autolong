@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use App\Product;
 use App\OrderItem;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Order extends Model
 {
@@ -147,7 +148,7 @@ class Order extends Model
             $this->status = $status;
             $this->save();
         } else {
-            return response()->json('Данного статуса не существует', 404);
+            throw new HttpException(404,'Данного статуса не существует');
         }
     }
 
@@ -158,7 +159,7 @@ class Order extends Model
             $this->status_payment = $status;
             $this->save();
         } else {
-            return response()->json('Данного статуса оплаты не существует', 404);
+            throw new HttpException(404,'Данного статуса оплаты не существует');
         }
     }
 
