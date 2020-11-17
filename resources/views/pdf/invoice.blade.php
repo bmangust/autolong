@@ -43,7 +43,7 @@
         INN/KPP 7721305869/ 772101001
     </p>
         <p style="display: block; text-align: left; margin-top: 20px; margin-bottom: 25px; font-size: 10px;">
-            {{ isset($additionalField) ? isset($additionalField) : '' }}
+            {{ isset($additionalField) ? $additionalField : '' }}
         </p>
     <table style="border-collapse: collapse; text-align: center; font-size: 10px;" border="1" width="100%">
         <tr>
@@ -116,7 +116,7 @@
         <tr>
             @if(isset($paymentTerms))
                 <td>
-                    {{ isset($paymentTerms) }}
+                    {{ $paymentTerms }}
                 </td>
             @else
                 <td>
