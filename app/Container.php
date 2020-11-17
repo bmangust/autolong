@@ -60,7 +60,7 @@ class Container extends Model
         $statusContainerInStock = head(array_keys($statuses, "На складе"));
         if (array_key_exists($status, $statuses)) {
             $this->status = $status;
-            $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->format('d/m/Y') : $this->arrival_date = null;
+            $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->toDateString() : $this->arrival_date = null;
             $this->save();
         } else {
             throw new HttpException(404,'Данного статуса контейнера не существует');
