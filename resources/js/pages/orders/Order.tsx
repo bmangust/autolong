@@ -30,6 +30,7 @@ import DocumentsCreate from '../../components/DocumentCreate/DocumentsCreate'
 import {getOrderStatusName, getPaymentStatusName} from '../../utils'
 import Form from '../../components/UI/Form/Form'
 import Input from '../../components/UI/Inputs/Input/Input'
+import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -160,6 +161,14 @@ const Order: React.FC<IOrder> = () => {
                     </button>
                 </div>
             </div>
+
+            <div className='mb-3'>
+                <OrderStatuses
+                    id={order.id}
+                    status={order.status}
+                    container={order.container}/>
+            </div>
+
             <div className='card mb-3 pb-lg-4 pb-0'>
                 <div className={classes.cardBody + ' card-body-info'}>
                     <div
