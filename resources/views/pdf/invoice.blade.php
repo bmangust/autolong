@@ -72,8 +72,13 @@
                 {{ $item->translateHtmlCodesToTags($item->product->name_ru) ??  '-'}} {{ $item->product->vendor_code }}
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
-                <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset(is_null($item->product->image) ? $item->product->image : '/public/imgs/placeholder-product-image.png') }}"
+                @if(!is_null($item->product->image))
+                <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset($item->product->image) }}"
                     alt="" />
+                @else
+                    <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset('/public/imgs/placeholder-product-image.png' }}"
+                         alt="" />
+                @endif
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
                 {{ $item->product->hs_code }}
