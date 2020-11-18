@@ -143,7 +143,6 @@ class OrderController extends Controller
         $request->validate([
             'statusPayment' => 'required',
         ]);
-        Log::$write = false;
         $status = $request->input('statusPayment');
         if ($request->has('paymentAmount')) {
             $paymentAmount = $request->input('paymentAmount');
@@ -158,6 +157,7 @@ class OrderController extends Controller
                 $paymentPrepaymentMade = Status::getOrderPaymentPaidInFull();
                 $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
             }
+            return response()->json(new OrderWithRelationshipsResource($order), 200);
         }
         $order->setOrderPaymentStatus($status);
         return response()->json(new OrderWithRelationshipsResource($order), 200);
