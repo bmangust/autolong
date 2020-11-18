@@ -39,8 +39,8 @@ class CatalogObserver
     {
         if (Log::$write) {
             $log = new Log();
-            $before = $catalog->getOriginal();
-            $after = $catalog->toArray();
+            $before = $catalog->withoutRelations()->getOriginal();
+            $after = $catalog->withoutRelations()->toArray();
             $log->create([
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new CatalogResource($catalog)),

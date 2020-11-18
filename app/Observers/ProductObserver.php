@@ -39,8 +39,8 @@ class ProductObserver
     {
         if (Log::$write) {
             $log = new Log();
-            $before = $product->getOriginal();
-            $after = $product->toArray();
+            $before = $product->withoutRelations()->getOriginal();
+            $after = $product->withoutRelations()->toArray();
             $log->create([
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ProductResource($product)),

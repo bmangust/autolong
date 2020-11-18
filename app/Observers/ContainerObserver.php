@@ -39,8 +39,8 @@ class ContainerObserver
     {
         if (Log::$write) {
             $log = new Log();
-            $before = $container->getOriginal();
-            $after = $container->toArray();
+            $before = $container->withoutRelations()->getOriginal();
+            $after = $container->withoutRelations()->toArray();
             $log->create([
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ContainerResource($container)),

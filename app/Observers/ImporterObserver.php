@@ -39,8 +39,8 @@ class ImporterObserver
     {
         if (Log::$write) {
             $log = new Log();
-            $before = $importer->getOriginal();
-            $after = $importer->toArray();
+            $before = $importer->withoutRelations()->getOriginal();
+            $after = $importer->withoutRelations()->toArray();
             $log->create([
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ImporterWithRelationshipsResource($importer)),

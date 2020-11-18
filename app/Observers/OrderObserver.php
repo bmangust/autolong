@@ -39,8 +39,8 @@ class OrderObserver
     {
         if (Log::$write) {
             $log = new Log();
-            $before = $order->getOriginal();
-            $after = $order->toArray();
+            $before = $order->withoutRelations()->getOriginal();
+            $after = $order->withoutRelations()->toArray();
             $log->create([
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new OrderResource($order)),

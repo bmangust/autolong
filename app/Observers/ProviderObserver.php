@@ -39,8 +39,8 @@ class ProviderObserver
     {
         if (Log::$write) {
             $log = new Log();
-            $before = $provider->getOriginal();
-            $after = $provider->toArray();
+            $before = $provider->withoutRelations()->getOriginal();
+            $after = $provider->withoutRelations()->toArray();
             $log->create([
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ProviderResource($provider)),
