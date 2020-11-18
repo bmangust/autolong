@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Supply extends Model
 {
-    const PATH_SUPPLY_FILE = 'supply/supply.json';
+    public const PATH_SUPPLY_FILE = 'supply/supply.json';
 
     private static function includeSupplyFile()
     {
@@ -16,7 +16,6 @@ class Supply extends Model
 
     public static function fob()
     {
-        $supply = self::includeSupplyFile();
-        return $supply->fob;
+        return self::includeSupplyFile()->fob;
     }
 }

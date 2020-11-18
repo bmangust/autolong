@@ -51,7 +51,7 @@ class Catalog extends Model
         $newRequest = [];
         foreach ($tags as $tag) {
             $availableTag = Tag::firstOrCreate(['name' => mb_strtolower($tag)]);
-            array_push($newRequest, $availableTag->id);
+            $newRequest[] = $availableTag->id;
         }
         $this->tags()->sync($newRequest);
     }

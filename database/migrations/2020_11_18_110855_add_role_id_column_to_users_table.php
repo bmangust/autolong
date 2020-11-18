@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class RenameDocumentsTable extends Migration
+class AddRoleIdColumnToUsersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,9 @@ class RenameDocumentsTable extends Migration
      */
     public function up()
     {
-        Schema::rename('documents', 'sandbox_files');
+        Schema::table('users', function (Blueprint $table) {
+            $table->integer('role_id');
+        });
     }
 
     /**
@@ -23,6 +25,8 @@ class RenameDocumentsTable extends Migration
      */
     public function down()
     {
-        Schema::rename('sandbox_files', 'documents');
+        Schema::table('users', function (Blueprint $table) {
+            $table->dropColumn('role_id');
+        });
     }
 }

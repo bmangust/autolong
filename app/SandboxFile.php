@@ -8,7 +8,7 @@ use Illuminate\Support\Facades\Storage;
 
 class SandboxFile extends Model
 {
-    const PARENT_DIRECTORY = '/storage/sandbox';
+    public const PARENT_DIRECTORY = '/storage/sandbox';
 
     protected $fillable = [
         'file',

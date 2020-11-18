@@ -34,7 +34,7 @@ class SandboxFileController extends Controller
 
         if ($request->input('check')) {
             $path = $model::CHECK_DIRECTORY . $model->id;
-            $name = 'check-' . $model->id . '-' . uniqid() . '.' .$file->getClientOriginalExtension();
+            $name = uniqid('check-', false) . '.' .$file->getClientOriginalExtension();
             $description = 'Чек об оплате';
         } else {
             $path = $model::SANDBOX_DIRECTORY . $model->id;

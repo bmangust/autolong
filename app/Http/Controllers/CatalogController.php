@@ -74,6 +74,7 @@ class CatalogController extends Controller
      * @param \Illuminate\Http\Request $request
      * @param Catalog $catalog
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Catalog $catalog)
     {

@@ -38,8 +38,8 @@ class Kernel extends ConsoleKernel
             $rubToCnyModulBank = $rubToCny + $rubToCny * $percentageModulBank;
             $rubToUsdModulBank = $rubToUsd + $rubToUsd * $percentageModulBank;
             $cnyToUsdModulBank = round($rubToCnyModulBank / $rubToUsdModulBank, 8);
-            $latesCours = $exchangeRate->latest()->first();
-            if (is_null($latesCours) || $latesCours->rub != $rubToCnyModulBank || $latesCours->usd != $cnyToUsdModulBank) {
+            $lattesCourse = $exchangeRate->lastCourse();
+            if (is_null($lattesCourse) || $lattesCourse->rub != $rubToCnyModulBank || $lattesCourse->usd != $cnyToUsdModulBank) {
                 $infoToFile = $exchangeRate->create(['rub' => $rubToCnyModulBank, 'usd' => $cnyToUsdModulBank]);
                 Storage::disk('resources')
                     ->put(ExchangeRate::FILE_INFO_COURSE, json_encode(new ExchangeRateResource($infoToFile)));

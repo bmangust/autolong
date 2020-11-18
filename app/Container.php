@@ -77,9 +77,8 @@ class Container extends Model
             $city = Order::findOrFail($id)->city;
             if ($mainCity == $city) {
                 continue;
-            } else {
-                throw new HttpException(400,'Города в заказах отличаются');
             }
+            throw new HttpException(400,'Города в заказах отличаются');
         }
         return $mainCity->id;
     }

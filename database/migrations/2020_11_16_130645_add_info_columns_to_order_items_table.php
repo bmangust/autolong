@@ -27,8 +27,7 @@ class AddInfoColumnsToOrderItemsTable extends Migration
     public function down()
     {
         Schema::table('order_items', function (Blueprint $table) {
-            $table->dropColumn('pcs_ctn');
-            $table->dropColumn('ctns');
+            $table->dropColumn('pcs_ctn_ctns');
             $table->dropColumn('meas');
         });
     }

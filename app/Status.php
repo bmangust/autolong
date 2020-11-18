@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Storage;
 
 class Status extends Model
 {
-    const PATH_STATUSES_FILE = 'statuses/statuses.json';
+    public const PATH_STATUSES_FILE = 'statuses/statuses.json';
 
     private static function includeStatusesFile()
     {
@@ -16,19 +16,16 @@ class Status extends Model
 
     public static function getOrderStatuses()
     {
-        $statuses = self::includeStatusesFile();
-        return $statuses->orderStatuses;
+        return self::includeStatusesFile()->orderStatuses;
     }
 
     public static function getOrderPaymentStatuses()
     {
-        $statuses = self::includeStatusesFile();
-        return $statuses->paymentStatuses;
+        return self::includeStatusesFile()->paymentStatuses;
     }
 
     public static function getContainerStatuses()
     {
-        $statuses = self::includeStatusesFile();
-        return $statuses->containerStatuses;
+        return self::includeStatusesFile()->containerStatuses;
     }
 }

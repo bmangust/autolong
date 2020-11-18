@@ -6,9 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Log extends Model
 {
-    const ACTION_CREATED = 'created';
-    const ACTION_UPDATED = 'updated';
-    const ACTION_DELETED = 'deleted';
+    public const ACTION_CREATED = 'created';
+    public const ACTION_UPDATED = 'updated';
+    public const ACTION_DELETED = 'deleted';
 
     public static $write = true;
 
