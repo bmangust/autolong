@@ -3,8 +3,8 @@
     flex-direction: column;
     justify-content: space-between;
     height: 100%;
-    min-height: 635px;
-    max-height: 635px;
+    min-height: 860px;
+    max-height: 860px;
     padding: 15px 15px 20px;
     width: 100%;
     border-radius: 15px;
@@ -102,6 +102,7 @@ a.help:hover {
         flex-wrap: wrap;
         justify-content: flex-start;
         margin: 0 -10px 35px;
+        background-color: white;
     }
 
     .navLink {
@@ -144,7 +145,7 @@ a.help:hover {
     .sidebar {
         position: fixed;
         top: 0;
-        left: -100%;
+        left: -200%;
         bottom: 0;
         right: 0;
         z-index: 999;
@@ -152,7 +153,7 @@ a.help:hover {
         padding-top: 70px;
         width: 100%;
         height: 100%;
-        display: flex;
+        min-height: 750px;
         border-radius: 0;
         transition: left 0.5s ease;
     }

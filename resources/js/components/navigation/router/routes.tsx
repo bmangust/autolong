@@ -17,6 +17,9 @@ import {
     Products,
     Settings,
     Providers,
+    Logout,
+    Prices,
+    NewItems,
 } from '../../UI/iconComponents'
 
 export const routes: IRoute[] = [
@@ -172,6 +175,26 @@ export const routes: IRoute[] = [
         private: true,
         fallback: <Loader />,
         icon: <Products />,
+    },
+    {
+        name: 'Цены',
+        path: '/prices',
+        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
+        hide: false,
+        exact: false,
+        private: true,
+        fallback: <Loader />,
+        icon: <Prices />,
+    },
+    {
+        name: 'Новинки',
+        path: '/newitems',
+        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
+        hide: false,
+        exact: false,
+        private: true,
+        fallback: <Loader />,
+        icon: <NewItems />,
     },
     {
         name: 'Просмотр информации о товаре',
@@ -340,5 +363,15 @@ export const routes: IRoute[] = [
         private: true,
         fallback: <Loader />,
         icon: <Settings />,
+    },
+    {
+        name: 'Выход',
+        path: '/exit',
+        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
+        hide: false,
+        exact: false,
+        private: true,
+        fallback: <Loader />,
+        icon: <Logout />,
     },
 ]
