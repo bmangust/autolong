@@ -24,6 +24,21 @@ class Status extends Model
         return self::includeStatusesFile()->paymentStatuses;
     }
 
+    public static function getOrderPaymentPrepaymentMade()
+    {
+        return array_search('Сделана предоплата', (array)self::getOrderPaymentStatuses(), true);
+    }
+
+    public static function getOrderPaymentPaidInFull()
+    {
+        return array_search('Оплачен полностью', (array)self::getOrderPaymentStatuses(), true);
+    }
+
+    public static function getOrderPaymentRefunded()
+    {
+        return array_search('Оплата возвращена"', (array)self::getOrderPaymentStatuses(), true);
+    }
+
     public static function getContainerStatuses()
     {
         return self::includeStatusesFile()->containerStatuses;

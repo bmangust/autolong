@@ -142,7 +142,25 @@ class OrderController extends Controller
         $request->validate([
             'statusPayment' => 'required',
         ]);
-        $order->setOrderPaymentStatus($request->input('statusPayment'));
+        $status = $request->input('statusPayment');
+        $paymentRefunded = Status::getOrderPaymentRefunded();
+        if ($status == $paymentRefunded) {
+            $order->setOrderPaymentStatus($status);
+        }
+        if ($request->has('paymentAmount') && $request->input('surchargeAmount')) {
+            $paymentAmount = $request->input('paymentAmount');
+            $surchargeAmount = $request->input('surchargeAmount');
+
+            if ($paymentAmount < $order->getOrderSumInCny()) {
+                $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+                $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+            }
+
+            if ($paymentAmount >= $order->getOrderSumInCny()) {
+                $paymentPrepaymentMade = Status::getOrderPaymentPaidInFull();
+                $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+            }
+        }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 

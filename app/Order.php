@@ -154,11 +154,13 @@ class Order extends Model
         }
     }
 
-    public function setOrderPaymentStatus($status)
+    public function setOrderPaymentStatus($status, $paymentAmount = null, $surchargeAmount = null)
     {
         $statuses = Status::getOrderPaymentStatuses();
         if (property_exists($statuses, $status)) {
             $this->status_payment = $status;
+            $this->payment_amount = $paymentAmount;
+            $this->surcharge_amount = $surchargeAmount;
             $this->save();
         } else {
             throw new HttpException(404,'Данного статуса оплаты не существует');
