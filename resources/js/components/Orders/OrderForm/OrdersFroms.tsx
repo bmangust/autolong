@@ -20,7 +20,6 @@ const OrdersForms: React.FC<{
             Object.keys(oldState)
                 .filter(key => key != number)
                 .reduce((obj, key) => {
-                    console.log(key)
                     obj[key] = oldState[key]
                     return obj
                 }, {})
