@@ -11,8 +11,10 @@ import classes from './Sidebar.module.css'
 import {routes} from '../router/routes'
 import SvgHelp from '../../UI/iconComponents/Help'
 
-const Sidebar: React.FC<{ isOpen: boolean, setIsOpen: Function }> = (
-    {isOpen, setIsOpen}) => {
+const Sidebar: React.FC<{isOpen: boolean; setIsOpen: Function}> = ({
+    isOpen,
+    setIsOpen,
+}) => {
     const onHideMenuHandler = () => {
         if (isOpen) {
             setIsOpen(false)
@@ -47,9 +49,9 @@ const Sidebar: React.FC<{ isOpen: boolean, setIsOpen: Function }> = (
         <nav className={cls.join(' ') + ' nav flex-column'}>
             <div className='w-100'>{renderLinks(routes)}</div>
             <NavLink className={classes.help} to='/help'>
-                <SvgHelp/>
+                <SvgHelp />
                 <span>
-                    Справка по работе <br/>с системой
+                    Справка по работе <br />с системой
                 </span>
             </NavLink>
         </nav>

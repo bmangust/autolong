@@ -27,7 +27,9 @@ import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import DocumentsCreate from '../../components/DocumentCreate/DocumentsCreate'
-import {getOrderStatusName, getPaymentStatusName} from '../../utils'
+import {getOrderStatusName,
+    getPaymentStatusName,
+    timeConverter} from '../../utils'
 import Form from '../../components/UI/Form/Form'
 import Input from '../../components/UI/Inputs/Input/Input'
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
@@ -192,22 +194,22 @@ const Order: React.FC<IOrder> = () => {
                     {'items' in order ? (
                         <OrderItems items={order.items}/>
                     ) : null}
-                    <div className='row align-items-center mt-3'>
+                    <div className='row align-items-center mt-5'>
                         <div className='col-xl-6'>
                             <div className={classes.orderInfo}>
                                     <span className={classes.orderDate}>
-                                        12.11.2020
+                                        {timeConverter(order.createdAt)}
                                     </span>
                                 <span className={classes.orderRateRub}>
                                         1 ¥ = 11,84 ₽
                                     </span>
                                 <span className={classes.orderRateUSD}>
-                                        1 ¥ = 11,84 $
+                                        1 ¥ = 0,15 $
                                     </span>
                             </div>
                         </div>
                         <div className='col-xl-6'>
-                            <div className={classes.orderPriceTotal}>
+                    <div className={classes.orderPriceTotal + ' text-right'}>
                                 Общая стоимость
                                 <span className='text-orange ml-3'>
                                         {'price' in order
