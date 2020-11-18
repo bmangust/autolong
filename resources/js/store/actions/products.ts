@@ -169,7 +169,7 @@ export const fetchProductsByVendors = (data) => async dispatch => {
     })
 }
 
-export const deleteProductById = (id) => async dispatch => {
+export const deleteProductById = (id, redirect = '') => async dispatch => {
     const url = `/api/products/${id}`
     axios
         .delete(url)
@@ -178,6 +178,9 @@ export const deleteProductById = (id) => async dispatch => {
                 type: DELETE_PRODUCT_BY_ID,
                 payload: id
             })
+            if (redirect) {
+                dispatch(push('/products'))
+            }
             toast.success('Товар удален')
         })
 }

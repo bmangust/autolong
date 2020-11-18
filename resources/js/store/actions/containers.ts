@@ -13,7 +13,7 @@ import {
     CREATE_CONTAINER_START,
     CHANGE_CONTAINER_STATUS_START,
     CHANGE_CONTAINER_STATUS_SUCCESS,
-    CHANGE_CONTAINER_STATUS_ERROR
+    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -83,6 +83,20 @@ export const fetchContainerById = (id) => async dispatch => {
                 type: FETCH_CONTAINER_ERROR,
                 payload: error.response
             })
+        })
+}
+
+export const deleteContainerById = id => async dispatch => {
+    const url = `/api/containers/${id}`
+    axios
+        .delete(url)
+        .then((answer) => {
+            dispatch({
+                type: DELETE_CONTAINER_BY_ID,
+                payload: id
+            })
+            dispatch(push('/containers'))
+            toast.success('Контейнер удален')
         })
 }
 

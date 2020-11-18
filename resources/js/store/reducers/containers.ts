@@ -14,7 +14,8 @@ import {
     FETCH_UNAPPLIED_ORDERS_ERROR,
     CHANGE_CONTAINER_STATUS_START,
     CHANGE_CONTAINER_STATUS_SUCCESS,
-    CHANGE_CONTAINER_STATUS_ERROR
+    CHANGE_CONTAINER_STATUS_ERROR,
+    DELETE_CONTAINER_BY_ID
 } from '../actions/actionTypes'
 
 // Typescript
@@ -86,6 +87,11 @@ export default function containersReducer(
         case FETCH_UNAPPLIED_ORDERS_ERROR:
             return {
                 ...state, loadingUnapplied: false, error: action.payload
+            }
+        case DELETE_CONTAINER_BY_ID:
+            return {
+                ...state, containers: state.containers.filter(({id}) =>
+                    id !== action.payload), container: {}
             }
         case CHANGE_CONTAINER_STATUS_START:
             return {

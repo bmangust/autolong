@@ -13,7 +13,7 @@ import {
     FETCH_UNAPPLIED_ORDERS_ERROR,
     CHANGE_CONTAINER_STATUS_START,
     CHANGE_CONTAINER_STATUS_SUCCESS,
-    CHANGE_CONTAINER_STATUS_ERROR
+    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID
 } from '../../store/actions/actionTypes'
 import {ICity} from '../Cities/ICities'
 import {IOrder} from '../Orders/IOrders'
@@ -131,10 +131,16 @@ interface IChangeContainerStatusError {
     loadingStatus: boolean
 }
 
+interface IDeleteContainerById {
+    type: typeof DELETE_CONTAINER_BY_ID
+    payload: any
+}
+
 export type IContainersActionTypes =
     IFetchContainersStart | IFetchContainersSuccess | IFetchContainersError |
     IFetchContainerStart | IFetchContainerSuccess | IFetchContainerError |
     ICreateContainerStart | ICreateContainerSuccess | ICreateContainerError |
     IFetchUnappliedOrdersStart | IFetchUnappliedOrdersSuccess |
     IFetchUnappliedOrdersError | IChangeContainerStatusStart |
-    IChangeContainerStatusSuccess | IChangeContainerStatusError
+    IChangeContainerStatusSuccess | IChangeContainerStatusError |
+    IDeleteContainerById

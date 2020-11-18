@@ -182,7 +182,7 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
                 <hr className='m-0'/>
                 <button
                     onClick={() => returnPaymentHandler('paymentRefunded')}
-                    className='btn btn-link'>
+                    className='btn btn-link mb-4 mt-3'>
                     Подтвердить возврат оплаты
                 </button>
             </>
@@ -190,13 +190,19 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
         }
         case 'paymentPaidInFull': {
             paymentContent = <>
-                <h2>Заказ оплачен полностью</h2>
+                <hr className='m-0'/>
+                <h2 className='mb-4 pt-3'>
+                    Заказ оплачен полностью
+                </h2>
             </>
             break
         }
         case 'paymentRefunded': {
             paymentContent = <>
-                <h2>Оплата заказа возвращена полностью</h2>
+                <hr className='m-0'/>
+                <h2 className='mb-4 pt-3'>
+                    Оплата заказа возвращена полностью
+                </h2>
             </>
             break
         }
