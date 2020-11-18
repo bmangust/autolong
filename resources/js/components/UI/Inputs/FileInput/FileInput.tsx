@@ -9,7 +9,11 @@ import {Control} from 'react-hook-form/dist/types'
 // Styles
 import classes from './FileInput.module.css'
 
-const FileInput: React.FC<{ control: Control, name: string, label: string }> = (
+const FileInput: React.FC<{
+    control: Control
+    name: string
+    label?: string
+}> = (
     {
         control,
         name,
