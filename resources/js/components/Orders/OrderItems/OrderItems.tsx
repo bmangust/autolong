@@ -13,12 +13,13 @@ interface IOrderItems {
     onChangePrice?: Function
 }
 
-const OrderItems: React.FC<IOrderItems> = ({
-    items,
-    onChange,
-    onDelete,
-    onChangePrice,
-}) => {
+const OrderItems: React.FC<IOrderItems> = (
+    {
+        items,
+        onChange,
+        onDelete,
+        onChangePrice
+    }) => {
     if (!items.length) {
         return (
             <div className={classes.orderProductsNoItems}>
@@ -26,8 +27,8 @@ const OrderItems: React.FC<IOrderItems> = ({
             </div>
         )
     }
-    return onChange && onDelete && onChangePrice ? (
-        items.map((item: IProduct) => (
+    return onChange && onDelete && onChangePrice
+        ? items.map((item: IProduct) => (
             <div
                 key={item.id + item.nameRu}
                 className={classes.products + ' row mb-2'}
@@ -64,12 +65,9 @@ const OrderItems: React.FC<IOrderItems> = ({
                             : null}
                     </p>
                 </div>
-                <div
-                    className={
-                        classes.deleteButton +
-                        ' col-xl-1 text-right pr-xl-4 pr-2'
-                    }
-                >
+                <div className={
+                    classes.deleteButton +
+                    ' col-xl-1 text-right pr-xl-4 pr-2'}>
                     <SvgClose
                         onClick={() => onDelete(item.id)}
                         className='mt-lg-3 mt-0 deleteButton'
@@ -77,13 +75,11 @@ const OrderItems: React.FC<IOrderItems> = ({
                 </div>
             </div>
         ))
-    ) : (
-        <div>
+        : <div>
             {items.map((item: IProduct) => (
                 <div
                     key={item.id + item.nameRu}
-                    className={classes.orderProducts + ' row'}
-                >
+                    className={classes.orderProducts + ' row'}>
                     <div className={classes.productImg + ' col-xl-2'}>
                         {imgFormatter(item.image, null, item.nameRu, 'pt-0')}
                     </div>
@@ -92,14 +88,15 @@ const OrderItems: React.FC<IOrderItems> = ({
                             {item.nameRu}
                         </p>
                         <div className='row align-items-center'>
-                        <div className='col-xl-3 col-6'>
+                            <div className='col-xl-3 col-6'>
                                 <p className={classes.orderProductsArticle}>
                                     {item.autolongNumber}
                                 </p>
                             </div>
                             <div className='col-xl-4 col-6'>
-                    <p className={classes.orderProductsItemPrice + ' priceOne'}>
-                                Цена за шт: {item.price
+                                <p className={classes.orderProductsItemPrice
+                                + ' priceOne'}>
+                                    Цена за шт: {item.price
                                     ? moneyFormatter(item.price, ['rub', 'usd'])
                                     : null}
                                 </p>
@@ -110,9 +107,10 @@ const OrderItems: React.FC<IOrderItems> = ({
                                 </p>
                             </div>
                             <div className='col-xl-2 col-6 text-right'>
-                        <p className={classes.orderProductsPrice}>
-                                    {item.price ?
-                        moneyFormatter(item.price, ['rub', 'usd'])
+                                <p className={classes.orderProductsPrice}>
+                                    {item.price
+                                        ? moneyFormatter(item.price,
+                                            ['rub', 'usd'])
                                         : null}
                                 </p>
                             </div>
@@ -121,7 +119,6 @@ const OrderItems: React.FC<IOrderItems> = ({
                 </div>
             ))}
         </div>
-    )
 }
 
 export default OrderItems
