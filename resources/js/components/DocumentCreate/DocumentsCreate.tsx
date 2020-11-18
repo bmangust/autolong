@@ -177,13 +177,19 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     : null
                 }
             </div>
-            <button className='btn btn-success mr-4'>
-                Создать
-            </button>
-            <button onClick={onCloseModalHandler}
-                    className='btn btn-light'>
-                Отменить
-            </button>
+            <div className='row mt-3'>
+                <div className="col-lg-6">
+                    <button className='btn btn-success w-100'>
+                        Создать
+                    </button>
+                </div>
+                <div className="col-lg-6">
+                    <button onClick={onCloseModalHandler}
+                        className='btn btn-light w-100 mt-lg-0 mt-3'>
+                        Отменить
+                    </button>
+                </div>
+            </div>
         </Form>
     </>
 

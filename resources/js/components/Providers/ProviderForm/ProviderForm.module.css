@@ -36,3 +36,10 @@
     margin-bottom: 0;
     padding-bottom: 0;
 }
+
+
+@media (max-width: 767px) {
+    .catalogs {
+        padding: 15px;
+    }
+}

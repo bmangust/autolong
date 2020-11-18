@@ -270,9 +270,11 @@ const SandboxFilesCard: React.FC<{
                     <FileInput name='file' control={control}/>
                     {errors.file &&
                     <small>Это поле обязательно</small>}
-                    <div className='d-flex justify-content-between'>
+                    <div className='d-flex justify-content-between
+                     flex-lg-row flex-column'>
                         <button onClick={onCancelHandler}
-                                type='button' className='btn btn-light'>
+                                type='button' className='btn btn-light
+                                 mb-lg-0 mb-3'>
                             Отменить добавление
                         </button>
                         <button className='btn btn-success'

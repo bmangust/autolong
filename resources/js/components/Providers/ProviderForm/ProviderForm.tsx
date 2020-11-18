@@ -282,7 +282,7 @@ const ProviderForm: React.FC<{
 
                     {activeCatalogsArr.length
                         ?
-                        <div className='col-11'>
+                        <div className='col-lg-11'>
                             <div className={classes.catalogs}>
                                 {activeCatalogsArr.map(catalog => {
                                     return (<div
