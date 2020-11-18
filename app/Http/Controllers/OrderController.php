@@ -149,7 +149,7 @@ class OrderController extends Controller
         if ($status == $paymentRefunded) {
             $order->setOrderPaymentStatus($status);
         }
-        if ($request->has('paymentAmount') && $request->input('surchargeAmount')) {
+        if ($request->has('paymentAmount')) {
             $paymentAmount = $request->input('paymentAmount');
             $surchargeAmount = $request->input('surchargeAmount');
 
