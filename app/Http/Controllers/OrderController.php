@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Http\Resources\ProductResource;
 use App\Importer;
+use App\Log;
 use App\Order;
 use App\OrderItem;
 use App\Product;
@@ -142,6 +143,7 @@ class OrderController extends Controller
         $request->validate([
             'statusPayment' => 'required',
         ]);
+        Log::$write = false;
         $status = $request->input('statusPayment');
         $paymentRefunded = Status::getOrderPaymentRefunded();
         if ($status == $paymentRefunded) {

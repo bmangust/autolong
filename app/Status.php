@@ -36,7 +36,7 @@ class Status extends Model
 
     public static function getOrderPaymentRefunded()
     {
-        return array_search('Оплата возвращена"', (array)self::getOrderPaymentStatuses(), true);
+        return array_search('Оплата возвращена', (array)self::getOrderPaymentStatuses(), true);
     }
 
     public static function getContainerStatuses()
