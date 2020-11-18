@@ -6,7 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class OrderItem extends Model
 {
-    use TranslateToSnakeCaseTrait, TranslateHtmlCodesToTagsTrait;
+    use TranslateToSnakeCaseTrait;
+    use TranslateHtmlCodesToTagsTrait;
 
     public function order()
     {

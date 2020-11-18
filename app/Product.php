@@ -9,7 +9,8 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Product extends Model
 {
-    use TranslateToSnakeCaseTrait, TranslateHtmlCodesToTagsTrait;
+    use TranslateToSnakeCaseTrait;
+    use TranslateHtmlCodesToTagsTrait;
     use SoftDeletes;
 
     public const IMAGE_DIRECTORY = '/storage/product-images';
@@ -50,7 +51,7 @@ class Product extends Model
         if (!is_null($this->image)) {
             $this->deleteImage();
         }
-        $path = Storage::disk('main')->putFileAs(Product::IMAGE_DIRECTORY, $image, $this->id . '_' . $this->id . '.' . $image->getClientOriginalExtension());
+        $path = Storage::disk('main')->putFileAs(self::IMAGE_DIRECTORY, $image, $this->id . '_' . $this->id . '.' . $image->getClientOriginalExtension());
         $this->image = '/' . $path;
         $this->save();
     }

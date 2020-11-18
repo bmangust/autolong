@@ -257,21 +257,9 @@ class OrderController extends Controller
         $proforma = $order->proforma->getInfo();
         $contract = $order->contract->getInfo();
 
-        if (isset($proforma->date)) {
-            $date = $proforma->date;
-        } else {
-            $date = null;
-        }
-        if (isset($proforma->contractNumber)) {
-            $contractNumber = $proforma->contractNumber;
-        } else {
-            $contractNumber = null;
-        }
-        if (isset($proforma->proformaNumber)) {
-            $proformaNumber = $proforma->proformaNumber;
-        } else {
-            $proformaNumber = null;
-        }
+        $date = $proforma->date ?? null;
+        $contractNumber = $proforma->contractNumber ?? null;
+        $proformaNumber = $proforma->proformaNumber ?? null;
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.proforma', [
@@ -312,16 +300,8 @@ class OrderController extends Controller
         $order->invoice->saveInfoWithJson($request->all());
         $invoice = $order->invoice->getInfo();
 
-        if (isset($invoice->paymentTerms)) {
-            $paymentTerms = $invoice->paymentTerms;
-        } else {
-            $paymentTerms = null;
-        }
-        if (isset($invoice->additionalField)) {
-            $additionalField = $invoice->additionalField;
-        } else {
-            $additionalField = null;
-        }
+        $paymentTerms = $invoice->paymentTerms ?? null;
+        $additionalField = $invoice->additionalField ?? null;
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.invoice', [

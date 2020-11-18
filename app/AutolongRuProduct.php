@@ -8,11 +8,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class AutolongRuProduct extends Model
 {
-    use CleaningSpaceTrait, TranslateHtmlCodesToTagsTrait;
+    use CleaningSpaceTrait;
+    use TranslateHtmlCodesToTagsTrait;
 
     protected $table = 'autolong_ru';
 
-    const AUTOLONG_LINK_IMAGE = "https://autolong.ru/images/products/thumb/";
+    public const AUTOLONG_LINK_IMAGE = "https://autolong.ru/images/products/thumb/";
 
     public function getPhotoAttribute()
     {

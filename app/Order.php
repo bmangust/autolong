@@ -11,7 +11,9 @@ use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class Order extends Model
 {
-    use TranslateToSnakeCaseTrait, TranslateHtmlCodesToTagsTrait, CleaningSpaceTrait;
+    use TranslateToSnakeCaseTrait;
+    use TranslateHtmlCodesToTagsTrait;
+    use CleaningSpaceTrait;
 
     public const SANDBOX_DIRECTORY = '/orders/';
     public const CONTRACT_DIRECTORY = '/orders/';
