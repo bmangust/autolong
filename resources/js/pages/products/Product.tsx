@@ -243,7 +243,7 @@ const Product: React.FC = () => {
                     </div>
                 </div>
 
-                {product.orders.length
+                {product.orders && product.orders.length
                     ? <div className="card card-body mb-3">
                         <h2 className='mb-2'>Список заказов</h2>
                         {product.orders.map(order => (

@@ -27,9 +27,11 @@ import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import DocumentsCreate from '../../components/DocumentCreate/DocumentsCreate'
-import {getOrderStatusName,
+import {
+    getOrderStatusName,
     getPaymentStatusName,
-    timeConverter} from '../../utils'
+    timeConverter
+} from '../../utils'
 import Form from '../../components/UI/Form/Form'
 import Input from '../../components/UI/Inputs/Input/Input'
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
@@ -91,6 +93,10 @@ const Order: React.FC<IOrder> = () => {
                 <div className='card-body-info'>
                     <h2 className='mb-3'>
                         {'name' in order ? order.name : ''}
+                        {order.cargo
+                            ? <span className='cargo'>Статус карго</span>
+                            : null
+                        }
                     </h2>
                     <div className='row mb-3 flex-lg-row flex-column'>
                         <div className='col-md-5 mb-lg-0 mb-3'>
@@ -209,7 +215,7 @@ const Order: React.FC<IOrder> = () => {
                             </div>
                         </div>
                         <div className='col-xl-6'>
-                    <div className={classes.orderPriceTotal + ' text-right'}>
+                            <div className={classes.orderPriceTotal + ' text-right'}>
                                 Общая стоимость
                                 <span className='text-orange ml-3'>
                                         {'price' in order

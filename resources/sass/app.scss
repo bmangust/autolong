@@ -74,6 +74,20 @@ a {
     display: inline-block;
 }
 
+.cargo {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #EB5E28;
+    float: right;
+}
+
+.cargo:after {
+    content: url("/svg/cargo.svg");
+    display: inline-block;
+    margin-left: 5px;
+}
+
 .statusPayment {
     font-weight: 500;
     font-size: 12px;
@@ -95,6 +109,19 @@ a {
     display: inline-flex;
     align-items: center;
     cursor: pointer;
+}
+
+.paymentCollapse:after {
+    content: url("/svg/payment-status.svg");
+    display: inline-block;
+    margin: 0 5px;
+    transition: 145ms ease-in-out;
+    transform: rotate(180deg);
+    transform-origin: center;
+}
+
+.paymentCollapse.active:after {
+    transform: rotate(0);
 }
 
 .deleteButton:hover path {
