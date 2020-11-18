@@ -133,9 +133,9 @@ const Order: React.FC<IOrder> = () => {
                 <div className='card-body-info'>
                     <h2 className='mb-3'>
                         {'name' in order ? order.name : ''}
-                        {order.cargo ? (
-                            <span className='cargo'>Статус карго</span>
-                        ) : null}
+                        {order.cargo
+                            ? <span className='cargo'>Статус карго</span>
+                            : null}
                     </h2>
                     <div className='row mb-3 flex-lg-row flex-column'>
                         <div className='col-md-5 mb-lg-0 mb-3'>
@@ -167,8 +167,7 @@ const Order: React.FC<IOrder> = () => {
                     </Collapse>
                     <button
                         onClick={() => onDeleteHandler(order.id)}
-                        className='btn btn-danger'
-                    >
+                        className='btn btn-danger'>
                         Удалить заказ
                     </button>
                 </div>
@@ -200,10 +199,10 @@ const Order: React.FC<IOrder> = () => {
                             </select>
                         </div>
                     </div>
-                    {'items' in order ? (
-                        <OrderItems coursesWithout={coursesWithout}
-                                    items={order.items}/>
-                    ) : null}
+                    {'items' in order
+                        ? <OrderItems coursesWithout={coursesWithout}
+                                      items={order.items}/>
+                        : null}
                     <div className='row align-items-center mt-5'>
                         <div className='col-xl-6'>
                             <div className={classes.orderInfo}>
@@ -267,18 +266,14 @@ const Order: React.FC<IOrder> = () => {
                         </p>
                         <p className='infoBlockHeaders mb-1'>Сайт</p>
                         <p className='infoBlockText'>
-                            <a
-                                href={order.provider.website}
-                                target='_blank'
-                                rel='noreferrer'
-                            >
+                            <a href={order.provider.website}
+                               target='_blank'
+                               rel='noreferrer'>
                                 {order.provider.website}
                             </a>
                         </p>
-                        <p
-                            className='infoBlockHeaders mb-1 mt-lg-5
-                                 mt-3'
-                        >
+                        <p className='infoBlockHeaders mb-1 mt-lg-5
+                                 mt-3'>
                             Перейти на страницу поставщика
                         </p>
                         <NavLink to={'/provider/' + order.provider.id}>
