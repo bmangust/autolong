@@ -36,6 +36,8 @@ export interface IOrder {
     priceCny: number
     city: ICity
     cargo: number
+    paymentAmount: number
+    surchargeAmount: number
     sandboxFiles: ISandboxFile[]
     price: IProductPrice
     provider: IProvider

@@ -82,6 +82,7 @@ export const createOrder = (data, redirect = '') => async dispatch => {
                 type: CREATE_ORDER_SUCCESS,
                 payload: answer.data
             })
+            toast.success(createNotyMsg(answer.data.name, 'заказ создан'))
             if (redirect) {
                 dispatch(push(redirect))
             }

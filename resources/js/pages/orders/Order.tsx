@@ -5,11 +5,9 @@ import React, {useEffect, useState} from 'react'
 import {NavLink, useHistory, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import Collapse from 'react-bootstrap/esm/Collapse'
-import {useForm} from 'react-hook-form'
 
 // Actions
 import {
-    changeOrderStatus,
     deleteOrderById,
     fetchOrderById
 } from '../../store/actions/orders'
@@ -32,9 +30,8 @@ import {
     getPaymentStatusName,
     timeConverter
 } from '../../utils'
-import Form from '../../components/UI/Form/Form'
-import Input from '../../components/UI/Inputs/Input/Input'
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
+import OrderPayment from '../../components/Orders/OrderPayment/OrderPayment'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -42,8 +39,6 @@ const Order: React.FC<IOrder> = () => {
 
     const dispatch = useDispatch()
     const history = useHistory()
-
-    const {register, handleSubmit} = useForm()
 
     const {order, loading, error} = useSelector((state: IOrdersRootState) => ({
         error: state.ordersState.error,
@@ -59,11 +54,6 @@ const Order: React.FC<IOrder> = () => {
     const showPaymentHandler = () => {
         setIsShow((oldState) => !oldState)
     }
-
-    const changePaymentStatus = handleSubmit((formValues) => {
-        formValues.statusPayment = order.statusPayment
-        dispatch(changeOrderStatus(id, formValues))
-    })
 
     const onDeleteHandler = (id) => {
         dispatch(deleteOrderById(id))
@@ -117,52 +107,7 @@ const Order: React.FC<IOrder> = () => {
                     </div>
                     <Collapse in={isShow}>
                         <div>
-                            <hr className='m-0'/>
-                            <Form className='mb-4'
-                                  onSubmit={changePaymentStatus}>
-                                <div className='row'>
-                                    <Input
-                                        id='paymentAmount'
-                                        type='number'
-                                        label='Укажите сумму оплаты ¥'
-                                        ref={register}
-                                        name='paymentAmount'
-                                    />
-                                    <Input
-                                        id='surchargeAmount'
-                                        type='number'
-                                        label='* Укажите сумму доплаты ¥'
-                                        ref={register}
-                                        name='surchargeAmount'
-                                    />
-                                </div>
-                                <div className='row mb-3'>
-                                    <div className='col-6'>
-                                        <label>Оплачено</label>
-                                        <h2 className='m-0'>
-                                            0 % + 12.800 ¥
-                                        </h2>
-                                    </div>
-                                    <div className='col-6 m-auto'>
-                                        <SandboxFilesCard
-                                            id={order.id}
-                                            isCheck={true}
-                                            isShowFiles={false}
-                                            label='+ Добавить чек'
-                                            sandboxFiles={
-                                                order.sandboxFiles
-                                            }
-                                            page='orders'
-                                        />
-                                    </div>
-                                </div>
-                                <button
-                                    type='submit'
-                                    className='btn btn-link'
-                                >
-                                    Подтвердить оплату
-                                </button>
-                            </Form>
+                            <OrderPayment order={order}/>
                         </div>
                     </Collapse>
                     <button
