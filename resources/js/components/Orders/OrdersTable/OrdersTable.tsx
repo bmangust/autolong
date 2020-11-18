@@ -43,10 +43,10 @@ const OrdersTable: React.FC = () => {
     if (!orders.length) {
         return (
             <Placeholder
-                description='Нажмите на кнопку «Создать заказ»,
+                description='Нажмите на кнопку «Добавить заказы»,
              чтобы он отображался в списке'
-                link='ordercreate'
-                linkName='Создать заказ'
+                link='orderscreate'
+                linkName='Добавить заказы'
                 title='В этом списке ещё нет заказов'
             />
         )
