@@ -18,7 +18,12 @@ import SandboxFilesCard from '../../SandboxCard/SandboxFilesCard'
 
 const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+    const {register, handleSubmit} = useForm({
+        defaultValues: {
+            paymentAmount: order.paymentAmount,
+            surchargeAmount: order.surchargeAmount
+        }
+    })
 
     const [paymentAmount, setPaymentAmount] = useState(() => {
         return (order && 'paymentAmount' in order)
