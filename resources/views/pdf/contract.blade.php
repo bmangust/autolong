@@ -6,7 +6,14 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract</title>
 </head>
-
+<style>
+    .page-break-before {
+        page-break-before: always;
+    }
+    .page-break-after {
+        page-break-after: always;
+    }
+</style>
 <body style="font-family: DejaVu Sans, sans-serif; line-height: 1.2;">
     <table style="margin: 0 auto; border-collapse: collapse; vertical-align: baseline;">
         <tr>
@@ -91,7 +98,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     2. Цена и общая сумма Контракта
                 </h4>
@@ -137,7 +144,7 @@
                     Покупателю в момент выдачи груза со склада Продавца.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     2. Price and total amount of the Contract
                 </h4>
@@ -188,7 +195,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" >
                 <h4 style="text-align: center; margin: 0;">
                     3. Условия поставки
                 </h4>
@@ -309,7 +316,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     6. Обязанности сторон
                 </h4>
@@ -354,7 +361,7 @@
                     сторонами даты отгрузки.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     6. Obligations of the Parties
                 </h4>
@@ -405,7 +412,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" >
                 <h4 style="text-align: center; margin: 0;">
                     7. Качество товара и гарантии
                 </h4>
@@ -477,7 +484,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     9. Санкции и рекламации
                 </h4>
@@ -536,7 +543,7 @@
                     поставляемого товара. Обе стороны принимают решение такой экспертной комиссии как окончательное.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     9. Sanctions and Reclamations
                 </h4>
@@ -623,7 +630,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     11. Форс-мажор
                 </h4>
@@ -639,7 +646,7 @@
                     или иные ситуации не подвластные сторонам и, повлекшие за собой невозможность выполнить
                     обязательства по данному Контракту.
                 </p>
-                <p style="margin: 0;">
+                <p style="margin: 0;" >
                     <span style="font-weight: bold;">11.3.</span>
                     В случае, если одна из сторон не может выполнить свои обязательства по данному Контракту в связи с
                     форс-мажором, она обязана уведомить другую сторону о задержке или полном прекращении исполнения
@@ -647,7 +654,7 @@
                     форс-мажора является единственно Сертификат Промышленной палаты страны <i>Продавца</i> или
                     <i>Покупателя</i>, прямо указывающий на наличие форс-мажорных обстоятельств.
                 </p>
-                <p style="margin: 0;">
+                <p style="margin: 0;" class="page-break-before">
                     <span style="font-weight: bold;">11.4.</span>
                     В случае, если форс-мажор продолжается более 3 месяцев, каждая из сторон имеет право полностью
                     отказаться от исполнения своих обязательств по данному Контракту. Ни одна из сторон при этом не
@@ -656,7 +663,7 @@
                     обязательствам согласно данному Контракту.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
                 <h4 style="text-align: center; margin: 0;">
                     11. Force majeure
                 </h4>
@@ -681,7 +688,7 @@
                     specifying force
                     majeure events.
                 </p>
-                <p style="margin: 0;">
+                <p style="margin: 0;" class="page-break-before">
                     <span style="font-weight: bold;">11.4.</span>
                     If force majeure continues for more than 3 months, each of the parties shall have the right to
                     completely refuse from its obligations under this Contract. In this case, neither of the parties
