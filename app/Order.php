@@ -157,11 +157,17 @@ class Order extends Model
     public function setOrderPaymentStatus($status, $paymentAmount = null, $surchargeAmount = null)
     {
         $statuses = Status::getOrderPaymentStatuses();
+        $paymentRefunded = Status::getOrderPaymentRefunded();
         if (property_exists($statuses, $status)) {
-            $this->status_payment = $status;
-            $this->payment_amount = $paymentAmount;
-            $this->surcharge_amount = $surchargeAmount;
-            $this->save();
+            if (!is_null($paymentAmount) && !is_null($surchargeAmount) && $status != $paymentRefunded ) {
+                $this->status_payment = $status;
+                $this->save();
+            } else {
+                $this->status_payment = $status;
+                $this->payment_amount = $paymentAmount;
+                $this->surcharge_amount = $surchargeAmount;
+                $this->save();
+            }
         } else {
             throw new HttpException(404,'Данного статуса оплаты не существует');
         }

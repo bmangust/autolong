@@ -39,6 +39,11 @@ class Status extends Model
         return array_search('Оплата возвращена', (array)self::getOrderPaymentStatuses(), true);
     }
 
+    public static function getOrderPaymentAwaitingRefund()
+    {
+        return array_search('Ожидает возврата оплаты', (array)self::getOrderPaymentStatuses(), true);
+    }
+
     public static function getContainerStatuses()
     {
         return self::includeStatusesFile()->containerStatuses;
