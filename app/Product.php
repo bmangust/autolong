@@ -68,7 +68,9 @@ class Product extends Model
         try {
             $image = file_get_contents($link);
         } catch (\Exception $e) {
-            throw new HttpException(404,'Данной картинки не существует');
+            $this->image = null;
+            $this->save();
+            return true;
         }
         $imageName = $this->id . '_' . str_replace(AutolongRuProduct::AUTOLONG_LINK_IMAGE, '', $link);
         file_put_contents($imageName, $image);
