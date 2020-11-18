@@ -24,6 +24,11 @@ class Status extends Model
         return self::includeStatusesFile()->paymentStatuses;
     }
 
+    public static function getOrderPaymentAwaiting()
+    {
+        return array_search('Ожидает оплаты', (array)self::getOrderPaymentStatuses(), true);
+    }
+
     public static function getOrderPaymentPrepaymentMade()
     {
         return array_search('Сделана предоплата', (array)self::getOrderPaymentStatuses(), true);

@@ -148,14 +148,22 @@ class OrderController extends Controller
             $paymentAmount = $request->input('paymentAmount');
             $surchargeAmount = $request->input('surchargeAmount');
 
-            if ($paymentAmount < $order->getOrderSumInCny()) {
-                $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+            $paymentAwaiting = Status::getOrderPaymentAwaiting();
+            $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+
+            if ($order->status_payment == $paymentAwaiting) {
                 $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
             }
 
-            if ($paymentAmount >= $order->getOrderSumInCny()) {
-                $paymentPrepaymentMade = Status::getOrderPaymentPaidInFull();
-                $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+            if ($order->status_payment == $paymentPrepaymentMade) {
+                if ($paymentAmount >= $order->getOrderSumInCny()) {
+                    $paymentPrepaymentMade = Status::getOrderPaymentPaidInFull();
+                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+                }
+                if ($paymentAmount < $order->getOrderSumInCny()) {
+                    $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+                }
             }
             return response()->json(new OrderWithRelationshipsResource($order), 200);
         }
