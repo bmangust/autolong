@@ -215,13 +215,14 @@ const Order: React.FC<IOrder> = () => {
                             </div>
                         </div>
                         <div className='col-xl-6'>
-                            <div className={classes.orderPriceTotal + ' text-right'}>
+                            <div className={classes.orderPriceTotal +
+                            ' text-right'}>
                                 Общая стоимость
                                 <span className='text-orange ml-3'>
-                                        {'price' in order
-                                            ? order.price.cny.toFixed(2) + ' ¥'
-                                            : null}
-                                    </span>
+                                    {'price' in order
+                                        ? order.price.cny.toFixed(2) + ' ¥'
+                                        : null}
+                                </span>
                             </div>
                         </div>
                     </div>
