@@ -7,14 +7,16 @@
     <title>Contract</title>
 </head>
 <style>
-    .page-break-before {
+    /* .page-break-before {
         page-break-before: always;
     }
     .page-break-after {
         page-break-after: always;
-    }
+    } */
+
 </style>
-<body style="font-family: DejaVu Sans, sans-serif; line-height: 1.2;">
+
+<body style="font-family: DejaVu Sans, sans-serif; font-size: 10px; line-height: 1.2;">
     <table style="margin: 0 auto; border-collapse: collapse; vertical-align: baseline;">
         <tr>
             <th style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
@@ -30,7 +32,7 @@
                     style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $date }}</span>
             </th>
         </tr>
-        <tr>``
+        <tr>
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
                     {{ $importer->name_ru ? $importer->name_ru : '-' }}, именуемое в дальнейшем
@@ -98,7 +100,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     2. Цена и общая сумма Контракта
                 </h4>
@@ -144,7 +146,7 @@
                     Покупателю в момент выдачи груза со склада Продавца.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     2. Price and total amount of the Contract
                 </h4>
@@ -195,7 +197,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" >
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     3. Условия поставки
                 </h4>
@@ -316,7 +318,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     6. Обязанности сторон
                 </h4>
@@ -361,7 +363,7 @@
                     сторонами даты отгрузки.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     6. Obligations of the Parties
                 </h4>
@@ -412,7 +414,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" >
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     7. Качество товара и гарантии
                 </h4>
@@ -484,7 +486,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     9. Санкции и рекламации
                 </h4>
@@ -543,7 +545,7 @@
                     поставляемого товара. Обе стороны принимают решение такой экспертной комиссии как окончательное.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     9. Sanctions and Reclamations
                 </h4>
@@ -630,7 +632,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     11. Форс-мажор
                 </h4>
@@ -646,7 +648,7 @@
                     или иные ситуации не подвластные сторонам и, повлекшие за собой невозможность выполнить
                     обязательства по данному Контракту.
                 </p>
-                <p style="margin: 0;" >
+                <p style="margin: 0;">
                     <span style="font-weight: bold;">11.3.</span>
                     В случае, если одна из сторон не может выполнить свои обязательства по данному Контракту в связи с
                     форс-мажором, она обязана уведомить другую сторону о задержке или полном прекращении исполнения
@@ -654,7 +656,7 @@
                     форс-мажора является единственно Сертификат Промышленной палаты страны <i>Продавца</i> или
                     <i>Покупателя</i>, прямо указывающий на наличие форс-мажорных обстоятельств.
                 </p>
-                <p style="margin: 0;" class="page-break-before">
+                <p style="margin: 0;">
                     <span style="font-weight: bold;">11.4.</span>
                     В случае, если форс-мажор продолжается более 3 месяцев, каждая из сторон имеет право полностью
                     отказаться от исполнения своих обязательств по данному Контракту. Ни одна из сторон при этом не
@@ -663,7 +665,7 @@
                     обязательствам согласно данному Контракту.
                 </p>
             </td>
-            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;" class="page-break-before">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: center; margin: 0;">
                     11. Force majeure
                 </h4>
@@ -688,7 +690,7 @@
                     specifying force
                     majeure events.
                 </p>
-                <p style="margin: 0;" class="page-break-before">
+                <p style="margin: 0;">
                     <span style="font-weight: bold;">11.4.</span>
                     If force majeure continues for more than 3 months, each of the parties shall have the right to
                     completely refuse from its obligations under this Contract. In this case, neither of the parties
@@ -712,7 +714,8 @@
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">12.2.</span>
-                    Срок действия настоящего Контракта истекает {{ $contractEndDate ? $contractEndDate :'«31» декабря 2020г'}}. Срок действия Контракта может быть
+                    Срок действия настоящего Контракта истекает
+                    {{ $contractEndDate ? $contractEndDate :'«31» декабря 2020г'}}. Срок действия Контракта может быть
                     изменен по взаимному соглашению сторон, что оформляется документально.
                 </p>
                 <p style="margin: 0;">
@@ -743,7 +746,8 @@
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">12.2.</span>
-                    The Contract expires on {{ $contractEndDate ? $contractEndDate :'December 31, 2020'}}. The term of the Contract may be changed as mutually
+                    The Contract expires on {{ $contractEndDate ? $contractEndDate :'December 31, 2020'}}. The term of
+                    the Contract may be changed as mutually
                     agreed by the parties, which shall be executed in writing.
                 </p>
                 <p style="margin: 0;">
@@ -840,13 +844,14 @@
                     Bank: {{ $provider->beneficiary_bank_name ? $provider->beneficiary_bank_name : '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Number account  {{ $provider->beneficiary_account_name ? $provider->beneficiary_account_name : '-' }}
+                    Number account {{ $provider->beneficiary_account_name ? $provider->beneficiary_account_name : '-' }}
                 </p>
                 <p style="margin: 0;">
                     SWIFT: {{ $provider->beneficiary_swift_address ? $provider->beneficiary_swift_address : '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Address of bank {{ $provider->beneficiary_bank_address ? $provider->beneficiary_bank_address : '-' }}
+                    Address of bank
+                    {{ $provider->beneficiary_bank_address ? $provider->beneficiary_bank_address : '-' }}
                 </p>
                 <p style="margin: 0;">
                     Директор/Director
