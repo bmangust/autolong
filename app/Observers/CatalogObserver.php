@@ -45,8 +45,8 @@ class CatalogObserver
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new CatalogResource($catalog)),
                 'model_name' => get_class($catalog),
-                'before' => json_encode(array_diff($before, $after)),
-                'after' => json_encode(array_diff($after, $before)),
+                'before' => json_encode(array_diff_assoc($before, $after)),
+                'after' => json_encode(array_diff_assoc($after, $before)),
             ]);
         }
     }
