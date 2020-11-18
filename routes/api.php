@@ -90,3 +90,10 @@ Route::bind('id', function ($id, $route) {
 
 Route::get('cities', 'CityController@index');
 Route::post('cities', 'CityController@create');
+
+Route::get('users', 'UserController@index');
+Route::post('users', 'UserController@store');
+Route::get('users/{user}', 'UserController@show');
+Route::put('users/{user}', 'UserController@update');
+Route::delete('users/{user}', 'UserController@destroy');
+Route::post('users/login', 'UserController@login');
