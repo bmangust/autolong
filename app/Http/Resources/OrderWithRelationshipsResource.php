@@ -27,6 +27,8 @@ class OrderWithRelationshipsResource extends JsonResource
             'price' => (object)['rub' => $this->getOrderSumInRub(),
                                 'usd' => $this->getOrderSumInUsd(),
                                 'cny' => $this->getOrderSumInCny()],
+            'paymentAmount' => $this->payment_amount,
+            'surchargeAmount' => $this->surcharge_amount,
             'provider' => new ProviderResource($this->provider),
             'items' => OrderItemResource::collection($this->orderItems),
             'cargo' => $this->cargo,

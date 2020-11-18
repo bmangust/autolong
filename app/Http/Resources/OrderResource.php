@@ -23,6 +23,8 @@ class OrderResource extends JsonResource
             'statusPayment' => $this->status_payment,
             'providerId' => $this->provider_id,
             'items' => OrderItemResource::collection($this->orderItems),
+            'paymentAmount' => $this->payment_amount,
+            'surchargeAmount' => $this->surcharge_amount,
             'price' => (object)['rub' => $this->getOrderSumInRub(),
                                 'usd' => $this->getOrderSumInUsd(),
                                 'cny' => $this->getOrderSumInCny()],
