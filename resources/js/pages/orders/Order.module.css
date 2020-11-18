@@ -73,4 +73,15 @@
     .orderPriceTotal {
         margin-top: 10px;
     }
+
+    .orderDate {
+        padding-right: 0;
+        border-right: 0;
+    }
+
+    .orderRateRub {
+        padding-right: 0;
+        border-right: 0;
+    }
+
 }

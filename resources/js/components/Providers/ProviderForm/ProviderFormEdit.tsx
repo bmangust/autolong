@@ -133,7 +133,7 @@ const ProviderFormEdit: React.FC<{
         <div className="card-body">
             <form onSubmit={providerFormSubmitHandler}>
                 <div className='mb-3 row'>
-                    <div className="col-lg-6">
+                    <div className="col-lg-6 mb-lg-0 mb-2">
                         <label className='w-100 required' htmlFor='name'>
                             Укажите поставщика
                         </label>
@@ -311,7 +311,7 @@ const ProviderFormEdit: React.FC<{
 
                     {activeCatalogsArr.length
                         ?
-                        <div className='col-11'>
+                        <div className='col-lg-11'>
                             <div className={classes.catalogs}>
                                 {activeCatalogsArr.map(catalog => {
                                     return (
