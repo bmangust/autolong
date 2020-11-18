@@ -3,7 +3,7 @@ import React, {useEffect} from 'react'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 
 // Third-party
-import {NavLink, useHistory, useParams} from 'react-router-dom'
+import {NavLink, useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 
 // Typescript
@@ -21,7 +21,6 @@ const Product: React.FC = () => {
     const {id}: any = useParams()
 
     const dispatch = useDispatch()
-    const history = useHistory()
 
     const {product, loading, error} = useSelector(
         (state: IProductsRootState) => ({
@@ -43,8 +42,7 @@ const Product: React.FC = () => {
     }
 
     const onDeleteHandler = (id) => {
-        dispatch(deleteProductById(id))
-        history.push('/products')
+        dispatch(deleteProductById(id, '/products'))
     }
 
     return (

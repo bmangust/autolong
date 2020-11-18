@@ -9,7 +9,10 @@ import {useDispatch, useSelector} from 'react-redux'
 import classes from './Container.module.css'
 
 // Actions
-import {fetchContainerById} from '../../store/actions/containers'
+import {
+    deleteContainerById,
+    fetchContainerById
+} from '../../store/actions/containers'
 
 // Typescript
 import {
@@ -40,6 +43,10 @@ const Container: React.FC<IContainer> = () => {
         })
     )
 
+    const onDeleteHandler = () => {
+        dispatch(deleteContainerById(id))
+    }
+
     useEffect(() => {
         dispatch(fetchContainerById(id))
     }, [dispatch, id])
@@ -57,9 +64,16 @@ const Container: React.FC<IContainer> = () => {
                     <div className="card mb-3 card-body">
                         <div className="d-flex justify-content-between
                          align-items-baseline">
-                            <h2 className="mb-0">{'name' in container
-                                ? container.name
-                                : ''}</h2>
+                            <h2 className="mb-0">
+                                {'name' in container
+                                    ? container.name
+                                    : ''}
+                            </h2>
+                            <button
+                                className='btn btn-link'
+                                onClick={onDeleteHandler}>
+                                Удалить
+                            </button>
                             <div className="d-flex">
                                     <span className="infoBlockHeaders mr-3">
                                         Статус контейнера
@@ -78,35 +92,39 @@ const Container: React.FC<IContainer> = () => {
                             container={container}/>
                     </div>
 
-                    <div className="card mb-3">
-                        <div className='card-body pb-0'>
-                            <h2 className="mb-3">
-                                Список заказов в контейнере
-                            </h2>
-                        </div>
-                        {container.orders.map((order: IOrder) => (
-                            <div key={order.id + order.name}
-                                 className={classes.order}>
-                                <div className={classes.orderHeader}>
-                                    <NavLink to={`/order/${order.id}`}>
-                                        Заказ {order.id}
-                                    </NavLink>
-                                </div>
-                                <div className={classes.orderBody}>
-                                    <OrderItems items={order.items}/>
-                                </div>
-                                <div className={classes.orderFooter}>
-                                    <p className={classes.orderItemsQrt}>
-                                        Товаров в заказе ({order.items.length})
-                                    </p>
-                                    <p className={classes.orderPrice}>
-                                        Стоимость заказа
-                                        <span>{order.price.cny} ¥</span>
-                                    </p>
-                                </div>
+                    {container.orders
+                        ? <div className="card mb-3">
+                            <div className='card-body pb-0'>
+                                <h2 className="mb-3">
+                                    Список заказов в контейнере
+                                </h2>
                             </div>
-                        ))}
-                    </div>
+                            {container.orders.map((order: IOrder) => (
+                                <div key={order.id + order.name}
+                                     className={classes.order}>
+                                    <div className={classes.orderHeader}>
+                                        <NavLink to={`/order/${order.id}`}>
+                                            Заказ {order.id}
+                                        </NavLink>
+                                    </div>
+                                    <div className={classes.orderBody}>
+                                        <OrderItems items={order.items}/>
+                                    </div>
+                                    <div className={classes.orderFooter}>
+                                        <p className={classes.orderItemsQrt}>
+                                            Товаров в заказе
+                                            ({order.items.length})
+                                        </p>
+                                        <p className={classes.orderPrice}>
+                                            Стоимость заказа
+                                            <span>{order.price.cny} ¥</span>
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                        : null
+                    }
 
                     <SandboxFilesCard
                         id={container.id}
