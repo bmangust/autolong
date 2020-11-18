@@ -64,7 +64,7 @@ export function timeConverter(timestamp) {
  * @param price
  * @param without
  */
-export function moneyFormatter(price: IProductPrice, without = []) {
+export function moneyFormatter(price: IProductPrice, without: string[] = []) {
     return (
         <span className="pricesBlock">
            {Object.entries(price).sort().map(([key, val]) => {

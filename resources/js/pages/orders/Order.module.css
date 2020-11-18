@@ -54,6 +54,16 @@
     text-align: right;
 }
 
+.orderPriceTotal > span {
+    display: inline-flex;
+    margin-left: 10px;
+    width: auto;
+}
+
+.orderPriceTotal > span > span {
+    margin-right: 0 !important;
+}
+
 .orderDate {
     padding-right: 15px;
     border-right: 1px solid #EBEBEB;
