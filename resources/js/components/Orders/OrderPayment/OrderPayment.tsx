@@ -161,19 +161,24 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
                                 page='orders'/>
                         </div>
                     </div>
-                    <div className='d-flex justify-content-between'>
-                        <button
-                            type='submit'
-                            className='btn btn-link'>
-                            Подтвердить полную оплату
-                        </button>
-                        <button
-                            type='button'
-                            onClick={() =>
-                                returnPaymentHandler('paymentAwaitingRefund')}
-                            className='btn btn-link'>
-                            Возврат оплаты
-                        </button>
+                    <div className='row'>
+                        <div className="col-6">
+                            <button
+                                type='submit'
+                                className='btn btn-link'>
+                                Подтвердить полную оплату
+                            </button>
+                        </div>
+                        <div className="col-6">
+                            <button
+                                type='button'
+                                onClick={() =>
+                                    returnPaymentHandler(
+                                        'paymentAwaitingRefund')}
+                                className='btn btn-link btn-refund'>
+                                Возврат оплаты
+                            </button>
+                        </div>
                     </div>
                 </Form>
             </>

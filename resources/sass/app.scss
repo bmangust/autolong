@@ -646,6 +646,21 @@ html button.btn-link {
     width: fit-content;
 }
 
+html button.btn-link.btn-refund {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    align-items: center;
+    display: flex;
+    text-decoration: none;
+}
+
+html button.btn-link.btn-refund:after {
+    content: url("/svg/reload.svg");
+    margin-left: 5px;
+}
+
 html button.btn-link:focus, html button.btn-link:active {
     outline: none;
     box-shadow: none;
