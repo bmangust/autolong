@@ -43,7 +43,11 @@ const OrderForm: React.FC = () => {
         orderProducts: state.ordersState.orderProducts
     }))
 
-    const [items, setItems] = useState([])
+    const [items, setItems] = useState(() => {
+        return orderProducts
+            .filter((el) => 'id' in el)
+            .map((el) => (el.id ? {...el, quantity: 1} : el))
+    })
 
     const providersOptions = providers.map((provider: IProvider) => {
         return {
@@ -56,19 +60,12 @@ const OrderForm: React.FC = () => {
         dispatch(fetchProviders())
     }, [dispatch])
 
-    useEffect(() => {
-        const filtered = orderProducts
-            .filter((el) => 'id' in el)
-            .map((el) => (el.id ? {...el, quantity: 1} : el))
-        setItems(filtered)
-    }, [orderProducts])
-
     if (items.length) {
         setValue(
             'providerId',
-            providersOptions.filter(
-                ({value}) => value === items[0]?.providerId
-            )[0]
+            providersOptions
+                .filter(({value}) =>
+                    value === items[0]?.providerId)[0]
         )
     }
 
@@ -116,131 +113,115 @@ const OrderForm: React.FC = () => {
         dispatch(fetchItemsByVendors(formValues))
     })
 
-    return (
-        <>
-            <form onSubmit={getProductSubmitHandler}>
-                <div className='card mb-3'>
-                    <div className='card-body'>
-                        <div className='row'>
-                            <div className='col-lg-7'>
-                                <label htmlFor='articles'>
-                                    Добавить товар по внутреннему номер
-                                </label>
-                                <textarea
-                                    ref={register2}
-                                    name='numbers'
-                                    rows={4}
-                                    placeholder='
+    return <>
+        <form onSubmit={getProductSubmitHandler}>
+            <div className='card mb-3'>
+                <div className='card-body'>
+                    <div className='row'>
+                        <div className='col-lg-7'>
+                            <label htmlFor='articles'>
+                                Добавить товар по внутреннему номер
+                            </label>
+                            <textarea
+                                ref={register2}
+                                name='numbers'
+                                rows={4}
+                                placeholder='
                             Добавляйте каждый внутреннему номер через enter
                             '/>
-                            </div>
                         </div>
-                        <button className='btn btn-success mt-2' type='submit'>
-                            Добавить товары
-                        </button>
                     </div>
+                    <button className='btn btn-success mt-2' type='submit'>
+                        Добавить товары
+                    </button>
                 </div>
-            </form>
+            </div>
+        </form>
 
-            <form onSubmit={orderFormSubmitHandler}>
-                <div className='card mb-3'>
-                    <div className='card-body'>
-                        <div className='mb-3 row'>
-                            <div className='col-lg-6'>
-                                <label
-                                    className='w-100 required'
-                                    htmlFor='name'
-                                >
-                                    Название заказа
-                                </label>
-                                <input
-                                    className='col-lg-10 mb-3'
-                                    name='name'
-                                    ref={register({required: true})}
-                                    placeholder='Введите название'
-                                    type='text'
+        <form onSubmit={orderFormSubmitHandler}>
+            <div className='card mb-3'>
+                <div className='card-body'>
+                    <div className='mb-3 row'>
+                        <div className='col-lg-6'>
+                            <label className='w-100 required'
+                                   htmlFor='name'>
+                                Название заказа
+                            </label>
+                            <input
+                                className='col-lg-10 mb-3'
+                                name='name'
+                                ref={register({required: true})}
+                                placeholder='Введите название'
+                                type='text'/>
+                            {errors.name && (
+                                <small>Это поле обязательно</small>
+                            )}
+
+                            <label
+                                className='w-100 required'
+                                htmlFor='provider'>
+                                Выберите поставщика
+                            </label>
+                            <div className='col-lg-10 mb-3 p-0'>
+                                <Controller
+                                    defaultValue=''
+                                    name='providerId'
+                                    as={select}
+                                    options={providersOptions}
+                                    control={control}
+                                    rules={{required: true}}
                                 />
-                                {errors.name && (
+                                {errors.providerId && (
                                     <small>Это поле обязательно</small>
                                 )}
-
-                                <label
-                                    className='w-100 required'
-                                    htmlFor='provider'
-                                >
-                                    Выберите поставщика
-                                </label>
-                                <div className='col-lg-10 mb-3 p-0'>
-                                    <Controller
-                                        defaultValue=''
-                                        name='providerId'
-                                        as={select}
-                                        options={providersOptions}
-                                        control={control}
-                                        rules={{required: true}}
-                                    />
-                                    {errors.providerId && (
-                                        <small>Это поле обязательно</small>
-                                    )}
-                                </div>
                             </div>
-                            <div className='col-lg-6'>
-                                <label className='w-100' htmlFor='provider'>
-                                    Статус карго
-                                </label>
-                                <div className='custom-control custom-switch'>
-                                    <input
-                                        type='checkbox'
-                                        name='cargo'
-                                        ref={register}
-                                        className='custom-control-input'
-                                        id='customSwitch1'
-                                    />
-                                </div>
+                        </div>
+                        <div className='col-lg-6'>
+                            <label className='w-100' htmlFor='provider'>
+                                Статус карго
+                            </label>
+                            <div className='custom-control custom-switch'>
+                                <input
+                                    type='checkbox'
+                                    name='cargo'
+                                    ref={register}
+                                    className='custom-control-input'
+                                    id='customSwitch1'
+                                />
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-                <div className='card mb-3'>
-                    <div className='card-body'>
-                        <h2 className='mb-3'>Список товаров в заказе</h2>
-                        <OrderItems
-                            onDelete={onDeleteHandler}
-                            onChange={onChangeQtyHandler}
-                            onChangePrice={onChangePrice}
-                            items={items}
-                        />
-                        <div className='text-right mb-3 mt-3'>
-                            Итоговая стоимость
-                            <span className='ml-4 font-weight-bold'>
+            <div className='card mb-3'>
+                <div className='card-body'>
+                    <h2 className='mb-3'>Список товаров в заказе</h2>
+                    <OrderItems
+                        onDelete={onDeleteHandler}
+                        onChange={onChangeQtyHandler}
+                        onChangePrice={onChangePrice}
+                        items={items}/>
+                    <div className='text-right mb-3 mt-3'>
+                        Итоговая стоимость
+                        <span className='ml-4 font-weight-bold'>
                                 {items.map((el) => {
                                     totalPrice =
                                         totalPrice + el.price.cny * el.quantity
                                 })}
-                                {totalPrice + ' ¥'}
-                            </span>
-                        </div>
-                        <div className='flex-sm-row flex-column
+                            {totalPrice + ' ¥'}
+                        </span>
+                    </div>
+                    <div className='flex-sm-row flex-column
                         d-flex justify-content-between mt-4'>
-                            <button
-                                onClick={() => {
-                                    history.goBack()
-                                }}
-                                className='mr-lg-3 btn btn-light
-                                 mb-lg-0 mb-3 mr-0'
-                            >
-                                Отмена
-                            </button>
-                            <button className='btn btn-success' type='submit'>
-                                Сформировать
-                            </button>
-                        </div>
+                        <button className='btn btn-success' type='submit'>
+                            Сформировать
+                        </button>
                     </div>
                 </div>
-            </form>
-        </>
-    )
+            </div>
+        </form>
+    </>
 }
 
 export default OrderForm

@@ -132,11 +132,11 @@ const ProductItemForm: React.FC<{
                 dispatch(updateProduct(product.id, formValues))
                 if (formValues.imageFile[0]) {
                     dispatch(updateProductImageById(product.id,
-                        {image: formValues.imageFile[0] || ''}))
+                        {image: formValues.imageFile[0]}))
                 }
             } else if ('number' in product) {
                 if (formValues.imageFile[0]) {
-                    formValues.image = formValues.imageFile[0] || ''
+                    formValues.image = formValues.imageFile[0]
                 }
                 dispatch(createProduct(formValues))
             }
