@@ -1,16 +1,18 @@
 // React
 import React from 'react'
 import {IProduct} from '../../Products/IProducts'
-import {imgFormatter, moneyFormatter} from '../../../utils'
+import {imgFormatter, moneyFormatter, substringOut} from '../../../utils'
 
 import classes from '../OrderItems/OrderItems.module.css'
 import SvgClose from '../../UI/iconComponents/Close'
+import {NavLink} from 'react-router-dom'
 
 interface IOrderItems {
     items: IProduct[]
     onChange?: Function
     onDelete?: Function
     onChangePrice?: Function
+    coursesWithout?: string[]
 }
 
 const OrderItems: React.FC<IOrderItems> = (
@@ -18,6 +20,7 @@ const OrderItems: React.FC<IOrderItems> = (
         items,
         onChange,
         onDelete,
+        coursesWithout = ['rub', 'usd'],
         onChangePrice
     }) => {
     if (!items.length) {
@@ -84,9 +87,11 @@ const OrderItems: React.FC<IOrderItems> = (
                         {imgFormatter(item.image, null, item.nameRu, 'pt-0')}
                     </div>
                     <div className='col-xl-10 p-xl-0'>
-                        <p className={classes.orderProductsName + ' mb-1'}>
-                            {item.nameRu}
-                        </p>
+                        <NavLink
+                            to={`/product/${item.productId}`}
+                            className={classes.orderProductsName}>
+                            {substringOut(item.nameRu, 74)}
+                        </NavLink>
                         <div className='row align-items-center'>
                             <div className='col-xl-3 col-6'>
                                 <p className={classes.orderProductsArticle}>
@@ -96,9 +101,11 @@ const OrderItems: React.FC<IOrderItems> = (
                             <div className='col-xl-4 col-6'>
                                 <p className={classes.orderProductsItemPrice
                                 + ' priceOne'}>
-                                    Цена за шт: {item.price
-                                    ? moneyFormatter(item.price, ['rub', 'usd'])
-                                    : null}
+                                    Цена за шт:
+                                    {item.price
+                                        ? moneyFormatter(item.price,
+                                            coursesWithout)
+                                        : null}
                                 </p>
                             </div>
                             <div className='col-xl-3 col-6'>
@@ -108,9 +115,9 @@ const OrderItems: React.FC<IOrderItems> = (
                             </div>
                             <div className='col-xl-2 col-6 text-right'>
                                 <p className={classes.orderProductsPrice}>
-                                    {item.price
-                                        ? moneyFormatter(item.price,
-                                            ['rub', 'usd'])
+                                    {item.fullPrice
+                                        ? moneyFormatter(item.fullPrice,
+                                            coursesWithout)
                                         : null}
                                 </p>
                             </div>

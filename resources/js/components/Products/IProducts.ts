@@ -39,6 +39,7 @@ export interface IProduct {
     autolongNumber: number
     image: string
     price: IProductPrice
+    fullPrice: IProductPrice
     hsCode: string
     weightNetto: number
     weightBrutto: number

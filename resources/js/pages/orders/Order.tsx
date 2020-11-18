@@ -27,15 +27,17 @@ import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import DocumentsCreate from '../../components/DocumentCreate/DocumentsCreate'
 import {
     getOrderStatusName,
-    getPaymentStatusName,
+    getPaymentStatusName, moneyFormatter,
     timeConverter
 } from '../../utils'
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 import OrderPayment from '../../components/Orders/OrderPayment/OrderPayment'
+import courses from '../../../courses/courses.json'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
     const [isShow, setIsShow] = useState(false)
+    const [course, setCourse] = useState('cny')
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -58,6 +60,59 @@ const Order: React.FC<IOrder> = () => {
     const onDeleteHandler = (id) => {
         dispatch(deleteOrderById(id))
         history.push('/orders')
+    }
+
+    const courseChangeHandler = (e) => {
+        setCourse(e.target.value)
+    }
+
+    let courseBlock
+    let coursesWithout
+    const usdCourse = courses.usd
+    const rubCourse = courses.rub
+
+    switch (course) {
+        case 'usd': {
+            coursesWithout = ['cny', 'rub']
+            const usdToCny = 1 / usdCourse
+            const usdToRub = usdToCny * rubCourse
+            courseBlock = <>
+                <span className={classes.orderRateRub}>
+                    1 $ = {usdToRub.toFixed(2)} ₽
+                </span>
+                <span className={classes.orderRateUSD}>
+                    1 $ = {usdToCny.toFixed(2)} ¥
+                </span>
+            </>
+            break
+        }
+        case 'rub': {
+            coursesWithout = ['cny', 'usd']
+            const rubToCny = 1 / rubCourse
+            const rubToRub = rubToCny * usdCourse
+            courseBlock = <>
+                <span className={classes.orderRateRub}>
+                    1 ₽ = {rubToCny.toFixed(2)} $
+                </span>
+                <span className={classes.orderRateUSD}>
+                    1 ₽ = {rubToRub.toFixed(2)} ¥
+                </span>
+            </>
+            break
+        }
+        case 'cny':
+        default: {
+            coursesWithout = ['usd', 'rub']
+            courseBlock = <>
+                <span className={classes.orderRateRub}>
+                    1 ¥ = {courses.rub.toFixed(2)} ₽
+                </span>
+                <span className={classes.orderRateUSD}>
+                    1 ¥ = {courses.usd.toFixed(2)} $
+                </span>
+            </>
+            break
+        }
     }
 
     const cls = ['paymentCollapse']
@@ -136,40 +191,35 @@ const Order: React.FC<IOrder> = () => {
                                 <span className={classes.dropdownTitle}>
                                     Валюта
                                 </span>
-                            <select>
-                                <option value='1' selected>
+                            <select onChange={courseChangeHandler}>
+                                <option value='cny' defaultValue='cny'>
                                     ¥
                                 </option>
-                                <option value='2'>₽</option>
-                                <option value='3'>$</option>
+                                <option value='rub'>₽</option>
+                                <option value='usd'>$</option>
                             </select>
                         </div>
                     </div>
                     {'items' in order ? (
-                        <OrderItems items={order.items}/>
+                        <OrderItems coursesWithout={coursesWithout}
+                                    items={order.items}/>
                     ) : null}
                     <div className='row align-items-center mt-5'>
                         <div className='col-xl-6'>
                             <div className={classes.orderInfo}>
                                 <span className={classes.orderDate}>
-                                    {timeConverter(order.createdAt)}
+                                    {timeConverter(courses.updatedAt)}
                                 </span>
-                                <span className={classes.orderRateRub}>
-                                    1 ¥ = 11,84 ₽
-                                </span>
-                                <span className={classes.orderRateUSD}>
-                                    1 ¥ = 0,15 $
-                                </span>
+                                {courseBlock}
                             </div>
                         </div>
                         <div className='col-xl-6'>
                             <div className={classes.orderPriceTotal}>
                                 Общая стоимость
-                                <span className='text-orange ml-3'>
                                 {'price' in order
-                                    ? order.price.cny.toFixed(2) + ' ¥'
+                                    ? moneyFormatter(order.price,
+                                        coursesWithout)
                                     : null}
-                            </span>
                             </div>
                         </div>
                     </div>
