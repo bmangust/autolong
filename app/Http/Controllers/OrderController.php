@@ -144,7 +144,7 @@ class OrderController extends Controller
             'statusPayment' => 'required',
         ]);
         $status = $request->input('statusPayment');
-        if ($request->has('paymentAmount') && !is_null($request->input('paymentAmount'))) {
+        if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
             $paymentAmount = $request->input('paymentAmount');
             $surchargeAmount = $request->input('surchargeAmount');
 
