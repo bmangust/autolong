@@ -631,7 +631,6 @@ html button.btn {
     padding-right: 36px;
     min-width: 140px;
     width: fit-content;
-    text-align: left;
 }
 
 html button.btn-link {
@@ -642,6 +641,24 @@ html button.btn-link {
     color: #EB5E28;
     padding-left: 0;
     padding-right: 0;
+    text-align: left;
+    min-width: fit-content;
+    width: fit-content;
+}
+
+html button.btn-link.btn-refund {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    align-items: center;
+    display: flex;
+    text-decoration: none;
+}
+
+html button.btn-link.btn-refund:after {
+    content: url("/svg/reload.svg");
+    margin-left: 5px;
 }
 
 html button.btn-link:focus, html button.btn-link:active {

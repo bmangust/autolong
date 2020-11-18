@@ -161,18 +161,25 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
                                 page='orders'/>
                         </div>
                     </div>
-                    <button
-                        type='submit'
-                        className='btn btn-link'>
-                        Подтвердить полную оплату
-                    </button>
-                    <button
-                        type='button'
-                        onClick={() =>
-                            returnPaymentHandler('paymentAwaitingRefund')}
-                        className='btn btn-link'>
-                        Возврат оплаты
-                    </button>
+                    <div className='row'>
+                        <div className="col-6">
+                            <button
+                                type='submit'
+                                className='btn btn-link'>
+                                Подтвердить полную оплату
+                            </button>
+                        </div>
+                        <div className="col-6">
+                            <button
+                                type='button'
+                                onClick={() =>
+                                    returnPaymentHandler(
+                                        'paymentAwaitingRefund')}
+                                className='btn btn-link btn-refund'>
+                                Возврат оплаты
+                            </button>
+                        </div>
+                    </div>
                 </Form>
             </>
             break
@@ -180,9 +187,8 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
         case 'paymentAwaitingRefund': {
             paymentContent = <>
                 <hr className='m-0'/>
-                <button
-                    onClick={() => returnPaymentHandler('paymentRefunded')}
-                    className='btn btn-link mb-4 mt-3'>
+                <button onClick={() => returnPaymentHandler('paymentRefunded')}
+                        className='btn btn-link mb-4 mt-3'>
                     Подтвердить возврат оплаты
                 </button>
             </>

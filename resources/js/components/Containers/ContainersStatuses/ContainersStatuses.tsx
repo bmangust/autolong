@@ -64,10 +64,9 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                         <p className={classes.statusText}>
                             Подтвердите, что контейнер прибыл на таможню
                         </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('containerArrivedAtCustoms')}
-                            className='btn btn-success'>
+                        <button onClick={() =>
+                            onClickHandler('containerArrivedAtCustoms')}
+                                className='btn btn-success'>
                             Подтвердить
                         </button>
                     </div>
@@ -84,10 +83,9 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                         <p className={classes.statusText}>
                             Подтвердите, что контейнер прошёл таможню
                         </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('containerRelease')}
-                            className='btn btn-success'>
+                        <button onClick={() =>
+                            onClickHandler('containerRelease')}
+                                className='btn btn-success'>
                             Подтвердить
                         </button>
                     </div>
@@ -104,10 +102,9 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                         <p className={classes.statusText}>
                             Подтвердите, что контейнер на складе
                         </p>
-                        <button
-                            onClick={() =>
-                                onClickHandler('containerInStock')}
-                            className='btn btn-success'>
+                        <button onClick={() =>
+                            onClickHandler('containerInStock')}
+                                className='btn btn-success'>
                             Подтвердить
                         </button>
                     </div>
