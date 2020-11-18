@@ -5,3 +5,9 @@
 .Layout main {
     margin-top: 15px;
 }
+
+@media (max-width: 767px) {
+    .sidebarWrap {
+        position: static !important;
+    }
+}
