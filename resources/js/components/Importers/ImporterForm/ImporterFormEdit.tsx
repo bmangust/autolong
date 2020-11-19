@@ -104,7 +104,6 @@ const ImporterFormEdit: React.FC<{ importer: IImporter }> = ({importer}) => {
                     </div>
                     <div>
                         <button
-                            type='button'
                             onClick={() => {
                                 history.goBack()
                             }} className='mr-3 btn btn-light mb-3 mb-sm-0'>

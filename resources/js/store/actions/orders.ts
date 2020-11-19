@@ -214,10 +214,9 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
 }
 
 export const createOrderInvoice = (id, data, type) => {
-    let url = `/api/containers/${id}/generatepdf${type}`
+    const url = `/api/orders/${id}/generatepdf${type}`
     let formData = data
     if (type !== 'packinglist') {
-        url = `/api/orders/${id}/generatepdf${type}`
         formData = new FormData()
         Object.entries(data).forEach(([key, val]) => {
             if (Array.isArray(val)) {
@@ -227,6 +226,7 @@ export const createOrderInvoice = (id, data, type) => {
             }
         })
     }
+    console.log(formData)
     axios
         .post(url, formData, {
             responseType: 'blob'
