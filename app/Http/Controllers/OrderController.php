@@ -371,7 +371,7 @@ class OrderController extends Controller
             'provider' => $provider,
             'orderItems' => $orderItems,
             'contract' => $contract
-        ]);
+        ])->setPaper('a4', 'landscape');
         return $newPdf->download();
     }
 
