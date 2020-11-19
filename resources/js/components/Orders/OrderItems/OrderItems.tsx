@@ -114,7 +114,7 @@ const OrderItems: React.FC<IOrderItems> = (
                                 </p>
                             </div>
                             <div className='col-xl-4 col-6
-                            text-lg-right text-left'>
+                            text-xl-right text-left'>
                                 <p className={classes.orderProductsPrice}>
                                     {item.fullPrice
                                         ? moneyFormatter(item.fullPrice,
