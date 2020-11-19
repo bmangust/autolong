@@ -119,41 +119,41 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                         {!('contractEndDate' in invoiceInputs)
                             ? <Input
                                 id='contractEndDate' type='date'
-                                label='contractEndDate'
+                                label='Дата окончания контракта'
                                 ref={register} name='contractEndDate'/>
                             : null}
                         {!('classificationEn' in invoiceInputs)
                             ? <Input
                                 id='classificationEn' type='text'
-                                label='classificationEn'
+                                label='Классификация En'
                                 ref={register} name='classificationEn'/>
                             : null}
                         {!('classificationRu' in invoiceInputs)
                             ? <Input
                                 id='classificationRu' type='text'
-                                label='classificationRu'
+                                label='Классификация Ru'
                                 ref={register} name='classificationRu'/>
                             : null}
                         {!('directorRu' in invoiceInputs)
                             ? <Input
                                 id='directorRu' type='text'
-                                label='directorRu'
+                                label='Директор Ru'
                                 ref={register} name='directorRu'/>
                             : null}
                         {!('directorEn' in invoiceInputs)
                             ? <Input
                                 id='directorEn' type='text'
-                                label='directorEn'
+                                label='Директор En'
                                 ref={register} name='directorEn'/>
                             : null}
                         {!('providerStamp' in invoiceInputs)
                             ? <FileInput
-                                label='providerStamp'
+                                label='Печать поставщика'
                                 control={control} name='providerStamp'/>
                             : null}
                         {!('importerStamp' in invoiceInputs)
                             ? <FileInput
-                                label='importerStamp'
+                                label='Печать импортера'
                                 control={control} name='importerStamp'/>
                             : null}
                     </>
