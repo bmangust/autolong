@@ -54,7 +54,7 @@
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->hs_code }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->quantity }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns) as $pcsCtn => $ctns)
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
                         <table>
                             <tr>
                                 <td>{{ $pcsCtn }}</td>
@@ -63,7 +63,7 @@
                     @endforeach
                 </td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns) as $pcsCtn => $ctns)
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
                     <table>
                             <tr>
                                 <td>{{ $ctns }}</td>
