@@ -14,7 +14,7 @@
             <th style="font-size: 24px; font-weight: normal;">{{ $provider->name_company }}</th>
         </tr>
         <tr>
-            <td>{{ $provider->manufacturing ? $provider->manufacturing : '-' }}/td>
+            <td>{{ $provider->manufacturing ? $provider->manufacturing : '-' }}</td>
         </tr>
         <tr>
             <td>TEL: {{ $provider->phone }}</td>
