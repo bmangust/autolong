@@ -139,7 +139,7 @@ const Order: React.FC<IOrder> = () => {
                             : null}
                     </h2>
                     <div className='row mb-3 flex-lg-row flex-column'>
-                        <div className='col-md-5 mb-lg-0 mb-3'>
+                        <div className='col-md-5 mb-xl-0 mb-3'>
                             <p className='infoBlockHeaders'>
                                 Статус заказа
                             </p>
@@ -147,7 +147,7 @@ const Order: React.FC<IOrder> = () => {
                                 {getOrderStatusName(order.status)}
                             </span>
                         </div>
-                        <div className='col-md-7'>
+                        <div className='col-xl-7'>
                             <p className='infoBlockHeaders'>
                                 Статус оплаты
                             </p>

@@ -14,5 +14,10 @@
     line-height: 15px;
     text-align: center;
     color: #3A405F;
-    margin: 0 15px;
+    margin: 1rem 0;
+}
+
+.fileInput + ul {
+    margin: 0;
+    padding: 0;
 }

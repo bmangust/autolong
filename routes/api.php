@@ -67,8 +67,8 @@ Route::get('orders/{order}/getpdfcontract', 'OrderController@getPdfContract');
 Route::post('orders/{order}/generatepdfproforma', 'OrderController@generatePdfProforma');
 Route::post('orders/{order}/generatepdfinvoice', 'OrderController@generatePdfInvoice');
 Route::post('orders/{order}/generatepdfcontract', 'OrderController@generatePdfContract');
-Route::post('orders/{order}/generatepackinglist', 'OrderController@generatePdfPackingList');
-Route::get('orders/{order}/getmarkinglist', 'OrderController@getMarkingList');
+Route::post('orders/{order}/generatepdfpackinglist', 'OrderController@generatePdfPackingList');
+Route::get('orders/{order}/getpdfmarkinglist', 'OrderController@getMarkingList');
 
 Route::get('tags', 'TagController@index');
 

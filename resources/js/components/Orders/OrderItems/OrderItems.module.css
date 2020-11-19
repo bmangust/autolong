@@ -56,7 +56,6 @@
 .orderProducts {
     background: white;
     position: relative;
-    margin-bottom: 15px;
     align-items: center;
 }
 
@@ -86,6 +85,10 @@
 
 .orderProductsPrice {
     font-weight: 500;
+}
+
+.orderProductsPrice span > span {
+    margin-right: 0 !important;
 }
 
 .orderProductsNoItems {
