@@ -51,7 +51,7 @@
         @foreach($orders as $order)
             @foreach($order->orderItems as $item)
                 <tr>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->name }}</td>
+                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->name_ru }}</td>
                     <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->hs_code }}</td>
                     <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->quantity }}</td>
                     <td style="padding: 5px 15px; border: 1px solid #000;">
