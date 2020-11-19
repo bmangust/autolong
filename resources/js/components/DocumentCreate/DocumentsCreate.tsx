@@ -179,13 +179,14 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
             </div>
             <div className='row mt-3'>
                 <div className="col-lg-6">
-                    <button className='btn btn-success w-100'>
+                    <button className='btn btn-success w-100 text-center'>
                         Создать
                     </button>
                 </div>
                 <div className="col-lg-6">
                     <button onClick={onCloseModalHandler}
-                        className='btn btn-light w-100 mt-lg-0 mt-3'>
+                        className='btn btn-light w-100
+                        mt-lg-0 mt-3 text-center'>
                         Отменить
                     </button>
                 </div>

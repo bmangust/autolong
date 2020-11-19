@@ -93,7 +93,7 @@ const OrderItems: React.FC<IOrderItems> = (
                             {substringOut(item.nameRu, 74)}
                         </NavLink>
                         <div className='row align-items-center'>
-                            <div className='col-xl-3 col-6'>
+                            <div className='col-xl-2 col-6'>
                                 <p className={classes.orderProductsArticle}>
                                     {item.autolongNumber}
                                 </p>
@@ -108,12 +108,13 @@ const OrderItems: React.FC<IOrderItems> = (
                                         : null}
                                 </p>
                             </div>
-                            <div className='col-xl-3 col-6'>
+                            <div className='col-xl-2 col-6'>
                                 <p className={classes.orderProductsCount}>
                                     {item.quantity + ' шт'}
                                 </p>
                             </div>
-                            <div className='col-xl-2 col-6 text-right'>
+                            <div className='col-xl-4 col-6
+                            text-lg-right text-left'>
                                 <p className={classes.orderProductsPrice}>
                                     {item.fullPrice
                                         ? moneyFormatter(item.fullPrice,
