@@ -94,6 +94,7 @@ const ImporterForm: React.FC = () => {
                     </div>
                     <div>
                         <button
+                            type='button'
                             onClick={() => {
                                 history.goBack()
                             }} className='mr-3 btn btn-light mb-3 mb-sm-0'>

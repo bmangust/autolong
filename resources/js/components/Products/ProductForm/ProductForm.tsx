@@ -339,6 +339,7 @@ const ProductForm: React.FC = () => {
                     </div>
                     <div>
                         <button
+                            type='button'
                             onClick={() => {
                                 history.goBack()
                             }} className='mr-3 btn btn-light mb-sm-0 mb-3'>

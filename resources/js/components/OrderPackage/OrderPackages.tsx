@@ -1,40 +1,69 @@
 // React
 import React, {useState} from 'react'
 
+// Third-party
+import {useDispatch} from 'react-redux'
+import Collapse from 'react-bootstrap/cjs/Collapse'
+
 // Typescript
-import {IProduct} from '../Products/IProducts'
+import {IOrder} from '../Orders/IOrders'
+
+// Actions
+import {createOrderInvoice} from '../../store/actions/orders'
 
 // App
 import Package from './Package/Package'
-import Collapse from 'react-bootstrap/cjs/Collapse'
 
-const OrderPackages: React.FC<{ items: IProduct[], orderId: number }> = (
-    {items, orderId}) => {
-    const [show, isShow] = useState(false)
+const OrderPackages: React.FC<{ orders: IOrder[], containerId: number }> = (
+    {orders, containerId}) => {
+    const [isShow, setIsShow] = useState(false)
+    const [data, setData] = useState([])
+    const dispatch = useDispatch()
 
     const showPackagesHandler = () => {
-        isShow(oldState => !oldState)
+        setIsShow(oldState => !oldState)
     }
+
+    const createPackageHandler = () => {
+        dispatch(createOrderInvoice(containerId, data, 'packinglist'))
+    }
+
+    let dataLength = 0
+
+    orders.forEach((order) => {
+        dataLength += order.items.length
+    })
 
     return <div className="card card-body mb-3">
         <h2 className='mb-4'>Упаковка</h2>
-        <Collapse in={show}>
+        <Collapse in={isShow}>
             <div>
-                <div className='mb-3'>
-                    {items && items.length
-                        ? items.map((item) =>
-                            <Package key={item.id}
-                                     orderId={orderId}
-                                     item={item}/>)
-                        : null
-                    }
-                </div>
+                {orders.map(order =>
+                    <div key={order.id}>
+                        {order.items && order.items.length
+                            ? order.items.map((item) =>
+                                <Package
+                                    orderId={order.id}
+                                    key={item.id}
+                                    setData={setData}
+                                    item={item}/>)
+                            : null
+                        }
+                    </div>
+                )}
             </div>
         </Collapse>
         <button onClick={showPackagesHandler}
                 className='btn btn-outline-dashed'>
-            {show ? 'Скрыть' : 'Показать'} упаковку
+            {isShow ? 'Скрыть' : 'Показать'} упаковку
         </button>
+        {data.length === dataLength
+            ? <button className='btn btn-success'
+                      onClick={createPackageHandler}>
+                Сформировать упаковочный лист для контейнера
+            </button>
+            : null
+        }
     </div>
 }
 

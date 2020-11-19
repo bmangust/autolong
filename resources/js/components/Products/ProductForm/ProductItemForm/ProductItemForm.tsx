@@ -464,7 +464,8 @@ const ProductItemForm: React.FC<{
                                         ? 'Обновить'
                                         : 'Добавить'}
                                 </button>
-                                <button className='btn btn-light mt-sm-0 mt-3'>
+                                <button type='button'
+                                        className='btn btn-light mt-sm-0 mt-3'>
                                     Отменить добавление
                                 </button>
                             </div>

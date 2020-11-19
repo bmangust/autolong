@@ -29,6 +29,7 @@ import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import ContainersStatuses
     from '../../components/Containers/ContainersStatuses/ContainersStatuses'
+import OrderPackage from '../../components/OrderPackage/OrderPackages'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -123,6 +124,13 @@ const Container: React.FC<IContainer> = () => {
                                 </div>
                             ))}
                         </div>
+                        : null
+                    }
+
+                    {container.orders
+                        ? <OrderPackage
+                            containerId={container.id}
+                            orders={container.orders}/>
                         : null
                     }
 

@@ -1,17 +1,11 @@
 // React
 import React, {useEffect, useState, useCallback} from 'react'
 
-// Third-party
-import {useDispatch} from 'react-redux'
-
 // Styles
 import classes from './Package.module.css'
 
 // Typescript
 import {IProduct} from '../../Products/IProducts'
-
-// Actions
-import {createOrderInvoice} from '../../../store/actions/orders'
 
 // App
 import {substringOut} from '../../../utils'
@@ -25,11 +19,15 @@ interface IPackage {
     length: number
 }
 
-const Package: React.FC<{ item: IProduct, orderId: number }> = (
-    {item, orderId}) => {
+const Package: React.FC<{
+    item: IProduct
+    setData: Function
+    orderId: number
+}> = (
+    {item, orderId, setData}) => {
     const [packages, setPackages] = useState<IPackage[]>([])
     const [totalIn, setTotalIn] = useState<any>(0)
-    const dispatch = useDispatch()
+    const [isShow, setIsShow] = useState(true)
 
     const packageTemplate = {
         name: 'Коробка',
@@ -86,57 +84,67 @@ const Package: React.FC<{ item: IProduct, orderId: number }> = (
                 meas
             }
         }
-        dispatch(createOrderInvoice(orderId, data, 'packinglist'))
+        setIsShow(false)
+        setData(oldState => [...oldState, data])
     }
 
-    return <div key={item.id} className={classes.item}>
-        <div className={classes.itemHeader}>
-            <p>{substringOut(item.nameRu, 40)}</p>
-            <p>{`Всего ${item.quantity}
+    return isShow
+        ? <>
+            <h2>Заказ {orderId}</h2>
+            <div key={item.id} className={classes.item}>
+                <div className={classes.itemHeader}>
+                    <p>{substringOut(item.nameRu, 40)}</p>
+                    <p>{`Всего ${item.quantity}
                     осталось распределить ${+item.quantity - totalIn} шт.`}</p>
-        </div>
-        <div>
-            {packages.map((pack: IPackage, index: number) => (
-                <div key={index} className={classes.package}>
-                    <div className={classes.name}>
-                        {pack.name}
-                    </div>
-                    <div className={classes.input}>
-                        <input onChange={(e) => onChangeHandler(e, pack.id)}
-                               type='number' name='qty'
-                               value={pack.qty}/>
-                    </div>
-                    <div className={classes.input}>
-                        <input onChange={(e) => onChangeHandler(e, pack.id)}
-                               type='number' name='length'
-                               value={pack.length}/>
-                    </div>
-                    <div className={classes.input}>
-                        <input onChange={(e) => onChangeHandler(e, pack.id)}
-                               type='number' name='width'
-                               value={pack.width}/>
-                    </div>
-                    <div className={classes.input}>
-                        <input onChange={(e) => onChangeHandler(e, pack.id)}
-                               type='number' name='height'
-                               value={pack.height}/>
-                    </div>
                 </div>
-            ))}
-            {!(+item.quantity - totalIn)
-                ? <button className='btn btn-success mb-3'
-                          onClick={() => sendPackageHandler(item.id)}>
-                    Создать упаковочный лист
-                </button>
-                : null
-            }
-            <button onClick={addPackageHandler}
-                    disabled={!(+item.quantity - totalIn)}
-                    className='btn btn-outline-dashed'>
-                Добавить упаковку
-            </button>
-        </div>
-    </div>
+                <div>
+                    {packages.map((pack: IPackage, index: number) => (
+                        <div key={index} className={classes.package}>
+                            <div className={classes.name}>
+                                {pack.name}
+                            </div>
+                            <div className={classes.input}>
+                                <input onChange={(e) =>
+                                    onChangeHandler(e, pack.id)}
+                                       type='number' name='qty'
+                                       value={pack.qty}/>
+                            </div>
+                            <div className={classes.input}>
+                                <input onChange={(e) =>
+                                    onChangeHandler(e, pack.id)}
+                                       type='number' name='length'
+                                       value={pack.length}/>
+                            </div>
+                            <div className={classes.input}>
+                                <input onChange={(e) =>
+                                    onChangeHandler(e, pack.id)}
+                                       type='number' name='width'
+                                       value={pack.width}/>
+                            </div>
+                            <div className={classes.input}>
+                                <input onChange={(e) =>
+                                    onChangeHandler(e, pack.id)}
+                                       type='number' name='height'
+                                       value={pack.height}/>
+                            </div>
+                        </div>
+                    ))}
+                    {!(+item.quantity - totalIn)
+                        ? <button className='btn btn-success mb-3'
+                                  onClick={() => sendPackageHandler(item.id)}>
+                            Подтвердить упаковку
+                        </button>
+                        : null
+                    }
+                    <button onClick={addPackageHandler}
+                            disabled={!(+item.quantity - totalIn)}
+                            className='btn btn-outline-dashed'>
+                        Добавить упаковку
+                    </button>
+                </div>
+            </div>
+        </>
+        : null
 }
 
 export default Package
