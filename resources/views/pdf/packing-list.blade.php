@@ -48,52 +48,50 @@
             <th style="font-weight: normal; padding: 5px 15px; border: 1px solid #000;">G.W(KGS)</th>
             <th style="font-weight: normal; padding: 5px 15px; border: 1px solid #000;">VOLUME</th>
         </tr>
-        @foreach($orders as $order)
-            @foreach($order->orderItems as $item)
-                <tr>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->name }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->hs_code }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->quantity }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">
-                        @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
-                            <table>
-                                <tr>
-                                    <td>{{ $pcsCtn }}</td>
-                                </tr>
-                            </table>
-                        @endforeach
-                    </td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">
-                        @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
+        @foreach($orderItems as $item)
+            <tr>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->name }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->hs_code }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->quantity }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
                         <table>
-                                <tr>
-                                    <td>{{ $ctns }}</td>
-                                </tr>
-                            </table>
-                        @endforeach
-                    </td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->height }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->length }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->width }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_netto }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_brutto }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000000;">{{ $item->fullWeightNettoOrderItem() }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->fullWeightBruttoOrderItem() }}</td>
-                    <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->getVolumeBox() }}</td>
+                            <tr>
+                                <td>{{ $pcsCtn }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
+                    <table>
+                            <tr>
+                                <td>{{ $ctns }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->height }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->length }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->width }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_netto }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_brutto }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000000;">{{ $item->fullWeightNettoOrderItem() }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->fullWeightBruttoOrderItem() }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->getVolumeBox() }}</td>
             </tr>
-            @endforeach
         @endforeach
     </table>
 
     <table style="border-collapse: collapse; margin: 20px auto 0;">
         <tr>
             <td>
-                [Название контракта]
+                {{ $contract->name }}
             </td>
         </tr>
         <tr>
             <td>
-                Terms of delivery: [Доставка]
+                Terms of delivery: {{ $contract->supply }}
             </td>
         </tr>
     </table>

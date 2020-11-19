@@ -90,13 +90,4 @@ class Container extends Model
         }
         return true;
     }
-
-    public function generateNamePackingListIfNull()
-    {
-        if ($this->packing_list_name) {
-            $packingListName =  $this->id . ' dated' . Carbon::now()->format('d F Y');
-            $this->packing_list_name = $packingListName;
-            $this->save();
-        }
-    }
 }

@@ -16,10 +16,10 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom: 10px;">[Какой поставщик]</td>
+            <td style="padding-bottom: 10px;">{{ $provider->name_company }}</td>
         </tr>
         <tr>
-            <td style="padding-bottom: 10px;">Address: [Какой поставщик]</td>
+            <td style="padding-bottom: 10px;">Address: {{ $provider->address ? $provider->address : '-' }}</td>
         </tr>
         <tr>
             <td style="padding-bottom: 10px;">
@@ -27,7 +27,7 @@
             </td>
         </tr>
         <tr>
-            <td style="padding-bottom: 10px;">[Какой поставщик]</td>
+            <td style="padding-bottom: 10px;">{{ $provider->manufacturing ? $provider->manufacturing : '-' }}</td>
         </tr>
         <tr>
             <td style="padding-bottom: 10px;">
@@ -44,12 +44,10 @@
             <td style="padding-bottom: 10px;">MODEL OF GOODS</td>
         </tr>
         <tr>
-            @foreach($orders as $order)
-                @foreach($order->getProductsHsCode() as $hsCode)
-                    <td>
-                        <span style="border-bottom: 1px dotted #000">{{ $hsCode }}</span>
-                    </td>
-                @endforeach
+            @foreach($hsCodes as $hsCode)
+            <td>
+                <span style="border-bottom: 1px dotted #000">{{ $hsCode }}</span>
+            </td>
             @endforeach
         </tr>
         <tr>

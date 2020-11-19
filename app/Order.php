@@ -4,6 +4,8 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
+use App\Product;
+use App\OrderItem;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -251,6 +253,15 @@ class Order extends Model
             'date' => $date,
         ]);
         return true;
+    }
+
+    public function generateNamePackingListIfNull(string $nameContract)
+    {
+        if ($this->packing_list_name) {
+            $packingListName = $nameContract . '-' . $this->id . ' dated' . Carbon::now()->format('d F Y');
+            $this->packing_list_name = $packingListName;
+            $this->save();
+        }
     }
 
     public function getProductsHsCode(): array
