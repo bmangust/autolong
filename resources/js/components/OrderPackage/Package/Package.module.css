@@ -1,0 +1,39 @@
+.package {
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.item {
+    margin-bottom: 10px;
+}
+
+.package div {
+    align-items: center;
+    margin: auto 0;
+}
+
+.itemHeader {
+    display: flex;
+    justify-content: space-between;
+}
+
+.itemHeader p {
+    font-weight: bold;
+    font-size: 12px;
+    display: block;
+    margin-bottom: 10px;
+}
+
+.package {
+    font-size: 12px;
+    display: flex;
+}
+
+.name {
+    max-width: 90px;
+    width: 100%;
+}
+
+.input:not(:last-of-type) {
+
+}

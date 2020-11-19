@@ -215,14 +215,18 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
 
 export const createOrderInvoice = (id, data, type) => {
     const url = `/api/orders/${id}/generatepdf${type}`
-    const formData = new FormData()
-    Object.entries(data).forEach(([key, val]) => {
-        if (Array.isArray(val)) {
-            return formData.append(key, JSON.stringify(val))
-        } else {
-            return formData.append(key, val)
-        }
-    })
+    let formData = data
+    if (type !== 'packinglist') {
+        formData = new FormData()
+        Object.entries(data).forEach(([key, val]) => {
+            if (Array.isArray(val)) {
+                return formData.append(key, JSON.stringify(val))
+            } else {
+                return formData.append(key, val)
+            }
+        })
+    }
+    console.log(formData)
     axios
         .post(url, formData, {
             responseType: 'blob'

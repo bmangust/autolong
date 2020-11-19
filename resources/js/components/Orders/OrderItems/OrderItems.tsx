@@ -23,7 +23,7 @@ const OrderItems: React.FC<IOrderItems> = (
         coursesWithout = ['rub', 'usd'],
         onChangePrice
     }) => {
-    if (!items.length) {
+    if (!items || !items.length) {
         return (
             <div className={classes.orderProductsNoItems}>
                 В этом списке еще нет товаров

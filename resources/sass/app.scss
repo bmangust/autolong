@@ -666,6 +666,20 @@ html button.btn-link:focus, html button.btn-link:active {
     box-shadow: none;
 }
 
+html button.btn-outline-dashed {
+    border: 1px dashed #3A405F;
+    border-radius: 10px;
+    font-weight: 300;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    text-align: center;
+    margin-right: 30px;
+    padding: 10px 20px;
+    width: 100%;
+    background: transparent;
+}
+
 .btn-primary {
     color: #fff;
     background-color: var(--main-color);

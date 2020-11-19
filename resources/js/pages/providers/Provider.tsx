@@ -179,7 +179,7 @@ const Provider: React.FC<IProvider> = () => {
                                 </div>
                             </div>
 
-                            {provider.catalogs.length
+                            {provider && 'catalogs' in provider
                                 ? <div className='mb-5'>
                                     <h2 className='mb-4'>
                                         Каталоги поставщика
@@ -237,7 +237,7 @@ const Provider: React.FC<IProvider> = () => {
                     <div className="card">
                         <div className="card-body-info">
                             <h2>Список заказов</h2>
-                            {provider.orders.length
+                            {provider.orders
                                 ? provider.orders.map((order) => (
                                     <p className={classes.orders}
                                        key={order.id + order.name}>
