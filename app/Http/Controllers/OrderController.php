@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\City;
 use App\Http\Resources\ProductResource;
 use App\Importer;
-use App\Log;
 use App\Order;
 use App\OrderItem;
 use App\Product;
@@ -157,8 +156,8 @@ class OrderController extends Controller
 
             if ($order->status_payment == $paymentPrepaymentMade) {
                 if ($paymentAmount >= $order->getOrderSumInCny()) {
-                    $paymentPrepaymentMade = Status::getOrderPaymentPaidInFull();
-                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+                    $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
+                    $order->setOrderPaymentStatus($paymentPaidInFull, $paymentAmount, $surchargeAmount);
                 }
                 if ($paymentAmount < $order->getOrderSumInCny()) {
                     $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();

@@ -79,7 +79,7 @@ Route::get('logs', 'LogController@index');
 Route::put('sandboxfiles/{sandboxFile}', 'SandboxFileController@update');
 Route::delete('sandboxfiles/{sandboxFile}', 'SandboxFileController@destroy');
 Route::post('{model}/{id}/savefile','SandboxFileController@saveFile')
-    ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе не работает для слов оканчивающиеся на y
+    ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе. Не работает для слов оканчивающиеся на y или s
 Route::bind('id', function ($id, $route) {
     $model = preg_replace('#s$#','' ,$route->parameter('model'));
     $class = 'App\\' . ucfirst(Str::camel($model));
@@ -97,3 +97,13 @@ Route::get('users/{user}', 'UserController@show');
 Route::put('users/{user}', 'UserController@update');
 Route::delete('users/{user}', 'UserController@destroy');
 Route::post('users/login', 'UserController@login');
+Route::post('users/logout', 'UserController@logout');
+
+Route::post('accesses', 'AccessesController@store');
+Route::put('accesses{access}', 'AccessesController@update');
+
+Route::get('userroles', 'UserRoleController@index');
+Route::post('userroles', 'UserRoleController@store');
+Route::get('userroles/{userrole}', 'UserRoleController@show');
+Route::put('userroles/{userrole}', 'UserRoleController@update');
+Route::delete('userroles/{userroles}', 'UserRoleController@destroy');

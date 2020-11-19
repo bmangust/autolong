@@ -6,7 +6,6 @@ use App\Http\Resources\UserResource;
 use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Validator;
 
@@ -55,11 +54,11 @@ class UserController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        //
+        return response()->json(UserResource::collection(User::all()->sortByDesc('created_at')), 200);
     }
 
     /**
@@ -83,52 +82,76 @@ class UserController extends Controller
             'password' => $password,
             'role' => $role,
         ]);
-        return response()->json(new UserResource($newUser), 200);
+        return response()->json(new UserResource($newUser), 201);
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function show($id)
+    public function show(User $user)
     {
-        //
+        return response()->json(new UserResource($user), 200);
     }
 
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param \Illuminate\Http\Request $request
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse
+     * @throws \Illuminate\Validation\ValidationException
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $this->userCreateValidator($request->all())->validate();
+        $name = $request->input('name');
+        $email = $request->input('email');
+        $password = Hash::make($request->input('password'));
+        $role = $request->input('role_id');
+        $user->update([
+            'name' => $name,
+            'email' => $email,
+            'password' => $password,
+            'role' => $role,
+        ]);
+        return response()->json(new UserResource($user), 200);
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param User $user
+     * @return \Illuminate\Http\JsonResponse|void
      */
-    public function destroy($id)
+    public function destroy(User $user)
     {
-        //
+        $user->delete();
+        return response()->json([], 204);
     }
 
-    public function login(Request $request, User $user)
+    public function login(Request $request)
     {
         $this->userLoginValidator($request->all())->validate();
         $email = $request->input('email');
         $password = $request->input('password');
 
-        if (Auth::attempt($email, $password)) {
-            return response()->json(new UserResource(Auth::user()), 200);
+        $user = User::whereEmail($email)->first();
+        if ($user && Hash::check($password, $user->password)) {
+            $token = $user->createToken('authToken')->plainTextToken;
+            return response()->json([
+                'user' => new UserResource($user),
+                'token' => $token
+            ], 200);
         }
-        throw ValidationException::withMessage('Данные введены некорректно');
+        throw ValidationException::withMessages('Эти учетные данные не соответствуют нашим записям.');
+    }
+
+    public function logout(User $user)
+    {
+        $user->tokens()->delete();
+        return response([], 200);
     }
 }
