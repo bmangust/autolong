@@ -146,16 +146,18 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 label='Директор En'
                                 ref={register} name='directorEn'/>
                             : null}
-                        {!('providerStamp' in invoiceInputs)
+                        <div className="col-12">
+                            {!('providerStamp' in invoiceInputs)
                             ? <FileInput
                                 label='Печать поставщика'
                                 control={control} name='providerStamp'/>
                             : null}
-                        {!('importerStamp' in invoiceInputs)
+                                {!('importerStamp' in invoiceInputs)
                             ? <FileInput
                                 label='Печать импортера'
                                 control={control} name='importerStamp'/>
                             : null}
+                        </div>
                     </>
                     : null
                 }
@@ -164,13 +166,13 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                         {!('paymentTerms' in invoiceInputs)
                             ? <Input
                                 id='paymentTerms' type='text'
-                                label='paymentTerms'
+                                label='Условия оплаты'
                                 ref={register} name='paymentTerms'/>
                             : null}
                         {!('additionalField' in invoiceInputs)
                             ? <Input
                                 id='additionalField' type='text'
-                                label='additionalField'
+                                label='Дополнительное поле'
                                 ref={register} name='additionalField'/>
                             : null}
                     </>
