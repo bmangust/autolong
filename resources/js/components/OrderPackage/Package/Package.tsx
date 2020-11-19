@@ -126,7 +126,7 @@ const Package: React.FC<{ item: IProduct, orderId: number }> = (
             {!(+item.quantity - totalIn)
                 ? <button className='btn btn-success mb-3'
                           onClick={() => sendPackageHandler(item.id)}>
-                    Отправить упаковку
+                    Создать упаковочный лист
                 </button>
                 : null
             }
