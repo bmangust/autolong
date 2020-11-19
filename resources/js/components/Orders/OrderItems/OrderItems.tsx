@@ -86,14 +86,14 @@ const OrderItems: React.FC<IOrderItems> = (
                     <div className={classes.productImg + ' col-xl-2'}>
                         {imgFormatter(item.image, null, item.nameRu, 'pt-0')}
                     </div>
-                    <div className='col-xl-10 p-xl-0'>
+                    <div className='col-xl-10'>
                         <NavLink
                             to={`/product/${item.productId}`}
                             className={classes.orderProductsName}>
                             {substringOut(item.nameRu, 74)}
                         </NavLink>
-                        <div className='row align-items-center'>
-                            <div className='col-xl-3 col-6'>
+                        <div className='row align-items-center mt-1'>
+                            <div className='col-xl-2 col-6'>
                                 <p className={classes.orderProductsArticle}>
                                     {item.autolongNumber}
                                 </p>
@@ -108,12 +108,13 @@ const OrderItems: React.FC<IOrderItems> = (
                                         : null}
                                 </p>
                             </div>
-                            <div className='col-xl-3 col-6'>
+                            <div className='col-xl-2 col-6'>
                                 <p className={classes.orderProductsCount}>
                                     {item.quantity + ' шт'}
                                 </p>
                             </div>
-                            <div className='col-xl-2 col-6 text-right'>
+                            <div className='col-xl-4 col-6
+                            text-xl-right text-left'>
                                 <p className={classes.orderProductsPrice}>
                                     {item.fullPrice
                                         ? moneyFormatter(item.fullPrice,

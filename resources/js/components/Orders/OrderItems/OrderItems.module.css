@@ -56,7 +56,6 @@
 .orderProducts {
     background: white;
     position: relative;
-    margin-bottom: 15px;
     align-items: center;
 }
 
@@ -80,12 +79,16 @@
 .orderProductsPrice {
     font-weight: bold;
     font-size: 12px;
-    display: block;
-    margin-bottom: 0.25rem;
+    line-height: 14px;
+    margin-bottom: 0;
 }
 
 .orderProductsPrice {
     font-weight: 500;
+}
+
+.orderProductsPrice span > span {
+    margin-right: 0 !important;
 }
 
 .orderProductsNoItems {
@@ -102,10 +105,6 @@
     align-items: center;
 }
 
-.orderProductsItemPrice > span {
-    margin-left: 5px;
-}
-
 .orderProductsArticle,
 .orderProductsItemPrice {
     font-weight: 500;
@@ -114,6 +113,11 @@
     color: #b4b6bd;
     margin-bottom: 0;
     white-space: nowrap;
+}
+
+.orderProductsArticle span,
+.orderProductsItemPrice span {
+    margin-right: 0 !important;
 }
 
 @media (max-width: 1199px) {

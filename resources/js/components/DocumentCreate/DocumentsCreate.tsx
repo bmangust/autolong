@@ -119,43 +119,45 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                         {!('contractEndDate' in invoiceInputs)
                             ? <Input
                                 id='contractEndDate' type='date'
-                                label='contractEndDate'
+                                label='Дата окончания контракта'
                                 ref={register} name='contractEndDate'/>
                             : null}
                         {!('classificationEn' in invoiceInputs)
                             ? <Input
                                 id='classificationEn' type='text'
-                                label='classificationEn'
+                                label='Классификация En'
                                 ref={register} name='classificationEn'/>
                             : null}
                         {!('classificationRu' in invoiceInputs)
                             ? <Input
                                 id='classificationRu' type='text'
-                                label='classificationRu'
+                                label='Классификация Ru'
                                 ref={register} name='classificationRu'/>
                             : null}
                         {!('directorRu' in invoiceInputs)
                             ? <Input
                                 id='directorRu' type='text'
-                                label='directorRu'
+                                label='Директор Ru'
                                 ref={register} name='directorRu'/>
                             : null}
                         {!('directorEn' in invoiceInputs)
                             ? <Input
                                 id='directorEn' type='text'
-                                label='directorEn'
+                                label='Директор En'
                                 ref={register} name='directorEn'/>
                             : null}
-                        {!('providerStamp' in invoiceInputs)
+                        <div className="col-12">
+                            {!('providerStamp' in invoiceInputs)
                             ? <FileInput
-                                label='providerStamp'
+                                label='Печать поставщика'
                                 control={control} name='providerStamp'/>
                             : null}
-                        {!('importerStamp' in invoiceInputs)
+                                {!('importerStamp' in invoiceInputs)
                             ? <FileInput
-                                label='importerStamp'
+                                label='Печать импортера'
                                 control={control} name='importerStamp'/>
                             : null}
+                        </div>
                     </>
                     : null
                 }
@@ -164,13 +166,13 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                         {!('paymentTerms' in invoiceInputs)
                             ? <Input
                                 id='paymentTerms' type='text'
-                                label='paymentTerms'
+                                label='Условия оплаты'
                                 ref={register} name='paymentTerms'/>
                             : null}
                         {!('additionalField' in invoiceInputs)
                             ? <Input
                                 id='additionalField' type='text'
-                                label='additionalField'
+                                label='Дополнительное поле'
                                 ref={register} name='additionalField'/>
                             : null}
                     </>
@@ -179,13 +181,14 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
             </div>
             <div className='row mt-3'>
                 <div className="col-lg-6">
-                    <button className='btn btn-success w-100'>
+                    <button className='btn btn-success w-100 text-center'>
                         Создать
                     </button>
                 </div>
                 <div className="col-lg-6">
                     <button onClick={onCloseModalHandler}
-                        className='btn btn-light w-100 mt-lg-0 mt-3'>
+                        className='btn btn-light w-100
+                        mt-lg-0 mt-3 text-center'>
                         Отменить
                     </button>
                 </div>
