@@ -91,4 +91,14 @@ class ProviderController extends Controller
         $provider->delete();
         return response()->json([], 204);
     }
+
+    public function setBlackLabel(Request $request, Provider $provider)
+    {
+        $request->validate([
+            'unscrupulous' => 'required|integer|min:0|max:1'
+        ]);
+        $provider->unscrupulous = $request->input('unscrupulous');
+        $provider->save();
+        return response()->json(new ProviderWithRelationshipsResource($provider), 200);
+    }
 }
