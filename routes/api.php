@@ -31,6 +31,7 @@ Route::post('providers', 'ProviderController@store');
 Route::get('providers/{provider}', 'ProviderController@show');
 Route::put('providers/{provider}', 'ProviderController@update');
 Route::delete('providers/{provider}', 'ProviderController@destroy');
+Route::put('providers/{provider}/setblacklabel', 'ProviderController@setBlackLabel');
 
 Route::get('products', 'ProductController@index');
 Route::post('products', 'ProductController@store');
