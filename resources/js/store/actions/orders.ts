@@ -226,7 +226,6 @@ export const createOrderInvoice = (id, data, type) => {
             }
         })
     }
-    console.log(formData)
     axios
         .post(url, formData, {
             responseType: 'blob'
