@@ -83,8 +83,8 @@ const Package: React.FC<{
                 meas
             }
         }
-        setData(oldDate => {
-            return Object.assign(oldDate, data)
+        setData((oldDate: any) => {
+            return Object.assign({}, oldDate, data)
         })
         setIsShow(false)
     }
