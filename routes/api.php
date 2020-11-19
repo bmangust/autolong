@@ -25,6 +25,8 @@ Route::get('containers/{container}', 'ContainerController@show');
 Route::put('containers/{container}', 'ContainerController@update');
 Route::delete('containers/{container}', 'ContainerController@destroy');
 Route::post('containers/{container}/changestatus', 'ContainerController@changeStatus');
+Route::post('containers/{container}/generatepdfpackinglist', 'ContainerController@generatePdfPackingList');
+Route::get('containers/{containers}/getpdfmarkinglist', 'ContainerController@getMarkingList');
 
 Route::get('providers', 'ProviderController@index');
 Route::post('providers', 'ProviderController@store');
@@ -67,8 +69,6 @@ Route::get('orders/{order}/getpdfcontract', 'OrderController@getPdfContract');
 Route::post('orders/{order}/generatepdfproforma', 'OrderController@generatePdfProforma');
 Route::post('orders/{order}/generatepdfinvoice', 'OrderController@generatePdfInvoice');
 Route::post('orders/{order}/generatepdfcontract', 'OrderController@generatePdfContract');
-Route::post('orders/{order}/generatepdfpackinglist', 'OrderController@generatePdfPackingList');
-Route::get('orders/{order}/getpdfmarkinglist', 'OrderController@getMarkingList');
 
 Route::get('tags', 'TagController@index');
 

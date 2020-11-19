@@ -344,52 +344,6 @@ class OrderController extends Controller
         return $newPdf->download();
     }
 
-    public function generatePdfPackingList(Request $request, Order $order)
-    {
-        $orderItemsInfo = $request->all();
-        foreach ($orderItemsInfo as $key => $info) {
-            $orderItem = OrderItem::findOrFail($key);
-            $orderItem->pcs_ctn_ctns = json_encode($info['PcsCtnCtns']);
-            $orderItem->meas = json_encode($info['meas']);
-            $orderItem->save();
-        }
-
-        $importer = Importer::first();
-        $provider = $order->provider;
-        $orderItems = $order->orderItems;
-        if ($order->contract) {
-            $contract = $order->contract->getInfo();
-            $order->generateNamePackingListIfNull($contract->name);
-        } else {
-            $contract = '';
-        }
-
-        $pdf = App::make('dompdf.wrapper');
-        $newPdf = $pdf->loadView('pdf.packing-list', [
-            'order' => $order,
-            'importer' => $importer,
-            'provider' => $provider,
-            'orderItems' => $orderItems,
-            'contract' => $contract
-        ]);
-        return $newPdf->download();
-    }
-
-    public function getMarkingList(Order $order)
-    {
-        $importer = Importer::first();
-        $provider = $order->provider;
-        $hsCodes = $order->getProductsHsCode();
-        $pdf = App::make('dompdf.wrapper');
-        $newPdf = $pdf->loadView('pdf.packing-list', [
-            'order' => $order,
-            'importer' => $importer,
-            'provider' => $provider,
-            'hsCodes' => $hsCodes,
-        ]);
-        return $newPdf->download();
-    }
-
     public function indexUnapplied()
     {
         $unappliedOrders = Order::all()->where('container_id', '=', null)
