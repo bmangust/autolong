@@ -116,9 +116,10 @@ class ContainerController extends Controller
         return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
 
-    public function generatePdfPackingList(Request $request, Order $order)
+    public function generatePdfPackingList(Request $request, Container $container)
     {
         $orderItemsInfo = $request->all();
+        $orders = $container->orders;
         foreach ($orderItemsInfo as $key => $info) {
             $orderItem = OrderItem::findOrFail($key);
             $orderItem->pcs_ctn_ctns = json_encode($info['PcsCtnCtns']);
@@ -127,37 +128,26 @@ class ContainerController extends Controller
         }
 
         $importer = Importer::first();
-        $provider = $order->provider;
-        $orderItems = $order->orderItems;
-        if ($order->contract) {
-            $contract = $order->contract->getInfo();
-            $order->generateNamePackingListIfNull($contract->name);
-        } else {
-            $contract = '';
-        }
+        $provider = $orders->first()->provider;
+        $container->generateNamePackingListIfNull();
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.packing-list', [
-            'order' => $order,
+            'orders' => $orders,
             'importer' => $importer,
             'provider' => $provider,
-            'orderItems' => $orderItems,
-            'contract' => $contract
-        ]);
+        ])->setPaper('a4', 'landscape');
         return $newPdf->download();
     }
 
-    public function getMarkingList(Order $order)
+    public function getMarkingList(Container $container)
     {
         $importer = Importer::first();
-        $provider = $order->provider;
-        $hsCodes = $order->getProductsHsCode();
+        $orders = $container->orders;
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.packing-list', [
-            'order' => $order,
+            'orders' => $orders,
             'importer' => $importer,
-            'provider' => $provider,
-            'hsCodes' => $hsCodes,
         ]);
         return $newPdf->download();
     }
