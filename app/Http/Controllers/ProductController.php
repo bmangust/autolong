@@ -67,7 +67,7 @@ class ProductController extends Controller
         $product->provider_id = $request->input('providerId');
         $product->published = $published ?? 1;
         $priceCny = $request->input('priceCny');
-        $product->price_cny = $priceCny;
+        $product->price_cny = $priceCny ?? 0;
         $product->price_rub = round($exchangeRate->lastCourse()->rub * $priceCny, 2);
         $product->price_usd = round($exchangeRate->lastCourse()->usd * $priceCny, 2);
         $product->weight_netto = $request->input('weightNetto');

@@ -359,7 +359,13 @@ class OrderController extends Controller
         $orderItemsInfo = $request->all();
         foreach ($orderItemsInfo as $key => $info) {
             $orderItem = OrderItem::findOrFail($key);
-            $orderItem->pcs_ctn_ctns = json_encode($info['PcsCtnCtns']);
+            $pcsCtnCtns = [];
+            foreach ($info['pcsCtn'] as $pcsCtn) {
+                foreach ($info['ctns'] as $ctn) {
+                    $pcsCtnCtns[$pcsCtn] = $ctn;
+                }
+            }
+            $orderItem->pcs_ctn_ctns = json_encode($pcsCtnCtns);
             $orderItem->meas = json_encode($info['meas']);
             $orderItem->save();
         }
