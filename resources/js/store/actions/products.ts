@@ -148,7 +148,7 @@ export const fetchProductPrice = (priceCny) =>
             )
     }
 
-export const fetchProductsByVendors = (data) => async dispatch => {
+export const fetchProductsByVendors = (data, publish = 1) => async dispatch => {
     await dispatch({
         type: FETCH_BY_VENDOR_START
     })
@@ -157,7 +157,7 @@ export const fetchProductsByVendors = (data) => async dispatch => {
     })
     const url = '/api/products/checknumbercode'
     axios
-        .post(url, {numbers})
+        .post(url, {numbers, publish})
         .then((answer) => {
             dispatch({
                 type: FETCH_BY_VENDOR_SUCCESS,

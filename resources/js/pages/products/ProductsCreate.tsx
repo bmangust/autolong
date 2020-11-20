@@ -46,7 +46,8 @@ const ProductsCreate: React.FC = () => {
 
     const getProductSubmitHandler =
         handleSubmit((formValues) => {
-            dispatch(fetchProductsByVendors(formValues))
+            dispatch(fetchProductsByVendors(formValues,
+                unpublished === 'unpublished' ? 0 : 1))
         })
 
     let contentProduct =
