@@ -66,6 +66,12 @@ const ProvidersTable: React.FC = () => {
         )
     }
 
+    const filter = {
+        field: 'orders',
+        placeholder: 'Активные заказы',
+        type: 'checkbox'
+    }
+
     const expandRowTable = [
         {
             dataField: 'orders',
@@ -111,6 +117,7 @@ const ProvidersTable: React.FC = () => {
 
     return (
         <AutoTable
+            filter={filter}
             expandRowTable={expandRowTable}
             keyField='id' data={providers} columns={columns}
             button={{link: 'providercreate', text: 'Добавить поставщика'}}/>

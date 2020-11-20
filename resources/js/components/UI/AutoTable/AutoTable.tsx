@@ -37,6 +37,7 @@ interface IFilter {
     placeholder?: any
     field?: string
     loading?: boolean
+    type?: string
 }
 
 interface IAutoTable extends BootstrapTableProps {
@@ -75,6 +76,44 @@ const AutoTable: React.FC<IAutoTable> = (
         } else {
             setDataState(data)
         }
+    }
+
+    const onChangeCheckFilter = (e) => {
+        const isChecked = e.target.checked
+        if (isChecked) {
+            setDataState(data.filter((item) =>
+                _.get(item, filter.field).length))
+        } else {
+            setDataState(data)
+        }
+    }
+
+    let select = <SelectSearch
+        isLoading={filter?.loading}
+        value={filter?.value}
+        onChange={onChangeFilter}
+        options={filter?.options}
+        placeholder={filter?.placeholder}
+        isSearchable={true}
+    />
+
+    if (filter?.type === 'checkbox') {
+        select = <div className='align-items-center d-flex'>
+            <label className='w-100 mr-3 mb-0' htmlFor='cargo'>
+                {filter?.placeholder}
+            </label>
+            <div className='custom-control custom-switch'>
+                <input
+                    type='checkbox'
+                    name='filter'
+                    id='filter'
+                    onChange={onChangeCheckFilter}
+                    className='custom-control-input'/>
+                <label className="custom-control-label"
+                       htmlFor='filter'>
+                </label>
+            </div>
+        </div>
     }
 
     function renderer(row: any, rowIndex: number) {
@@ -142,14 +181,7 @@ const AutoTable: React.FC<IAutoTable> = (
                                 />
                             </div>
                             {filter
-                                ? <SelectSearch
-                                    isLoading={filter.loading}
-                                    value={filter.value}
-                                    onChange={onChangeFilter}
-                                    options={filter.options}
-                                    placeholder={filter.placeholder}
-                                    isSearchable={true}
-                                />
+                                ? select
                                 : null
                             }
                         </div>
