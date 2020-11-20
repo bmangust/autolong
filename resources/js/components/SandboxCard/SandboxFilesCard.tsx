@@ -270,16 +270,19 @@ const SandboxFilesCard: React.FC<{
                     <FileInput name='file' control={control}/>
                     {errors.file &&
                     <small>Это поле обязательно</small>}
-                    <div className='d-flex justify-content-between
-                     flex-lg-row flex-column'>
-                        <button onClick={onCancelHandler}
+                    <div className='row'>
+                        <div className="col-xl-6">
+                            <button onClick={onCancelHandler}
                                 type='button' className='btn btn-light
-                                 mb-lg-0 mb-3'>
-                            Отменить добавление
-                        </button>
-                        <button className='btn btn-success'
-                                type="submit">Добавить файл
-                        </button>
+                                 mb-xl-0 mb-3 w-100'>
+                                Отменить добавление
+                            </button>
+                        </div>
+                        <div className="col-xl-6">
+                            <button className='btn btn-success w-100'
+                                    type="submit">Добавить файл
+                            </button>
+                        </div>
                     </div>
                 </form>
             </Modal>

@@ -6,15 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Contract</title>
 </head>
-<style>
-    /* .page-break-before {
-        page-break-before: always;
-    }
-    .page-break-after {
-        page-break-after: always;
-    } */
-
-</style>
 
 <body style="font-family: DejaVu Sans, sans-serif; font-size: 10px; line-height: 1.2;">
     <table style="margin: 0 auto; border-collapse: collapse; vertical-align: baseline;">
@@ -807,7 +798,7 @@
         </tr>
         <br>
         <tr style="">
-            <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">
                     14. Юридические адреса и банковские реквизиты сторон:
                 </h4>
@@ -820,10 +811,10 @@
                 </p>
                 {!! $order->cutScriptTagsInText($contract['requisites']) ?: '-' !!}
                 @if(isset($contract['importerStamp']))
-                <img style="max-width: 300px; max-height: 300px;" src="{{ asset($contract['importerStamp']) }}" alt="">
+                <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($contract['importerStamp']) }}" alt="">
                 @endif
             </td>
-            <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
+            <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">
                     14. Legal addresses and bank details of the parties:
                 </h4>
@@ -860,7 +851,7 @@
                     Chi Ning {{ $contract['directorEn'] }}
                 </p>
                 @if(isset( $contract['providerStamp']))
-                <img style="max-width: 300px; max-height: 300px;" src="{{ asset($contract['providerStamp']) }}" alt="">
+                <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($contract['providerStamp']) }}" alt="">
                 @endif
             </td>
         </tr>

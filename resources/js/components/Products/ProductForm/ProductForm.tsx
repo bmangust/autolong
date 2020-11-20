@@ -104,7 +104,7 @@ const ProductForm: React.FC = () => {
                             {errors.nameRu &&
                             <small>Это поле обязательно</small>}
                         </div>
-                        <div className="col-lg-6">
+                        <div className="col-lg-6 mt-lg-0 mt-3">
                             <label htmlFor='nameEn' className='w-100'>
                                 Product name
                                 <span className="float-right
@@ -174,7 +174,7 @@ const ProductForm: React.FC = () => {
                                            className='w-100'>
                                         Выберите поставщика
                                     </label>
-                                    <div className='col-10 mb-3 p-0'>
+                                    <div className='col-lg-10 mb-3 p-0'>
                                         <Controller
                                             defaultValue=''
                                             name="providerId"
@@ -214,7 +214,7 @@ const ProductForm: React.FC = () => {
                                 <div className='col-lg-12 mb-3'>
                                     <label>Укажите цену</label>
                                     <div className='row'>
-                                        <div className='col-10 mb-3'>
+                                        <div className='col-lg-10 col-11 mb-3'>
                                             <input name="priceCny"
                                                    className='w-100'
                                                    ref={register(
@@ -238,7 +238,8 @@ const ProductForm: React.FC = () => {
                                                 ¥
                                             </span>
                                         </div>
-                                        <div className='col-4'>
+                                        <div className='col-xl-4
+                                        col-lg-10 col-11'>
                                             <input
                                                 name="priceUsd"
                                                 type="number"
@@ -252,14 +253,15 @@ const ProductForm: React.FC = () => {
                                                 disabled
                                             />
                                         </div>
-                                        <div className='col-2 pl-0'>
+                                        <div className='col-xl-2 col-1 pl-0'>
                                     <span
                                         className='priceSymbol text-main
                                          font-weight-bold'>
                                     $
                                     </span>
                                         </div>
-                                        <div className='col-4'>
+                                        <div className='col-xl-4 col-lg-10
+                             col-11 mt-xl-0 mt-3'>
                                             <input
                                                 name="priceRub"
                                                 type="number"
@@ -273,7 +275,8 @@ const ProductForm: React.FC = () => {
                                                 disabled
                                             />
                                         </div>
-                                        <div className='col-2 pl-0'>
+                                        <div className='col-xl-2 col-1
+                                         pl-0 mt-xl-0 mt-3'>
                                     <span
                                         className='priceSymbol text-main
                                         font-weight-bold'>
@@ -288,11 +291,12 @@ const ProductForm: React.FC = () => {
 
                                     <div className='row mb-3'>
                                         <div
-                                            className='col-2 small
-                                                    pt-2 font-weight-bold'>
+                                            className='col-xl-2 col-3 small
+                                            pt-2 font-weight-bold'>
                                             Брутто
                                         </div>
-                                        <div className='col-8'>
+                                        <div className='col-xl-8
+                                         col-lg-7 col-8'>
                                             <input name="weightBrutto"
                                                    placeholder="0"
                                                    ref={register(
@@ -303,19 +307,21 @@ const ProductForm: React.FC = () => {
                                             {errors.weightBrutto &&
                                             <small>Это поле обязательно</small>}
                                         </div>
-                                        <div className='col-2 priceSymbol
+                                        <div className='col-xl-2
+                                            col-lg-2 col-1 priceSymbol
                                             text-main font-weight-bold pl-0'>
                                             кг
                                         </div>
                                     </div>
                                     <div className='row mb-3'>
                                         <div
-                                            className='col-2 small
+                                            className='col-xl-2 col-3 small
                                             pt-2 font-weight-bold'
                                         >
-                                            Нетто
+
                                         </div>
-                                        <div className='col-8'>
+                                        <div className='col-xl-8 col-lg-7
+                                        col-8'>
                                             <input name="weightNetto"
                                                    className='w-100'
                                                    ref={register(
@@ -326,8 +332,9 @@ const ProductForm: React.FC = () => {
                                             {errors.weightNetto &&
                                             <small>Это поле обязательно</small>}
                                         </div>
-                                        <div className='col-2 priceSymbol
-                                            text-main font-weight-bold pl-0'>
+                                        <div className='
+                                        col-xl-2 col-lg-2 col-1 priceSymbol
+                                        text-main font-weight-bold pl-0'>
                                             кг
                                         </div>
                                     </div>
@@ -337,14 +344,14 @@ const ProductForm: React.FC = () => {
                             </div>
                         </div>
                     </div>
-                    <div>
+                    <div className="col-lg-12">
                         <button
                             onClick={() => {
                                 history.goBack()
-                            }} className='mr-3 btn btn-light mb-sm-0 mb-3'>
+                            }} className='btn btn-light mb-2 mt-2 mr-3'>
                             Назад
                         </button>
-                        <button className='btn btn-success'
+                        <button className='btn btn-success mb-2 mt-2'
                                 type="submit">
                             Сохранить
                         </button>
