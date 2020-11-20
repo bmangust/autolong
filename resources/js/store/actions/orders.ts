@@ -237,6 +237,10 @@ export const createOrderInvoice = (id, data, type) => {
             saveAs(blob, `${type}.pdf`)
         })
         .catch((error: AxiosError) => {
-            toast.error(error.message)
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
         })
 }

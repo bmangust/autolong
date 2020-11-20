@@ -17,6 +17,7 @@
     "paymentStatuses": {
         "paymentAwaiting": "Ожидает оплаты",
         "paymentPrepaymentMade": "Сделана предоплата",
+        "paymentPaidFor": "Оплачен на",
         "paymentPaidInFull": "Оплачен полностью",
         "paymentAwaitingRefund": "Ожидает возврата оплаты",
         "paymentRefunded": "Оплата возвращена"

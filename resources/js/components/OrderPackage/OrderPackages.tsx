@@ -49,7 +49,7 @@ const OrderPackages: React.FC<{ items: IProduct[], orderId: number }> = (
                 className='btn btn-outline-dashed'>
             {show ? 'Скрыть' : 'Показать'} упаковку
         </button>
-        {Object.keys(data).length === items.length
+        {items && Object.keys(data).length === items.length
             ? <button className='btn btn-success'
                       onClick={createPackageHandler}>
                 Сформировать упаковочный лист для контейнера
