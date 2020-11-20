@@ -34,13 +34,13 @@ Route::delete('providers/{provider}', 'ProviderController@destroy');
 Route::put('providers/{provider}/setblacklabel', 'ProviderController@setBlackLabel');
 
 Route::get('products', 'ProductController@index');
+Route::get('products/unpublished', 'ProductController@indexUnpublished');
 Route::post('products', 'ProductController@store');
 Route::post('products/checknumbercode', 'ProductController@checkNumberCode');
 Route::get('products/{product}', 'ProductController@show');
 Route::put('products/{product}', 'ProductController@update');
 Route::post('products/{product}/updateimage', 'ProductController@updateImage');
 Route::delete('products/{product}', 'ProductController@destroy');
-Route::get('products/unpublished', 'ProductController@indexUnpublished');
 
 Route::get('catalogs', 'CatalogController@index');
 Route::post('catalogs', 'CatalogController@store');
