@@ -155,4 +155,11 @@ class ProductController extends Controller
         $product->createOrUpdateImage($request->file('image'));
         return response()->json($product->image, 200);
     }
+
+    public function indexUnpublished()
+    {
+        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
+            ->wherePublished(0)
+            ->orderBy('updated_at', 'desc')->get(), 200));
+    }
 }
