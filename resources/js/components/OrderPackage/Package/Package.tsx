@@ -80,6 +80,10 @@ const Package: React.FC<{
         }
     }
 
+    const deletePackHandler = (packId) => {
+        setPackages(packages.filter(({id}) => id !== packId))
+    }
+
     const sendPackageHandler = (id) => {
         const pcsCtn: number[] = []
         const ctns: number[] = []
@@ -159,7 +163,9 @@ const Package: React.FC<{
                         </div>
                         <div className={classes.close}>
                             <button>
-                                <SvgClose width='10px'/>
+                                <SvgClose
+                                    onClick={() => deletePackHandler(pack.id)}
+                                    width='10px'/>
                             </button>
                         </div>
                     </div>
