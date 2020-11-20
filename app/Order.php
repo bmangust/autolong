@@ -19,8 +19,6 @@ class Order extends Model
     public const CONTRACT_DIRECTORY = '/orders/';
     public const CHECK_DIRECTORY = '/checks/';
     public const STAMP_DIRECTORY = '/storage/stamps/';
-    public const STAMP_PROVIDER_NAME = 'provider-stamp';
-    public const STAMP_IMPORTER_NAME = 'importer-stamp';
 
     protected $fillable = ['name', 'provider_id'];
 

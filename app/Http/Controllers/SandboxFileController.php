@@ -61,14 +61,16 @@ class SandboxFileController extends Controller
         $name = $sandboxFile->getClearName($request->input('name'));
         $description = $request->input('description');
         $newName = $sandboxFile->getNewFileName($name);
-        $newPath = str_replace($sandboxFile->name, $newName, $sandboxFile->file);
-
-        if ($sandboxFile->checkFileInFolder($newPath)) {
-            return response()->json('Файл с таким именем существует', 400);
+        if ($sandboxFile->name != $newName) {
+            $newPath = str_replace($sandboxFile->name, $newName, $sandboxFile->file);
+            if ($sandboxFile->checkFileInFolder($newPath)) {
+                return response()->json('Файл с таким именем существует', 400);
+            }
+            Storage::disk('main')->rename($sandboxFile->file, $newPath);
+            $sandboxFile->update(['file' => $newPath, 'name' => $newName, 'description' => $description]);
+        } else {
+            $sandboxFile->update(['description' => $description]);
         }
-
-        Storage::disk('main')->rename($sandboxFile->file, $newPath);
-        $sandboxFile->update(['file' => $newPath, 'name' => $newName, 'description' => $description]);
         return response()->json(new SandboxFileResource($sandboxFile), 200);
     }
 }

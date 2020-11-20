@@ -74,10 +74,43 @@
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->height }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->length }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->width }}</td>
-                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_netto }}</td>
-                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->weight_brutto }}</td>
-                <td style="padding: 5px 15px; border: 1px solid #000000;">{{ $item->fullWeightNettoOrderItem() }}</td>
-                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->fullWeightBruttoOrderItem() }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $ctns)
+                        <table>
+                            <tr>
+                                <td>{{ $item->product->weight_netto }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $ctns)
+                        <table>
+                            <tr>
+                                <td>{{ $item->product->weight_brutto }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
+                        <table>
+                            <tr>
+                                <td>{{ $item->countWeightNetto($ctns) }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
+                        <table>
+                            <tr>
+                                <td>{{ $item->countWeightBrutto($ctns) }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->getVolumeBox() }}</td>
             </tr>
         @endforeach

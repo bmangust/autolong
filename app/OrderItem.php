@@ -44,6 +44,16 @@ class OrderItem extends Model
         return $this->quantity * $this->product->weight_brutto;
     }
 
+    public function countWeightNetto($quanity)
+    {
+        return $quanity * $this->product->weight_netto;
+    }
+
+    public function countWeightBrutto($quanity)
+    {
+        return $quanity * $this->product->weight_brutto;
+    }
+
     public function getVolumeBox()
     {
         return array_product(json_decode($this->meas, true));

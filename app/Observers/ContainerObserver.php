@@ -53,6 +53,7 @@ class ContainerObserver
 
     public function deleting(Container $container)
     {
+        $container->orders()->update(['container_id' => null]);
         foreach ($container->sandboxFiles as $sandboxFile) {
             $sandboxFile->deleteFile();
             $sandboxFile->delete();

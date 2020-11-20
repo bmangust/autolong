@@ -40,7 +40,9 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()->orderBy('updated_at', 'desc')->get(), 200));
+        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
+            ->wherePublished(1)
+            ->orderBy('updated_at', 'desc')->get(), 200));
     }
 
     /**
@@ -52,7 +54,9 @@ class ProductController extends Controller
      */
     public function store(Request $request, ExchangeRate $exchangeRate)
     {
-        $this->productCreateValidator($request->all())->validate();
+        if ($request->input('published')) {
+            $this->productCreateValidator($request->all())->validate();
+        }
         $product = new Product();
         $product->name_ru = $request->input('nameRu');
         $product->name_en = $request->input('nameEn');
@@ -93,7 +97,8 @@ class ProductController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param Product $product
+     * @param ExchangeRate $exchangeRate
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Product $product, ExchangeRate $exchangeRate)
@@ -112,6 +117,7 @@ class ProductController extends Controller
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
         $product->hs_code = $request->input('hsCode');
+        $product->published = $request->input('published');
         $product->save();
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }
