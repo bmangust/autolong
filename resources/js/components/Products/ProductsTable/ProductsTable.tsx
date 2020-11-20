@@ -7,9 +7,11 @@ import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Actions
 import {deleteProductById, fetchProducts} from '../../../store/actions/products'
+import {fetchProviders} from '../../../store/actions/providers'
 
 // Typescript
 import {IProductsRootState} from '../IProducts'
+import {IProvidersRootState} from '../../Providers/IProviders'
 
 // App
 import Loader from '../../UI/Loader/Loader'
@@ -36,6 +38,7 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
 
     useEffect(() => {
         dispatch(fetchProducts(unpublished))
+        dispatch(fetchProviders())
     }, [dispatch, unpublished])
 
     const {products, loading, error} = useSelector(
@@ -45,6 +48,27 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
             loading: state.productsState.loading
         })
     )
+
+    const {providers, loadingProviders} = useSelector(
+        (state: IProvidersRootState) => ({
+            providers: state.providersState.providers,
+            loadingProviders: state.providersState.loading
+        })
+    )
+
+    const filterOptions = providers.map((provider) => {
+        return {
+            label: provider.name,
+            value: provider.id
+        }
+    })
+
+    const filter = {
+        options: filterOptions,
+        field: 'provider.id',
+        placeholder: 'Фильтр по поставщику',
+        loading: loadingProviders
+    }
 
     if (error) {
         return <Error/>
@@ -138,6 +162,7 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     ]
     return (
         <AutoTable
+            filter={filter}
             expandRowTable={expandRowTable}
             keyField='id' data={products} columns={columns}
             button={{

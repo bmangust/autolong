@@ -20,6 +20,7 @@ import {
 } from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
+import statuses from '../../../../statuses/statuses.json'
 
 const OrdersTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -50,6 +51,20 @@ const OrdersTable: React.FC = () => {
                 title='В этом списке ещё нет заказов'
             />
         )
+    }
+
+    const filterOptions = Object.entries(statuses.orderStatuses)
+        .map(([key, value]) => {
+            return {
+                label: value,
+                value: key
+            }
+        })
+
+    const filter = {
+        options: filterOptions,
+        field: 'status',
+        placeholder: 'Фильтр по статусу'
     }
 
     const itemsFormatter = (items) => {
@@ -123,6 +138,7 @@ const OrdersTable: React.FC = () => {
 
     return (
         <AutoTable
+            filter={filter}
             expandRowTable={expandRowTable}
             keyField='id' data={orders} columns={columns}
             button={{link: 'orderscreate', text: 'Добавить заказы'}}

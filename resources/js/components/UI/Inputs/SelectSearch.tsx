@@ -5,7 +5,6 @@ import React from 'react'
 import Select from 'react-select'
 
 // Styles
-import classes from './SelectSearch.module.css'
 import {ActionMeta, OptionTypeBase, ValueType} from 'react-select/src/types'
 
 interface option {
@@ -38,9 +37,10 @@ const SelectSearch: React.FC<props> =
      }) => {
         return (
             <Select
-                className={classes.selectSearch}
-                classNamePrefix={classes.selectSearch}
+                className='select-mini select-filter'
+                classNamePrefix='select-mini'
                 placeholder={placeholder}
+                isClearable={true}
                 onChange={onChange}
                 options={options}
                 value={value}

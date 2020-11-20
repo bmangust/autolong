@@ -932,6 +932,12 @@ html .select-mini-tags {
     }
 }
 
+html .select-filter .select-mini__control, html .select-filter .select-mini-tags__control {
+    background: #fff;
+    height: 50px;
+    width: 250px;
+}
+
 html select.select-mini.loading {
     background-image: url(/svg/select-loading.svçg);
 }
