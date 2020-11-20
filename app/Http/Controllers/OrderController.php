@@ -149,6 +149,7 @@ class OrderController extends Controller
 
             $paymentAwaiting = Status::getOrderPaymentAwaiting();
             $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+            $paymentPaidFor = Status::getOrderPaymentPaidFor();
 
             if ($order->status_payment == $paymentPrepaymentMade) {
                 if ($paymentAmount >= $order->getOrderSumInCny()) {
@@ -162,7 +163,12 @@ class OrderController extends Controller
             }
 
             if ($order->status_payment == $paymentAwaiting) {
-                $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+                if ($paymentAmount >= $order->getOrderSumInCny()) {
+                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+                }
+                if ($paymentAmount < $order->getOrderSumInCny()) {
+                    $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $surchargeAmount);
+                }
             }
 
             return response()->json(new OrderWithRelationshipsResource($order), 200);
