@@ -20,23 +20,23 @@
     <table style="margin: 0 auto; border-collapse: collapse; vertical-align: baseline;">
         <tr>
             <th style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
-                <span style="display: block; text-align: center;">Контракт № {{ $name }}</span>
+                <span style="display: block; text-align: center;">Контракт № {{ $contract['name'] }}</span>
                 <span style="display: block; text-align: left;">г. Москва</span>
                 <span
-                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $date }}</span>
+                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $contract['date'] }}</span>
             </th>
             <th style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
-                <span style="display: block; text-align: center;">Contract {{ $name }}</span>
+                <span style="display: block; text-align: center;">Contract {{ $contract['name'] }}</span>
                 <span style="display: block; text-align: left;">Moscow</span>
                 <span
-                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $date }}</span>
+                    style="display: inline-block; text-align: right; margin-left: 100px; border-bottom: 2px solid #000; line-height: 1;">{{ $contract['date'] }}</span>
             </th>
         </tr>
         <tr>
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
-                    {{ $importer->name_ru ? $importer->name_ru : '-' }}, именуемое в дальнейшем
-                    <i>Продавец</i>, в лице Директора {{ $directorRu }}, и Общество с
+                    {{ $importer->name_ru ?: '-' }}, именуемое в дальнейшем
+                    <i>Продавец</i>, в лице Директора {{ $contract['directorRu'] }}, и Общество с
                     ограниченной ответственностью «Деталь поставка», Россия,
                     именуемое в дальнейшем <i>Покупатель</i>, в лице Директора
                     Холоденко Андрея Геннадьевича, действующего на основании
@@ -47,7 +47,7 @@
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <p style="margin: 0;">
                     {{ $importer->name_en ? $importer->name_en : '-' }} hereinafter referred to
-                    as <i>‘the Seller’</i>, represented by the Director {{ $directorEn }},
+                    as <i>‘the Seller’</i>, represented by the Director {{ $contract['directorEn'] }},
                     on the one part, and LLC «Component Supply»(«СS LLC»,
                     Russia, hereinafter referred to as <i><i>‘the Buyer’</i></i>, on
                     behalf of Director Kholodenko Andrey Gennadyevich,
@@ -64,10 +64,10 @@
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">1.1.</span>
                     <i>Продавец</i>
-                    продал, а <i>Покупатель</i> купил на условиях {{ $supply }}
-                    согласно Инкотермс-2010, {{ $classificationRu }}, (далее –
-                    Товар), производства {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country->name : '-' }}.
+                    продал, а <i>Покупатель</i> купил на условиях {{ $contract['supply'] }}
+                    согласно Инкотермс-2010, {{$contract['classificationRu']}}, (далее –
+                    Товар), производства {{ $provider->name_company ?: '-' }}
+                    {{ $provider->country->name ?? '-' }}.
                     Товар ввозится на территорию Российской Федерации.
                 </p>
                 <p style="margin: 0;">
@@ -84,10 +84,10 @@
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">1.1.</span>
                     <i>Seller</i> has
-                    sold and the <i>Buyer</i> has bought on terms {{ $supply }} in
-                    accordance with Incoterms 2010, {{ $classificationEn }}, (hereinafter -
-                    Goods), {{ $provider->name_company ? $provider->name_company : '-' }}
-                    {{ $provider->country ? $provider->country->name : '-' }}. Goods are being imported into the
+                    sold and the <i>Buyer</i> has bought on terms {{ $contract['supply'] }} in
+                    accordance with Incoterms 2010, {{ $contract['classificationEn'] }}, (hereinafter -
+                    Goods), {{ $provider->name_company ?: '-' }}
+                    {{ $provider->country->name ?? '-' }}. Goods are being imported into the
                     territory of the Russian Federation.
                 </p>
                 <p style="margin: 0;">
@@ -108,7 +108,7 @@
                     <span style="font-weight: bold;">2.1.</span>
                     <i>Продавец</i> обязуется поставить <i>Покупателю</i> товар на общую
                     сумму Контракта. Общая сумма настоящего Контракта
-                    составляет {{ $orderPrice }}китайских юаней. Согласованная
+                    составляет {{ $order->getOrderSumInCny() }} китайских юаней. Согласованная
                     сторонами цена Товара устанавливается в CNY и
                     указывается Инвойсах.
                 </p>
@@ -154,7 +154,7 @@
                     <span style="font-weight: bold;">2.1.</span>
                     The <i>Seller</i> undertakes to supply to <i>Buyer</i> with the Goods
                     in the total amount of the Contract. The total value of
-                    the contract is {{ $orderPrice }} CNY. The parties have agreed the
+                    the contract is {{ $order->getOrderSumInCny() }} CNY. The parties have agreed the
                     price of the goods is set in CNY and stated in invoices.
                 </p>
                 <p style="margin: 0;">
@@ -204,7 +204,7 @@
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">3.1.</span>
                     Поставка
-                    Товара производится в соответствии ИНКОТЕРМС {{ $supply }}.
+                    Товара производится в соответствии ИНКОТЕРМС {{ $contract['supply'] }}.
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">3.2.</span>
@@ -223,7 +223,7 @@
                     <span style="font-weight: bold;">3.1.</span>
                     The Goods
                     shall be delivered in accordance with INCOTERMS
-                    {{ $supply }}.
+                    {{ $contract['supply'] }}.
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">3.2.</span>
@@ -715,7 +715,7 @@
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">12.2.</span>
                     Срок действия настоящего Контракта истекает
-                    {{ $contractEndDate ? $contractEndDate :'«31» декабря 2020г'}}. Срок действия Контракта может быть
+                    {{ $contract['contractEndDate'] ?: '«31» декабря 2020г'}}. Срок действия Контракта может быть
                     изменен по взаимному соглашению сторон, что оформляется документально.
                 </p>
                 <p style="margin: 0;">
@@ -746,7 +746,7 @@
                 </p>
                 <p style="margin: 0;">
                     <span style="font-weight: bold;">12.2.</span>
-                    The Contract expires on {{ $contractEndDate ? $contractEndDate :'December 31, 2020'}}. The term of
+                    The Contract expires on {{ $contract['contractEndDate'] ?: 'December 31, 2020'}}. The term of
                     the Contract may be changed as mutually
                     agreed by the parties, which shall be executed in writing.
                 </p>
@@ -818,9 +818,9 @@
                 <p style="margin: 0;">
                     ПОКУПАТЕЛЬ: {{ $importer->name_ru }}
                 </p>
-                {!! $requisites ? $requisites : '-' !!}
-                @if(isset($importerStamp))
-                <img style="max-width: 300px; max-height: 300px;" src="{{ asset($importerStamp) }}" alt="">
+                {!! $order->cutScriptTagsInText($contract['requisites']) ?: '-' !!}
+                @if(isset($contract['importerStamp']))
+                <img style="max-width: 300px; max-height: 300px;" src="{{ asset($contract['importerStamp']) }}" alt="">
                 @endif
             </td>
             <td style="width: 340px; height: 800px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
@@ -832,7 +832,7 @@
                         BUYER:</span>
                 </p>
                 <p style="margin: 0;">
-                    Name: «{{ $provider->name_company ? $provider->name_company : '-'}}»
+                    Name: «{{ $provider->name_company ?: '-'}}»
                 </p>
                 <p style="margin: 0;">
                     Address: TONG YANG VILLAGE BAI ZHANG JI TOWN, WENZHOU,CN
@@ -841,26 +841,26 @@
                     Beneficiary:
                 </p>
                 <p style="margin: 0;">
-                    Bank: {{ $provider->beneficiary_bank_name ? $provider->beneficiary_bank_name : '-' }}
+                    Bank: {{ $provider->beneficiary_bank_name ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Number account {{ $provider->beneficiary_account_name ? $provider->beneficiary_account_name : '-' }}
+                    Number account {{ $provider->beneficiary_account_name ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    SWIFT: {{ $provider->beneficiary_swift_address ? $provider->beneficiary_swift_address : '-' }}
+                    SWIFT: {{ $provider->beneficiary_swift_address ?: '-' }}
                 </p>
                 <p style="margin: 0;">
                     Address of bank
-                    {{ $provider->beneficiary_bank_address ? $provider->beneficiary_bank_address : '-' }}
+                    {{ $provider->beneficiary_bank_address ?: '-' }}
                 </p>
                 <p style="margin: 0;">
                     Директор/Director
                 </p>
                 <p style="margin: 0;">
-                    Chi Ning {{ $directorEn }}
+                    Chi Ning {{ $contract['directorEn'] }}
                 </p>
-                @if(isset($providerStamp))
-                <img style="max-width: 300px; max-height: 300px;" src="{{ asset($providerStamp) }}" alt="">
+                @if(isset( $contract['providerStamp']))
+                <img style="max-width: 300px; max-height: 300px;" src="{{ asset($contract['providerStamp']) }}" alt="">
                 @endif
             </td>
         </tr>

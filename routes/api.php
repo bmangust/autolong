@@ -40,6 +40,7 @@ Route::get('products/{product}', 'ProductController@show');
 Route::put('products/{product}', 'ProductController@update');
 Route::post('products/{product}/updateimage', 'ProductController@updateImage');
 Route::delete('products/{product}', 'ProductController@destroy');
+Route::get('products/unpublished', 'ProductController@destroy');
 
 Route::get('catalogs', 'CatalogController@index');
 Route::post('catalogs', 'CatalogController@store');
