@@ -152,7 +152,14 @@ const Order: React.FC<IOrder> = () => {
                                 Статус оплаты
                             </p>
                             <span className='statusPayment'>
-                                {getPaymentStatusName(order.statusPayment)}
+                                {order.statusPayment === 'paymentPaidFor'
+                                    ? `${getPaymentStatusName(order
+                                        .statusPayment)}
+                                     ${Math.round(order
+                                            .paymentAmount /
+                                        +order.price.cny / 100)} %`
+                                    : getPaymentStatusName(order.statusPayment)
+                                }
                             </span>
                             <span
                                 className={cls.join(' ')}

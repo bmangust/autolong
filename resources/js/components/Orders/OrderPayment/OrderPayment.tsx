@@ -113,6 +113,77 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
             </>
             break
         }
+        case 'paymentPaidFor': {
+            paymentContent = <>
+                <hr className='m-0'/>
+                <Form className='mb-4'
+                      onSubmit={changePaymentStatus}>
+                    <div className='row'>
+                        <Input
+                            id='paymentAmount'
+                            type='number'
+                            label='Укажите сумму оплаты ¥'
+                            ref={register}
+                            onChange={paymentAmountHandler}
+                            name='paymentAmount'
+                        />
+                        <Input
+                            id='surchargeAmount'
+                            type='number'
+                            label='* Укажите сумму доплаты ¥'
+                            ref={register}
+                            onChange={surchargeAmountHandler}
+                            name='surchargeAmount'
+                        />
+                    </div>
+                    <div className='row mb-3'>
+                        <div className='col-6'>
+                            <label>Оплачено</label>
+                            <h2 className='m-0'>
+                                {Math.round(
+                                    paymentAmount / +order.price.cny
+                                    * 100)} %
+                                {surchargeAmount
+                                    ? ` + ${surchargeAmount} ¥`
+                                    : null
+                                }
+                            </h2>
+                        </div>
+                        <div className='col-6 m-auto'>
+                            <SandboxFilesCard
+                                id={order.id}
+                                isCheck={true}
+                                isShowFiles={false}
+                                label='+ Добавить чек'
+                                sandboxFiles={
+                                    order.sandboxFiles
+                                }
+                                page='orders'/>
+                        </div>
+                    </div>
+                    <div className='row'>
+                        <div className="col-6">
+                            <button
+                                type='submit'
+                                className='btn btn-link'>
+                                Подтвердить предоплату
+                            </button>
+                        </div>
+                        <div className="col-6">
+                            <button
+                                type='button'
+                                onClick={() =>
+                                    returnPaymentHandler(
+                                        'paymentAwaitingRefund')}
+                                className='btn btn-link btn-refund'>
+                                Возврат оплаты
+                            </button>
+                        </div>
+                    </div>
+                </Form>
+            </>
+            break
+        }
         case 'paymentPrepaymentMade': {
             paymentContent = <>
                 <hr className='m-0'/>
