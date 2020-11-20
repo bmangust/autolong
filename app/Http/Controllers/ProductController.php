@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AutolongRuProduct;
 use App\ExchangeRate;
 use App\Log;
+use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Product;
@@ -66,7 +67,7 @@ class ProductController extends Controller
         $product->provider_id = $request->input('providerId');
         $product->published = $published ?? 1;
         $priceCny = $request->input('priceCny');
-        $product->price_cny = $priceCny;
+        $product->price_cny = $priceCny ?? 0;
         $product->price_rub = round($exchangeRate->lastCourse()->rub * $priceCny, 2);
         $product->price_usd = round($exchangeRate->lastCourse()->usd * $priceCny, 2);
         $product->weight_netto = $request->input('weightNetto');
@@ -105,6 +106,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product, ExchangeRate $exchangeRate)
     {
+        if ($product->published) {
+            $this->productCreateValidator($request->all())->validate();
+        }
         $product->name_ru = $request->input('nameRu');
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
@@ -119,7 +123,6 @@ class ProductController extends Controller
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
         $product->hs_code = $request->input('hsCode');
-        $product->published = $request->input('published');
         $product->save();
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }
@@ -163,5 +166,12 @@ class ProductController extends Controller
         return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
             ->wherePublished(0)
             ->orderBy('updated_at', 'desc')->get(), 200));
+    }
+
+    public function publish(Product $product)
+    {
+        $product->published = 1;
+        $product->save();
+        response()->json(new ProductWithRelationshipsResource($product), 200);
     }
 }
