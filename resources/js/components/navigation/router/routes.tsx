@@ -199,28 +199,6 @@ export const routes: IRoute[] = [
         icon: <NewItems/>
     },
     {
-        name: 'Новинки',
-        pageName: 'Просмотр информации о неопубликованном товаре',
-        path: '/newproduct/:id',
-        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
-        hide: true,
-        exact: false,
-        private: true,
-        fallback: <Loader/>,
-        icon: <NewItems/>
-    },
-    {
-        name: 'Новинки',
-        pageName: 'Просмотр информации о неопубликованном товаре',
-        path: '/newproduct/:id',
-        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
-        hide: true,
-        exact: false,
-        private: true,
-        fallback: <Loader/>,
-        icon: <NewItems/>
-    },
-    {
         name: 'Просмотр информации о товаре',
         path: '/product/:id',
         component: lazy(() =>
@@ -255,7 +233,7 @@ export const routes: IRoute[] = [
     },
     {
         name: 'Добавление нескольких новых товаров',
-        path: '/productscreate',
+        path: '/productscreate/:unpublished',
         component: lazy(() =>
             pMinDelay(import('../../../pages/products/ProductsCreate'), 600)
         ),

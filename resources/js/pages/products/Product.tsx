@@ -10,7 +10,10 @@ import {useDispatch, useSelector} from 'react-redux'
 import {IProductsRootState} from '../../components/Products/IProducts'
 
 // Actions
-import {deleteProductById, fetchProductById} from '../../store/actions/products'
+import {
+    acceptProductById,
+    deleteProductById, fetchProductById
+} from '../../store/actions/products'
 
 // App
 import Loader from '../../components/UI/Loader/Loader'
@@ -43,6 +46,10 @@ const Product: React.FC = () => {
 
     const onDeleteHandler = (id) => {
         dispatch(deleteProductById(id, '/products'))
+    }
+
+    const onAcceptHandler = (id) => {
+        dispatch(acceptProductById(id))
     }
 
     return (
@@ -238,6 +245,17 @@ const Product: React.FC = () => {
                                 Удалить товар
                             </button>
                         </div>
+                        {product.published === 0
+                            ? <div className='d-flex justify-content-between
+                         flex-lg-row flex-column'>
+                                <button onClick={() =>
+                                    onAcceptHandler(product.id)}
+                                        className='btn btn-danger'>
+                                    Одобрить
+                                </button>
+                            </div>
+                            : null
+                        }
                     </div>
                 </div>
 

@@ -23,7 +23,7 @@ import {
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
 
-const ProductsTable: React.FC<{ unpublished: boolean }> = (
+const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     {unpublished = false}) => {
     const dispatch = useDispatch()
 
@@ -32,6 +32,7 @@ const ProductsTable: React.FC<{ unpublished: boolean }> = (
     if (unpublished) {
         productsKey = 'newProducts'
     }
+    const link = `productscreate${unpublished ? '/unpublished' : '/published'}`
 
     useEffect(() => {
         dispatch(fetchProducts(unpublished))
@@ -40,7 +41,7 @@ const ProductsTable: React.FC<{ unpublished: boolean }> = (
     const {products, loading, error} = useSelector(
         (state: IProductsRootState) => ({
             error: state.productsState.error,
-            [productsKey]: state.productsState[productsKey],
+            products: state.productsState[productsKey],
             loading: state.productsState.loading
         })
     )
@@ -52,12 +53,11 @@ const ProductsTable: React.FC<{ unpublished: boolean }> = (
         return <Loader/>
     }
 
-    console.log(products)
     if (!products.length) {
         return <Placeholder
             description='Нажмите на кнопку «Добавить товар»,
              чтобы он отображался в списке'
-            link='/productcreate' linkName='Добавить товар'
+            link={link} linkName='Добавить товар'
             title='В этом списке ещё нет товаров'/>
     }
 
@@ -136,13 +136,14 @@ const ProductsTable: React.FC<{ unpublished: boolean }> = (
             formatter: timeConverter
         }
     ]
-
     return (
         <AutoTable
             expandRowTable={expandRowTable}
             keyField='id' data={products} columns={columns}
-            button={{link: 'productscreate', text: 'Добавить товары'}}
-            // secondbutton={{link: 'productcreate', text: 'Добавить товар'}}
+            button={{
+                link: link,
+                text: 'Добавить товары'
+            }}
         />
     )
 }

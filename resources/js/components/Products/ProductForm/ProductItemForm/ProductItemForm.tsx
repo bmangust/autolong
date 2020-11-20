@@ -29,6 +29,7 @@ interface IEditProductData {
     nameEn: string
     vendorCode: string
     autolongNumber: number
+    published: number
     aboutRu: string
     aboutEn: string
     providerId: number
@@ -42,14 +43,16 @@ interface IEditProductData {
 }
 
 const ProductItemForm: React.FC<{
-    product: IProduct | IProductAutolong,
-    providers: IProvider[],
+    product: IProduct | IProductAutolong
+    providers: IProvider[]
     onHide: Function
+    unpublished: string
 }> = (
     {
         product,
         providers,
-        onHide
+        onHide,
+        unpublished = 'published'
     }) => {
     let defaultValues
 
@@ -127,6 +130,7 @@ const ProductItemForm: React.FC<{
 
     const productFormSubmitHandler =
         handleSubmit((formValues: IEditProductData) => {
+            formValues.published = unpublished === 'unpublished' ? 0 : 1
             formValues.providerId = formValues.providerId.value
             if ('id' in product && product.id) {
                 dispatch(updateProduct(product.id, formValues))

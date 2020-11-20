@@ -206,3 +206,18 @@ export const updateProductImageById = (id, data) => async dispatch => {
             })
         })
 }
+
+export const acceptProductById = (id) => async dispacth => {
+    const url = `/api/products/${id}/updateimage`
+    const data = {publish: 1}
+    axios
+        .put(url, data)
+        .then((answer) => {
+            toast.success(createNotyMsg(answer.data.nameRu,
+                'товар опубликован'))
+            dispacth(push('/newproducts'))
+        })
+        .catch((error: AxiosError) => {
+            toast.error(error.message)
+        })
+}

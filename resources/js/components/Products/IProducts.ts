@@ -34,6 +34,7 @@ export interface IProduct {
     priceCny: number
     sandboxFiles: ISandboxFile[]
     vendorCode: string
+    published: '1' | '0'
     quantity: number
     orders: IOrder[] | null
     autolongNumber: number

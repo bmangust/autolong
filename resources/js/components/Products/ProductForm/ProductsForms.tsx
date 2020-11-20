@@ -12,8 +12,10 @@ import {IProvider} from '../../Providers/IProviders'
 import ProductItemForm from './ProductItemForm/ProductItemForm'
 
 const ProductsForms: React.FC<{
-    vendorProducts: IProduct[] | IProductAutolong[], providers: IProvider[]
-}> = ({vendorProducts, providers}) => {
+    vendorProducts: IProduct[] | IProductAutolong[]
+    providers: IProvider[]
+    unpublished: string
+}> = ({vendorProducts, providers, unpublished = 'published'}) => {
     const [productsState, setProductsState] = useState(() => {
         return vendorProducts
     })
@@ -33,6 +35,7 @@ const ProductsForms: React.FC<{
                 timeout={750}
                 classNames='fade'>
                 <ProductItemForm
+                    unpublished={unpublished}
                     onHide={onHideHandler}
                     providers={providers}
                     product={product}/>

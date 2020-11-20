@@ -4,6 +4,7 @@ import React, {useEffect} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
+import {useParams} from 'react-router-dom'
 
 // Typescript
 import {IProductsRootState} from '../../components/Products/IProducts'
@@ -12,6 +13,8 @@ import {IProvidersRootState} from '../../components/Providers/IProviders'
 // Actions
 import {fetchProductsByVendors} from '../../store/actions/products'
 import {fetchProviders} from '../../store/actions/providers'
+
+// App
 import ProductsForms from '../../components/Products/ProductForm/ProductsForms'
 import Error from '../../components/UI/Error/Error'
 import Loader from '../../components/UI/Loader/Loader'
@@ -19,6 +22,7 @@ import Loader from '../../components/UI/Loader/Loader'
 
 const ProductsCreate: React.FC = () => {
     const dispatch = useDispatch()
+    const {unpublished}: any = useParams()
 
     const {
         register, handleSubmit
@@ -47,6 +51,7 @@ const ProductsCreate: React.FC = () => {
 
     let contentProduct =
         <ProductsForms
+            unpublished={unpublished}
             vendorProducts={vendorProducts}
             providers={providers}
         />
