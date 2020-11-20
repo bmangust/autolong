@@ -82,7 +82,7 @@ const SandboxFilesCard: React.FC<{
         reset: reset2, errors: errors2
     } = useForm()
 
-    const sandboxFormSubmitHandler =
+    const submitAddHandler =
         handleSubmit((formValues) => {
             if (isCheck) {
                 formValues.check = isCheck ? 1 : 0
@@ -117,7 +117,7 @@ const SandboxFilesCard: React.FC<{
                 })
         })
 
-    const sandboxEditFormSubmitHandler =
+    const submitEditHandler =
         handleSubmit2((formValues) => {
             const url = `/api/sandboxfiles/${editState.id}`
             axios
@@ -227,7 +227,7 @@ const SandboxFilesCard: React.FC<{
         {isEdit
             ? <Modal title='Изменить информацию о файле'
                      setIsOpen={setIsOpen} isOpen={isOpen}>
-                <form onSubmit={sandboxEditFormSubmitHandler}>
+                <form>
                     <label htmlFor='description'>Укажите название файла</label>
                     <input className='mb-3' defaultValue={editState.name}
                            type='text' name='name'
@@ -243,15 +243,17 @@ const SandboxFilesCard: React.FC<{
                                 type='button' className='btn btn-light'>
                             Отменить обновление
                         </button>
-                        <button className='btn btn-success'
-                                type="submit">Обновить информацию
+                        <button
+                            onClick={submitEditHandler}
+                            className='btn btn-success'
+                            type="button">Обновить информацию
                         </button>
                     </div>
                 </form>
             </Modal>
             : <Modal title='Добавить новый файл'
                      setIsOpen={setIsOpen} isOpen={isOpen}>
-                <form onSubmit={sandboxFormSubmitHandler}>
+                <form>
                     {!isCheck
                         ? <>
                             <label htmlFor='name'>
@@ -282,7 +284,8 @@ const SandboxFilesCard: React.FC<{
                         </div>
                         <div className="col-xl-6">
                             <button className='btn btn-success w-100'
-                                    type="submit">Добавить файл
+                                    onClick={submitAddHandler}
+                                    type="button">Добавить файл
                             </button>
                         </div>
                     </div>

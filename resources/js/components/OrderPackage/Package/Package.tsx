@@ -64,18 +64,15 @@ const Package: React.FC<{
         const qty = +item.quantity - totalIn
         if (name === 'qty' && qty - value * pack.qtyPacks >= -1) {
             const newItems = packages.map((el) =>
-                el.id === pack.id ? {...el, [name]: value} : el
-            )
+                el.id === pack.id ? {...el, [name]: value} : el)
             setPackages(newItems)
         } else if (name === 'qtyPacks' && qty - value * pack.qtyPacks >= -1) {
             const newItems = packages.map((el) =>
-                el.id === pack.id ? {...el, [name]: value} : el
-            )
+                el.id === pack.id ? {...el, [name]: value} : el)
             setPackages(newItems)
         } else if (name !== 'qty' && name !== 'qtyPacks') {
             const newItems = packages.map((el) =>
-                el.id === pack.id ? {...el, [name]: value} : el
-            )
+                el.id === pack.id ? {...el, [name]: value} : el)
             setPackages(newItems)
         }
     }
