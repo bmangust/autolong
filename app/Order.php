@@ -157,7 +157,7 @@ class Order extends Model
         $statuses = Status::getOrderPaymentStatuses();
         $paymentRefunded = Status::getOrderPaymentRefunded();
         if (property_exists($statuses, $status)) {
-            if (!is_null($paymentAmount) && !is_null($surchargeAmount) && $status != $paymentRefunded ) {
+            if (is_null($paymentAmount) && is_null($surchargeAmount) && $status != $paymentRefunded ) {
                 $this->status_payment = $status;
                 $this->save();
             } else {
