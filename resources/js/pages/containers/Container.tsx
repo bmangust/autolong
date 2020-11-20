@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {NavLink, useParams} from 'react-router-dom'
@@ -29,9 +29,13 @@ import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import ContainersStatuses
     from '../../components/Containers/ContainersStatuses/ContainersStatuses'
+import Modal from '../../components/UI/Modal/Modal'
+import OrderPackage from '../../components/OrderPackage/OrderPackages'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
+    const [isOpen, setIsOpen] = useState(false)
+    const [activeOrder, setActiveOrder] = useState<null | IOrder>(null)
 
     const dispatch = useDispatch()
 
@@ -45,6 +49,11 @@ const Container: React.FC<IContainer> = () => {
 
     const onDeleteHandler = () => {
         dispatch(deleteContainerById(id))
+    }
+
+    const showPackage = (order) => {
+        setIsOpen(true)
+        setActiveOrder(order)
     }
 
     useEffect(() => {
@@ -106,6 +115,10 @@ const Container: React.FC<IContainer> = () => {
                                         <NavLink to={`/order/${order.id}`}>
                                             Заказ {order.id}
                                         </NavLink>
+                                        <p className={classes.packageBtn}
+                                           onClick={() => showPackage(order)}>
+                                            Упаковочный
+                                        </p>
                                     </div>
                                     <div className={classes.orderBody}>
                                         <OrderItems items={order.items}/>
@@ -132,6 +145,19 @@ const Container: React.FC<IContainer> = () => {
                         page='containers'
                     />
                 </div>
+
+                {activeOrder
+                    ? <Modal
+                        size='size-700'
+                        title={`Упаковка заказ ${activeOrder.id}`}
+                        isOpen={isOpen}
+                        setIsOpen={setIsOpen}>
+                        <OrderPackage
+                            orderId={activeOrder.id}
+                            items={activeOrder.items}/>
+                    </Modal>
+                    : null
+                }
 
                 <div className="col-lg-4">
                     <div className="card card-body-info">

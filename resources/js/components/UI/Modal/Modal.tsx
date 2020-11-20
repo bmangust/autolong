@@ -14,6 +14,7 @@ interface IModal {
     onSuccessNode?: NonNullable<ReactNode>
     onCloseNode?: NonNullable<ReactNode>
     onClose?: () => void
+    size?: string
 }
 
 const Modal: React.FC<IModal> = (
@@ -24,9 +25,11 @@ const Modal: React.FC<IModal> = (
         onSuccessNode,
         onClose,
         onCloseNode,
-        children
+        children,
+        size
     }) => {
     const cls = [classes.backDrop]
+    const clsModal = [classes.modalDialog]
 
     const closeHandler = () => {
         setIsOpen(false)
@@ -36,12 +39,16 @@ const Modal: React.FC<IModal> = (
         cls.push(classes.show)
     }
 
+    if (size) {
+        clsModal.push(classes[size])
+    }
+
     if (!isOpen) return null
 
     return ReactDOM.createPortal(
         <>
             <div className={classes.modal}>
-                <div className={classes.modalDialog}>
+                <div className={clsModal.join(' ')}>
                     <div className={classes.modalContent}>
                         <div onClick={() => closeHandler()}
                              className={classes.modalClose}>

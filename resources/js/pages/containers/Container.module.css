@@ -31,6 +31,14 @@ h2 {
     line-height: 16px;
     color: #3A405F;
     padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.packageBtn {
+    text-decoration-line: underline;
+    margin-bottom: 0;
+    cursor: pointer;
 }
 
 .order .orderHeader a {

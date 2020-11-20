@@ -33,7 +33,6 @@ import {
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 import OrderPayment from '../../components/Orders/OrderPayment/OrderPayment'
 import courses from '../../../courses/courses.json'
-import OrderPackage from '../../components/OrderPackage/OrderPackages'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -231,8 +230,6 @@ const Order: React.FC<IOrder> = () => {
                     </div>
                 </div>
             </div>
-
-            <OrderPackage orderId={order.id} items={order.items}/>
 
             <div className='card mb-3'>
                 <div className='card-body'>

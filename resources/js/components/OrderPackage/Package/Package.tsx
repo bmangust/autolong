@@ -8,13 +8,13 @@ import classes from './Package.module.css'
 import {IProduct} from '../../Products/IProducts'
 
 // App
-import {substringOut} from '../../../utils'
 import SvgClose from '../../UI/iconComponents/Close'
 
 interface IPackage {
     id: number
     name: string
     qty: number
+    qtyPacks: number
     width: number
     height: number
     length: number
@@ -33,6 +33,7 @@ const Package: React.FC<{
         name: '',
         id: 1,
         qty: 1,
+        qtyPacks: 1,
         width: 0,
         height: 0,
         length: 0
@@ -47,8 +48,8 @@ const Package: React.FC<{
 
     const updateTotal = useCallback(() => {
         let total = 0
-        packages.map(({qty}) => {
-            total += qty
+        packages.map(({qty, qtyPacks}) => {
+            total += qty * qtyPacks
         })
         setTotalIn(total)
     }, [packages])
@@ -57,30 +58,43 @@ const Package: React.FC<{
         updateTotal()
     }, [updateTotal])
 
-    const onChangeHandler = (e, id) => {
+    const onChangeHandler = (e, pack) => {
         const name = e.target.name
         const value = +e.target.value
         const qty = +item.quantity - totalIn
-        if (name === 'qty' && qty - value >= -1 || name !== 'qty') {
+        if (name === 'qty' && qty - value * pack.qtyPacks >= -1) {
             const newItems = packages.map((el) =>
-                el.id === id ? {...el, [name]: value} : el
+                el.id === pack.id ? {...el, [name]: value} : el
+            )
+            setPackages(newItems)
+        } else if (name === 'qtyPacks' && qty - value * pack.qtyPacks >= -1) {
+            const newItems = packages.map((el) =>
+                el.id === pack.id ? {...el, [name]: value} : el
+            )
+            setPackages(newItems)
+        } else if (name !== 'qty' && name !== 'qtyPacks') {
+            const newItems = packages.map((el) =>
+                el.id === pack.id ? {...el, [name]: value} : el
             )
             setPackages(newItems)
         }
     }
 
     const sendPackageHandler = (id) => {
-        const PcsCtnCtns: {} = {}
+        const pcsCtn: number[] = []
+        const ctns: number[] = []
         const meas: { length: number, width: number, height: number } = {}
         packages.map((pack) => {
-            PcsCtnCtns[pack.id] = pack.qty
+            pcsCtn.push(pack.qtyPacks)
+            ctns.push(pack.qty)
             meas.length = pack.length
             meas.height = pack.height
             meas.width = pack.width
         })
         const data = {
             [id]: {
-                PcsCtnCtns,
+                pcsCtn,
+                ctns,
                 meas
             }
         }
@@ -94,7 +108,7 @@ const Package: React.FC<{
         ? <div key={item.id} className={classes.item}>
             <div className={classes.itemHeader}>
                 <p className={classes.itemTitle}>
-                    {substringOut(item.nameRu, 40)}
+                    {item.nameRu}
                 </p>
                 <div className={classes.itemInfo}>
                     <div>
@@ -105,8 +119,6 @@ const Package: React.FC<{
                         <span>Осталось распределить: </span>
                         {`${+item.quantity - totalIn} шт`}
                     </div>
-                    {/* {`Всего ${item.quantity}
-                    осталось распределить ${+item.quantity - totalIn} шт.`} */}
                 </div>
             </div>
             <div>
@@ -117,31 +129,31 @@ const Package: React.FC<{
                         </div>
                         <div className={classes.input}>
                             <label>Кол-во коробок</label>
-                            <input onChange={(e) => onChangeHandler(e, pack.id)}
-                                   type='number' name='qty'
-                                   value={pack.qty}/>
+                            <input onChange={(e) => onChangeHandler(e, pack)}
+                                   type='number' name='qtyPacks'
+                                   value={pack.qtyPacks}/>
                         </div>
                         <div className={classes.input}>
                             <label>Кол-во шт</label>
-                            <input onChange={(e) => onChangeHandler(e, pack.id)}
+                            <input onChange={(e) => onChangeHandler(e, pack)}
                                    type='number' name='qty'
                                    value={pack.qty}/>
                         </div>
                         <div className={classes.input}>
                             <label>Длина</label>
-                            <input onChange={(e) => onChangeHandler(e, pack.id)}
+                            <input onChange={(e) => onChangeHandler(e, pack)}
                                    type='number' name='length'
                                    value={pack.length}/>
                         </div>
                         <div className={classes.input}>
                             <label>Ширина</label>
-                            <input onChange={(e) => onChangeHandler(e, pack.id)}
+                            <input onChange={(e) => onChangeHandler(e, pack)}
                                    type='number' name='width'
                                    value={pack.width}/>
                         </div>
                         <div className={classes.input}>
                             <label>Высота</label>
-                            <input onChange={(e) => onChangeHandler(e, pack.id)}
+                            <input onChange={(e) => onChangeHandler(e, pack)}
                                    type='number' name='height'
                                    value={pack.height}/>
                         </div>
@@ -165,7 +177,7 @@ const Package: React.FC<{
                             className={
                                 classes.btnAdd + ' btn btn-outline-dashed'
                             }>
-                       + Добавить коробку
+                        + Добавить коробку
                     </button>
                 </div>
             </div>

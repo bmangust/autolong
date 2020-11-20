@@ -1,7 +1,7 @@
 // React
 import React from 'react'
 import {IProduct} from '../../Products/IProducts'
-import {imgFormatter, moneyFormatter, substringOut} from '../../../utils'
+import {imgFormatter, moneyFormatter} from '../../../utils'
 
 import classes from '../OrderItems/OrderItems.module.css'
 import SvgClose from '../../UI/iconComponents/Close'
@@ -90,7 +90,7 @@ const OrderItems: React.FC<IOrderItems> = (
                         <NavLink
                             to={`/product/${item.productId}`}
                             className={classes.orderProductsName}>
-                            {substringOut(item.nameRu, 74)}
+                            {item.nameRu}
                         </NavLink>
                         <div className='row align-items-center mt-1'>
                             <div className='col-xl-2 col-6'>

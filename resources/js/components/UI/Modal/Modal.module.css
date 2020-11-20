@@ -17,6 +17,10 @@
     box-shadow: 0 5px 10px 2px rgba(195, 192, 192, .5);
 }
 
+.modalDialog.size-700 {
+    max-width: 700px;
+}
+
 .modalContent {
     background: #FFFFFF;
     box-shadow: 0 4px 4px rgba(0, 0, 0, 0.25), 0 4px 4px rgba(0, 0, 0, 0.25), 0 24px 8px 5px rgba(0, 0, 0, 0.12);

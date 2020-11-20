@@ -7,19 +7,9 @@
 
 .btns svg {
     margin-bottom: 15px;
+    width: 75px;
+    height: 75px;
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
 }
-
-.btns button {
-    position: relative;
-    font-weight: 500 !important;
-    font-size: 14px;
-    text-decoration: underline;
-    color: #949599;
-    background: url('/svg/chevron-down.svg') right 15px center / 10px no-repeat;
-}
-
-.btns button:hover {
-    color: #949599;
-    text-decoration: underline;
-}
-
