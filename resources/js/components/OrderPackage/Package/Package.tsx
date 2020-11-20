@@ -9,6 +9,7 @@ import {IProduct} from '../../Products/IProducts'
 
 // App
 import {substringOut} from '../../../utils'
+import SvgClose from '../../UI/iconComponents/Close'
 
 interface IPackage {
     id: number
@@ -29,7 +30,7 @@ const Package: React.FC<{
     const [isShow, setIsShow] = useState(true)
 
     const packageTemplate = {
-        name: 'Коробка',
+        name: '',
         id: 1,
         qty: 1,
         width: 0,
@@ -92,9 +93,21 @@ const Package: React.FC<{
     return isShow
         ? <div key={item.id} className={classes.item}>
             <div className={classes.itemHeader}>
-                <p>{substringOut(item.nameRu, 40)}</p>
-                <p>{`Всего ${item.quantity}
-                    осталось распределить ${+item.quantity - totalIn} шт.`}</p>
+                <p className={classes.itemTitle}>
+                    {substringOut(item.nameRu, 40)}
+                </p>
+                <div className={classes.itemInfo}>
+                    <div>
+                        <span>Всего: </span>
+                        {`${item.quantity} шт`}
+                    </div>
+                    <div>
+                        <span>Осталось распределить: </span>
+                        {`${+item.quantity - totalIn} шт`}
+                    </div>
+                    {/* {`Всего ${item.quantity}
+                    осталось распределить ${+item.quantity - totalIn} шт.`} */}
+                </div>
             </div>
             <div>
                 {packages.map((pack: IPackage, index: number) => (
@@ -103,39 +116,58 @@ const Package: React.FC<{
                             {pack.name}
                         </div>
                         <div className={classes.input}>
+                            <label>Кол-во коробок</label>
                             <input onChange={(e) => onChangeHandler(e, pack.id)}
                                    type='number' name='qty'
                                    value={pack.qty}/>
                         </div>
                         <div className={classes.input}>
+                            <label>Кол-во шт</label>
+                            <input onChange={(e) => onChangeHandler(e, pack.id)}
+                                   type='number' name='qty'
+                                   value={pack.qty}/>
+                        </div>
+                        <div className={classes.input}>
+                            <label>Длина</label>
                             <input onChange={(e) => onChangeHandler(e, pack.id)}
                                    type='number' name='length'
                                    value={pack.length}/>
                         </div>
                         <div className={classes.input}>
+                            <label>Ширина</label>
                             <input onChange={(e) => onChangeHandler(e, pack.id)}
                                    type='number' name='width'
                                    value={pack.width}/>
                         </div>
                         <div className={classes.input}>
+                            <label>Высота</label>
                             <input onChange={(e) => onChangeHandler(e, pack.id)}
                                    type='number' name='height'
                                    value={pack.height}/>
                         </div>
+                        <div className={classes.close}>
+                            <button>
+                                <SvgClose width='10px'/>
+                            </button>
+                        </div>
                     </div>
                 ))}
-                {!(+item.quantity - totalIn)
-                    ? <button className='btn btn-success mb-3'
-                              onClick={() => sendPackageHandler(item.id)}>
-                        Добавить в упаковочный лист
+                <div className={classes.btns}>
+                    {!(+item.quantity - totalIn)
+                        ? <button className='btn btn-success'
+                                  onClick={() => sendPackageHandler(item.id)}>
+                            Добавить в упаковочный лист
+                        </button>
+                        : null
+                    }
+                    <button onClick={addPackageHandler}
+                            disabled={!(+item.quantity - totalIn)}
+                            className={
+                                classes.btnAdd + ' btn btn-outline-dashed'
+                            }>
+                       + Добавить коробку
                     </button>
-                    : null
-                }
-                <button onClick={addPackageHandler}
-                        disabled={!(+item.quantity - totalIn)}
-                        className='btn btn-outline-dashed'>
-                    Добавить упаковку
-                </button>
+                </div>
             </div>
         </div>
         : null

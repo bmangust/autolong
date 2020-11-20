@@ -1,6 +1,9 @@
 // React
 import React, {useState} from 'react'
 
+// Styles
+import classes from './OrderPackages.module.css'
+
 // Third-party
 import Collapse from 'react-bootstrap/cjs/Collapse'
 import {useDispatch} from 'react-redux'
@@ -13,6 +16,7 @@ import {createOrderInvoice} from '../../store/actions/orders'
 
 // App
 import Package from './Package/Package'
+import SvgCube from '../UI/iconComponents/Cube'
 
 const OrderPackages: React.FC<{ items: IProduct[], orderId: number }> = (
     {items, orderId}) => {
@@ -45,17 +49,20 @@ const OrderPackages: React.FC<{ items: IProduct[], orderId: number }> = (
                 </div>
             </div>
         </Collapse>
-        <button onClick={showPackagesHandler}
-                className='btn btn-outline-dashed'>
-            {show ? 'Скрыть' : 'Показать'} упаковку
-        </button>
-        {items && Object.keys(data).length === items.length
-            ? <button className='btn btn-success'
-                      onClick={createPackageHandler}>
-                Сформировать упаковочный лист для контейнера
+        <div className={classes.btns}>
+            <SvgCube width='50' height='50'/>
+            <button onClick={showPackagesHandler}
+                    className='btn btn-outline-dashed'>
+                {show ? 'Скрыть' : 'Показать'} упаковочный лист
             </button>
-            : null
-        }
+            {items && Object.keys(data).length === items.length
+                ? <button className='btn btn-success'
+                        onClick={createPackageHandler}>
+                    Сформировать упаковочный лист для контейнера
+                </button>
+                : null
+            }
+        </div>
     </div>
 }
 
