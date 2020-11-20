@@ -162,7 +162,7 @@ class OrderController extends Controller
                 }
             }
 
-            if ($order->status_payment == $paymentAwaiting) {
+            if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
                 if ($paymentAmount >= $order->getOrderSumInCny()) {
                     $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
                 }
@@ -170,7 +170,7 @@ class OrderController extends Controller
                     $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $surchargeAmount);
                 }
             }
-
+            
             return response()->json(new OrderWithRelationshipsResource($order), 200);
         }
         $order->setOrderPaymentStatus($status);
@@ -186,7 +186,7 @@ class OrderController extends Controller
         $unknownProductsKey = 'number';
         $availableAndUnknownProducts = [$unknownProductsKey => []];
         foreach ($numbers as $number) {
-            $product = Product::whereAutolongNumber($number);
+            $product = Product::wherePublished(1)->whereAutolongNumber($number);
             if ($product->exists()) {
                 $providerId = $product->first()->provider->id;
                 if (array_key_exists($providerId, $availableAndUnknownProducts)) {
