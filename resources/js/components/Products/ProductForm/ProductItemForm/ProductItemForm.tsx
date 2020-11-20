@@ -214,7 +214,7 @@ const ProductItemForm: React.FC<{
                         <div className="row mb-3">
                             <div className="col-lg-2 col-2 pr-0">
                                 {img
-                                    ? <img height={65} width={35}
+                                    ? <img height={65} width='100%'
                                            src={img} alt=""/>
                                     : null
                                 }
