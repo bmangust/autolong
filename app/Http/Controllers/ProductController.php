@@ -106,6 +106,9 @@ class ProductController extends Controller
      */
     public function update(Request $request, Product $product, ExchangeRate $exchangeRate)
     {
+        if ($product->published) {
+            $this->productCreateValidator($request->all())->validate();
+        }
         $product->name_ru = $request->input('nameRu');
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
@@ -120,7 +123,6 @@ class ProductController extends Controller
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
         $product->hs_code = $request->input('hsCode');
-        $product->published = $request->input('published');
         $product->save();
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }
