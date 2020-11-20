@@ -148,15 +148,15 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                             : null}
                         <div className="col-12">
                             {!('providerStamp' in invoiceInputs)
-                            ? <FileInput
-                                label='Печать поставщика'
-                                control={control} name='providerStamp'/>
-                            : null}
-                                {!('importerStamp' in invoiceInputs)
-                            ? <FileInput
-                                label='Печать импортера'
-                                control={control} name='importerStamp'/>
-                            : null}
+                                ? <FileInput
+                                    label='Печать поставщика'
+                                    control={control} name='providerStamp'/>
+                                : null}
+                            {!('importerStamp' in invoiceInputs)
+                                ? <FileInput
+                                    label='Печать импортера'
+                                    control={control} name='importerStamp'/>
+                                : null}
                         </div>
                     </>
                     : null
@@ -187,7 +187,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                 </div>
                 <div className="col-lg-6">
                     <button onClick={onCloseModalHandler}
-                        className='btn btn-light w-100
+                            className='btn btn-light w-100
                         mt-lg-0 mt-3 text-center'>
                         Отменить
                     </button>
@@ -228,7 +228,8 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     Контракт
                 </button>
             </div>
-            <Modal title={`Генерация документа ${type}`} isOpen={isOpen}>
+            <Modal title={`Генерация документа ${type}`}
+                   setIsOpen={setIsOpen} isOpen={isOpen}>
                 {modal}
             </Modal>
         </>

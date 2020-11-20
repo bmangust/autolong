@@ -225,7 +225,8 @@ const SandboxFilesCard: React.FC<{
             </label>
         }
         {isEdit
-            ? <Modal title='Изменить информацию о файле' isOpen={isOpen}>
+            ? <Modal title='Изменить информацию о файле'
+                     setIsOpen={setIsOpen} isOpen={isOpen}>
                 <form onSubmit={sandboxEditFormSubmitHandler}>
                     <label htmlFor='description'>Укажите название файла</label>
                     <input className='mb-3' defaultValue={editState.name}
@@ -248,7 +249,8 @@ const SandboxFilesCard: React.FC<{
                     </div>
                 </form>
             </Modal>
-            : <Modal title='Добавить новый файл' isOpen={isOpen}>
+            : <Modal title='Добавить новый файл'
+                     setIsOpen={setIsOpen} isOpen={isOpen}>
                 <form onSubmit={sandboxFormSubmitHandler}>
                     {!isCheck
                         ? <>
@@ -273,7 +275,7 @@ const SandboxFilesCard: React.FC<{
                     <div className='row'>
                         <div className="col-xl-6">
                             <button onClick={onCancelHandler}
-                                type='button' className='btn btn-light
+                                    type='button' className='btn btn-light
                                  mb-xl-0 mb-3 w-100'>
                                 Отменить добавление
                             </button>

@@ -24,7 +24,6 @@ const FileInput: React.FC<IFileInput> =
             label = 'Перенесите сюда файл или кликните для выбора файла',
             maxFiles = 1
         }) => {
-
         // const removeFile = (file) => () => {
         //     acceptedFiles.splice(acceptedFiles.indexOf(file), 1)
         // }

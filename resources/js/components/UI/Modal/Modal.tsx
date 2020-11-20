@@ -10,6 +10,7 @@ import classes from './Modal.module.css'
 interface IModal {
     title: string
     isOpen: boolean
+    setIsOpen: Function
     onSuccessNode?: NonNullable<ReactNode>
     onCloseNode?: NonNullable<ReactNode>
     onClose?: () => void
@@ -19,12 +20,17 @@ const Modal: React.FC<IModal> = (
     {
         title,
         isOpen,
+        setIsOpen,
         onSuccessNode,
         onClose,
         onCloseNode,
         children
     }) => {
     const cls = [classes.backDrop]
+
+    const closeHandler = () => {
+        setIsOpen(false)
+    }
 
     if (isOpen) {
         cls.push(classes.show)
@@ -37,7 +43,8 @@ const Modal: React.FC<IModal> = (
             <div className={classes.modal}>
                 <div className={classes.modalDialog}>
                     <div className={classes.modalContent}>
-                        <div className={classes.modalClose}>
+                        <div onClick={() => closeHandler()}
+                             className={classes.modalClose}>
                             &times;
                         </div>
                         <div className={classes.modalBody}>
