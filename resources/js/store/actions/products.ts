@@ -148,28 +148,29 @@ export const fetchProductPrice = (priceCny) =>
             )
     }
 
-export const fetchProductsByVendors = (data, publish = 1) => async dispatch => {
-    await dispatch({
-        type: FETCH_BY_VENDOR_START
-    })
-    const numbers = data.numbers.split('\n').filter(el => {
-        return el != null && el != ''
-    })
-    const url = '/api/products/checknumbercode'
-    axios
-        .post(url, {numbers, publish})
-        .then((answer) => {
-            dispatch({
-                type: FETCH_BY_VENDOR_SUCCESS,
-                payload: answer.data
-            })
-        }).catch((error: AxiosError) => {
-        dispatch({
-            type: FETCH_BY_VENDOR_ERROR,
-            payload: error.response
+export const fetchProductsByVendors = (data, published = 1) =>
+    async dispatch => {
+        await dispatch({
+            type: FETCH_BY_VENDOR_START
         })
-    })
-}
+        const numbers = data.numbers.split('\n').filter(el => {
+            return el != null && el != ''
+        })
+        const url = '/api/products/checknumbercode'
+        axios
+            .post(url, {numbers, published})
+            .then((answer) => {
+                dispatch({
+                    type: FETCH_BY_VENDOR_SUCCESS,
+                    payload: answer.data
+                })
+            }).catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_BY_VENDOR_ERROR,
+                payload: error.response
+            })
+        })
+    }
 
 export const deleteProductById = (id, redirect = '') => async dispatch => {
     const url = `/api/products/${id}`
