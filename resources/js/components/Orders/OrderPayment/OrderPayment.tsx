@@ -21,7 +21,7 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
     const {register, handleSubmit} = useForm({
         defaultValues: {
             paymentAmount: order.paymentAmount,
-            surchargeAmount: order.surchargeAmount
+            surchargeAmount: order.surchargeAmount || 0
         }
     })
 
