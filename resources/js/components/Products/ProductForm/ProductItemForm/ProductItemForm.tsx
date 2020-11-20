@@ -198,7 +198,7 @@ const ProductItemForm: React.FC<{
                                className='w-100'>
                             Укажите артикул
                         </label>
-                        <input className='col-lg-10'
+                        <input className='col-lg-10 mb-3'
                                name="vendorCode"
                                ref={register}
                                type="text"
@@ -210,7 +210,7 @@ const ProductItemForm: React.FC<{
                         <div className="row mb-3">
                             <div className="col-lg-2 col-2 pr-0">
                                 {img
-                                    ? <img height={65}
+                                    ? <img height={65} width={35}
                                            src={img} alt=""/>
                                     : null
                                 }
@@ -455,16 +455,15 @@ const ProductItemForm: React.FC<{
                                 </div>
 
                             </div>
-                            <div>
+                            <div className="col-lg-12">
                                 <button
-                                    className='btn btn-success mr-0 mr-sm-3
-                                    mb-xl-0 mb-lg-3'
+                                    className='btn btn-success mb-2 mt-2 mr-3'
                                     type="submit">
                                     {'id' in product && product.id
                                         ? 'Обновить'
                                         : 'Добавить'}
                                 </button>
-                                <button className='btn btn-light mt-sm-0 mt-3'>
+                                <button className='btn btn-light mb-2 mt-2'>
                                     Отменить добавление
                                 </button>
                             </div>
