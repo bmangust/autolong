@@ -208,13 +208,12 @@ export const updateProductImageById = (id, data) => async dispatch => {
         })
 }
 
-export const acceptProductById = (id) => async dispacth => {
-    const url = `/api/products/${id}/updateimage`
-    const data = {publish: 1}
+export const acceptProductById = (id, nameRu) => async dispacth => {
+    const url = `/api/products/${id}/publish`
     axios
-        .put(url, data)
+        .put(url, {publish: 1})
         .then((answer) => {
-            toast.success(createNotyMsg(answer.data.nameRu,
+            toast.success(createNotyMsg(nameRu,
                 'товар опубликован'))
             dispacth(push('/newproducts'))
         })

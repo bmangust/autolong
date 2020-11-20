@@ -49,7 +49,7 @@ const Product: React.FC = () => {
     }
 
     const onAcceptHandler = (id) => {
-        dispatch(acceptProductById(id))
+        dispatch(acceptProductById(id, product.nameRu))
     }
 
     return (
@@ -245,7 +245,7 @@ const Product: React.FC = () => {
                                 Удалить товар
                             </button>
                         </div>
-                        {product.published === 0
+                        {product.published == 0
                             ? <div className='d-flex justify-content-between
                          flex-lg-row flex-column'>
                                 <button onClick={() =>
