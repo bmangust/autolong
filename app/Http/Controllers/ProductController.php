@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\AutolongRuProduct;
 use App\ExchangeRate;
 use App\Log;
+use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Product;
@@ -163,5 +164,12 @@ class ProductController extends Controller
         return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
             ->wherePublished(0)
             ->orderBy('updated_at', 'desc')->get(), 200));
+    }
+
+    public function publish(Product $product)
+    {
+        $product->published = 1;
+        $product->save();
+        response()->json(new ProductWithRelationshipsResource($product), 200);
     }
 }
