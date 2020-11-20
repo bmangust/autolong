@@ -1,39 +1,133 @@
 .package {
-    align-items: center;
-    margin-bottom: 10px;
+    font-size: 12px;
+    display: flex;
+    align-items: flex-end;
+    margin-bottom: 25px;
+}
+
+.package label {
+    margin-bottom: 5px;
+    font-size: 11px;
+    color: #949599;
+    text-align: center;
 }
 
 .item {
     margin-bottom: 10px;
 }
 
-.package div {
-    align-items: center;
-    margin: auto 0;
-}
-
 .itemHeader {
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
+    padding-left: 20px;
+}
+
+.itemTitle {
+    position: relative;
+}
+
+.itemTitle::before {
+    content: '';
+    position: absolute;
+    top: 3px;
+    left: -20px;
+    width: 10px;
+    height: 10px;
+    background: #eb5e28;
+    border-radius: 50%;
 }
 
 .itemHeader p {
     font-weight: bold;
     font-size: 12px;
     display: block;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
-.package {
-    font-size: 12px;
+.itemInfo {
     display: flex;
+    font-size: 12px;
+    padding-bottom: 15px;
+    margin-bottom: 20px;
+    border-bottom: 1px solid #ebebeb;
+}
+
+.itemInfo span {
+    color: #949599;
+}
+
+.itemInfo div:first-child {
+    margin-right: 40px;
 }
 
 .name {
-    max-width: 90px;
-    width: 100%;
+    margin-right: 15px;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 40px;
 }
 
-.input:not(:last-of-type) {
+.input {
+    width: 100%;
+    max-width: 90px;
+    margin-right: 10px;
+}
 
+.close {
+    line-height: 40px;
+}
+
+.close button {
+    background-color: transparent;
+    border: 0;
+}
+
+.btns {
+    display: flex;
+    flex-direction: column;
+    padding: 0 20px;
+}
+
+.btns button {
+    width: 100% !important;
+    margin-bottom: 15px;
+    border-radius: 10px !important;
+}
+
+.btnAdd {
+    border: 1px dashed #3a405f !important;
+}
+
+
+@media (max-width: 991px) {
+    .input {
+        max-width: 20%;
+    }
+}
+
+@media (max-width: 575px) {
+    .package {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .package label {
+        text-align: left;
+    }
+
+    .input {
+        max-width: 100%;
+        margin-bottom: 15px;
+    }
+
+    .close {
+        order: -1;
+        width: 100%;
+        display: flex;
+        justify-content: flex-end;
+    }
+
+    .btns {
+        padding: 0;
+    }
 }

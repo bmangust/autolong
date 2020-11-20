@@ -1,0 +1,25 @@
+.btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.btns svg {
+    margin-bottom: 15px;
+}
+
+.btns button {
+    position: relative;
+    font-weight: 500 !important;
+    font-size: 14px;
+    text-decoration: underline;
+    color: #949599;
+    background: url('/svg/chevron-down.svg') right 15px center / 10px no-repeat;
+}
+
+.btns button:hover {
+    color: #949599;
+    text-decoration: underline;
+}
+
