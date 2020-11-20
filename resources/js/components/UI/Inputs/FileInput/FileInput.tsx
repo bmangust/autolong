@@ -9,40 +9,59 @@ import {Control} from 'react-hook-form/dist/types'
 // Styles
 import classes from './FileInput.module.css'
 
-const FileInput: React.FC<{
+interface IFileInput {
     control: Control
     name: string
     label?: string
-}> = (
-    {
-        control,
-        name,
-        label = 'Перенесите сюда файл или кликните для выбора файла'
-    }) => {
-    return (
-        <Controller
-            control={control}
-            name={name}
-            defaultValue={[]}
-            render={({onChange, onBlur, value}) => <>
-                <Dropzone maxFiles={1} onDrop={onChange}>
-                    {({getRootProps, getInputProps}) =>
-                        (<div className={classes.fileInput}
-                              {...getRootProps()}>
-                            <input {...getInputProps()} onBlur={onBlur}
-                                   name={name}/>
-                            <p className='mb-0'>{label}</p>
-                        </div>)}
-                </Dropzone>
-                <ul>
-                    {value.map((f, index) => (
-                        <li key={index}>
-                            {f.name}
-                        </li>
-                    ))}
-                </ul>
-            </>}/>
-    )
+    maxFiles?: number
 }
+
+const FileInput: React.FC<IFileInput> =
+    (
+        {
+            control,
+            name,
+            label = 'Перенесите сюда файл или кликните для выбора файла',
+            maxFiles = 1
+        }) => {
+
+        // const removeFile = (file) => () => {
+        //     acceptedFiles.splice(acceptedFiles.indexOf(file), 1)
+        // }
+
+        return (
+            <Controller
+                control={control}
+                name={name}
+                defaultValue={[]}
+                render={({onChange, onBlur, value}) => <>
+                    <Dropzone maxFiles={maxFiles} onDrop={onChange}>
+                        {({getRootProps, getInputProps}) =>
+                            (<div className={classes.fileInput}
+                                  {...getRootProps()}>
+                                <input
+                                    {...getInputProps()}
+                                    onBlur={onBlur}
+                                    name={name}/>
+                                <p className='mb-0'>{label}</p>
+                            </div>)}
+                    </Dropzone>
+                    <ul className={classes.fileList}>
+                        {value.map((f, index) => (
+                            <li key={index}>
+                                <div>
+                                    {f.name}
+                                    <p className={classes.size}>
+                                        {`Размер файла
+                                ${(f.size / 1000000).toFixed(3)} mb`}
+                                    </p>
+                                </div>
+                            </li>
+                        ))}
+                    </ul>
+                </>}
+            />
+        )
+    }
 
 export default FileInput

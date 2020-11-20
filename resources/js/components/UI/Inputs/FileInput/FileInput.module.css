@@ -17,22 +17,26 @@
     margin: 1rem 0;
 }
 
-.fileInput + ul {
+.fileList {
     margin: 0;
     padding: 0;
     list-style: none;
 }
 
-.fileInput + ul li {
+.fileList li {
+    display: flex;
+    justify-content: space-between;
     position: relative;
     padding: 15px 25px 15px 80px;
     min-height: 57px;
     margin-bottom: 1rem;
     border: 1px solid #ebebeb;
     border-radius: 10px;
+    font-size: 12px;
+    font-weight: 600;
 }
 
-.fileInput + ul li::before {
+.fileList li::before {
     content: '';
     position: absolute;
     top: 50%;
@@ -42,4 +46,26 @@
     height: 39px;
     border-radius: 50%;
     background: #f7f8fa url('/svg/clip.svg') center no-repeat;
+}
+
+.fileList li svg {
+    width: 15px;
+    height: 15px;
+    display: block;
+}
+
+.fileList li div:last-of-type {
+    margin: auto 0;
+}
+
+.fileList li svg {
+    cursor: pointer;
+}
+
+.size {
+    font-weight: normal;
+    font-size: 10px;
+    line-height: 12px;
+    color: #949599;
+    margin-bottom: 0;
 }
