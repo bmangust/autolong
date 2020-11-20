@@ -54,7 +54,7 @@
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->product->hs_code }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->quantity }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
+                    @foreach(json_decode($item->pcs_ctn_ctns, true)['pcsCtn'] as $pcsCtn)
                         <table>
                             <tr>
                                 <td>{{ $pcsCtn }}</td>
@@ -63,10 +63,10 @@
                     @endforeach
                 </td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
-                    <table>
+                    @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
+                        <table>
                             <tr>
-                                <td>{{ $ctns }}</td>
+                                <td>{{ $ctn }}</td>
                             </tr>
                         </table>
                     @endforeach
@@ -75,7 +75,7 @@
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->length }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->width }}</td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $ctns)
+                    @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
                         <table>
                             <tr>
                                 <td>{{ $item->product->weight_netto }}</td>
@@ -84,7 +84,7 @@
                     @endforeach
                 </td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $ctns)
+                    @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
                         <table>
                             <tr>
                                 <td>{{ $item->product->weight_brutto }}</td>
@@ -93,19 +93,19 @@
                     @endforeach
                 </td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
+                    @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
                         <table>
                             <tr>
-                                <td>{{ $item->countWeightNetto($ctns) }}</td>
+                                <td>{{ $item->countWeightNetto($ctn) }}</td>
                             </tr>
                         </table>
                     @endforeach
                 </td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
-                    @foreach(json_decode($item->pcs_ctn_ctns, true) as $pcsCtn => $ctns)
+                    @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
                         <table>
                             <tr>
-                                <td>{{ $item->countWeightBrutto($ctns) }}</td>
+                                <td>{{ $item->countWeightBrutto($ctn) }}</td>
                             </tr>
                         </table>
                     @endforeach

@@ -170,7 +170,6 @@ class OrderController extends Controller
                     $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $surchargeAmount);
                 }
             }
-            
             return response()->json(new OrderWithRelationshipsResource($order), 200);
         }
         $order->setOrderPaymentStatus($status);
@@ -237,6 +236,7 @@ class OrderController extends Controller
         } else {
             $providerStamp = null;
         }
+
         if ($request->hasFile('importerStamp') && $request->file('importerStamp')->isValid()) {
             $importerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('importerStamp'));
         }elseif(isset($oldContract->importerStamp)) {
@@ -359,12 +359,7 @@ class OrderController extends Controller
         $orderItemsInfo = $request->all();
         foreach ($orderItemsInfo as $key => $info) {
             $orderItem = OrderItem::findOrFail($key);
-            $pcsCtnCtns = [];
-            foreach ($info['pcsCtn'] as $pcsCtn) {
-                foreach ($info['ctns'] as $ctn) {
-                    $pcsCtnCtns[$pcsCtn] = $ctn;
-                }
-            }
+            $pcsCtnCtns = array_merge([],['pcsCtn' => $info['pcsCtn']], ['ctns' => $info['ctns']]);
             $orderItem->pcs_ctn_ctns = json_encode($pcsCtnCtns);
             $orderItem->meas = json_encode($info['meas']);
             $orderItem->save();
