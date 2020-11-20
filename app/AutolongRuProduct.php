@@ -35,8 +35,8 @@ class AutolongRuProduct extends Model
     {
         $availableProducts = [];
         foreach ($numbers as $number) {
-            $usProduct = Product::whereAutolongNumber($number);
-            $product = $this->whereNumber($number)->first();
+            $usProduct = Product::wherePublished(1)->whereAutolongNumber($number);
+            $product = $this->wherePublished(1)->whereNumber($number)->first();
             if ($usProduct->exists()) {
                 $availableProducts[] = new ProductResource($usProduct->first());
             } elseif (!is_null($product) && $product != '') {
