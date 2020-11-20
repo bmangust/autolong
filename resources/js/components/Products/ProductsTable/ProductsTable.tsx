@@ -23,17 +23,24 @@ import {
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
 
-const ProductsTable: React.FC = () => {
+const ProductsTable: React.FC<{ unpublished: boolean }> = (
+    {unpublished = false}) => {
     const dispatch = useDispatch()
 
+    let productsKey = 'products'
+
+    if (unpublished) {
+        productsKey = 'newProducts'
+    }
+
     useEffect(() => {
-        dispatch(fetchProducts())
-    }, [dispatch])
+        dispatch(fetchProducts(unpublished))
+    }, [dispatch, unpublished])
 
     const {products, loading, error} = useSelector(
         (state: IProductsRootState) => ({
             error: state.productsState.error,
-            products: state.productsState.products,
+            [productsKey]: state.productsState[productsKey],
             loading: state.productsState.loading
         })
     )
@@ -44,6 +51,8 @@ const ProductsTable: React.FC = () => {
     if (loading) {
         return <Loader/>
     }
+
+    console.log(products)
     if (!products.length) {
         return <Placeholder
             description='Нажмите на кнопку «Добавить товар»,

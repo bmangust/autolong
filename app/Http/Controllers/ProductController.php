@@ -54,8 +54,9 @@ class ProductController extends Controller
      */
     public function store(Request $request, ExchangeRate $exchangeRate)
     {
-        if ($request->input('published')) {
+        if ($request->has('published') && $request->input('published')) {
             $this->productCreateValidator($request->all())->validate();
+            $published = $request->input('published');
         }
         $product = new Product();
         $product->name_ru = $request->input('nameRu');
@@ -63,6 +64,7 @@ class ProductController extends Controller
         $product->about_ru = $request->input('aboutRu');
         $product->about_en = $request->input('aboutEn');
         $product->provider_id = $request->input('providerId');
+        $product->published = $published ?? 1;
         $priceCny = $request->input('priceCny');
         $product->price_cny = $priceCny;
         $product->price_rub = round($exchangeRate->lastCourse()->rub * $priceCny, 2);
@@ -154,5 +156,12 @@ class ProductController extends Controller
         ]);
         $product->createOrUpdateImage($request->file('image'));
         return response()->json($product->image, 200);
+    }
+
+    public function indexUnpublished()
+    {
+        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
+            ->wherePublished(0)
+            ->orderBy('updated_at', 'desc')->get(), 200));
     }
 }

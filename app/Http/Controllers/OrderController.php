@@ -149,6 +149,7 @@ class OrderController extends Controller
 
             $paymentAwaiting = Status::getOrderPaymentAwaiting();
             $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+            $paymentPaidFor = Status::getOrderPaymentPaidFor();
 
             if ($order->status_payment == $paymentPrepaymentMade) {
                 if ($paymentAmount >= $order->getOrderSumInCny()) {
@@ -162,7 +163,12 @@ class OrderController extends Controller
             }
 
             if ($order->status_payment == $paymentAwaiting) {
-                $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+                if ($paymentAmount >= $order->getOrderSumInCny()) {
+                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+                }
+                if ($paymentAmount < $order->getOrderSumInCny()) {
+                    $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $surchargeAmount);
+                }
             }
 
             return response()->json(new OrderWithRelationshipsResource($order), 200);
@@ -223,6 +229,7 @@ class OrderController extends Controller
         $provider = $order->provider;
         $oldContract = $order->contract->getInfo();
         $stampDirectory = Order::STAMP_DIRECTORY;
+
         if ($request->hasFile('providerStamp') && $request->file('providerStamp')->isValid()) {
             $providerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('providerStamp'));
         } elseif(isset($oldContract->providerStamp)) {

@@ -23,17 +23,19 @@ import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
 import {push} from 'connected-react-router'
 
-export const fetchProducts = () => async dispatch => {
+export const fetchProducts: (unpublished?: boolean) => (dispatch) =>
+    Promise<void> = (unpublished = false) => async dispatch => {
     await dispatch({
         type: FETCH_PRODUCTS_START
     })
 
-    const url = '/api/products'
+    const url = `/api/products${unpublished ? '/unpublished' : ''}`
     axios.get(url)
         .then((answer) => {
             dispatch({
                 type: FETCH_PRODUCTS_SUCCESS,
-                payload: answer.data
+                payload: answer.data,
+                unpublished
             })
         })
         .catch((error: AxiosError) => {

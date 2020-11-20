@@ -34,6 +34,11 @@ class Status extends Model
         return array_search('Сделана предоплата', (array)self::getOrderPaymentStatuses(), true);
     }
 
+    public static function getOrderPaymentPaidFor()
+    {
+        return array_search('Оплачен на', (array)self::getOrderPaymentStatuses(), true);
+    }
+
     public static function getOrderPaymentPaidInFull()
     {
         return array_search('Оплачен полностью', (array)self::getOrderPaymentStatuses(), true);

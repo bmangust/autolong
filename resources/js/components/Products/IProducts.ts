@@ -66,6 +66,7 @@ export interface IProductsState {
     products: IProduct[] | []
     vendorProducts: IProduct[] | IProductAutolong[] | []
     product: IProduct | {}
+    newProducts: IProduct[] | []
     price: IProductPrice | {}
     loading: boolean
     vendorLoading: boolean
@@ -84,6 +85,7 @@ interface IFetchProductsStart {
 interface IFetchProductsSuccess {
     type: typeof FETCH_PRODUCTS_SUCCESS
     payload: IProduct[]
+    unpublished: boolean
     loading: boolean
 }
 

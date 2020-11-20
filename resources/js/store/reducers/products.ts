@@ -29,6 +29,7 @@ import {
 
 const initialState: IProductsState = {
     products: [],
+    newProducts: [],
     vendorProducts: [],
     product: {},
     price: {},
@@ -45,10 +46,12 @@ export default function productsReducer(
             return {
                 ...state, loading: true
             }
-        case FETCH_PRODUCTS_SUCCESS:
+        case FETCH_PRODUCTS_SUCCESS: {
+            const productsKey = action.unpublished ? 'newProducts' : 'products'
             return {
-                ...state, loading: false, products: action.payload
+                ...state, loading: false, [productsKey]: action.payload
             }
+        }
         case FETCH_PRODUCTS_ERROR:
             return {
                 ...state, loading: false, error: action.payload
