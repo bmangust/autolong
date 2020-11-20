@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useState} from 'react'
 
 // Third-party
 import {NavLink} from 'react-router-dom'
@@ -10,6 +10,12 @@ import BootstrapTable, {
 } from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit'
+import _ from 'lodash'
+
+// App
+import SvgExpandOn from '../iconComponents/ExpandOn'
+import SvgExpandOff from '../iconComponents/ExpandOff'
+import SelectSearch from '../Inputs/SelectSearch'
 
 interface expandRow<T extends object = any, E = any> {
     dataField: string
@@ -24,9 +30,19 @@ interface button {
     text: string
 }
 
+interface IFilter {
+    value?: any
+    onChange?: any
+    options?: any
+    placeholder?: any
+    field?: string
+    loading?: boolean
+}
+
 interface IAutoTable extends BootstrapTableProps {
     secondBtn?: button | undefined
     button?: button | undefined
+    filter?: IFilter
     expandRowTable?: expandRow[] | undefined
 }
 
@@ -38,9 +54,11 @@ const AutoTable: React.FC<IAutoTable> = (
         secondBtn,
         selectRow,
         button,
+        filter,
         expandRowTable = undefined
     }) => {
     const {SearchBar} = Search
+    const [dataState, setDataState] = useState(() => data)
 
     const expandRow: ExpandRowProps<any> = {
         expandColumnPosition: 'right',
@@ -48,6 +66,15 @@ const AutoTable: React.FC<IAutoTable> = (
         showExpandColumn: true,
         expandHeaderColumnRenderer: expandHeaderColumnRenderer,
         expandColumnRenderer: expandColumnRenderer
+    }
+
+    const onChangeFilter = (option) => {
+        if (option) {
+            setDataState(data.filter((item) =>
+                _.get(item, filter.field) === option.value))
+        } else {
+            setDataState(data)
+        }
     }
 
     function renderer(row: any, rowIndex: number) {
@@ -88,58 +115,16 @@ const AutoTable: React.FC<IAutoTable> = (
 
     function expandColumnRenderer({expanded}) {
         if (expanded) {
-            return (
-                <svg
-                    width='5'
-                    height='17'
-                    viewBox='0 0 5 17'
-                    fill='none'
-                    xmlns='http://www.w3.org/2000/svg'
-                >
-                    <circle cx='2.75' cy='2.75' r='1.75' stroke='#3A405F'/>
-                    <circle cx='2.75' cy='8.75' r='1.75' stroke='#3A405F'/>
-                    <circle cx='2.75' cy='14.75' r='1.75' stroke='#3A405F'/>
-                </svg>
-            )
+            return <SvgExpandOn width={5} height={17}/>
         }
-        return (
-            <svg
-                width='5'
-                height='17'
-                viewBox='0 0 5 17'
-                fill='none'
-                xmlns='http://www.w3.org/2000/svg'
-            >
-                <circle
-                    cx='2.75'
-                    cy='2.75'
-                    r='1.75'
-                    fill='#3A405F'
-                    stroke='#3A405F'
-                />
-                <circle
-                    cx='2.75'
-                    cy='8.75'
-                    r='1.75'
-                    fill='#3A405F'
-                    stroke='#3A405F'
-                />
-                <circle
-                    cx='2.75'
-                    cy='14.75'
-                    r='1.75'
-                    fill='#3A405F'
-                    stroke='#3A405F'
-                />
-            </svg>
-        )
+        return <SvgExpandOff width={5} height={17}/>
     }
 
     return (
         <ToolkitProvider
             bootstrap4
             keyField={keyField}
-            data={data}
+            data={dataState}
             columns={columns}
             search
         >
@@ -149,12 +134,26 @@ const AutoTable: React.FC<IAutoTable> = (
                         className='flex-sm-row d-flex
                     justify-content-between mb-2 flex-column '
                     >
-                        <div className='searchBar'>
-                            <SearchBar
-                                {...props.searchProps}
-                                placeholder='Поиск...'
-                            />
+                        <div className='d-flex'>
+                            <div className='searchBar mr-2'>
+                                <SearchBar
+                                    {...props.searchProps}
+                                    placeholder='Поиск...'
+                                />
+                            </div>
+                            {filter
+                                ? <SelectSearch
+                                    isLoading={filter.loading}
+                                    value={filter.value}
+                                    onChange={onChangeFilter}
+                                    options={filter.options}
+                                    placeholder={filter.placeholder}
+                                    isSearchable={true}
+                                />
+                                : null
+                            }
                         </div>
+
                         <div>
                             {secondBtn ? (
                                 <NavLink

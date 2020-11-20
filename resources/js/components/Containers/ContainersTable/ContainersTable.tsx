@@ -19,6 +19,7 @@ import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {getContainerStatusName, nameToLinkFormatter} from '../../../utils'
 import Error from '../../UI/Error/Error'
+import statuses from '../../../../statuses/statuses.json'
 
 const ContainersTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -56,6 +57,20 @@ const ContainersTable: React.FC = () => {
             : null
     }
 
+    const filterOptions = Object.entries(statuses.containerStatuses)
+        .map(([key, value]) => {
+            return {
+                label: value,
+                value: key
+            }
+        })
+
+    const filter = {
+        options: filterOptions,
+        field: 'status',
+        placeholder: 'Фильтр по статусу'
+    }
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
@@ -87,6 +102,7 @@ const ContainersTable: React.FC = () => {
     return (
         <AutoTable
             keyField='id' data={containers} columns={columns}
+            filter={filter}
             button={{link: 'containercreate', text: 'Добавить контейнер'}}/>
     )
 }
