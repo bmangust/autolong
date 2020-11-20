@@ -19,7 +19,7 @@ import {
     Providers,
     Logout,
     Prices,
-    NewItems,
+    NewItems
 } from '../../UI/iconComponents'
 
 export const routes: IRoute[] = [
@@ -35,7 +35,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: false,
-        fallback: <div> Loading... </div>,
+        fallback: <div> Loading... </div>
     },
     {
         name: 'Логин',
@@ -46,7 +46,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: false,
-        fallback: <div> Loading... </div>,
+        fallback: <div> Loading... </div>
     },
     {
         name: 'Заказы',
@@ -58,8 +58,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Orders />,
+        fallback: <Loader/>,
+        icon: <Orders/>
     },
     {
         name: 'Просмотр информации о заказе',
@@ -70,7 +70,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Инициализация нового заказа',
@@ -81,7 +81,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Инициализация нескольких новых заказов',
@@ -103,8 +103,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Containers />,
+        fallback: <Loader/>,
+        icon: <Containers/>
     },
     {
         name: 'Просмотр информации о контейнере',
@@ -115,7 +115,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Сформировать контейнер',
@@ -126,7 +126,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Каталоги',
@@ -138,8 +138,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Catalogs />,
+        fallback: <Loader/>,
+        icon: <Catalogs/>
     },
     {
         name: 'Просмотр информации о каталоге',
@@ -150,7 +150,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Добавление нового каталога',
@@ -161,7 +161,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Товары',
@@ -173,8 +173,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Products />,
+        fallback: <Loader/>,
+        icon: <Products/>
     },
     {
         name: 'Цены',
@@ -183,18 +183,42 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Prices />,
+        fallback: <Loader/>,
+        icon: <Prices/>
     },
     {
         name: 'Новинки',
-        path: '/newitems',
-        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
+        pageName: 'Список неопубликованных товаров',
+        path: '/newproducts',
+        component: lazy(() => pMinDelay(
+            import('../../../pages/newproducts/NewProducts'), 600)),
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <NewItems />,
+        fallback: <Loader/>,
+        icon: <NewItems/>
+    },
+    {
+        name: 'Новинки',
+        pageName: 'Просмотр информации о неопубликованном товаре',
+        path: '/newproduct/:id',
+        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <NewItems/>
+    },
+    {
+        name: 'Новинки',
+        pageName: 'Просмотр информации о неопубликованном товаре',
+        path: '/newproduct/:id',
+        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <NewItems/>
     },
     {
         name: 'Просмотр информации о товаре',
@@ -205,7 +229,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Редактирование информации о товаре',
@@ -216,7 +240,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Добавление нового товара',
@@ -227,7 +251,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Добавление нескольких новых товаров',
@@ -238,7 +262,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Поставщики',
@@ -250,8 +274,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Providers />,
+        fallback: <Loader/>,
+        icon: <Providers/>
     },
     {
         name: 'Просмотр информации о поставщике',
@@ -262,7 +286,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Редактирование информации о поставщике',
@@ -273,7 +297,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Добавление нового поставщика',
@@ -284,7 +308,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Импортеры',
@@ -296,8 +320,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Importers />,
+        fallback: <Loader/>,
+        icon: <Importers/>
     },
     {
         name: 'Просмотр информации об импортере',
@@ -308,7 +332,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Добавление нового импортера',
@@ -319,7 +343,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Импортер изменение',
@@ -330,7 +354,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
+        fallback: <Loader/>
     },
     {
         name: 'Лог',
@@ -339,8 +363,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Log />,
+        fallback: <Loader/>,
+        icon: <Log/>
     },
     {
         name: 'Настройки',
@@ -351,8 +375,8 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Settings />,
+        fallback: <Loader/>,
+        icon: <Settings/>
     },
     {
         name: 'Справка по работе с системой',
@@ -361,8 +385,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Settings />,
+        fallback: <Loader/>,
+        icon: <Settings/>
     },
     {
         name: 'Выход',
@@ -371,7 +395,7 @@ export const routes: IRoute[] = [
         hide: false,
         exact: false,
         private: true,
-        fallback: <Loader />,
-        icon: <Logout />,
-    },
+        fallback: <Loader/>,
+        icon: <Logout/>
+    }
 ]
