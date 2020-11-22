@@ -18,7 +18,7 @@ import {
     FETCH_ORDER_SUCCESS,
     FETCH_ORDERS_ERROR,
     FETCH_ORDERS_START,
-    FETCH_ORDERS_SUCCESS
+    FETCH_ORDERS_SUCCESS, REMOVE_INPUT_FROM_INVOICE
 } from '../actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -132,6 +132,15 @@ export default function ordersReducer(
             return {
                 ...state, loadingInvoice: false, error: action.payload
             }
+        case REMOVE_INPUT_FROM_INVOICE: {
+            const newInputs = state.invoiceInputs
+            if (action.payload in newInputs) {
+                delete newInputs[action.payload]
+            }
+            return {
+                ...state, invoiceInputs: newInputs
+            }
+        }
         default:
             return state
     }

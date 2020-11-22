@@ -18,7 +18,8 @@ import {
     DELETE_ORDER_BY_ID,
     FETCH_ORDER_INVOICE_SUCCESS,
     FETCH_ORDER_INVOICE_START,
-    FETCH_ORDER_INVOICE_ERROR
+    FETCH_ORDER_INVOICE_ERROR,
+    REMOVE_INPUT_FROM_INVOICE
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -238,6 +239,26 @@ export const createOrderInvoice = (id, data, type) => {
                 {type: 'application/pdf;charset=utf-8'})
             toast.success(`${type} сгенерирован`)
             saveAs(blob, `${type}.pdf`)
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+}
+
+export const removeStampByType = (orderId, type) => async dispatch => {
+    const url = `/api/orders/${orderId}/deletepdfcontract${type.toLowerCase()}`
+    axios
+        .delete(url)
+        .then((answer) => {
+            dispatch({
+                type: REMOVE_INPUT_FROM_INVOICE,
+                payload: type
+            })
+            toast.success(createNotyMsg(type, 'печать удалена'))
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {

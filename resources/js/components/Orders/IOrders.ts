@@ -18,7 +18,7 @@ import {
     DELETE_ORDER_BY_ID,
     FETCH_ORDER_INVOICE_START,
     FETCH_ORDER_INVOICE_SUCCESS,
-    FETCH_ORDER_INVOICE_ERROR
+    FETCH_ORDER_INVOICE_ERROR, REMOVE_INPUT_FROM_INVOICE
 } from '../../store/actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -181,6 +181,11 @@ interface IFetchOrderInvoiceError {
     loadingInvoice: boolean
 }
 
+interface IRemoveInputFromInvoice {
+    type: typeof REMOVE_INPUT_FROM_INVOICE
+    payload: string
+}
+
 export type IOrdersActionTypes =
     IFetchOrdersStart | IFetchOrdersSuccess | IFetchOrdersError |
     IFetchOrderStart | IFetchOrderSuccess | IFetchOrderError |
@@ -189,4 +194,5 @@ export type IOrdersActionTypes =
     IFetchItemsByVendorSuccess | IChangeOrderStatusStart |
     IChangeOrderStatusSuccess | IChangeOrderStatusError |
     IDeleteOrderById | IClearOrderProducts | IFetchOrderInvoiceStart |
-    IFetchOrderInvoiceSuccess | IFetchOrderInvoiceError
+    IFetchOrderInvoiceSuccess | IFetchOrderInvoiceError |
+    IRemoveInputFromInvoice

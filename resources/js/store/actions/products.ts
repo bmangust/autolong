@@ -177,7 +177,7 @@ export const fetchProductsByVendors = (data, published = 1) =>
                 }
                 dispatch({
                     type: FETCH_BY_VENDOR_SUCCESS,
-                    payload: answer.data
+                    payload: answer.data.products
                 })
             }).catch((error: AxiosError) => {
             dispatch({
@@ -237,28 +237,29 @@ export const acceptProductById = (id, nameRu) => async dispatch => {
         })
 }
 
-export const fetchCompareProductsByArticle = (vendorCode) => async dispatch => {
-    await dispatch({
-        type: FETCH_COMPARE_PRODUCTS_START
-    })
-    const url = '/api/products/compare'
-    axios
-        .post(url, {vendorCode})
-        .then((answer) => {
-            dispatch({
-                type: FETCH_COMPARE_PRODUCTS_SUCCESS,
-                payload: answer.data
-            })
-            if (!answer.data.length) {
-                toast.warn(`Товары с артикулом
+export const fetchCompareProductsByVendorCode = (vendorCode) =>
+    async dispatch => {
+        await dispatch({
+            type: FETCH_COMPARE_PRODUCTS_START
+        })
+        const url = '/api/products/getbyvendorcode'
+        axios
+            .post(url, {vendorCode})
+            .then((answer) => {
+                dispatch({
+                    type: FETCH_COMPARE_PRODUCTS_SUCCESS,
+                    payload: answer.data
+                })
+                if (!answer.data.length) {
+                    toast.warn(`Товары с артикулом
                 ${vendorCode.vendorCode} не найдены`)
-            }
-        })
-        .catch((error: AxiosError) => {
-            dispatch({
-                type: FETCH_COMPARE_PRODUCTS_ERROR,
-                payload: error.message
+                }
             })
-            toast.error(error.message)
-        })
-}
+            .catch((error: AxiosError) => {
+                dispatch({
+                    type: FETCH_COMPARE_PRODUCTS_ERROR,
+                    payload: error.message
+                })
+                toast.error(error.message)
+            })
+    }

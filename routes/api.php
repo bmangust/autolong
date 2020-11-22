@@ -75,7 +75,7 @@ Route::post('orders/{order}/generatepdfpackinglist', 'OrderController@generatePd
 Route::get('orders/{order}/getpdfmarkinglist', 'OrderController@getMarkingList');
 Route::delete('orders/{order}/deletepdfcontractproviderstamp', 'OrderController@deletePdfContractProviderStamp');
 Route::delete('orders/{order}/deletepdfcontractimporterstamp', 'OrderController@deletePdfContractImporterStamp');
-Route::delete('orders/{order}/deletepdfcontractimportersignture', 'OrderController@deletePdfContractImporterSignature');
+Route::delete('orders/{order}/deletepdfcontractimportersignature', 'OrderController@deletePdfContractImporterSignature');
 
 Route::get('tags', 'TagController@index');
 

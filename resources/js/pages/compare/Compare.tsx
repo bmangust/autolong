@@ -10,7 +10,7 @@ import {ColumnDescription} from 'react-bootstrap-table-next'
 import {IProductsRootState} from '../../components/Products/IProducts'
 
 // Actions
-import {fetchCompareProductsByArticle} from '../../store/actions/products'
+import {fetchCompareProductsByVendorCode} from '../../store/actions/products'
 
 // App
 import AutoTable from '../../components/UI/AutoTable/AutoTable'
@@ -32,7 +32,7 @@ const Compare = () => {
 
     const compareSubmitHandler =
         handleSubmit((formValues) => {
-            dispatch(fetchCompareProductsByArticle(formValues))
+            dispatch(fetchCompareProductsByVendorCode(formValues))
         })
 
     const {compareProducts, compareLoading, error} = useSelector(

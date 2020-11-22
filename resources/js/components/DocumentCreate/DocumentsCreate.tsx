@@ -12,7 +12,11 @@ import classes from './DocumentsCreate.module.css'
 import {IOrdersRootState} from '../Orders/IOrders'
 
 // Actions
-import {createOrderInvoice, fetchOrderInvoice} from '../../store/actions/orders'
+import {
+    createOrderInvoice,
+    fetchOrderInvoice,
+    removeStampByType
+} from '../../store/actions/orders'
 
 // App
 import Modal from '../UI/Modal/Modal'
@@ -48,6 +52,10 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
         dispatch(fetchOrderInvoice(id, type))
     }
 
+    const removeStamp = (type) => {
+        dispatch(removeStampByType(id, type))
+    }
+
     const onCloseModalHandler = () => {
         setIsOpen(false)
     }
@@ -60,6 +68,9 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
             if ('importerStamp' in formValues) {
                 formValues.importerStamp = formValues.importerStamp[0] || ''
             }
+            if ('importerSignature' in formValues) {
+                formValues.importerStamp = formValues.importerStamp[0] || ''
+            }
             setIsOpen(false)
             dispatch(createOrderInvoice(id, formValues, type))
         })
@@ -69,29 +80,66 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
             <div className='row'>
                 {Object.entries(invoiceInputs).map(([key, value]) => {
                     if (key === 'requisites') {
-                        return <>
-                            <label className='col-12'
-                                   htmlFor='requisites'>Реквизиты
-                                <Controller
-                                    name="requisites"
-                                    control={control}
-                                    defaultValue={value || ''}
-                                    render={({value, onChange}) => (
-                                        <TextEditor
-                                            value={value}
-                                            onChange={onChange}
-                                        />
-                                    )}/>
-                            </label>
-                        </>
+                        return <label
+                            key={key} className='col-12'
+                            htmlFor='requisites'>Реквизиты
+                            <Controller
+                                name="requisites"
+                                control={control}
+                                defaultValue={value || ''}
+                                render={({value, onChange}) => (
+                                    <TextEditor
+                                        value={value}
+                                        onChange={onChange}
+                                    />
+                                )}/>
+                        </label>
                     } else if (key === 'providerStamp') {
-                        return <FileInput
-                            label='providerStamp'
-                            control={control} name='providerStamp'/>
+                        return <div className='w-100' key={key}>
+                            <FileInput
+                                label='providerStamp'
+                                control={control} name='providerStamp'/>
+                            {value
+                                ? <button
+                                    type='button'
+                                    onClick={() => removeStamp(key)}
+                                    className='btn btn-link'>
+                                    Удалить печать поставщика
+                                </button>
+                                : null
+                            }
+
+                        </div>
+                    } else if (key === 'importerSignature') {
+                        return <div className='w-100' key={key}>
+                            <FileInput
+                                label='importerSignature'
+                                control={control} name='importerSignature'/>
+                            {value
+                                ? <button
+                                    type='button'
+                                    onClick={() => removeStamp(key)}
+                                    className='btn btn-link'>
+                                    Удалить подпись импортера
+                                </button>
+                                : null
+                            }
+                        </div>
                     } else if (key === 'importerStamp') {
-                        return <FileInput
-                            label='importerStamp'
-                            control={control} name='importerStamp'/>
+                        return <div className='w-100' key={key}>
+                            <FileInput
+                                label='importerStamp'
+                                control={control} name='importerStamp'/>
+                            {value
+                                ? <button
+                                    type='button'
+                                    onClick={() => removeStamp(key)}
+                                    className='btn btn-link'>
+                                    Удалить печать импортера
+                                </button>
+                                : null
+                            }
+                        </div>
                     } else {
                         return <Input
                             key={key} id={key}
@@ -156,6 +204,11 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 ? <FileInput
                                     label='Печать импортера'
                                     control={control} name='importerStamp'/>
+                                : null}
+                            {!('importerSignature' in invoiceInputs)
+                                ? <FileInput
+                                    label='Подпись импортера'
+                                    control={control} name='importerSignature'/>
                                 : null}
                         </div>
                     </>
