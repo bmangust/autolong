@@ -71,9 +71,33 @@
                         </table>
                     @endforeach
                 </td>
-                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->height }}</td>
-                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->length }}</td>
-                <td style="padding: 5px 15px; border: 1px solid #000;">{{ json_decode($item->meas)->width }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->meas, true) as $meas)
+                        <table>
+                            <tr>
+                                <td>{{  $meas['length']  }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->meas, true) as $meas)
+                        <table>
+                            <tr>
+                                <td>{{  $meas['height']  }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->meas, true) as $meas)
+                        <table>
+                            <tr>
+                                <td>{{  $meas['width']  }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
                 <td style="padding: 5px 15px; border: 1px solid #000;">
                     @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
                         <table>
@@ -110,8 +134,15 @@
                         </table>
                     @endforeach
                 </td>
-
-                <td style="padding: 5px 15px; border: 1px solid #000;">{{ $item->getVolumeBox() }}</td>
+                <td style="padding: 5px 15px; border: 1px solid #000;">
+                    @foreach(json_decode($item->meas, true) as $meas)
+                        <table>
+                            <tr>
+                                <td>{{  array_product($meas)  }}</td>
+                            </tr>
+                        </table>
+                    @endforeach
+                </td>
             </tr>
         @endforeach
     </table>
