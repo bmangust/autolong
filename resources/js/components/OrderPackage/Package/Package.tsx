@@ -62,9 +62,11 @@ const Package: React.FC<{
     const onChangeHandler = (e, pack) => {
         const name = e.target.name
         const value = +e.target.value
-        const newItems = packages.map((el) =>
-            el.id === pack.id ? {...el, [name]: value} : el)
-        setPackages(newItems)
+        if (value >= 0) {
+            const newItems = packages.map((el) =>
+                el.id === pack.id ? {...el, [name]: value} : el)
+            setPackages(newItems)
+        }
     }
 
     const deletePackHandler = (packId) => {
