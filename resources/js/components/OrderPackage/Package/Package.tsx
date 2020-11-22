@@ -77,13 +77,15 @@ const Package: React.FC<{
         if (+item.quantity - totalIn === 0) {
             const pcsCtn: number[] = []
             const ctns: number[] = []
-            const meas: { length: number, width: number, height: number } = {}
+            const meas: any[] = []
             packages.map((pack) => {
                 pcsCtn.push(pack.qtyPacks)
                 ctns.push(pack.qty)
-                meas.length = pack.length
-                meas.height = pack.height
-                meas.width = pack.width
+                meas.push({
+                    length: pack.length,
+                    height: pack.height,
+                    width: pack.width
+                })
             })
             const data = {
                 [id]: {
