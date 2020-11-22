@@ -165,7 +165,7 @@ export const fetchProductsByVendors = (data, published = 1) =>
             .then((answer) => {
                 if (published === 0) {
                     Object.entries(answer.data).forEach(([key, value]: any) => {
-                        if (key === 'unpublished') {
+                        if (key === 'published') {
                             value.forEach(item => {
                                 toast.warn(createNotyMsg(item,
                                     'товар с таким номером' +
@@ -173,7 +173,7 @@ export const fetchProductsByVendors = (data, published = 1) =>
                             })
                         }
                     })
-                    delete answer.data.unpublished
+                    delete answer.data.published
                 }
                 dispatch({
                     type: FETCH_BY_VENDOR_SUCCESS,
