@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use App\AutolongRuProduct;
 use App\ExchangeRate;
 use App\Log;
-use App\Order;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Product;
@@ -175,7 +174,7 @@ class ProductController extends Controller
         response()->json(new ProductWithRelationshipsResource($product), 200);
     }
 
-    public function compare(Request $request)
+    public function indexVendorCode(Request $request)
     {
         $request->validate([
             'vendorCode' => 'required'
