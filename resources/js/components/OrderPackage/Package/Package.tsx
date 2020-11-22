@@ -9,6 +9,7 @@ import {IProduct} from '../../Products/IProducts'
 
 // App
 import SvgClose from '../../UI/iconComponents/Close'
+import {toast} from 'react-toastify'
 
 interface IPackage {
     id: number
@@ -61,20 +62,9 @@ const Package: React.FC<{
     const onChangeHandler = (e, pack) => {
         const name = e.target.name
         const value = +e.target.value
-        const qty = +item.quantity - totalIn
-        if (name === 'qty' && qty - value * pack.qtyPacks >= -1) {
-            const newItems = packages.map((el) =>
-                el.id === pack.id ? {...el, [name]: value} : el)
-            setPackages(newItems)
-        } else if (name === 'qtyPacks' && qty - value * pack.qtyPacks >= -1) {
-            const newItems = packages.map((el) =>
-                el.id === pack.id ? {...el, [name]: value} : el)
-            setPackages(newItems)
-        } else if (name !== 'qty' && name !== 'qtyPacks') {
-            const newItems = packages.map((el) =>
-                el.id === pack.id ? {...el, [name]: value} : el)
-            setPackages(newItems)
-        }
+        const newItems = packages.map((el) =>
+            el.id === pack.id ? {...el, [name]: value} : el)
+        setPackages(newItems)
     }
 
     const deletePackHandler = (packId) => {
@@ -82,27 +72,31 @@ const Package: React.FC<{
     }
 
     const sendPackageHandler = (id) => {
-        const pcsCtn: number[] = []
-        const ctns: number[] = []
-        const meas: { length: number, width: number, height: number } = {}
-        packages.map((pack) => {
-            pcsCtn.push(pack.qtyPacks)
-            ctns.push(pack.qty)
-            meas.length = pack.length
-            meas.height = pack.height
-            meas.width = pack.width
-        })
-        const data = {
-            [id]: {
-                pcsCtn,
-                ctns,
-                meas
+        if (+item.quantity - totalIn === 0) {
+            const pcsCtn: number[] = []
+            const ctns: number[] = []
+            const meas: { length: number, width: number, height: number } = {}
+            packages.map((pack) => {
+                pcsCtn.push(pack.qtyPacks)
+                ctns.push(pack.qty)
+                meas.length = pack.length
+                meas.height = pack.height
+                meas.width = pack.width
+            })
+            const data = {
+                [id]: {
+                    pcsCtn,
+                    ctns,
+                    meas
+                }
             }
+            setData((oldDate: any) => {
+                return Object.assign({}, oldDate, data)
+            })
+            setIsShow(false)
+        } else {
+            toast.error('Осталось распределить < 0')
         }
-        setData((oldDate: any) => {
-            return Object.assign({}, oldDate, data)
-        })
-        setIsShow(false)
     }
 
     return isShow
