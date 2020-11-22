@@ -177,7 +177,7 @@ export const fetchProductsByVendors = (data, published = 1) =>
                 }
                 dispatch({
                     type: FETCH_BY_VENDOR_SUCCESS,
-                    payload: answer.data
+                    payload: [answer.data]
                 })
             }).catch((error: AxiosError) => {
             dispatch({
