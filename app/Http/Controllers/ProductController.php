@@ -59,9 +59,6 @@ class ProductController extends Controller
             $this->productCreateValidator($request->all())->validate();
             $published = $request->input('published');
         }
-        $request->validate([
-            'hsCode' => 'integer'
-        ]);
         $product = new Product();
         $product->name_ru = $request->input('nameRu');
         $product->name_en = $request->input('nameEn');
@@ -77,7 +74,7 @@ class ProductController extends Controller
         $product->weight_brutto = $request->input('weightBrutto');
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
-        $product->hs_code = $request->input('hsCode');
+        $product->hs_code = $request->input('hsCode') ?? 0;
         $product->save();
         Log::$write = false;
         if ($request->has('image') && $request->hasFile('image')) {
@@ -125,7 +122,7 @@ class ProductController extends Controller
         $product->weight_brutto = $request->input('weightBrutto');
         $product->vendor_code = $request->input('vendorCode');
         $product->autolong_number = $request->input('autolongNumber');
-        $product->hs_code = $request->input('hsCode');
+        $product->hs_code = $request->input('hsCode') ?? 0;
         $product->save();
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }

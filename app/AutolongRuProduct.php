@@ -38,7 +38,7 @@ class AutolongRuProduct extends Model
 
     public function checkNumberCodesInDB($numbers,int $published = 1): array
     {
-        $availableProducts = [];
+        $availableProducts = ['products' => []];
         foreach ($numbers as $number) {
             $usProduct = Product::whereAutolongNumber($number);
             $product = $this->whereNumber($number)->first();
@@ -47,12 +47,12 @@ class AutolongRuProduct extends Model
                     array_key_exists('published', $availableProducts) ?: $availableProducts['published'] = [];
                     $availableProducts['published'][] = $number;
                 } else {
-                    $availableProducts[] = new ProductResource($usProduct->first());
+                    $availableProducts['products'][] = new ProductResource($usProduct->first());
                 }
             } elseif (!is_null($product) && $product != '') {
                 $availableProducts[] = new AutolongRuProductResource($product);
             } else {
-                $availableProducts[] = ['number' => $number];
+                $availableProducts['products'][] = (object) ['number' => $number];
             }
         }
         return $availableProducts;
