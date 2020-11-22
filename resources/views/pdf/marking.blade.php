@@ -43,13 +43,13 @@
         <tr>
             <td style="padding-bottom: 10px;">MODEL OF GOODS</td>
         </tr>
+        @foreach($hsCodes as $hsCode)
         <tr>
-            @foreach($hsCodes as $hsCode)
             <td>
-                <span style="border-bottom: 1px dotted #000">{{ $hsCode }}</span>
+                <span style="border-bottom: 1px dotted #000">{{ $hsCode ?? '-' }}</span>
             </td>
-            @endforeach
         </tr>
+        @endforeach
         <tr>
             <td></td>
         </tr>

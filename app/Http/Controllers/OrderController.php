@@ -397,7 +397,7 @@ class OrderController extends Controller
         $provider = $order->provider;
         $hsCodes = $order->getProductsHsCode();
         $pdf = App::make('dompdf.wrapper');
-        $newPdf = $pdf->loadView('pdf.packing-list', [
+        $newPdf = $pdf->loadView('pdf.marking', [
             'order' => $order,
             'importer' => $importer,
             'provider' => $provider,
