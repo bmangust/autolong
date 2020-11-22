@@ -59,13 +59,16 @@ class ProductController extends Controller
             $this->productCreateValidator($request->all())->validate();
             $published = $request->input('published');
         }
+        $request->validate([
+            'hsCode' => 'integer'
+        ]);
         $product = new Product();
         $product->name_ru = $request->input('nameRu');
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
         $product->about_en = $request->input('aboutEn');
         $product->provider_id = $request->input('providerId');
-        $product->published = $published ?? 1;
+        $product->published = $published ?? 0;
         $priceCny = $request->input('priceCny');
         $product->price_cny = $priceCny ?? 0;
         $product->price_rub = round($exchangeRate->lastCourse()->rub * $priceCny, 2);
