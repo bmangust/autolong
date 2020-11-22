@@ -813,6 +813,9 @@
                 @if(isset($contract['importerStamp']))
                 <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($contract['importerStamp']) }}" alt="">
                 @endif
+                @if(isset( $contract['importerSignature']))
+                    <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($contract['importerSignature']) }}" alt="">
+                @endif
             </td>
             <td style="width: 340px; padding: 5px; border: 1px solid #000000; vertical-align: baseline;">
                 <h4 style="text-align: left; margin: 0; ">

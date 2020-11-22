@@ -19,6 +19,7 @@ class Order extends Model
     public const CONTRACT_DIRECTORY = '/orders/';
     public const CHECK_DIRECTORY = '/checks/';
     public const STAMP_DIRECTORY = '/storage/stamps/';
+    public const SIGNATURE_DIRECTORY = '/storage/signature/';
 
     protected $fillable = ['name', 'provider_id'];
 
@@ -288,5 +289,47 @@ class Order extends Model
     {
         return Storage::disk('main')
             ->putFileAs($directory, $image, $name . '.' . $image->getClientOriginalExtension());
+    }
+
+    public function deletePdfContractProviderStamp()
+    {
+        try {
+            $providerStamp = $this->contract->getInfo()->providerStamp;
+        } catch (\Exception $e) {
+            throw new HttpException(404, $e);
+        }
+        Storage::disk('main')->delete($providerStamp);
+        $array = (array) $this->contract->getInfo();
+        unset($array['providerStamp']);
+        $this->contract->info = $array;
+        $this->contract->save();
+    }
+
+    public function deletePdfContractImporterStamp()
+    {
+        try {
+            $importerStamp = $this->contract->getInfo()->importerStamp;
+        } catch (\Exception $e) {
+            throw new HttpException(404, $e);
+        }
+        Storage::disk('main')->delete($importerStamp);
+        $array = (array) $this->contract->getInfo();
+        unset($array['importerStamp']);
+        $this->contract->info = $array;
+        $this->contract->save();
+    }
+
+    public function deletePdfContractImporterSignature()
+    {
+        try {
+            $importerSignature = $this->contract->getInfo()->importerSignature;
+        } catch (\Exception $e) {
+            throw new HttpException(404, $e);
+        }
+        Storage::disk('main')->delete($importerSignature);
+        $array = (array) $this->contract->getInfo();
+        unset($array['importerSignature']);
+        $this->contract->info = $array;
+        $this->contract->save();
     }
 }
