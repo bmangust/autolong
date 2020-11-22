@@ -237,13 +237,13 @@ export const acceptProductById = (id, nameRu) => async dispatch => {
         })
 }
 
-export const fetchCompareProductsByArticle = (article) => async dispatch => {
+export const fetchCompareProductsByArticle = (vendorCode) => async dispatch => {
     await dispatch({
         type: FETCH_COMPARE_PRODUCTS_START
     })
     const url = '/api/products/compare'
     axios
-        .post(url, {article})
+        .post(url, {vendorCode})
         .then((answer) => {
             dispatch({
                 type: FETCH_COMPARE_PRODUCTS_SUCCESS,

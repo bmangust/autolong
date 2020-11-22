@@ -115,7 +115,7 @@ const Compare = () => {
                             </label>
                             <input
                                 ref={register({required: true})}
-                                name='compare'
+                                name='vendorCode'
                                 placeholder='артикул товара для сравнения'
                             />
                         </div>
