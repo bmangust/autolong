@@ -189,16 +189,12 @@ class OrderController extends Controller
             if ($product->exists()) {
                 $providerId = $product->first()->provider->id;
                 if (array_key_exists($providerId, $availableAndUnknownProducts)) {
-                    $value = $availableAndUnknownProducts[$providerId];
-                    $value[] = new ProductResource($product->first());
-                    $availableAndUnknownProducts[$providerId] = $value;
+                    $availableAndUnknownProducts[$providerId][] = new ProductResource($product->first());
                 } else {
                     $availableAndUnknownProducts[$providerId] = array(new ProductResource($product->first()));
                 }
             } else {
-                $value = $availableAndUnknownProducts[$unknownProductsKey];
-                $value[] = $number;
-                $availableAndUnknownProducts[$unknownProductsKey] = $value;
+                $availableAndUnknownProducts[$unknownProductsKey][] = $number;
             }
         }
         return response()->json($availableAndUnknownProducts);
