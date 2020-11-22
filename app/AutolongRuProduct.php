@@ -31,14 +31,18 @@ class AutolongRuProduct extends Model
         return $this->translateHtmlCodesToTags($this->attributes['articul']);
     }
 
-    public function checkNumberCodesInDB($numbers): array
+    public function checkNumberCodesInDB($numbers,int $published = 1): array
     {
         $availableProducts = [];
         foreach ($numbers as $number) {
             $usProduct = Product::whereAutolongNumber($number);
             $product = $this->whereNumber($number)->first();
             if ($usProduct->exists()) {
-                $availableProducts[] = new ProductResource($usProduct->first());
+                if (!$published && $usProduct->first()->published) {
+                    $availableProducts[] = ['published' => $number];
+                } else {
+                    $availableProducts[] = new ProductResource($usProduct->first());
+                }
             } elseif (!is_null($product) && $product != '') {
                 $availableProducts[] = new AutolongRuProductResource($product);
             } else {
