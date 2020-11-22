@@ -148,7 +148,7 @@ class ProductController extends Controller
             'numbers' => 'required'
         ]);
         $numbers = $autolongRuProduct->cleanSpaceInArrayItems($request->input('numbers'));
-        $availableProducts = $autolongRuProduct->checkNumberCodesInDB($numbers);
+        $availableProducts = $autolongRuProduct->checkNumberCodesInDB($numbers, $request->input('published'));
         return response()->json($availableProducts, 200);
     }
 
