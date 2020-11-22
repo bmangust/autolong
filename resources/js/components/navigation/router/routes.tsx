@@ -178,8 +178,9 @@ export const routes: IRoute[] = [
     },
     {
         name: 'Цены',
-        path: '/prices',
-        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
+        path: '/compare',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/compare/Compare'), 600)),
         hide: false,
         exact: false,
         private: true,

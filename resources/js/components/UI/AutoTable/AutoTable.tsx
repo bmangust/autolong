@@ -45,6 +45,7 @@ interface IAutoTable extends BootstrapTableProps {
     button?: button | undefined
     filter?: IFilter
     expandRowTable?: expandRow[] | undefined
+    header?: boolean
 }
 
 const AutoTable: React.FC<IAutoTable> = (
@@ -56,7 +57,8 @@ const AutoTable: React.FC<IAutoTable> = (
         selectRow,
         button,
         filter,
-        expandRowTable = undefined
+        expandRowTable = undefined,
+        header = true
     }) => {
     const {SearchBar} = Search
     const [dataState, setDataState] = useState(() => data)
@@ -169,42 +171,46 @@ const AutoTable: React.FC<IAutoTable> = (
         >
             {(props) => (
                 <div>
-                    <div
-                        className='flex-sm-row d-flex
+                    {header
+                        ? <div
+                            className='flex-sm-row d-flex
                     justify-content-between mb-2 flex-column '
-                    >
-                        <div className='d-flex'>
-                            <div className='searchBar mr-2'>
-                                <SearchBar
-                                    {...props.searchProps}
-                                    placeholder='Поиск...'
-                                />
+                        >
+                            <div className='d-flex'>
+                                <div className='searchBar mr-2'>
+                                    <SearchBar
+                                        {...props.searchProps}
+                                        placeholder='Поиск...'
+                                    />
+                                </div>
+                                {filter
+                                    ? select
+                                    : null
+                                }
                             </div>
-                            {filter
-                                ? select
-                                : null
-                            }
-                        </div>
 
-                        <div>
-                            {secondBtn ? (
-                                <NavLink
-                                    to={`/${secondBtn.link}`}
-                                    className='btn addButton mr-3'
-                                >
-                                    {secondBtn.text}
-                                </NavLink>
-                            ) : null}
-                            {button ? (
-                                <NavLink
-                                    to={`/${button.link}`}
-                                    className='btn addButton'
-                                >
-                                    {button.text}
-                                </NavLink>
-                            ) : null}
+                            <div>
+                                {secondBtn ? (
+                                    <NavLink
+                                        to={`/${secondBtn.link}`}
+                                        className='btn addButton mr-3'
+                                    >
+                                        {secondBtn.text}
+                                    </NavLink>
+                                ) : null}
+                                {button ? (
+                                    <NavLink
+                                        to={`/${button.link}`}
+                                        className='btn addButton'
+                                    >
+                                        {button.text}
+                                    </NavLink>
+                                ) : null}
+                            </div>
                         </div>
-                    </div>
+                        : null
+                    }
+
                     <div className='card'>
                         <div className='card-body text-muted'>
                             <BootstrapTable

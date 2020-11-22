@@ -16,7 +16,10 @@ import {
     FETCH_BY_VENDOR_ERROR,
     FETCH_BY_VENDOR_START,
     DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_IMAGE
+    UPDATE_PRODUCT_IMAGE,
+    FETCH_COMPARE_PRODUCTS_START,
+    FETCH_COMPARE_PRODUCTS_SUCCESS,
+    FETCH_COMPARE_PRODUCTS_ERROR
 } from '../../store/actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 import {IProvider} from '../Providers/IProviders'
@@ -68,9 +71,11 @@ export interface IProductsState {
     vendorProducts: IProduct[] | IProductAutolong[] | []
     product: IProduct | {}
     newProducts: IProduct[] | []
+    compareProducts: IProduct[] | []
     price: IProductPrice | {}
     loading: boolean
     vendorLoading: boolean
+    compareLoading: boolean
     error: any
 }
 
@@ -188,6 +193,23 @@ interface IClearVendorProducts {
     type: typeof LOCATION_CHANGE
 }
 
+interface IFetchCompareProductsStart {
+    type: typeof FETCH_COMPARE_PRODUCTS_START
+    compareLoading: boolean
+}
+
+interface IFetchCompareProductsSuccess {
+    type: typeof FETCH_COMPARE_PRODUCTS_SUCCESS
+    payload: IProduct[]
+    compareLoading: boolean
+}
+
+interface IFetchCompareProductsError {
+    type: typeof FETCH_COMPARE_PRODUCTS_ERROR
+    payload: any
+    compareLoading: boolean
+}
+
 export type IProductsActionTypes =
     IFetchProductsStart | IFetchProductsSuccess | IFetchProductsError |
     IFetchProductStart | IFetchProductSuccess | IFetchProductError |
@@ -195,4 +217,5 @@ export type IProductsActionTypes =
     IUpdateProductStart | IUpdateProductSuccess | IUpdateProductError |
     IFetchProductPrice | IFetchByVendorStart | IFetchByVendorSuccess |
     IFetchByVendorError | IDeleteProductById | IUpdateProductImage |
-    IClearVendorProducts
+    IClearVendorProducts | IFetchCompareProductsStart |
+    IFetchCompareProductsSuccess | IFetchCompareProductsError
