@@ -11,7 +11,8 @@ import classes from './Container.module.css'
 // Actions
 import {
     deleteContainerById,
-    fetchContainerById
+    fetchContainerById,
+    getMarkingList
 } from '../../store/actions/containers'
 
 // Typescript
@@ -115,10 +116,18 @@ const Container: React.FC<IContainer> = () => {
                                         <NavLink to={`/order/${order.id}`}>
                                             Заказ {order.id}
                                         </NavLink>
-                                        <p className={classes.packageBtn}
-                                           onClick={() => showPackage(order)}>
-                                            Упаковочный
-                                        </p>
+                                        <div className='d-flex'>
+                                            <p className={classes.packageBtn}
+                                               onClick={() =>
+                                                   showPackage(order)}>
+                                                Упаковочный
+                                            </p>
+                                            <p className={classes.packageBtn}
+                                               onClick={() =>
+                                                   getMarkingList(order.id)}>
+                                                Маркировочный
+                                            </p>
+                                        </div>
                                     </div>
                                     <div className={classes.orderBody}>
                                         <OrderItems items={order.items}/>

@@ -39,6 +39,11 @@ h2 {
     text-decoration-line: underline;
     margin-bottom: 0;
     cursor: pointer;
+    margin-right: 10px;
+}
+
+.packageBtn:last-of-type {
+    margin-right: 0;
 }
 
 .order .orderHeader a {

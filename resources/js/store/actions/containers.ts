@@ -19,6 +19,7 @@ import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
 import {push} from 'connected-react-router'
+import {saveAs} from 'file-saver'
 
 export const fetchContainers = () => async dispatch => {
     await dispatch({
@@ -155,4 +156,25 @@ export const changeContainerStatus = (id, data) => async dispatch => {
             toast.error(error.message)
         }
     })
+}
+
+export const getMarkingList = (id) => {
+    const url = `/api/orders/${id}/getpdfmarkinglist`
+    axios
+        .get(url, {
+            responseType: 'blob'
+        })
+        .then((answer) => {
+            const blob = new Blob([answer.data],
+                {type: 'application/pdf;charset=utf-8'})
+            toast.success(`Маркировочный лист сгенерирован`)
+            saveAs(blob, `markinglist.pdf`)
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
 }
