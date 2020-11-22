@@ -3,8 +3,13 @@ import {
     CREATE_PRODUCT_ERROR,
     CREATE_PRODUCT_START,
     CREATE_PRODUCT_SUCCESS,
+    DELETE_PRODUCT_BY_ID,
     FETCH_BY_VENDOR_ERROR,
+    FETCH_BY_VENDOR_START,
     FETCH_BY_VENDOR_SUCCESS,
+    FETCH_COMPARE_PRODUCTS_ERROR,
+    FETCH_COMPARE_PRODUCTS_START,
+    FETCH_COMPARE_PRODUCTS_SUCCESS,
     FETCH_PRODUCT_ERROR,
     FETCH_PRODUCT_PRICE,
     FETCH_PRODUCT_START,
@@ -13,11 +18,9 @@ import {
     FETCH_PRODUCTS_START,
     FETCH_PRODUCTS_SUCCESS,
     UPDATE_PRODUCT_ERROR,
+    UPDATE_PRODUCT_IMAGE,
     UPDATE_PRODUCT_START,
-    UPDATE_PRODUCT_SUCCESS,
-    FETCH_BY_VENDOR_START,
-    DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_IMAGE
+    UPDATE_PRODUCT_SUCCESS
 } from '../actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -30,10 +33,12 @@ import {
 const initialState: IProductsState = {
     products: [],
     newProducts: [],
+    compareProducts: [],
     vendorProducts: [],
     product: {},
     price: {},
     loading: true,
+    compareLoading: false,
     vendorLoading: false,
     error: null
 }
@@ -103,6 +108,18 @@ export default function productsReducer(
         case FETCH_BY_VENDOR_ERROR:
             return {
                 ...state, vendorLoading: false, error: action.payload
+            }
+        case FETCH_COMPARE_PRODUCTS_START:
+            return {
+                ...state, compareLoading: true
+            }
+        case FETCH_COMPARE_PRODUCTS_SUCCESS:
+            return {
+                ...state, compareLoading: false, compareProducts: action.payload
+            }
+        case FETCH_COMPARE_PRODUCTS_ERROR:
+            return {
+                ...state, compareLoading: false, error: action.payload
             }
         case FETCH_PRODUCT_PRICE:
             return {

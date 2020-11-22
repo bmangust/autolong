@@ -16,7 +16,10 @@ import {
     FETCH_BY_VENDOR_SUCCESS,
     FETCH_BY_VENDOR_ERROR,
     DELETE_PRODUCT_BY_ID,
-    UPDATE_PRODUCT_IMAGE
+    UPDATE_PRODUCT_IMAGE,
+    FETCH_COMPARE_PRODUCTS_START,
+    FETCH_COMPARE_PRODUCTS_SUCCESS,
+    FETCH_COMPARE_PRODUCTS_ERROR
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -160,6 +163,18 @@ export const fetchProductsByVendors = (data, published = 1) =>
         axios
             .post(url, {numbers, published})
             .then((answer) => {
+                if (published === 0) {
+                    Object.entries(answer.data).forEach(([key, value]: any) => {
+                        if (key === 'unpublished') {
+                            value.forEach(item => {
+                                toast.warn(createNotyMsg(item,
+                                    'товар с таким номером' +
+                                    ' есть опубликованный'))
+                            })
+                        }
+                    })
+                    delete answer.data.unpublished
+                }
                 dispatch({
                     type: FETCH_BY_VENDOR_SUCCESS,
                     payload: answer.data
@@ -208,16 +223,38 @@ export const updateProductImageById = (id, data) => async dispatch => {
         })
 }
 
-export const acceptProductById = (id, nameRu) => async dispacth => {
+export const acceptProductById = (id, nameRu) => async dispatch => {
     const url = `/api/products/${id}/publish`
     axios
         .put(url, {publish: 1})
         .then((answer) => {
             toast.success(createNotyMsg(nameRu,
                 'товар опубликован'))
-            dispacth(push('/newproducts'))
+            dispatch(push('/newproducts'))
         })
         .catch((error: AxiosError) => {
+            toast.error(error.message)
+        })
+}
+
+export const fetchCompareProductsByArticle = (article) => async dispatch => {
+    await dispatch({
+        type: FETCH_COMPARE_PRODUCTS_START
+    })
+    const url = '/api/compareproducts'
+    axios
+        .post(url, {article})
+        .then((answer) => {
+            dispatch({
+                type: FETCH_COMPARE_PRODUCTS_SUCCESS,
+                payload: answer.data
+            })
+        })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_COMPARE_PRODUCTS_ERROR,
+                payload: error.message
+            })
             toast.error(error.message)
         })
 }
