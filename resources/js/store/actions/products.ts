@@ -241,7 +241,7 @@ export const fetchCompareProductsByArticle = (article) => async dispatch => {
     await dispatch({
         type: FETCH_COMPARE_PRODUCTS_START
     })
-    const url = '/api/compareproducts'
+    const url = '/api/products/compare'
     axios
         .post(url, {article})
         .then((answer) => {
