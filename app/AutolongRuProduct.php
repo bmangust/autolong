@@ -31,6 +31,11 @@ class AutolongRuProduct extends Model
         return $this->translateHtmlCodesToTags($this->attributes['articul']);
     }
 
+    public function getNameAttribute()
+    {
+        return $this->translateHtmlCodesToTags($this->attributes['name']);
+    }
+
     public function checkNumberCodesInDB($numbers,int $published = 1): array
     {
         $availableProducts = [];

@@ -174,4 +174,15 @@ class ProductController extends Controller
         $product->save();
         response()->json(new ProductWithRelationshipsResource($product), 200);
     }
+
+    public function compare(Request $request)
+    {
+        $request->validate([
+            'vendorCode' => 'required'
+        ]);
+        $vendorCode = $request->input('vendorCode');
+        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
+            ->whereVendorCode($vendorCode)
+            ->orderBy('created_at', 'asc')->get(), 200));
+    }
 }

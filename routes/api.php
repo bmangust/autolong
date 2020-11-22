@@ -42,6 +42,7 @@ Route::put('products/{product}', 'ProductController@update');
 Route::post('products/{product}/updateimage', 'ProductController@updateImage');
 Route::delete('products/{product}', 'ProductController@destroy');
 Route::put('products/{product}/publish', 'ProductController@publish');
+Route::post('products/compare', 'ProductController@compare');
 
 Route::get('catalogs', 'CatalogController@index');
 Route::post('catalogs', 'CatalogController@store');
