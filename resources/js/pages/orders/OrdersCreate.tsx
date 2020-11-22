@@ -4,13 +4,21 @@ import React, {useEffect} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
+import {push} from 'connected-react-router'
+
+// Typescript
+import {IProvidersRootState} from '../../components/Providers/IProviders'
+import {IOrdersRootState} from '../../components/Orders/IOrders'
+
+// Styles
+import classes from './Orders.module.css'
 
 // Actions
 import {fetchItemsByVendors} from '../../store/actions/orders'
-import OrdersForms from '../../components/Orders/OrderForm/OrdersFroms'
-import {IProvidersRootState} from '../../components/Providers/IProviders'
 import {fetchProviders} from '../../store/actions/providers'
-import {IOrdersRootState} from '../../components/Orders/IOrders'
+
+// App
+import OrdersForms from '../../components/Orders/OrderForm/OrdersFroms'
 
 const OrdersCreate: React.FC = () => {
     const dispatch = useDispatch()
@@ -23,9 +31,15 @@ const OrdersCreate: React.FC = () => {
         dispatch(fetchItemsByVendors(formValues))
     })
 
-    const {orderProducts} = useSelector((state: IOrdersRootState) => ({
-        orderProducts: state.ordersState.orderProducts
-    }))
+    const {orderProducts, notFound} = useSelector(
+        (state: IOrdersRootState) => ({
+            orderProducts: state.ordersState.orderProducts,
+            notFound: state.ordersState.notFound
+        }))
+
+    const createProductsHandler = () => {
+        dispatch(push('/productscreate/published'))
+    }
 
     const {providers} = useSelector(
         (state: IProvidersRootState) => ({
@@ -52,11 +66,30 @@ const OrdersCreate: React.FC = () => {
                                 placeholder='
                             Добавляйте каждый внутреннему номер через enter
                             '/>
+                            <button
+                                className='btn btn-success mt-2'
+                                type='submit'>
+                                Добавить товары
+                            </button>
+                        </div>
+                        <div className="col-lg-4">
+                            {notFound && notFound.length
+                                ? <p className={classes.notFound}>
+                                    Для артикулов {notFound
+                                    .map((item, index) =>
+                                        index + 1 === notFound.length
+                                            ? `${item} `
+                                            : `${item}, `)}
+                                    не найдены записи. <span onClick={() =>
+                                    createProductsHandler()}>
+                                        Создайте эти товары
+                                    </span>
+                                </p>
+                                : null
+                            }
                         </div>
                     </div>
-                    <button className='btn btn-success mt-2' type='submit'>
-                        Добавить товары
-                    </button>
+
                 </div>
             </div>
         </form>

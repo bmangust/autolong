@@ -53,6 +53,8 @@ export interface IOrdersState {
     loadingStatus: boolean
     loadingInvoice: boolean
     invoiceInputs: any
+    notFound: any[]
+    locationChangeCount: number
     error: any
     statusError: any
 }
@@ -132,6 +134,7 @@ interface IFetchItemsByVendorError {
 interface IFetchItemsByVendorSuccess {
     type: typeof FETCH_ITEMS_BY_VENDOR_SUCCESS
     payload: IProduct[]
+    notFound: any[]
     loading: boolean
 }
 

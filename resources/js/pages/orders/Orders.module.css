@@ -11,3 +11,16 @@ h2 {
     font-size: 12px;
     line-height: 15px;
 }
+
+.notFound {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #949599;
+    margin-top: 25px;
+}
+
+.notFound span {
+    cursor: pointer;
+    color: #EB5E28;
+}

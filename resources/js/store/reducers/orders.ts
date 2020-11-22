@@ -33,6 +33,8 @@ const initialState: IOrdersState = {
     loadingStatus: false,
     loadingInvoice: true,
     invoiceInputs: [],
+    notFound: [],
+    locationChangeCount: 0,
     error: null,
     statusError: null
 }
@@ -83,7 +85,8 @@ export default function ordersReducer(
             }
         case FETCH_ITEMS_BY_VENDOR_SUCCESS:
             return {
-                ...state, loading: false, orderProducts: action.payload
+                ...state, loading: false, orderProducts: action.payload,
+                notFound: action.notFound
             }
         case FETCH_ITEMS_BY_VENDOR_ERROR:
             return {
@@ -106,10 +109,17 @@ export default function ordersReducer(
                 ...state, orders: state.orders.filter(({id}) =>
                     id !== action.payload), order: {}
             }
-        case LOCATION_CHANGE:
-            return {
-                ...state, orderProducts: []
+        case LOCATION_CHANGE: {
+            let notFound = state.notFound
+            if (state.locationChangeCount === 2) {
+                notFound = []
             }
+            return {
+                ...state, orderProducts: [],
+                locationChangeCount: state.locationChangeCount + 1,
+                notFound: notFound
+            }
+        }
         case FETCH_ORDER_INVOICE_START:
             return {
                 ...state, loadingInvoice: true

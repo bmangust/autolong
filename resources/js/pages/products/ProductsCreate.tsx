@@ -18,15 +18,30 @@ import {fetchProviders} from '../../store/actions/providers'
 import ProductsForms from '../../components/Products/ProductForm/ProductsForms'
 import Error from '../../components/UI/Error/Error'
 import Loader from '../../components/UI/Loader/Loader'
+import {IOrdersRootState} from '../../components/Orders/IOrders'
 
 
 const ProductsCreate: React.FC = () => {
     const dispatch = useDispatch()
     const {unpublished}: any = useParams()
 
+    const {notFound} = useSelector(
+        (state: IOrdersRootState) => ({
+            notFound: state.ordersState.notFound
+        }))
+
+    let numbers
+    if (notFound && notFound.length) {
+        numbers = notFound.join('\n')
+    }
+
     const {
         register, handleSubmit
-    } = useForm()
+    } = useForm({
+        defaultValues: {
+            numbers: numbers || ''
+        }
+    })
 
     const {providers} = useSelector(
         (state: IProvidersRootState) => ({

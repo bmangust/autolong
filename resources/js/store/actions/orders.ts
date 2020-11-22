@@ -121,9 +121,11 @@ export const fetchItemsByVendors = (data) => async dispatch => {
     axios
         .post(url, {numbers})
         .then((answer) => {
-            Object.entries(answer.data).forEach(([key, value]) => {
+            const notFound: any[] = []
+            Object.entries(answer.data).forEach(([key, value]: any) => {
                 if (key === 'number') {
                     value.forEach(item => {
+                        notFound.push(item)
                         toast.warn(createNotyMsg(item,
                             'артикул не найден'))
                     })
@@ -132,7 +134,8 @@ export const fetchItemsByVendors = (data) => async dispatch => {
             delete answer.data.number
             dispatch({
                 type: FETCH_ITEMS_BY_VENDOR_SUCCESS,
-                payload: answer.data
+                payload: answer.data,
+                notFound: notFound
             })
         }).catch((error: AxiosError) => {
         dispatch({
