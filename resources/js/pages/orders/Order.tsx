@@ -162,7 +162,7 @@ const Order: React.FC<IOrder> = () => {
                             <span
                                 className={cls.join(' ')}
                                 onClick={showPaymentHandler}>
-                                    Сменить статус
+                                    Изменить
                             </span>
                         </div>
                     </div>
