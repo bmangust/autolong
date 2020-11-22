@@ -249,6 +249,10 @@ export const fetchCompareProductsByArticle = (vendorCode) => async dispatch => {
                 type: FETCH_COMPARE_PRODUCTS_SUCCESS,
                 payload: answer.data
             })
+            if (!answer.data.length) {
+                toast.warn(`Товары с артикулом
+                ${vendorCode.vendorCode} не найдены`)
+            }
         })
         .catch((error: AxiosError) => {
             dispatch({
