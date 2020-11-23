@@ -15,18 +15,17 @@ class LoginController extends Controller
         $request->validate([
             'email' => 'required|email',
             'password' => 'required',
-            'deviceName' => 'required',
         ]);
 
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect.'],
+                'email' => ['Учетные данные не соответствуют нашим .'],
             ]);
         }
 
-        return $user->createToken($request->deviceName)->plainTextToken;
+        return $user->createToken($user->name)->plainTextToken;
     }
 
     public function logout(Request $request)
