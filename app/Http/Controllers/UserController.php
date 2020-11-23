@@ -135,7 +135,7 @@ class UserController extends Controller
 
     public function login(Request $request)
     {
-        $this->userLoginValidator($request->all())->validate();
+//        $this->userLoginValidator($request->all())->validate();
         $email = $request->input('email');
         $password = $request->input('password');
 
