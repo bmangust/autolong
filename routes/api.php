@@ -14,16 +14,17 @@ use Illuminate\Support\Str;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/user', function (Request $request) {
-    return $request->user();
-});
 
 Route::post('/login', 'LoginController@login')->name('login');
 Route::post('/logout', 'LoginController@logout');
-Route::post('users/passwordforgot', 'UserController@forgot');
-Route::post('users/passwordreset', 'UserController@reset');
+Route::post('/forgot', 'UserController@forgot');
+Route::post('/reset', 'UserController@reset');
 
 Route::middleware('auth:sanctum')->group(function () {
+    Route::get('/user', function (Request $request) {
+        return $request->user();
+    });
+
     Route::get('importers', 'ImporterController@index');
     Route::post('importers', 'ImporterController@store');
     Route::get('importers/{importer}', 'ImporterController@show');
