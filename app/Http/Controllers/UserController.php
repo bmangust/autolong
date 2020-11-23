@@ -133,23 +133,6 @@ class UserController extends Controller
         return response()->json([], 204);
     }
 
-    public function login(Request $request)
-    {
-//        $this->userLoginValidator($request->all())->validate();
-        $email = $request->input('email');
-        $password = $request->input('password');
-
-        $user = User::whereEmail($email)->first();
-        if ($user && Hash::check($password, $user->password)) {
-            $token = $user->createToken('authToken')->plainTextToken;
-            return response()->json([
-                'user' => new UserResource($user),
-                'token' => $token
-            ], 200);
-        }
-        throw ValidationException::withMessages('Эти учетные данные не соответствуют нашим записям.');
-    }
-
     public function logout(User $user)
     {
         $user->tokens()->delete();

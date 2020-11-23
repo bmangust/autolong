@@ -17,6 +17,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::post('/login', 'LoginController@login');
+
 Route::get('importers', 'ImporterController@index');
 Route::post('importers', 'ImporterController@store');
 Route::get('importers/{importer}', 'ImporterController@show');
@@ -107,13 +109,13 @@ Route::post('users', 'UserController@store');
 Route::get('users/{user}', 'UserController@show');
 Route::put('users/{user}', 'UserController@update');
 Route::delete('users/{user}', 'UserController@destroy');
-Route::post('users/login', 'UserController@login');
 Route::post('users/logout', 'UserController@logout');
 Route::post('users/passwordforgot', 'UserController@forgot');
 Route::post('users/passwordreset', 'UserController@reset');
 
-Route::post('accesses', 'AccessesController@store');
-Route::put('accesses{access}', 'AccessesController@update');
+
+Route::post('accesses', 'AccessController@store');
+Route::put('accesses{access}', 'AccessController@update');
 
 Route::get('userroles', 'UserRoleController@index');
 Route::post('userroles', 'UserRoleController@store');
