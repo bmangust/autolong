@@ -24,16 +24,15 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
             <Suspense fallback={route.fallback}>
                 <Route path={route.path} render={(props) => route.redirect
                     ? <Redirect to={route.redirect}/>
-                    : (authenticated === true || authenticated === null)
-                    && route.private
-                        ? route.component && route.private &&
+                    : route.private ?
+                        (authenticated
+                            ? route.component &&
+                            <route.component
+                                {...props} routes={route.routes}/>
+                            : <Redirect to='/login'/>)
+                        : route.component &&
                         <route.component
-                            {...props} routes={route.routes}/>
-                        : (route.path === '/login' ||
-                        route.path === '/forgotpassword')
-                        && <route.component
-                            {...props} routes={route.routes}/>
-                }
+                            {...props} routes={route.routes}/>}
                 />
             </Suspense>
         </ErrorBoundary>

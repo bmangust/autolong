@@ -18,7 +18,7 @@ const Layout: React.FC = (props) => {
 
     const cls = [classes.Layout]
 
-    if (authenticated !== true || authenticated !== null) {
+    if (!authenticated) {
         cls.push(classes.notAuthenticated)
     }
 
@@ -26,8 +26,13 @@ const Layout: React.FC = (props) => {
         <div className={cls.join(' ')}>
 
             <div className='container'>
-                {authenticated === true || authenticated === null
+                {!authenticated
                     ? <div className='row'>
+                        <main role='main' className='col-12'>
+                            {props.children}
+                        </main>
+                    </div>
+                    : <div className='row'>
                         <div className={classes.sidebarWrap +
                         ' col-xl-2 col-lg-2 p-lg-0'}>
                             <Sidebar isOpen={isOpen} setIsOpen={setIsOpen}/>
@@ -35,11 +40,6 @@ const Layout: React.FC = (props) => {
                         <main role='main' className='col-xl-10 col-lg-10
                      pl-xl-5 pl-auto'>
                             <Header isOpen={isOpen} setIsOpen={setIsOpen}/>
-                            {props.children}
-                        </main>
-                    </div>
-                    : <div className='row'>
-                        <main role='main' className='col-12'>
                             {props.children}
                         </main>
                     </div>
