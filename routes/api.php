@@ -92,7 +92,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('tags', 'TagController@index');
 
-    Route::put('/orderitems/{orderitem}', 'OrderItemController@update');
+    Route::put('orderitems/{orderitem}', 'OrderItemController@update');
 
     Route::get('logs', 'LogController@index');
 

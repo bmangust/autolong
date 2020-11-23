@@ -19,10 +19,10 @@ use Illuminate\Support\Str;
 
 $factory->define(User::class, function (Faker $faker) {
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
+        'name' => 'Администратор',
+        'email' => env('ADMIN_EMAIL', 'example@gmail.com'),
         'email_verified_at' => now(),
-        'password' => \Illuminate\Support\Facades\Hash::make('12345'),
+        'password' => \Illuminate\Support\Facades\Hash::make(env('ADMIN_PASSWORD')),
         'remember_token' => Str::random(10),
         'role_id' => 1,
     ];
