@@ -25,10 +25,12 @@ class MailTaskController extends Controller
     public function changeTime(Request $request)
     {
         $mailTask = MailTask::first();
+        $dispatchTime = $request->input('dispatchTime');
+        $email = $request->input('email');
         if (is_null($mailTask)) {
-            $mailTask->create($request->all());
+            $mailTask->create(['email' => $email, 'dispatch_time' => $dispatchTime]);
         } else {
-            $mailTask->update($request->all());
+            $mailTask->update(['email' => $email, 'dispatch_time' => $dispatchTime]);
         }
         return response()->json([
             'dispatchTime' => $mailTask->dispatch_time,

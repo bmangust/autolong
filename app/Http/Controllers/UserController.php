@@ -7,6 +7,7 @@ use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
 
 class UserController extends Controller
@@ -153,5 +154,34 @@ class UserController extends Controller
     {
         $user->tokens()->delete();
         return response([], 200);
+    }
+
+    public function forgot(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email'
+        ]);
+        Password::sendResetLink($request->only('email'));
+        return response()->json('Мы направили на ваш email ссылку на восстановление пароля', 200);
+    }
+
+    public function reset(Request $request)
+    {
+        $request->validate([
+            'email' => 'required|email',
+            'token' => 'required|string',
+            'password' => 'required|string|confirmed'
+        ]);
+
+        $reset_password_status = Password::reset($request->all(), function ($user, $password) {
+            $user->password = $password;
+            $user->save();
+        });
+
+        if ($reset_password_status == Password::INVALID_TOKEN) {
+            return response()->json("Предоставлен недействительный токен", 400);
+        }
+
+        return response()->json("Пароль был успешно изменен", 200);
     }
 }
