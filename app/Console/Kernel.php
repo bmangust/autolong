@@ -4,10 +4,14 @@ namespace App\Console;
 
 use App\ExchangeRate;
 use App\Http\Resources\ExchangeRateResource;
+use App\Mail\NewProducts;
+use App\MailTask;
+use App\Product;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Storage;
 use Spatie\DbDumper\Databases\MySql;
 
@@ -55,6 +59,22 @@ class Kernel extends ConsoleKernel
                 ->dumpToFile($name);
             Storage::disk('base')->move($name, '/public/dumps/' . $name);
         })->dailyAt('03:00');
+
+        $schedule->call(function () {
+            $mailTask = MailTask::first();
+
+            if (is_null($mailTask)) {
+                return true;
+            }
+
+            $dispatchTime = date('h:i', strtotime($mailTask->dispatch_time));
+            $email = $mailTask->email;
+            $nowTime = Carbon::now()->format('h:i');
+            if ($dispatchTime == $nowTime) {
+                $newProducts = Product::wherePublished(0)->orderByDesc('created_at')->get();
+                Mail::to($email)->send(new NewProducts($newProducts));
+            }
+        })->everyMinute();
     }
 
     /**

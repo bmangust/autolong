@@ -114,3 +114,7 @@ Route::post('userroles', 'UserRoleController@store');
 Route::get('userroles/{userrole}', 'UserRoleController@show');
 Route::put('userroles/{userrole}', 'UserRoleController@update');
 Route::delete('userroles/{userroles}', 'UserRoleController@destroy');
+
+Route::get('mailtask', 'MailTaskController@index');
+Route::post('mailtask', 'MailTaskController@changeTime');
+Route::delete('mailtask', 'MailTaskController@destroy');
