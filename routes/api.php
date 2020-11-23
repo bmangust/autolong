@@ -105,6 +105,8 @@ Route::put('users/{user}', 'UserController@update');
 Route::delete('users/{user}', 'UserController@destroy');
 Route::post('users/login', 'UserController@login');
 Route::post('users/logout', 'UserController@logout');
+Route::post('users/passwordforgot', 'UserController@forgot');
+Route::post('users/passwordreset', 'UserController@reset');
 
 Route::post('accesses', 'AccessesController@store');
 Route::put('accesses{access}', 'AccessesController@update');
