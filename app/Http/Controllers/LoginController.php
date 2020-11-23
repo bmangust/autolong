@@ -29,8 +29,8 @@ class LoginController extends Controller
         return $user->createToken($request->device_name)->plainTextToken;
     }
 
-    public function logout(): void
+    public function logout(Request $request)
     {
-        Auth::logout();
+        $request->user()->tokens()->delete();
     }
 }

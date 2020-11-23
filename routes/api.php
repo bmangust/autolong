@@ -16,7 +16,6 @@ use Illuminate\Support\Str;
 */
 
 Route::post('/login', 'LoginController@login')->name('login');
-Route::post('/logout', 'LoginController@logout');
 Route::post('/forgot', 'UserController@forgot');
 Route::post('/reset', 'UserController@reset');
 
@@ -24,6 +23,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
+    
+    Route::post('/logout', 'LoginController@logout');
 
     Route::get('importers', 'ImporterController@index');
     Route::post('importers', 'ImporterController@store');
