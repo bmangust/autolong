@@ -7,9 +7,9 @@
     <title>Marking</title>
 </head>
 
-<body style="font-family: DejaVu Sans, sans-serif; line-height: 1.5;">
+<body style="font-family: DejaVu Sans, sans-serif; font-size: 12px; line-height: 1.5;">
 
-    <table style="margin: 80px auto 0; border-collapse: collapse;">
+    <table style="margin: 30px 0 0 50px; border-collapse: collapse;">
         <tr>
             <td style="padding-bottom: 10px;">
                 <span style="border-bottom: 1px solid #000">Seller</span>
@@ -46,13 +46,10 @@
         @foreach($hsCodes as $hsCode)
         <tr>
             <td>
-                <span style="border-bottom: 1px dotted #000">{{ $hsCode ?? '-' }}</span>
+                <span style="border-bottom: 1px dotted #000">{{ $hsCode ?? '-' }}231314545646</span>
             </td>
         </tr>
         @endforeach
-        <tr>
-            <td></td>
-        </tr>
     </table>
 </body>
 

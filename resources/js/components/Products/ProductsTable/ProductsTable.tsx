@@ -92,7 +92,7 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     const deleteFormatter = (id) => {
         return (
             <button onClick={() => onDeleteHandler(id)}
-                    className='btn btn-danger'>
+                    className='btn btn-link btn-link-expend'>
                 Удалить
             </button>
         )
@@ -102,7 +102,7 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
         {
             dataField: 'price',
             text: 'Цена',
-            classes: 'price',
+            classNameTh: 'expend-price',
             formatter: moneyFormatter
         },
         {

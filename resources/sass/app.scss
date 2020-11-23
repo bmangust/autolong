@@ -649,6 +649,11 @@ html button.btn-link {
     width: fit-content;
 }
 
+html button.btn-link.btn-link-expend {
+    min-height: auto;
+    padding: 0;
+}
+
 html button.btn-link.btn-refund {
     font-weight: 500;
     font-size: 12px;
@@ -944,6 +949,10 @@ html select.select-mini.loading {
 
 html select.select-mini:focus {
     box-shadow: none;
+}
+
+.expend-price {
+    width: 210px;
 }
 
 .Toastify {
