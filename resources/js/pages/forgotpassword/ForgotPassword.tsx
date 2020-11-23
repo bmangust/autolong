@@ -18,7 +18,7 @@ const ForgotPassword: React.FC = () => {
 
     const forgotHandler = (e) => {
         e.preventDefault()
-        axios.post('/api/passwordforgot', {email})
+        axios.post('/api/forgot', {email})
             .then(() => {
                 toast.success('Письмо о смене пароля отправлено на почту')
                 dispatch(push('/login'))
