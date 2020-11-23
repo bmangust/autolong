@@ -37,8 +37,6 @@ const sanctumConfig = {
     user_object_route: process.env.MIX_USER_OBJECT_ROUTE || ''
 }
 
-console.log(sanctumConfig)
-
 const application = (
     <Provider store={store}>
         <ConnectedRouter history={history}>
