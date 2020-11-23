@@ -17,37 +17,11 @@ import {
     Products,
     Settings,
     Providers,
-    Logout,
     Prices,
     NewItems
 } from '../../UI/iconComponents'
 
 export const routes: IRoute[] = [
-    {
-        name: 'Регистрация',
-        path: '/forgotpassword',
-        component: lazy(() =>
-            pMinDelay(
-                import('../../../pages/forgotpassword/ForgotPassword'),
-                600
-            )
-        ),
-        hide: true,
-        exact: false,
-        private: false,
-        fallback: <div> Loading... </div>
-    },
-    {
-        name: 'Логин',
-        path: '/login',
-        component: lazy(() =>
-            pMinDelay(import('../../../pages/login/Login'), 600)
-        ),
-        hide: true,
-        exact: false,
-        private: false,
-        fallback: <div> Loading... </div>
-    },
     {
         name: 'Заказы',
         pageName: 'Заказы',
@@ -368,13 +342,47 @@ export const routes: IRoute[] = [
         icon: <Settings/>
     },
     {
-        name: 'Выход',
-        path: '/exit',
-        component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),
-        hide: false,
+        name: 'Забыли пароль?',
+        path: '/forgotpassword',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/forgotpassword/ForgotPassword'),
+                600)
+        ),
+        hide: true,
         exact: false,
-        private: true,
-        fallback: <Loader/>,
-        icon: <Logout/>
+        private: false,
+        fallback: <div> Loading... </div>
+    },
+    {
+        name: 'Восстановление пароля',
+        path: '/passwordreset',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/resetpassword/ResetPassword'),
+                600)
+        ),
+        hide: true,
+        exact: false,
+        private: false,
+        fallback: <div> Loading... </div>
+    },
+    {
+        name: 'Логин',
+        path: '/login',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/login/Login'), 600)
+        ),
+        hide: true,
+        exact: false,
+        private: false,
+        fallback: <div> Loading... </div>
+    },
+    {
+        name: 'Выход',
+        path: '/logout',
+        redirect: '/login',
+        hide: true,
+        exact: false,
+        private: false,
+        fallback: <div> Loading... </div>
     }
 ]

@@ -9,6 +9,8 @@ import thunk, {ThunkMiddleware} from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension'
 import {ConnectedRouter, routerMiddleware} from 'connected-react-router'
 import {createBrowserHistory} from 'history'
+import {Sanctum} from 'react-sanctum'
+
 
 // App
 import Index from './index'
@@ -27,10 +29,22 @@ const store = createStore(
     )
 )
 
+const sanctumConfig = {
+    api_url: process.env.MIX_API_URL || '',
+    csrf_cookie_route: process.env.MIX_CSRF_COOKIE_ROUTE || '',
+    signin_route: process.env.MIX_SIGNIN_ROUTE || '',
+    signout_route: process.env.MIX_SIGNOUT_ROUTE || '',
+    user_object_route: process.env.MIX_USER_OBJECT_ROUTE || ''
+}
+
+console.log(sanctumConfig)
+
 const application = (
     <Provider store={store}>
         <ConnectedRouter history={history}>
-            <Index/>
+            <Sanctum config={sanctumConfig}>
+                <Index/>
+            </Sanctum>
         </ConnectedRouter>
     </Provider>
 )

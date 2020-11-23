@@ -6,6 +6,10 @@
     margin-top: 15px;
 }
 
+.notAuthenticated {
+    height: 100vh;
+}
+
 @media (max-width: 767px) {
     .sidebarWrap {
         position: static !important;

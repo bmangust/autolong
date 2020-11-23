@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useContext} from 'react'
 
 // Third-party
 import {NavLink} from 'react-router-dom'
@@ -10,11 +10,14 @@ import classes from './Sidebar.module.css'
 // App
 import {routes} from '../router/routes'
 import SvgHelp from '../../UI/iconComponents/Help'
+import SvgLogout from '../../UI/iconComponents/Logout'
+import {SanctumContext} from 'react-sanctum'
 
-const Sidebar: React.FC<{isOpen: boolean; setIsOpen: Function}> = ({
-    isOpen,
-    setIsOpen,
-}) => {
+const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: Function }> = (
+    {
+        isOpen,
+        setIsOpen
+    }) => {
     const onHideMenuHandler = () => {
         if (isOpen) {
             setIsOpen(false)
@@ -39,6 +42,14 @@ const Sidebar: React.FC<{isOpen: boolean; setIsOpen: Function}> = ({
         )
     }
 
+    const {signOut} = useContext(SanctumContext)
+
+    const onLogoutHandler = () => {
+        if (signOut) {
+            signOut()
+        }
+    }
+
     const cls = [classes.sidebar]
 
     if (isOpen) {
@@ -47,11 +58,21 @@ const Sidebar: React.FC<{isOpen: boolean; setIsOpen: Function}> = ({
 
     return (
         <nav className={cls.join(' ') + ' nav flex-column'}>
-            <div className='w-100'>{renderLinks(routes)}</div>
+            <div className='w-100'>
+                {renderLinks(routes)}
+                <NavLink
+                    className={classes.navLink}
+                    activeClassName={classes.active}
+                    onClick={onLogoutHandler}
+                    to='/logout'>
+                    <SvgLogout/>
+                    Выход
+                </NavLink>
+            </div>
             <NavLink className={classes.help} to='/help'>
-                <SvgHelp />
+                <SvgHelp/>
                 <span>
-                    Справка по работе <br />с системой
+                    Справка по работе <br/>с системой
                 </span>
             </NavLink>
         </nav>

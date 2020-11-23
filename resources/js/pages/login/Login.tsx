@@ -1,34 +1,70 @@
 // React
-import React from 'react'
+import React, {useContext, useState} from 'react'
+
+// Third-party
+import {SanctumContext} from 'react-sanctum'
+import {toast} from 'react-toastify'
+import {NavLink} from 'react-router-dom'
+import {push} from 'connected-react-router'
+import {useDispatch} from 'react-redux'
 
 // Styles
 import classes from './Login.module.css'
 
+
 const Login: React.FC = () => {
+    const [email, setEmail] = useState<string>('')
+    const [password, setPassword] = useState<string>('')
+    const dispatch = useDispatch()
+
+    const {signIn} = useContext(SanctumContext)
+
+    const loginHandler = (e) => {
+        e.preventDefault()
+        if (signIn) {
+            signIn(email, password)
+                .then(() => {
+                    toast.success('Успешная авторизация')
+                    dispatch(push('/'))
+                })
+                .catch(() => toast.error('Неверный пароль или email'))
+        }
+    }
+
     return (
         <div className={classes.Login}>
             <div className='row'>
                 <div className='col-xl-7'>
-                    <form action='#' className={classes.LoginForm}>
+                    <form onSubmit={loginHandler} className={classes.LoginForm}>
                         <h1>Вход в систему</h1>
-                            <label htmlFor='email'>E-mail:</label>
-                            <input
-                                name='email'
-                                type='email'
-                                placeholder='Введите E-mail'
-                                required
-                            />
-                            <label htmlFor='password'>Пароль:</label>
-                            <input
-                                name='password'
-                                type='password'
-                                placeholder='Введите пароль'
-                                required
-                            />
-                        <button className='btn btn-success w-100'>
+                        <label htmlFor='email'>E-mail:</label>
+                        <input
+                            onChange={(e) => setEmail(e.target.value)}
+                            name='email'
+                            type='email'
+                            placeholder='Введите E-mail'
+                            autoComplete='email'
+                            required
+                        />
+                        <label htmlFor='password'>Пароль:</label>
+                        <input
+                            onChange={(e) => setPassword(e.target.value)}
+                            name='password'
+                            type='password'
+                            placeholder='Введите пароль'
+                            autoComplete='current-password'
+                            required
+                        />
+                        <button
+                            type='submit'
+                            className='btn btn-success w-100'>
                             Войти
                         </button>
-                        <a href='#'>Забыли пароль?</a>
+                        <NavLink
+                            className='d-table ml-auto mr-auto'
+                            to={'/forgotpassword'}>
+                            Забыли пароль?
+                        </NavLink>
                     </form>
                 </div>
             </div>
