@@ -16,8 +16,8 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
     const history = useHistory()
     history.location.state = route.pageName || route.name
     /** Authenticated flag */
-    const {authenticated} = useContext(SanctumContext)
-    // console.log('user', user)
+    const {authenticated, user} = useContext(SanctumContext)
+    console.log('user', user)
     console.log('authenticated', authenticated)
     return (
         <ErrorBoundary FallbackComponent={Error}>

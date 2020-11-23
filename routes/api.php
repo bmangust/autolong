@@ -13,6 +13,10 @@ use Illuminate\Support\Str;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
+Route::middleware('auth:api')->get('/user', function (Request $request) {
+    return $request->user();
+});
+
 Route::get('importers', 'ImporterController@index');
 Route::post('importers', 'ImporterController@store');
 Route::get('importers/{importer}', 'ImporterController@show');
@@ -85,10 +89,10 @@ Route::get('logs', 'LogController@index');
 
 Route::put('sandboxfiles/{sandboxFile}', 'SandboxFileController@update');
 Route::delete('sandboxfiles/{sandboxFile}', 'SandboxFileController@destroy');
-Route::post('{model}/{id}/savefile','SandboxFileController@saveFile')
+Route::post('{model}/{id}/savefile', 'SandboxFileController@saveFile')
     ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе. Не работает для слов оканчивающиеся на y или s
 Route::bind('id', function ($id, $route) {
-    $model = preg_replace('#s$#','' ,$route->parameter('model'));
+    $model = preg_replace('#s$#', '', $route->parameter('model'));
     $class = 'App\\' . ucfirst(Str::camel($model));
     $instance = $class::findOrFail($id);
     $route->forgetParameter('model');
