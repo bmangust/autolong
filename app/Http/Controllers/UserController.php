@@ -6,6 +6,7 @@ use App\Http\Resources\UserResource;
 use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 use Illuminate\Support\Facades\Validator;
@@ -32,26 +33,6 @@ class UserController extends Controller
             'password' => ['required', 'min:8', 'confirmed'],
         ], $messages, $names);
     }
-
-    protected function userLoginValidator(array $data)
-    {
-        $messages = [
-            'required' => 'Поле :attribute обязательно для заполнения.',
-            'max' => 'Поле :attribute должно содержать не более :max символов',
-            'min' => 'Поле :attribute должно содержать не менее :min символов'
-        ];
-
-        $names = [
-            'email' => 'e-mail',
-            'password' => 'пароль',
-        ];
-
-        return Validator::make($data, [
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8', 'confirmed'],
-        ], $messages, $names);
-    }
-
     /**
      * Display a listing of the resource.
      *
@@ -131,12 +112,6 @@ class UserController extends Controller
     {
         $user->delete();
         return response()->json([], 204);
-    }
-
-    public function logout(User $user)
-    {
-        $user->tokens()->delete();
-        return response([], 200);
     }
 
     public function forgot(Request $request)

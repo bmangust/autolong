@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -18,6 +19,8 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::post('/login', 'LoginController@login');
+Route::post('/logout', 'LoginController@logout');
+
 
 Route::get('importers', 'ImporterController@index');
 Route::post('importers', 'ImporterController@store');
@@ -109,7 +112,6 @@ Route::post('users', 'UserController@store');
 Route::get('users/{user}', 'UserController@show');
 Route::put('users/{user}', 'UserController@update');
 Route::delete('users/{user}', 'UserController@destroy');
-Route::post('users/logout', 'UserController@logout');
 Route::post('users/passwordforgot', 'UserController@forgot');
 Route::post('users/passwordreset', 'UserController@reset');
 
