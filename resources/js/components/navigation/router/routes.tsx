@@ -372,7 +372,7 @@ export const routes: IRoute[] = [
             pMinDelay(import('../../../pages/login/Login'), 600)
         ),
         hide: true,
-        exact: false,
+        exact: true,
         private: false,
         fallback: <div> Loading... </div>
     },
