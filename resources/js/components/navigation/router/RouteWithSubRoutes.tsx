@@ -4,13 +4,13 @@ import {ErrorBoundary} from 'react-error-boundary'
 
 // Third-party
 import {Redirect, Route, useHistory} from 'react-router-dom'
-import {SanctumContext} from 'react-sanctum'
 
 // Typescript
 import {IRoute} from './IRoute'
 
 // App
 import Error from '../../UI/Error/Error'
+import SanctumContext from '../../../Sanctum/SanctumContext'
 
 const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
     const history = useHistory()
@@ -25,7 +25,7 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
                 <Route path={route.path} render={(props) => route.redirect
                     ? <Redirect to={route.redirect}/>
                     : route.private ?
-                        (authenticated
+                        (authenticated || authenticated === null
                             ? route.component &&
                             <route.component
                                 {...props} routes={route.routes}/>

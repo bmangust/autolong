@@ -1,15 +1,13 @@
 // React
 import React, {useContext, useState} from 'react'
 
-// Third-party
-import {SanctumContext} from 'react-sanctum'
-
 // Styles
 import classes from './Layout.module.css'
 
 // App
 import Sidebar from '../components/navigation/Sidebar/Sidebar'
 import Header from '../components/navigation/Header/Header'
+import SanctumContext from '../Sanctum/SanctumContext'
 
 const Layout: React.FC = (props) => {
     const [isOpen, setIsOpen] = useState(false)
