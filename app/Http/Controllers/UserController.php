@@ -161,7 +161,7 @@ class UserController extends Controller
         $request->validate([
             'email' => 'required|email'
         ]);
-        Password::sendResetLink($request->input('email'));
+        Password::sendResetLink($request->only('email'));
         return response()->json('Мы направили на ваш email ссылку на восстановление пароля', 200);
     }
 
