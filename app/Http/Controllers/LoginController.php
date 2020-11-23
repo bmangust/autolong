@@ -2,24 +2,31 @@
 
 namespace App\Http\Controllers;
 
+use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class LoginController extends Controller
 {
     public function login(Request $request)
     {
         $request->validate([
-            'email' => 'required',
-            'password' => 'required'
+            'email' => 'required|email',
+            'password' => 'required',
+            'device_name' => 'required',
         ]);
 
-        if (Auth::attempt($request->only('email', 'password'))) {
-            return response()->json(Auth::user(), 200);
+        $user = User::where('email', $request->email)->first();
+
+        if (! $user || ! Hash::check($request->password, $user->password)) {
+            throw ValidationException::withMessages([
+                'email' => ['The provided credentials are incorrect.'],
+            ]);
         }
 
-        throw ValidationException::withMessages('Эти учетные данные не соответствуют нашим записям.');
+        return $user->createToken($request->device_name)->plainTextToken;
     }
 
     public function logout(): void
