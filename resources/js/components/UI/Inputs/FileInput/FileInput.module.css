@@ -69,3 +69,8 @@
     color: #949599;
     margin-bottom: 0;
 }
+
+.delete {
+    border: 0;
+    background-color: transparent;
+}
