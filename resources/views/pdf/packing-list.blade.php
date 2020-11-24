@@ -159,7 +159,6 @@
             </td>
         </tr>
     </table>
-    <img style="display: block; max-width: 300px; margin: 0 auto;" src="../../../public/imgs/seal.jpg" alt="">
 
 </body>
 
