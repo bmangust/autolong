@@ -1,13 +1,16 @@
 .Login {
+    margin-top: -15px;
     position: relative;
-    background: url('/imgs/cargo.png') right / contain no-repeat;
+    height: 100vh;
+    align-items: center;
+    background: url('/imgs/cargo.png') right 100px top / 327px no-repeat;
 }
 
 .Login::before {
     content: '';
     position: absolute;
-    top: 20%;
-    right: 20%;
+    top: 164px;
+    right: 380px;
     width: 80px;
     height: 46px;
     background: url('/svg/dots-small.svg') center no-repeat;
@@ -16,14 +19,15 @@
 .Login::after {
     content: '';
     position: absolute;
-    top: 45%;
-    right: -15%;
+    top: 250px;
+    right: 0;
     width: 120px;
     height: 65px;
     background: url('/svg/dots-big.svg') center no-repeat;
 }
 
 .LoginForm {
+    max-width: 505px;
     padding: 34px 95px;
     background: var(--white);
     border-radius: 10px;
@@ -67,16 +71,42 @@
 
 
 @media (max-width: 1199px) {
+
+    .Login {
+        background-position: right top;
+    }
+
+    .Login::before {
+        content: '';
+        top: 120px;
+        right: 300px;
+    }
+
+    .Login::after {
+        content: '';
+        top: 200px;
+    }
+}
+
+@media (max-width: 991px) {
+
+    .Login {
+        background-image: none;
+    }
+
     .Login::before,
     .Login::after {
         display: none;
     }
-}
 
+    .LoginForm {
+        margin: 0 auto;
+    }
+}
 
 @media (max-width: 767px) {
     .LoginForm {
-        padding: 15px;
+        padding: 15px 30px;
     }
 
     .LoginForm h1 {
