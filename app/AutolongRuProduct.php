@@ -50,7 +50,7 @@ class AutolongRuProduct extends Model
                     $availableProducts['products'][] = new ProductResource($usProduct->first());
                 }
             } elseif (!is_null($product) && $product != '') {
-                $availableProducts[] = new AutolongRuProductResource($product);
+                $availableProducts['products'][] = new AutolongRuProductResource($product);
             } else {
                 $availableProducts['products'][] = (object) ['number' => $number];
             }
