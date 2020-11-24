@@ -17,7 +17,6 @@ use Illuminate\Support\Str;
 
 Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/forgot', 'Auth\ResetPasswordController@forgot')->name('password.forgot');
-Route::post('/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {

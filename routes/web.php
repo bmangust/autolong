@@ -16,3 +16,6 @@ use Illuminate\Support\Facades\Route;
 Route::get('/{any}', static function () {
     return view('app');
 })->where('any', '.*');
+
+Route::post('/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
+
