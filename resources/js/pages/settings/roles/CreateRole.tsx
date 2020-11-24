@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useContext} from 'react'
 
 // Third-party
 import {useForm} from 'react-hook-form'
@@ -17,6 +17,7 @@ import Form from '../../../components/UI/Form/Form'
 import Input from '../../../components/UI/Inputs/Input/Input'
 import InputCheckbox
     from '../../../components/UI/Inputs/InputCheckbox/InputCheckbox'
+import {SanctumContext} from '../../../Sanctum'
 
 const CreateRole: React.FC = () => {
     const dispatch = useDispatch()
@@ -26,6 +27,8 @@ const CreateRole: React.FC = () => {
         dispatch(push('/settings/roles'))
     }
 
+    const {user} = useContext(SanctumContext)
+
     const createRoleHandler =
         handleSubmit((formValues) => {
             Object.entries(formValues).map(([key, value]) => {
@@ -33,13 +36,14 @@ const CreateRole: React.FC = () => {
                     formValues[key] = value ? 1 : 0
                 }
             })
+            formValues.roleId = user.role_id
             dispatch(createRole(formValues))
         })
     return <div className={classes.form + ' card card-body'}>
         <Form onSubmit={createRoleHandler}>
             <div className="row mb-4">
                 <Input
-                    placeHolder='Введите название роли'
+                    placeholder='Введите название роли'
                     type='text'
                     ref={register}
                     label='Название роли'
