@@ -41,7 +41,7 @@
                                 <tr>
                                     <td>
                                         <img width="65" height="50"
-                                            src={{ asset($newProduct->image) ?? asset('public/imgs/placeholder-product-image.png') }} alt="product">
+                                            src={{ asset($newProduct->image) ?? asset('/public/imgs/placeholder-product-image.png') }} alt="product">
                                     </td>
                                 </tr>
                             </table>
