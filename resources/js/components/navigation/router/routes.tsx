@@ -323,9 +323,59 @@ export const routes: IRoute[] = [
         name: 'Настройки',
         path: '/settings',
         component: lazy(() =>
-            pMinDelay(import('../../../pages/Settings'), 600)
+            pMinDelay(import('../../../pages/settings/Settings'), 600)
         ),
         hide: false,
+        exact: true,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>
+    },
+    {
+        name: 'Общие настройки',
+        path: '/settings/general',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/GeneralSettings'), 600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>
+    },
+    {
+        name: 'Настроить права доступа',
+        path: '/settings/roles',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/roles/RolesSettings')
+                , 600)
+        ),
+        hide: true,
+        exact: true,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>
+    },
+    {
+        name: 'Настроить права доступа',
+        path: '/settings/roles/add',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/roles/CreateRole')
+                , 600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>
+    },
+    {
+        name: 'Пользователи',
+        path: '/settings/users',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/UsersSettings'), 600)
+        ),
+        hide: true,
         exact: false,
         private: true,
         fallback: <Loader/>,

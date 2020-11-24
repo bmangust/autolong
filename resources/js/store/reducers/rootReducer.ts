@@ -13,6 +13,7 @@ import ordersReducer from './orders'
 import tagsReducer from './tags'
 import logsReducer from './Logs'
 import citiesReducer from './cities'
+import rolesReducer from './roles'
 
 const createRootReducer = (history) => combineReducers({
     router: connectRouter(history),
@@ -25,7 +26,8 @@ const createRootReducer = (history) => combineReducers({
     countriesState: countryReducer,
     tagsState: tagsReducer,
     citiesState: citiesReducer,
-    logsState: logsReducer
+    logsState: logsReducer,
+    rolesState: rolesReducer
 })
 
 export default createRootReducer

@@ -1,0 +1,35 @@
+.link a {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3A405F;
+    display: flex;
+    align-items: center;
+}
+
+.link p {
+    padding-bottom: 12px;
+    border-bottom: 1px solid #EBEBEB;
+    margin-bottom: 12px;
+    width: 90%;
+    position: relative;
+}
+
+.link p:before {
+    content: url("/svg/chevron-down.svg");
+    position: absolute;
+    right: 0;
+    transform: rotate(-90deg);
+}
+
+.link:last-of-type p, .link:last-of-type svg {
+    padding-bottom: 0;
+    border: 0;
+    margin-bottom: 0;
+}
+
+.link svg {
+    margin-right: 22px;
+    margin-bottom: 24px;
+}
+

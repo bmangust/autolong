@@ -16,7 +16,7 @@ const Placeholder: React.FC<IPlaceholder> = props => {
         <div className={classes.placeholder + ' card'}>
             <div className="card-body">
                 <div className={classes.placeholderBody}>
-                    <img src="imgs/placeholder-img.png" alt="placeholder"/>
+                    <img src="/imgs/placeholder-img.png" alt="placeholder"/>
                     <div>
                         <p className={classes.title}>
                             {props.title}

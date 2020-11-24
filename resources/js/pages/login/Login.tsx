@@ -45,7 +45,6 @@ const Login: React.FC = () => {
         //     .catch((error) => console.log(error.message))
     }
 
-
     return (
         <div className={classes.Login}>
             <div className='row'>
