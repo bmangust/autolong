@@ -130,7 +130,9 @@ class Order extends Model
         $quantity = 0;
         foreach ($this->orderItems as $orderItem) {
             if (!is_null($orderItem->pcs_ctn_ctns)) {
-                $quantity += array_product(json_decode($orderItem->pcs_ctn_ctns, true)[$pcsCtnOrCtns]);
+                foreach (json_decode($orderItem->pcs_ctn_ctns, true)[$pcsCtnOrCtns] as $pcsCtnOrCtn) {
+                    $quantity += $pcsCtnOrCtn;
+                }
             }
         }
         return $quantity;
@@ -141,7 +143,9 @@ class Order extends Model
         $volume = 0;
         foreach ($this->orderItems as $orderItem) {
             if (!is_null($orderItem->meas)) {
-                $volume += array_product(json_decode($orderItem->meas, true));
+                foreach (json_decode($orderItem->meas, true) as $meas) {
+                    $volume += array_product($meas);
+                }
             }
         }
         return $volume;
