@@ -46,41 +46,39 @@ const Login: React.FC = () => {
     }
 
     return (
-        <div className={classes.Login}>
-            <div className='row'>
-                <div className='col-xl-7'>
-                    <form onSubmit={loginHandler} className={classes.LoginForm}>
-                        <h1>Вход в систему</h1>
-                        <label htmlFor='email'>E-mail:</label>
-                        <input
-                            onChange={(e) => setEmail(e.target.value)}
-                            name='email'
-                            type='email'
-                            placeholder='Введите E-mail'
-                            autoComplete='email'
-                            required
-                        />
-                        <label htmlFor='password'>Пароль:</label>
-                        <input
-                            onChange={(e) => setPassword(e.target.value)}
-                            name='password'
-                            type='password'
-                            placeholder='Введите пароль'
-                            autoComplete='current-password'
-                            required
-                        />
-                        <button
-                            type='submit'
-                            className='btn btn-success w-100'>
-                            Войти
-                        </button>
-                        <NavLink
-                            className='d-table ml-auto mr-auto'
-                            to={'/forgotpassword'}>
-                            Забыли пароль?
-                        </NavLink>
-                    </form>
-                </div>
+        <div className={classes.Login + ' row'}>
+            <div className='col-xl-7 justify-content-center'>
+                <form onSubmit={loginHandler} className={classes.LoginForm}>
+                    <h1>Вход в систему</h1>
+                    <label htmlFor='email'>E-mail:</label>
+                    <input
+                        onChange={(e) => setEmail(e.target.value)}
+                        name='email'
+                        type='email'
+                        placeholder='Введите E-mail'
+                        autoComplete='email'
+                        required
+                    />
+                    <label htmlFor='password'>Пароль:</label>
+                    <input
+                        onChange={(e) => setPassword(e.target.value)}
+                        name='password'
+                        type='password'
+                        placeholder='Введите пароль'
+                        autoComplete='current-password'
+                        required
+                    />
+                    <button
+                        type='submit'
+                        className='btn btn-success w-100'>
+                        Войти
+                    </button>
+                    <NavLink
+                        className='d-table ml-auto mr-auto'
+                        to={'/forgotpassword'}>
+                        Забыли пароль?
+                    </NavLink>
+                </form>
             </div>
         </div>
     )

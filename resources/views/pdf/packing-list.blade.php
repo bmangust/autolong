@@ -145,6 +145,21 @@
                 </td>
             </tr>
         @endforeach
+        <tr>
+            <td style="padding: 5px 15px; border: 1px solid #000;">total</td>
+            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
+            <td style="padding: 5px 15px; border: 1px solid #000;">{{ $order->getOrderItemsQuantity() }}</td>
+            <td style="padding: 5px 15px; border: 1px solid #000;">{{ $order->getFullOrderItemsPcsCtnOrCtns('pcsCtn') }}</td>
+            <td style="padding: 5px 15px; border: 1px solid #000;">{{ $order->getFullOrderItemsPcsCtnOrCtns('ctns') }}</td>
+            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
+            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
+            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
+            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
+            <td style="padding: 5px 15px; border: 1px solid #000;"></td>
+            <td style="padding: 5px 15px; border: 1px solid #000;">{{ $order->getFullOrderItemsWeightNetto() }}</td>
+            <td style="padding: 5px 15px; border: 1px solid #000;">{{ $order->getFullOrderItemsWeightBrutto() }}</td>
+            <td style="padding: 5px 15px; border: 1px solid #000;">{{ $order->getFullOrderItemsVolume() }}</td>
+        </tr>
     </table>
 
     <table style="border-collapse: collapse; margin: 20px auto 0;">
@@ -159,7 +174,6 @@
             </td>
         </tr>
     </table>
-    <img style="display: block; max-width: 300px; margin: 0 auto;" src="../../../public/imgs/seal.jpg" alt="">
 
 </body>
 

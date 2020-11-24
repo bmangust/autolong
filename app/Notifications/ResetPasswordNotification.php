@@ -44,10 +44,9 @@ class ResetPasswordNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->subject('Восстановление пароля в системе' . env('APP_NAME'))
+            ->subject('Восстановление пароля в системе ' . env('APP_NAME'))
             ->view('emails.reset-password', [
                 'url' => url(config('app.url') . route('password.reset', [$this->token, $notifiable->email], false)),
-                'name' => $notifiable->name
             ]);
     }
 }

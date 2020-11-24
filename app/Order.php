@@ -122,6 +122,59 @@ class Order extends Model
         return $quantity;
     }
 
+    public function getFullOrderItemsPcsCtnOrCtns(string $pcsCtnOrCtns): int
+    {
+        if (!preg_match('#^pcsCtn$|^ctns$#', $pcsCtnOrCtns)) {
+            throw new HttpException(404, $pcsCtnOrCtns . 'такого параметра нет');
+        }
+        $quantity = 0;
+        foreach ($this->orderItems as $orderItem) {
+            if (!is_null($orderItem->pcs_ctn_ctns)) {
+                foreach (json_decode($orderItem->pcs_ctn_ctns, true)[$pcsCtnOrCtns] as $pcsCtnOrCtn) {
+                    $quantity += $pcsCtnOrCtn;
+                }
+            }
+        }
+        return $quantity;
+    }
+
+    public function getFullOrderItemsVolume(): int
+    {
+        $volume = 0;
+        foreach ($this->orderItems as $orderItem) {
+            if (!is_null($orderItem->meas)) {
+                foreach (json_decode($orderItem->meas, true) as $meas) {
+                    $volume += array_product($meas);
+                }
+            }
+        }
+        return $volume;
+    }
+
+    public function getFullOrderItemsWeightNetto(): int
+    {
+        $weight = 0;
+        foreach ($this->orderItems as $orderItem) {
+            if (!is_null($orderItem->pcs_ctn_ctns)) {
+                $ctns = array_product(json_decode($orderItem->pcs_ctn_ctns, true)['ctns']);
+                $weight += $orderItem->countWeightNetto($ctns);
+            }
+        }
+        return $weight;
+    }
+
+    public function getFullOrderItemsWeightBrutto(): int
+    {
+        $weight = 0;
+        foreach ($this->orderItems as $orderItem) {
+            if (!is_null($orderItem->pcs_ctn_ctns)) {
+                $ctns = array_product(json_decode($orderItem->pcs_ctn_ctns, true)['ctns']);
+                $weight += $orderItem->countWeightBrutto($ctns);
+            }
+        }
+        return $weight;
+    }
+
     public function getFullBruttoWeight(): int
     {
         $weight = 0;
