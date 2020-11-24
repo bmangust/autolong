@@ -1,92 +1,219 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!DOCTYPE html
+    PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
 <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <meta name="viewport" content="width=device-width" />
-</head>
+    <title>Autolong</title>
 
-<style>
-    @media screen and (max-width:480px) {
-
-        table {
-            width: 100% !important;
+    <style type="text/css">
+        body {
+            -webkit-text-size-adjust: 100%;
+            -ms-text-size-adjust: 100%;
+            text-size-adjust: 100%;
+            margin: 0;
+            padding: 0;
         }
 
-    }
-</style>
+        table {
+            border-spacing: 0;
+            border-collapse: collapse;
+        }
 
-<body style="font-family: Arial, Helvetica, sans-serif; font-size: 12px; line-height: 1.2; padding-top: 60px;">
+        table td {
+            border-collapse: collapse;
+        }
 
-    <table cellpadding='0' cellspacing='0' border="0" width="600"
-        style="border-collapse: collapse; margin: 0 auto; background-color: #f7f8fa; border-radius: 10px;">
-        <tr>
-            <th style="padding: 25px 23px 10px 23px;">
-                <h1 style="margin: 0; font-size: 18px; font-weight: 600; text-align: left; color: #3a405f;">Новинки в
-                    системе Autolong</h1>
-            </th>
-        </tr>
-        <tr>
-            <td style="padding: 0 23px 20px 23px; color: #949599;">
-                Товары, ожидающие одобрения от 21.11.2020
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 0 23px 25px;">
-                <table cellpadding='0' cellspacing='0' border="0"
-                    style="border-collapse: collapse; background-color: #ffffff; border-radius: 10px;">
-                    <tr>
-                        <td style="padding: 10px 15px 10px;">
-                            <table cellpadding='0' cellspacing='0' border="0" style="border-collapse: collapse;">
-                                <tr>
-                                    <td>
-                                        <img width="65" height="50"
-                                            src="../../../public/imgs/placeholder-product-image.png" alt="product">
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                        <td style="padding: 10px 10px 10px 0;">
-                            <table cellpadding='0' cellspacing='0' border="0" style="border-collapse: collapse;">
-                                <tr>
-                                    <td
-                                        style="padding-bottom: 10px; font-weight: 600; font-size: 10px; color: #3a405f;">
-                                        Фара противотуманная универсальная (дальний свет) 12-27 В, 16 LED диодов, 48W,
-                                        5048 SPOT4,5"
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td>
-                                        <table cellpadding='0' cellspacing='0' border="0" width='150'
-                                            style="border-collapse: collapse;">
-                                            <tr>
-                                                <td style="color: #949599;">
-                                                    Цена:
-                                                </td>
-                                                <td style="color: #eb5e28;">
-                                                    13.00 ¥
-                                                </td>
-                                            </tr>
-                                        </table>
-                                    </td>
-                                </tr>
-                            </table>
-                        </td>
-                    </tr>
-                </table>
-            </td>
-        </tr>
-        <tr>
-            <td style="padding: 0 23px 30px; text-align: center;">
-                <a href="#"
-                    style="display: inline-block; width: 300px; padding: 10px 10px; background-color: #eb5e28; border-radius: 10px; text-decoration: none; color: #ffffff;">Перейти
-                    к
-                    новинкам</a>
-            </td>
-        </tr>
-    </table>
+        img {
+            -ms-interpolation-mode: bicubic;
+            display: block;
+            outline: none;
+            text-decoration: none;
+        }
+
+        a img {
+            border: none;
+        }
+
+        p {
+            margin: 0;
+            padding: 0;
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            color: #3a405f;
+            line-height: 100%;
+        }
+
+
+        body,
+        #body_style {
+            width: 100% !important;
+            min-height: 1000px;
+            color: #3a405f;
+            background-color: #f7f8fa;
+            font-family: -apple-system, BlinkMacSystemFont, Arial, Helvetica, sans-serif;
+            font-size: 14px;
+            line-height: 1.4;
+        }
+
+        a {
+            color: #3a405f;
+            text-decoration: none;
+        }
+
+        a:link {
+            color: #3a405f;
+            text-decoration: none;
+        }
+
+        a:visited {
+            color: #3a405f;
+            text-decoration: none;
+        }
+
+        a:focus {
+            color: #3a405f !important;
+        }
+
+        a:hover {
+            color: #3a405f !important;
+        }
+
+        @media only screen and (max-width: 639px) {
+
+            .table {
+                width: 320px !important;
+            }
+
+            .table td {
+                text-align: left;
+            }
+
+            .innertable {
+                width: 300px !important;
+            }
+
+            .collapse-cell {
+                width: 300px !important;
+            }
+
+        }
+    </style>
+</head>
+
+
+<body
+    style="width:100% !important; min-height:1000px; color:#3a405f; background-color: #f7f8fa; font-family:-apple-system,Arial,Helvetica,sans-serif; font-size:14px; line-height:1.4;"
+    alink="#1990fe" link="#1990fe" text="#3a405f">
+
+
+    <!-- PAGE WRAPPER -->
+    <div id="body_style">
+
+        <!-- Wrapper/Container Table -->
+        <table cellpadding="0" cellspacing="0" border="0" align="center"
+            style="width:100% !important; margin:0; padding:0;">
+
+            <!-- HEADER -->
+            <tr>
+                <td bgcolor="#f7f8fa" style="padding-top: 50px;">
+                    <table bgcolor="#f7f8fa" width="600" cellpadding="0" cellspacing="0" border="0" align="center"
+                        class="innertable">
+                        <tr>
+                            <td style="padding-bottom: 20px;">
+                                <h1 style="font-size: 18px; font-weight: 600; text-align: left; color: #3a405f;">Новинки
+                                    в
+                                    системе Autolong</h1>
+                                <p style="color: #949599;">Товары, ожидающие одобрения от
+                                    {{ \Carbon\Carbon::now()->format('d.m.Y') }}</p>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- /HEADER -->
+
+            @foreach($newProducts as $newProduct)
+            <tr bgcolor="#f7f8fa">
+                <td style="padding-bottom: 10px;">
+                    <table width="600" cellpadding="0" cellspacing="0" border="0" align="center" class="table"
+                        bgcolor="#ffffff" style="border-radius: 10px;">
+
+                        <!-- CONTENT -->
+                        <tr>
+                            <td>
+                                <table class="innertable" bgcolor="#ffffff" width="550" cellpadding="0" cellspacing="0"
+                                    border="0" align="center">
+                                    <tr>
+                                        <td style="padding-top: 15px; padding-bottom: 15px;">
+                                            <table align="left" width="80" cellpadding="0" cellspacing="0" border="0"
+                                                class="collapse-cell">
+                                                <tr>
+                                                    <td style="padding-bottom: 10px;">
+                                                        <img width="65" height="50"
+                                            src={{ asset($newProduct->image) ?? asset('/imgs/placeholder-product-image.png') }} alt="product">
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                            <table align="right" width="470" cellpadding="0" cellspacing="0" border="0"
+                                                class="collapse-cell">
+                                                <tr>
+                                                    <td>
+                                                        {{ $newProduct->name_ru ?: $newProduct->name_en }}
+                                                        <p style="padding-top: 10px;">
+                                                            <span style="color: #949599; padding-right: 40px;">
+                                                                Цена:
+                                                            </span>
+                                                            <span style="color: #eb5e28;">
+                                                                {{ $newProduct->price_cny }} ¥
+                                                            </span>
+                                                        </p>
+                                                    </td>
+                                                </tr>
+                                            </table>
+                                        </td>
+                                    </tr>
+                                </table>
+                            </td>
+                        </tr>
+                        <!-- /CONTENT -->
+
+                    </table>
+                </td>
+            </tr>
+            @endforeach
+
+
+            <!-- footer -->
+            <tr>
+                <td>
+                    <table bgcolor="#f7f8fa" width="600" cellpadding="0" cellspacing="0" border="0" align="center"
+                        class="innertable">
+                        <tr>
+                            <td align="center" style="padding-top: 5px;" class="collapse-cell">
+                                <a href={{ asset('newproducts') }}
+                                    style="display: block; width: 300px; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; background-color: #eb5e28; border-radius: 10px; color: #ffffff;">Перейти
+                                    к новинкам</a>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+            <!-- /footer -->
+        </table>
+        <!-- End of wrapper table -->
+
+
+    </div>
+    <!-- /PAGE WRAPPER -->
 
 </body>
 
 </html>
-
