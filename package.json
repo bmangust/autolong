@@ -69,6 +69,7 @@
         "laravel-mix-react-css-modules": "^2.0.0",
         "laravel-mix-react-typescript-extension": "^1.0.3",
         "p-min-delay": "^3.1.0",
+        "query-string": "^6.13.7",
         "react-bootstrap": "^1.4.0",
         "react-bootstrap-table-next": "^4.0.3",
         "react-bootstrap-table2-paginator": "^2.1.2",

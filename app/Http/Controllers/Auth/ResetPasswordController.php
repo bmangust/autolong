@@ -22,7 +22,7 @@ class ResetPasswordController extends Controller
         $request->validate([
             'email' => 'required|email',
             'token' => 'required|string',
-            'password' => 'required|string|confirmed'
+            'password' => 'required|string'
         ]);
 
         $reset_password_status = Password::reset($request->all(), function ($user, $password) {

@@ -416,6 +416,18 @@ export const routes: IRoute[] = [
         fallback: <div> Loading... </div>
     },
     {
+        name: 'Восстановление пароля',
+        path: '/reset',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/resetpassword/ResetPassword'),
+                600)
+        ),
+        hide: true,
+        exact: false,
+        private: false,
+        fallback: <div> Loading... </div>
+    },
+    {
         name: 'Логин',
         path: '/login',
         component: lazy(() =>
