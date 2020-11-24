@@ -31,7 +31,8 @@ class NewProducts extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->view('emails.newproducts')
+        return $this->subject('Новинки в системе Autolong')
+                    ->view('emails.newproducts')
                     ->with([
                         'newProducts' => $this->newProducts,
                     ]);

@@ -27,9 +27,10 @@
         </tr>
         <tr>
             <td style="padding: 0 23px 20px 23px; color: #949599;">
-                Товары, ожидающие одобрения от 21.11.2020
+                Товары, ожидающие одобрения от {{ \Carbon\Carbon::now()->format('d.m.Y') }}
             </td>
         </tr>
+        @foreach($newProducts as $newProduct)
         <tr>
             <td style="padding: 0 23px 25px;">
                 <table cellpadding='0' cellspacing='0' border="0"
@@ -40,7 +41,7 @@
                                 <tr>
                                     <td>
                                         <img width="65" height="50"
-                                            src="../../../public/imgs/placeholder-product-image.png" alt="product">
+                                            src={{ asset($newProduct->image) ?? asset('public/imgs/placeholder-product-image.png') }} alt="product">
                                     </td>
                                 </tr>
                             </table>
@@ -50,8 +51,7 @@
                                 <tr>
                                     <td
                                         style="padding-bottom: 10px; font-weight: 600; font-size: 10px; color: #3a405f;">
-                                        Фара противотуманная универсальная (дальний свет) 12-27 В, 16 LED диодов, 48W,
-                                        5048 SPOT4,5"
+                                        {{ $newProduct->name_ru ?: $newProduct->name_en }}
                                     </td>
                                 </tr>
                                 <tr>
@@ -63,7 +63,7 @@
                                                     Цена:
                                                 </td>
                                                 <td style="color: #eb5e28;">
-                                                    13.00 ¥
+                                                    {{ $newProduct->price_cny }} ¥
                                                 </td>
                                             </tr>
                                         </table>
@@ -75,9 +75,10 @@
                 </table>
             </td>
         </tr>
+        @endforeach
         <tr>
             <td style="padding: 0 23px 30px; text-align: center;">
-                <a href="#"
+                <a href={{ asset('newproducts') }}
                     style="display: inline-block; width: 300px; padding: 10px 10px; background-color: #eb5e28; border-radius: 10px; text-decoration: none; color: #ffffff;">Перейти
                     к
                     новинкам</a>
