@@ -18,7 +18,8 @@ class LogPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->logs_index == true;
     }
 
     /**
@@ -30,7 +31,8 @@ class LogPolicy
      */
     public function view(User $user, Log $log)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->logs_index == true;
     }
 
     /**

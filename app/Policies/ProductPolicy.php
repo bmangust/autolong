@@ -18,7 +18,8 @@ class ProductPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->products_index == true;
     }
 
     /**
@@ -30,7 +31,8 @@ class ProductPolicy
      */
     public function view(User $user, Product $product)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->products_index == true;
     }
 
     /**
@@ -41,7 +43,8 @@ class ProductPolicy
      */
     public function create(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->products_create == true;
     }
 
     /**
@@ -53,7 +56,8 @@ class ProductPolicy
      */
     public function update(User $user, Product $product)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->products_update == true;
     }
 
     /**
@@ -65,7 +69,8 @@ class ProductPolicy
      */
     public function delete(User $user, Product $product)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->products_delete == true;
     }
 
     /**

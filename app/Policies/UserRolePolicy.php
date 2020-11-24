@@ -18,7 +18,8 @@ class UserRolePolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->user_roles_index == true;
     }
 
     /**
@@ -30,7 +31,7 @@ class UserRolePolicy
      */
     public function view(User $user, UserRole $userRole)
     {
-        //
+        return $userRole->access->user_roles_index == true;
     }
 
     /**
@@ -41,7 +42,7 @@ class UserRolePolicy
      */
     public function create(User $user)
     {
-        //
+        return $user->role->access->user_roles_create == true;
     }
 
     /**
@@ -53,7 +54,7 @@ class UserRolePolicy
      */
     public function update(User $user, UserRole $userRole)
     {
-        //
+        return $user->role->access->user_roles_update == true;
     }
 
     /**
@@ -65,7 +66,7 @@ class UserRolePolicy
      */
     public function delete(User $user, UserRole $userRole)
     {
-        //
+        return $user->role->access->user_roles_delete == true;
     }
 
     /**

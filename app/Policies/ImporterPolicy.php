@@ -18,7 +18,8 @@ class ImporterPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->importers_index == true;
     }
 
     /**
@@ -30,7 +31,8 @@ class ImporterPolicy
      */
     public function view(User $user, Importer $importer)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->importers_index == true;
     }
 
     /**
@@ -41,7 +43,8 @@ class ImporterPolicy
      */
     public function create(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->importers_create == true;
     }
 
     /**
@@ -53,7 +56,8 @@ class ImporterPolicy
      */
     public function update(User $user, Importer $importer)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->importers_update == true;
     }
 
     /**
@@ -65,7 +69,8 @@ class ImporterPolicy
      */
     public function delete(User $user, Importer $importer)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->importers_delete == true;
     }
 
     /**

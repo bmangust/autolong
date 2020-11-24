@@ -18,7 +18,8 @@ class ProviderPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->providers_index == true;
     }
 
     /**
@@ -30,7 +31,8 @@ class ProviderPolicy
      */
     public function view(User $user, Provider $provider)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->providers_index == true;
     }
 
     /**
@@ -41,7 +43,8 @@ class ProviderPolicy
      */
     public function create(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->providers_create == true;
     }
 
     /**
@@ -53,7 +56,8 @@ class ProviderPolicy
      */
     public function update(User $user, Provider $provider)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->providers_update == true;
     }
 
     /**
@@ -65,7 +69,8 @@ class ProviderPolicy
      */
     public function delete(User $user, Provider $provider)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->providers_delete == true;
     }
 
     /**

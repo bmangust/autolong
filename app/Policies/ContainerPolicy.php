@@ -18,7 +18,8 @@ class ContainerPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->containers_index == true;
     }
 
     /**
@@ -30,7 +31,8 @@ class ContainerPolicy
      */
     public function view(User $user, Container $container)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->containers_index == true;
     }
 
     /**
@@ -41,7 +43,8 @@ class ContainerPolicy
      */
     public function create(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->containers_create == true;
     }
 
     /**
@@ -53,7 +56,8 @@ class ContainerPolicy
      */
     public function update(User $user, Container $container)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->containers_update == true;
     }
 
     /**
@@ -65,7 +69,8 @@ class ContainerPolicy
      */
     public function delete(User $user, Container $container)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->containers_delete == true;
     }
 
     /**

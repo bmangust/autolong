@@ -18,7 +18,8 @@ class OrderPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->orders_index == true;
     }
 
     /**
@@ -30,7 +31,8 @@ class OrderPolicy
      */
     public function view(User $user, Order $order)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->orders_index == true;
     }
 
     /**
@@ -41,7 +43,8 @@ class OrderPolicy
      */
     public function create(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->orders_create == true;
     }
 
     /**
@@ -53,7 +56,8 @@ class OrderPolicy
      */
     public function update(User $user, Order $order)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->orders_update == true;
     }
 
     /**
@@ -65,7 +69,8 @@ class OrderPolicy
      */
     public function delete(User $user, Order $order)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->orders_delete == true;
     }
 
     /**

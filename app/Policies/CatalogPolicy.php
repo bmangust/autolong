@@ -18,7 +18,8 @@ class CatalogPolicy
      */
     public function viewAny(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->catalogs_index == true;
     }
 
     /**
@@ -30,7 +31,8 @@ class CatalogPolicy
      */
     public function view(User $user, Catalog $catalog)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->catalogs_index == true;
     }
 
     /**
@@ -41,7 +43,8 @@ class CatalogPolicy
      */
     public function create(User $user)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->catalogs_create == true;
     }
 
     /**
@@ -53,7 +56,8 @@ class CatalogPolicy
      */
     public function update(User $user, Catalog $catalog)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->catalogs_update == true;
     }
 
     /**
@@ -65,7 +69,8 @@ class CatalogPolicy
      */
     public function delete(User $user, Catalog $catalog)
     {
-        //
+        $userRole = $user->role;
+        return $userRole->access->catalogs_delete == true;
     }
 
     /**
