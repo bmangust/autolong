@@ -2,7 +2,6 @@
 import React, {useContext, useState} from 'react'
 
 // Third-party
-import {SanctumContext} from 'react-sanctum'
 import {toast} from 'react-toastify'
 import {NavLink} from 'react-router-dom'
 import {push} from 'connected-react-router'
@@ -10,7 +9,7 @@ import {useDispatch} from 'react-redux'
 
 // Styles
 import classes from './Login.module.css'
-
+import SanctumContext from '../../Sanctum/SanctumContext'
 
 const Login: React.FC = () => {
     const [email, setEmail] = useState<string>('')
@@ -26,9 +25,24 @@ const Login: React.FC = () => {
                 .then(() => {
                     toast.success('Успешная авторизация')
                     dispatch(push('/'))
+                    location.reload()
                 })
                 .catch(() => toast.error('Неверный пароль или email'))
         }
+
+        // axios.post('/api/login', {email, password})
+        //     .then((answer) => {
+        //         console.log('login', answer.data)
+        //         return axios.get('/api/user', {
+        //             withCredentials: true,
+        //             headers: {
+        //                 'Authorization': `Bearer ${answer.data}`
+        //             }
+        //         })
+        //             .then((answer) => console.log(answer.data))
+        //             .catch((error) => console.log(error))
+        //     })
+        //     .catch((error) => console.log(error.message))
     }
 
 

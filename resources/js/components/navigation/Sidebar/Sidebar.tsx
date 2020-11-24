@@ -11,7 +11,7 @@ import classes from './Sidebar.module.css'
 import {routes} from '../router/routes'
 import SvgHelp from '../../UI/iconComponents/Help'
 import SvgLogout from '../../UI/iconComponents/Logout'
-import {SanctumContext} from 'react-sanctum'
+import {SanctumContext} from '../../../Sanctum'
 
 const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: Function }> = (
     {
