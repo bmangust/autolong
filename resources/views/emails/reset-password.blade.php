@@ -47,7 +47,7 @@
         <td style="padding-bottom: 26px;">
                 <span
                     style="display: block; width: 50px; height: 50px; margin: 0 auto; background-color: #f7f8fa; border-radius: 50%;">
-                    <img width="24" height="24" style="display: block; margin: 0 auto; padding-top: 13px;" src={{ asset('/public/imgs/key.png') }}
+                    <img width="24" height="24" style="display: block; margin: 0 auto; padding-top: 13px;" src={{ asset('/imgs/key.png') }}
                          alt="key">
                 </span>
         </td>
