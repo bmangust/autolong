@@ -16,15 +16,15 @@ use Illuminate\Support\Str;
 */
 
 Route::post('/login', 'Auth\LoginController@login')->name('login');
-Route::post('/forgot', 'Auth\ResetPasswordController@forgot');
-Route::post('/reset', 'Auth\ResetPasswordController@reset');
+Route::post('/forgot', 'Auth\ResetPasswordController@forgot')->name('password.forgot');
+Route::post('/reset', 'Auth\ResetPasswordController@reset')->name('password.reset');
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/user', function (Request $request) {
         return $request->user();
     });
 
-    Route::post('/logout', 'Auth\LoginController@logout');
+    Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('importers', 'ImporterController@index');
     Route::post('importers', 'ImporterController@store');
@@ -130,4 +130,3 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::post('mailtask', 'MailTaskController@changeTime');
     Route::delete('mailtask', 'MailTaskController@destroy');
 });
-
