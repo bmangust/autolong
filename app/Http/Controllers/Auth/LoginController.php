@@ -7,6 +7,7 @@ use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class LoginController extends Controller
 {
@@ -20,9 +21,7 @@ class LoginController extends Controller
         $user = User::where('email', $request->email)->first();
 
         if (! $user || ! Hash::check($request->password, $user->password)) {
-            throw ValidationException::withMessages([
-                'email' => ['Учетные данные не соответствуют нашим.'],
-            ]);
+            throw new HttpException( 400 , 'Учетные данные не соответствуют нашим.');
         }
 
         return $user->createToken($user->name)->plainTextToken;
