@@ -45,7 +45,6 @@ const Login: React.FC = () => {
         //     .catch((error) => console.log(error.message))
     }
 
-
     return (
         <div className={classes.Login + ' row'}>
             <div className='col-xl-7 justify-content-center'>
