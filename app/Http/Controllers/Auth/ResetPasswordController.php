@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Auth;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
 
 class ResetPasswordController extends Controller
@@ -26,7 +27,7 @@ class ResetPasswordController extends Controller
         ]);
 
         $reset_password_status = Password::reset($request->all(), function ($user, $password) {
-            $user->password = $password;
+            $user->password = Hash::make($password);
             $user->save();
         });
 
