@@ -6,6 +6,7 @@ use App\Container;
 use App\Http\Resources\ContainerResource;
 use App\Log;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Support\Facades\Auth;
 
 class ContainerObserver
 {
@@ -22,6 +23,7 @@ class ContainerObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new ContainerResource($container)),
                 'model_name' => get_class($container)
@@ -42,6 +44,7 @@ class ContainerObserver
             $before = $container->withoutRelations()->getOriginal();
             $after = $container->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ContainerResource($container)),
                 'model_name' => get_class($container),
@@ -71,6 +74,7 @@ class ContainerObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new ContainerResource($container)),
                 'model_name' => get_class($container)

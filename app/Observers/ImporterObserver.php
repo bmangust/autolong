@@ -6,6 +6,7 @@ use App\Http\Resources\ImporterWithRelationshipsResource;
 use App\Importer;
 use App\Log;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Support\Facades\Auth;
 
 class ImporterObserver
 {
@@ -22,6 +23,7 @@ class ImporterObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new ImporterWithRelationshipsResource($importer)),
                 'model_name' => get_class($importer)
@@ -42,6 +44,7 @@ class ImporterObserver
             $before = $importer->withoutRelations()->getOriginal();
             $after = $importer->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ImporterWithRelationshipsResource($importer)),
                 'model_name' => get_class($importer),
@@ -70,6 +73,7 @@ class ImporterObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new ImporterWithRelationshipsResource($importer)),
                 'model_name' => get_class($importer)

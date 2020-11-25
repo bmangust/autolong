@@ -13,18 +13,16 @@ class UserRoleController extends Controller
     {
         $messages = [
             'required' => 'Поле :attribute обязательно для заполнения.',
-            'max' => 'Поле :attribute должно содержать не более :max символов',
-            'min' => 'Поле :attribute должно содержать не менее :min символов'
         ];
 
         $names = [
             'name' => 'название',
-            'roleId' => 'роль'
+            'accesses' => 'доступы'
         ];
 
         return Validator::make($data, [
             'name' => ['required', 'string'],
-            'roleId' => ['required', 'integer'],
+            'accesses' => ['required']
         ], $messages, $names);
     }
     /**
@@ -47,6 +45,7 @@ class UserRoleController extends Controller
     {
         $this->userRoleCreateValidator($request->all())->validate();
         $newRole = UserRole::create($request->all());
+        $newRole->setAccesses($request->input('accesses'));
         return response()->json(new UserRoleResource($newRole), 201);
     }
 
@@ -73,6 +72,7 @@ class UserRoleController extends Controller
     {
         $this->userRoleCreateValidator($request->all())->validate();
         $userRole->update($request->all());
+        $userRole->setAccesses($request->input('accesses'));
         return response()->json(new UserRoleResource($userRole), 200);
     }
 

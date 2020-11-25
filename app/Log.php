@@ -20,4 +20,9 @@ class Log extends Model
         'before',
         'after'
     ];
+
+    public function user()
+    {
+        return $this->belongsTo('App\User');
+    }
 }

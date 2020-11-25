@@ -6,6 +6,7 @@ use App\Http\Resources\ProviderResource;
 use App\Log;
 use App\Provider;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Support\Facades\Auth;
 
 class ProviderObserver
 {
@@ -22,6 +23,7 @@ class ProviderObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new ProviderResource($provider)),
                 'model_name' => get_class($provider)
@@ -42,6 +44,7 @@ class ProviderObserver
             $before = $provider->withoutRelations()->getOriginal();
             $after = $provider->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ProviderResource($provider)),
                 'model_name' => get_class($provider),
@@ -70,6 +73,7 @@ class ProviderObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new ProviderResource($provider)),
                 'model_name' => get_class($provider)
