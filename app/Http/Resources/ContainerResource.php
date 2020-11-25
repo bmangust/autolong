@@ -3,6 +3,7 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use Illuminate\Support\Facades\Auth;
 
 class ContainerResource extends JsonResource
 {
@@ -10,11 +11,11 @@ class ContainerResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param \Illuminate\Http\Request $request
-     * @return array
+     * @return array|false|string
      */
     public function toArray($request)
     {
-        return [
+        $container = [
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
@@ -24,5 +25,14 @@ class ContainerResource extends JsonResource
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
+
+        if ($this->checkCargoOrders()) {
+            if (Auth::user()->role->access->orders_show_cargo){
+                return $container;
+            }
+            return (object)[];
+        }
+
+        return $container;
     }
 }

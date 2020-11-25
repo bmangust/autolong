@@ -90,4 +90,14 @@ class Container extends Model
         }
         return true;
     }
+
+    public function checkCargoOrders(): bool
+    {
+        foreach ($this->orders as $order) {
+            if ($order->cargo) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

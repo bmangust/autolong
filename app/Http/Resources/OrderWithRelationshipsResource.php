@@ -6,6 +6,7 @@ use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ProviderResource;
 use App\Http\Resources\OrderItemResource;
 use App\Http\Resources\ContainerResource;
+use Illuminate\Support\Facades\Auth;
 
 class OrderWithRelationshipsResource extends JsonResource
 {
@@ -13,11 +14,11 @@ class OrderWithRelationshipsResource extends JsonResource
      * Transform the resource into an array.
      *
      * @param \Illuminate\Http\Request $request
-     * @return array
+     * @return array|false|string
      */
     public function toArray($request)
     {
-        return [
+        $order = [
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
@@ -26,8 +27,8 @@ class OrderWithRelationshipsResource extends JsonResource
             'statusPayment' => $this->status_payment,
             'packingList' => $this->checkDataForPackingList(),
             'price' => (object)['rub' => $this->getOrderSumInRub(),
-                                'usd' => $this->getOrderSumInUsd(),
-                                'cny' => $this->getOrderSumInCny()],
+                'usd' => $this->getOrderSumInUsd(),
+                'cny' => $this->getOrderSumInCny()],
             'paymentAmount' => $this->payment_amount,
             'surchargeAmount' => $this->surcharge_amount,
             'provider' => new ProviderResource($this->provider),
@@ -38,5 +39,14 @@ class OrderWithRelationshipsResource extends JsonResource
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
+
+        if ($this->cargo) {
+            if (Auth::user()->role->access->orders_show_cargo) {
+                return $order;
+            }
+            return (object)[];
+        }
+
+        return $order;
     }
 }

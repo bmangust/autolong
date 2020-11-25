@@ -24,6 +24,7 @@ class UserRole extends Model
     public function setAccesses(array $accesses): void
     {
         $access = Access::create($accesses);
+        $access->setUserRoleId($this->id);
         $this->access_id = $access->id;
         $this->save();
     }

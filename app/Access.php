@@ -44,8 +44,15 @@ class Access extends Model
         'user_index',
         'logs_index',
     ];
+
     public function userRole()
     {
         return $this->hasOne('App\UserRole');
+    }
+
+    public function setUserRoleId(int $id)
+    {
+        $this->user_role_id = $id;
+        $this->save();
     }
 }
