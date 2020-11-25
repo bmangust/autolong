@@ -28,8 +28,8 @@
 
 .placeholderAdd {
     background: #FFFFFF;
-    border: 1px solid #EB5E28;
-    color: #EB5E28;
+    border: 1px solid #f44a0e;
+    color: #f44a0e;
     box-sizing: border-box;
     border-radius: 10px;
     padding: 12px;
@@ -40,7 +40,7 @@
 }
 
 .placeholderAdd:hover {
-    color: #EB5E28;
+    color: #f44a0e;
 }
 
 .placeholderAdd svg {

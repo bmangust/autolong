@@ -16,7 +16,7 @@ function SvgRelease(props: React.SVGProps<SVGSVGElement>) {
             />
             <path
                 d="M36.16 34.035h5.061a1.025 1.025 0 000-2.051H36.16a1.025 1.025 0 000 2.05zM36.16 38.487h8.046a1.025 1.025 0 000-2.051h-8.047a1.025 1.025 0 000 2.05z"
-                fill="#EB5E28"
+                fill="#f44a0e"
             />
         </svg>
     );

@@ -20,7 +20,7 @@ function SvgInTransit(props: React.SVGProps<SVGSVGElement>) {
             />
             <path
                 d="M27.682 22.41h-2.636v2.636h2.636v-2.637zM32.955 22.41h-2.637v2.636h2.637v-2.637zM38.227 22.41h-2.636v2.636h2.636v-2.637z"
-                fill="#EB5E28"
+                fill="#f44a0e"
             />
         </svg>
     );

@@ -58,7 +58,7 @@ h2 {
     width: 10px;
     height: 10px;
     margin-right: 10px;
-    background: #EB5E28;
+    background: #f44a0e;
     border-radius: 50%;
     display: inline-block;
 }
@@ -90,7 +90,7 @@ h2 {
 }
 
 .order .orderPrice span {
-    color: #EB5E28;
+    color: #f44a0e;
     margin-left: 19px;
 }
 

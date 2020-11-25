@@ -1,6 +1,6 @@
 .status {
     background: #FFFFFF;
-    border: 1px solid #EB5E28;
+    border: 1px solid #f44a0e;
     box-sizing: border-box;
     border-radius: 15px;
     padding: 23px 48px;
@@ -66,7 +66,7 @@
     font-weight: 600;
     font-size: 13px;
     line-height: 16px;
-    color: #EB5E28;
+    color: #f44a0e;
     margin-bottom: 10px;
 }
 

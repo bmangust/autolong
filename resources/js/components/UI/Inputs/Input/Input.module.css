@@ -30,11 +30,11 @@
 }
 
 .input input.error {
-    border: 1px solid #EB5E28;
+    border: 1px solid #f44a0e;
 }
 
 .helperText {
-    color: #EB5E28;
+    color: #f44a0e;
 }
 
 @media (max-width: 575px) {

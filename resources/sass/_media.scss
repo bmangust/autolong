@@ -76,6 +76,10 @@
         font-size: 12px;
         white-space: nowrap;
     }
+
+    html .select-filter .select-mini__control, html .select-filter .select-mini-tags__control {
+        width: 100%;
+    }
 }
 
 @media (max-width: 767px) {
@@ -108,13 +112,11 @@
 }
 
 @media (max-width: 575px) {
+
     .searchBar label {
         margin-bottom: 15px;
     }
 
-    .searchBar input {
-        text-align: center;
-    }
 
     .addButton {
         margin-bottom: 7px;

@@ -67,7 +67,7 @@ a {
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
-    color: #EB5E28;
+    color: #f44a0e;
     padding: 4px 16px;
     background: rgba(235, 94, 40, 0.1);
     border-radius: 100px;
@@ -79,7 +79,7 @@ a {
     font-weight: normal;
     font-size: 12px;
     line-height: 14px;
-    color: #EB5E28;
+    color: #f44a0e;
     float: right;
 }
 
@@ -229,9 +229,9 @@ a {
         th.sortable {
             cursor: pointer;
 
-            &:nth-child(2) {
-                min-width: 250px;
-            }
+            // &:nth-child(2) {
+            //     min-width: 250px;
+            // }
         }
 
         td:first-child,
@@ -641,7 +641,7 @@ html button.btn-link {
     font-size: 12px;
     line-height: 15px;
     text-decoration-line: underline;
-    color: #EB5E28;
+    color: #f44a0e;
     padding-left: 0;
     padding-right: 0;
     text-align: left;
@@ -1111,7 +1111,7 @@ html select.select-mini:focus {
 }
 
 .tag.tag-first {
-    color: #eb5e28;
+    color: #f44a0e;
     border: 1px solid rgba(235, 94, 40, 0.25);
     margin: 0;
 }
