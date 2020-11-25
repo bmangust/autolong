@@ -32,12 +32,13 @@ import ContainersStatuses
     from '../../components/Containers/ContainersStatuses/ContainersStatuses'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderPackage from '../../components/OrderPackage/OrderPackages'
+import {createOrderInvoice} from '../../store/actions/orders'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
     const [isOpen, setIsOpen] = useState(false)
     const [activeOrder, setActiveOrder] = useState<null | IOrder>(null)
-
+    const [packingList, setPackingList] = useState(false)
     const dispatch = useDispatch()
 
     const {container, loading, error} = useSelector(
@@ -52,8 +53,14 @@ const Container: React.FC<IContainer> = () => {
         dispatch(deleteContainerById(id))
     }
 
-    const showPackage = (order) => {
+    const downloadPack = (order, old) => {
+        dispatch(createOrderInvoice(order.id, {old: old ? 1 : 0},
+            'packinglist'))
+    }
+
+    const showPackage = (order, old) => {
         setIsOpen(true)
+        setPackingList(old)
         setActiveOrder(order)
     }
 
@@ -117,12 +124,29 @@ const Container: React.FC<IContainer> = () => {
                                             Заказ {order.id}
                                         </NavLink>
                                         <div className='d-flex'>
-                                            <p className={classes.packageBtn}
-                                               onClick={() =>
-                                                   showPackage(order)}>
-                                                Упаковочный
-                                            </p>
-                                            <p className={classes.packageBtn}
+                                            {order.packingList
+                                                ? <>
+                                                    <p className={classes.btn}
+                                                       onClick={() =>
+                                                           downloadPack(order,
+                                                               true)}>
+                                                        Скачать упаковочный
+                                                    </p>
+                                                    <p className={classes.btn}
+                                                       onClick={() =>
+                                                           showPackage(order,
+                                                               false)}>
+                                                        Новый упаковочный
+                                                    </p>
+                                                </>
+                                                : <p className={classes.btn}
+                                                     onClick={() =>
+                                                         showPackage(order,
+                                                             false)}>
+                                                    Новый упаковочный
+                                                </p>
+                                            }
+                                            <p className={classes.btn}
                                                onClick={() =>
                                                    getMarkingList(order.id)}>
                                                 Маркировочный
@@ -162,6 +186,7 @@ const Container: React.FC<IContainer> = () => {
                         isOpen={isOpen}
                         setIsOpen={setIsOpen}>
                         <OrderPackage
+                            packingList={packingList}
                             orderId={activeOrder.id}
                             items={activeOrder.items}/>
                     </Modal>

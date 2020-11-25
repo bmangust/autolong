@@ -37,6 +37,7 @@ export interface IOrder {
     priceCny: number
     city: ICity
     cargo: number
+    packingList: boolean
     container: IContainer
     paymentAmount: number
     surchargeAmount: number

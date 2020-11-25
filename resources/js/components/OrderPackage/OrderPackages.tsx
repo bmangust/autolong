@@ -17,12 +17,17 @@ import {createOrderInvoice} from '../../store/actions/orders'
 import Package from './Package/Package'
 import SvgCube from '../UI/iconComponents/Cube'
 
-const OrderPackages: React.FC<{ items: IProduct[], orderId: number }> = (
-    {items, orderId}) => {
-    const [data, setData] = useState({})
+const OrderPackages: React.FC<{
+    items: IProduct[]
+    packingList: boolean
+    orderId: number
+}> = (
+    {items, packingList, orderId}) => {
+    const [data, setData] = useState<any>({})
     const dispatch = useDispatch()
 
     const createPackageHandler = () => {
+        data.old = packingList ? 1 : 0
         dispatch(createOrderInvoice(orderId, data, 'packinglist'))
     }
 

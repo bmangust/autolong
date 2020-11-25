@@ -16,6 +16,10 @@ import AutoTable from '../UI/AutoTable/AutoTable'
 import Error from '../UI/Error/Error'
 import Loader from '../UI/Loader/Loader'
 import Placeholder from '../UI/Placeholder/Placeholder'
+import {NavLink} from 'react-router-dom'
+import {IRole} from '../Roles/IRoles'
+import SvgEdit from '../UI/iconComponents/Edit'
+import {nameToLinkFormatter} from '../../utils'
 
 const UsersTable = () => {
     const dispatch = useDispatch()
@@ -31,18 +35,31 @@ const UsersTable = () => {
             error: state.usersState.error
         }))
 
+    const roleFormatter = (role: IRole, row) => {
+        return <div className='d-flex justify-content-between'>
+            <NavLink to={`/settings/role/${role.id}`}>
+                {role.name}
+            </NavLink>
+            <NavLink to={`/settings/user/edit/${row.id}`}>
+                <SvgEdit/>
+            </NavLink>
+        </div>
+    }
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
             text: 'Сотрудник',
             classes: 'title',
-            sort: true
+            sort: true,
+            formatter: (name, row) =>
+                nameToLinkFormatter(name, row, 'settings/user')
         },
         {
             dataField: 'role',
             text: 'Роль',
             classes: 'title',
-            sort: true
+            formatter: roleFormatter
         }
     ]
     if (error) {
