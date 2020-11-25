@@ -36,10 +36,10 @@ const CreateRole: React.FC = () => {
 
     const createRoleHandler =
         handleSubmit((formValues) => {
-            const accesses: any = []
+            const accesses: any = {}
             Object.entries(formValues).map(([key, value]) => {
                 if (key !== 'name') {
-                    accesses.push({[key]: value ? 1 : 0})
+                    accesses[key] = value ? 1 : 0
                     delete formValues[key]
                 }
             })
