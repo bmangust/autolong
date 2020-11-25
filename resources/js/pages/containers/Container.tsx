@@ -73,7 +73,7 @@ const Container: React.FC<IContainer> = () => {
                 <div className="col-lg-8">
                     <div className="card mb-3 card-body">
                         <div className="d-flex justify-content-between
-                         align-items-baseline">
+                         align-items-baseline flex-sm-row flex-column">
                             <h2 className="mb-0">
                                 {'name' in container
                                     ? container.name
