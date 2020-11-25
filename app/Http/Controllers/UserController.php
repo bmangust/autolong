@@ -31,7 +31,7 @@ class UserController extends Controller
 
         return Validator::make($data, [
             'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8', 'confirmed'],
+            'password' => ['required', 'min:8'],
             'roleId' => ['required', 'integer'],
             'lastname' => ['required', 'string'],
             'name' => ['required', 'string'],
@@ -64,12 +64,12 @@ class UserController extends Controller
         $phone = $request->input('phone');
         $email = $request->input('email');
         $password = Hash::make($request->input('password'));
-        $role = $request->input('role_id');
+        $role = $request->input('roleId');
         $newUser = $user->create([
             'name' => $name,
             'email' => $email,
             'password' => $password,
-            'role' => $role,
+            'role_id' => $role,
             'lastname' => $lastname,
             'patronymic' => $patronymic,
             'phone' => $phone
@@ -105,12 +105,12 @@ class UserController extends Controller
         $phone = $request->input('phone');
         $email = $request->input('email');
         $password = Hash::make($request->input('password'));
-        $role = $request->input('role_id');
+        $role = $request->input('roleId');
         $user->update([
             'name' => $name,
             'email' => $email,
             'password' => $password,
-            'role' => $role,
+            'role_id' => $role,
             'lastname' => $lastname,
             'patronymic' => $patronymic,
             'phone' => $phone
