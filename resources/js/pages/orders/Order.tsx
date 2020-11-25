@@ -180,13 +180,17 @@ const Order: React.FC<IOrder> = () => {
             </div>
 
             <div className='mb-3'>
-                <OrderStatuses
-                    id={order.id}
-                    providerId={order.provider.id}
-                    status={order.status}
-                    container={order.container}
-                    unscrupulous={order.unscrupulous}
-                />
+                {'provider' in order
+                    ? <OrderStatuses
+                        id={order.id}
+                        providerId={order.provider.id}
+                        status={order.status}
+                        container={order.container}
+                        unscrupulous={order.provider.unscrupulous}
+                    />
+                    : null
+                }
+
             </div>
 
             <div className='card mb-3 pb-lg-4 pb-0'>
