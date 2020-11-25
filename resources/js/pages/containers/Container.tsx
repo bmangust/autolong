@@ -123,35 +123,7 @@ const Container: React.FC<IContainer> = () => {
                                         <NavLink to={`/order/${order.id}`}>
                                             Заказ {order.id}
                                         </NavLink>
-                                        <div className='d-flex'>
-                                            {order.packingList
-                                                ? <>
-                                                    <p className={classes.btn}
-                                                       onClick={() =>
-                                                           downloadPack(order,
-                                                               true)}>
-                                                        Скачать упаковочный
-                                                    </p>
-                                                    <p className={classes.btn}
-                                                       onClick={() =>
-                                                           showPackage(order,
-                                                               false)}>
-                                                        Новый упаковочный
-                                                    </p>
-                                                </>
-                                                : <p className={classes.btn}
-                                                     onClick={() =>
-                                                         showPackage(order,
-                                                             false)}>
-                                                    Новый упаковочный
-                                                </p>
-                                            }
-                                            <p className={classes.btn}
-                                               onClick={() =>
-                                                   getMarkingList(order.id)}>
-                                                Маркировочный
-                                            </p>
-                                        </div>
+
                                     </div>
                                     <div className={classes.orderBody}>
                                         <OrderItems items={order.items}/>
@@ -164,6 +136,35 @@ const Container: React.FC<IContainer> = () => {
                                         <p className={classes.orderPrice}>
                                             Стоимость заказа
                                             <span>{order.price.cny} ¥</span>
+                                        </p>
+                                    </div>
+                                    <div className={classes.documents}>
+                                        {order.packingList
+                                            ? <>
+                                                <p className={classes.btn}
+                                                onClick={() =>
+                                                    downloadPack(order,
+                                                        true)}>
+                                                    Новый упаковочный лист
+                                                </p>
+                                                <p className={classes.btn}
+                                                onClick={() =>
+                                                    showPackage(order,
+                                                        false)}>
+                                                    Упаковочный лист
+                                                </p>
+                                            </>
+                                            : <p className={classes.btn}
+                                                onClick={() =>
+                                                    showPackage(order,
+                                                        false)}>
+                                                Скачать упаковочный лист
+                                            </p>
+                                        }
+                                        <p className={classes.btn}
+                                        onClick={() =>
+                                            getMarkingList(order.id)}>
+                                            Маркировка
                                         </p>
                                     </div>
                                 </div>

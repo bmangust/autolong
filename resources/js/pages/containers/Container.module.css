@@ -15,7 +15,7 @@ h2 {
 }
 
 .order {
-    border: 1px solid #EBEBEB;
+    border: 1px solid #ebebeb;
     border-radius: 10px;
     margin-bottom: 10px;
 }
@@ -25,11 +25,11 @@ h2 {
 }
 
 .order .orderHeader {
-    border-bottom: 1px solid #EBEBEB;
+    border-bottom: 1px solid #ebebeb;
     font-weight: 600;
     font-size: 13px;
     line-height: 16px;
-    color: #3A405F;
+    color: #3a405f;
     padding: 12px 30px;
     display: flex;
     justify-content: space-between;
@@ -50,7 +50,7 @@ h2 {
     font-weight: 600;
     font-size: 13px;
     line-height: 16px;
-    color: #3A405F;
+    color: #3a405f;
 }
 
 .order .orderHeader a:before {
@@ -77,7 +77,7 @@ h2 {
     font-weight: normal;
     font-size: 12px;
     line-height: 14px;
-    color: #B4B6BD;
+    color: #b4b6bd;
     margin-bottom: 0;
 }
 
@@ -85,13 +85,55 @@ h2 {
     font-weight: 600;
     font-size: 14px;
     line-height: 17px;
-    color: #3A405F;
+    color: #3a405f;
     margin-bottom: 0;
 }
 
 .order .orderPrice span {
     color: #f44a0e;
     margin-left: 19px;
+}
+
+.documents {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-top: 1px solid #ebebeb;
+}
+
+.documents .btn {
+    position: relative;
+    padding-left: 30px;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-decoration: none;
+    color: #b4b6bd;
+}
+
+.documents .btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 0;
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: #F7F8FA;
+}
+
+.documents .btn:first-child::before {
+    background: #F7F8FA url('/svg/plus-gray.svg') right 6px center no-repeat;
+}
+
+.documents .btn:nth-child(2)::before {
+    background: #F7F8FA url('/svg/download-gray.svg') center no-repeat;
+}
+
+
+.documents .btn:last-child::before {
+    background: #F7F8FA url('/svg/download-gray.svg') center no-repeat;
 }
 
 @media (max-width: 767px) {
@@ -103,8 +145,16 @@ h2 {
     .order .orderItemsQrt {
         margin-bottom: 10px;
     }
-}
 
+    .documents {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .documents .btn:not(:last-child) {
+        margin-bottom: 15px;
+    }
+}
 
 @media (max-width: 575px) {
     .order .orderHeader {
@@ -114,4 +164,6 @@ h2 {
     .order .orderHeader a {
         margin-bottom: 10px;
     }
+
+
 }
