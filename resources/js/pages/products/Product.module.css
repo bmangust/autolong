@@ -1,0 +1,17 @@
+.btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+@media (max-width: 575px) {
+    .btns {
+        flex-direction: column;
+        justify-content: flex-start;
+        align-items: flex-start;
+    }
+
+    .btns button {
+        margin-top: 10px;
+    }
+}

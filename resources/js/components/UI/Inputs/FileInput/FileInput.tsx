@@ -8,7 +8,7 @@ import {Control} from 'react-hook-form/dist/types'
 
 // Styles
 import classes from './FileInput.module.css'
-import SvgDelete from '../../iconComponents/Delete'
+// import SvgDelete from '../../iconComponents/Delete'
 
 interface IFileInput {
     control: Control
@@ -56,9 +56,9 @@ const FileInput: React.FC<IFileInput> =
                                 ${(f.size / 1000000).toFixed(3)} mb`}
                                     </p>
                                 </div>
-                                <button className={classes.delete}>
+                                {/* <button className={classes.delete}>
                                     <SvgDelete/>
-                                </button>
+                                </button> */}
                             </li>
                         ))}
                     </ul>
