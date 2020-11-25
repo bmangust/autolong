@@ -26,6 +26,7 @@ import {IProvider} from '../Providers/IProviders'
 import {IProduct, IProductPrice} from '../Products/IProducts'
 import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 import {ICity} from '../Cities/ICities'
+import {IContainer} from '../Containers/IContainers'
 
 export interface IOrder {
     id: number
@@ -36,6 +37,7 @@ export interface IOrder {
     priceCny: number
     city: ICity
     cargo: number
+    container: IContainer
     paymentAmount: number
     surchargeAmount: number
     sandboxFiles: ISandboxFile[]
