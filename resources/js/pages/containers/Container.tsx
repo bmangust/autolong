@@ -158,7 +158,7 @@ const Container: React.FC<IContainer> = () => {
                                                 onClick={() =>
                                                     showPackage(order,
                                                         false)}>
-                                                Скачать упаковочный лист
+                                                Создать упаковочный лист
                                             </p>
                                         }
                                         <p className={classes.btn}
