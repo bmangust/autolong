@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Http\Resources\UserRoleResource;
 use App\Log;
 use App\UserRole;
+use Illuminate\Support\Facades\Auth;
 
 class UserRoleObserver
 {
@@ -19,6 +20,7 @@ class UserRoleObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new UserRoleResource($userRole)),
                 'model_name' => get_class($userRole)
@@ -39,6 +41,7 @@ class UserRoleObserver
             $before = $userRole->withoutRelations()->getOriginal();
             $after = $userRole->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new UserRoleResource($userRole)),
                 'model_name' => get_class($userRole),
@@ -64,6 +67,7 @@ class UserRoleObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new UserRoleResource($userRole)),
                 'model_name' => get_class($userRole)

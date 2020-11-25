@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Resources\UserResource;
+use App\Http\Resources\UserWithRelationshipsResource;
 use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
@@ -40,7 +40,7 @@ class UserController extends Controller
      */
     public function index()
     {
-        return response()->json(UserResource::collection(User::all()->sortByDesc('created_at')), 200);
+        return response()->json(UserWithRelationshipsResource::collection(User::all()->sortByDesc('created_at')), 200);
     }
 
     /**
@@ -64,7 +64,7 @@ class UserController extends Controller
             'password' => $password,
             'role' => $role,
         ]);
-        return response()->json(new UserResource($newUser), 201);
+        return response()->json(new UserWithRelationshipsResource($newUser), 201);
     }
 
     /**
@@ -75,7 +75,7 @@ class UserController extends Controller
      */
     public function show(User $user)
     {
-        return response()->json(new UserResource($user), 200);
+        return response()->json(new UserWithRelationshipsResource($user), 200);
     }
 
     /**
@@ -99,7 +99,7 @@ class UserController extends Controller
             'password' => $password,
             'role' => $role,
         ]);
-        return response()->json(new UserResource($user), 200);
+        return response()->json(new UserWithRelationshipsResource($user), 200);
     }
 
     /**

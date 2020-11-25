@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Http\Resources\UserResource;
 use App\Log;
 use App\User;
+use Illuminate\Support\Facades\Auth;
 
 class UserObserver
 {
@@ -19,6 +20,7 @@ class UserObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new UserResource($user)),
                 'model_name' => get_class($user)
@@ -39,6 +41,7 @@ class UserObserver
             $before = $user->withoutRelations()->getOriginal();
             $after = $user->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new UserResource($user)),
                 'model_name' => get_class($user),
@@ -64,6 +67,7 @@ class UserObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new UserResource($user)),
                 'model_name' => get_class($user)

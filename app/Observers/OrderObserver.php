@@ -6,6 +6,7 @@ use App\Http\Resources\OrderResource;
 use App\Log;
 use App\Order;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Support\Facades\Auth;
 
 class OrderObserver
 {
@@ -22,6 +23,7 @@ class OrderObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new OrderResource($order)),
                 'model_name' => get_class($order)
@@ -42,6 +44,7 @@ class OrderObserver
             $before = $order->withoutRelations()->getOriginal();
             $after = $order->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new OrderResource($order)),
                 'model_name' => get_class($order),
@@ -74,6 +77,7 @@ class OrderObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new OrderResource($order)),
                 'model_name' => get_class($order)

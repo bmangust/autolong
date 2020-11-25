@@ -6,6 +6,7 @@ use App\Catalog;
 use App\Http\Resources\CatalogResource;
 use App\Log;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Support\Facades\Auth;
 
 class CatalogObserver
 {
@@ -22,6 +23,7 @@ class CatalogObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new CatalogResource($catalog)),
                 'model_name' => get_class($catalog),
@@ -42,6 +44,7 @@ class CatalogObserver
             $before = $catalog->withoutRelations()->getOriginal();
             $after = $catalog->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new CatalogResource($catalog)),
                 'model_name' => get_class($catalog),
@@ -70,6 +73,7 @@ class CatalogObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new CatalogResource($catalog)),
                 'model_name' => get_class($catalog),

@@ -6,6 +6,7 @@ use App\Http\Resources\ProductResource;
 use App\Log;
 use App\Product;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
+use Illuminate\Support\Facades\Auth;
 
 class ProductObserver
 {
@@ -22,6 +23,7 @@ class ProductObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_CREATED,
                 'model' => json_encode(new ProductResource($product)),
                 'model_name' => get_class($product)
@@ -42,6 +44,7 @@ class ProductObserver
             $before = $product->withoutRelations()->getOriginal();
             $after = $product->withoutRelations()->toArray();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
                 'model' => json_encode(new ProductResource($product)),
                 'model_name' => get_class($product),
@@ -70,6 +73,7 @@ class ProductObserver
         if (Log::$write) {
             $log = new Log();
             $log->create([
+                'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_DELETED,
                 'model' => json_encode(new ProductResource($product)),
                 'model_name' => get_class($product)
