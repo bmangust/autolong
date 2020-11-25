@@ -5,8 +5,8 @@ import React from 'react'
 import {useForm} from 'react-hook-form'
 import {useDispatch} from 'react-redux'
 import {push} from 'connected-react-router'
-import * as yup from 'yup'
 import {yupResolver} from '@hookform/resolvers/yup'
+import * as yup from 'yup'
 
 // Styles
 import classes from './CreateRole.module.css'
