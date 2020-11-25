@@ -78,7 +78,7 @@ const UsersTable = () => {
     return <AutoTable
         keyField='id'
         data={users}
-        button={{link: '/settings/users/add', text: 'Добавить сотрудника'}}
+        button={{link: 'settings/users/add', text: 'Добавить сотрудника'}}
         columns={columns}/>
 }
 
