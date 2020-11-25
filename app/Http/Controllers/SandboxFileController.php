@@ -29,7 +29,7 @@ class SandboxFileController extends Controller
         }
         $file = $request->file('file');
         if (!$file->isValid()) {
-            return response()->json('Ошибка загружаемого файла', 400);
+            throw response()->json('Ошибка загружаемого файла', 400);
         }
 
         if ($request->input('check')) {
@@ -40,7 +40,7 @@ class SandboxFileController extends Controller
             $path = $model::SANDBOX_DIRECTORY . $model->id;
             $name = $sandboxFile->getClearName($request->input('name')) . '.' . $file->getClientOriginalExtension();
             if ($sandboxFile->checkFileInFolder($sandboxFile->getPathWithParentDirectory($path . '/' . $name))) {
-                return response()->json('Файл с таким именем существует', 400);
+                throw response()->json('Файл с таким именем существует', 400);
             }
             $description = $request->input('description');
         }
