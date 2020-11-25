@@ -224,6 +224,9 @@ class OrderController extends Controller
         $stampDirectory = Order::STAMP_DIRECTORY;
 
         if ($request->hasFile('providerStamp') && $request->file('providerStamp')->isValid()) {
+            $request->validate(
+                ['providerStamp' => 'file|mimes:png,jpg,jpeg']
+            );
             $providerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('providerStamp'));
         } elseif(isset($oldContract->providerStamp)) {
             $providerStamp = $oldContract->providerStamp;
@@ -232,6 +235,9 @@ class OrderController extends Controller
         }
 
         if ($request->hasFile('importerStamp') && $request->file('importerStamp')->isValid()) {
+            $request->validate(
+                ['importerStamp' => 'file|mimes:png,jpg,jpeg']
+            );
             $importerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('importerStamp'));
         }elseif(isset($oldContract->importerStamp)) {
             $importerStamp = $oldContract->importerStamp;
@@ -241,6 +247,9 @@ class OrderController extends Controller
 
         $signatureDirectory = Order::SIGNATURE_DIRECTORY;
         if ($request->hasFile('importerSignature') && $request->file('importerSignature')->isValid()) {
+            $request->validate(
+                ['importerSignature' => 'file|mimes:png,jpg,jpeg']
+            );
             $importerSignature = $order->saveStamp($signatureDirectory, uniqid('signature-', false), $request->file('importerSignature'));
         }elseif(isset($oldContract->importerSignature)) {
             $importerSignature = $oldContract->importerSignature;
@@ -364,7 +373,7 @@ class OrderController extends Controller
     public function generatePdfPackingList(Request $request, Order $order)
     {
         if (!$request->input('old')) {
-            $orderItemsInfo = $request->all();
+            $orderItemsInfo = $request->except('old');
             foreach ($orderItemsInfo as $key => $info) {
                 $orderItem = OrderItem::findOrFail($key);
                 $pcsCtnCtns = array_merge([],['pcsCtn' => $info['pcsCtn']], ['ctns' => $info['ctns']]);

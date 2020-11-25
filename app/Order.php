@@ -156,8 +156,9 @@ class Order extends Model
         $weight = 0;
         foreach ($this->orderItems as $orderItem) {
             if (!is_null($orderItem->pcs_ctn_ctns)) {
-                $ctns = array_product(json_decode($orderItem->pcs_ctn_ctns, true)['ctns']);
-                $weight += $orderItem->countWeightNetto($ctns);
+                foreach (json_decode($orderItem->pcs_ctn_ctns, true)['ctns'] as $ctn) {
+                    $weight += $orderItem->countWeightNetto($ctn);
+                }
             }
         }
         return $weight;
@@ -168,8 +169,9 @@ class Order extends Model
         $weight = 0;
         foreach ($this->orderItems as $orderItem) {
             if (!is_null($orderItem->pcs_ctn_ctns)) {
-                $ctns = array_product(json_decode($orderItem->pcs_ctn_ctns, true)['ctns']);
-                $weight += $orderItem->countWeightBrutto($ctns);
+                foreach (json_decode($orderItem->pcs_ctn_ctns, true)['ctns'] as $ctn) {
+                    $weight += $orderItem->countWeightBrutto($ctn);
+                }
             }
         }
         return $weight;
@@ -207,7 +209,7 @@ class Order extends Model
 
             $this->save();
         } else {
-            throw new HttpException(404,'Данного статуса не существует');
+            throw new HttpException(404, 'Данного статуса не существует');
         }
     }
 
@@ -216,7 +218,7 @@ class Order extends Model
         $statuses = Status::getOrderPaymentStatuses();
         $paymentRefunded = Status::getOrderPaymentRefunded();
         if (property_exists($statuses, $status)) {
-            if (is_null($paymentAmount) && is_null($surchargeAmount) && $status != $paymentRefunded ) {
+            if (is_null($paymentAmount) && is_null($surchargeAmount) && $status != $paymentRefunded) {
                 $this->status_payment = $status;
                 $this->save();
             } else {
@@ -226,7 +228,7 @@ class Order extends Model
                 $this->save();
             }
         } else {
-            throw new HttpException(404,'Данного статуса оплаты не существует');
+            throw new HttpException(404, 'Данного статуса оплаты не существует');
         }
     }
 
@@ -357,7 +359,7 @@ class Order extends Model
             throw new HttpException(404, $e);
         }
         Storage::disk('main')->delete($providerStamp);
-        $array = (array) $this->contract->getInfo();
+        $array = (array)$this->contract->getInfo();
         unset($array['providerStamp']);
         $this->contract->info = $array;
         $this->contract->save();
@@ -371,7 +373,7 @@ class Order extends Model
             throw new HttpException(404, $e);
         }
         Storage::disk('main')->delete($importerStamp);
-        $array = (array) $this->contract->getInfo();
+        $array = (array)$this->contract->getInfo();
         unset($array['importerStamp']);
         $this->contract->info = $array;
         $this->contract->save();
@@ -385,7 +387,7 @@ class Order extends Model
             throw new HttpException(404, $e);
         }
         Storage::disk('main')->delete($importerSignature);
-        $array = (array) $this->contract->getInfo();
+        $array = (array)$this->contract->getInfo();
         unset($array['importerSignature']);
         $this->contract->info = $array;
         $this->contract->save();
