@@ -10,6 +10,16 @@
     vertical-align: top;
 }
 
+.blackLabel {
+    position: relative;
+}
+
+.blackLabel:before {
+    content: url("/svg/black-label.svg");
+    position: absolute;
+    right: -25px;
+}
+
 .input input {
     position: absolute;
     width: 1px;

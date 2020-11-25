@@ -182,8 +182,10 @@ const Order: React.FC<IOrder> = () => {
             <div className='mb-3'>
                 <OrderStatuses
                     id={order.id}
+                    providerId={order.provider.id}
                     status={order.status}
                     container={order.container}
+                    unscrupulous={order.unscrupulous}
                 />
             </div>
 

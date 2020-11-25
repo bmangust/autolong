@@ -16,7 +16,7 @@ import {ColumnDescription} from 'react-bootstrap-table-next'
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import Loader from '../../UI/Loader/Loader'
 import {
-    getOrderStatusName, nameToLinkFormatter
+    getOrderStatusName, moneyFormatter, nameToLinkFormatter
 } from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
@@ -77,16 +77,6 @@ const OrdersTable: React.FC = () => {
             : null
     }
 
-    const orderMoneyFormatter = (price) => {
-        if ('cny' in price) {
-            return <span className='pricesBlock'>
-            <span>{price.cny} ¥</span>
-        </span>
-        } else {
-            return null
-        }
-    }
-
     const expandRowTable = [
         {
             dataField: 'provider',
@@ -132,7 +122,7 @@ const OrdersTable: React.FC = () => {
             dataField: 'price',
             text: 'Сумма',
             headerStyle: {width: '90px'},
-            formatter: orderMoneyFormatter
+            formatter: (price) => moneyFormatter(price, ['rub', 'usd'])
         }
     ]
 

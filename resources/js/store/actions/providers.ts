@@ -12,7 +12,7 @@ import {
     DELETE_PROVIDER_BY_ID,
     UPDATE_PROVIDER_SUCCESS,
     UPDATE_PROVIDER_ERROR,
-    UPDATE_PROVIDER_START
+    UPDATE_PROVIDER_START, SET_BLACK_LABEL
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
@@ -119,5 +119,20 @@ export const deleteProviderById = (id) => async dispatch => {
                 payload: id
             })
             toast.success('Поставщик удален')
+        })
+}
+
+export const setBlackLabelById = (id, unscrupulous) => async dispatch => {
+    const url = `/api/providers/${id}/setblacklabel`
+    axios
+        .put(url, {unscrupulous})
+        .then((answer) => {
+            dispatch({
+                type: SET_BLACK_LABEL,
+                payload: answer.data
+            })
+        })
+        .catch((error: AxiosError) => {
+            toast.error(error.message)
         })
 }

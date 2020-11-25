@@ -21,6 +21,7 @@ import {updateProvider} from '../../../store/actions/providers'
 // App
 import SvgCatalog from '../../UI/iconComponents/Catalog'
 import SvgClose from '../../UI/iconComponents/Close'
+import InputCheckbox from '../../UI/Inputs/InputCheckbox/InputCheckbox'
 
 interface IEditProviderData {
     name: string
@@ -30,6 +31,7 @@ interface IEditProviderData {
     phone: string
     wechat: string
     countryId: string
+    unscrupulous: boolean
     catalogs: [number]
     beneficiaryName: string
     beneficiaryAccountName: string
@@ -55,6 +57,7 @@ const ProviderFormEdit: React.FC<{
         phone: provider.phone,
         wechat: provider.wechat,
         country: provider.country,
+        unscrupulous: !!provider.unscrupulous,
         beneficiaryName: provider.beneficiaryName,
         beneficiaryAccountName: provider.beneficiaryAccountName,
         beneficiaryBankAddress: provider.beneficiaryBankAddress,
@@ -116,6 +119,7 @@ const ProviderFormEdit: React.FC<{
                 newCatalogsArr.push(catalog.value)
             })
             formValues.catalogs = newCatalogsArr
+            formValues.unscrupulous = formValues.unscrupulous ? 1 : 0
             formValues.countryId = formValues.countryId.value
             dispatch(updateProvider(formValues, provider.id,
                 `/provider/${provider.id}`))
@@ -362,6 +366,13 @@ const ProviderFormEdit: React.FC<{
                         </div>
                     </div>
 
+                </div>
+                <div className="row mb-4">
+                    <InputCheckbox
+                        name='unscrupulous'
+                        ref={register}
+                        classNameLabel='blackLabel'
+                        label='Недобросовестный поставщик'/>
                 </div>
 
                 <div>

@@ -26,6 +26,7 @@ import Error from '../../components/UI/Error/Error'
 import SvgCatalog from '../../components/UI/iconComponents/Catalog'
 import {ArrowRight} from '../../components/UI/iconComponents'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
+import SvgBlackLabel from '../../components/UI/iconComponents/BlackLabel'
 
 const Provider: React.FC<IProvider> = () => {
     const {id}: any = useParams()
@@ -112,7 +113,16 @@ const Provider: React.FC<IProvider> = () => {
                     <div className="card mb-3">
                         <div className="card-body-info">
 
-                            <h2 className="mb-3">Общая информация</h2>
+                            <h2 className="mb-3">
+                                Общая информация
+                                {'unscrupulous' in provider
+                                    ? provider.unscrupulous
+                                        ? <SvgBlackLabel
+                                            className='float-right'/>
+                                        : null
+                                    : null
+                                }
+                            </h2>
 
                             <div className="row mb-3">
                                 <div className="col-lg-5 infoBlockHeaders">
@@ -125,19 +135,28 @@ const Provider: React.FC<IProvider> = () => {
                                 <div className="col-lg-7 infoBlockText">
                                     <p>{'email' in provider
                                         ? provider.email
+                                            ? provider.email
+                                            : '-'
                                         : ''}</p>
                                     <p>{'phone' in provider
                                         ? provider.phone
+                                            ? provider.phone
+                                            : '-'
                                         : ''}</p>
                                     <p>{'wechat' in provider
                                         ? provider.wechat
+                                            ? provider.wechat
+                                            : '-'
                                         : ''}</p>
                                     <p>{'website' in provider
                                         ? provider.website
+                                            ? provider.website
+                                            : '-'
                                         : ''}</p>
                                     <p>{'country' in provider
                                         ? provider.country
-                                            ? provider.country.name : ''
+                                            ? provider.country.name
+                                            : '-'
                                         : ''}</p>
                                 </div>
                             </div>
@@ -157,24 +176,38 @@ const Provider: React.FC<IProvider> = () => {
                                 <div className="col-lg-7 infoBlockText">
                                     <p>{'beneficiaryName' in provider
                                         ? provider.beneficiaryName
+                                            ? provider.beneficiaryName
+                                            : '-'
                                         : ''}</p>
                                     <p>{'beneficiaryAddress' in provider
                                         ? provider.beneficiaryAddress
+                                            ? provider.beneficiaryAddress
+                                            : '-'
                                         : ''}</p>
                                     <p>{'beneficiaryAccountName' in provider
                                         ? provider.beneficiaryAccountName
+                                            ? provider.beneficiaryAccountName
+                                            : '-'
                                         : ''}</p>
                                     <p>{'beneficiaryBankAddress' in provider
                                         ? provider.beneficiaryBankAddress
+                                            ? provider.beneficiaryBankAddress
+                                            : '-'
                                         : ''}</p>
                                     <p>{'beneficiaryBankCode' in provider
                                         ? provider.beneficiaryBankCode
+                                            ? provider.beneficiaryBankCode
+                                            : '-'
                                         : ''}</p>
                                     <p>{'manufacturer' in provider
                                         ? provider.manufacturer
+                                            ? provider.manufacturer
+                                            : '-'
                                         : ''}</p>
                                     <p>{'beneficiarySwiftAddress' in provider
                                         ? provider.beneficiarySwiftAddress
+                                            ? provider.beneficiarySwiftAddress
+                                            : '-'
                                         : ''}</p>
                                 </div>
                             </div>

@@ -136,7 +136,7 @@ export default function productsReducer(
             }
         case LOCATION_CHANGE:
             return {
-                ...state, vendorProducts: []
+                ...state, vendorProducts: [], compareProducts: []
             }
         default:
             return state

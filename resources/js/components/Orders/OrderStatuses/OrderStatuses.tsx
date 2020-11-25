@@ -16,6 +16,7 @@ import classes from './OrderStatuses.module.css'
 // Actions
 import {changeOrderStatus} from '../../../store/actions/orders'
 import {fetchCities} from '../../../store/actions/cities'
+import {setBlackLabelById} from '../../../store/actions/providers'
 
 // Typescript
 import {IContainer} from '../../Containers/IContainers'
@@ -26,17 +27,22 @@ import SvgReadyForSent from '../../UI/iconComponents/ReadyForSent'
 import SvgDeliveryBox from '../../UI/iconComponents/DeliveryBox'
 import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
 import {getContainerStatusName} from '../../../utils'
+import InputCheckbox from '../../UI/Inputs/InputCheckbox/InputCheckbox'
 
 const OrderStatuses: React.FC<{
-    id: number,
-    status: string,
+    id: number
+    status: string
+    providerId: number
     container?: IContainer
+    unscrupulous: 0 | 1
 }> =
-    ({id, status, container}) => {
+    ({id, status, providerId, container, unscrupulous}) => {
         const dispatch = useDispatch()
 
         const [date, setDate] = useState('')
         const [city, setCity] = useState({})
+        const [unscrupulousState, setUnscrupulousState] =
+            useState<boolean>(!!unscrupulous)
 
         useEffect(() => {
             dispatch(fetchCities())
@@ -46,8 +52,11 @@ const OrderStatuses: React.FC<{
             setDate(e.target.value)
         }
 
-        const onClickHandler = (status) => {
+        const onClickHandler = (status: string) => {
             dispatch(changeOrderStatus(id, {status}))
+            if (status === 'orderCompleted') {
+                dispatch(setBlackLabelById(providerId, unscrupulousState))
+            }
         }
 
         const onSubmitHandler = (status) => {
@@ -66,6 +75,10 @@ const OrderStatuses: React.FC<{
 
         const onChangeCityHandler = (newValue: any) => {
             setCity(newValue)
+        }
+
+        const onCheckHandler = (e) => {
+            setUnscrupulousState(e.target.checked)
         }
 
         const {cities} = useSelector(
@@ -169,12 +182,22 @@ const OrderStatuses: React.FC<{
                         «Чёрную метку», если поставщик прислал
                         неправильный заказ
                     </p>
-                    <button
-                        onClick={() =>
-                            onClickHandler('orderCompleted')}
-                        className='btn btn-success'>
-                        Завершить
-                    </button>
+                    <div className='row'>
+                        <InputCheckbox
+                            classNameLabel='blackLabel'
+                            name='unscrupulous'
+                            defaultChecked={unscrupulousState}
+                            label='Недобросовестный поставщик'
+                            onChange={onCheckHandler}/>
+                        <div className="col-4 offset-lg-2 offset-0">
+                            <button
+                                onClick={() =>
+                                    onClickHandler('orderCompleted')}
+                                className='btn btn-success'>
+                                Завершить
+                            </button>
+                        </div>
+                    </div>
                 </div>
                 break
             }

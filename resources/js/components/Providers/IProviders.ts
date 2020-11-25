@@ -11,7 +11,8 @@ import {
     DELETE_PROVIDER_BY_ID,
     UPDATE_PROVIDER_START,
     UPDATE_PROVIDER_SUCCESS,
-    UPDATE_PROVIDER_ERROR
+    UPDATE_PROVIDER_ERROR,
+    SET_BLACK_LABEL
 } from '../../store/actions/actionTypes'
 import {ICountry} from '../Сountries/ICountries'
 import {IOrder} from '../Orders/IOrders'
@@ -26,6 +27,7 @@ export interface IProvider {
     website: string
     phone: string
     wechat: string
+    unscrupulous: 1 | 0
     country: ICountry | null
     beneficiaryName: string
     beneficiaryAccountName: string
@@ -127,9 +129,14 @@ interface IDeleteProviderById {
     payload: number
 }
 
+interface ISetBlackLabel {
+    type: typeof SET_BLACK_LABEL
+    payload: IProvider
+}
+
 export type IProvidersActionTypes =
     IFetchProvidersStart | IFetchProvidersSuccess | IFetchProvidersError |
     IFetchProviderStart | IFetchProviderSuccess | IFetchProviderError |
     ICreateProviderStart | ICreateProviderSuccess | ICreateProviderError |
     IDeleteProviderById | IUpdateProviderStart | IUpdateProviderSuccess |
-    IUpdateProviderError
+    IUpdateProviderError | ISetBlackLabel

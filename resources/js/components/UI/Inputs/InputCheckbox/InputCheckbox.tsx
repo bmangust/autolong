@@ -11,14 +11,15 @@ interface ICheckboxField {
     onChange: (val: string) => void
     label: string
     name: string
-    id: string
+    id?: string
+    classNameLabel?: string
 }
 
 const InputCheckbox: React.FC =
     // eslint-disable-next-line react/display-name
     forwardRef<InputElement, ICheckboxField>((
         {
-            label, id, name,
+            label, id, name, classNameLabel,
             ...rest
         }, ref) => {
         return <div className={classes.input}>
@@ -36,7 +37,9 @@ const InputCheckbox: React.FC =
                         <polyline points="1.5 6 4.5 9 10.5 1"/>
                     </svg>
                 </span>
-                <span>{label}</span>
+                <span className={classNameLabel
+                    ? classes[classNameLabel]
+                    : ''}>{label}</span>
             </label>
         </div>
     })

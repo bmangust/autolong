@@ -143,7 +143,7 @@ const OrderItemForm: React.FC<{
                             <div className={classes.submitPrice}>
                                 Итоговая стоимость
                                 <span>
-                                        {totalPrice + ' ¥'}
+                                        {totalPrice.toFixed(2) + ' ¥'}
                                     </span>
                             </div>
                         </div>

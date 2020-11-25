@@ -13,6 +13,7 @@ import {
     FETCH_PROVIDER_ERROR,
     FETCH_PROVIDER_START,
     FETCH_PROVIDER_SUCCESS,
+    SET_BLACK_LABEL,
     UPDATE_PROVIDER_ERROR,
     UPDATE_PROVIDER_START,
     UPDATE_PROVIDER_SUCCESS
@@ -81,6 +82,10 @@ export default function providersReducer(
         case UPDATE_PROVIDER_ERROR:
             return {
                 ...state, error: action.payload, loading: false
+            }
+        case SET_BLACK_LABEL:
+            return {
+                ...state, provider: action.payload
             }
         default:
             return state
