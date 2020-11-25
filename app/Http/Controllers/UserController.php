@@ -25,12 +25,16 @@ class UserController extends Controller
             'name' => 'имя',
             'email' => 'e-mail',
             'password' => 'пароль',
-            'roleId' => 'роль'
+            'roleId' => 'роль',
+            'lastname' => 'фамилия'
         ];
 
         return Validator::make($data, [
             'email' => ['required', 'email', 'unique:users'],
             'password' => ['required', 'min:8', 'confirmed'],
+            'roleId' => ['required', 'integer'],
+            'lastname' => ['required', 'string'],
+            'name' => ['required', 'string'],
         ], $messages, $names);
     }
     /**
@@ -55,6 +59,9 @@ class UserController extends Controller
     {
         $this->userCreateValidator($request->all())->validate();
         $name = $request->input('name');
+        $lastname = $request->input('lastname');
+        $patronymic = $request->input('patronymic');
+        $phone = $request->input('phone');
         $email = $request->input('email');
         $password = Hash::make($request->input('password'));
         $role = $request->input('role_id');
@@ -63,6 +70,9 @@ class UserController extends Controller
             'email' => $email,
             'password' => $password,
             'role' => $role,
+            'lastname' => $lastname,
+            'patronymic' => $patronymic,
+            'phone' => $phone
         ]);
         return response()->json(new UserWithRelationshipsResource($newUser), 201);
     }
@@ -90,6 +100,9 @@ class UserController extends Controller
     {
         $this->userCreateValidator($request->all())->validate();
         $name = $request->input('name');
+        $lastname = $request->input('lastname');
+        $patronymic = $request->input('patronymic');
+        $phone = $request->input('phone');
         $email = $request->input('email');
         $password = Hash::make($request->input('password'));
         $role = $request->input('role_id');
@@ -98,6 +111,9 @@ class UserController extends Controller
             'email' => $email,
             'password' => $password,
             'role' => $role,
+            'lastname' => $lastname,
+            'patronymic' => $patronymic,
+            'phone' => $phone
         ]);
         return response()->json(new UserWithRelationshipsResource($user), 200);
     }

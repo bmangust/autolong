@@ -17,7 +17,10 @@ class UserWithRelationshipsResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
+            'lastname' => $this->lastname,
+            'patronymic' => $this->patronymic,
             'email' => $this->email,
+            'phone' => $this->phone,
             'role' => new UserRoleResource($this->role),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
