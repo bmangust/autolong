@@ -9,6 +9,7 @@ import {
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchRoles = () => async dispatch => {
     await dispatch({
@@ -43,6 +44,7 @@ export const createRole = (data) => async dispatch => {
                 type: CREATE_ROLE_SUCCESS,
                 payload: answer.data
             })
+            dispatch(push('/settings/roles'))
             toast.success(createNotyMsg(answer.data.name, 'роль создана'))
         })
         .catch((error: AxiosError) => {
