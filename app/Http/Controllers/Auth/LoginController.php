@@ -34,6 +34,6 @@ class LoginController extends Controller
 
     public function user(Request $request)
     {
-        return new UserWithRelationshipsResource($request->user());
+        return json_encode(new UserWithRelationshipsResource($request->user()));
     }
 }
