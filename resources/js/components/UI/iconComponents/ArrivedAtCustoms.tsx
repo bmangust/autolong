@@ -12,7 +12,7 @@ function SvgArrivedAtCustoms(props: React.SVGProps<SVGSVGElement>) {
         >
             <path
                 d="M7 41.517l-1.508-1.509-1.65 1.65 2.334 2.333a1.167 1.167 0 001.65 0l5.833-5.833-1.65-1.65-5.008 5.009z"
-                fill="#EB5E28"
+                fill="#f44a0e"
             />
             <path
                 d="M29.167 36.166h-14V38.5h14v-2.334zM28 39.666H15.167V42H28v-2.334zM29.167 45.5h-14v2.333h14V45.5zM28 49H15.167v2.333H28V49zM29.167 54.834h-14v2.333h14v-2.334zM28 58.333H15.167v2.333H28v-2.333z"

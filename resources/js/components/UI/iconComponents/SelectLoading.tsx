@@ -19,10 +19,10 @@ function SvgSelectLoading(props: React.SVGProps<SVGSVGElement>) {
                 <path
                     d="M50 15a35 35 0 1024.749 10.251"
                     fill="none"
-                    stroke="#eb5e28"
+                    stroke="#f44a0e"
                     strokeWidth={12}
                 />
-                <path d="M49 3v24l12-12L49 3" fill="#eb5e28" />
+                <path d="M49 3v24l12-12L49 3" fill="#f44a0e" />
                 <animateTransform
                     attributeName="transform"
                     type="rotate"

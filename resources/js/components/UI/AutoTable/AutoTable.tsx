@@ -173,11 +173,12 @@ const AutoTable: React.FC<IAutoTable> = (
                 <div>
                     {header
                         ? <div
-                            className='flex-sm-row d-flex
+                            className='flex-lg-row d-flex
                     justify-content-between mb-2 flex-column '
                         >
-                            <div className='d-flex'>
-                                <div className='searchBar mr-2'>
+                            <div className='d-flex flex-lg-row
+                             flex-column mb-lg-0 mb-2'>
+                                <div className='searchBar mr-lg-2 mr-0'>
                                     <SearchBar
                                         {...props.searchProps}
                                         placeholder='Поиск...'
