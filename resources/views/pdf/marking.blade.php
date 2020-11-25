@@ -46,7 +46,7 @@
         @foreach($hsCodes as $hsCode)
         <tr>
             <td>
-                <span style="border-bottom: 1px dotted #000">{{ $hsCode ?? '-' }}231314545646</span>
+                <span style="border-bottom: 1px dotted #000">{{ $hsCode ?? '-' }}</span>
             </td>
         </tr>
         @endforeach

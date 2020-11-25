@@ -69,7 +69,8 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                 formValues.importerStamp = formValues.importerStamp[0] || ''
             }
             if ('importerSignature' in formValues) {
-                formValues.importerStamp = formValues.importerStamp[0] || ''
+                formValues.importerSignature =
+                    formValues.importerSignature[0] || ''
             }
             setIsOpen(false)
             dispatch(createOrderInvoice(id, formValues, type))

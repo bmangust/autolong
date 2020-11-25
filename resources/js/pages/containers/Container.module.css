@@ -104,3 +104,14 @@ h2 {
         margin-bottom: 10px;
     }
 }
+
+
+@media (max-width: 575px) {
+    .order .orderHeader {
+        flex-direction: column;
+    }
+
+    .order .orderHeader a {
+        margin-bottom: 10px;
+    }
+}
