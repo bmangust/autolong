@@ -1,19 +1,34 @@
 // React
-import React, {useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 // Styles
 import classes from './Header.module.css'
 import {useLocation} from 'react-router-dom'
 import MenuButton from '../MenuButton/MenuButton'
+import {SanctumContext} from '../../../Sanctum'
 
 const Header: React.FC<{ isOpen: boolean, setIsOpen: Function }> = (
     {isOpen, setIsOpen}) => {
-    const [pageName, setPageName]: any = useState('')
     const location = useLocation()
-    // @todo Оптимизировать
-    setTimeout(() => {
-        return setPageName(location.state)
-    }, 0)
+
+    const [pageName, setPageName]: any = useState('')
+
+    useEffect(() => {
+        setPageName(location.state)
+    }, [location])
+
+    const {user} = useContext(SanctumContext)
+
+    const roleName = user ? user.role.name : ''
+    const fullName = user
+        ? `${user.lastname}
+        ${user.name
+            ? user.name.charAt(0)
+            : ''}.
+            ${user.patronymic
+            ? user.patronymic.charAt(0)
+            : ''}.`
+        : ''
 
     return (
         <>
@@ -25,10 +40,10 @@ const Header: React.FC<{ isOpen: boolean, setIsOpen: Function }> = (
                     <span className={classes.HeaderBlockUserPic}>И</span>
                     <div className={classes.HeaderBlockUserNameRole}>
                         <span className={classes.HeaderBlockUserName}>
-                            Иванов И.И.
+                            {fullName}
                         </span>
                         <span className={classes.HeaderBlockUserRole}>
-                            Администратор
+                            {roleName}
                         </span>
                     </div>
                     <MenuButton isOpen={isOpen} setIsOpen={setIsOpen}/>

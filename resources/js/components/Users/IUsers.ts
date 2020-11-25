@@ -6,13 +6,16 @@ import {
     FETCH_USERS_START,
     FETCH_USERS_SUCCESS
 } from '../../store/actions/actionTypes'
+import {IRole} from '../Roles/IRoles'
 
 
 export interface IUser {
     id: number
     name: string
+    lastname: string
     email: string
-    role: string
+    patronymic: string
+    role: IRole
     createdAt: string
     updatedAt: string
 }
