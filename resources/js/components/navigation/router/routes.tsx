@@ -25,6 +25,16 @@ export const routes: IRoute[] = [
     {
         name: 'Заказы',
         pageName: 'Заказы',
+        path: '/',
+        redirect: '/orders',
+        hide: true,
+        exact: true,
+        private: true,
+        fallback: <Loader/>
+    },
+    {
+        name: 'Заказы',
+        pageName: 'Заказы',
         path: '/orders',
         component: lazy(() =>
             pMinDelay(import('../../../pages/orders/Orders'), 600)
@@ -33,7 +43,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Orders/>
+        icon: <Orders/>,
+        access: ['ordersIndex']
     },
     {
         name: 'Просмотр информации о заказе',
@@ -44,7 +55,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['ordersIndex']
     },
     {
         name: 'Инициализация нового заказа',
@@ -55,7 +67,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['ordersIndex', 'ordersCreate']
     },
     {
         name: 'Инициализация нескольких новых заказов',
@@ -65,7 +78,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['ordersIndex', 'ordersCreate']
     },
     {
         name: 'Контейнеры',
@@ -78,7 +92,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Containers/>
+        icon: <Containers/>,
+        access: ['containersIndex']
     },
     {
         name: 'Просмотр информации о контейнере',
@@ -89,7 +104,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['containersIndex']
     },
     {
         name: 'Сформировать контейнер',
@@ -100,7 +116,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['containersIndex', 'containersCreate']
     },
     {
         name: 'Каталоги',
@@ -113,7 +130,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Catalogs/>
+        icon: <Catalogs/>,
+        access: ['catalogsIndex']
     },
     {
         name: 'Просмотр информации о каталоге',
@@ -124,7 +142,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['catalogsIndex']
     },
     {
         name: 'Добавление нового каталога',
@@ -135,7 +154,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['catalogsIndex', 'catalogsCreate']
     },
     {
         name: 'Товары',
@@ -148,7 +168,56 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Products/>
+        icon: <Products/>,
+        access: ['productsIndex']
+    },
+    {
+        name: 'Просмотр информации о товаре',
+        path: '/product/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/products/Product'), 600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        access: ['productsIndex']
+    },
+    {
+        name: 'Редактирование информации о товаре',
+        path: '/productedit/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/products/ProductEdit'), 600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        access: ['productsIndex', 'productsUpdate']
+    },
+    {
+        name: 'Добавление нового товара',
+        path: '/productcreate',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/products/ProductCreate'), 600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        access: ['productsIndex', 'productsCreate']
+    },
+    {
+        name: 'Добавление нескольких новых товаров',
+        path: '/productscreate/:unpublished',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/products/ProductsCreate'), 600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        access: ['productsIndex', 'productsCreate']
     },
     {
         name: 'Цены',
@@ -165,57 +234,14 @@ export const routes: IRoute[] = [
         name: 'Новинки',
         pageName: 'Список неопубликованных товаров',
         path: '/newproducts',
-        component: lazy(() => pMinDelay(
-            import('../../../pages/newproducts/NewProducts'), 600)),
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/newproducts/NewProducts'),
+                600)),
         hide: false,
         exact: false,
         private: true,
         fallback: <Loader/>,
         icon: <NewItems/>
-    },
-    {
-        name: 'Просмотр информации о товаре',
-        path: '/product/:id',
-        component: lazy(() =>
-            pMinDelay(import('../../../pages/products/Product'), 600)
-        ),
-        hide: true,
-        exact: false,
-        private: true,
-        fallback: <Loader/>
-    },
-    {
-        name: 'Редактирование информации о товаре',
-        path: '/productedit/:id',
-        component: lazy(() =>
-            pMinDelay(import('../../../pages/products/ProductEdit'), 600)
-        ),
-        hide: true,
-        exact: false,
-        private: true,
-        fallback: <Loader/>
-    },
-    {
-        name: 'Добавление нового товара',
-        path: '/productcreate',
-        component: lazy(() =>
-            pMinDelay(import('../../../pages/products/ProductCreate'), 600)
-        ),
-        hide: true,
-        exact: false,
-        private: true,
-        fallback: <Loader/>
-    },
-    {
-        name: 'Добавление нескольких новых товаров',
-        path: '/productscreate/:unpublished',
-        component: lazy(() =>
-            pMinDelay(import('../../../pages/products/ProductsCreate'), 600)
-        ),
-        hide: true,
-        exact: false,
-        private: true,
-        fallback: <Loader/>
     },
     {
         name: 'Поставщики',
@@ -228,7 +254,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Providers/>
+        icon: <Providers/>,
+        access: ['providersIndex']
     },
     {
         name: 'Просмотр информации о поставщике',
@@ -239,7 +266,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['providersIndex']
     },
     {
         name: 'Редактирование информации о поставщике',
@@ -250,7 +278,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['providersIndex', 'providersUpdate']
     },
     {
         name: 'Добавление нового поставщика',
@@ -261,7 +290,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['providersIndex', 'providersCreate']
     },
     {
         name: 'Импортеры',
@@ -274,7 +304,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Importers/>
+        icon: <Importers/>,
+        access: ['importersIndex']
     },
     {
         name: 'Просмотр информации об импортере',
@@ -285,7 +316,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['importersIndex']
     },
     {
         name: 'Добавление нового импортера',
@@ -296,7 +328,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['importersIndex', 'importersCreate']
     },
     {
         name: 'Импортер изменение',
@@ -307,7 +340,8 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: true,
-        fallback: <Loader/>
+        fallback: <Loader/>,
+        access: ['importersIndex', 'importersUpdate']
     },
     {
         name: 'Лог',
@@ -317,7 +351,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Log/>
+        icon: <Log/>,
+        access: ['logsIndex']
     },
     {
         name: 'Настройки',
@@ -326,7 +361,7 @@ export const routes: IRoute[] = [
             pMinDelay(import('../../../pages/settings/Settings'), 600)
         ),
         hide: false,
-        exact: true,
+        exact: false,
         private: true,
         fallback: <Loader/>,
         icon: <Settings/>
@@ -338,7 +373,7 @@ export const routes: IRoute[] = [
             pMinDelay(import('../../../pages/settings/GeneralSettings'), 600)
         ),
         hide: true,
-        exact: false,
+        exact: true,
         private: true,
         fallback: <Loader/>,
         icon: <Settings/>
@@ -442,23 +477,23 @@ export const routes: IRoute[] = [
         fallback: <div> Loading... </div>
     },
     {
+        name: 'Выход',
+        path: '/logout',
+        redirect: '/login',
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <div> Loading... </div>
+    },
+    {
         name: 'Логин',
         path: '/login',
         component: lazy(() =>
             pMinDelay(import('../../../pages/login/Login'), 600)
         ),
         hide: true,
-        exact: true,
         private: false,
-        fallback: <div> Loading... </div>
-    },
-    {
-        name: 'Выход',
-        path: '/logout',
-        redirect: '/login',
-        hide: true,
         exact: false,
-        private: false,
         fallback: <div> Loading... </div>
     }
 ]
