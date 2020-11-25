@@ -199,7 +199,8 @@ class Order extends Model
         if (property_exists($statuses, $status)) {
             $this->status = $status;
 
-            if (is_null($this->arrival_date) && is_null($this->city_id)) {
+            if ((is_null($this->arrival_date) && is_null($this->city_id)) ||
+                (!is_null($city) && !is_null($arrivalDate))) {
                 $this->city_id = $city;
                 $this->arrival_date = $arrivalDate;
             }
