@@ -125,10 +125,16 @@ class OrderController extends Controller
         $statusOrderInProduction = array_keys(get_object_vars(Status::getOrderStatuses()), 'Находится в производстве')[0];
         if ($status != $statusOrderInProduction) {
             $order->setOrderStatus($status);
-        } elseif ($request->has('arrivalDate') && $order->checkActualDate($request->input('arrivalDate')) && $request->has('city')) {
+        } elseif ($request->has('arrivalDate') && $request->has('city')) {
+
+            if (!$order->checkActualDate($request->input('arrivalDate'))) {
+                return response()->json('Указана не актуальная дата', 400);
+            }
+
             $city = City::firstOrCreate(['name' => City::translateUcFirstCyrillicAndOtherLc($request->input('city'))]);
             $arrivalDate = $request->input('arrivalDate');
             $order->setOrderStatus($status, $city->id, $arrivalDate);
+
         } else {
             return response()->json('Заполнена не вся информация для статуса "Находится в производстве"', 400);
         }
