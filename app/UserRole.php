@@ -20,4 +20,11 @@ class UserRole extends Model
     {
         return $this->hasOne('App\Access');
     }
+
+    public function setAccesses(array $accesses): void
+    {
+        $access = Access::create($accesses);
+        $this->access_id = $access->id;
+        $this->save();
+    }
 }
