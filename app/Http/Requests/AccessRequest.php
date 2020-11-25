@@ -26,7 +26,6 @@ class AccessRequest extends FormRequest
         return [
             '*_create' => 'required|integer|min:0|max:1',
             '*_update' => 'required|integer|min:0|max:1',
-            '*_show' => 'required|integer|min:0|max:1',
             '*_delete' => 'required|integer|min:0|max:1',
             '*_index' => 'required|integer|min:0|max:1',
             'orders_show_cargo' => 'required|integer|min:0|max:1',

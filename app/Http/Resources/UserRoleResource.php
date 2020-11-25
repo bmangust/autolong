@@ -17,7 +17,7 @@ class UserRoleResource extends JsonResource
         return [
             'id' => $this->id,
             'name' => $this->name,
-            'access' => new AccessResource($this->access),
+            'accesses' => new AccessResource($this->access),
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
