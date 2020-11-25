@@ -116,9 +116,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('users/{user}', 'UserController@update');
     Route::delete('users/{user}', 'UserController@destroy');
 
-    Route::post('accesses', 'AccessController@store');
-    Route::put('accesses{access}', 'AccessController@update');
-
     Route::get('userroles', 'UserRoleController@index');
     Route::post('userroles', 'UserRoleController@store');
     Route::get('userroles/{userrole}', 'UserRoleController@show');

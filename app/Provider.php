@@ -17,6 +17,7 @@ class Provider extends Model
         'name_company',
         'email',
         'website',
+        'unscrupulous',
         'phone',
         'wechat',
         'country_id',
