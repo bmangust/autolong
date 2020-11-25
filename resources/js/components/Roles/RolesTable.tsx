@@ -49,7 +49,7 @@ const RolesTable: React.FC = () => {
     if (!roles.length) {
         return <Placeholder
             description='Нажмите на кнопку «Добавить роль»,
-             чтобы она отображался в списке'
+             чтобы она отображалась в списке'
             link='/settings/roles/add' linkName='Добавить роль'
             title='В этом списке ещё нет ролей'/>
     }

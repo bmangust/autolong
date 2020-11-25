@@ -1,10 +1,12 @@
 // React
-import React, {useContext} from 'react'
+import React from 'react'
 
 // Third-party
 import {useForm} from 'react-hook-form'
 import {useDispatch} from 'react-redux'
 import {push} from 'connected-react-router'
+import * as yup from 'yup'
+import {yupResolver} from '@hookform/resolvers/yup'
 
 // Styles
 import classes from './CreateRole.module.css'
@@ -17,26 +19,31 @@ import Form from '../../../components/UI/Form/Form'
 import Input from '../../../components/UI/Inputs/Input/Input'
 import InputCheckbox
     from '../../../components/UI/Inputs/InputCheckbox/InputCheckbox'
-import {SanctumContext} from '../../../Sanctum'
 
 const CreateRole: React.FC = () => {
     const dispatch = useDispatch()
-    const {register, handleSubmit} = useForm()
+
+    const schema = yup.object().shape({
+        name: yup.string().required('Поле обязательно к заполнению')
+    })
+
+    const {register, handleSubmit, errors} =
+        useForm({resolver: yupResolver(schema)})
 
     const goBackHandler = () => {
         dispatch(push('/settings/roles'))
     }
 
-    const {user} = useContext(SanctumContext)
-
     const createRoleHandler =
         handleSubmit((formValues) => {
+            const accesses: any = []
             Object.entries(formValues).map(([key, value]) => {
                 if (key !== 'name') {
-                    formValues[key] = value ? 1 : 0
+                    accesses.push({[key]: value ? 1 : 0})
+                    delete formValues[key]
                 }
             })
-            formValues.roleId = user.role_id
+            formValues.accesses = accesses
             dispatch(createRole(formValues))
         })
     return <div className={classes.form + ' card card-body'}>
@@ -45,7 +52,10 @@ const CreateRole: React.FC = () => {
                 <Input
                     placeholder='Введите название роли'
                     type='text'
+                    error={!!errors.name}
+                    helperText={errors?.name?.message}
                     ref={register}
+                    required={true}
                     label='Название роли'
                     defaultValue=''
                     name='name'/>
@@ -65,6 +75,10 @@ const CreateRole: React.FC = () => {
                     label='Редактирование информации о заказе'/>
                 <InputCheckbox
                     name='ordersShowCargo'
+                    ref={register}
+                    label='Показывать заказы карго?'/>
+                <InputCheckbox
+                    name='ordersIndex'
                     ref={register}
                     label='Доступ в раздел и просмотр информации'/>
                 <InputCheckbox
@@ -86,7 +100,7 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Редактирование информации о контейнере'/>
                 <InputCheckbox
-                    name='containersShow'
+                    name='containersIndex'
                     ref={register}
                     label='Просмотр информации о контейнере'/>
                 <InputCheckbox
@@ -108,7 +122,7 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Редактирование информации о каталоге'/>
                 <InputCheckbox
-                    name='catalogsShow'
+                    name='catalogsIndex'
                     ref={register}
                     label='Просмотр информации о каталоге'/>
                 <InputCheckbox
@@ -131,7 +145,7 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Редактирование информации о товаре'/>
                 <InputCheckbox
-                    name='productsShow'
+                    name='productsIndex'
                     ref={register}
                     label='Просмотр информации о товаре'/>
                 <InputCheckbox
@@ -153,7 +167,7 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Редактирование информации о поставщике'/>
                 <InputCheckbox
-                    name='providersShow'
+                    name='providersIndex'
                     ref={register}
                     label='Просмотр информации о поставщике'/>
                 <InputCheckbox
@@ -175,7 +189,7 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Редактирование информации об импортёре'/>
                 <InputCheckbox
-                    name='importersShow'
+                    name='importersIndex'
                     ref={register}
                     label='Просмотр информации об импортёре'/>
                 <InputCheckbox
@@ -197,7 +211,7 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Редактирование роли'/>
                 <InputCheckbox
-                    name='userRolesShow'
+                    name='userRolesIndex'
                     ref={register}
                     label='Просмотр роли'/>
                 <InputCheckbox
@@ -214,7 +228,7 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Редактирование информации пользователя'/>
                 <InputCheckbox
-                    name='userShow'
+                    name='userIndex'
                     ref={register}
                     label='Просмотр информации о пользователе'/>
                 <InputCheckbox

@@ -373,7 +373,8 @@ export const routes: IRoute[] = [
         name: 'Пользователи',
         path: '/settings/users',
         component: lazy(() =>
-            pMinDelay(import('../../../pages/settings/UsersSettings'), 600)
+            pMinDelay(import('../../../pages/settings/users/UsersSettings'),
+                600)
         ),
         hide: true,
         exact: false,

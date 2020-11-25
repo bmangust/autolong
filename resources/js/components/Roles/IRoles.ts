@@ -10,6 +10,48 @@ import {
 export interface IRole {
     id: number
     name: string
+    ordersCreate: 0 | 1
+    ordersUpdate: 0 | 1
+    ordersShowCargo: 0 | 1
+    ordersDelete: 0 | 1
+    ordersIndex: 0 | 1
+
+    containersCreate: 0 | 1
+    containersUpdate: 0 | 1
+    containersDelete: 0 | 1
+    containersIndex: 0 | 1
+
+    catalogsCreate: 0 | 1
+    catalogsUpdate: 0 | 1
+    catalogsDelete: 0 | 1
+    catalogsIndex: 0 | 1
+
+    productsCreate: 0 | 1
+    productsUpdate: 0 | 1
+    productsDelete: 0 | 1
+    productsIndex: 0 | 1
+
+    providersCreate: 0 | 1
+    providersUpdate: 0 | 1
+    providersDelete: 0 | 1
+    providersIndex: 0 | 1
+
+    importersCreate: 0 | 1
+    importersUpdate: 0 | 1
+    importersDelete: 0 | 1
+    importersIndex: 0 | 1
+
+    userRolesCreate: 0 | 1
+    userRolesUpdate: 0 | 1
+    userRolesDelete: 0 | 1
+    userRolesIndex: 0 | 1
+
+    userCreate: 0 | 1
+    userUpdate: 0 | 1
+    userDelete: 0 | 1
+    userIndex: 0 | 1
+
+    logsIndex: 0 | 1
     createdAt: string
     updatedAt: string
 }
