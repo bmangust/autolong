@@ -361,7 +361,7 @@ export const routes: IRoute[] = [
             pMinDelay(import('../../../pages/settings/Settings'), 600)
         ),
         hide: false,
-        exact: false,
+        exact: true,
         private: true,
         fallback: <Loader/>,
         icon: <Settings/>
