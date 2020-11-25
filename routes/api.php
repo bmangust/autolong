@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Str;
 
@@ -19,10 +18,7 @@ Route::post('/login', 'Auth\LoginController@login')->name('login');
 Route::post('/forgot', 'Auth\ResetPasswordController@forgot')->name('password.forgot');
 
 Route::middleware('auth:sanctum')->group(function () {
-    Route::get('/user', function (Request $request) {
-        return $request->user();
-    });
-
+    Route::get('/user', 'Auth\LoginController@user');
     Route::post('/logout', 'Auth\LoginController@logout')->name('logout');
 
     Route::get('importers', 'ImporterController@index');

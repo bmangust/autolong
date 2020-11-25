@@ -3,8 +3,8 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\UserWithRelationshipsResource;
 use App\User;
-use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\HttpException;
@@ -30,5 +30,10 @@ class LoginController extends Controller
     public function logout(Request $request)
     {
         $request->user()->tokens()->delete();
+    }
+
+    public function user(Request $request)
+    {
+        return new UserWithRelationshipsResource($request->user());
     }
 }
