@@ -8,7 +8,6 @@ class UserRole extends Model
 {
     protected $fillable = [
         'name',
-        'access_id'
     ];
 
     public function users()
