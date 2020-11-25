@@ -15,6 +15,9 @@ import {
     deleteProductById, fetchProductById
 } from '../../store/actions/products'
 
+// Styles
+import classes from './Product.module.css'
+
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import {imgFormatter, moneyFormatter, timeConverter} from '../../utils'
@@ -234,28 +237,26 @@ const Product: React.FC = () => {
                             </div>
 
                         </div>
-                        <div className='d-flex justify-content-between
-                         flex-lg-row flex-column'>
+                        <div className={classes.btns}>
                             <NavLink to={`/productedit/${id}`}
                                      className='editButton'>
-                                Редактировать информацию
+                                Редактировать
                             </NavLink>
                             <button onClick={() => onDeleteHandler(product.id)}
                                     className='btn btn-danger'>
                                 Удалить товар
                             </button>
-                        </div>
-                        {product.published == 0
-                            ? <div className='d-flex justify-content-between
-                         flex-lg-row flex-column'>
+                            {product.published == 0
+                            ?
                                 <button onClick={() =>
                                     onAcceptHandler(product.id)}
-                                        className='btn btn-danger'>
+                                        className='btn btn-success'>
                                     Одобрить
                                 </button>
-                            </div>
                             : null
                         }
+                        </div>
+
                     </div>
                 </div>
 
