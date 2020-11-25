@@ -361,13 +361,15 @@ class OrderController extends Controller
 
     public function generatePdfPackingList(Request $request, Order $order)
     {
-        $orderItemsInfo = $request->all();
-        foreach ($orderItemsInfo as $key => $info) {
-            $orderItem = OrderItem::findOrFail($key);
-            $pcsCtnCtns = array_merge([],['pcsCtn' => $info['pcsCtn']], ['ctns' => $info['ctns']]);
-            $orderItem->pcs_ctn_ctns = json_encode($pcsCtnCtns);
-            $orderItem->meas = json_encode($info['meas']);
-            $orderItem->save();
+        if (!$request->input('old')) {
+            $orderItemsInfo = $request->all();
+            foreach ($orderItemsInfo as $key => $info) {
+                $orderItem = OrderItem::findOrFail($key);
+                $pcsCtnCtns = array_merge([],['pcsCtn' => $info['pcsCtn']], ['ctns' => $info['ctns']]);
+                $orderItem->pcs_ctn_ctns = json_encode($pcsCtnCtns);
+                $orderItem->meas = json_encode($info['meas']);
+                $orderItem->save();
+            }
         }
 
         $importer = Importer::first();

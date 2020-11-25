@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use Carbon\Carbon;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -31,7 +32,7 @@ class NewProducts extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject('Новинки в системе Autolong')
+        return $this->subject('Новинки в системе Autolong от ' . Carbon::now()->format('d.m'))
                     ->view('emails.newproducts')
                     ->with([
                         'newProducts' => $this->newProducts,

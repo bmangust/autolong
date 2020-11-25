@@ -24,6 +24,7 @@ class OrderWithRelationshipsResource extends JsonResource
             'arrivalDate' => $this->arrivale_date,
             'city' => new CityResource($this->city),
             'statusPayment' => $this->status_payment,
+            'packingList' => $this->checkDataForPackingList(),
             'price' => (object)['rub' => $this->getOrderSumInRub(),
                                 'usd' => $this->getOrderSumInUsd(),
                                 'cny' => $this->getOrderSumInCny()],

@@ -197,9 +197,13 @@ class Order extends Model
     {
         $statuses = Status::getOrderStatuses();
         if (property_exists($statuses, $status)) {
-            $this->city_id = $city;
-            $this->arrival_date = $arrivalDate;
             $this->status = $status;
+
+            if (is_null($this->arrival_date) && is_null($this->city_id)) {
+                $this->city_id = $city;
+                $this->arrival_date = $arrivalDate;
+            }
+
             $this->save();
         } else {
             throw new HttpException(404,'Данного статуса не существует');
@@ -384,5 +388,16 @@ class Order extends Model
         unset($array['importerSignature']);
         $this->contract->info = $array;
         $this->contract->save();
+    }
+
+    public function checkDataForPackingList(): bool
+    {
+        foreach ($this->orderItems as $orderItem) {
+            if (!is_null($orderItem->pcs_ctn_ctns) && !is_null($orderItem->meas)) {
+                continue;
+            }
+            return false;
+        }
+        return true;
     }
 }
