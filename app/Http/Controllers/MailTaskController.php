@@ -28,7 +28,7 @@ class MailTaskController extends Controller
         $dispatchTime = $request->input('dispatchTime');
         $email = $request->input('email');
         if (is_null($mailTask)) {
-            $mailTask->create(['email' => $email, 'dispatch_time' => $dispatchTime]);
+            $mailTask = MailTask::create(['email' => $email, 'dispatch_time' => $dispatchTime]);
         } else {
             $mailTask->update(['email' => $email, 'dispatch_time' => $dispatchTime]);
         }
