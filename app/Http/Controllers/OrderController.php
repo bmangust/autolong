@@ -13,6 +13,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use App\Http\Resources\OrderWithRelationshipsResource;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class OrderController extends Controller
 {
@@ -127,14 +128,14 @@ class OrderController extends Controller
             $order->setOrderStatus($status);
         } elseif ($request->has('arrivalDate') && $request->has('city')) {
             if (!$order->checkActualDate($request->input('arrivalDate'))) {
-                throw response()->json('Указана не актуальная дата', 400);
+                throw new HttpException( 400, 'Указана не актуальная дата');
             }
 
             $city = City::firstOrCreate(['name' => City::translateUcFirstCyrillicAndOtherLc($request->input('city'))]);
             $arrivalDate = $request->input('arrivalDate');
             $order->setOrderStatus($status, $city->id, $arrivalDate);
         } else {
-            return response()->json('Заполнена не вся информация для статуса "Находится в производстве"', 400);
+            throw new HttpException( 400, 'Заполнена не вся информация для статуса "Находится в производстве"');
         }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }

@@ -6,6 +6,7 @@ use App\SandboxFile;
 use App\Http\Resources\SandboxFileResource;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class SandboxFileController extends Controller
 {
@@ -29,7 +30,7 @@ class SandboxFileController extends Controller
         }
         $file = $request->file('file');
         if (!$file->isValid()) {
-            throw response()->json('Ошибка загружаемого файла', 400);
+            throw new HttpException( 400, 'Ошибка загружаемого файла');
         }
 
         if ($request->input('check')) {
@@ -40,7 +41,7 @@ class SandboxFileController extends Controller
             $path = $model::SANDBOX_DIRECTORY . $model->id;
             $name = $sandboxFile->getClearName($request->input('name')) . '.' . $file->getClientOriginalExtension();
             if ($sandboxFile->checkFileInFolder($sandboxFile->getPathWithParentDirectory($path . '/' . $name))) {
-                throw response()->json('Файл с таким именем существует', 400);
+                throw new HttpException( 400, 'Файл с таким именем существует');
             }
             $description = $request->input('description');
         }
