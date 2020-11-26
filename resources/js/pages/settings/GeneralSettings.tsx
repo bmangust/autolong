@@ -1,14 +1,11 @@
 // React
 import React from 'react'
+import NewsEmail from '../../components/General/NewsEmail/NewsEmail'
 
 const GeneralSettings: React.FC = () => {
-    return (
-        <div className='card'>
-            <div className='card-body'>
-                <p className='mt-3'>Общие</p>
-            </div>
-        </div>
-    )
+    return <>
+        <NewsEmail/>
+    </>
 }
 
 export default GeneralSettings
