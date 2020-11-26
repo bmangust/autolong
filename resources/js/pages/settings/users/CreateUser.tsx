@@ -112,7 +112,7 @@ const CreateUser = () => {
                     <label className='required'
                            htmlFor='roleId'>
                         Выберите роль
-                    </label>
+                    </label>autocomplete
                     <Controller
                         name="roleId"
                         as={roleSelect}
@@ -156,7 +156,6 @@ const CreateUser = () => {
                     error={!!errors.password}
                     helperText={errors?.password?.message}
                     ref={register}
-                    autoComplete='current-password'
                     required={true}
                     label='Пароль'
                     defaultValue=''

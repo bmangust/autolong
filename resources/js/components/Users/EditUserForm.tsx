@@ -153,7 +153,6 @@ const EditUserForm: React.FC<{
                     error={!!errors.password}
                     helperText={errors?.password?.message}
                     ref={register}
-                    autoComplete='current-password'
                     required={true}
                     label='Пароль'
                     name='password'/>
