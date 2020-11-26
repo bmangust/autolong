@@ -13,7 +13,7 @@ import Select from 'react-select'
 import {IRole} from '../Roles/IRoles'
 
 // Actions
-import {createUser} from '../../store/actions/users'
+import {updateUserById} from '../../store/actions/users'
 
 // App
 import Form from '../UI/Form/Form'
@@ -64,10 +64,6 @@ const EditUserForm: React.FC<{
         dispatch(push('/settings/users'))
     }
 
-    console.log(rolesOptions
-        .filter(({value}) =>
-            value === user.role.id)[0])
-
     const roleSelect = <Select
         placeholder='Роль'
         classNamePrefix='select-mini'
@@ -77,7 +73,7 @@ const EditUserForm: React.FC<{
     const createUserHandler =
         handleSubmit((formValues) => {
             formValues.roleId = formValues.roleId.value
-            dispatch(createUser(formValues))
+            dispatch(updateUserById(formValues, user.id))
         })
     return <div className='card card-body'>
         <Form onSubmit={createUserHandler}>
