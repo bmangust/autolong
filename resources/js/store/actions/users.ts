@@ -5,7 +5,13 @@ import {
     CREATE_USER_SUCCESS,
     FETCH_USERS_ERROR,
     FETCH_USERS_START,
-    FETCH_USERS_SUCCESS
+    FETCH_USERS_SUCCESS,
+    FETCH_USER_BY_ID_ERROR,
+    FETCH_USER_BY_ID_START,
+    FETCH_USER_BY_ID_SUCCESS,
+    UPDATE_USER_START,
+    UPDATE_USER_SUCCESS,
+    UPDATE_USER_ERROR
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
@@ -51,6 +57,53 @@ export const createUser = (data) => async dispatch => {
         .catch((error: AxiosError) => {
             dispatch({
                 type: CREATE_USER_ERROR,
+                payload: error.message
+            })
+            toast.error(error.message)
+        })
+}
+
+export const updateUserById = (data, id) => async dispatch => {
+    await dispatch({
+        type: UPDATE_USER_START
+    })
+
+    const url = `/api/users/${id}`
+    axios.put(url, data)
+        .then((answer) => {
+            dispatch({
+                type: UPDATE_USER_SUCCESS,
+                payload: answer.data
+            })
+            dispatch(push('/settings/users'))
+            toast.success(createNotyMsg(answer.data.name,
+                'пользователь обновлен'))
+        })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: UPDATE_USER_ERROR,
+                payload: error.message
+            })
+            toast.error(error.message)
+        })
+}
+
+export const fetchUserById = (id) => async dispatch => {
+    await dispatch({
+        type: FETCH_USER_BY_ID_START
+    })
+
+    const url = `/api/users/${id}`
+    axios.get(url)
+        .then((answer) => {
+            dispatch({
+                type: FETCH_USER_BY_ID_SUCCESS,
+                payload: answer.data
+            })
+        })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_USER_BY_ID_ERROR,
                 payload: error.message
             })
             toast.error(error.message)
