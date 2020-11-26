@@ -26,14 +26,6 @@ class CountryController extends Controller
         ], $messages, $names);
     }
 
-    protected static function booted()
-    {
-        static::deleting(function (Country $country) {
-            $country->providers()->update(['country_id' => null]);
-        });
-    }
-
-
     /**
      * Display a listing of the resource.
      *
@@ -55,7 +47,7 @@ class CountryController extends Controller
     {
         $this->countryCreateValidator($request->all())->validate();
         $name = Country::translateUcFirstCyrillicAndOtherLc($request->input('name'));
-        $newCountry = Country::create($name);
+        $newCountry = Country::create(['name' => $name]);
         return response()->json(new CountryWithRelationshipsResource($newCountry), 201);
     }
 
@@ -81,7 +73,7 @@ class CountryController extends Controller
     {
         $this->countryCreateValidator($request->all())->validate();
         $name = Country::translateUcFirstCyrillicAndOtherLc($request->input('name'));
-        $country->update($name);
+        $country->update(['name' => $name]);
         return response()->json(new CountryWithRelationshipsResource($country), 201);
     }
 
