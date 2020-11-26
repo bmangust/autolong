@@ -1,7 +1,22 @@
 {
+    "name": "Название",
     "date": "Дата",
-    "contractNumber": "Номер контракта",
     "supply": "Поставка",
+    "directorRu": "Директор Ru",
+    "directorEn": "Директор En",
+    "requisites": "Реквизиты",
+    "classificationRu": "Классификация Ru",
+    "classificationEn": "Классификация En",
+    "contractEndDate": "Дата окончания контракта",
+    "providerStamp": "Печать поставщика",
+    "importerStamp": "Печать импортера",
+    "importerSignature": "Подпись импортера",
+    "statusPayment": "Статус оплаты",
+    "contractNumber": "Номер контракта",
     "proformaNumber": "Номер проформы",
-    "statusPayment": "Статус оплаты"
+    "proforma": "Проформа",
+    "paymentTerms": "Условия оплаты",
+    "additionalField": "Дополнительное поле",
+    "proformaStatusPayment": "Статус оплаты проформы",
+    "invoice": "Выставленный счет"
 }

@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Country extends Model
 {
     use TranslateToSnakeCaseTrait;
+    use TranslationIntoCaseCyrillicTrait;
 
     protected $fillable = ['name'];
 

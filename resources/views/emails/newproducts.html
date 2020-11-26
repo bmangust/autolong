@@ -195,11 +195,11 @@
             <tr>
                 <td>
                     <table bgcolor="#f7f8fa" width="600" cellpadding="0" cellspacing="0" border="0" align="center"
-                        class="innertable">
+                        class="table">
                         <tr>
                             <td align="center" style="padding-top: 5px;" class="collapse-cell">
                                 <a href={{ asset('newproducts') }}
-                                    style="display: block; width: 300px; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; background-color: #f44a0e; border-radius: 10px; color: #ffffff;">Перейти
+                                    style="display: block; width: 300px; padding-top: 10px; padding-bottom: 10px; padding-left: 10px; padding-right: 10px; background-color: #f44a0e; border-radius: 10px; color: #ffffff; text-align: center;">Перейти
                                     к новинкам</a>
                             </td>
                         </tr>

@@ -26,6 +26,14 @@ class CountryController extends Controller
         ], $messages, $names);
     }
 
+    protected static function booted()
+    {
+        static::deleting(function (Country $country) {
+            $country->providers()->update(['country_id' => null]);
+        });
+    }
+
+
     /**
      * Display a listing of the resource.
      *
@@ -43,10 +51,11 @@ class CountryController extends Controller
      * @param Country $country
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request, Country $country)
+    public function store(Request $request)
     {
         $this->countryCreateValidator($request->all())->validate();
-        $newCountry = $country->create($country->dashesToSnakeCase($request->all()));
+        $name = Country::translateUcFirstCyrillicAndOtherLc($request->input('name'));
+        $newCountry = Country::create($name);
         return response()->json(new CountryWithRelationshipsResource($newCountry), 201);
     }
 
@@ -71,7 +80,8 @@ class CountryController extends Controller
     public function update(Request $request, Country $country)
     {
         $this->countryCreateValidator($request->all())->validate();
-        $country->update($country->dashesToSnakeCase($request->all()));
+        $name = Country::translateUcFirstCyrillicAndOtherLc($request->input('name'));
+        $country->update($name);
         return response()->json(new CountryWithRelationshipsResource($country), 201);
     }
 
