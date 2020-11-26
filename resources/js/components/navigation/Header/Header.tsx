@@ -20,12 +20,12 @@ const Header: React.FC<{ isOpen: boolean, setIsOpen: Function }> = (
     const {user} = useContext(SanctumContext)
 
     const roleName = user ? user.role.name : ''
-    const fullName = user
-        ? `${user.lastname}
-            ${user.name && user.name.charAt(0)}.
-            ${user.patronymic && user.patronymic.charAt(0)}.`
-        : ''
-    const firstLetter = user && user.lastname.charAt(0)
+    const lastname = user.lastname
+    const name = user && user.name?.charAt(0) || ''
+    const patronymic = user && user.patronymic?.charAt(0) || ''
+    const fullName =
+        `${lastname} ${name && name + '.'} ${patronymic && patronymic + '.'}`
+    const firstLetter = user && user.lastname?.charAt(0) || ''
 
     return (
         <>

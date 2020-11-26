@@ -24,21 +24,30 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: Function }> = (
         }
     }
 
+    const {user} = useContext(SanctumContext)
+
     const renderLinks = (routes) => {
-        return routes.map((route, index) =>
-            !route.hide ? (
-                <NavLink
-                    onClick={onHideMenuHandler}
-                    key={index}
-                    to={route.path}
-                    className={classes.navLink}
-                    activeClassName={classes.active}
-                    exact={route.exact}
-                >
-                    {route.icon}
-                    {route.name}
-                </NavLink>
-            ) : null
+        return routes.map((route, index) => {
+                const checker = (!('access' in route) && !route.access?.length)
+                    || route.access?.map(access =>
+                        user?.role.accesses[access] == 1).every(i => i === true)
+                const isShow = user && checker
+
+                return isShow
+                    ? !route.hide
+                        ? <NavLink
+                            onClick={onHideMenuHandler}
+                            key={index}
+                            to={route.path}
+                            className={classes.navLink}
+                            activeClassName={classes.active}
+                            exact={route.exact}>
+                            {route.icon}
+                            {route.name}
+                        </NavLink>
+                        : null
+                    : null
+            }
         )
     }
 

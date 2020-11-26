@@ -11,5 +11,6 @@ export interface IRoute {
     routes?: IRoute[]
     redirect?: string
     private?: boolean
+    access?: string[]
     icon?: NonNullable<ReactNode>
 }

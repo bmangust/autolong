@@ -9,6 +9,7 @@ import {
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
+import {push} from 'connected-react-router'
 
 export const fetchUsers = () => async dispatch => {
     await dispatch({
@@ -43,6 +44,7 @@ export const createUser = (data) => async dispatch => {
                 type: CREATE_USER_SUCCESS,
                 payload: answer.data
             })
+            dispatch(push('/settings/users'))
             toast.success(createNotyMsg(answer.data.name,
                 'пользователь создан'))
         })
