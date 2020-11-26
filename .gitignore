@@ -18,5 +18,7 @@ tsconfig.json
 .idea
 .DS_Store
 /public/*.js
+/public/*.js.map
+/public/*.js.LICENSE.txt
 /resources/courses/
 .vscode/settings.json
