@@ -96,7 +96,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 )}/>
                         </label>
                     } else if (key === 'providerStamp') {
-                        return <div className='w-100' key={key}>
+                        return <div className='col-12' key={key}>
                             <FileInput
                                 label='providerStamp'
                                 control={control} name='providerStamp'/>
@@ -112,7 +112,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
 
                         </div>
                     } else if (key === 'importerSignature') {
-                        return <div className='w-100' key={key}>
+                        return <div className='col-12' key={key}>
                             <FileInput
                                 label='importerSignature'
                                 control={control} name='importerSignature'/>
@@ -127,7 +127,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                             }
                         </div>
                     } else if (key === 'importerStamp') {
-                        return <div className='w-100' key={key}>
+                        return <div className='col-12' key={key}>
                             <FileInput
                                 label='importerStamp'
                                 control={control} name='importerStamp'/>
