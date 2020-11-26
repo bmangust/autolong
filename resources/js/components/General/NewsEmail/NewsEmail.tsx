@@ -24,18 +24,18 @@ import Loader from '../../UI/Loader/Loader'
 const NewsEmail: React.FC = () => {
     const dispatch = useDispatch()
 
-    const schema = yup.object().shape({
-        dispatchTime: yup.string().required('Поле обязательно к заполнению'),
-        email: yup.string().email('Укажите корректный email')
-            .required('Поле обязательно к заполнению')
-    })
-
     const {loadingEmail, errorEmail, emailSettings} = useSelector(
         (state) => ({
             loadingEmail: state.settingsState.loadingEmail,
             errorEmail: state.settingsState.errorEmail,
             emailSettings: state.settingsState.emailSettings
         }))
+
+    const schema = yup.object().shape({
+        dispatchTime: yup.string().required('Поле обязательно к заполнению'),
+        email: yup.string().email('Укажите корректный email')
+            .required('Поле обязательно к заполнению')
+    })
 
     const deleteEmailSettingsHandler = () => {
         dispatch(deleteEmailSettings())
@@ -52,7 +52,6 @@ const NewsEmail: React.FC = () => {
         handleSubmit((formValues) => {
             dispatch(updateEmailSettings(formValues))
         })
-    console.log(emailSettings)
     if (errorEmail) {
         return <Error/>
     }
@@ -61,7 +60,7 @@ const NewsEmail: React.FC = () => {
     }
     return <div className='card card-body mb-3'>
         <Form onSubmit={saveSettingsHandler}>
-            <div className="row">
+            <div className="row mb-4">
                 <Input
                     placeholder='E-mail'
                     type='email'
@@ -70,7 +69,7 @@ const NewsEmail: React.FC = () => {
                     ref={register}
                     required={true}
                     label='E-mail'
-                    defaultValue=''
+                    defaultValue={emailSettings.email || ''}
                     name='email'/>
                 <Input
                     placeholder='Укажите время отправки'
@@ -79,19 +78,19 @@ const NewsEmail: React.FC = () => {
                     helperText={errors?.dispatchTime?.message}
                     ref={register}
                     required={true}
+                    defaultValue={emailSettings.dispatchTime || ''}
                     label='Время отправки'
-                    defaultValue=''
                     name='dispatchTime'/>
             </div>
             <button
                 type='submit'
-                className="btn btn-success">
+                className="btn btn-success mr-4">
                 Сохранить
             </button>
             <button
                 type='button'
                 onClick={deleteEmailSettingsHandler}
-                className="btn btn-success">
+                className="btn btn-light">
                 Отменить отправку
             </button>
         </Form>
