@@ -37,13 +37,13 @@ const sanctumConfig = {
 }
 
 const application = (
-    <Provider store={store}>
-        <ConnectedRouter history={history}>
-            <Sanctum config={sanctumConfig}>
+    <Sanctum config={sanctumConfig}>
+        <Provider store={store}>
+            <ConnectedRouter history={history}>
                 <Index/>
-            </Sanctum>
-        </ConnectedRouter>
-    </Provider>
+            </ConnectedRouter>
+        </Provider>
+    </Sanctum>
 )
 
 ReactDOM.render(application, document.getElementById('root'))

@@ -22,7 +22,7 @@ interface Props {
 }
 
 interface State {
-    user: null | {};
+    user: null | {} | false;
     authenticated: null | boolean;
 }
 
@@ -96,7 +96,7 @@ class Sanctum extends React.Component<Props, State> {
             try {
                 await axios.post(`${apiUrl}/${signOutRoute}`)
                 // Only sign out after the server has successfully responded.
-                this.setState({user: null, authenticated: false})
+                this.setState({user: false, authenticated: false})
                 resolve()
             } catch (error) {
                 return reject(error)
@@ -123,7 +123,7 @@ class Sanctum extends React.Component<Props, State> {
                 } catch (error) {
                     if (error.response && error.response.status === 401) {
                         // If there's a 401 error the user is not signed in.
-                        this.setState({user: null, authenticated: false})
+                        this.setState({user: false, authenticated: false})
                         return resolve(false)
                     } else {
                         // If there's any other error, something has gone wrong.

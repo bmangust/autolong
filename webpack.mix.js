@@ -29,6 +29,7 @@ mix.reactTypeScript('resources/js/app.tsx', 'public/js')
             ]
         },
     })
+    .sourceMaps()
     .babelConfig({
         plugins: ['@babel/plugin-syntax-dynamic-import'],
     })

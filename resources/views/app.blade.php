@@ -12,6 +12,6 @@
 </head>
 <body>
 <div id="root"></div>
-<script src="{{ asset('js/app.js?v=0.1.6') }}"></script>
+<script src="{{ mix('js/app.js') }}"></script>
 </body>
 </html>

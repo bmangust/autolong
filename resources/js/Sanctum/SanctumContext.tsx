@@ -1,7 +1,7 @@
 import * as React from 'react'
 
 export interface ContextProps {
-    user: null | any;
+    user: null | any | false;
     authenticated: null | boolean;
     signIn: (email: string, password: string, remember?: boolean) =>
         Promise<{}>;
