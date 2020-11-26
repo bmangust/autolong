@@ -15,7 +15,7 @@ class ResetPasswordController extends Controller
             'email' => 'required|email'
         ]);
         Password::sendResetLink($request->only('email'));
-        return response()->json('Мы направили на ваш email ссылку на восстановление пароля', 200);
+        return response()->json('Мы направили на ваш email ссылку на восстановление пароля.', 200);
     }
 
     public function reset(Request $request)
@@ -32,9 +32,9 @@ class ResetPasswordController extends Controller
         });
 
         if ($reset_password_status == Password::INVALID_TOKEN) {
-            return response()->json("Предоставлен недействительный токен", 400);
+            return response()->json("Предоставлен недействительный токен.", 400);
         }
 
-        return response()->json("Пароль был успешно изменен", 200);
+        return response()->json("Пароль был успешно изменен.", 200);
     }
 }
