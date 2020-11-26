@@ -66,6 +66,10 @@ const CreateRole: React.FC = () => {
                     <p>Заказы</p>
                 </div>
                 <InputCheckbox
+                    name='ordersIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о заказач'/>
+                <InputCheckbox
                     name='ordersCreate'
                     ref={register}
                     label='Создание заказа'/>
@@ -78,10 +82,6 @@ const CreateRole: React.FC = () => {
                     ref={register}
                     label='Показывать заказы карго?'/>
                 <InputCheckbox
-                    name='ordersIndex'
-                    ref={register}
-                    label='Доступ в раздел и просмотр информации'/>
-                <InputCheckbox
                     name='ordersDelete'
                     ref={register}
                     label='Удаление заказа'/>
@@ -92,6 +92,10 @@ const CreateRole: React.FC = () => {
                     <p>Контейнеры</p>
                 </div>
                 <InputCheckbox
+                    name='containersIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о контейнере'/>
+                <InputCheckbox
                     name='containersCreate'
                     ref={register}
                     label='Создание контейнера'/>
@@ -99,10 +103,6 @@ const CreateRole: React.FC = () => {
                     name='containersUpdate'
                     ref={register}
                     label='Редактирование информации о контейнере'/>
-                <InputCheckbox
-                    name='containersIndex'
-                    ref={register}
-                    label='Просмотр информации о контейнере'/>
                 <InputCheckbox
                     name='containersDelete'
                     ref={register}
@@ -114,6 +114,10 @@ const CreateRole: React.FC = () => {
                     <p>Каталоги</p>
                 </div>
                 <InputCheckbox
+                    name='catalogsIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о каталоге'/>
+                <InputCheckbox
                     name='catalogsCreate'
                     ref={register}
                     label='Добавление нового каталога'/>
@@ -121,10 +125,6 @@ const CreateRole: React.FC = () => {
                     name='catalogsUpdate'
                     ref={register}
                     label='Редактирование информации о каталоге'/>
-                <InputCheckbox
-                    name='catalogsIndex'
-                    ref={register}
-                    label='Просмотр информации о каталоге'/>
                 <InputCheckbox
                     name='catalogsDelete'
                     ref={register}
@@ -137,6 +137,10 @@ const CreateRole: React.FC = () => {
                     <p>Товары</p>
                 </div>
                 <InputCheckbox
+                    name='productsIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о товаре'/>
+                <InputCheckbox
                     name='productsCreate'
                     ref={register}
                     label='Добавление нового товара'/>
@@ -144,10 +148,6 @@ const CreateRole: React.FC = () => {
                     name='productsUpdate'
                     ref={register}
                     label='Редактирование информации о товаре'/>
-                <InputCheckbox
-                    name='productsIndex'
-                    ref={register}
-                    label='Просмотр информации о товаре'/>
                 <InputCheckbox
                     name='productsDelete'
                     ref={register}
@@ -159,6 +159,10 @@ const CreateRole: React.FC = () => {
                     <p>Поставщики</p>
                 </div>
                 <InputCheckbox
+                    name='providersIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о поставщике'/>
+                <InputCheckbox
                     name='providersCreate'
                     ref={register}
                     label='Добавление нового поставщика'/>
@@ -166,10 +170,6 @@ const CreateRole: React.FC = () => {
                     name='providersUpdate'
                     ref={register}
                     label='Редактирование информации о поставщике'/>
-                <InputCheckbox
-                    name='providersIndex'
-                    ref={register}
-                    label='Просмотр информации о поставщике'/>
                 <InputCheckbox
                     name='providersDelete'
                     ref={register}
@@ -181,6 +181,10 @@ const CreateRole: React.FC = () => {
                     <p>Импортеры</p>
                 </div>
                 <InputCheckbox
+                    name='importersIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации об импортёре'/>
+                <InputCheckbox
                     name='importersCreate'
                     ref={register}
                     label='Добавление нового импортёра'/>
@@ -188,10 +192,6 @@ const CreateRole: React.FC = () => {
                     name='importersUpdate'
                     ref={register}
                     label='Редактирование информации об импортёре'/>
-                <InputCheckbox
-                    name='importersIndex'
-                    ref={register}
-                    label='Просмотр информации об импортёре'/>
                 <InputCheckbox
                     name='importersDelete'
                     ref={register}
@@ -203,22 +203,31 @@ const CreateRole: React.FC = () => {
                     <p>Доступ администратора</p>
                 </div>
                 <InputCheckbox
+                    name='settingsIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о настройках'/>
+
+                <InputCheckbox
+                    name='userRolesIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о роли'/>
+                <InputCheckbox
                     name='userRolesCreate'
                     ref={register}
-                    label='Создание роли'/>
+                    label='Добавление новой роли'/>
                 <InputCheckbox
                     name='userRolesUpdate'
                     ref={register}
                     label='Редактирование роли'/>
                 <InputCheckbox
-                    name='userRolesIndex'
-                    ref={register}
-                    label='Просмотр роли'/>
-                <InputCheckbox
                     name='userRolesDelete'
                     ref={register}
                     label='Удаление роли'/>
 
+                <InputCheckbox
+                    name='userIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о пользователе'/>
                 <InputCheckbox
                     name='userCreate'
                     ref={register}
@@ -227,10 +236,6 @@ const CreateRole: React.FC = () => {
                     name='userUpdate'
                     ref={register}
                     label='Редактирование информации пользователя'/>
-                <InputCheckbox
-                    name='userIndex'
-                    ref={register}
-                    label='Просмотр информации о пользователе'/>
                 <InputCheckbox
                     name='userDelete'
                     ref={register}
@@ -244,7 +249,7 @@ const CreateRole: React.FC = () => {
                 <InputCheckbox
                     name='logsIndex'
                     ref={register}
-                    label='Просмотр лог'/>
+                    label='Доступ и просмотр информации о логах'/>
             </div>
 
             <div>
