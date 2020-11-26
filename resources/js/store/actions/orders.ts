@@ -165,13 +165,13 @@ export const changeOrderStatus = (id, data) => async dispatch => {
             toast.success(createNotyMsg(answer.data.name,
                 'статус заказа изменен'))
         }).catch((error: AxiosError) => {
-        dispatch({
-            type: CHANGE_ORDER_STATUS_ERROR,
-            payload: error.response
-        })
         if (error.response?.status === 400) {
-            toast.error(error.response.data)
+            toast.error(error.response.data.message)
         } else {
+            dispatch({
+                type: CHANGE_ORDER_STATUS_ERROR,
+                payload: error.response
+            })
             toast.error(error.message)
         }
     })
