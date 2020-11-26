@@ -1,5 +1,5 @@
 // React
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 
 // Third-party
 import {useForm} from 'react-hook-form'
@@ -18,6 +18,7 @@ import classes from './OrderItemForm.module.css'
 // App
 import OrderItems from '../../OrderItems/OrderItems'
 import {currencyConversion} from '../../../../utils'
+import {SanctumContext} from '../../../../Sanctum'
 
 interface ICreateOrderData {
     name: string
@@ -49,6 +50,10 @@ const OrderItemForm: React.FC<{
             dispatch(createOrder(formValues))
         }
     )
+
+    const {user} = useContext(SanctumContext)
+
+    console.log(user)
 
     const onChangeQtyHandler = (e, itemId: number) => {
         const value = +e.target.value
@@ -119,22 +124,25 @@ const OrderItemForm: React.FC<{
                             <small>Это поле обязательно</small>
                         )}
                     </div>
-                    <div className='col-lg-6'>
-                        <label className='w-100' htmlFor='cargo'>
-                            Статус карго
-                        </label>
-                        <div className='custom-control custom-switch'>
-                            <input
-                                type='checkbox'
-                                name='cargo'
-                                ref={register}
-                                id={providerId + 'cargo'}
-                                className='custom-control-input'/>
-                            <label className="custom-control-label"
-                                   htmlFor={providerId + 'cargo'}>
+                    {user.role.accesses.ordersShowCargo == 1
+                        ? <div className='col-lg-6'>
+                            <label className='w-100' htmlFor='cargo'>
+                                Статус карго
                             </label>
+                            <div className='custom-control custom-switch'>
+                                <input
+                                    type='checkbox'
+                                    name='cargo'
+                                    ref={register}
+                                    id={providerId + 'cargo'}
+                                    className='custom-control-input'/>
+                                <label className="custom-control-label"
+                                       htmlFor={providerId + 'cargo'}>
+                                </label>
+                            </div>
                         </div>
-                    </div>
+                        : null
+                    }
                 </div>
                 <div className='mb-4'>
                     <hr className={classes.hr}/>
