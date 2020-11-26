@@ -64,10 +64,6 @@ const EditUserForm: React.FC<{
         dispatch(push('/settings/users'))
     }
 
-    console.log(rolesOptions
-        .filter(({value}) =>
-            value === user.role.id)[0])
-
     const roleSelect = <Select
         placeholder='Роль'
         classNamePrefix='select-mini'
