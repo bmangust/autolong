@@ -28,7 +28,7 @@ const CreateUser = () => {
         lastname: yup.string().required('Поле обязательно к заполнению'),
         roleId: yup.object().required(),
         password: yup.string()
-            .length(8, 'Минимальная длина пароль 8 символов')
+            .min(8, 'Минимальная длина пароль 8 символов')
             .required('Поле обязательно к заполнению'),
         email: yup.string().email('Укажите корректный email')
             .required('Поле обязательно к заполнению')
