@@ -51,6 +51,7 @@ class Access extends Model
         'user_index',
 
         'logs_index',
+        'settings_index'
     ];
 
     public function userRole()

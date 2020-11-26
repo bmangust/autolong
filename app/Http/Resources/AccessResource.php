@@ -59,6 +59,8 @@ class AccessResource extends JsonResource
             'userIndex' => $this->user_index,
 
             'logsIndex' => $this->logs_index,
+            'settingsIndex' => $this->settings_index,
+
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];
