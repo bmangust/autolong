@@ -448,7 +448,21 @@ export const routes: IRoute[] = [
         private: true,
         fallback: <Loader/>,
         icon: <Settings/>,
-        access: ['settingsIndex', 'userIndex', 'userCreate']
+        access: ['settingsIndex', 'userIndex', 'userUpdate']
+    },
+    {
+        name: 'Редактирование сотрудника',
+        path: '/settings/user/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/users/User'),
+                600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userIndex']
     },
     {
         name: 'Справка по работе с системой',
