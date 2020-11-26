@@ -62,7 +62,6 @@ class Kernel extends ConsoleKernel
 
         $schedule->call(function () {
             $mailTask = MailTask::first();
-
             if (is_null($mailTask)) {
                 return true;
             }
