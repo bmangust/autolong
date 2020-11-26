@@ -75,7 +75,7 @@ const CountrySettings: React.FC = () => {
             )}
         </div>
         <Form onSubmit={addCountryHandler}>
-            <div className="row mb-4">
+            <div className="row mb-3">
                 <Input
                     placeholder='Укажите страну'
                     type='name'

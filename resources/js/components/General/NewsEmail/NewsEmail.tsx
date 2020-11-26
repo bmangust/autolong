@@ -61,7 +61,7 @@ const NewsEmail: React.FC = () => {
     return <div className='card card-body mb-3'>
         <h2>Настройка почты для новинок</h2>
         <Form onSubmit={saveSettingsHandler}>
-            <div className="row mb-4">
+            <div className="row mb-3">
                 <Input
                     placeholder='E-mail'
                     type='email'
