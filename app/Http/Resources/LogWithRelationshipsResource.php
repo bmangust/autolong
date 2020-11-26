@@ -16,7 +16,7 @@ class LogWithRelationshipsResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'user' => $this->user->name ?? null,
+            'user' => !is_null($this->user) ? $this->user->getFullName() : '',
             'action' => $this->action,
             'model' => $this->model,
             'modelName' => $this->model_name,
