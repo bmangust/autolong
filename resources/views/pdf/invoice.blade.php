@@ -116,7 +116,7 @@
         <tr>
             @if(isset($paymentTerms))
                 <td>
-                    {{ $paymentTerms }}
+                    PAYMENT TERMS:  {{ $paymentTerms }}
                 </td>
             @else
                 <td>
