@@ -437,6 +437,20 @@ export const routes: IRoute[] = [
         access: ['settingsIndex', 'userIndex', 'userCreate']
     },
     {
+        name: 'Редактирование сотрудника',
+        path: '/settings/user/edit/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/users/EditUser'),
+                600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userIndex', 'userCreate']
+    },
+    {
         name: 'Справка по работе с системой',
         path: '/help',
         component: lazy(() => pMinDelay(import('../../../pages/Help'), 600)),

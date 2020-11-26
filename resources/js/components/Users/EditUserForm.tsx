@@ -1,8 +1,8 @@
 // React
-import React, {useEffect} from 'react'
+import React from 'react'
 
 // Third-party
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import * as yup from 'yup'
 import {Controller, useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -10,18 +10,29 @@ import {push} from 'connected-react-router'
 import Select from 'react-select'
 
 // Typescript
-import {IRole, IRolesRootState} from '../../../components/Roles/IRoles'
+import {IRole} from '../Roles/IRoles'
 
 // Actions
-import {createUser} from '../../../store/actions/users'
-import {fetchRoles} from '../../../store/actions/roles'
+import {createUser} from '../../store/actions/users'
 
 // App
-import Form from '../../../components/UI/Form/Form'
-import Input from '../../../components/UI/Inputs/Input/Input'
+import Form from '../UI/Form/Form'
+import Input from '../UI/Inputs/Input/Input'
+import {IUser} from './IUsers'
 
-const CreateUser = () => {
+const EditUserForm: React.FC<{
+    roles: IRole[], user: IUser
+}> = ({roles, user}) => {
     const dispatch = useDispatch()
+
+
+    const rolesOptions = roles.map(
+        (role: IRole) => {
+            return {
+                label: role.name,
+                value: role.id
+            }
+        })
 
     const schema = yup.object().shape({
         name: yup.string().required('Поле обязательно к заполнению'),
@@ -35,38 +46,33 @@ const CreateUser = () => {
     })
 
     const {register, control, handleSubmit, errors} =
-        useForm({resolver: yupResolver(schema)})
+        useForm({
+            defaultValues: {
+                name: user.name,
+                lastname: user.lastname,
+                patronymic: user.patronymic,
+                phone: user.phone,
+                roleId: rolesOptions
+                    .filter(({value}) =>
+                        value === user.role.id)[0],
+                email: user.email
+            },
+            resolver: yupResolver(schema)
+        })
 
     const goBackHandler = () => {
         dispatch(push('/settings/users'))
     }
 
-    useEffect(() => {
-        dispatch(fetchRoles())
-    }, [dispatch])
-
-    const {roles} = useSelector(
-        (state: IRolesRootState) => ({
-            roles: state.rolesState.roles
-        }))
+    console.log(rolesOptions
+        .filter(({value}) =>
+            value === user.role.id)[0])
 
     const roleSelect = <Select
         placeholder='Роль'
         classNamePrefix='select-mini'
         className='select-mini'
     />
-
-    let rolesOptions = []
-
-    if (roles) {
-        rolesOptions = roles.map(
-            (role: IRole) => {
-                return {
-                    label: role.name,
-                    value: role.id
-                }
-            })
-    }
 
     const createUserHandler =
         handleSubmit((formValues) => {
@@ -84,7 +90,6 @@ const CreateUser = () => {
                     ref={register}
                     required={true}
                     label='Имя'
-                    defaultValue=''
                     name='name'/>
 
                 <Input
@@ -95,7 +100,6 @@ const CreateUser = () => {
                     ref={register}
                     required={true}
                     label='Фамилия'
-                    defaultValue=''
                     name='lastname'/>
 
                 <Input
@@ -103,7 +107,6 @@ const CreateUser = () => {
                     type='text'
                     ref={register}
                     label='Отчество'
-                    defaultValue=''
                     name='patronymic'/>
             </div>
 
@@ -114,9 +117,9 @@ const CreateUser = () => {
                         Выберите роль
                     </label>
                     <Controller
+                        defaultValue=''
                         name="roleId"
                         as={roleSelect}
-                        defaultValue=''
                         options={rolesOptions}
                         control={control}
                     />
@@ -136,7 +139,6 @@ const CreateUser = () => {
                     ref={register}
                     required={true}
                     label='E-mail'
-                    defaultValue=''
                     name='email'/>
 
                 <Input
@@ -145,9 +147,8 @@ const CreateUser = () => {
                     error={!!errors.phone}
                     helperText={errors?.phone?.message}
                     ref={register}
-                    label='Номер телефона'
-                    defaultValue=''
                     autoComplete='phone'
+                    label='Номер телефона'
                     name='phone'/>
 
                 <Input
@@ -159,7 +160,6 @@ const CreateUser = () => {
                     autoComplete='current-password'
                     required={true}
                     label='Пароль'
-                    defaultValue=''
                     name='password'/>
             </div>
 
@@ -182,4 +182,4 @@ const CreateUser = () => {
     </div>
 }
 
-export default CreateUser
+export default EditUserForm

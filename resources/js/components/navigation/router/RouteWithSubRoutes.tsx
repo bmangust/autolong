@@ -22,10 +22,10 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
         || route.access?.map(access =>
             user?.role.accesses[access] == 1).every(i => i === true)
 
-    console.log(isShow)
+    // console.log(isShow)
 
-    console.log('user', user)
-    console.log('authenticated', authenticated)
+    // console.log('user', user)
+    // console.log('authenticated', authenticated)
     return (
         <ErrorBoundary FallbackComponent={Error}>
             <Suspense fallback={route.fallback}>
