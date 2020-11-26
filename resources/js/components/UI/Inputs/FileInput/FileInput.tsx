@@ -8,6 +8,8 @@ import {Control} from 'react-hook-form/dist/types'
 
 // Styles
 import classes from './FileInput.module.css'
+import {substringOut} from '../../../../utils'
+
 // import SvgDelete from '../../iconComponents/Delete'
 
 interface IFileInput {
@@ -50,7 +52,7 @@ const FileInput: React.FC<IFileInput> =
                         {value.map((f, index) => (
                             <li key={index}>
                                 <div>
-                                    {f.name}
+                                    {substringOut(f.name, 30)}
                                     <p className={classes.size}>
                                         {`Размер файла
                                 ${(f.size / 1000000).toFixed(3)} mb`}
