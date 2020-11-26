@@ -19,6 +19,7 @@ class UserWithRelationshipsResource extends JsonResource
             'name' => $this->name,
             'lastname' => $this->lastname,
             'patronymic' => $this->patronymic,
+            'fullName' =>  $this->getFullName(),
             'email' => $this->email,
             'phone' => $this->phone,
             'role' => new UserRoleResource($this->role),

@@ -54,4 +54,9 @@ class User extends Authenticatable
     {
         $this->notify(new ResetPasswordNotification($token));
     }
+
+    public function getFullName(): string
+    {
+        return !is_null($this->patronymic ) ? $this->name . ' ' . $this->lastname . ' ' . $this->patronymic : $this->name . ' ' . $this->lastname;
+    }
 }
