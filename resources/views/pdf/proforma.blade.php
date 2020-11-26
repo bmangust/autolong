@@ -71,7 +71,7 @@
         @foreach($orderItems as $item)
         <tr>
             <td style="padding: 10px; border: 1px solid #000;">
-                {{ $item->product->name_en }} {{ $item->product->vendor_code }}
+                {{ $item->translateHtmlCodesToTags($item->product->name_en) ??  '-'}} {{ $item->product->vendor_code }}
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
                 @if(!is_null($item->product->image))
