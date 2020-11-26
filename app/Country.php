@@ -9,14 +9,14 @@ class Country extends Model
     use TranslateToSnakeCaseTrait;
     use TranslationIntoCaseCyrillicTrait;
 
+    protected $fillable = ['name'];
+
     protected static function booted()
     {
         static::deleting(function (Country $country) {
             $country->providers()->update(['country_id' => null]);
         });
     }
-    
-    protected $fillable = ['name'];
 
     public function providers()
     {

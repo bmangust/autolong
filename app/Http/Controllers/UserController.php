@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserWithRelationshipsResource;
+use App\Notifications\RegistrationNotification;
 use App\User;
 use Dotenv\Exception\ValidationException;
 use Illuminate\Http\Request;
@@ -55,7 +56,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
-    public function store(Request $request, User $user)
+    public function store(Request $request)
     {
         $this->userCreateValidator($request->all())->validate();
         $name = $request->input('name');
@@ -65,7 +66,7 @@ class UserController extends Controller
         $email = $request->input('email');
         $password = Hash::make($request->input('password'));
         $role = $request->input('roleId');
-        $newUser = $user->create([
+        $newUser = User::create([
             'name' => $name,
             'email' => $email,
             'password' => $password,
@@ -74,6 +75,7 @@ class UserController extends Controller
             'patronymic' => $patronymic,
             'phone' => $phone
         ]);
+        $newUser->notify(new RegistrationNotification($email, $request->input('password')));
         return response()->json(new UserWithRelationshipsResource($newUser), 201);
     }
 
@@ -115,6 +117,7 @@ class UserController extends Controller
             'patronymic' => $patronymic,
             'phone' => $phone
         ]);
+        $user->notify(new RegistrationNotification($email, $request->input('password'), true));
         return response()->json(new UserWithRelationshipsResource($user), 200);
     }
 
