@@ -206,23 +206,28 @@ const CreateRole: React.FC = () => {
                     name='settingsIndex'
                     ref={register}
                     label='Доступ и просмотр информации о настройках'/>
-                <InputCheckbox
-                    name='userRolesCreate'
-                    ref={register}
-                    label='Создание роли'/>
-                <InputCheckbox
-                    name='userRolesUpdate'
-                    ref={register}
-                    label='Редактирование роли'/>
+
                 <InputCheckbox
                     name='userRolesIndex'
                     ref={register}
                     label='Доступ и просмотр информации о роли'/>
                 <InputCheckbox
+                    name='userRolesCreate'
+                    ref={register}
+                    label='Добавление новой роли'/>
+                <InputCheckbox
+                    name='userRolesUpdate'
+                    ref={register}
+                    label='Редактирование роли'/>
+                <InputCheckbox
                     name='userRolesDelete'
                     ref={register}
                     label='Удаление роли'/>
 
+                <InputCheckbox
+                    name='userIndex'
+                    ref={register}
+                    label='Доступ и просмотр информации о пользователе'/>
                 <InputCheckbox
                     name='userCreate'
                     ref={register}
@@ -231,10 +236,6 @@ const CreateRole: React.FC = () => {
                     name='userUpdate'
                     ref={register}
                     label='Редактирование информации пользователя'/>
-                <InputCheckbox
-                    name='userIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о пользователе'/>
                 <InputCheckbox
                     name='userDelete'
                     ref={register}

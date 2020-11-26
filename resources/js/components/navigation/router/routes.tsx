@@ -364,7 +364,8 @@ export const routes: IRoute[] = [
         exact: true,
         private: true,
         fallback: <Loader/>,
-        icon: <Settings/>
+        icon: <Settings/>,
+        access: ['settingsIndex']
     },
     {
         name: 'Общие настройки',
@@ -376,7 +377,8 @@ export const routes: IRoute[] = [
         exact: true,
         private: true,
         fallback: <Loader/>,
-        icon: <Settings/>
+        icon: <Settings/>,
+        access: ['settingsIndex']
     },
     {
         name: 'Настроить права доступа',
@@ -389,7 +391,8 @@ export const routes: IRoute[] = [
         exact: true,
         private: true,
         fallback: <Loader/>,
-        icon: <Settings/>
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userRolesIndex']
     },
     {
         name: 'Настроить права доступа',
@@ -402,7 +405,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Settings/>
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userRolesIndex', 'userRolesCreate']
     },
     {
         name: 'Пользователи',
@@ -415,7 +419,8 @@ export const routes: IRoute[] = [
         exact: true,
         private: true,
         fallback: <Loader/>,
-        icon: <Settings/>
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userIndex']
     },
     {
         name: 'Пользователи',
@@ -428,7 +433,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Settings/>
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userIndex', 'userCreate']
     },
     {
         name: 'Справка по работе с системой',
