@@ -112,7 +112,7 @@ const CreateUser = () => {
                     <label className='required'
                            htmlFor='roleId'>
                         Выберите роль
-                    </label>autocomplete
+                    </label>
                     <Controller
                         name="roleId"
                         as={roleSelect}

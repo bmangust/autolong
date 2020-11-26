@@ -4,6 +4,8 @@ import React, {forwardRef} from 'react'
 // Styles
 import classes from './Input.module.css'
 
+import translate from './inputTranslate.json'
+
 type InputElement = HTMLInputElement | HTMLTextAreaElement;
 
 interface ITextFieldProps {
@@ -41,7 +43,10 @@ const Input: React.FC = forwardRef<InputElement, ITextFieldProps>((
         labelNode =
             <label className={labelCls.join(' ')}
                    htmlFor={id}>
-                {label}
+                {label in translate
+                    ? translate[label]
+                    : label
+                }
             </label>
     }
 
