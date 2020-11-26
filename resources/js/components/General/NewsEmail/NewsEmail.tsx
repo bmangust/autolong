@@ -59,6 +59,7 @@ const NewsEmail: React.FC = () => {
         return <Loader/>
     }
     return <div className='card card-body mb-3'>
+        <h2>Настройка почты для новинок</h2>
         <Form onSubmit={saveSettingsHandler}>
             <div className="row mb-4">
                 <Input

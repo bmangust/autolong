@@ -1,0 +1,42 @@
+.countries {
+    display: flex;
+    flex-wrap: wrap;
+    margin-bottom: 20px;
+}
+
+.country {
+    background: #ffffff;
+    border: 1px solid #ebebeb;
+    border-radius: 100px;
+    display: flex;
+    margin: 2px;
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+.country span {
+    overflow: hidden;
+    padding: 3px 3px 3px 6px;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    box-sizing: border-box;
+    font-weight: 500;
+    font-size: 10px;
+    line-height: 15px;
+    color: var(--dark-color);
+}
+
+.country .delete {
+    border-bottom-right-radius: 100px;
+    border-top-right-radius: 100px;
+    cursor: pointer;
+    display: flex;
+    padding-left: 4px;
+    padding-right: 4px;
+    box-sizing: border-box;
+    align-items: center;
+}
+
+.country .delete svg {
+    width: 9px;
+}
