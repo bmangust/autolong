@@ -73,7 +73,7 @@ const EditUserForm: React.FC<{
     const createUserHandler =
         handleSubmit((formValues) => {
             formValues.roleId = formValues.roleId.value
-            dispatch(updateUserById(formValues, id))
+            dispatch(updateUserById(formValues, user.id))
         })
     return <div className='card card-body'>
         <Form onSubmit={createUserHandler}>
