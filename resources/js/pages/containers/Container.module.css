@@ -103,7 +103,6 @@ h2 {
 
 .documents .btn {
     position: relative;
-    padding-left: 30px;
     font-weight: 500;
     font-size: 12px;
     line-height: 15px;
@@ -111,29 +110,10 @@ h2 {
     color: #b4b6bd;
 }
 
-.documents .btn::before {
-    content: '';
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 0;
+.documents .btn svg {
+    margin-right: 5px;
     width: 22px;
     height: 22px;
-    border-radius: 50%;
-    background: #F7F8FA;
-}
-
-.documents .btn:first-child::before {
-    background: #F7F8FA url('/svg/plus-gray.svg') right 6px center no-repeat;
-}
-
-.documents .btn:nth-child(2)::before {
-    background: #F7F8FA url('/svg/download-gray.svg') center no-repeat;
-}
-
-
-.documents .btn:last-child::before {
-    background: #F7F8FA url('/svg/download-gray.svg') center no-repeat;
 }
 
 @media (max-width: 767px) {

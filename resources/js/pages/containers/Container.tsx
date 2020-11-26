@@ -33,6 +33,8 @@ import ContainersStatuses
 import Modal from '../../components/UI/Modal/Modal'
 import OrderPackage from '../../components/OrderPackage/OrderPackages'
 import {createOrderInvoice} from '../../store/actions/orders'
+import SvgPlusGrey from '../../components/UI/iconComponents/PlusGrey'
+import SvgDownloadGrey from '../../components/UI/iconComponents/DownloadGrey'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -135,35 +137,40 @@ const Container: React.FC<IContainer> = () => {
                                         </p>
                                         <p className={classes.orderPrice}>
                                             Стоимость заказа
-                                            <span>{order.price.cny} ¥</span>
+                                            <span>{parseFloat(order.price.cny)
+                                                .toFixed(2)} ¥</span>
                                         </p>
                                     </div>
                                     <div className={classes.documents}>
                                         {order.packingList
                                             ? <>
                                                 <p className={classes.btn}
-                                                onClick={() =>
-                                                    downloadPack(order,
-                                                        true)}>
+                                                   onClick={() =>
+                                                       showPackage(order,
+                                                           false)}>
+                                                    <SvgPlusGrey/>
                                                     Новый упаковочный лист
                                                 </p>
                                                 <p className={classes.btn}
-                                                onClick={() =>
-                                                    showPackage(order,
-                                                        false)}>
+                                                   onClick={() =>
+                                                       downloadPack(order,
+                                                           true)}>
+                                                    <SvgDownloadGrey/>
                                                     Упаковочный лист
                                                 </p>
                                             </>
                                             : <p className={classes.btn}
-                                                onClick={() =>
-                                                    showPackage(order,
-                                                        false)}>
+                                                 onClick={() =>
+                                                     showPackage(order,
+                                                         false)}>
+                                                <SvgPlusGrey/>
                                                 Создать упаковочный лист
                                             </p>
                                         }
                                         <p className={classes.btn}
-                                        onClick={() =>
-                                            getMarkingList(order.id)}>
+                                           onClick={() =>
+                                               getMarkingList(order.id)}>
+                                            <SvgDownloadGrey/>
                                             Маркировка
                                         </p>
                                     </div>
