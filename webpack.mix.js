@@ -15,6 +15,10 @@ require('laravel-mix-react-css-modules');
 
 mix.reactTypeScript('resources/js/app.tsx', 'public/js')
     .webpackConfig({
+        output: {
+            publicPath: '/',
+            chunkFilename: 'js/chunks/[name].[chunkhash].js',
+        },
         module: {
             rules: [
                 {
