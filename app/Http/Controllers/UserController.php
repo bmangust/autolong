@@ -31,11 +31,11 @@ class UserController extends Controller
         ];
 
         return Validator::make($data, [
-            'email' => ['required', 'email', 'unique:users'],
-            'password' => ['required', 'min:8'],
-            'roleId' => ['required', 'integer'],
-            'lastname' => ['required', 'string'],
-            'name' => ['required', 'string'],
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:8',
+            'roleId' => 'required|integer',
+            'lastname' => 'required|string',
+            'name' => 'required|string',
         ], $messages, $names);
     }
     /**
@@ -100,7 +100,13 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $this->userCreateValidator($request->all())->validate();
+        $request->validate([
+            'email' => 'required|email|unique:users,email,'.$user->id,
+            'password' => 'required|min:8',
+            'roleId' => 'required|integer',
+            'lastname' => 'required|string',
+            'name' => 'required|string'
+        ]);
         $name = $request->input('name');
         $lastname = $request->input('lastname');
         $patronymic = $request->input('patronymic');
