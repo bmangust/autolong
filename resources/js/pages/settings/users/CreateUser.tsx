@@ -167,7 +167,7 @@ const CreateUser = () => {
                     <button
                         type='button'
                         onClick={goBackHandler}
-                        className='btn btn-light mr-3'>
+                        className='btn btn-light mr-3 mb-md-0 mb-3'>
                         Назад
                     </button>
                     <button
