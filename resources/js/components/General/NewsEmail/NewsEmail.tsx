@@ -14,6 +14,9 @@ import {
     updateEmailSettings
 } from '../../../store/actions/settings'
 
+// Styles
+import classes from './NewsEmail.module.css';
+
 // App
 import Form from '../../UI/Form/Form'
 import Input from '../../UI/Inputs/Input/Input'
@@ -83,17 +86,19 @@ const NewsEmail: React.FC = () => {
                     label='Время отправки'
                     name='dispatchTime'/>
             </div>
-            <button
-                type='submit'
-                className="btn btn-success mr-4">
-                Сохранить
-            </button>
-            <button
-                type='button'
-                onClick={deleteEmailSettingsHandler}
-                className="btn btn-light">
-                Отменить отправку
-            </button>
+            <div className={classes.btns}>
+                <button
+                    type='submit'
+                    className="btn btn-success mr-4">
+                    Сохранить
+                </button>
+                <button
+                    type='button'
+                    onClick={deleteEmailSettingsHandler}
+                    className="btn btn-light">
+                    Отменить отправку
+                </button>
+            </div>
         </Form>
     </div>
 }
