@@ -1,9 +1,9 @@
 // React
 import React, {Suspense, useContext} from 'react'
-import {ErrorBoundary} from 'react-error-boundary'
 
 // Third-party
 import {Redirect, Route, useHistory} from 'react-router-dom'
+import {ErrorBoundary} from 'react-error-boundary'
 
 // Typescript
 import {IRoute} from './IRoute'
@@ -18,11 +18,16 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
     /** Authenticated flag */
     const {authenticated, user} = useContext(SanctumContext)
 
+    const objectAccess = {}
+
+    localStorage.getItem('access-autolong')?.split(',')
+        .map((item) => objectAccess[item] = 1)
+
+    const userAccess = user?.role?.accesses || objectAccess
+
     const isShow = (!('access' in route) && !route.access?.length)
         || route.access?.map(access =>
-            user?.role.accesses[access] == 1).every(i => i === true)
-
-    // console.log(isShow)
+            userAccess[access] == 1).every(i => i === true)
 
     // console.log('user', user)
     // console.log('authenticated', authenticated)
