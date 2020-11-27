@@ -66,9 +66,9 @@ class Kernel extends ConsoleKernel
                 return true;
             }
 
-            $dispatchTime = date('h:i', strtotime($mailTask->dispatch_time));
+            $dispatchTime = date('H:i', strtotime($mailTask->dispatch_time));
             $email = $mailTask->email;
-            $nowTime = Carbon::now()->format('h:i');
+            $nowTime = Carbon::now()->format('H:i');
             if ($dispatchTime == $nowTime) {
                 $newProducts = Product::wherePublished(0)->orderByDesc('created_at')->get();
                 Mail::to($email)->send(new NewProducts($newProducts));
