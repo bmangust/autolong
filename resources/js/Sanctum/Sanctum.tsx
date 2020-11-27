@@ -1,5 +1,5 @@
 import * as React from 'react'
-import axios from 'axios'
+import axios, {AxiosError} from 'axios'
 import SanctumContext from './SanctumContext'
 
 axios.defaults.withCredentials = true
@@ -81,6 +81,16 @@ class Sanctum extends React.Component<Props, State> {
                                 'Authorization': `Bearer ${token}`
                             }
                         })
+                const activeAccess = Object.entries(data.role.accesses)
+                    .map(([key, value]) => {
+                        if (value == 1) {
+                            return key
+                        } else {
+                            return null
+                        }
+                    }).filter((el) => el !== null)
+                localStorage.setItem('access-autolong',
+                    JSON.stringify(activeAccess.join(',')))
                 this.setState({user: data, authenticated: true})
                 return resolve(data)
             } catch (error) {
@@ -97,6 +107,7 @@ class Sanctum extends React.Component<Props, State> {
                 await axios.post(`${apiUrl}/${signOutRoute}`)
                 // Only sign out after the server has successfully responded.
                 this.setState({user: false, authenticated: false})
+                localStorage.removeItem('access-autolong')
                 resolve()
             } catch (error) {
                 return reject(error)
@@ -108,34 +119,25 @@ class Sanctum extends React.Component<Props, State> {
         this.setState({user, authenticated})
     }
 
-    checkAuthentication(): Promise<boolean> {
+    async checkAuthentication(): Promise<boolean> {
         const {apiUrl, userObjectRoute} = this.props.config
-        // eslint-disable-next-line no-async-promise-executor
-        return new Promise(async (resolve, reject) => {
-            if (this.state.authenticated === null) {
-                // The status is null if we haven't checked it,
-                // so we have to make a request.
-                try {
-                    const {data} = await axios
-                        .get(`${apiUrl}/${userObjectRoute}`)
-                    this.setState({user: data, authenticated: true})
-                    return resolve(true)
-                } catch (error) {
-                    if (error.response && error.response.status === 401) {
-                        // If there's a 401 error the user is not signed in.
-                        this.setState({user: false, authenticated: false})
-                        return resolve(false)
-                    } else {
-                        // If there's any other error, something has gone wrong.
-                        return reject(error)
-                    }
+        return await axios
+            .get(`${apiUrl}/${userObjectRoute}`)
+            .then(({data}) => {
+                this.setState({user: data, authenticated: true})
+                return true
+            })
+            .catch((error: AxiosError) => {
+                if (error.response && error.response.status === 401) {
+                    // If there's a 401 error the user is not signed in.
+                    this.setState({user: false, authenticated: false})
+                    localStorage.removeItem('access-autolong')
+                    return false
+                } else {
+                    // If there's any other error, something has gone wrong.
+                    return false
                 }
-            } else {
-                // If it has been checked with the server before,
-                // we can just return the state.
-                return resolve(this.state.authenticated)
-            }
-        })
+            })
     }
 
     componentDidMount() {
