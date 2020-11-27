@@ -15,7 +15,9 @@ class CityController extends Controller
 
     public function store(Request $request, City $city)
     {
-        $city = $city->create($request->all());
+        $city = $city->create([
+            'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('name'))
+        ]);
         return response()->json(new CityResource($city), 201);
     }
 }

@@ -131,7 +131,9 @@ class OrderController extends Controller
                 throw new HttpException( 400, 'Указана не актуальная дата');
             }
 
-            $city = City::firstOrCreate(['name' => City::translateUcFirstCyrillicAndOtherLc($request->input('city'))]);
+            $city = City::firstOrCreate([
+                'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
+            ]);
             $arrivalDate = $request->input('arrivalDate');
             $order->setOrderStatus($status, $city->id, $arrivalDate);
         } else {

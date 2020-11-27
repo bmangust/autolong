@@ -46,7 +46,7 @@ class CountryController extends Controller
     public function store(Request $request)
     {
         $this->countryCreateValidator($request->all())->validate();
-        $name = Country::translateUcFirstCyrillicAndOtherLc($request->input('name'));
+        $name = Country::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('name'));
         $newCountry = Country::create(['name' => $name]);
         return response()->json(new CountryWithRelationshipsResource($newCountry), 201);
     }
@@ -72,7 +72,7 @@ class CountryController extends Controller
     public function update(Request $request, Country $country)
     {
         $this->countryCreateValidator($request->all())->validate();
-        $name = Country::translateUcFirstCyrillicAndOtherLc($request->input('name'));
+        $name = Country::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('name'));
         $country->update(['name' => $name]);
         return response()->json(new CountryWithRelationshipsResource($country), 201);
     }
