@@ -16,7 +16,10 @@ import {ColumnDescription} from 'react-bootstrap-table-next'
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import Loader from '../../UI/Loader/Loader'
 import {
-    getOrderStatusName, moneyFormatter, nameToLinkFormatter
+    getOrderStatusName,
+    getPaymentStatusName,
+    moneyFormatter,
+    nameToLinkFormatter
 } from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
@@ -84,8 +87,9 @@ const OrdersTable: React.FC = () => {
             formatter: providerFormatter
         },
         {
-            dataField: 'dop',
-            text: 'Дополнительно'
+            dataField: 'statusPayment',
+            text: 'Статус оплаты',
+            formatter: (statusPayment) => getPaymentStatusName(statusPayment)
         }
     ]
 

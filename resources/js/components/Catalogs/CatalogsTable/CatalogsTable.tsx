@@ -7,9 +7,11 @@ import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Actions
 import {fetchCatalogs} from '../../../store/actions/catalogs'
+import {fetchTags} from '../../../store/actions/tags'
 
 // Typescript
 import {ICatalogsRootState} from '../ICatalogs'
+import {ITagsRootState} from '../ITags'
 
 // App
 import Loader from '../../UI/Loader/Loader'
@@ -23,6 +25,7 @@ const CatalogsTable: React.FC = () => {
 
     useEffect(() => {
         dispatch(fetchCatalogs())
+        dispatch(fetchTags())
     }, [dispatch])
 
     const {catalogs, loading, error} = useSelector(
@@ -33,13 +36,38 @@ const CatalogsTable: React.FC = () => {
         })
     )
 
+    const {tags, loadingTags} = useSelector(
+        (state: ITagsRootState) => ({
+            tags: state.tagsState.tags,
+            loadingTags: state.tagsState.loading
+        })
+    )
+
     const tagsFirst = (tags) => {
         if (tags.length) {
             return <span className='tag tag-first'>
             {tags[tags.length - 1].name}</span>
         } else {
-            return null
+            return ''
         }
+    }
+
+    const filterOptions = tags.map((tag) => {
+        return {
+            label: tag.name,
+            value: tag.id
+        }
+    })
+
+    console.log(filterOptions)
+
+    const filter = {
+        options: filterOptions,
+        field: 'tags',
+        placeholder: 'Фильтр по тегам',
+        loading: loadingTags,
+        filterArrKey: 'id',
+        isMulti: true
     }
 
     if (error) {
@@ -104,6 +132,7 @@ const CatalogsTable: React.FC = () => {
 
     return (
         <AutoTable
+            filter={filter}
             expandRowTable={expandRowTable}
             keyField='id' data={catalogs} columns={columns}
             button={{link: 'catalogcreate', text: 'Добавить каталог'}}/>

@@ -21,11 +21,11 @@ export default function tagsReducer(
             }
         case FETCH_TAGS_SUCCESS:
             return {
-                ...state, loading: true, tags: action.payload
+                ...state, loading: false, tags: action.payload
             }
         case FETCH_TAGS_ERROR:
             return {
-                ...state, loading: true, error: action.payload
+                ...state, loading: false, error: action.payload
             }
         default:
             return state

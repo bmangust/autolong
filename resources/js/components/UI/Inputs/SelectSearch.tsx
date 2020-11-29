@@ -21,6 +21,7 @@ interface props {
     name?: string
     isLoading?: boolean
     isDisabled?: boolean
+    isMulti?: boolean
     isSearchable?: boolean
 }
 
@@ -32,6 +33,7 @@ const SelectSearch: React.FC<props> =
          value,
          name,
          isLoading,
+         isMulti,
          isDisabled,
          isSearchable
      }) => {
@@ -43,6 +45,7 @@ const SelectSearch: React.FC<props> =
                 isClearable={true}
                 onChange={onChange}
                 options={options}
+                isMulti={isMulti}
                 value={value}
                 isLoading={isLoading}
                 isDisabled={isDisabled}

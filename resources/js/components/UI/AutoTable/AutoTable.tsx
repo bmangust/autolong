@@ -38,6 +38,8 @@ interface IFilter {
     field?: string
     loading?: boolean
     type?: string
+    filterArrKey?: string
+    isMulti?: boolean
 }
 
 interface IAutoTable extends BootstrapTableProps {
@@ -72,9 +74,24 @@ const AutoTable: React.FC<IAutoTable> = (
     }
 
     const onChangeFilter = (option) => {
-        if (option) {
-            setDataState(data.filter((item) =>
-                _.get(item, filter.field) === option.value))
+        if (option && filter) {
+            setDataState(data.filter((item) => {
+                    if (filter.filterArrKey) {
+                        const target = _.get(item, filter.field)
+                        const arr = target.map((item) =>
+                            item[filter.filterArrKey])
+                        if (option.length === 0) {
+                            return true
+                        }
+                        const optionsArr = option.map(({value}) => value)
+                        const intersection = arr
+                            .filter(element => optionsArr.includes(element))
+                        return !!intersection.length
+                    } else {
+                        return _.get(item, filter.field) === option.value
+                    }
+                }
+            ))
         } else {
             setDataState(data)
         }
@@ -97,6 +114,7 @@ const AutoTable: React.FC<IAutoTable> = (
         options={filter?.options}
         placeholder={filter?.placeholder}
         isSearchable={true}
+        isMulti={filter?.isMulti}
     />
 
     if (filter?.type === 'checkbox') {
