@@ -45,13 +45,13 @@ const EditUser: React.FC = () => {
             </div>
             <div className="col-lg-7 infoBlockText">
                 <p>
-                    {'lastname' in user
+                    {'lastname' in user && user.lastname
                         ? user.lastname + ' '
                         : ''}
-                    {'name' in user
-                        ? user.name
+                    {'name' in user && user.name
+                        ? user.name + ' '
                         : ''}
-                    {'patronymic' in user
+                    {'patronymic' in user && user.patronymic
                         ? user.patronymic + ' '
                         : ''}
                 </p>
