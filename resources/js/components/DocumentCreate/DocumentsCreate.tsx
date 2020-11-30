@@ -72,6 +72,10 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                 formValues.importerSignature =
                     formValues.importerSignature[0] || ''
             }
+            if ('providerSignature' in formValues) {
+                formValues.providerSignature =
+                    formValues.providerSignature[0] || ''
+            }
             setIsOpen(false)
             dispatch(createOrderInvoice(id, formValues, type))
         })
@@ -106,6 +110,22 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                     onClick={() => removeStamp(key)}
                                     className='btn btn-link'>
                                     Удалить печать поставщика
+                                </button>
+                                : null
+                            }
+
+                        </div>
+                    } else if (key === 'providerSignature') {
+                        return <div className='col-12' key={key}>
+                            <FileInput
+                                label='providerSignature'
+                                control={control} name='providerSignature'/>
+                            {value
+                                ? <button
+                                    type='button'
+                                    onClick={() => removeStamp(key)}
+                                    className='btn btn-link'>
+                                    Удалить подпись поставщика
                                 </button>
                                 : null
                             }
@@ -200,6 +220,11 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 ? <FileInput
                                     label='Печать поставщика'
                                     control={control} name='providerStamp'/>
+                                : null}
+                                {!('providerSignature' in invoiceInputs)
+                                ? <FileInput
+                                    label='Подпись поставщика'
+                                    control={control} name='providerSignature'/>
                                 : null}
                             {!('importerStamp' in invoiceInputs)
                                 ? <FileInput
