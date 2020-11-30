@@ -15,21 +15,18 @@ import {
 } from '../../../store/actions/settings'
 
 // Styles
-import classes from './NewsEmail.module.css';
+import classes from './NewsEmail.module.css'
 
 // App
 import Form from '../../UI/Form/Form'
 import Input from '../../UI/Inputs/Input/Input'
 import Error from '../../UI/Error/Error'
-import Loader from '../../UI/Loader/Loader'
-
 
 const NewsEmail: React.FC = () => {
     const dispatch = useDispatch()
 
-    const {loadingEmail, errorEmail, emailSettings} = useSelector(
+    const {errorEmail, emailSettings} = useSelector(
         (state) => ({
-            loadingEmail: state.settingsState.loadingEmail,
             errorEmail: state.settingsState.errorEmail,
             emailSettings: state.settingsState.emailSettings
         }))
@@ -57,9 +54,6 @@ const NewsEmail: React.FC = () => {
         })
     if (errorEmail) {
         return <Error/>
-    }
-    if (loadingEmail) {
-        return <Loader/>
     }
     return <div className='card card-body mb-3'>
         <h2>Настройка отправки писем с новинками</h2>

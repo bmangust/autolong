@@ -83,7 +83,7 @@ const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
                 <InputCheckbox
                     name='ordersIndex'
                     ref={register}
-                    label='Доступ и просмотр информации о заказач'/>
+                    label='Доступ и просмотр информации о заказах'/>
                 <InputCheckbox
                     name='ordersCreate'
                     ref={register}
