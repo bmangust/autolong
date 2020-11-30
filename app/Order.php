@@ -324,7 +324,8 @@ class Order extends Model
             'requisites' => null,
             'importerStamp' => null,
             'providerStamp' => null,
-            'importerSignature' => null
+            'importerSignature' => null,
+            'providerSignature' => null
         ]);
 
         $contract->saveInfoWithJson($all);
