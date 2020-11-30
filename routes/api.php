@@ -84,6 +84,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('orders/{order}/deletepdfcontractproviderstamp', 'OrderController@deletePdfContractProviderStamp');
     Route::delete('orders/{order}/deletepdfcontractimporterstamp', 'OrderController@deletePdfContractImporterStamp');
     Route::delete('orders/{order}/deletepdfcontractimportersignature', 'OrderController@deletePdfContractImporterSignature');
+    Route::delete('orders/{order}/deletepdfcontractprovidersignature', 'OrderController@deletePdfContractProviderSignature');
 
     Route::get('tags', 'TagController@index');
 

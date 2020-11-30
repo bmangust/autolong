@@ -856,6 +856,9 @@
                 @if(isset( $contract['providerStamp']))
                 <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($contract['providerStamp']) }}" alt="">
                 @endif
+                @if(isset( $contract['providerSignature']))
+                    <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($contract['providerSignature']) }}" alt="">
+                @endif
             </td>
         </tr>
     </table>

@@ -368,44 +368,19 @@ class Order extends Model
             ->putFileAs($directory, $image, $name . '.' . $image->getClientOriginalExtension());
     }
 
-    public function deletePdfContractProviderStamp()
+    public function deletePdfContractFilesStampsOrSignatures(string $name)
     {
-        try {
-            $providerStamp = $this->contract->getInfo()->providerStamp;
-        } catch (\Exception $e) {
-            throw new HttpException(404, $e);
+        if (!preg_match('#^providerStamp$|^importerStamp$|^importerSignature$|^providerSignature$#', $name)) {
+            throw new HttpException(404, $name . 'такого параметра нет');
         }
-        Storage::disk('main')->delete($providerStamp);
-        $array = (array)$this->contract->getInfo();
-        unset($array['providerStamp']);
-        $this->contract->info = $array;
-        $this->contract->save();
-    }
-
-    public function deletePdfContractImporterStamp()
-    {
         try {
-            $importerStamp = $this->contract->getInfo()->importerStamp;
+            $file = json_decode($this->contract->info, true)[$name];
         } catch (\Exception $e) {
-            throw new HttpException(404, $e);
+            throw new HttpException(404, 'У данного документа нет данного файла ' . $name);
         }
-        Storage::disk('main')->delete($importerStamp);
+        Storage::disk('main')->delete($file);
         $array = (array)$this->contract->getInfo();
-        unset($array['importerStamp']);
-        $this->contract->info = $array;
-        $this->contract->save();
-    }
-
-    public function deletePdfContractImporterSignature()
-    {
-        try {
-            $importerSignature = $this->contract->getInfo()->importerSignature;
-        } catch (\Exception $e) {
-            throw new HttpException(404, $e);
-        }
-        Storage::disk('main')->delete($importerSignature);
-        $array = (array)$this->contract->getInfo();
-        unset($array['importerSignature']);
+        unset($array[$name]);
         $this->contract->info = $array;
         $this->contract->save();
     }

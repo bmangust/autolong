@@ -264,6 +264,17 @@ class OrderController extends Controller
             $importerSignature = null;
         }
 
+        if ($request->hasFile('providerSignature') && $request->file('providerSignature')->isValid()) {
+            $request->validate(
+                ['providerSignature' => 'file|mimes:png,jpg,jpeg']
+            );
+            $importerSignature = $order->saveStamp($signatureDirectory, uniqid('signature-', false), $request->file('providerSignature'));
+        }elseif(isset($oldContract->providerSignature)) {
+            $importerSignature = $oldContract->providerSignature;
+        } else {
+            $importerSignature = null;
+        }
+
         $all = $order->sortArrayAndPushElement($request->except([
             'importerStamp',
             'providerStamp',
@@ -438,19 +449,25 @@ class OrderController extends Controller
 
     public function deletePdfContractProviderStamp(Order $order)
     {
-        $order->deletePdfContractProviderStamp();
+        $order->deletePdfContractFilesStampsOrSignatures('providerStamp');
         return response()->json([], 204);
     }
 
     public function deletePdfContractImporterStamp(Order $order)
     {
-        $order->deletePdfContractImporterStamp();
+        $order->deletePdfContractFilesStampsOrSignatures('importerStamp');
         return response()->json([], 204);
     }
 
     public function deletePdfContractImporterSignature(Order $order)
     {
-        $order->deletePdfContractImporterSignature();
+        $order->deletePdfContractFilesStampsOrSignatures('ImporterSignature');
+        return response()->json([], 204);
+    }
+
+    public function deletePdfContractProviderSignature(Order $order)
+    {
+        $order->deletePdfContractFilesStampsOrSignatures('ProviderSignature');
         return response()->json([], 204);
     }
 
