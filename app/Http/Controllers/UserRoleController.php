@@ -52,7 +52,7 @@ class UserRoleController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param UserRole $role
+     * @param UserRole $userRole
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(UserRole $userRole)
