@@ -935,6 +935,10 @@ html .select-mini-tags {
     &__input input:focus {
         box-shadow: none;
     }
+
+    &__menu {
+        z-index: 123;
+    }
 }
 
 html .select-filter .select-mini__control, html .select-filter .select-mini-tags__control {
