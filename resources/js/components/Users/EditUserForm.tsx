@@ -163,7 +163,7 @@ const EditUserForm: React.FC<{
                     <button
                         type='button'
                         onClick={goBackHandler}
-                        className='btn btn-light mr-3'>
+                        className='btn btn-light mr-3 mb-md-0 mb-2'>
                         Назад
                     </button>
                     <button

@@ -1,8 +1,8 @@
 .input {
-    max-width: 50%;
+    /* max-width: 50%; */
     width: 100%;
     margin: 10px 0;
-    padding: 0 15px;
+    /* padding: 0 15px; */
     border: 0;
     position: relative;
     min-width: 0;
@@ -115,3 +115,8 @@
     }
 }
 
+@media (max-width: 767px) {
+    .cbx {
+        align-items: center;
+    }
+}

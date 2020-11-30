@@ -368,11 +368,13 @@ const ProviderFormEdit: React.FC<{
 
                 </div>
                 <div className="row mb-4">
-                    <InputCheckbox
-                        name='unscrupulous'
-                        ref={register}
-                        classNameLabel='blackLabel'
-                        label='Недобросовестный поставщик'/>
+                    <div className="col-lg-6">
+                        <InputCheckbox
+                            name='unscrupulous'
+                            ref={register}
+                            classNameLabel='blackLabel'
+                            label='Недобросовестный поставщик'/>
+                    </div>
                 </div>
 
                 <div>

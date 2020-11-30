@@ -65,70 +65,96 @@ const CreateRole: React.FC = () => {
                 <div className="col-12">
                     <p>Заказы</p>
                 </div>
-                <InputCheckbox
-                    name='ordersIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о заказач'/>
-                <InputCheckbox
-                    name='ordersCreate'
-                    ref={register}
-                    label='Создание заказа'/>
-                <InputCheckbox
-                    name='ordersUpdate'
-                    ref={register}
-                    label='Редактирование информации о заказе'/>
-                <InputCheckbox
-                    name='ordersShowCargo'
-                    ref={register}
-                    label='Показывать заказы карго?'/>
-                <InputCheckbox
-                    name='ordersDelete'
-                    ref={register}
-                    label='Удаление заказа'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='ordersIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о заказах'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='ordersCreate'
+                        ref={register}
+                        label='Создание заказа'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='ordersUpdate'
+                        ref={register}
+                        label='Редактирование информации о заказе'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='ordersShowCargo'
+                        ref={register}
+                        label='Показывать заказы карго?'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='ordersDelete'
+                        ref={register}
+                        label='Удаление заказа'/>
+                </div>
             </div>
 
             <div className='row mb-4'>
                 <div className="col-12">
                     <p>Контейнеры</p>
                 </div>
-                <InputCheckbox
-                    name='containersIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о контейнере'/>
-                <InputCheckbox
-                    name='containersCreate'
-                    ref={register}
-                    label='Создание контейнера'/>
-                <InputCheckbox
-                    name='containersUpdate'
-                    ref={register}
-                    label='Редактирование информации о контейнере'/>
-                <InputCheckbox
-                    name='containersDelete'
-                    ref={register}
-                    label='Удаление контейнера'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='containersIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о контейнере'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='containersCreate'
+                        ref={register}
+                        label='Создание контейнера'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='containersUpdate'
+                        ref={register}
+                        label='Редактирование информации о контейнере'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='containersDelete'
+                        ref={register}
+                        label='Удаление контейнера'/>
+                </div>
             </div>
 
             <div className='row mb-4'>
                 <div className="col-12">
                     <p>Каталоги</p>
                 </div>
-                <InputCheckbox
-                    name='catalogsIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о каталоге'/>
-                <InputCheckbox
-                    name='catalogsCreate'
-                    ref={register}
-                    label='Добавление нового каталога'/>
-                <InputCheckbox
-                    name='catalogsUpdate'
-                    ref={register}
-                    label='Редактирование информации о каталоге'/>
-                <InputCheckbox
-                    name='catalogsDelete'
-                    ref={register}
-                    label='Удаление каталога'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='catalogsIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о каталоге'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='catalogsCreate'
+                        ref={register}
+                        label='Добавление нового каталога'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='catalogsUpdate'
+                        ref={register}
+                        label='Редактирование информации о каталоге'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='catalogsDelete'
+                        ref={register}
+                        label='Удаление каталога'/>
+                </div>
             </div>
 
 
@@ -136,127 +162,169 @@ const CreateRole: React.FC = () => {
                 <div className="col-12">
                     <p>Товары</p>
                 </div>
-                <InputCheckbox
-                    name='productsIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о товаре'/>
-                <InputCheckbox
-                    name='productsCreate'
-                    ref={register}
-                    label='Добавление нового товара'/>
-                <InputCheckbox
-                    name='productsUpdate'
-                    ref={register}
-                    label='Редактирование информации о товаре'/>
-                <InputCheckbox
-                    name='productsDelete'
-                    ref={register}
-                    label='Удаление товара'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='productsIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о товаре'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='productsCreate'
+                        ref={register}
+                        label='Добавление нового товара'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='productsUpdate'
+                        ref={register}
+                        label='Редактирование информации о товаре'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='productsDelete'
+                        ref={register}
+                        label='Удаление товара'/>
+                </div>
             </div>
 
             <div className='row mb-4'>
                 <div className="col-12">
                     <p>Поставщики</p>
                 </div>
-                <InputCheckbox
-                    name='providersIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о поставщике'/>
-                <InputCheckbox
-                    name='providersCreate'
-                    ref={register}
-                    label='Добавление нового поставщика'/>
-                <InputCheckbox
-                    name='providersUpdate'
-                    ref={register}
-                    label='Редактирование информации о поставщике'/>
-                <InputCheckbox
-                    name='providersDelete'
-                    ref={register}
-                    label='Удаление поставщика'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='providersIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о поставщике'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='providersCreate'
+                        ref={register}
+                        label='Добавление нового поставщика'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='providersUpdate'
+                        ref={register}
+                        label='Редактирование информации о поставщике'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='providersDelete'
+                        ref={register}
+                        label='Удаление поставщика'/>
+                </div>
             </div>
 
             <div className='row mb-4'>
                 <div className="col-12">
                     <p>Импортеры</p>
                 </div>
-                <InputCheckbox
-                    name='importersIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации об импортёре'/>
-                <InputCheckbox
-                    name='importersCreate'
-                    ref={register}
-                    label='Добавление нового импортёра'/>
-                <InputCheckbox
-                    name='importersUpdate'
-                    ref={register}
-                    label='Редактирование информации об импортёре'/>
-                <InputCheckbox
-                    name='importersDelete'
-                    ref={register}
-                    label='Удаление импортёра'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='importersIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации об импортёре'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='importersCreate'
+                        ref={register}
+                        label='Добавление нового импортёра'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='importersUpdate'
+                        ref={register}
+                        label='Редактирование информации об импортёре'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='importersDelete'
+                        ref={register}
+                        label='Удаление импортёра'/>
+                </div>
             </div>
 
             <div className='row mb-4'>
                 <div className="col-12">
                     <p>Доступ администратора</p>
                 </div>
-                <InputCheckbox
-                    name='settingsIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о настройках'/>
-
-                <InputCheckbox
-                    name='userRolesIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о роли'/>
-                <InputCheckbox
-                    name='userRolesCreate'
-                    ref={register}
-                    label='Добавление новой роли'/>
-                <InputCheckbox
-                    name='userRolesUpdate'
-                    ref={register}
-                    label='Редактирование роли'/>
-                <InputCheckbox
-                    name='userRolesDelete'
-                    ref={register}
-                    label='Удаление роли'/>
-
-                <InputCheckbox
-                    name='userIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о пользователе'/>
-                <InputCheckbox
-                    name='userCreate'
-                    ref={register}
-                    label='Добавление нового пользователя'/>
-                <InputCheckbox
-                    name='userUpdate'
-                    ref={register}
-                    label='Редактирование информации пользователя'/>
-                <InputCheckbox
-                    name='userDelete'
-                    ref={register}
-                    label='Удаление пользователя'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='settingsIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о настройках'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userRolesIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о роли'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userRolesCreate'
+                        ref={register}
+                        label='Добавление новой роли'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userRolesUpdate'
+                        ref={register}
+                        label='Редактирование роли'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userRolesDelete'
+                        ref={register}
+                        label='Удаление роли'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о пользователе'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userCreate'
+                        ref={register}
+                        label='Добавление нового пользователя'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userUpdate'
+                        ref={register}
+                        label='Редактирование информации пользователя'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='userDelete'
+                        ref={register}
+                        label='Удаление пользователя'/>
+                </div>
             </div>
 
             <div className='row mb-4'>
                 <div className="col-12">
                     <p>Дополнительно</p>
                 </div>
-                <InputCheckbox
-                    name='logsIndex'
-                    ref={register}
-                    label='Доступ и просмотр информации о логах'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='logsIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о логах'/>
+                </div>
             </div>
 
             <div>
                 <button
                     type='button'
                     onClick={goBackHandler}
-                    className='btn btn-light mr-3'>
+                    className='btn btn-light mr-3 mb-sm-0 mb-2'>
                     Назад
                 </button>
                 <button

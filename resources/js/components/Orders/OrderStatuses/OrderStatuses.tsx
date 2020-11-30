@@ -183,12 +183,14 @@ const OrderStatuses: React.FC<{
                         неправильный заказ
                     </p>
                     <div className='row'>
-                        <InputCheckbox
-                            classNameLabel='blackLabel'
-                            name='unscrupulous'
-                            defaultChecked={unscrupulousState}
-                            label='Недобросовестный поставщик'
-                            onChange={onCheckHandler}/>
+                        <div className="col-lg-6">
+                            <InputCheckbox
+                                classNameLabel='blackLabel'
+                                name='unscrupulous'
+                                defaultChecked={unscrupulousState}
+                                label='Недобросовестный поставщик'
+                                onChange={onCheckHandler}/>
+                        </div>
                         <div className="col-4 offset-lg-2 offset-0">
                             <button
                                 onClick={() =>
