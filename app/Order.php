@@ -259,13 +259,15 @@ class Order extends Model
         $proformaNumber = $proformaInfo->proformaNumber;
         $date = Carbon::now()->format('Y/m/d');
 
-        $invoice->saveInfoWithJson([
+        $all = $this->sortArrayAndPushElement([
             'supply' => $supply,
             'proformaNumber' => $proformaNumber,
             'contractNumber' => $contractNumber,
             'proformaStatusPayment' => $proformaStatusPayment,
             'date' => $date
         ]);
+
+        $invoice->saveInfoWithJson($all);
         return true;
     }
 
@@ -284,13 +286,15 @@ class Order extends Model
         $contractNumber = $contractInfo->name;
         $date = Carbon::now()->format('Y/m/d');
 
-        $proforma->saveInfoWithJson([
+        $all = $this->sortArrayAndPushElement([
             'supply' => $supply,
             'statusPayment' => $statusPayment,
             'contractNumber' => $contractNumber,
             'proformaNumber' => $proforma->id,
             'date' => $date
         ]);
+
+        $proforma->saveInfoWithJson($all);
         return true;
     }
 
@@ -306,11 +310,24 @@ class Order extends Model
         $date = Carbon::now()->format('Y/m/d');
         $contractName = $date . '-' . $contract->id;
         $supply = Supply::fob();
-        $contract->saveInfoWithJson([
+
+        $all = $this->sortArrayAndPushElement([
             'name' => $contractName,
             'supply' => $supply,
             'date' => $date,
+            'directorRu' => null,
+            'directorEn' => null,
+            'classificationRu' => null,
+            'classificationEn' => null,
+            'contractEndDate' => null
+        ], [
+            'requisites' => null,
+            'importerStamp' => null,
+            'providerStamp' => null,
+            'importerSignature' => null
         ]);
+
+        $contract->saveInfoWithJson($all);
         return true;
     }
 
@@ -402,5 +419,16 @@ class Order extends Model
             return false;
         }
         return true;
+    }
+
+    public function sortArrayAndPushElement(array $array,array $element = null): array
+    {
+        krsort($array);
+        if (!is_null($element)){
+            foreach ($element as $key => $value){
+                $array[$key] = $value;
+            }
+        }
+        return $array;
     }
 }

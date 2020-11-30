@@ -114,9 +114,9 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('userroles', 'UserRoleController@index');
     Route::post('userroles', 'UserRoleController@store');
-    Route::get('userroles/{userrole}', 'UserRoleController@show');
-    Route::put('userroles/{userrole}', 'UserRoleController@update');
-    Route::delete('userroles/{userroles}', 'UserRoleController@destroy');
+    Route::get('userroles/{userRole}', 'UserRoleController@show');
+    Route::put('userroles/{userRole}', 'UserRoleController@update');
+    Route::delete('userroles/{userRole}', 'UserRoleController@destroy');
 
     Route::get('mailtask', 'MailTaskController@index');
     Route::post('mailtask', 'MailTaskController@changeTime');
