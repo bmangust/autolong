@@ -9,6 +9,9 @@ import {useHistory} from 'react-router-dom'
 // Actions
 import {createImporter} from '../../../store/actions/importers'
 
+// Styles
+import classes from './ImporterForm.module.css';
+
 interface ICreateImporterData {
     nameRu: string
     nameEn: string
@@ -92,11 +95,11 @@ const ImporterForm: React.FC = () => {
                             <small>Это поле обязательно</small>}
                         </div>
                     </div>
-                    <div>
+                    <div className={classes.btns}>
                         <button
                             onClick={() => {
                                 history.goBack()
-                            }} className='mr-3 btn btn-light mb-3 mb-sm-0'>
+                            }} className=' btn btn-light'>
                             Назад
                         </button>
                         <button
