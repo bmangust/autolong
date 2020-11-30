@@ -227,7 +227,13 @@ class OrderController extends Controller
     {
         $importer = Importer::first();
         $provider = $order->provider;
-        $oldContract = $order->contract->getInfo();
+
+        if (!is_null($order->contract)) {
+            $oldContract = $order->contract->getInfo();
+        } else {
+            $oldContract = null;
+        }
+
         $stampDirectory = Order::STAMP_DIRECTORY;
 
         if ($request->hasFile('providerStamp') && $request->file('providerStamp')->isValid()) {
