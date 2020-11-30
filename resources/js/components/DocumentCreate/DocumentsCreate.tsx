@@ -83,7 +83,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     if (key === 'requisites') {
                         return <label
                             key={key} className='col-12'
-                            htmlFor='requisites'>Реквизиты
+                            htmlFor='requisites'>Реквизиты импортера
                             <Controller
                                 name="requisites"
                                 control={control}
