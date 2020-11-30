@@ -13,6 +13,9 @@ import * as yup from 'yup'
 import {IProduct, IProductAutolong} from '../../IProducts'
 import {IProvider} from '../../../Providers/IProviders'
 
+// Styles
+import classes from './ProductItemForm.module.css';
+
 // Actions
 import {
     createProduct,
@@ -212,9 +215,9 @@ const ProductItemForm: React.FC<{
                     <div className="col-lg-6 mt-lg-0 mt-3">
 
                         <div className="row mb-3">
-                            <div className="col-lg-2 col-2 pr-0">
+                            <div className="col-lg-2 col-3 pr-0">
                                 {img
-                                    ? <img height={65} width='100%'
+                                    ? <img className={classes.ProductItemImg}
                                            src={img} alt=""/>
                                     : null
                                 }

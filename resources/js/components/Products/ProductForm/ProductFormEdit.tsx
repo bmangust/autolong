@@ -1,6 +1,9 @@
 // React
 import React, {useEffect, useState} from 'react'
 
+// Styles
+import classes from './ProductItemForm/ProductItemForm.module.css';
+
 // Third-party
 import {useDispatch} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
@@ -170,9 +173,10 @@ const ProductFormEdit: React.FC<{
                             <div className="col-lg-6">
 
                                 <div className="row mb-3">
-                                    <div className="col-lg-2 pr-0">
+                                    <div className="col-lg-2 col-3 pr-0">
                                         {img
-                                            ? <img height={65} width='100%'
+                                            ? <img
+                                             className={classes.ProductItemImg}
                                                    src={img} alt=""/>
                                             : null
                                         }
