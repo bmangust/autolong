@@ -4,6 +4,7 @@ import React, {useEffect} from 'react'
 // Third-party
 import {ColumnDescription} from 'react-bootstrap-table-next'
 import {useDispatch, useSelector} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 
 // Typescript
 import {IRolesRootState} from './IRoles'
@@ -16,6 +17,7 @@ import AutoTable from '../../components/UI/AutoTable/AutoTable'
 import Error from '../../components/UI/Error/Error'
 import Loader from '../../components/UI/Loader/Loader'
 import Placeholder from '../UI/Placeholder/Placeholder'
+import SvgEdit from '../UI/iconComponents/Edit'
 
 const RolesTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -31,12 +33,22 @@ const RolesTable: React.FC = () => {
             error: state.rolesState.error
         }))
 
+    const nameFormatter = (name, row) => {
+        return <div className='d-flex justify-content-between'>
+            <NavLink to={`/settings/role/${row.id}`}>{name}</NavLink>
+            <NavLink to={`/settings/role/edit/${row.id}`}>
+                <SvgEdit/>
+            </NavLink>
+        </div>
+    }
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
             text: 'Роль',
             classes: 'title',
-            sort: true
+            sort: true,
+            formatter: nameFormatter
         }
     ]
 

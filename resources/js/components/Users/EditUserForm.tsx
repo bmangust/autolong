@@ -25,7 +25,6 @@ const EditUserForm: React.FC<{
 }> = ({roles, user}) => {
     const dispatch = useDispatch()
 
-
     const rolesOptions = roles.map(
         (role: IRole) => {
             return {

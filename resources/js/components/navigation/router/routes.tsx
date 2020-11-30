@@ -409,6 +409,34 @@ export const routes: IRoute[] = [
         access: ['settingsIndex', 'userRolesIndex', 'userRolesCreate']
     },
     {
+        name: 'Обновить права доступа',
+        path: '/settings/role/edit/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/roles/EditRole'),
+                600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userRolesIndex', 'userRolesUpdate']
+    },
+    {
+        name: 'Просмотр прав доступа',
+        path: '/settings/role/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/roles/Role'),
+                600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>,
+        access: ['settingsIndex', 'userRolesIndex']
+    },
+    {
         name: 'Пользователи',
         path: '/settings/users',
         component: lazy(() =>

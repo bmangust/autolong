@@ -23,7 +23,8 @@ export const fetchUsers = () => async dispatch => {
     })
 
     const url = '/api/users'
-    axios.get(url)
+    axios
+        .get(url)
         .then((answer) => {
             dispatch({
                 type: FETCH_USERS_SUCCESS,
@@ -44,7 +45,8 @@ export const createUser = (data) => async dispatch => {
     })
 
     const url = '/api/users'
-    axios.post(url, data)
+    axios
+        .post(url, data)
         .then((answer) => {
             dispatch({
                 type: CREATE_USER_SUCCESS,
@@ -69,7 +71,8 @@ export const updateUserById = (data, id) => async dispatch => {
     })
 
     const url = `/api/users/${id}`
-    axios.put(url, data)
+    axios
+        .put(url, data)
         .then((answer) => {
             dispatch({
                 type: UPDATE_USER_SUCCESS,
@@ -94,7 +97,8 @@ export const fetchUserById = (id) => async dispatch => {
     })
 
     const url = `/api/users/${id}`
-    axios.get(url)
+    axios
+        .get(url)
         .then((answer) => {
             dispatch({
                 type: FETCH_USER_BY_ID_SUCCESS,
