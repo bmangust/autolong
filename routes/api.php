@@ -105,7 +105,8 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 
     Route::get('cities', 'CityController@index');
-    Route::post('cities', 'CityController@create');
+    Route::post('cities', 'CityController@store');
+    Route::delete('cities/{city}', 'CityController@destroy');
 
     Route::get('users', 'UserController@index');
     Route::post('users', 'UserController@store');
