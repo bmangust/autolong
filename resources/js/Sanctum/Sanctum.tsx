@@ -26,6 +26,19 @@ interface State {
     authenticated: null | boolean;
 }
 
+const setAccessToLocale = (data) => {
+    const activeAccess = Object.entries(data.role.accesses)
+        .map(([key, value]) => {
+            if (value == 1) {
+                return key
+            } else {
+                return null
+            }
+        }).filter((el) => el !== null)
+    localStorage.setItem('access-autolong',
+        JSON.stringify(activeAccess.join(',')))
+}
+
 class Sanctum extends React.Component<Props, State> {
     static defaultProps = {
         checkOnInit: true
@@ -81,16 +94,7 @@ class Sanctum extends React.Component<Props, State> {
                                 'Authorization': `Bearer ${token}`
                             }
                         })
-                const activeAccess = Object.entries(data.role.accesses)
-                    .map(([key, value]) => {
-                        if (value == 1) {
-                            return key
-                        } else {
-                            return null
-                        }
-                    }).filter((el) => el !== null)
-                localStorage.setItem('access-autolong',
-                    JSON.stringify(activeAccess.join(',')))
+                setAccessToLocale(data)
                 this.setState({user: data, authenticated: true})
                 return resolve(data)
             } catch (error) {
@@ -124,6 +128,7 @@ class Sanctum extends React.Component<Props, State> {
         return await axios
             .get(`${apiUrl}/${userObjectRoute}`)
             .then(({data}) => {
+                setAccessToLocale(data)
                 this.setState({user: data, authenticated: true})
                 return true
             })

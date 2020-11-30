@@ -36,11 +36,13 @@ const EditUser: React.FC = () => {
             loading: state.usersState.loading,
             error: state.usersState.error
         }))
+
     const {roles, loadingRoles} = useSelector(
         (state: IRolesRootState) => ({
             roles: state.rolesState.roles,
             loadingRoles: state.rolesState.loading
         }))
+
     if (error) {
         return <Error/>
     }

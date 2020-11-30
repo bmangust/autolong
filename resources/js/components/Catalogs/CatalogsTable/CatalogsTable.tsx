@@ -59,8 +59,6 @@ const CatalogsTable: React.FC = () => {
         }
     })
 
-    console.log(filterOptions)
-
     const filter = {
         options: filterOptions,
         field: 'tags',
