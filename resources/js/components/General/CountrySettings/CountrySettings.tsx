@@ -86,11 +86,13 @@ const CountrySettings: React.FC = () => {
                     label='Страна'
                     name='name'/>
             </div>
-            <button
-                type='submit'
-                className="btn btn-success">
-                Добавить
-            </button>
+            <div className={classes.btns}>
+                <button
+                    type='submit'
+                    className="btn btn-success">
+                    Добавить
+                </button>
+            </div>
         </Form>
     </div>
 }

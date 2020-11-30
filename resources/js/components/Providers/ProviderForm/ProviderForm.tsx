@@ -333,7 +333,7 @@ const ProviderForm: React.FC<{
 
                 </div>
 
-                <div>
+                <div className={classes.btns}>
                     <button
                         onClick={() => {
                             history.goBack()

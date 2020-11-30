@@ -12,6 +12,10 @@
         flex-direction: column;
     }
 
+    .btns button {
+        width: 100% !important;
+    }
+
     .btns button:first-child {
         margin: 0 0 15px;
     }

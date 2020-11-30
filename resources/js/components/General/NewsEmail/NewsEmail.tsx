@@ -89,7 +89,7 @@ const NewsEmail: React.FC = () => {
             <div className={classes.btns}>
                 <button
                     type='submit'
-                    className="btn btn-success mr-4">
+                    className="btn btn-success">
                     Сохранить
                 </button>
                 <button

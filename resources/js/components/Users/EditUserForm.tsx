@@ -20,6 +20,9 @@ import Form from '../UI/Form/Form'
 import Input from '../UI/Inputs/Input/Input'
 import {IUser} from './IUsers'
 
+// Styles
+import classes from './EditUserForm.module.css';
+
 const EditUserForm: React.FC<{
     roles: IRole[], user: IUser
 }> = ({roles, user}) => {
@@ -158,11 +161,11 @@ const EditUserForm: React.FC<{
             </div>
 
             <div className="row">
-                <div className="col-6">
+                <div className={classes.btns + ' col-lg-6'}>
                     <button
                         type='button'
                         onClick={goBackHandler}
-                        className='btn btn-light mr-3 mb-md-0 mb-2'>
+                        className='btn btn-light'>
                         Назад
                     </button>
                     <button

@@ -18,6 +18,9 @@ import {createCatalog} from '../../../store/actions/catalogs'
 import {fetchProviders} from '../../../store/actions/providers'
 import {fetchTags} from '../../../store/actions/tags'
 
+// Styles
+import classes from './CatalogForm.module.css';
+
 interface ICreateCatalogData {
     name: string
     providerId: string
@@ -157,11 +160,11 @@ const CatalogForm: React.FC = () => {
                             />
                         </div>
                     </div>
-                    <div>
+                    <div className={classes.btns}>
                         <button
                             onClick={() => {
                                 history.goBack()
-                            }} className='mr-3 btn btn-light mb-3 mb-sm-0'>
+                            }} className='btn btn-light'>
                             Назад
                         </button>
                         <button

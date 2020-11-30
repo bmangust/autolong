@@ -320,11 +320,11 @@ const CreateRole: React.FC = () => {
                 </div>
             </div>
 
-            <div>
+            <div className={classes.btns}>
                 <button
                     type='button'
                     onClick={goBackHandler}
-                    className='btn btn-light mr-3 mb-sm-0 mb-2'>
+                    className='btn btn-light'>
                     Назад
                 </button>
                 <button

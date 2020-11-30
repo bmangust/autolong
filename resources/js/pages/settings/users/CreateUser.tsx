@@ -20,6 +20,9 @@ import {fetchRoles} from '../../../store/actions/roles'
 import Form from '../../../components/UI/Form/Form'
 import Input from '../../../components/UI/Inputs/Input/Input'
 
+// Styles
+import classes from './CreateUser.module.css';
+
 const CreateUser = () => {
     const dispatch = useDispatch()
 
@@ -163,11 +166,11 @@ const CreateUser = () => {
             </div>
 
             <div className="row">
-                <div className="col-6">
+                <div className={classes.btns + ' col-lg-6'}>
                     <button
                         type='button'
                         onClick={goBackHandler}
-                        className='btn btn-light mr-3 mb-md-0 mb-3'>
+                        className='btn btn-light'>
                         Назад
                     </button>
                     <button

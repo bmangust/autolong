@@ -462,15 +462,15 @@ const ProductItemForm: React.FC<{
                                 </div>
 
                             </div>
-                            <div className="col-lg-12">
+                            <div className={classes.btns + ' col-lg-12'}>
                                 <button
-                                    className='btn btn-success mb-2 mt-2 mr-3'
+                                    className='btn btn-success'
                                     type="submit">
                                     {'id' in product && product.id
                                         ? 'Обновить'
                                         : 'Добавить'}
                                 </button>
-                                <button className='btn btn-light mb-2 mt-2'>
+                                <button className='btn btn-light'>
                                     Отменить добавление
                                 </button>
                             </div>

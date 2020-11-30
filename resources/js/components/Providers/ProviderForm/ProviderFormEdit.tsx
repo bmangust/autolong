@@ -377,11 +377,11 @@ const ProviderFormEdit: React.FC<{
                     </div>
                 </div>
 
-                <div>
+                <div className={classes.btns}>
                     <button
                         onClick={() => {
                             history.goBack()
-                        }} className='mr-3 btn btn-light mb-3 mb-sm-0'>
+                        }} className='btn btn-light'>
                         Назад
                     </button>
                     <button className='btn btn-success'

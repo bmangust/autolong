@@ -1,11 +1,6 @@
-.ProductItemImg {
-    width: 100%;
-    height: 65px;
-    object-fit: contain;
-}
-
 .btns {
     display: flex;
+    margin-top: 10px;
 }
 
 .btns button:first-child {

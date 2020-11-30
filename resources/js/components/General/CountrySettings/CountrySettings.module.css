@@ -40,3 +40,18 @@
 .country .delete svg {
     width: 9px;
 }
+
+.btns {
+    display: flex;
+    margin-top: 10px;
+}
+
+@media (max-width: 575px) {
+    .btns {
+        flex-direction: column;
+    }
+
+    .btns button {
+        width: 100% !important;
+    }
+}
