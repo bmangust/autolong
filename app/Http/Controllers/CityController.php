@@ -13,11 +13,17 @@ class CityController extends Controller
         return response()->json(CityResource::collection(City::all()->sortByDesc('name')), 200);
     }
 
-    public function store(Request $request, City $city)
+    public function store(Request $request)
     {
-        $city = $city->create([
+        $city = City::create([
             'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('name'))
         ]);
         return response()->json(new CityResource($city), 201);
+    }
+
+    public function destroy(City $city)
+    {
+        $city->delete();
+        return response()->json([], 204);
     }
 }

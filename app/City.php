@@ -10,6 +10,14 @@ class City extends Model
 
     protected $fillable = ['name'];
 
+    protected static function booted()
+    {
+        static::deleting(function (City $city) {
+            $city->orders()->update(['city_id' => null]);
+            $city->containers()->update(['city_id' => null]);
+        });
+    }
+
     public function orders()
     {
         return $this->hasMany('App\Order');
