@@ -54,13 +54,13 @@ const Catalog: React.FC<ICatalog> = () => {
                     <div className="card-body-info">
 
                         <div className="row">
-                            <div className="col-lg-5 infoBlockHeaders">
+                            <div className="col-lg-5 col-5 infoBlockHeaders">
                                 <p>Название каталога</p>
                                 <p>Дата загрузки</p>
                                 <p>Дата обновления</p>
                                 <p>Теги:</p>
                             </div>
-                            <div className="col-lg-7 infoBlockText">
+                            <div className="col-lg-7 col-7 infoBlockText">
                                 <p>{'name' in catalog
                                     ? catalog.name
                                     : ''}</p>
@@ -72,9 +72,9 @@ const Catalog: React.FC<ICatalog> = () => {
                                     : ''}</p>
                             </div>
                         </div>
-                        <p>{'tags' in catalog
+                        <div>{'tags' in catalog
                             ? tagsConverter(catalog.tags)
-                            : ''}</p>
+                            : ''}</div>
 
                     </div>
                 </div>
