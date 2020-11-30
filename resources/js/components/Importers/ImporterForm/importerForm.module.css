@@ -1,0 +1,18 @@
+.btns {
+    display: flex;
+}
+
+.btns button:first-child {
+    margin: 0 15px 0 0;
+}
+
+@media (max-width: 575px) {
+
+    .btns {
+        flex-direction: column;
+    }
+
+    .btns button:first-child {
+        margin: 0 0 15px;
+    }
+}
