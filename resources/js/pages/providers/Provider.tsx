@@ -58,9 +58,11 @@ const Provider: React.FC<IProvider> = () => {
         let totalRub = 0
         let totalUsd = 0
         provider.orders.map((order) => {
-            totalCny += +order.price.cny
-            totalRub += +order.price.rub
-            totalUsd += +order.price.usd
+            if (Object.keys(order).length) {
+                totalCny += +order.price.cny
+                totalRub += +order.price.rub
+                totalUsd += +order.price.usd
+            }
         })
         ordersPrice =
             <>
@@ -270,22 +272,23 @@ const Provider: React.FC<IProvider> = () => {
                     <div className="card">
                         <div className="card-body-info">
                             <h2>Список заказов</h2>
-                            {provider.orders
+                            {'orders' in provider && provider.orders
                                 ? provider.orders.map((order) => (
-                                    <p className={classes.orders}
-                                       key={order.id + order.name}>
-                                        <NavLink
-                                            to={`/order/${order.id}`}>
-                                            {order.name}
-                                        </NavLink>
-                                    </p>
+                                    Object.keys(order).length
+                                        ? <p className={classes.orders}
+                                             key={order.id + order.name}>
+                                            <NavLink
+                                                to={`/order/${order.id}`}>
+                                                {order.name}
+                                            </NavLink>
+                                        </p>
+                                        : null
                                 ))
                                 : 'Заказов нет'
                             }
                         </div>
                     </div>
                 </div>
-
             </div>
         </div>
     )

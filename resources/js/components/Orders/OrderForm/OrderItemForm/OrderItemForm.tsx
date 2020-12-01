@@ -53,8 +53,6 @@ const OrderItemForm: React.FC<{
 
     const {user} = useContext(SanctumContext)
 
-    console.log(user)
-
     const onChangeQtyHandler = (e, itemId: number) => {
         const value = +e.target.value
         const newItems = items.map((el) =>
