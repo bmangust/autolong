@@ -18,17 +18,20 @@ import Package from './Package/Package'
 import SvgCube from '../UI/iconComponents/Cube'
 
 const OrderPackages: React.FC<{
+    setIsOpen: Function
+    containerId: number
     items: IProduct[]
     packingList: boolean
     orderId: number
 }> = (
-    {items, packingList, orderId}) => {
+    {items, packingList, orderId, containerId, setIsOpen}) => {
     const [data, setData] = useState<any>({})
     const dispatch = useDispatch()
 
     const createPackageHandler = () => {
         data.old = packingList ? 1 : 0
-        dispatch(createOrderInvoice(orderId, data, 'packinglist'))
+        dispatch(createOrderInvoice(orderId, data, 'packinglist', containerId))
+        setIsOpen(false)
     }
 
     return <div>

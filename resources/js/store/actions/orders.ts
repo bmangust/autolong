@@ -26,6 +26,7 @@ import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
 import {push} from 'connected-react-router'
 import {saveAs} from 'file-saver'
+import {fetchContainerById} from './containers'
 
 export const fetchOrders = () => async dispatch => {
     await dispatch({
@@ -217,37 +218,42 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
         })
 }
 
-export const createOrderInvoice = (id, data, type) => {
-    const url = `/api/orders/${id}/generatepdf${type}`
-    let formData = data
-    if (type !== 'packinglist') {
-        formData = new FormData()
-        Object.entries(data).forEach(([key, val]) => {
-            if (Array.isArray(val)) {
-                return formData.append(key, JSON.stringify(val))
-            } else {
-                return formData.append(key, val)
+export const createOrderInvoice =
+    (id: number, data: any, type: string, containerId?: number) =>
+        async dispatch => {
+            const url = `/api/orders/${id}/generatepdf${type}`
+            let formData = data
+            if (type !== 'packinglist') {
+                formData = new FormData()
+                Object.entries(data).forEach(([key, val]) => {
+                    if (Array.isArray(val)) {
+                        return formData.append(key, JSON.stringify(val))
+                    } else {
+                        return formData.append(key, val)
+                    }
+                })
             }
-        })
-    }
-    axios
-        .post(url, formData, {
-            responseType: 'blob'
-        })
-        .then(answer => {
-            const blob = new Blob([answer.data],
-                {type: 'application/pdf;charset=utf-8'})
-            toast.success(`${type} сгенерирован`)
-            saveAs(blob, `${type}.pdf`)
-        })
-        .catch((error: AxiosError) => {
-            if (error.response?.status === 400) {
-                toast.error(error.response.data)
-            } else {
-                toast.error(error.message)
-            }
-        })
-}
+            axios
+                .post(url, formData, {
+                    responseType: 'blob'
+                })
+                .then(answer => {
+                    const blob = new Blob([answer.data],
+                        {type: 'application/pdf;charset=utf-8'})
+                    if (type === 'packinglist') {
+                        dispatch(fetchContainerById(containerId, false))
+                    }
+                    toast.success(`${type} сгенерирован`)
+                    saveAs(blob, `${type}.pdf`)
+                })
+                .catch((error: AxiosError) => {
+                    if (error.response?.status === 400) {
+                        toast.error(error.response.data)
+                    } else {
+                        toast.error(error.message)
+                    }
+                })
+        }
 
 export const removeStampByType = (orderId, type) => async dispatch => {
     const url = `/api/orders/${orderId}/deletepdfcontract${type.toLowerCase()}`

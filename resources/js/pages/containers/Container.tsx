@@ -194,6 +194,8 @@ const Container: React.FC<IContainer> = () => {
                         isOpen={isOpen}
                         setIsOpen={setIsOpen}>
                         <OrderPackage
+                            setIsOpen={setIsOpen}
+                            containerId={container.id}
                             packingList={packingList}
                             orderId={activeOrder.id}
                             items={activeOrder.items}/>

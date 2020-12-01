@@ -10,6 +10,8 @@ import {Control} from 'react-hook-form/dist/types'
 import classes from './FileInput.module.css'
 import {substringOut} from '../../../../utils'
 
+import translate from '../Input/inputTranslate.json'
+
 // import SvgDelete from '../../iconComponents/Delete'
 
 interface IFileInput {
@@ -45,7 +47,11 @@ const FileInput: React.FC<IFileInput> =
                                     {...getInputProps()}
                                     onBlur={onBlur}
                                     name={name}/>
-                                <p className='mb-0'>{label}</p>
+                                <p className='mb-0'>
+                                    {label in translate
+                                        ? translate[label]
+                                        : label
+                                    }</p>
                             </div>)}
                     </Dropzone>
                     <ul className={classes.fileList}>
