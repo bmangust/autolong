@@ -6,6 +6,7 @@ import {CSSTransition, TransitionGroup} from 'react-transition-group'
 
 // Typescript
 import {IProvider} from '../../Providers/IProviders'
+import {IProduct} from '../../Products/IProducts'
 
 // App
 import OrderItemForm from './OrderItemForm/OrderItemForm'
@@ -37,7 +38,7 @@ const OrdersForms: React.FC<{
                     providerId={+key}
                     providers={providers}
                     onHide={onHideHandler}
-                    products={value}
+                    products={value as IProduct[]}
                 />
             </CSSTransition>
         ))}
