@@ -285,6 +285,7 @@ class OrderController extends Controller
             'importerStamp',
             'providerStamp',
             'importerSignature',
+            'providerSignature',
             'requisites'
         ]), [
             'requisites' => $request->input('requisites'),
