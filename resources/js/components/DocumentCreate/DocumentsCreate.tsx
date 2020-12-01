@@ -26,6 +26,7 @@ import Form from '../UI/Form/Form'
 import Input from '../UI/Inputs/Input/Input'
 import TextEditor from '../UI/TextEditor/TextEditor'
 import FileInput from '../UI/Inputs/FileInput/FileInput'
+import {mapOrder} from '../../utils'
 
 const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const dispatch = useDispatch()
@@ -60,6 +61,13 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
         setIsOpen(false)
     }
 
+    const sorting = ['supply', 'name', 'directorRu',
+        'directorEn', 'date', 'contractEndDate',
+        'classificationRu', 'classificationEn',
+        'requisites', 'importerStamp', 'providerStamp',
+        'importerSignature', 'providerSignature'
+    ]
+
     const documentCreateSubmitHandler =
         handleSubmit((formValues) => {
             if ('providerStamp' in formValues) {
@@ -83,92 +91,93 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     modal = <>
         <Form onSubmit={documentCreateSubmitHandler}>
             <div className='row'>
-                {Object.entries(invoiceInputs).map(([key, value]) => {
-                    if (key === 'requisites') {
-                        return <label
-                            key={key} className='col-12'
-                            htmlFor='requisites'>Реквизиты импортера
-                            <Controller
-                                name="requisites"
-                                control={control}
-                                defaultValue={value || ''}
-                                render={({value, onChange}) => (
-                                    <TextEditor
-                                        placeholder='Реквизиты импортера'
-                                        value={value}
-                                        onChange={onChange}
-                                    />
-                                )}/>
-                        </label>
-                    } else if (key === 'providerStamp') {
-                        return <div className='col-12' key={key}>
-                            <FileInput
-                                label='providerStamp'
-                                control={control} name='providerStamp'/>
-                            {value
-                                ? <button
-                                    type='button'
-                                    onClick={() => removeStamp(key)}
-                                    className='btn btn-link'>
-                                    Удалить печать поставщика
-                                </button>
-                                : null
-                            }
+                {mapOrder(Object.entries(invoiceInputs), sorting)
+                    .map(([key, value]) => {
+                        if (key === 'requisites') {
+                            return <label
+                                key={key} className='col-12'
+                                htmlFor='requisites'>Реквизиты импортера
+                                <Controller
+                                    name="requisites"
+                                    control={control}
+                                    defaultValue={value || ''}
+                                    render={({value, onChange}) => (
+                                        <TextEditor
+                                            placeholder='Реквизиты импортера'
+                                            value={value}
+                                            onChange={onChange}
+                                        />
+                                    )}/>
+                            </label>
+                        } else if (key === 'providerStamp') {
+                            return <div className='col-12' key={key}>
+                                <FileInput
+                                    label='providerStamp'
+                                    control={control} name='providerStamp'/>
+                                {value
+                                    ? <button
+                                        type='button'
+                                        onClick={() => removeStamp(key)}
+                                        className='btn btn-link'>
+                                        Удалить печать поставщика
+                                    </button>
+                                    : null
+                                }
 
-                        </div>
-                    } else if (key === 'providerSignature') {
-                        return <div className='col-12' key={key}>
-                            <FileInput
-                                label='providerSignature'
-                                control={control} name='providerSignature'/>
-                            {value
-                                ? <button
-                                    type='button'
-                                    onClick={() => removeStamp(key)}
-                                    className='btn btn-link'>
-                                    Удалить подпись поставщика
-                                </button>
-                                : null
-                            }
+                            </div>
+                        } else if (key === 'providerSignature') {
+                            return <div className='col-12' key={key}>
+                                <FileInput
+                                    label='providerSignature'
+                                    control={control} name='providerSignature'/>
+                                {value
+                                    ? <button
+                                        type='button'
+                                        onClick={() => removeStamp(key)}
+                                        className='btn btn-link'>
+                                        Удалить подпись поставщика
+                                    </button>
+                                    : null
+                                }
 
-                        </div>
-                    } else if (key === 'importerSignature') {
-                        return <div className='col-12' key={key}>
-                            <FileInput
-                                label='importerSignature'
-                                control={control} name='importerSignature'/>
-                            {value
-                                ? <button
-                                    type='button'
-                                    onClick={() => removeStamp(key)}
-                                    className='btn btn-link'>
-                                    Удалить подпись импортера
-                                </button>
-                                : null
-                            }
-                        </div>
-                    } else if (key === 'importerStamp') {
-                        return <div className='col-12' key={key}>
-                            <FileInput
-                                label='importerStamp'
-                                control={control} name='importerStamp'/>
-                            {value
-                                ? <button
-                                    type='button'
-                                    onClick={() => removeStamp(key)}
-                                    className='btn btn-link'>
-                                    Удалить печать импортера
-                                </button>
-                                : null
-                            }
-                        </div>
-                    } else {
-                        return <Input
-                            key={key} id={key}
-                            ref={register} name={key}
-                            defaultValue={value} label={key}/>
-                    }
-                })}
+                            </div>
+                        } else if (key === 'importerSignature') {
+                            return <div className='col-12' key={key}>
+                                <FileInput
+                                    label='importerSignature'
+                                    control={control} name='importerSignature'/>
+                                {value
+                                    ? <button
+                                        type='button'
+                                        onClick={() => removeStamp(key)}
+                                        className='btn btn-link'>
+                                        Удалить подпись импортера
+                                    </button>
+                                    : null
+                                }
+                            </div>
+                        } else if (key === 'importerStamp') {
+                            return <div className='col-12' key={key}>
+                                <FileInput
+                                    label='importerStamp'
+                                    control={control} name='importerStamp'/>
+                                {value
+                                    ? <button
+                                        type='button'
+                                        onClick={() => removeStamp(key)}
+                                        className='btn btn-link'>
+                                        Удалить печать импортера
+                                    </button>
+                                    : null
+                                }
+                            </div>
+                        } else {
+                            return <Input
+                                key={key} id={key}
+                                ref={register} name={key}
+                                defaultValue={value} label={key}/>
+                        }
+                    })}
                 {type === 'contract'
                     ? <>
                         {!('requisites' in invoiceInputs)
