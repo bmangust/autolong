@@ -9,7 +9,7 @@ import {useParams} from 'react-router-dom'
 import {fetchRoleById} from '../../../store/actions/roles'
 
 // Typescript
-import {IRolesRootState} from '../../../components/Roles/IRoles'
+import {IRole, IRolesRootState} from '../../../components/Roles/IRoles'
 
 // App
 import Error from '../../../components/UI/Error/Error'
@@ -34,10 +34,10 @@ const EditRole: React.FC = () => {
     if (error) {
         return <Error/>
     }
-    if (loading) {
+    if (loading || !Object.keys(role).length) {
         return <Loader/>
     }
-    return <EditRoleForm role={role}/>
+    return <EditRoleForm role={role as IRole}/>
 }
 
 export default EditRole

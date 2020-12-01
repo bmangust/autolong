@@ -27,6 +27,9 @@ const OrdersForms: React.FC<{
         )
     }
 
+    console.log(items)
+    console.log('itemsState', itemsState)
+
     return <TransitionGroup>
         {Object.entries(itemsState).map(([key, value]) => (
             <CSSTransition
