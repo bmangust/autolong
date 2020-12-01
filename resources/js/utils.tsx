@@ -160,3 +160,28 @@ export const tagsConverter = (tags: ITag[]) => {
         })
     )
 }
+
+/**
+ * Sort array of objects based on another array
+ * key = undefined for entries sorting
+ * @param array
+ * @param order
+ * @param key
+ */
+export const mapOrder =
+    (array: [string, unknown][],
+     order: string[],
+     key = 0) => {
+        array.sort((a, b) => {
+            const A = a[key]
+            const B = b[key]
+
+            if (order.indexOf(A as string) > order.indexOf(B as string)) {
+                return 1
+            } else {
+                return -1
+            }
+        })
+
+        return array
+    }
