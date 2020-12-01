@@ -43,7 +43,7 @@ const Package: React.FC<{
     const addPackageHandler = () => {
         const newPackage = packageTemplate
         newPackage.name = `${newPackage.name} ${packages.length + 1}`
-        newPackage.id = packages.length + 1
+        newPackage.id = Math.random()
         setPackages(oldState => [...oldState, newPackage])
     }
 
@@ -70,7 +70,7 @@ const Package: React.FC<{
     }
 
     const deletePackHandler = (packId) => {
-        setPackages(packages.filter(({id}) => id !== packId))
+        setPackages(oldState => oldState.filter(({id}) => id !== packId))
     }
 
     const sendPackageHandler = (id) => {
@@ -124,7 +124,7 @@ const Package: React.FC<{
                 {packages.map((pack: IPackage, index: number) => (
                     <div key={index} className={classes.package}>
                         <div className={classes.name}>
-                            {pack.name}
+                            {index + 1}
                         </div>
                         <div className={classes.input}>
                             <label>Кол-во коробок</label>
@@ -157,9 +157,9 @@ const Package: React.FC<{
                                    value={pack.height}/>
                         </div>
                         <div className={classes.close}>
-                            <button>
+                            <button type='button'
+                                    onClick={() => deletePackHandler(pack.id)}>
                                 <SvgClose
-                                    onClick={() => deletePackHandler(pack.id)}
                                     width='10px'/>
                             </button>
                         </div>

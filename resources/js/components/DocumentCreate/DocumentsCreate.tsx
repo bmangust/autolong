@@ -94,6 +94,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                 defaultValue={value || ''}
                                 render={({value, onChange}) => (
                                     <TextEditor
+                                        placeholder='Реквизиты импортера'
                                         value={value}
                                         onChange={onChange}
                                     />
@@ -172,13 +173,14 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     ? <>
                         {!('requisites' in invoiceInputs)
                             ? <label className='col-12'
-                                     htmlFor='requisites'>Реквизиты
+                                     htmlFor='requisites'>Реквизиты импортера
                                 <Controller
                                     name="requisites"
                                     control={control}
                                     defaultValue=''
                                     render={({value, onChange}) => (
                                         <TextEditor
+                                            placeholder='Реквизиты импортера'
                                             value={value}
                                             onChange={onChange}
                                         />
@@ -221,7 +223,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                     label='Печать поставщика'
                                     control={control} name='providerStamp'/>
                                 : null}
-                                {!('providerSignature' in invoiceInputs)
+                            {!('providerSignature' in invoiceInputs)
                                 ? <FileInput
                                     label='Подпись поставщика'
                                     control={control} name='providerSignature'/>
