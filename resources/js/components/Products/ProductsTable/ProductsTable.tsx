@@ -160,17 +160,15 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
             formatter: timeConverter
         }
     ]
-    return (
-        <AutoTable
-            filter={filter}
-            expandRowTable={expandRowTable}
-            keyField='id' data={products} columns={columns}
-            button={{
-                link: link,
-                text: 'Добавить товары'
-            }}
-        />
-    )
+    return <AutoTable
+        filter={filter}
+        expandRowTable={expandRowTable}
+        keyField='id' data={products} columns={columns}
+        button={{
+            link: link,
+            text: 'Добавить товары'
+        }}
+    />
 }
 
 export default ProductsTable

@@ -1,5 +1,5 @@
 // React
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {NavLink} from 'react-router-dom'
@@ -63,7 +63,11 @@ const AutoTable: React.FC<IAutoTable> = (
         header = true
     }) => {
     const {SearchBar} = Search
-    const [dataState, setDataState] = useState(() => data)
+    const [dataState, setDataState] = useState<any>([])
+
+    useEffect(() => {
+        return setDataState(data)
+    }, [data])
 
     const expandRow: ExpandRowProps<any> = {
         expandColumnPosition: 'right',
