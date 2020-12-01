@@ -6,7 +6,7 @@ import ReactDOM from 'react-dom'
 import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import thunk, {ThunkMiddleware} from 'redux-thunk'
-import {composeWithDevTools} from 'redux-devtools-extension'
+import {composeWithDevTools} from 'redux-devtools-extension/logOnlyInProduction'
 import {ConnectedRouter, routerMiddleware} from 'connected-react-router'
 import {createBrowserHistory} from 'history'
 

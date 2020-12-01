@@ -4,6 +4,7 @@ import React, {forwardRef} from 'react'
 // Styles
 import classes from './Input.module.css'
 
+// App
 import translate from './inputTranslate.json'
 
 type InputElement = HTMLInputElement | HTMLTextAreaElement;

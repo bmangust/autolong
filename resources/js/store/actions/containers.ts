@@ -65,27 +65,30 @@ export const fetchUnappliedOrders = () => async dispatch => {
         })
 }
 
-export const fetchContainerById = (id) => async dispatch => {
-    await dispatch({
-        type: FETCH_CONTAINER_START
-    })
+export const fetchContainerById = (id, isWithLoading = true) =>
+    async dispatch => {
+        if (isWithLoading) {
+            await dispatch({
+                type: FETCH_CONTAINER_START
+            })
+        }
 
-    const url = `/api/containers/${id}`
-    axios
-        .get(url)
-        .then((answer) => {
-            dispatch({
-                type: FETCH_CONTAINER_SUCCESS,
-                payload: answer.data
+        const url = `/api/containers/${id}`
+        axios
+            .get(url)
+            .then((answer) => {
+                dispatch({
+                    type: FETCH_CONTAINER_SUCCESS,
+                    payload: answer.data
+                })
             })
-        })
-        .catch((error: AxiosError) => {
-            dispatch({
-                type: FETCH_CONTAINER_ERROR,
-                payload: error.response
+            .catch((error: AxiosError) => {
+                dispatch({
+                    type: FETCH_CONTAINER_ERROR,
+                    payload: error.response
+                })
             })
-        })
-}
+    }
 
 export const deleteContainerById = id => async dispatch => {
     const url = `/api/containers/${id}`
