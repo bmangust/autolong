@@ -70,7 +70,7 @@
     </tr>
     <tr>
         <td style="padding: 0 30px 32px;">
-            <a href="#" style="color: #3a405f; text-decoration: none;">{{ $url }}</a>
+            <a href="{{ $url }}" style="color: #3a405f; text-decoration: none;">{{ $url }}</a>
         </td>
     </tr>
 </table>

@@ -20,8 +20,37 @@ class Order extends Model
     public const CHECK_DIRECTORY = '/checks/';
     public const STAMP_DIRECTORY = '/storage/stamps/';
     public const SIGNATURE_DIRECTORY = '/storage/signature/';
+    /**
+     * @var null[]
+     */
 
     protected $fillable = ['name', 'provider_id'];
+
+    public $contractActualRows = [
+        'name' => null,
+        'supply' => null,
+        'date' => null,
+        'directorRu' => null,
+        'directorEn' => null,
+        'classificationRu' => null,
+        'classificationEn' => null,
+        'contractEndDate' => null
+    ];
+
+    public $proformaActualRows = [
+        'supply' => null,
+        'statusPayment' => null,
+        'contractNumber' => null,
+        'proformaNumber' => null,
+        'date' => null
+    ];
+
+    public $invoiceActualRows = [
+        'paymentTerms' => null,
+        'contractNumber' => null,
+        'proformaStatusPayment' => null,
+        'additionalField' => null
+    ];
 
     public function provider()
     {
@@ -251,20 +280,17 @@ class Order extends Model
         $invoice = $this->invoice;
 
         $contractInfo = $this->contract->getInfo();
-        $supply = $contractInfo->supply;
         $contractNumber = $contractInfo->name;
 
         $proformaInfo = $this->proforma->getInfo();
         $proformaStatusPayment = $proformaInfo->statusPayment;
-        $proformaNumber = $proformaInfo->proformaNumber;
-        $date = Carbon::now()->format('Y/m/d');
 
-        $all = $this->sortArrayAndPushElement([
-            'supply' => $supply,
-            'proformaNumber' => $proformaNumber,
+        $paymentTerms = $contractInfo->supply . ' by proforma invoice ' . $proformaInfo->proformaNumber . ' dated ' . Carbon::now()->format('Y/m/d');
+
+        $all = $this->sortArrayAndPushElements([
+            'paymentTerms' => $paymentTerms,
             'contractNumber' => $contractNumber,
             'proformaStatusPayment' => $proformaStatusPayment,
-            'date' => $date
         ]);
 
         $invoice->saveInfoWithJson($all);
@@ -286,7 +312,7 @@ class Order extends Model
         $contractNumber = $contractInfo->name;
         $date = Carbon::now()->format('Y/m/d');
 
-        $all = $this->sortArrayAndPushElement([
+        $all = $this->sortArrayAndPushElements([
             'supply' => $supply,
             'statusPayment' => $statusPayment,
             'contractNumber' => $contractNumber,
@@ -305,13 +331,14 @@ class Order extends Model
         $contract->order_id = $this->id;
         $contract->save();
 
+        $this->contract;
         $contract = $this->contract;
 
         $date = Carbon::now()->format('Y/m/d');
-        $contractName = $date . '-' . $contract->id;
+        $contractName = $date . '-' .  $contract->id;
         $supply = Supply::fob();
 
-        $all = $this->sortArrayAndPushElement([
+        $all = $this->sortArrayAndPushElements([
             'name' => $contractName,
             'supply' => $supply,
             'date' => $date,
@@ -397,14 +424,47 @@ class Order extends Model
         return true;
     }
 
-    public function sortArrayAndPushElement(array $array,array $element = null): array
+    public function sortArrayAndPushElements(array $array, array $element = null): array
     {
         krsort($array);
-        if (!is_null($element)){
-            foreach ($element as $key => $value){
+        if (!is_null($element)) {
+            foreach ($element as $key => $value) {
                 $array[$key] = $value;
             }
         }
         return $array;
+    }
+
+    public function checkActualIfNotThenChangeContract(array $contractData): array
+    {
+        $actual = array_diff_key($this->contractActualRows, $contractData);
+        if (count($actual) > 0) {
+            foreach ($actual as $key => $value) {
+                $contractData = [$key => $value] + $contractData;
+            }
+        }
+        return $contractData;
+    }
+
+    public function checkActualIfNotThenChangeProforma(array $proformaData): array
+    {
+        $actual = array_diff_key($this->proformaActualRows, $proformaData);
+        if (count($actual) > 0) {
+            foreach ($actual as $key => $value) {
+                $proformaData = [$key => $value] + $proformaData;
+            }
+        }
+        return $proformaData;
+    }
+
+    public function checkActualIfNotThenChangeInvoice(array $invoiceData): array
+    {
+        $actual = array_diff_key($this->invoiceActualRows, $invoiceData);
+        if (count($actual) > 0) {
+            foreach ($actual as $key => $value) {
+                $invoiceData = [$key => $value] + $invoiceData;
+            }
+        }
+        return $invoiceData;
     }
 }

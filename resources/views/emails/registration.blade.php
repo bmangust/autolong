@@ -81,7 +81,7 @@
     </tr>
     <tr>
         <td style="padding: 0 30px 32px;">
-            <a href="{{ asset('') }}" style="color: #3a405f; text-decoration: none;">http://autolong.ru</a>
+            <a href="{{ asset('') }}" style="color: #3a405f; text-decoration: none;">{{ asset('') }}</a>
         </td>
     </tr>
 </table>

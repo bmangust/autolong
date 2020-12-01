@@ -102,7 +102,7 @@
                     @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
                         <table height="80" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: center;">
                             <tr>
-                                <td height="40" style="border-bottom: 1px solid #000;">{{ $item->product->weight_netto }}</td>
+                                <td height="40" style="border-bottom: 1px solid #000;">{{ !is_null($item->product->weight_netto) ? $item->product->weight_netto : '0'}}</td>
                             </tr>
                         </table>
                     @endforeach
@@ -111,7 +111,7 @@
                     @foreach(json_decode($item->pcs_ctn_ctns, true)['ctns'] as $ctn)
                         <table height="80" cellpadding="0" cellspacing="0" style="width: 100%; border-collapse: collapse; text-align: center;">
                             <tr>
-                                <td height="40" style="border-bottom: 1px solid #000;">{{ $item->product->weight_brutto }}</td>
+                                <td height="40" style="border-bottom: 1px solid #000;">{{ !is_null($item->product->weight_brutto) ? $item->product->weight_brutto : '0' }}</td>
                             </tr>
                         </table>
                     @endforeach
