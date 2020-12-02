@@ -34,7 +34,8 @@ class ProviderController extends Controller
      */
     public function index()
     {
-        return response()->json(ProviderWithRelationshipsResource::collection(Provider::withoutTrashed()->orderBy('name', 'asc')->get(), 200));
+        $providers = Provider::getCachedProvidersOrSetProvidersToCache();
+        return response()->json($providers, 200);
     }
 
     /**

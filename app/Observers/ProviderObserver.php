@@ -29,6 +29,7 @@ class ProviderObserver
                 'model_name' => get_class($provider)
             ]);
         }
+        Provider::setProvidersCache();
     }
 
     /**
@@ -52,6 +53,7 @@ class ProviderObserver
                 'after' => json_encode(array_diff_assoc($after, $before)),
             ]);
         }
+        Provider::setProvidersCache();
     }
 
     public function deleting(Provider $provider)
@@ -79,6 +81,7 @@ class ProviderObserver
                 'model_name' => get_class($provider)
             ]);
         }
+        Provider::setProvidersCache();
     }
 
     /**

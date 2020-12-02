@@ -102,39 +102,35 @@ class Product extends Model
         return $orders;
     }
 
-    public static function getCachedProductsOrSetProductsCache($published)
+    public static function getCacheKey($published): string
     {
         if ($published == 1) {
             $cacheKey = self::PRODUCTS_PUBLISHED_CACHE_KEY;
-        } elseif($published == 0) {
+        } elseif ($published == 0) {
             $cacheKey = self::PRODUCTS_UNPUBLISHED_CACHE_KEY;
         } else {
-            throw new HttpException(404,  'Передан неверный параметр');
+            throw new HttpException(404, 'Передан неверный параметр');
         }
+        return $cacheKey;
+    }
 
+    public static function getCachedProductsOrSetProductsToCache($published)
+    {
+        $cacheKey = self::getCacheKey($published);
         $cachedProducts = Redis::get($cacheKey);
 
         if ($cachedProducts) {
             $products = json_decode($cachedProducts);
         } else {
-            $products = ProductWithRelationshipsResource::collection(self::withoutTrashed()->wherePublished($published)->orderByDesc('created_at')->get());
-            Redis::set($cacheKey, json_encode($products));
+            $products = self::setProductsCache($published, $cacheKey);
         }
-
         return $products;
     }
 
-    public static function setProductsCache($published): bool
+    public static function setProductsCache($published, string $cacheKey)
     {
-        if ($published == 1) {
-            $cacheKey = self::PRODUCTS_PUBLISHED_CACHE_KEY;
-        } elseif($published == 0) {
-            $cacheKey = self::PRODUCTS_UNPUBLISHED_CACHE_KEY;
-        } else {
-            throw new HttpException(404,  'Передан неверный параметр');
-        }
         $products = ProductWithRelationshipsResource::collection(self::withoutTrashed()->wherePublished($published)->orderByDesc('created_at')->get());
         Redis::set($cacheKey, json_encode($products));
-        return true;
+        return $products;
     }
 }

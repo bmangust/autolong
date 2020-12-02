@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Http\Resources\ProviderWithRelationshipsResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Redis;
 
 class Provider extends Model
 {
@@ -11,6 +13,7 @@ class Provider extends Model
     use SoftDeletes;
 
     public const SANDBOX_DIRECTORY = '/providers/';
+    public const PROVIDERS_CACHE_KEY = 'providers';
 
     protected $fillable = [
         'name',
@@ -66,5 +69,25 @@ class Provider extends Model
             $catalog = Catalog::findOrFail($id);
             $this->catalogs()->save($catalog);
         }
+    }
+
+    public static function getCachedProvidersOrSetProvidersToCache()
+    {
+        $cacheKey = self::PROVIDERS_CACHE_KEY;
+        $cachedProviders = Redis::get($cacheKey);
+
+        if ($cachedProviders) {
+            $providers = json_decode($cachedProviders);
+        } else {
+            $providers = self::setProvidersCache();
+        }
+        return $providers;
+    }
+
+    public static function setProvidersCache(string $cacheKey = self::PROVIDERS_CACHE_KEY)
+    {
+        $providers = ProviderWithRelationshipsResource::collection(self::withoutTrashed()->orderBy('name', 'asc')->get());
+        Redis::set($cacheKey, json_encode($providers));
+        return $providers;
     }
 }

@@ -29,7 +29,9 @@ class ProductObserver
                 'model_name' => get_class($product)
             ]);
         }
-        Product::setProductsCache($product->published);
+        $published = $product->published;
+        $cacheKey = Product::getCacheKey($published);
+        Product::setProductsCache($published, $cacheKey);
     }
 
     /**
@@ -53,7 +55,9 @@ class ProductObserver
                 'after' => json_encode(array_diff_assoc($after, $before)),
             ]);
         }
-        Product::setProductsCache($product->published);
+        $published = $product->published;
+        $cacheKey = Product::getCacheKey($published);
+        Product::setProductsCache($published, $cacheKey);
     }
 
     public function deleting(Product $product)
@@ -81,7 +85,9 @@ class ProductObserver
                 'model_name' => get_class($product)
             ]);
         }
-        Product::setProductsCache($product->published);
+        $published = $product->published;
+        $cacheKey = Product::getCacheKey($published);
+        Product::setProductsCache($published, $cacheKey);
     }
 
     /**

@@ -42,7 +42,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::getCachedProductsOrSetProductsCache(1);
+        $products = Product::getCachedProductsOrSetProductsToCache(1);
         return response()->json($products, 200);
     }
 
@@ -163,7 +163,7 @@ class ProductController extends Controller
 
     public function indexUnpublished()
     {
-        $products = Product::getCachedProductsOrSetProductsCache(0);
+        $products = Product::getCachedProductsOrSetProductsToCache(0);
         return response()->json($products, 200);
     }
 
