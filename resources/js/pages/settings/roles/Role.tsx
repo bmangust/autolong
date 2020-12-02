@@ -50,34 +50,33 @@ const EditUser: React.FC = () => {
                         : '-'}
                 </p>
             </div>
-            {'accesses' in role && Object.entries(role.accesses)
-                .map(([key, value]) => {
-                    if (key === 'id' ||
-                        key === 'createdAt' ||
-                        key === 'updatedAt') {
-                        return null
-                    } else {
-                        return <>
-                            <div className='col-lg-5 infoBlockHeaders'
-                                 key={key}>
-                                <p className='pl-3'>
-                                    {key in roleTranslate
-                                        ? roleTranslate[key] + ':'
-                                        : key
-                                    }
-                                </p>
-                            </div>
-                            <div className='col-lg-7 infoBlockText'>
-                                <p>
-                                    {value == 1
-                                        ? 'разрешено'
-                                        : 'не разрешено'}
-                                </p>
-                            </div>
-                        </>
-                    }
-                })}
         </div>
+        {'accesses' in role && Object.entries(role.accesses)
+            .map(([key, value]) => {
+                if (key === 'id' ||
+                    key === 'createdAt' ||
+                    key === 'updatedAt') {
+                    return null
+                } else {
+                    return <div className='row' key={key}>
+                        <div className='col-lg-5 infoBlockHeaders'>
+                            <p className='pl-3'>
+                                {key in roleTranslate
+                                    ? roleTranslate[key] + ':'
+                                    : key
+                                }
+                            </p>
+                        </div>
+                        <div className='col-lg-7 infoBlockText'>
+                            <p>
+                                {value == 1
+                                    ? 'разрешено'
+                                    : 'не разрешено'}
+                            </p>
+                        </div>
+                    </div>
+                }
+            })}
         <NavLink to={`/settings/role/edit/${id}`}
                  className='editButton'>
             Редактировать информацию
