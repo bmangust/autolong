@@ -94,7 +94,7 @@ export const updateUserById = (data, id) => async dispatch => {
             } else {
                 toast.error(error.message)
                 dispatch({
-                    type: CREATE_USER_ERROR,
+                    type: UPDATE_USER_ERROR,
                     payload: error.response
                 })
             }
