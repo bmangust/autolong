@@ -13,7 +13,7 @@ import Select from 'react-select'
 import {IRole} from '../Roles/IRoles'
 
 // Actions
-import {updateUserById} from '../../store/actions/users'
+import {deleteUserById, updateUserById} from '../../store/actions/users'
 
 // App
 import Form from '../UI/Form/Form'
@@ -22,6 +22,7 @@ import {IUser} from './IUsers'
 
 // Styles
 import classes from './EditUserForm.module.css'
+import SvgDelete from '../UI/iconComponents/Delete'
 
 const EditUserForm: React.FC<{
     roles: IRole[], user: IUser
@@ -60,6 +61,10 @@ const EditUserForm: React.FC<{
 
     const goBackHandler = () => {
         dispatch(push('/settings/users'))
+    }
+
+    const deleteUserHandler = () => {
+        dispatch(deleteUserById(user.id))
     }
 
     const roleSelect = <Select
@@ -167,6 +172,15 @@ const EditUserForm: React.FC<{
                         type='submit'
                         className='btn btn-success'>
                         Сохранить
+                    </button>
+                </div>
+                <div className="col-6 mt-auto mb-auto">
+                    <button
+                        className={classes.delete + ' btn-link btn'}
+                        onClick={deleteUserHandler}
+                        type='button'>
+                        <SvgDelete/>
+                        Удалить профиль из системы
                     </button>
                 </div>
             </div>

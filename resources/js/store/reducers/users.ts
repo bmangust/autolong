@@ -10,7 +10,8 @@ import {
     FETCH_USERS_SUCCESS,
     UPDATE_USER_ERROR,
     UPDATE_USER_START,
-    UPDATE_USER_SUCCESS
+    UPDATE_USER_SUCCESS,
+    DELETE_USER_BY_ID
 } from '../actions/actionTypes'
 import {IUsersActionTypes, IUsersState} from '../../components/Users/IUsers'
 
@@ -72,6 +73,11 @@ export default function usersReducer(
         case UPDATE_USER_ERROR:
             return {
                 ...state, loading: false, error: action.payload
+            }
+        case DELETE_USER_BY_ID:
+            return {
+                ...state,
+                users: state.users.filter(({id}) => id !== action.payload)
             }
         default:
             return state

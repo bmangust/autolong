@@ -10,7 +10,7 @@ import {
     FETCH_USERS_SUCCESS,
     UPDATE_USER_ERROR,
     UPDATE_USER_START,
-    UPDATE_USER_SUCCESS
+    UPDATE_USER_SUCCESS, DELETE_USER_BY_ID
 } from '../../store/actions/actionTypes'
 import {IRole} from '../Roles/IRoles'
 
@@ -106,8 +106,14 @@ interface IFetchUserError {
     loading: boolean
 }
 
+interface IDeleteUser {
+    payload: number
+    type: typeof DELETE_USER_BY_ID
+}
+
 export type IUsersActionTypes =
     IFetchUsersStart | IFetchUsersSuccess | IFetchUsersError |
     ICreateUserStart | ICreateUserSuccess | ICreateUserError |
     IUpdateUserStart | IUpdateUserSuccess | IUpdateUserError |
-    IFetchUserStart | IFetchUserSuccess | IFetchUserError
+    IFetchUserStart | IFetchUserSuccess | IFetchUserError |
+    IDeleteUser

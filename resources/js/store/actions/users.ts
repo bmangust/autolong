@@ -11,7 +11,8 @@ import {
     FETCH_USER_BY_ID_SUCCESS,
     UPDATE_USER_START,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_ERROR
+    UPDATE_USER_ERROR,
+    DELETE_USER_BY_ID
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
@@ -120,6 +121,22 @@ export const fetchUserById = (id) => async dispatch => {
                 type: FETCH_USER_BY_ID_ERROR,
                 payload: error.message
             })
+            toast.error(error.message)
+        })
+}
+
+export const deleteUserById = (id) => async dispatch => {
+    const url = `/api/users/${id}`
+    axios
+        .delete(url)
+        .then((answer) => {
+            dispatch({
+                type: DELETE_USER_BY_ID,
+                payload: id
+            })
+            dispatch(push('/settings/users'))
+        })
+        .catch((error: AxiosError) => {
             toast.error(error.message)
         })
 }
