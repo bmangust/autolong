@@ -58,9 +58,11 @@ export const createUser = (data) => async dispatch => {
                 'пользователь создан'))
         })
         .catch((error: AxiosError) => {
-            if (error.response?.status === 422 ||
-                error.response?.status === 400) {
+            if (error.response?.status === 400) {
                 toast.error(error.response.data)
+            }
+            if (error.response?.status === 422) {
+                toast.error(error.response.data.errors?.email[0])
             } else {
                 toast.error(error.message)
                 dispatch({
