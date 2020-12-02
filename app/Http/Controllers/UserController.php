@@ -19,7 +19,8 @@ class UserController extends Controller
         $messages = [
             'required' => 'Поле :attribute обязательно для заполнения.',
             'max' => 'Поле :attribute должно содержать не более :max символов',
-            'min' => 'Поле :attribute должно содержать не менее :min символов'
+            'min' => 'Поле :attribute должно содержать не менее :min символов',
+            'unique' => 'Данный :attribute уже занят'
         ];
 
         $names = [
@@ -36,6 +37,40 @@ class UserController extends Controller
             'roleId' => 'required|integer',
             'lastname' => 'required|string',
             'name' => 'required|string',
+        ], $messages, $names);
+    }
+
+    protected function userUpdateValidator(array $data, User $user)
+    {
+        $messages = [
+            'required' => 'Поле :attribute обязательно для заполнения.',
+            'max' => 'Поле :attribute должно содержать не более :max символов',
+            'min' => 'Поле :attribute должно содержать не менее :min символов',
+            'unique' => 'Данный :attribute уже занят'
+        ];
+
+        $names = [
+            'name' => 'имя',
+            'email' => 'e-mail',
+            'roleId' => 'роль',
+            'lastname' => 'фамилия',
+            'password' => 'пароль',
+        ];
+
+        if (empty($data['password'])) {
+            return Validator::make($data, [
+                'email' => 'required|email|unique:users,email,' . $user->id,
+                'roleId' => 'required|integer',
+                'lastname' => 'required|string',
+                'name' => 'required|string'
+            ], $messages, $names);
+        }
+        return Validator::make($data, [
+            'email' => 'required|email|unique:users,email,' . $user->id,
+            'roleId' => 'required|integer',
+            'password' => 'required|min:8',
+            'lastname' => 'required|string',
+            'name' => 'required|string'
         ], $messages, $names);
     }
     /**
@@ -100,30 +135,40 @@ class UserController extends Controller
      */
     public function update(Request $request, User $user)
     {
-        $request->validate([
-            'email' => 'required|email|unique:users,email,' . $user->id,
-            'password' => 'required|min:8',
-            'roleId' => 'required|integer',
-            'lastname' => 'required|string',
-            'name' => 'required|string'
-        ]);
+        $this->userUpdateValidator($request->all(), $user)->validate();
         $name = $request->input('name');
         $lastname = $request->input('lastname');
         $patronymic = $request->input('patronymic');
         $phone = $request->input('phone');
         $email = $request->input('email');
-        $password = Hash::make($request->input('password'));
         $role = $request->input('roleId');
-        $user->update([
-            'name' => $name,
-            'email' => $email,
-            'password' => $password,
-            'role_id' => $role,
-            'lastname' => $lastname,
-            'patronymic' => $patronymic,
-            'phone' => $phone
-        ]);
-        $user->notify(new RegistrationNotification($email, $request->input('password'), true));
+        $oldEmail = $user->email;
+
+        if (!empty($request->input('password'))) {
+            $password = Hash::make($request->input('password'));
+            $user->update([
+                'name' => $name,
+                'email' => $email,
+                'password' => $password,
+                'role_id' => $role,
+                'lastname' => $lastname,
+                'patronymic' => $patronymic,
+                'phone' => $phone
+            ]);
+            $user->notify(new RegistrationNotification($email, $request->input('password'), true));
+        } else {
+            $user->update([
+                'name' => $name,
+                'email' => $email,
+                'role_id' => $role,
+                'lastname' => $lastname,
+                'patronymic' => $patronymic,
+                'phone' => $phone
+            ]);
+            if ($email != $oldEmail) {
+                $user->notify(new RegistrationNotification($email, '', true));
+            }
+        }
         return response()->json(new UserWithRelationshipsResource($user), 200);
     }
 

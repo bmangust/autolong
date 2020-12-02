@@ -42,7 +42,8 @@
         <tr>
 
             <th style="padding: 24px 30px 20px 30px;">
-                <h1 style="margin: 0; font-size: 18px; font-weight: 600; text-align: left; color: #3a405f;">Обновление регистрационных данных.</h1>
+                <h1 style="margin: 0; font-size: 18px; font-weight: 600; text-align: left; color: #3a405f;">Обновление
+                    регистрационных данных.</h1>
             </th>
         </tr>
         <tr>
@@ -69,11 +70,13 @@
             Ваш E-mail: <span style="color: #f44a0e;">{{ $email }}</span>
         </td>
     </tr>
-    <tr>
-        <td style="padding: 0 30px 15px; color: #949599;">
-            Ваш пароль: <span style="color: #f44a0e;">{{ $password }}</span>
-        </td>
-    </tr>
+    @if(!empty($password))
+        <tr>
+            <td style="padding: 0 30px 15px; color: #949599;">
+                Ваш пароль: <span style="color: #f44a0e;">{{ $password }}</span>
+            </td>
+        </tr>
+    @endif
     <tr>
         <td style="padding: 0 30px 10px; color: #949599;">
             Чтобы войти в систему, пройдите по ссылке:
