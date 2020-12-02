@@ -165,12 +165,12 @@
     <table style="border-collapse: collapse; margin: 20px auto 0;">
         <tr>
             <td>
-                {{ $contract->name }}
+                {{ is_null($contract) ? $contract->name : '-' }}
             </td>
         </tr>
         <tr>
             <td>
-                Terms of delivery: {{ $contract->supply }}
+                Terms of delivery: {{ is_null($contract) ? $contract->supply : '-' }}
             </td>
         </tr>
     </table>

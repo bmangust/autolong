@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\ContractDocument;
 use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
@@ -272,19 +273,7 @@ class OrderController extends Controller
             $providerSignature = null;
         }
 
-        $all = $order->sortArrayAndPushElements($request->except([
-            'importerStamp',
-            'providerStamp',
-            'importerSignature',
-            'providerSignature',
-            'requisites'
-        ]), [
-            'requisites' => $request->input('requisites'),
-            'importerStamp' => $importerStamp,
-            'providerStamp' => $providerStamp,
-            'importerSignature' => $importerSignature,
-            'providerSignature' => $providerSignature
-        ]);
+        $all = $request->all();
 
         if (!$order->contract()->count() || is_null($order->contract->info)) {
             $order->generateContract();
@@ -297,8 +286,14 @@ class OrderController extends Controller
         }
 
         $all = $order->checkActualIfNotThenChangeContract($all);
-        $order->contract->saveInfoWithJson($all);
-        $contract = (array)$order->contract->getInfo();
+        if (!is_null($order->contract)) {
+            $order->contract->saveInfoWithJson($all);
+            $contract = (array)$order->contract->getInfo();
+        } else {
+            $contract = ContractDocument::whereOrderId($order->id)->first();
+            $contract->saveInfoWithJson($all);
+        }
+
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
@@ -336,7 +331,7 @@ class OrderController extends Controller
             $order->generateInvoice();
         }
 
-        $all = $order->checkActualIfNotThenChangeProforma($order->sortArrayAndPushElements($request->all()));
+        $all = $order->checkActualIfNotThenChangeProforma($request->all());
 
         $order->proforma->saveInfoWithJson($all);
         $proforma = $order->proforma->getInfo();
@@ -387,8 +382,8 @@ class OrderController extends Controller
         if (!$order->invoice()->count() || is_null($order->invoice->info)) {
             $order->generateInvoice();
         }
-        ;
-        $all = $order->checkActualIfNotThenChangeInvoice($order->sortArrayAndPushElements($request->all()));
+
+        $all = $order->checkActualIfNotThenChangeInvoice($request->all());
 
         $order->invoice->saveInfoWithJson($all);
         $invoice = (array)$order->invoice->getInfo();
@@ -397,6 +392,7 @@ class OrderController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.invoice', [
             'order' => $order,
+
             'importer' => $importer,
             'provider' => $provider,
             'orderItems' => $order->orderItems,
