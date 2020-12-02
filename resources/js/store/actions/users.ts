@@ -57,11 +57,16 @@ export const createUser = (data) => async dispatch => {
                 'пользователь создан'))
         })
         .catch((error: AxiosError) => {
-            dispatch({
-                type: CREATE_USER_ERROR,
-                payload: error.message
-            })
-            toast.error(error.message)
+            if (error.response?.status === 422 ||
+                error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+                dispatch({
+                    type: CREATE_USER_ERROR,
+                    payload: error.response
+                })
+            }
         })
 }
 
@@ -83,11 +88,16 @@ export const updateUserById = (data, id) => async dispatch => {
                 'пользователь обновлен'))
         })
         .catch((error: AxiosError) => {
-            dispatch({
-                type: UPDATE_USER_ERROR,
-                payload: error.message
-            })
-            toast.error(error.message)
+            if (error.response?.status === 422 ||
+                error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+                dispatch({
+                    type: CREATE_USER_ERROR,
+                    payload: error.response
+                })
+            }
         })
 }
 

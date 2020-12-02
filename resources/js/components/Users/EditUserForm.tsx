@@ -21,7 +21,7 @@ import Input from '../UI/Inputs/Input/Input'
 import {IUser} from './IUsers'
 
 // Styles
-import classes from './EditUserForm.module.css';
+import classes from './EditUserForm.module.css'
 
 const EditUserForm: React.FC<{
     roles: IRole[], user: IUser
@@ -40,11 +40,7 @@ const EditUserForm: React.FC<{
         name: yup.string().required('Поле обязательно к заполнению'),
         lastname: yup.string().required('Поле обязательно к заполнению'),
         roleId: yup.object().required(),
-        password: yup.string()
-            .min(8, 'Минимальная длина пароль 8 символов')
-            .required('Поле обязательно к заполнению'),
         email: yup.string().email('Укажите корректный email')
-            .required('Поле обязательно к заполнению')
     })
 
     const {register, control, handleSubmit, errors} =
@@ -155,7 +151,6 @@ const EditUserForm: React.FC<{
                     error={!!errors.password}
                     helperText={errors?.password?.message}
                     ref={register}
-                    required={true}
                     label='Пароль'
                     name='password'/>
             </div>
