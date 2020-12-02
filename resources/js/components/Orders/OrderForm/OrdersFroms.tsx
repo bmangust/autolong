@@ -1,5 +1,5 @@
 // React
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -16,6 +16,10 @@ const OrdersForms: React.FC<{
 }> = ({items, providers}) => {
     const [itemsState, setItemsState] = useState(() => items)
 
+    useEffect(() => {
+        setItemsState(items)
+    }, [items])
+
     const onHideHandler = (number) => {
         setItemsState((oldState) =>
             Object.keys(oldState)
@@ -26,9 +30,6 @@ const OrdersForms: React.FC<{
                 }, {})
         )
     }
-
-    console.log(items)
-    console.log('itemsState', itemsState)
 
     return <TransitionGroup>
         {Object.entries(itemsState).map(([key, value]) => (
