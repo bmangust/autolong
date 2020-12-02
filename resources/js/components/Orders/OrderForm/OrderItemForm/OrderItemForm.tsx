@@ -93,7 +93,7 @@ const OrderItemForm: React.FC<{
                     <span
                         className='ml-1 text-main font-weight-bold'>
                         {providers.find(({id}) =>
-                            id === providerId).name}
+                            id === providerId)?.name}
                         </span>
                 </h2>
                 <OrderItems
