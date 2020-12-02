@@ -32,7 +32,8 @@ class NewProducts extends Mailable implements ShouldQueue
      */
     public function build()
     {
-        return $this->subject('Новинки в системе Autolong от ' . Carbon::now()->format('d.m'))
+        return $this->from(env('MAIL_FROM_ADDRESS'))
+                    ->subject('Новинки в системе Autolong от ' . Carbon::now()->format('d.m'))
                     ->view('emails.newproducts')
                     ->with([
                         'newProducts' => $this->newProducts,
