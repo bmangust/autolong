@@ -240,7 +240,7 @@ export const createOrderInvoice =
                 .then(answer => {
                     const blob = new Blob([answer.data],
                         {type: 'application/pdf;charset=utf-8'})
-                    if (type === 'packinglist') {
+                    if (type === 'packinglist' && containerId) {
                         dispatch(fetchContainerById(containerId, false))
                     }
                     toast.success(`${type} сгенерирован`)
