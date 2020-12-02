@@ -2,8 +2,10 @@
 
 namespace App;
 
+use App\Http\Resources\ProductWithRelationshipsResource;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -15,6 +17,8 @@ class Product extends Model
 
     public const IMAGE_DIRECTORY = '/storage/product-images';
     public const SANDBOX_DIRECTORY = '/products/';
+    public const PRODUCTS_PUBLISHED_CACHE_KEY = 'publishedProductsAllWIthRelationships';
+    public const PRODUCTS_UNPUBLISHED_CACHE_KEY = 'unpublishedProductsAllWIthRelationships';
 
     public function setAboutRuAttribute($value)
     {
@@ -96,5 +100,41 @@ class Product extends Model
             $orders[] = $item->order;
         }
         return $orders;
+    }
+
+    public static function getCachedProductsOrSetProductsCache($published)
+    {
+        if ($published == 1) {
+            $cacheKey = self::PRODUCTS_PUBLISHED_CACHE_KEY;
+        } elseif($published == 0) {
+            $cacheKey = self::PRODUCTS_UNPUBLISHED_CACHE_KEY;
+        } else {
+            throw new HttpException(404,  'Передан неверный параметр');
+        }
+
+        $cachedProducts = Redis::get($cacheKey);
+
+        if ($cachedProducts) {
+            $products = json_decode($cachedProducts);
+        } else {
+            $products = ProductWithRelationshipsResource::collection(self::withoutTrashed()->wherePublished($published)->orderByDesc('created_at')->get());
+            Redis::set($cacheKey, json_encode($products));
+        }
+
+        return $products;
+    }
+
+    public static function setProductsCache($published): bool
+    {
+        if ($published == 1) {
+            $cacheKey = self::PRODUCTS_PUBLISHED_CACHE_KEY;
+        } elseif($published == 0) {
+            $cacheKey = self::PRODUCTS_UNPUBLISHED_CACHE_KEY;
+        } else {
+            throw new HttpException(404,  'Передан неверный параметр');
+        }
+        $products = ProductWithRelationshipsResource::collection(self::withoutTrashed()->wherePublished($published)->orderByDesc('created_at')->get());
+        Redis::set($cacheKey, json_encode($products));
+        return true;
     }
 }

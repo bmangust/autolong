@@ -29,6 +29,7 @@ class ProductObserver
                 'model_name' => get_class($product)
             ]);
         }
+        Product::setProductsCache($product->published);
     }
 
     /**
@@ -52,6 +53,7 @@ class ProductObserver
                 'after' => json_encode(array_diff_assoc($after, $before)),
             ]);
         }
+        Product::setProductsCache($product->published);
     }
 
     public function deleting(Product $product)
@@ -79,6 +81,7 @@ class ProductObserver
                 'model_name' => get_class($product)
             ]);
         }
+        Product::setProductsCache($product->published);
     }
 
     /**

@@ -4,10 +4,12 @@ namespace App\Http\Controllers;
 
 use App\AutolongRuProduct;
 use App\ExchangeRate;
+use App\Http\Resources\ProductResource;
 use App\Log;
 use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Product;
+use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
 
 class ProductController extends Controller
@@ -40,9 +42,8 @@ class ProductController extends Controller
      */
     public function index()
     {
-        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
-            ->wherePublished(1)
-            ->orderBy('updated_at', 'desc')->get(), 200));
+        $products = Product::getCachedProductsOrSetProductsCache(1);
+        return response()->json($products, 200);
     }
 
     /**
@@ -162,9 +163,8 @@ class ProductController extends Controller
 
     public function indexUnpublished()
     {
-        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
-            ->wherePublished(0)
-            ->orderBy('updated_at', 'desc')->get(), 200));
+        $products = Product::getCachedProductsOrSetProductsCache(0);
+        return response()->json($products, 200);
     }
 
     public function publish(Product $product)
