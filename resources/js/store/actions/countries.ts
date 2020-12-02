@@ -51,7 +51,6 @@ export const createCountry = (data) => async dispatch => {
             toast.success(createNotyMsg(answer.data.name, 'страна добавлена'))
         })
         .catch((error: AxiosError) => {
-            toast.error(error.message)
             if (error.response?.status === 400) {
                 toast.error(error.response.data)
             } else {
@@ -80,7 +79,6 @@ export const deleteCountryById = (id) => async dispatch => {
             toast.success('Страна удалена')
         })
         .catch((error: AxiosError) => {
-            toast.error(error.message)
             if (error.response?.status === 400) {
                 toast.error(error.response.data)
             } else {

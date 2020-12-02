@@ -11,7 +11,8 @@ import {
     FETCH_USER_BY_ID_SUCCESS,
     UPDATE_USER_START,
     UPDATE_USER_SUCCESS,
-    UPDATE_USER_ERROR
+    UPDATE_USER_ERROR,
+    DELETE_USER_BY_ID
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
@@ -57,11 +58,16 @@ export const createUser = (data) => async dispatch => {
                 'пользователь создан'))
         })
         .catch((error: AxiosError) => {
-            dispatch({
-                type: CREATE_USER_ERROR,
-                payload: error.message
-            })
-            toast.error(error.message)
+            if (error.response?.status === 422 ||
+                error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+                dispatch({
+                    type: CREATE_USER_ERROR,
+                    payload: error.response
+                })
+            }
         })
 }
 
@@ -83,11 +89,16 @@ export const updateUserById = (data, id) => async dispatch => {
                 'пользователь обновлен'))
         })
         .catch((error: AxiosError) => {
-            dispatch({
-                type: UPDATE_USER_ERROR,
-                payload: error.message
-            })
-            toast.error(error.message)
+            if (error.response?.status === 422 ||
+                error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+                dispatch({
+                    type: UPDATE_USER_ERROR,
+                    payload: error.response
+                })
+            }
         })
 }
 
@@ -110,6 +121,22 @@ export const fetchUserById = (id) => async dispatch => {
                 type: FETCH_USER_BY_ID_ERROR,
                 payload: error.message
             })
+            toast.error(error.message)
+        })
+}
+
+export const deleteUserById = (id) => async dispatch => {
+    const url = `/api/users/${id}`
+    axios
+        .delete(url)
+        .then((answer) => {
+            dispatch({
+                type: DELETE_USER_BY_ID,
+                payload: id
+            })
+            dispatch(push('/settings/users'))
+        })
+        .catch((error: AxiosError) => {
             toast.error(error.message)
         })
 }

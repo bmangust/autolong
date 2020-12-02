@@ -1,10 +1,20 @@
 .btns {
     display: flex;
-    margin-top: 10px;
 }
 
 .btns button:first-child {
     margin: 0 15px 0 0;
+}
+
+.delete {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #BDBDBD !important;
+}
+
+.delete svg {
+    margin-right: 10px;
 }
 
 @media (max-width: 575px) {
