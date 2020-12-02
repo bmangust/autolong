@@ -5,6 +5,8 @@ namespace App\Providers;
 use App\Catalog;
 use App\Container;
 use App\Observers\SandboxFileObserver;
+use App\Observers\UserObserver;
+use App\Observers\UserRoleObserver;
 use App\SandboxFile;
 use App\Importer;
 use App\Observers\CatalogObserver;
@@ -16,6 +18,8 @@ use App\Observers\ProviderObserver;
 use App\Order;
 use App\Product;
 use App\Provider;
+use App\User;
+use App\UserRole;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -44,5 +48,7 @@ class AppServiceProvider extends ServiceProvider
         Catalog::observe(CatalogObserver::class);
         Provider::observe(ProviderObserver::class);
         Order::observe(OrderObserver::class);
+        User::observe(UserObserver::class);
+        UserRole::observe(UserRoleObserver::class);
     }
 }

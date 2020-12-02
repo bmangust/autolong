@@ -40,6 +40,7 @@ class UserObserver
             $log = new Log();
             $before = $user->withoutRelations()->getOriginal();
             $after = $user->withoutRelations()->toArray();
+            unset($before['password'], $after['password'], $before['remember_token'], $after['remember_token']);
             $log->create([
                 'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
