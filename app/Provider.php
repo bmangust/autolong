@@ -14,7 +14,7 @@ class Provider extends Model
 
     public const SANDBOX_DIRECTORY = '/providers/';
     public const PROVIDERS_CACHE_KEY = 'providers';
-    public const PROVIDERS_CACHE_TTL = 65 * 60;
+    public const PROVIDERS_CACHE_TTL = 60 * 60;
 
     protected $fillable = [
         'name',

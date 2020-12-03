@@ -19,7 +19,7 @@ class Product extends Model
     public const SANDBOX_DIRECTORY = '/products/';
     public const PRODUCTS_PUBLISHED_CACHE_KEY = 'publishedProductsAllWIthRelationships';
     public const PRODUCTS_UNPUBLISHED_CACHE_KEY = 'unpublishedProductsAllWIthRelationships';
-    public const PRODUCTS_CACHE_TTL = 65 * 60;
+    public const PRODUCTS_CACHE_TTL = 60 * 60;
 
     public function setAboutRuAttribute($value)
     {
