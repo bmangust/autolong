@@ -14,6 +14,7 @@ class Provider extends Model
 
     public const SANDBOX_DIRECTORY = '/providers/';
     public const PROVIDERS_CACHE_KEY = 'providers';
+    public const PROVIDERS_CACHE_TTL = 65 * 60;
 
     protected $fillable = [
         'name',
@@ -87,7 +88,7 @@ class Provider extends Model
     public static function setProvidersCache(string $cacheKey = self::PROVIDERS_CACHE_KEY)
     {
         $providers = ProviderWithRelationshipsResource::collection(self::withoutTrashed()->orderBy('name', 'asc')->get());
-        Redis::set($cacheKey, json_encode($providers));
+        Redis::set($cacheKey, json_encode($providers), 'EX', self::PROVIDERS_CACHE_TTL);
         return $providers;
     }
 }

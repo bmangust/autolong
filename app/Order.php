@@ -340,7 +340,7 @@ class Order extends Model
         $contract = ContractDocument::whereOrderId($orderId)->first();
 
         $date = Carbon::now()->format('Y/m/d');
-        $contractName = $date . '-' .  $contract->id;
+        $contractName = $date . '-' . $contract->id;
         $supply = Supply::fob();
 
         $contract->saveInfoWithJson([

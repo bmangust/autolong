@@ -19,6 +19,7 @@ class Product extends Model
     public const SANDBOX_DIRECTORY = '/products/';
     public const PRODUCTS_PUBLISHED_CACHE_KEY = 'publishedProductsAllWIthRelationships';
     public const PRODUCTS_UNPUBLISHED_CACHE_KEY = 'unpublishedProductsAllWIthRelationships';
+    public const PRODUCTS_CACHE_TTL = 65 * 60;
 
     public function setAboutRuAttribute($value)
     {
@@ -130,7 +131,7 @@ class Product extends Model
     public static function setProductsCache($published, string $cacheKey)
     {
         $products = ProductWithRelationshipsResource::collection(self::withoutTrashed()->wherePublished($published)->orderByDesc('created_at')->get());
-        Redis::set($cacheKey, json_encode($products));
+        Redis::set($cacheKey, json_encode($products), 'EX', self::PRODUCTS_CACHE_TTL);
         return $products;
     }
 }
