@@ -1,5 +1,5 @@
 // React
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -28,6 +28,7 @@ import SvgDeliveryBox from '../../UI/iconComponents/DeliveryBox'
 import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
 import {getContainerStatusName} from '../../../utils'
 import InputCheckbox from '../../UI/Inputs/InputCheckbox/InputCheckbox'
+import {SanctumContext} from '../../../Sanctum'
 
 const OrderStatuses: React.FC<{
     id: number
@@ -43,6 +44,7 @@ const OrderStatuses: React.FC<{
         const [city, setCity] = useState({})
         const [unscrupulousState, setUnscrupulousState] =
             useState<boolean>(!!unscrupulous)
+        const {user} = useContext(SanctumContext)
 
         useEffect(() => {
             dispatch(fetchCities())
@@ -139,8 +141,13 @@ const OrderStatuses: React.FC<{
                     </div>
                     <button
                         onClick={() => onSubmitHandler('orderInProduction')}
-                        className='btn btn-success'>
+                        className='btn btn-success mr-3'>
                         Подтвердить
+                    </button>
+                    <button
+                        onClick={() => onClickHandler('orderCreated')}
+                        className='btn btn-light'>
+                        Откатить
                     </button>
                 </div>
                 break
@@ -157,8 +164,13 @@ const OrderStatuses: React.FC<{
                         </p>
                         <button
                             onClick={() => onClickHandler('orderReadyForSent')}
-                            className='btn btn-success'>
+                            className='btn btn-success mr-3'>
                             Подтвердить
+                        </button>
+                        <button
+                            onClick={() => onClickHandler('orderConfirmed')}
+                            className='btn btn-light'>
+                            Откатить
                         </button>
                     </div>
                 </div>
@@ -171,6 +183,11 @@ const OrderStatuses: React.FC<{
                         <p className={classes.statusTitle}>
                             Заказ готов к отгрузке
                         </p>
+                        <button
+                            onClick={() => onClickHandler('orderInProduction')}
+                            className='btn btn-light'>
+                            Откатить
+                        </button>
                     </div>
                 </div>
                 break
@@ -238,7 +255,7 @@ const OrderStatuses: React.FC<{
         }
 
         return (
-            orderStatus
+            orderStatus && user.role.accesses.ordersUpdate == 1
                 ? <>
                     <div className={classes.status}>
                         {orderStatus}
