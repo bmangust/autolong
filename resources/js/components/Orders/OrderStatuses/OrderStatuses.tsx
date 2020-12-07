@@ -146,7 +146,7 @@ const OrderStatuses: React.FC<{
                     </button>
                     <button
                         onClick={() => onClickHandler('orderCreated')}
-                        className='btn btn-light'>
+                        className='btn btn-link color-blue'>
                         Откатить
                     </button>
                 </div>
@@ -169,7 +169,7 @@ const OrderStatuses: React.FC<{
                         </button>
                         <button
                             onClick={() => onClickHandler('orderConfirmed')}
-                            className='btn btn-light'>
+                            className='btn btn-link color-blue'>
                             Откатить
                         </button>
                     </div>
@@ -180,12 +180,12 @@ const OrderStatuses: React.FC<{
                 orderStatus = <div className={classes.statusBody}>
                     <SvgReadyForSent/>
                     <div>
-                        <p className={classes.statusTitle}>
+                        <p className={classes.statusTitle + ' mb-0 mt-2'}>
                             Заказ готов к отгрузке
                         </p>
                         <button
                             onClick={() => onClickHandler('orderInProduction')}
-                            className='btn btn-light'>
+                            className='btn btn-link color-blue'>
                             Откатить
                         </button>
                     </div>
