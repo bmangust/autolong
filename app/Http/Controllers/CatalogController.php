@@ -53,7 +53,9 @@ class CatalogController extends Controller
         $newCatalog = $catalog->create($catalog->dashesToSnakeCase($request->all()));
         Log::$write = false;
         $newCatalog->checkAndAddTag(json_decode($request->input('tags')));
-        $newCatalog->createOrUpdateFile($request->file('file'));
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $newCatalog->createOrUpdateFile($request->file('file'));
+        }
         return response()->json(new CatalogWithRelationshipsResource($newCatalog), 201);
     }
 
@@ -81,7 +83,9 @@ class CatalogController extends Controller
         $this->catalogCreateValidator($request->all())->validate();
         $catalog->update($catalog->dashesToSnakeCase($request->all()));
         $catalog->checkAndAddTag(json_decode($request->input('tags')));
-        $catalog->createOrUpdateFile($request->file('file'));
+        if ($request->hasFile('file') && $request->file('file')->isValid()) {
+            $catalog->createOrUpdateFile($request->file('file'));
+        }
         return response()->json(new CatalogWithRelationshipsResource($catalog), 200);
     }
 
@@ -98,5 +102,16 @@ class CatalogController extends Controller
         Log::$write = true;
         $catalog->delete();
         return response()->json([], 204);
+    }
+
+    public function addFile(Request $request, Catalog $catalog)
+    {
+        $request->validate([
+            'file' => 'required|mimes:pdf,xlsx,zip'
+        ]);
+        if ($request->file('file')->isValid()) {
+            $catalog->createOrUpdateFile($request->file('file'));
+        }
+        return response()->json($catalog->file, 200);
     }
 }

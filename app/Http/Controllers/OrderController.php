@@ -58,7 +58,9 @@ class OrderController extends Controller
         $order = new Order();
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
-        $order->cargo = $request->input('cargo');
+        if ($request->has('cargo')){
+            $order->cargo = $request->input('cargo');
+        }
         $order->status = array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0];
         $order->status_payment = array_keys(get_object_vars(Status::getOrderPaymentStatuses()), 'Ожидает оплаты')[0];
         $order->save();
@@ -94,7 +96,9 @@ class OrderController extends Controller
         $this->orderCreateValidator($request->all())->validate();
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
-        $order->cargo = $request->input('cargo');
+        if ($request->has('cargo')){
+            $order->cargo = $request->input('cargo');
+        }
         if ($order->status != $request->input('status')) {
             $order->setOrderStatus($request->input('status'));
         }

@@ -57,6 +57,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('catalogs/{catalog}', 'CatalogController@show');
     Route::put('catalogs/{catalog}', 'CatalogController@update');
     Route::delete('catalogs/{catalog}', 'CatalogController@destroy');
+    Route::put('catalogs/{catalog}/addfile', 'CatalogController@addFile');
 
     Route::get('countries', 'CountryController@index');
     Route::post('countries', 'CountryController@store');
