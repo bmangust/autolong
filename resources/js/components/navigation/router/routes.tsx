@@ -20,6 +20,7 @@ import {
     Prices,
     NewItems
 } from '../../UI/iconComponents'
+import LoaderPublic from '../../UI/Loader/LoaderPublic'
 
 export const routes: IRoute[] = [
     {
@@ -524,7 +525,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: false,
-        fallback: <div> Loading... </div>
+        fallback: <LoaderPublic/>
     },
     {
         name: 'Восстановление пароля',
@@ -536,7 +537,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: false,
-        fallback: <div> Loading... </div>
+        fallback: <LoaderPublic/>
     },
     {
         name: 'Восстановление пароля',
@@ -548,7 +549,7 @@ export const routes: IRoute[] = [
         hide: true,
         exact: false,
         private: false,
-        fallback: <div> Loading... </div>
+        fallback: <LoaderPublic/>
     },
     {
         name: 'Выход',
@@ -568,6 +569,6 @@ export const routes: IRoute[] = [
         hide: true,
         private: false,
         exact: false,
-        fallback: <div> Loading... </div>
+        fallback: <LoaderPublic/>
     }
 ]
