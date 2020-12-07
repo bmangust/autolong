@@ -144,9 +144,7 @@ class OrderController extends Controller
             $arrivalDate = $request->input('arrivalDate');
             $order->setOrderStatus($status, $city->id, $arrivalDate);
         } elseif (!is_null($order->city) && !is_null($order->arrival_date)) {
-            $city = $order->city;
-            $arrivalDate = $order->arrival_date;
-            $order->setOrderStatus($status, $city->id, $arrivalDate);
+            $order->setOrderStatus($status);
         } else {
             throw new HttpException(400, 'Заполнена не вся информация для статуса "Находится в производстве"');
         }
