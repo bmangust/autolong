@@ -22,10 +22,16 @@ class CatalogController extends Controller
             'file' => 'файл',
             'providerId' => 'поставщик'
         ];
+        if (isset($data['file']) && !is_string($data['file'])) {
+            return Validator::make($data, [
+                'name' => ['required', 'string', 'max:255'],
+                'file' => ['mimes:pdf,xlsx,zip'],
+                'providerId' => ['required']
+            ], $messages, $names);
+        }
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'file' => ['mimes:pdf,xlsx,zip'],
             'providerId' => ['required']
         ], $messages, $names);
     }
@@ -52,7 +58,12 @@ class CatalogController extends Controller
         $this->catalogCreateValidator($request->all())->validate();
         $newCatalog = $catalog->create($catalog->dashesToSnakeCase($request->all()));
         Log::$write = false;
-        $newCatalog->checkAndAddTag(json_decode($request->input('tags')));
+        if (is_string($request->input('tags'))) {
+            $tags = json_decode($request->input('tags'));
+        } else {
+            $tags = $request->input('tags');
+        }
+        $newCatalog->checkAndAddTag($tags);
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $newCatalog->createOrUpdateFile($request->file('file'));
         }
@@ -82,7 +93,12 @@ class CatalogController extends Controller
     {
         $this->catalogCreateValidator($request->all())->validate();
         $catalog->update($catalog->dashesToSnakeCase($request->all()));
-        $catalog->checkAndAddTag(json_decode($request->input('tags')));
+        if (is_string($request->input('tags'))) {
+            $tags = json_decode($request->input('tags'));
+        } else {
+            $tags = $request->input('tags');
+        }
+        $catalog->checkAndAddTag($tags);
         if ($request->hasFile('file') && $request->file('file')->isValid()) {
             $catalog->createOrUpdateFile($request->file('file'));
         }
