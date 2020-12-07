@@ -5,6 +5,7 @@ namespace App\Observers;
 use App\Http\Resources\OrderResource;
 use App\Log;
 use App\Order;
+use App\Provider;
 use Illuminate\Database\Eloquent\Concerns\HasEvents;
 use Illuminate\Support\Facades\Auth;
 
@@ -29,6 +30,7 @@ class OrderObserver
                 'model_name' => get_class($order)
             ]);
         }
+        Provider::setProvidersCache();
     }
 
     /**
