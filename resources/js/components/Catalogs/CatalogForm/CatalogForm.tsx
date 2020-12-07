@@ -1,8 +1,8 @@
 // React
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 
 // Third-party
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
 import Select from 'react-select'
 import CreatableSelect from 'react-select/creatable'
@@ -10,49 +10,44 @@ import bsCustomFileInput from 'bs-custom-file-input'
 import {useHistory} from 'react-router-dom'
 
 // Typescript
-import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
-import {ITag, ITagsRootState} from '../ITags'
+import {IProvider} from '../../Providers/IProviders'
+import {ITag} from '../ITags'
+import {ICatalog} from '../ICatalogs'
 
 // Actions
-import {createCatalog} from '../../../store/actions/catalogs'
-import {fetchProviders} from '../../../store/actions/providers'
-import {fetchTags} from '../../../store/actions/tags'
+import {
+    createCatalog,
+    updateCatalogById,
+    updateCatalogFileById
+} from '../../../store/actions/catalogs'
 
 // Styles
-import classes from './CatalogForm.module.css';
+import classes from './CatalogForm.module.css'
 
 interface ICreateCatalogData {
     name: string
     providerId: string
+    inputFile: File
     tags: []
     file: string
 }
 
-const CatalogForm: React.FC = () => {
-    const {
-        register, handleSubmit, control, errors
-    } = useForm<ICreateCatalogData>()
+type Props = {
+    type?: string
+    catalog?: ICatalog
+    tags: ITag[]
+    providers: IProvider[]
+}
+
+const CatalogForm: React.FC<Props> = (props) => {
+    const {type, catalog, tags, providers} = props
 
     const dispatch = useDispatch()
     const history = useHistory()
 
-    // eslint-disable-next-line no-unused-vars
     const [tagsState, setTags] = useState([])
 
-    const {providers} = useSelector(
-        (state: IProvidersRootState) => ({
-            providers: state.providersState.providers
-        }))
-
-    const {tags} = useSelector(
-        (state: ITagsRootState) => ({
-            tags: state.tagsState.tags
-        }))
-
-    useEffect(() => {
-        dispatch(fetchProviders())
-        dispatch(fetchTags())
-    }, [dispatch])
+    let defaultValues = {}
 
     const providersOptions = providers.map(
         (provider: IProvider) => {
@@ -71,6 +66,29 @@ const CatalogForm: React.FC = () => {
         }
     )
 
+    if (type === 'edit') {
+        const defaultTags = catalog?.tags.map(
+            (tag: ITag) => {
+                return {
+                    label: tag.name,
+                    value: tag.id
+                }
+            }
+        )
+        defaultValues = {
+            name: catalog?.name,
+            providerId: providersOptions
+                .filter(({value}) =>
+                            value === catalog?.provider.id)[0],
+            tagId: defaultTags,
+            file: catalog?.file
+        }
+    }
+
+    const {
+        register, handleSubmit, control, errors
+    } = useForm<ICreateCatalogData>({defaultValues})
+
     const onChangeHandler = (newValue: any, actionMeta: any) => {
         setTags(newValue)
     }
@@ -83,14 +101,25 @@ const CatalogForm: React.FC = () => {
 
     const catalogFormSubmitHandler =
         handleSubmit((formValues: ICreateCatalogData) => {
-            formValues.file = formValues.file[0]
             formValues.providerId = formValues.providerId.value
             const newTags = []
             tagsState.forEach(option => {
                 newTags.push(option.label)
             })
             formValues.tags = [...newTags]
-            dispatch(createCatalog(formValues, '/catalogs'))
+            if (type === 'edit') {
+                dispatch(
+                    updateCatalogById(formValues, catalog?.id, '/catalogs'))
+                if (formValues.inputFile && formValues.inputFile[0]) {
+                    dispatch(updateCatalogFileById(
+                        catalog?.id, {image: formValues.inputFile[0]}))
+                }
+            } else {
+                if (formValues.inputFile && formValues.inputFile[0]) {
+                    formValues.file = formValues.inputFile[0]
+                }
+                dispatch(createCatalog(formValues, '/catalogs'))
+            }
         })
 
     bsCustomFileInput.init()
@@ -133,15 +162,38 @@ const CatalogForm: React.FC = () => {
                                 Загрузите файл каталога
                             </label>
                             <div className="custom-file col-lg-10 mb-3 mb-lg-0">
-                                <input multiple={false} name="file"
-                                       ref={register({required: true})}
-                                       className="custom-file-input"
-                                       type="file"/>
-                                <label
-                                    className="custom-file-label"
-                                    htmlFor="file">
-                                    Выберите файл
-                                </label>
+                                {type === 'edit'
+                                    ? <>
+                                        <div className="custom-file">
+                                            <input className='hidden d-none'
+                                                   ref={register}
+                                                   name='file'
+                                                   type="hidden"/>
+                                            <input multiple={false}
+                                                   name="inputFile"
+                                                   ref={register}
+                                                   className="custom-file-input"
+                                                   type="file"/>
+                                            <label
+                                                className="custom-file-label"
+                                                htmlFor="imageFile">
+                                                Выберите файл
+                                            </label>
+                                        </div>
+                                    </>
+                                    : <>
+                                        <input multiple={false} name="inputFile"
+                                               ref={register({required: true})}
+                                               className="custom-file-input"
+                                               type="file"/>
+                                        <label
+                                            className="custom-file-label"
+                                            htmlFor="file">
+                                            Выберите файл
+                                        </label>
+                                    </>
+                                }
+
                             </div>
                             {errors.file &&
                             <small>Это поле обязательно</small>}

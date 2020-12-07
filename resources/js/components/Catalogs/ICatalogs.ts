@@ -3,12 +3,15 @@ import {
     CREATE_CATALOG_ERROR,
     CREATE_CATALOG_START,
     CREATE_CATALOG_SUCCESS,
+    DELETE_CATALOG_SUCCESS,
     FETCH_CATALOGS_ERROR,
     FETCH_CATALOGS_START,
     FETCH_CATALOGS_SUCCESS,
     FETCH_CATALOG_ERROR,
     FETCH_CATALOG_START,
-    FETCH_CATALOG_SUCCESS
+    FETCH_CATALOG_SUCCESS,
+    UPDATE_CATALOG_FILE,
+    UPDATE_CATALOG_SUCCESS
 } from '../../store/actions/actionTypes'
 import {ITag} from './ITags'
 import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
@@ -16,7 +19,7 @@ import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 export interface ICatalog {
     id: number
     name: string
-    provider?: IProvider | {}
+    provider: IProvider | {}
     file: string
     tags: ITag[]
     sandboxFiles: ISandboxFile[]
@@ -86,7 +89,23 @@ interface ICreateCatalogError {
     loading: boolean
 }
 
+interface IDeleteCatalog {
+    type: typeof DELETE_CATALOG_SUCCESS
+    payload: number
+}
+
+interface IUpdateCatalog {
+    type: typeof UPDATE_CATALOG_SUCCESS
+    payload: ICatalog
+}
+
+interface IUpdateFileCatalog {
+    type: typeof UPDATE_CATALOG_FILE
+    payload: ICatalog
+}
+
 export type ICatalogsActionTypes =
     IFetchCatalogsStart | IFetchCatalogsSuccess | IFetchCatalogsError |
     IFetchCatalogStart | IFetchCatalogSuccess | IFetchCatalogError |
-    ICreateCatalogStart | ICreateCatalogSuccess | ICreateCatalogError
+    ICreateCatalogStart | ICreateCatalogSuccess | ICreateCatalogError |
+    IDeleteCatalog | IUpdateCatalog | IUpdateFileCatalog

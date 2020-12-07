@@ -21,21 +21,26 @@ import Form from '../../../components/UI/Form/Form'
 import Input from '../../../components/UI/Inputs/Input/Input'
 
 // Styles
-import classes from './CreateUser.module.css';
+import classes from './CreateUser.module.css'
 
 const CreateUser = () => {
     const dispatch = useDispatch()
 
-    const schema = yup.object().shape({
-        name: yup.string().required('Поле обязательно к заполнению'),
-        lastname: yup.string().required('Поле обязательно к заполнению'),
-        roleId: yup.object().required(),
-        password: yup.string()
-            .min(8, 'Минимальная длина пароль 8 символов')
-            .required('Поле обязательно к заполнению'),
-        email: yup.string().email('Укажите корректный email')
-            .required('Поле обязательно к заполнению')
-    })
+    const schema = yup.object()
+        .shape({
+                   name: yup.string()
+                       .required('Поле обязательно к заполнению'),
+                   lastname: yup.string()
+                       .required('Поле обязательно к заполнению'),
+                   roleId: yup.object()
+                       .required(),
+                   password: yup.string()
+                       .min(8, 'Минимальная длина пароль 8 символов')
+                       .required('Поле обязательно к заполнению'),
+                   email: yup.string()
+                       .email('Укажите корректный email')
+                       .required('Поле обязательно к заполнению')
+               })
 
     const {register, control, handleSubmit, errors} =
         useForm({resolver: yupResolver(schema)})

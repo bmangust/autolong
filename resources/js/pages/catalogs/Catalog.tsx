@@ -9,7 +9,7 @@ import {useDispatch, useSelector} from 'react-redux'
 // import classes from './Catalogs.module.css';
 
 // Actions
-import {fetchCatalogById} from '../../store/actions/catalogs'
+import {deleteCatalogById, fetchCatalogById} from '../../store/actions/catalogs'
 
 // Typescript
 import {
@@ -36,6 +36,10 @@ const Catalog: React.FC<ICatalog> = () => {
             loading: state.catalogsState.loading
         })
     )
+
+    const onDeleteHandler = () => {
+        dispatch(deleteCatalogById(id))
+    }
 
     useEffect(() => {
         dispatch(fetchCatalogById(id))
@@ -75,7 +79,15 @@ const Catalog: React.FC<ICatalog> = () => {
                         <div>{'tags' in catalog
                             ? tagsConverter(catalog.tags)
                             : ''}</div>
-
+                        <NavLink to={`/catalogedit/${id}`}
+                                 className='editButton mr-4'>
+                            Редактировать информацию
+                        </NavLink>
+                        <button
+                            className='btn btn-danger'
+                            onClick={onDeleteHandler}>
+                            Удалить
+                        </button>
                     </div>
                 </div>
                 <SandboxFilesCard

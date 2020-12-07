@@ -158,6 +158,18 @@ export const routes: IRoute[] = [
         access: ['catalogsIndex', 'catalogsCreate']
     },
     {
+        name: 'Изменение информации о каталоге',
+        path: '/catalogedit/:id',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/catalogs/CatalogEdit'), 600)
+        ),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        access: ['catalogsIndex', 'catalogsUpdate']
+    },
+    {
         name: 'Товары',
         pageName: 'Список оцифрованных товаров',
         path: '/products',
