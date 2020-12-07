@@ -142,7 +142,6 @@ class OrderController extends Controller
             ]);
             $arrivalDate = $request->input('arrivalDate');
             $order->setOrderStatus($status, $city->id, $arrivalDate);
-            return response()->json(new OrderWithRelationshipsResource($order), 200);
         } elseif (!is_null($order->city) && !is_null($order->arrival_date)) {
             $order->setOrderStatus($status);
         } else {
