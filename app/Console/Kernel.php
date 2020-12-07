@@ -4,14 +4,14 @@ namespace App\Console;
 
 use App\ExchangeRate;
 use App\Http\Resources\ExchangeRateResource;
-use App\Mail\NewProducts;
 use App\MailTask;
+use App\Notifications\NewProductsNotification;
 use App\Product;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Http;
-use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Support\Facades\Storage;
 use Spatie\DbDumper\Databases\MySql;
 
@@ -71,7 +71,9 @@ class Kernel extends ConsoleKernel
             $nowTime = Carbon::now()->format('H:i');
             if ($dispatchTime == $nowTime) {
                 $newProducts = Product::wherePublished(0)->orderByDesc('created_at')->get();
-                Mail::to($email)->send(new NewProducts($newProducts));
+                if (count($newProducts) > 0) {
+                    Notification::route('mail', $email)->notify(new NewProductsNotification($newProducts));
+                }
             }
         })->everyMinute();
     }
