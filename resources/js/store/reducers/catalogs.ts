@@ -3,12 +3,15 @@ import {
     CREATE_CATALOG_ERROR,
     CREATE_CATALOG_START,
     CREATE_CATALOG_SUCCESS,
+    DELETE_CATALOG_SUCCESS,
     FETCH_CATALOGS_ERROR,
     FETCH_CATALOGS_START,
     FETCH_CATALOGS_SUCCESS,
     FETCH_CATALOG_ERROR,
     FETCH_CATALOG_START,
-    FETCH_CATALOG_SUCCESS
+    FETCH_CATALOG_SUCCESS,
+    UPDATE_CATALOG_FILE,
+    UPDATE_CATALOG_SUCCESS
 } from '../actions/actionTypes'
 
 // Typescript
@@ -63,6 +66,20 @@ export default function catalogsReducer(
         case CREATE_CATALOG_ERROR:
             return {
                 ...state, loading: false, error: action.payload
+            }
+        case DELETE_CATALOG_SUCCESS:
+            return {
+                ...state,
+                catalog: {},
+                catalogs: state.catalogs.filter(({id}) => id !== action.payload)
+            }
+        case UPDATE_CATALOG_SUCCESS:
+            return {
+                ...state, catalog: action.payload
+            }
+        case UPDATE_CATALOG_FILE:
+            return {
+                ...state
             }
         default:
             return state
