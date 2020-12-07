@@ -45,7 +45,7 @@ const CatalogForm: React.FC<Props> = (props) => {
     const dispatch = useDispatch()
     const history = useHistory()
 
-    const [tagsState, setTags] = useState([])
+    let defaultTags = []
 
     let defaultValues = {}
 
@@ -67,7 +67,7 @@ const CatalogForm: React.FC<Props> = (props) => {
     )
 
     if (type === 'edit') {
-        const defaultTags = catalog?.tags.map(
+        defaultTags = catalog?.tags.map(
             (tag: ITag) => {
                 return {
                     label: tag.name,
@@ -80,10 +80,12 @@ const CatalogForm: React.FC<Props> = (props) => {
             providerId: providersOptions
                 .filter(({value}) =>
                             value === catalog?.provider.id)[0],
-            tagId: defaultTags,
+            tags: defaultTags,
             file: catalog?.file
         }
     }
+
+    const [tagsState, setTags] = useState(() => defaultTags)
 
     const {
         register, handleSubmit, control, errors
@@ -204,6 +206,7 @@ const CatalogForm: React.FC<Props> = (props) => {
                             </label>
                             <CreatableSelect
                                 isMulti={true}
+                                defaultValue={tagsState}
                                 placeholder='Введите теги'
                                 onChange={onChangeHandler}
                                 classNamePrefix='select-mini-tags'
