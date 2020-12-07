@@ -20,7 +20,7 @@ class CatalogObserver
      */
     public function created(Catalog $catalog)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -39,7 +39,7 @@ class CatalogObserver
      */
     public function updated(Catalog $catalog)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $catalog->withoutRelations()->getOriginal();
             $after = $catalog->withoutRelations()->toArray();
@@ -70,7 +70,7 @@ class CatalogObserver
      */
     public function deleted(Catalog $catalog)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,

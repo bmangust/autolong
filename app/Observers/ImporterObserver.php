@@ -20,7 +20,7 @@ class ImporterObserver
      */
     public function created(Importer $importer)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -39,7 +39,7 @@ class ImporterObserver
      */
     public function updated(Importer $importer)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $importer->withoutRelations()->getOriginal();
             $after = $importer->withoutRelations()->toArray();
@@ -70,7 +70,7 @@ class ImporterObserver
      */
     public function deleted(Importer $importer)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,

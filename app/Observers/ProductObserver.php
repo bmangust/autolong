@@ -20,7 +20,7 @@ class ProductObserver
      */
     public function created(Product $product)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -42,7 +42,7 @@ class ProductObserver
      */
     public function updated(Product $product)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $product->withoutRelations()->getOriginal();
             $after = $product->withoutRelations()->toArray();
@@ -76,7 +76,7 @@ class ProductObserver
      */
     public function deleted(Product $product)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,

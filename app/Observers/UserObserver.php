@@ -17,7 +17,7 @@ class UserObserver
      */
     public function created(User $user)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -36,7 +36,7 @@ class UserObserver
      */
     public function updated(User $user)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $user->withoutRelations()->getOriginal();
             $after = $user->withoutRelations()->toArray();
@@ -65,7 +65,7 @@ class UserObserver
      */
     public function deleted(User $user)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,

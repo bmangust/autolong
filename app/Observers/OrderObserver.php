@@ -21,7 +21,7 @@ class OrderObserver
      */
     public function created(Order $order)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -41,7 +41,7 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $order->withoutRelations()->getOriginal();
             $after = $order->withoutRelations()->toArray();
@@ -76,7 +76,7 @@ class OrderObserver
         $order->contract()->delete();
         $order->proforma()->delete();
         $order->invoice()->delete();
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,

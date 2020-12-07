@@ -20,7 +20,7 @@ class ContainerObserver
      */
     public function created(Container $container)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -39,7 +39,7 @@ class ContainerObserver
      */
     public function updated(Container $container)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $container->withoutRelations()->getOriginal();
             $after = $container->withoutRelations()->toArray();
@@ -71,7 +71,7 @@ class ContainerObserver
      */
     public function deleted(Container $container)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,

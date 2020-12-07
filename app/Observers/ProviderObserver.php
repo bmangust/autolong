@@ -20,7 +20,7 @@ class ProviderObserver
      */
     public function created(Provider $provider)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -40,7 +40,7 @@ class ProviderObserver
      */
     public function updated(Provider $provider)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $provider->withoutRelations()->getOriginal();
             $after = $provider->withoutRelations()->toArray();
@@ -72,7 +72,7 @@ class ProviderObserver
      */
     public function deleted(Provider $provider)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,

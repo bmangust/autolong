@@ -17,7 +17,7 @@ class UserRoleObserver
      */
     public function created(UserRole $userRole)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
@@ -36,7 +36,7 @@ class UserRoleObserver
      */
     public function updated(UserRole $userRole)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $before = $userRole->withoutRelations()->getOriginal();
             $after = $userRole->withoutRelations()->toArray();
@@ -64,7 +64,7 @@ class UserRoleObserver
      */
     public function deleted(UserRole $userRole)
     {
-        if (Log::$write) {
+        if (Log::$write && Auth::user()) {
             $log = new Log();
             $log->create([
                 'user_id' => Auth::user()->id,
