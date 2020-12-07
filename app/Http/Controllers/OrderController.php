@@ -58,7 +58,7 @@ class OrderController extends Controller
         $order = new Order();
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
-        if ($request->has('cargo')){
+        if ($request->has('cargo')) {
             $order->cargo = $request->input('cargo');
         }
         $order->status = array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0];
@@ -96,7 +96,7 @@ class OrderController extends Controller
         $this->orderCreateValidator($request->all())->validate();
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
-        if ($request->has('cargo')){
+        if ($request->has('cargo')) {
             $order->cargo = $request->input('cargo');
         }
         if ($order->status != $request->input('status')) {
@@ -137,12 +137,12 @@ class OrderController extends Controller
             if (!$order->checkActualDate($request->input('arrivalDate'))) {
                 throw new HttpException(400, 'Указана не актуальная дата');
             }
-
             $city = City::firstOrCreate([
                 'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
             ]);
             $arrivalDate = $request->input('arrivalDate');
             $order->setOrderStatus($status, $city->id, $arrivalDate);
+            return response()->json(new OrderWithRelationshipsResource($order), 200);
         } elseif (!is_null($order->city) && !is_null($order->arrival_date)) {
             $order->setOrderStatus($status);
         } else {

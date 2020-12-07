@@ -19,7 +19,7 @@ class OrderResource extends JsonResource
             'id' => $this->id,
             'name' => $this->name,
             'status' => $this->status,
-            'arrivalDate' => $this->arrivale_date,
+            'arrivalDate' => $this->arrival_date,
             'city' => new CityResource($this->city),
             'statusPayment' => $this->status_payment,
             'packingList' => $this->checkDataForPackingList(),
