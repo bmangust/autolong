@@ -3,7 +3,7 @@
     position: relative;
     height: 100vh;
     align-items: center;
-    background: url('/imgs/cargo.png') right 100px top / 327px no-repeat;
+    background: url('/imgs/carg.png') right 100px top / 327px no-repeat;
 }
 
 .Login::before {
