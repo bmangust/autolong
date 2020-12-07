@@ -25,7 +25,7 @@ class CatalogController extends Controller
 
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
-            'file' => ['required', 'mimes:pdf,xlsx,zip'],
+            'file' => ['mimes:pdf,xlsx,zip'],
             'providerId' => ['required']
         ], $messages, $names);
     }
