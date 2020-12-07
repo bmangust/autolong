@@ -112,7 +112,7 @@ const CatalogForm: React.FC<Props> = (props) => {
                     updateCatalogById(formValues, catalog?.id, '/catalogs'))
                 if (formValues.inputFile && formValues.inputFile[0]) {
                     dispatch(updateCatalogFileById(
-                        catalog?.id, {image: formValues.inputFile[0]}))
+                        catalog?.id, {file: formValues.inputFile[0]}))
                 }
             } else {
                 if (formValues.inputFile && formValues.inputFile[0]) {
