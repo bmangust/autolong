@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Dump;
 use App\ExchangeRate;
 use App\Http\Resources\ExchangeRateResource;
 use App\MailTask;
@@ -57,8 +58,16 @@ class Kernel extends ConsoleKernel
                 ->setUserName(env('DB_USERNAME'))
                 ->setPassword(env('DB_PASSWORD'))
                 ->dumpToFile($name);
-            Storage::disk('base')->move($name, '/public/dumps/' . $name);
-        })->dailyAt('03:00');
+
+            $year = Carbon::now()->format('Y');
+            $month = Carbon::now()->format('m');
+            $path = '/public/dumps/' . $year . '/' . $month . '/' . $name;
+
+            Storage::disk('base')->move($name, $path);
+            Dump::create([
+                'path' => $path
+            ]);
+        })->everyMinute();
 
         $schedule->call(function () {
             $mailTask = MailTask::first();
@@ -75,7 +84,7 @@ class Kernel extends ConsoleKernel
                     Notification::route('mail', $email)->notify(new NewProductsNotification($newProducts));
                 }
             }
-        })->everyMinute();
+        })->dailyAt('03:00');
     }
 
     /**
