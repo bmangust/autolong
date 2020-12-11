@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useContext} from 'react'
 
 // Third-party
 import {useDispatch} from 'react-redux'
@@ -20,10 +20,12 @@ import SvgRelease from '../../UI/iconComponents/Release'
 import SvgToTheCarrier from '../../UI/iconComponents/ToTheCarrier'
 import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
 import {timeConverter} from '../../../utils'
+import {SanctumContext} from '../../../Sanctum'
 
 const ContainersStatuses: React.FC<{ container: IContainer }> =
     (({container}) => {
         const dispatch = useDispatch()
+        const {user} = useContext(SanctumContext)
 
         const onClickHandler = (status) => {
             dispatch(changeContainerStatus(container?.id, {status}))
@@ -66,8 +68,13 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                         </p>
                         <button onClick={() =>
                             onClickHandler('containerArrivedAtCustoms')}
-                                className='btn btn-success'>
+                                className='btn btn-success mr-3'>
                             Подтвердить
+                        </button>
+                        <button
+                            onClick={() => onClickHandler('containerAssemble')}
+                            className='btn btn-link color-blue'>
+                            Откатить
                         </button>
                     </div>
                 </div>
@@ -85,8 +92,13 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                         </p>
                         <button onClick={() =>
                             onClickHandler('containerRelease')}
-                                className='btn btn-success'>
+                                className='btn btn-success mr-3'>
                             Подтвердить
+                        </button>
+                        <button
+                            onClick={() => onClickHandler('containerInTransit')}
+                            className='btn btn-link color-blue'>
+                            Откатить
                         </button>
                     </div>
                 </div>
@@ -104,8 +116,14 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                         </p>
                         <button onClick={() =>
                             onClickHandler('containerInStock')}
-                                className='btn btn-success'>
+                                className='btn btn-success mr-3'>
                             Подтвердить
+                        </button>
+                        <button
+                            onClick={() =>
+                                onClickHandler('containerArrivedAtCustoms')}
+                            className='btn btn-link color-blue'>
+                            Откатить
                         </button>
                     </div>
                 </div>
@@ -127,6 +145,11 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
                                 </span>
                             </div>
                         </div>
+                        <button
+                            onClick={() => onClickHandler('containerRelease')}
+                            className='btn btn-link color-blue'>
+                            Откатить
+                        </button>
                     </div>
                 </div>
                 break
@@ -137,7 +160,7 @@ const ContainersStatuses: React.FC<{ container: IContainer }> =
             }
         }
 
-        return containerStatus
+        return containerStatus && user.role.accesses.containersUpdate == 1
             ? <div className={cls.join(' ')}>
                 {containerStatus}
             </div>
