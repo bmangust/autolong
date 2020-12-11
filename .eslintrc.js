@@ -3,7 +3,7 @@ module.exports = {
     'root': true,
     'parser': '@typescript-eslint/parser',
     'parserOptions': {
-        'sourceType': 'module',
+        'sourceType': 'module'
     },
     'env': {
         'es6': true,
@@ -11,6 +11,20 @@ module.exports = {
         'node': true
     },
     'rules': {
+        'max-len': [
+            'error',
+            120,
+            4,
+            {
+                'ignoreTrailingComments': true,
+                'ignoreComments': true,
+                'code': 120,
+                'ignoreUrls': true,
+                'ignoreTemplateLiterals': true,
+                'ignoreStrings': true,
+                'ignoreRegExpLiterals': true
+            }
+        ],
         'semi': 'off',
         'arrow-parens': 'off',
         'comma-dangle': 'off',
@@ -23,7 +37,7 @@ module.exports = {
         'linebreak-style': 'off'
     },
     'plugins': [
-        'react',
+        'react'
     ],
     'ignorePatterns': [
         'resources/js/components/UI/iconComponents/*.tsx'

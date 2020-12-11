@@ -12,6 +12,7 @@ import SvgGeneralSettings
     from '../../components/UI/iconComponents/GeneralSettings'
 import SvgRoleSettings from '../../components/UI/iconComponents/RoleSettings'
 import SvgUsersSettings from '../../components/UI/iconComponents/UsersSettings'
+import SvgBackup from '../../components/UI/iconComponents/Backup'
 
 const Settings: React.FC = () => {
     return (
@@ -33,6 +34,12 @@ const Settings: React.FC = () => {
                     <NavLink to='/settings/users'>
                         <SvgUsersSettings/>
                         <p>Пользователи</p>
+                    </NavLink>
+                </div>
+                <div className={classes.link}>
+                    <NavLink to='/settings/backups'>
+                        <SvgBackup/>
+                        <p>Бекапы</p>
                     </NavLink>
                 </div>
             </div>

@@ -381,6 +381,19 @@ export const routes: IRoute[] = [
         access: ['settingsIndex']
     },
     {
+        name: 'Бекапы',
+        path: '/settings/backups',
+        component: lazy(() =>
+            pMinDelay(import('../../../pages/settings/Backups'), 600)
+        ),
+        hide: true,
+        exact: true,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Settings/>,
+        access: ['settingsIndex']
+    },
+    {
         name: 'Общие настройки',
         path: '/settings/general',
         component: lazy(() =>

@@ -4,6 +4,9 @@ import {
     DELETE_EMAIL_SETTINGS_ERROR,
     DELETE_EMAIL_SETTINGS_START,
     DELETE_EMAIL_SETTINGS_SUCCESS,
+    FETCH_BACKUPS_ERROR,
+    FETCH_BACKUPS_START,
+    FETCH_BACKUPS_SUCCESS,
     FETCH_EMAIL_SETTINGS_ERROR,
     FETCH_EMAIL_SETTINGS_START,
     FETCH_EMAIL_SETTINGS_SUCCESS,
@@ -85,5 +88,27 @@ export const deleteEmailSettings = () => async dispatch => {
                 })
                 toast.error(error.message)
             }
+        })
+}
+
+export const fetchBackups = () => async dispatch => {
+    await dispatch({
+        type: FETCH_BACKUPS_START
+    })
+
+    const url = '/api/dumps'
+    axios
+        .get(url)
+        .then((answer) => {
+            dispatch({
+                type: FETCH_BACKUPS_SUCCESS,
+                payload: answer.data
+            })
+        })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_BACKUPS_ERROR,
+                payload: error.message
+            })
         })
 }
