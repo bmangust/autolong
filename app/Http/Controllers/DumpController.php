@@ -9,6 +9,6 @@ class DumpController extends Controller
 {
     public function index()
     {
-        return response()->json(DumpResource::collection(Dump::getCachedDumpsOrSetDumpsToCache()), 200);
+        return response()->json(Dump::getCachedDumpsOrSetDumpsToCache(), 200);
     }
 }
