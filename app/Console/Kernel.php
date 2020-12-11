@@ -67,7 +67,7 @@ class Kernel extends ConsoleKernel
             Dump::create([
                 'path' => $path
             ]);
-        })->everyMinute();
+        })->dailyAt('03:00');
 
         $schedule->call(function () {
             $mailTask = MailTask::first();
@@ -84,7 +84,7 @@ class Kernel extends ConsoleKernel
                     Notification::route('mail', $email)->notify(new NewProductsNotification($newProducts));
                 }
             }
-        })->dailyAt('03:00');
+        })->everyMinute();
     }
 
     /**
