@@ -124,4 +124,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('mailtask', 'MailTaskController@index');
     Route::post('mailtask', 'MailTaskController@changeTime');
     Route::delete('mailtask', 'MailTaskController@destroy');
+
+    Route::get('dumps', 'DumpController@index');
 });
