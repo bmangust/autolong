@@ -134,6 +134,7 @@ const OrdersTable: React.FC = () => {
         <AutoTable
             filter={filter}
             expandRowTable={expandRowTable}
+            rowClickLink='order'
             keyField='id' data={orders} columns={columns}
             button={{link: 'orderscreate', text: 'Добавить заказы'}}
         />

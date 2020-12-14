@@ -131,6 +131,7 @@ const CatalogsTable: React.FC = () => {
     return (
         <AutoTable
             filter={filter}
+            rowClickLink='catalog'
             expandRowTable={expandRowTable}
             keyField='id' data={catalogs} columns={columns}
             button={{link: 'catalogcreate', text: 'Добавить каталог'}}/>

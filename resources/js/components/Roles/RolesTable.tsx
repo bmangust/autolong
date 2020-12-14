@@ -68,6 +68,7 @@ const RolesTable: React.FC = () => {
     return <AutoTable
         keyField='id'
         data={roles}
+        rowClickLink='settings/role'
         button={{link: 'settings/roles/add', text: 'Добавить роль'}}
         columns={columns}/>
 }

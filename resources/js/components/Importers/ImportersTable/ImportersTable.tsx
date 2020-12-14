@@ -71,6 +71,7 @@ const ImportersTable: React.FC = () => {
 
     return (
         <AutoTable
+            rowClickLink='importer'
             keyField='id' data={importers} columns={columns}
             button={{link: 'importercreate', text: 'Добавить импортера'}}/>
     )

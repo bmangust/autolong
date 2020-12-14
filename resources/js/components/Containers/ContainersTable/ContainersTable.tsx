@@ -102,6 +102,7 @@ const ContainersTable: React.FC = () => {
     return (
         <AutoTable
             keyField='id' data={containers} columns={columns}
+            rowClickLink='container'
             filter={filter}
             button={{link: 'containercreate', text: 'Добавить контейнер'}}/>
     )

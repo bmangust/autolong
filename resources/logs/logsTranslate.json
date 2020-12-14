@@ -1,15 +1,17 @@
 {
-    "actions": {
-        "created": "Создан",
-        "updated": "Обновлен",
-        "deleted": "Удален"
-    },
-    "classes": {
-        "App\\Product": "продукт",
-        "App\\Provider": "поставщик",
-        "App\\Catalog": "каталог",
-        "App\\Container": "контейнер",
-        "App\\Importer": "импортер",
-        "App\\Order": "заказ"
-    }
+  "actions": {
+    "created": "Создан",
+    "updated": "Обновлен",
+    "deleted": "Удален"
+  },
+  "classes": {
+    "App\\Product": "продукт",
+    "App\\Provider": "поставщик",
+    "App\\Catalog": "каталог",
+    "App\\Container": "контейнер",
+    "App\\Importer": "импортер",
+    "App\\Order": "заказ",
+    "App\\User": "пользователь",
+    "App\\UserRole": "роль"
+  }
 }

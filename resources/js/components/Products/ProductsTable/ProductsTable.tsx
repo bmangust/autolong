@@ -163,6 +163,7 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     return <AutoTable
         filter={filter}
         expandRowTable={expandRowTable}
+        rowClickLink='product'
         keyField='id' data={products} columns={columns}
         button={{
             link: link,

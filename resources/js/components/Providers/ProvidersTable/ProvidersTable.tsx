@@ -118,6 +118,7 @@ const ProvidersTable: React.FC = () => {
     return (
         <AutoTable
             filter={filter}
+            rowClickLink='provider'
             expandRowTable={expandRowTable}
             keyField='id' data={providers} columns={columns}
             button={{link: 'providercreate', text: 'Добавить поставщика'}}/>

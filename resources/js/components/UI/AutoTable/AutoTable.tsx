@@ -11,6 +11,8 @@ import BootstrapTable, {
 import paginationFactory from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit'
 import _ from 'lodash'
+import {push} from 'connected-react-router'
+import {useDispatch} from 'react-redux'
 
 // App
 import SvgExpandOn from '../iconComponents/ExpandOn'
@@ -48,6 +50,7 @@ interface IAutoTable extends BootstrapTableProps {
     filter?: IFilter
     expandRowTable?: expandRow[] | undefined
     header?: boolean
+    rowClickLink?: string
 }
 
 const AutoTable: React.FC<IAutoTable> = (
@@ -60,10 +63,12 @@ const AutoTable: React.FC<IAutoTable> = (
         button,
         filter,
         expandRowTable = undefined,
-        header = true
+        header = true,
+        rowClickLink
     }) => {
     const {SearchBar} = Search
     const [dataState, setDataState] = useState<any>([])
+    const dispatch = useDispatch()
 
     useEffect(() => {
         return setDataState(data)
@@ -72,6 +77,7 @@ const AutoTable: React.FC<IAutoTable> = (
     const expandRow: ExpandRowProps<any> = {
         expandColumnPosition: 'right',
         renderer: renderer,
+        expandByColumnOnly: true,
         showExpandColumn: true,
         expandHeaderColumnRenderer: expandHeaderColumnRenderer,
         expandColumnRenderer: expandColumnRenderer
@@ -98,6 +104,13 @@ const AutoTable: React.FC<IAutoTable> = (
             ))
         } else {
             setDataState(data)
+        }
+    }
+
+    const tableRowEvents = {
+        onClick: (e, row) => {
+            const link = `/${rowClickLink}/${row.id}`
+            dispatch(push(link))
         }
     }
 
@@ -239,12 +252,9 @@ const AutoTable: React.FC<IAutoTable> = (
                             <BootstrapTable
                                 pagination={paginationFactory({})}
                                 bordered={false}
-                                expandRow={
-                                    expandRowTable ? expandRow : undefined
-                                }
-                                selectRow={
-                                    selectRow ? selectRow : undefined
-                                }
+                                expandRow={expandRowTable ? expandRow : undefined}
+                                rowEvents={rowClickLink ? tableRowEvents : undefined}
+                                selectRow={selectRow ? selectRow : undefined}
                                 {...props.baseProps}
                             />
                         </div>
