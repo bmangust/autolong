@@ -42,7 +42,7 @@ const OrderItems: React.FC<IOrderItems> = (
                 <div className='col-xl-4 pr-0'>
                     <p className={classes.productName}>{item.nameRu}</p>
                 </div>
-                <div className='col-xl-2'>
+                <div className='col-xl-2 d-flex align-items-center'>
                     <input
                         data-id={item.id}
                         min={1}

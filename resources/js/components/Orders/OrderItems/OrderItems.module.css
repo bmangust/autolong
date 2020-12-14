@@ -23,6 +23,7 @@
     line-height: 15px;
     color: #3a405f;
     font-weight: 700;
+    margin-bottom: 0;
 }
 
 .orderProductsQty {
@@ -40,7 +41,6 @@
 .products .productCount {
     background: white;
     height: 30px;
-    margin-top: 10px;
     margin-right: 25px;
     border: 1px solid #ebebeb;
     box-sizing: border-box;
@@ -60,13 +60,15 @@
     background: white;
     position: relative;
     align-items: center;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
 }
 
 .orderProducts:before {
     content: '';
     position: absolute;
     right: 0;
-    bottom: -7px;
+    bottom: 0;
     width: 100%;
     max-width: 450px;
     height: 1px;
