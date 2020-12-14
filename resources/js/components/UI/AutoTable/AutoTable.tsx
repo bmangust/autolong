@@ -114,6 +114,13 @@ const AutoTable: React.FC<IAutoTable> = (
         }
     }
 
+    const paginationOptions = {
+        onSizePerPageChange: (sizePerPage) => {
+            localStorage.setItem('autolong_size_per_page', sizePerPage)
+        },
+        sizePerPage: Number(localStorage.getItem('autolong_size_per_page')) || 10
+    }
+
     const onChangeCheckFilter = (e) => {
         const isChecked = e.target.checked
         if (isChecked) {
@@ -207,12 +214,8 @@ const AutoTable: React.FC<IAutoTable> = (
             {(props) => (
                 <div>
                     {header
-                        ? <div
-                            className='flex-lg-row d-flex
-                    justify-content-between mb-2 flex-column '
-                        >
-                            <div className='d-flex flex-lg-row
-                             flex-column mb-lg-0 mb-2'>
+                        ? <div className='flex-lg-row d-flex justify-content-between mb-2 flex-column '>
+                            <div className='d-flex flex-lg-row flex-column mb-lg-0 mb-2'>
                                 <div className='searchBar mr-lg-2 mr-0'>
                                     <SearchBar
                                         {...props.searchProps}
@@ -226,22 +229,20 @@ const AutoTable: React.FC<IAutoTable> = (
                             </div>
 
                             <div>
-                                {secondBtn ? (
-                                    <NavLink
+                                {secondBtn
+                                    ? <NavLink
                                         to={`/${secondBtn.link}`}
-                                        className='btn addButton mr-3'
-                                    >
+                                        className='btn addButton mr-3'>
                                         {secondBtn.text}
                                     </NavLink>
-                                ) : null}
-                                {button ? (
-                                    <NavLink
+                                    : null}
+                                {button
+                                    ? <NavLink
                                         to={`/${button.link}`}
-                                        className='btn addButton'
-                                    >
+                                        className='btn addButton'>
                                         {button.text}
                                     </NavLink>
-                                ) : null}
+                                    : null}
                             </div>
                         </div>
                         : null
@@ -250,7 +251,7 @@ const AutoTable: React.FC<IAutoTable> = (
                     <div className='card'>
                         <div className='card-body text-muted'>
                             <BootstrapTable
-                                pagination={paginationFactory({})}
+                                pagination={paginationFactory(paginationOptions)}
                                 bordered={false}
                                 expandRow={expandRowTable ? expandRow : undefined}
                                 rowEvents={rowClickLink ? tableRowEvents : undefined}
