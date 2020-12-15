@@ -24,6 +24,7 @@ interface expandRow<T extends object = any, E = any> {
     text: string
     classNameTd: string
     classNameTh: string
+    headerStyle?: React.CSSProperties | (() => React.CSSProperties)
     formatter?: ColumnFormatter<T, E>
 }
 
@@ -163,7 +164,7 @@ const AutoTable: React.FC<IAutoTable> = (
     function renderer(row: any, rowIndex: number) {
         const tableHead = expandRowTable?.map((item, index) => {
             return (
-                <th className={item.classNameTh} key={`${item.text}-${index}`}>
+                <th style={item.headerStyle} className={item.classNameTh} key={`${item.text}-${index}`}>
                     {item.text}
                 </th>
             )

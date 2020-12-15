@@ -86,6 +86,11 @@ const OrdersTable: React.FC = () => {
 
     const expandRowTable = [
         {
+            dataField: 'id',
+            text: 'ID',
+            headerStyle: {width: '85px'}
+        },
+        {
             dataField: 'provider',
             text: 'Поставщик',
             formatter: providerFormatter
