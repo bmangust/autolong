@@ -37,7 +37,7 @@ const sanctumConfig = {
 }
 
 const application = (
-    <Sanctum config={sanctumConfig}>
+    <Sanctum checkOnInit={false} config={sanctumConfig}>
         <Provider store={store}>
             <ConnectedRouter history={history}>
                 <Index/>

@@ -4,12 +4,6 @@ import SanctumContext from './SanctumContext'
 
 axios.defaults.withCredentials = true
 
-const token = localStorage.getItem('token')
-
-if (token) {
-    axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
-}
-
 interface Props {
     config: {
         apiUrl: string;
@@ -34,7 +28,8 @@ const setAccessToLocale = (data) => {
             } else {
                 return null
             }
-        }).filter((el) => el !== null)
+        })
+        .filter((el) => el !== null)
     localStorage.setItem('access-autolong',
         JSON.stringify(activeAccess.join(',')))
 }
@@ -125,6 +120,9 @@ class Sanctum extends React.Component<Props, State> {
 
     async checkAuthentication(): Promise<boolean> {
         const {apiUrl, userObjectRoute} = this.props.config
+        const token = localStorage.getItem('token')
+        axios.defaults.headers.common['Authorization'] = `Bearer ${token}`
+
         return await axios
             .get(`${apiUrl}/${userObjectRoute}`)
             .then(({data}) => {
