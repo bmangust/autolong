@@ -3,12 +3,12 @@ import React from 'react'
 
 // Third-party
 import {RouteComponentProps, withRouter} from 'react-router-dom'
-import Router from './components/navigation/router/Router'
-import {routes} from './components/navigation/router/routes'
 import {ToastContainer} from 'react-toastify'
 
 // App
 import Layout from './layout/Layout'
+import Router from './components/navigation/router/Router'
+import {routes} from './components/navigation/router/routes'
 
 const Index: React.FC<RouteComponentProps> = () => {
     return (

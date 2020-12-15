@@ -107,6 +107,16 @@ const AutoTable: React.FC<IAutoTable> = (
         }
     }
 
+    const onChangeCheckFilter = (e) => {
+        const isChecked = e.target.checked
+        if (isChecked) {
+            setDataState(data.filter((item) =>
+                _.get(item, filter.field).length))
+        } else {
+            setDataState(data)
+        }
+    }
+
     const tableRowEvents = {
         onClick: (e, row) => {
             const link = `/${rowClickLink}/${row.id}`
@@ -119,16 +129,6 @@ const AutoTable: React.FC<IAutoTable> = (
             localStorage.setItem('autolong_size_per_page', sizePerPage)
         },
         sizePerPage: Number(localStorage.getItem('autolong_size_per_page')) || 10
-    }
-
-    const onChangeCheckFilter = (e) => {
-        const isChecked = e.target.checked
-        if (isChecked) {
-            setDataState(data.filter((item) =>
-                _.get(item, filter.field).length))
-        } else {
-            setDataState(data)
-        }
     }
 
     let select = <SelectSearch

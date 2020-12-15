@@ -80,6 +80,10 @@ const OrdersTable: React.FC = () => {
             : null
     }
 
+    const containerFormatter = (container) => {
+        return container && Object.keys(container).length ? container.id : null
+    }
+
     const expandRowTable = [
         {
             dataField: 'provider',
@@ -103,11 +107,12 @@ const OrdersTable: React.FC = () => {
             formatter: (name, row) => nameToLinkFormatter(name, row, 'order')
         },
         {
-            dataField: 'id',
-            text: 'ID',
+            dataField: 'container',
+            text: '№ кон.',
             headerStyle: {width: '85px'},
             classes: 'email',
-            sort: true
+            sort: true,
+            formatter: containerFormatter
         },
         {
             dataField: 'status',
