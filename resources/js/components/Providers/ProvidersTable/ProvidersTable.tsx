@@ -117,7 +117,7 @@ const ProvidersTable: React.FC = () => {
 
     return (
         <AutoTable
-            filter={filter}
+            checkFilter={filter}
             rowClickLink='provider'
             expandRowTable={expandRowTable}
             keyField='id' data={providers} columns={columns}

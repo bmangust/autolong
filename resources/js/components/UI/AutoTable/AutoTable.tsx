@@ -49,6 +49,7 @@ interface IAutoTable extends BootstrapTableProps {
     secondBtn?: button | undefined
     button?: button | undefined
     filter?: IFilter
+    checkFilter?: IFilter
     expandRowTable?: expandRow[] | undefined
     header?: boolean
     rowClickLink?: string
@@ -63,6 +64,7 @@ const AutoTable: React.FC<IAutoTable> = (
         selectRow,
         button,
         filter,
+        checkFilter,
         expandRowTable = undefined,
         header = true,
         rowClickLink
@@ -110,11 +112,22 @@ const AutoTable: React.FC<IAutoTable> = (
 
     const onChangeCheckFilter = (e) => {
         const isChecked = e.target.checked
-        if (isChecked) {
-            setDataState(data.filter((item) =>
-                _.get(item, filter.field).length))
+        if (checkFilter?.type === 'products') {
+            if (isChecked) {
+                setDataState(data.filter((product) => _.get(product, checkFilter.field)
+                    .find((order) => order.status !== 'orderCompleted' &&
+                        order.status !== 'orderRefunded' &&
+                        order.status !== 'orderCanceled')))
+            } else {
+                setDataState(data)
+            }
         } else {
-            setDataState(data)
+            if (isChecked) {
+                setDataState(data.filter((item) =>
+                    _.get(item, checkFilter.field).length))
+            } else {
+                setDataState(data)
+            }
         }
     }
 
@@ -132,7 +145,7 @@ const AutoTable: React.FC<IAutoTable> = (
         sizePerPage: Number(localStorage.getItem('autolong_size_per_page')) || 10
     }
 
-    let select = <SelectSearch
+    const select = <SelectSearch
         isLoading={filter?.loading}
         value={filter?.value}
         onChange={onChangeFilter}
@@ -142,24 +155,22 @@ const AutoTable: React.FC<IAutoTable> = (
         isMulti={filter?.isMulti}
     />
 
-    if (filter?.type === 'checkbox') {
-        select = <div className='align-items-center d-flex'>
-            <label className='w-100 mr-3 mb-0' htmlFor='cargo'>
-                {filter?.placeholder}
+    const checkBoxFilter = <div className='align-items-center d-flex ml-2'>
+        <label className='w-100 mr-3 mb-0' htmlFor='cargo'>
+            {checkFilter?.placeholder}
+        </label>
+        <div className='custom-control custom-switch'>
+            <input
+                type='checkbox'
+                name='filter'
+                id='filter'
+                onChange={onChangeCheckFilter}
+                className='custom-control-input'/>
+            <label className="custom-control-label"
+                   htmlFor='filter'>
             </label>
-            <div className='custom-control custom-switch'>
-                <input
-                    type='checkbox'
-                    name='filter'
-                    id='filter'
-                    onChange={onChangeCheckFilter}
-                    className='custom-control-input'/>
-                <label className="custom-control-label"
-                       htmlFor='filter'>
-                </label>
-            </div>
         </div>
-    }
+    </div>
 
     function renderer(row: any, rowIndex: number) {
         const tableHead = expandRowTable?.map((item, index) => {
@@ -225,6 +236,10 @@ const AutoTable: React.FC<IAutoTable> = (
                                 </div>
                                 {filter
                                     ? select
+                                    : null
+                                }
+                                {checkFilter
+                                    ? checkBoxFilter
                                     : null
                                 }
                             </div>

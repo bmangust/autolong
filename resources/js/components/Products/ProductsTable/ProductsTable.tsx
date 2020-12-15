@@ -70,6 +70,12 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
         loading: loadingProviders
     }
 
+    const checkFilter = {
+        field: 'orders',
+        placeholder: 'Активные товары',
+        type: 'products'
+    }
+
     if (error) {
         return <Error/>
     }
@@ -162,6 +168,7 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     ]
     return <AutoTable
         filter={filter}
+        checkFilter={checkFilter}
         expandRowTable={expandRowTable}
         rowClickLink='product'
         keyField='id' data={products} columns={columns}
