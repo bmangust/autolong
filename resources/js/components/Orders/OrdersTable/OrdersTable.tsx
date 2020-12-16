@@ -84,6 +84,10 @@ const OrdersTable: React.FC = () => {
         return container && Object.keys(container).length ? container.id : null
     }
 
+    const footerFormatter = (column, colIndex, {text}) => {
+        return <span className='pricesBlock'><span>{text}</span></span>
+    }
+
     const expandRowTable = [
         {
             dataField: 'id',
@@ -109,7 +113,8 @@ const OrdersTable: React.FC = () => {
             classes: 'title',
             headerStyle: {width: '285px'},
             sort: true,
-            formatter: (name, row) => nameToLinkFormatter(name, row, 'order')
+            formatter: (name, row) => nameToLinkFormatter(name, row, 'order'),
+            footer: 'Общая стоимость на странице:'
         },
         {
             dataField: 'container',
@@ -117,26 +122,31 @@ const OrdersTable: React.FC = () => {
             headerStyle: {width: '85px'},
             classes: 'email',
             sort: true,
-            formatter: containerFormatter
+            formatter: containerFormatter,
+            footer: ''
         },
         {
             dataField: 'status',
             text: 'Статус',
             classes: 'status',
             formatter: (status) => getOrderStatusName(status),
-            sort: true
+            sort: true,
+            footer: ''
         },
         {
             dataField: 'items',
             text: 'Кол.наим.',
             headerStyle: {width: '88px'},
-            formatter: itemsFormatter
+            formatter: itemsFormatter,
+            footer: ''
         },
         {
             dataField: 'price',
             text: 'Сумма',
             headerStyle: {width: '90px'},
-            formatter: (price) => moneyFormatter(price, ['rub', 'usd'])
+            formatter: (price) => moneyFormatter(price, ['rub', 'usd']),
+            footer: columnData => columnData.reduce((acc, price) => acc + price.cny, 0) + '¥',
+            footerFormatter: footerFormatter
         }
     ]
 
