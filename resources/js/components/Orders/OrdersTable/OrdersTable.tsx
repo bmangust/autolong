@@ -145,7 +145,8 @@ const OrdersTable: React.FC = () => {
             text: 'Сумма',
             headerStyle: {width: '90px'},
             formatter: (price) => moneyFormatter(price, ['rub', 'usd']),
-            footer: columnData => columnData.reduce((acc, price) => acc + price.cny, 0) + '¥',
+            footer: columnData => columnData.reduce((acc, price) => acc + price.cny, 0)
+                .toFixed(2) + '¥',
             footerFormatter: footerFormatter
         }
     ]
