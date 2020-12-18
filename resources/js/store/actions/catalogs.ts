@@ -18,45 +18,45 @@ import {push} from 'connected-react-router'
 
 export const fetchCatalogs = () => async dispatch => {
     await dispatch({
-                       type: FETCH_CATALOGS_START
-                   })
+        type: FETCH_CATALOGS_START
+    })
 
     const url = '/api/catalogs'
     axios
         .get(url)
         .then((answer) => {
             dispatch({
-                         type: FETCH_CATALOGS_SUCCESS,
-                         payload: answer.data
-                     })
+                type: FETCH_CATALOGS_SUCCESS,
+                payload: answer.data
+            })
         })
         .catch((error: AxiosError) => {
             dispatch({
-                         type: FETCH_CATALOGS_ERROR,
-                         payload: error.response
-                     })
+                type: FETCH_CATALOGS_ERROR,
+                payload: error.response
+            })
         })
 }
 
 export const fetchCatalogById = (id) => async dispatch => {
     await dispatch({
-                       type: FETCH_CATALOG_START
-                   })
+        type: FETCH_CATALOG_START
+    })
 
     const url = `/api/catalogs/${id}`
     axios
         .get(url)
         .then((answer) => {
             dispatch({
-                         type: FETCH_CATALOG_SUCCESS,
-                         payload: answer.data
-                     })
+                type: FETCH_CATALOG_SUCCESS,
+                payload: answer.data
+            })
         })
         .catch((error: AxiosError) => {
             dispatch({
-                         type: FETCH_CATALOG_ERROR,
-                         payload: error.response
-                     })
+                type: FETCH_CATALOG_ERROR,
+                payload: error.response
+            })
         })
 }
 
@@ -71,25 +71,25 @@ export const createCatalog = (data, redirect = '') => async dispatch => {
             }
         })
     await dispatch({
-                       type: CREATE_CATALOG_START
-                   })
+        type: CREATE_CATALOG_START
+    })
     const url = '/api/catalogs'
     axios
         .post(url, formData)
         .then((answer) => {
             dispatch({
-                         type: CREATE_CATALOG_SUCCESS,
-                         payload: answer.data
-                     })
+                type: CREATE_CATALOG_SUCCESS,
+                payload: answer.data
+            })
             toast.success(
                 createNotyMsg(answer.data.name, 'каталог создан'))
             dispatch(push(redirect))
         })
         .catch((error: AxiosError) => {
             dispatch({
-                         type: CREATE_CATALOG_ERROR,
-                         payload: error.response
-                     })
+                type: CREATE_CATALOG_ERROR,
+                payload: error.response
+            })
         })
 }
 
@@ -99,9 +99,9 @@ export const deleteCatalogById = (id) => async dispatch => {
         .delete(url)
         .then((answer) => {
             dispatch({
-                         type: DELETE_CATALOG_SUCCESS,
-                         payload: id
-                     })
+                type: DELETE_CATALOG_SUCCESS,
+                payload: id
+            })
             toast.success('Каталог удален')
             dispatch(push('/catalogs'))
         })
@@ -125,8 +125,8 @@ export const updateCatalogFileById = (id, data) => async dispatch => {
         .post(url, formData)
         .then((answer) => {
             dispatch({
-                         type: UPDATE_CATALOG_FILE
-                     })
+                type: UPDATE_CATALOG_FILE
+            })
         })
 }
 
@@ -137,9 +137,9 @@ export const updateCatalogById = (data, id, redirect = '') =>
             .put(url, data)
             .then((answer) => {
                 dispatch({
-                             type: UPDATE_CATALOG_SUCCESS,
-                             payload: answer.data
-                         })
+                    type: UPDATE_CATALOG_SUCCESS,
+                    payload: answer.data
+                })
                 toast.success(
                     createNotyMsg(answer.data.name, 'каталог обновлен'))
                 dispatch(push(redirect))
