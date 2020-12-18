@@ -4,19 +4,25 @@
 }
 
 .invoiceBtnBlock .invoiceBtn {
-    border: 1px dashed #3A405F;
-    border-radius: 10px;
-
-    font-weight: 300;
-    font-size: 12px;
-    line-height: 15px;
-    color: #3A405F;
-    text-align: center;
-    margin-right: 30px;
-    padding: 10px 20px;
-    width: 100%;
-    background: transparent;
+    width: 120px;
+    height: 110px;
+    border: 0;
+    border-radius: 15px;
+    background: #F7F8FA url('/svg/document.svg') center no-repeat;
 }
+
+.invoiceBtnBlock .invoiceBtn span {
+    display: block;
+    margin-top: 10px;
+    padding: 6px 13px;
+    font-weight: 500;
+    font-size: 16px;
+    line-height: 20px;
+    color: var(--orange);
+    background: #F7F8FA;
+    border-radius: 5px;
+}
+
 
 .invoiceBtnBlock .invoiceBtn:last-of-type {
     margin-right: 0;

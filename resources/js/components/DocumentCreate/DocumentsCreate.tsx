@@ -301,21 +301,21 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                         fetchInvoiceHandler(
                             id, 'invoice')}
                     className={classes.invoiceBtn}>
-                    Invoice
+                    <span>Invoice</span>
                 </button>
                 <button
                     onClick={() =>
                         fetchInvoiceHandler(
                             id, 'proforma')}
                     className={classes.invoiceBtn}>
-                    Proforma
+                    <span>Proforma</span>
                 </button>
                 <button
                     onClick={() =>
                         fetchInvoiceHandler(
                             id, 'contract')}
                     className={classes.invoiceBtn}>
-                    Контракт
+                    <span>Контракт</span>
                 </button>
             </div>
             <Modal title={`Генерация документа ${type}`}
