@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {ColumnDescription} from 'react-bootstrap-table-next'
@@ -20,9 +20,11 @@ import {NavLink} from 'react-router-dom'
 import {IRole} from '../Roles/IRoles'
 import SvgEdit from '../UI/iconComponents/Edit'
 import {nameToLinkFormatter} from '../../utils'
+import {SanctumContext} from '../../Sanctum'
 
 const UsersTable = () => {
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchUsers())
@@ -70,16 +72,18 @@ const UsersTable = () => {
     }
     if (!users.length) {
         return <Placeholder
-            description='Нажмите на кнопку «Добавить сотрудника»,
-             чтобы он отображался в списке'
-            link='/settings/users/add' linkName='Добавить сотрудника'
+            description='Нажмите на кнопку «Добавить сотрудника», чтобы он отображался в списке'
+            link={user && user.role.accesses.userCreate == 1 ? 'settings/users/add' : undefined}
+            linkName='Добавить сотрудника'
             title='В этом списке ещё нет сотрудников'/>
     }
     return <AutoTable
         keyField='id'
         data={users}
         rowClickLink='settings/user'
-        button={{link: 'settings/users/add', text: 'Добавить сотрудника'}}
+        button={user && user.role.accesses.userCreate == 1
+            ? {link: 'settings/users/add', text: 'Добавить сотрудника'}
+            : undefined}
         columns={columns}/>
 }
 

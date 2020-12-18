@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -14,18 +14,20 @@ import {fetchUserById} from '../../../store/actions/users'
 // App
 import Error from '../../../components/UI/Error/Error'
 import Loader from '../../../components/UI/Loader/Loader'
+import {SanctumContext} from '../../../Sanctum'
 
 const EditUser: React.FC = () => {
     const dispatch = useDispatch()
     const {id}: any = useParams()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchUserById(id))
     }, [dispatch, id])
 
-    const {user, loading, error} = useSelector(
+    const {userProfile, loading, error} = useSelector(
         (state: IUsersRootState) => ({
-            user: state.usersState.user,
+            userProfile: state.usersState.user,
             loading: state.usersState.loading,
             error: state.usersState.error
         }))
@@ -45,40 +47,44 @@ const EditUser: React.FC = () => {
             </div>
             <div className="col-lg-7 infoBlockText">
                 <p>
-                    {'lastname' in user && user.lastname
-                        ? user.lastname + ' '
+                    {'lastname' in userProfile && userProfile.lastname
+                        ? userProfile.lastname + ' '
                         : ''}
-                    {'name' in user && user.name
-                        ? user.name + ' '
+                    {'name' in userProfile && userProfile.name
+                        ? userProfile.name + ' '
                         : ''}
-                    {'patronymic' in user && user.patronymic
-                        ? user.patronymic + ' '
+                    {'patronymic' in userProfile && userProfile.patronymic
+                        ? userProfile.patronymic + ' '
                         : ''}
                 </p>
                 <p>
-                    {'role' in user
-                        ? user.role.name
+                    {'role' in userProfile
+                        ? userProfile.role.name
                         : '-'
                     }
                 </p>
                 <p>
-                    {'email' in user
-                        ? user.email
+                    {'email' in userProfile
+                        ? userProfile.email
                         : '-'
                     }
                 </p>
                 <p>
-                    {'phone' in user
-                        ? user.phone
+                    {'phone' in userProfile
+                        ? userProfile.phone
                         : '-'
                     }
                 </p>
             </div>
         </div>
-        <NavLink to={`/settings/user/edit/${id}`}
-                 className='editButton'>
-            Редактировать информацию
-        </NavLink>
+        {user && user.role.accesses.userUpdate == 1
+            ? <NavLink
+                to={`/settings/user/edit/${id}`}
+                className='editButton'>
+                Редактировать информацию
+            </NavLink>
+            : null
+        }
     </div>
 }
 

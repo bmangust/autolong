@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -16,10 +16,12 @@ import {fetchRoleById} from '../../../store/actions/roles'
 import Error from '../../../components/UI/Error/Error'
 import Loader from '../../../components/UI/Loader/Loader'
 import roleTranslate from '../../../components/Roles/rolesTranslate.json'
+import {SanctumContext} from '../../../Sanctum'
 
 const EditUser: React.FC = () => {
     const dispatch = useDispatch()
     const {id}: any = useParams()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchRoleById(id))
@@ -77,10 +79,14 @@ const EditUser: React.FC = () => {
                     </div>
                 }
             })}
-        <NavLink to={`/settings/role/edit/${id}`}
-                 className='editButton'>
-            Редактировать информацию
-        </NavLink>
+        {user && user.role.accesses.userRolesUpdate == 1
+            ? <NavLink
+                to={`/settings/role/edit/${id}`}
+                className='editButton'>
+                Редактировать информацию
+            </NavLink>
+            : null
+        }
     </div>
 }
 
