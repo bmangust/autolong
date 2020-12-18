@@ -61,9 +61,9 @@ class Kernel extends ConsoleKernel
 
             $year = Carbon::now()->format('Y');
             $month = Carbon::now()->format('m');
-            $path = '/public/dumps/' . $year . '/' . $month . '/' . $name;
+            $path = '/dumps/' . $year . '/' . $month . '/' . $name;
 
-            Storage::disk('base')->move($name, $path);
+            Storage::disk('base')->move($name, 'public' . $path); //проблема с драйвером
             Dump::create([
                 'path' => $path
             ]);
