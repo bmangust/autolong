@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -17,9 +17,11 @@ import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {nameToLinkFormatter} from '../../../utils'
 import Error from '../../UI/Error/Error'
+import {SanctumContext} from '../../../Sanctum'
 
 const ProvidersTable: React.FC = () => {
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchProviders())
@@ -40,9 +42,9 @@ const ProvidersTable: React.FC = () => {
     }
     if (!providers.length) {
         return <Placeholder
-            description='Нажмите на кнопку «Добавить поставщика»,
-             чтобы он отображался в списке'
-            link='/providercreate' linkName='Добавить поставщика'
+            description='Нажмите на кнопку «Добавить поставщика», чтобы он отображался в списке'
+            link={user && user.role.accesses.providersCreate == 1 ? 'providercreate' : undefined}
+            linkName='Добавить поставщика'
             title='В этом списке ещё нет поставщиков'/>
     }
 
@@ -121,7 +123,9 @@ const ProvidersTable: React.FC = () => {
             rowClickLink='provider'
             expandRowTable={expandRowTable}
             keyField='id' data={providers} columns={columns}
-            button={{link: 'providercreate', text: 'Добавить поставщика'}}/>
+            button={user && user.role.accesses.providersCreate == 1
+                ? {link: 'providercreate', text: 'Добавить поставщика'}
+                : undefined}/>
     )
 }
 

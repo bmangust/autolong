@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -19,9 +19,11 @@ import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {nameToLinkFormatter, tagsConverter, timeConverter} from '../../../utils'
 import Error from '../../UI/Error/Error'
+import {SanctumContext} from '../../../Sanctum'
 
 const CatalogsTable: React.FC = () => {
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchCatalogs())
@@ -76,9 +78,9 @@ const CatalogsTable: React.FC = () => {
     }
     if (!catalogs.length) {
         return <Placeholder
-            description='Нажмите на кнопку «Добавить каталог»,
-             чтобы он отображался в списке'
-            link='/catalogcreate' linkName='Добавить каталог'
+            description='Нажмите на кнопку «Добавить каталог», чтобы он отображался в списке'
+            link={user && user.role.accesses.catalogsCreate == 1 ? 'catalogcreate' : undefined}
+            linkName='Добавить каталог'
             title='В этом списке ещё нет каталогов'/>
     }
 
@@ -134,7 +136,9 @@ const CatalogsTable: React.FC = () => {
             rowClickLink='catalog'
             expandRowTable={expandRowTable}
             keyField='id' data={catalogs} columns={columns}
-            button={{link: 'catalogcreate', text: 'Добавить каталог'}}/>
+            button={user && user.role.accesses.catalogsCreate == 1
+                ? {link: 'catalogcreate', text: 'Добавить каталог'}
+                : undefined}/>
     )
 }
 

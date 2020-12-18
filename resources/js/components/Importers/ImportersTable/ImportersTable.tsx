@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -17,9 +17,11 @@ import {nameToLinkFormatter} from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import {ColumnDescription} from 'react-bootstrap-table-next'
 import Error from '../../UI/Error/Error'
+import {SanctumContext} from '../../../Sanctum'
 
 const ImportersTable: React.FC = () => {
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchImporters())
@@ -41,9 +43,9 @@ const ImportersTable: React.FC = () => {
     }
     if (!importers.length) {
         return <Placeholder
-            description='Нажмите на кнопку «Добавить импортера»,
-             чтобы он отображался в списке'
-            link='importercreate' linkName='Добавить импортера'
+            description='Нажмите на кнопку «Добавить импортера», чтобы он отображался в списке'
+            link={user && user.role.accesses.importersCreate == 1 ? 'importercreate' : undefined}
+            linkName='Добавить импортера'
             title='В этом списке ещё нет импортеров'/>
     }
 
@@ -73,7 +75,9 @@ const ImportersTable: React.FC = () => {
         <AutoTable
             rowClickLink='importer'
             keyField='id' data={importers} columns={columns}
-            button={{link: 'importercreate', text: 'Добавить импортера'}}/>
+            button={user && user.role.accesses.importersCreate == 1
+                ? {link: 'importercreate', text: 'Добавить импортера'}
+                : undefined}/>
     )
 }
 

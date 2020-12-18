@@ -6,9 +6,7 @@ import CatalogsTable
     from '../../components/Catalogs/CatalogsTable/CatalogsTable'
 
 const Catalogs: React.FC = () => {
-    return (
-        <CatalogsTable/>
-    )
+    return <CatalogsTable/>
 }
 
 export default Catalogs

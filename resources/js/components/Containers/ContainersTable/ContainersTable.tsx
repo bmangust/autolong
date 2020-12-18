@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -20,22 +20,22 @@ import AutoTable from '../../UI/AutoTable/AutoTable'
 import {getContainerStatusName, nameToLinkFormatter} from '../../../utils'
 import Error from '../../UI/Error/Error'
 import statuses from '../../../../statuses/statuses.json'
+import {SanctumContext} from '../../../Sanctum'
 
 const ContainersTable: React.FC = () => {
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchContainers())
     }, [dispatch])
 
-    const {containers, loading, error} =
-        useSelector(
-            (state: IContainersRootState) => ({
-                error: state.containersState.error,
-                containers: state.containersState.containers,
-                loading: state.containersState.loading
-            })
-        )
+    const {containers, loading, error} = useSelector((state: IContainersRootState) => ({
+            error: state.containersState.error,
+            containers: state.containersState.containers,
+            loading: state.containersState.loading
+        })
+    )
 
     if (error) {
         return <Error/>
@@ -45,9 +45,9 @@ const ContainersTable: React.FC = () => {
     }
     if (!containers.length) {
         return <Placeholder
-            description='Нажмите на кнопку «Добавить контейнер»,
-             чтобы он отображался в списке'
-            link='/containercreate' linkName='Добавить контейнер'
+            description='Нажмите на кнопку «Добавить контейнер», чтобы он отображался в списке'
+            link={user && user.role.accesses.containersCreate == 1 ? 'containercreate' : undefined}
+            linkName='Добавить контейнер'
             title='В этом списке ещё нет контейнеров'/>
     }
 
@@ -104,7 +104,9 @@ const ContainersTable: React.FC = () => {
             keyField='id' data={containers} columns={columns}
             rowClickLink='container'
             filter={filter}
-            button={{link: 'containercreate', text: 'Добавить контейнер'}}/>
+            button={user && user.role.accesses.containersCreate == 1
+                ? {link: 'containercreate', text: 'Добавить контейнер'}
+                : undefined}/>
     )
 }
 

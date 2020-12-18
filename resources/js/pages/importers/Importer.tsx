@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {NavLink, useParams} from 'react-router-dom'
@@ -18,9 +18,11 @@ import {
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
+import {SanctumContext} from '../../Sanctum'
 
 const Importer: React.FC<IImporter> = () => {
     const {id}: any = useParams()
+    const {user} = useContext(SanctumContext)
 
     const dispatch = useDispatch()
 
@@ -69,10 +71,14 @@ const Importer: React.FC<IImporter> = () => {
                                     : ''}</p>
                             </div>
                         </div>
-                        <NavLink to={`/importeredit/${id}`}
-                                 className='editButton'>
-                            Редактировать информацию
-                        </NavLink>
+                        {user && user.role.accesses.importersUpdate == 1
+                            ? <NavLink
+                                to={`/importeredit/${id}`}
+                                className='editButton'>
+                                Редактировать
+                            </NavLink>
+                            : null
+                        }
                     </div>
                 </div>
                 <SandboxFilesCard

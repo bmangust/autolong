@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -24,10 +24,12 @@ import {
 } from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
+import {SanctumContext} from '../../../Sanctum'
 
 const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     {unpublished = false}) => {
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     let productsKey = 'products'
 
@@ -85,9 +87,9 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
 
     if (!products.length) {
         return <Placeholder
-            description='Нажмите на кнопку «Добавить товар»,
-             чтобы он отображался в списке'
-            link={link} linkName='Добавить товар'
+            description='Нажмите на кнопку «Добавить товар», чтобы он отображался в списке'
+            link={user && user.role.accesses.productsCreate == 1 ? link : undefined}
+            linkName='Добавить товар'
             title='В этом списке ещё нет товаров'/>
     }
 
@@ -172,10 +174,9 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
         expandRowTable={expandRowTable}
         rowClickLink='product'
         keyField='id' data={products} columns={columns}
-        button={{
-            link: link,
-            text: 'Добавить товары'
-        }}
+        button={user && user.role.accesses.productsCreate == 1
+            ? {link: link, text: 'Добавить товары'}
+            : undefined}
     />
 }
 

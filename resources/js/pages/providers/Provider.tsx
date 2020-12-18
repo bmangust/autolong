@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {NavLink, useHistory, useParams} from 'react-router-dom'
@@ -27,9 +27,11 @@ import SvgCatalog from '../../components/UI/iconComponents/Catalog'
 import {ArrowRight} from '../../components/UI/iconComponents'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import SvgBlackLabel from '../../components/UI/iconComponents/BlackLabel'
+import {SanctumContext} from '../../Sanctum'
 
 const Provider: React.FC<IProvider> = () => {
     const {id}: any = useParams()
+    const {user} = useContext(SanctumContext)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -241,17 +243,23 @@ const Provider: React.FC<IProvider> = () => {
                                 </div>
                                 : <p>Каталогов нет</p>}
 
-                            <div className='d-flex justify-content-between
-                            flex-lg-row flex-column'>
-                                <NavLink to={`/provideredit/${id}`}
-                                         className='editButton'>
-                                    Редактировать информацию
-                                </NavLink>
-                                <button onClick={() =>
-                                    onDeleteHandler(provider.id)}
+                            <div className='d-flex justify-content-between flex-lg-row flex-column'>
+                                {user && user.role.accesses.providersUpdate == 1
+                                    ? <NavLink
+                                        to={`/provideredit/${id}`}
+                                        className='editButton'>
+                                        Редактировать
+                                    </NavLink>
+                                    : null
+                                }
+                                {user && user.role.accesses.providersDelete == 1
+                                    ? <button
+                                        onClick={() => onDeleteHandler(provider.id)}
                                         className='btn btn-danger'>
-                                    Удалить поставщика
-                                </button>
+                                        Удалить поставщика
+                                    </button>
+                                    : null
+                                }
                             </div>
                         </div>
                     </div>

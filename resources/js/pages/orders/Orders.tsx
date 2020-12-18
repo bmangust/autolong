@@ -1,13 +1,9 @@
 // React
-import React from 'react';
-import OrdersTable from '../../components/Orders/OrdersTable/OrdersTable';
-
-// Typescript
+import React from 'react'
+import OrdersTable from '../../components/Orders/OrdersTable/OrdersTable'
 
 const Orders: React.FC = () => {
-    return (
-        <OrdersTable/>
-    );
+    return <OrdersTable/>
 }
 
-export default Orders;
+export default Orders

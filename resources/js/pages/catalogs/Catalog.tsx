@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useContext, useEffect} from 'react'
 
 // Third-party
 import {NavLink, useParams} from 'react-router-dom'
@@ -23,9 +23,11 @@ import Error from '../../components/UI/Error/Error'
 import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import {tagsConverter, timeConverter} from '../../utils'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
+import {SanctumContext} from '../../Sanctum'
 
 const Catalog: React.FC<ICatalog> = () => {
     const {id}: any = useParams()
+    const {user} = useContext(SanctumContext)
 
     const dispatch = useDispatch()
 
@@ -76,18 +78,26 @@ const Catalog: React.FC<ICatalog> = () => {
                                     : ''}</p>
                             </div>
                         </div>
-                        <div>{'tags' in catalog
-                            ? tagsConverter(catalog.tags)
-                            : ''}</div>
-                        <NavLink to={`/catalogedit/${id}`}
-                                 className='editButton mr-4'>
-                            Редактировать информацию
-                        </NavLink>
-                        <button
-                            className='btn btn-danger'
-                            onClick={onDeleteHandler}>
-                            Удалить
-                        </button>
+                        <div className='mb-3'>
+                            {'tags' in catalog
+                                ? tagsConverter(catalog.tags)
+                                : ''}
+                        </div>
+                        {user && user.role.accesses.catalogsUpdate == 1
+                            ? <NavLink to={`/catalogedit/${id}`}
+                                       className='editButton mr-4'>
+                                Редактировать информацию
+                            </NavLink>
+                            : null
+                        }
+                        {user && user.role.accesses.catalogsDelete == 1
+                            ? <button
+                                className='btn btn-danger'
+                                onClick={onDeleteHandler}>
+                                Удалить
+                            </button>
+                            : null
+                        }
                     </div>
                 </div>
                 <SandboxFilesCard
@@ -98,9 +108,7 @@ const Catalog: React.FC<ICatalog> = () => {
             </div>
 
             <div className="col-lg-4">
-                <a href={'file' in catalog
-                    ? catalog.file
-                    : ''}
+                <a href={'file' in catalog ? catalog.file : ''}
                    target="_blank"
                    download
                    className="btn btn-success mb-3 w-100"
@@ -124,7 +132,8 @@ const Catalog: React.FC<ICatalog> = () => {
                             <p className="infoBlockText">
                                 {'country' in catalog.provider
                                     ? catalog.provider.country
-                                        ? catalog.provider.country.name : ''
+                                        ? catalog.provider.country.name
+                                        : ''
                                     : ''}
                             </p>
                             <p className="infoBlockHeaders mb-1">

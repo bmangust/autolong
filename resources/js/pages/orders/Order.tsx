@@ -282,8 +282,7 @@ const Order: React.FC<IOrder> = () => {
                                 {order.provider.website}
                             </a>
                         </p>
-                        <p className='infoBlockHeaders mb-1 mt-lg-5
-                                 mt-3'>
+                        <p className='infoBlockHeaders mb-1 mt-lg-5 mt-3'>
                             Перейти на страницу поставщика
                         </p>
                         <NavLink to={'/provider/' + order.provider.id}>

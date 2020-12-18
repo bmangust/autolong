@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useContext} from 'react'
 import {useEffect} from 'react'
 
 // Third-party
@@ -24,9 +24,11 @@ import {
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
 import statuses from '../../../../statuses/statuses.json'
+import {SanctumContext} from '../../../Sanctum'
 
 const OrdersTable: React.FC = () => {
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     useEffect(() => {
         dispatch(fetchOrders())
@@ -47,9 +49,8 @@ const OrdersTable: React.FC = () => {
     if (!orders.length) {
         return (
             <Placeholder
-                description='Нажмите на кнопку «Добавить заказы»,
-             чтобы он отображался в списке'
-                link='orderscreate'
+                description='Нажмите на кнопку «Добавить заказы», чтобы он отображался в списке'
+                link={user && user.role.accesses.ordersCreate == 1 ? 'orderscreate' : undefined}
                 linkName='Добавить заказы'
                 title='В этом списке ещё нет заказов'
             />
@@ -157,7 +158,9 @@ const OrdersTable: React.FC = () => {
             expandRowTable={expandRowTable}
             rowClickLink='order'
             keyField='id' data={orders} columns={columns}
-            button={{link: 'orderscreate', text: 'Добавить заказы'}}
+            button={user && user.role.accesses.ordersCreate == 1
+                ? {link: 'orderscreate', text: 'Добавить заказы'}
+                : undefined}
         />
     )
 }

@@ -1,12 +1,10 @@
 // React
-import React from 'react';
+import React from 'react'
 import ProvidersTable
-    from '../../components/Providers/ProvidersTable/ProvidersTable';
+    from '../../components/Providers/ProvidersTable/ProvidersTable'
 
 const Providers: React.FC = () => {
-    return (
-        <ProvidersTable/>
-    );
-};
+    return <ProvidersTable/>
+}
 
-export default Providers;
+export default Providers
