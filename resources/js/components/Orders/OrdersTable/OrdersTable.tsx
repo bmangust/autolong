@@ -120,7 +120,7 @@ const OrdersTable: React.FC = () => {
         {
             dataField: 'container',
             text: '№ кон.',
-            headerStyle: {width: '85px'},
+            headerStyle: {width: '90px'},
             classes: 'email',
             sort: true,
             formatter: containerFormatter,
