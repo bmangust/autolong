@@ -120,7 +120,7 @@
         </td>
     </tr>
     <tr>
-        <td>Contract {{ $contract['name'] }}</td>
+        <td>Contract {{ $invoice['contractNumber'] ?? '-' }}</td>
     </tr>
     <tr>
         <td>{{ $contract['supply'] }}</td>
