@@ -47,7 +47,7 @@
         </tr>
     </table>
     <p style="display: block; text-align: left; margin-top: 20px; margin-bottom: 25px; font-size: 10px;">
-        К: {{ $importer->name_ru ? $importer->name_ru : '-' }} {{ $importer->address ? $importer->address : '-' }}
+        Для: {{ $importer->name_ru ? $importer->name_ru : '-' }} {{ $importer->address ? $importer->address : '-' }}
         ИНН/КПП 7721305869/ 772101001
     </p>
     <table style="border-collapse: collapse; text-align: center; font-size: 10px;" border="1" width="100%">
