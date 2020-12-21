@@ -25,7 +25,7 @@ import {IOrder} from '../../components/Orders/IOrders'
 // App
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
-import {getContainerStatusName} from '../../utils'
+import {getContainerStatusName, timeConverter} from '../../utils'
 import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import ContainersStatuses
@@ -240,7 +240,9 @@ const Container: React.FC<IContainer> = () => {
                             Дата прибытия на склад
                         </p>
                         <p className="infoBlockText">
-                            -
+                            {'arrivalDate' in container && container.arrivalDate
+                                ? timeConverter(container.arrivalDate)
+                                : '-'}
                         </p>
                     </div>
                 </div>
