@@ -118,7 +118,7 @@ const ProviderForm: React.FC<{
                     <div className="col-lg-6">
                         <label className='w-100 required'
                                htmlFor='nameCompany'>
-                            Укажите название компании
+                            Укажите название компании (Используется для инвойса)
                         </label>
                         <input name="nameCompany" type="text"
                                ref={register({required: true})}

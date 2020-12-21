@@ -209,7 +209,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <Prices/>
+        icon: <Prices/>,
+        access: ['compareIndex']
     },
     {
         name: 'Новинки',
@@ -220,7 +221,8 @@ export const routes: IRoute[] = [
         exact: false,
         private: true,
         fallback: <Loader/>,
-        icon: <NewItems/>
+        icon: <NewItems/>,
+        access: ['productsNewIndex']
     },
     {
         name: 'Поставщики',

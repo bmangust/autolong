@@ -23,9 +23,11 @@ import InputCheckbox
 const CreateRole: React.FC = () => {
     const dispatch = useDispatch()
 
-    const schema = yup.object().shape({
-        name: yup.string().required('Поле обязательно к заполнению')
-    })
+    const schema = yup.object()
+        .shape({
+            name: yup.string()
+                .required('Поле обязательно к заполнению')
+        })
 
     const {register, handleSubmit, errors} =
         useForm({resolver: yupResolver(schema)})
@@ -37,12 +39,13 @@ const CreateRole: React.FC = () => {
     const createRoleHandler =
         handleSubmit((formValues) => {
             const accesses: any = {}
-            Object.entries(formValues).map(([key, value]) => {
-                if (key !== 'name') {
-                    accesses[key] = value ? 1 : 0
-                    delete formValues[key]
-                }
-            })
+            Object.entries(formValues)
+                .map(([key, value]) => {
+                    if (key !== 'name') {
+                        accesses[key] = value ? 1 : 0
+                        delete formValues[key]
+                    }
+                })
             formValues.accesses = accesses
             dispatch(createRole(formValues))
         })
@@ -245,6 +248,30 @@ const CreateRole: React.FC = () => {
                         name='importersDelete'
                         ref={register}
                         label='Удаление импортёра'/>
+                </div>
+            </div>
+
+            <div className='row mb-4'>
+                <div className="col-12">
+                    <p>Новинки</p>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='productsNewIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о новинках'/>
+                </div>
+            </div>
+
+            <div className='row mb-4'>
+                <div className="col-12">
+                    <p>Сравнение цен</p>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='compareIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о сравнении цен'/>
                 </div>
             </div>
 
