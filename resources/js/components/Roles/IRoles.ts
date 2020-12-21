@@ -54,6 +54,9 @@ export interface IRole {
         userRolesDelete: 0 | 1
         userRolesIndex: 0 | 1
 
+        productsNewIndex: 0 | 1
+        compareIndex: 0 | 1
+
         userCreate: 0 | 1
         userUpdate: 0 | 1
         userDelete: 0 | 1

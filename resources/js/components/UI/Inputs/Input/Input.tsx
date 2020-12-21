@@ -10,25 +10,30 @@ import translate from './inputTranslate.json'
 type InputElement = HTMLInputElement | HTMLTextAreaElement;
 
 interface ITextFieldProps {
-    value: string
-    onChange: (val: string) => void
+    value?: string
+    defaultValue?: string
+    onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     label: string
     name: string
-    id: string
+    id?: string
     helperText?: string
     placeholder?: string
     autoFocus?: boolean
-    type?: 'email' | 'password' | 'text'
+    type?: 'email' | 'password' | 'text' | 'date'
     textarea?: boolean
     required?: boolean
+    disabled?: boolean
     error?: boolean
 }
 
 // eslint-disable-next-line react/display-name
-const Input: React.FC = forwardRef<InputElement, ITextFieldProps>((
+const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldProps> &
+    // eslint-disable-next-line react/display-name
+    React.RefAttributes<InputElement>> = forwardRef<InputElement, ITextFieldProps>((
     {
         required, label, id,
-        helperText, error, ...rest
+        helperText, error,
+        type, disabled, ...rest
     }, ref) => {
     let labelNode
     let errorNode
@@ -63,10 +68,11 @@ const Input: React.FC = forwardRef<InputElement, ITextFieldProps>((
         <div className={classes.input}>
             {labelNode}
             <input
+                type={type}
+                disabled={disabled || false}
                 className={inputCls.join(' ')}
                 {...rest}
-                ref={ref as any}
-            />
+                ref={ref as never}/>
             {errorNode}
         </div>
     )
