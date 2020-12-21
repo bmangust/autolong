@@ -25,9 +25,11 @@ import InputCheckbox from '../UI/Inputs/InputCheckbox/InputCheckbox'
 const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
     const dispatch = useDispatch()
 
-    const schema = yup.object().shape({
-        name: yup.string().required('Поле обязательно к заполнению')
-    })
+    const schema = yup.object()
+        .shape({
+            name: yup.string()
+                .required('Поле обязательно к заполнению')
+        })
 
     const defaultValues = {
         name: role.name
@@ -51,12 +53,13 @@ const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
     const createRoleHandler =
         handleSubmit((formValues) => {
             const accesses: any = {}
-            Object.entries(formValues).map(([key, value]) => {
-                if (key !== 'name') {
-                    accesses[key] = value ? 1 : 0
-                    delete formValues[key]
-                }
-            })
+            Object.entries(formValues)
+                .map(([key, value]) => {
+                    if (key !== 'name') {
+                        accesses[key] = value ? 1 : 0
+                        delete formValues[key]
+                    }
+                })
             formValues.accesses = accesses
             dispatch(updateRole(formValues, role.id))
         })
@@ -259,6 +262,30 @@ const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
                         name='importersDelete'
                         ref={register}
                         label='Удаление импортёра'/>
+                </div>
+            </div>
+
+            <div className='row mb-4'>
+                <div className="col-12">
+                    <p>Новинки</p>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='productsNewIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о новинках'/>
+                </div>
+            </div>
+
+            <div className='row mb-4'>
+                <div className="col-12">
+                    <p>Сравнение цен</p>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        name='compareIndex'
+                        ref={register}
+                        label='Доступ и просмотр информации о сравнении цен'/>
                 </div>
             </div>
 
