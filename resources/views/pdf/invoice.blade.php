@@ -25,7 +25,7 @@
 <table style="text-align: left; border-collapse: collapse; font-size: 10px;">
     <tr>
         <td style="width: 500px">
-            Seller: {{ $provider->name}}
+            Seller: {{ $provider->name_company}}
             <br/>
             {{ $provider->beneficiary_address ?: '-' }}
             <br/>
