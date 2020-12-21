@@ -21,6 +21,18 @@
     background-color: rgba(247,248,250, .5);
 }
 
+.dragAccept {
+    background-color: rgba(247,248,250, .5);
+}
+
+.dragActive {
+    background-color: rgba(247,248,250, .5);
+}
+
+.dragReject {
+    background-color: rgba(247,248,250, .5);
+}
+
 .fileList {
     margin: 0;
     padding: 0;
