@@ -98,12 +98,12 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     }
 
     const deleteFormatter = (id) => {
-        return (
-            <button onClick={() => onDeleteHandler(id)}
-                    className='btn btn-link btn-link-expend'>
+        return user && user.role.accesses.productsDelete == 1
+            ? <button onClick={() => onDeleteHandler(id)}
+                      className='btn btn-link btn-link-expend'>
                 Удалить
             </button>
-        )
+            : null
     }
 
     const expandRowTable = [

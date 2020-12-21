@@ -1,5 +1,5 @@
 // React
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 // Third-party
 import {NavLink, useHistory, useParams} from 'react-router-dom'
@@ -33,11 +33,13 @@ import {
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 import OrderPayment from '../../components/Orders/OrderPayment/OrderPayment'
 import courses from '../../../courses/courses.json'
+import {SanctumContext} from '../../Sanctum'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
     const [isShow, setIsShow] = useState(false)
     const [course, setCourse] = useState('cny')
+    const {user} = useContext(SanctumContext)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -169,11 +171,14 @@ const Order: React.FC<IOrder> = () => {
                             <OrderPayment order={order}/>
                         </div>
                     </Collapse>
-                    <button
-                        onClick={() => onDeleteHandler(order.id)}
-                        className='btn btn-danger'>
-                        Удалить заказ
-                    </button>
+                    {user && user.role.accesses.ordersDelete == 1
+                        ? < button
+                            onClick={() => onDeleteHandler(order.id)}
+                            className='btn btn-danger'>
+                            Удалить заказ
+                        </button>
+                        : null
+                    }
                 </div>
             </div>
 

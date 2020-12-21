@@ -1,5 +1,5 @@
 // React
-import React, {useEffect, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 
 // Third-party
 import {NavLink, useParams} from 'react-router-dom'
@@ -35,6 +35,7 @@ import OrderPackage from '../../components/OrderPackage/OrderPackages'
 import {createOrderInvoice} from '../../store/actions/orders'
 import SvgPlusGrey from '../../components/UI/iconComponents/PlusGrey'
 import SvgDownloadGrey from '../../components/UI/iconComponents/DownloadGrey'
+import {SanctumContext} from '../../Sanctum'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -42,6 +43,7 @@ const Container: React.FC<IContainer> = () => {
     const [activeOrder, setActiveOrder] = useState<null | IOrder>(null)
     const [packingList, setPackingList] = useState(false)
     const dispatch = useDispatch()
+    const {user} = useContext(SanctumContext)
 
     const {container, loading, error} = useSelector(
         (state: IContainersRootState) => ({
@@ -88,11 +90,14 @@ const Container: React.FC<IContainer> = () => {
                                     ? container.name
                                     : ''}
                             </h2>
-                            <button
-                                className='btn btn-link'
-                                onClick={onDeleteHandler}>
-                                Удалить
-                            </button>
+                            {user && user.role.accesses.containersDelete == 1
+                                ? < button
+                                    className='btn btn-link'
+                                    onClick={onDeleteHandler}>
+                                    Удалить
+                                </button>
+                                : null
+                            }
                             <div className="d-flex">
                                     <span className="infoBlockHeaders mr-3">
                                         Статус контейнера
