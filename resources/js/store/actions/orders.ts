@@ -116,35 +116,38 @@ export const fetchItemsByVendors = (data) => async dispatch => {
     await dispatch({
         type: FETCH_ITEMS_BY_VENDOR_START
     })
-    const numbers = data.numbers.split('\n').filter(el => {
-        return el != null && el != ''
-    })
+    const numbers = data.numbers.split('\n')
+        .filter(el => {
+            return el != null && el != ''
+        })
     const url = '/api/orders/checkproductnumberwithus'
     axios
         .post(url, {numbers})
         .then((answer) => {
             const notFound: any[] = []
-            Object.entries(answer.data).forEach(([key, value]: any) => {
-                if (key === 'number') {
-                    value.forEach(item => {
-                        notFound.push(item)
-                        toast.warn(createNotyMsg(item,
-                            'артикул не найден'))
-                    })
-                }
-            })
+            Object.entries(answer.data)
+                .forEach(([key, value]: any) => {
+                    if (key === 'number') {
+                        value.forEach(item => {
+                            notFound.push(item)
+                            toast.warn(createNotyMsg(item,
+                                'артикул не найден'))
+                        })
+                    }
+                })
             delete answer.data.number
             dispatch({
                 type: FETCH_ITEMS_BY_VENDOR_SUCCESS,
                 payload: answer.data,
                 notFound: notFound
             })
-        }).catch((error: AxiosError) => {
-        dispatch({
-            type: FETCH_ITEMS_BY_VENDOR_ERROR,
-            payload: error.response
         })
-    })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: FETCH_ITEMS_BY_VENDOR_ERROR,
+                payload: error.response
+            })
+        })
 }
 
 export const changeOrderStatus = (id, data) => async dispatch => {
@@ -165,17 +168,18 @@ export const changeOrderStatus = (id, data) => async dispatch => {
             })
             toast.success(createNotyMsg(answer.data.name,
                 'статус заказа изменен'))
-        }).catch((error: AxiosError) => {
-        if (error.response?.status === 400) {
-            toast.error(error.response.data.message)
-        } else {
-            dispatch({
-                type: CHANGE_ORDER_STATUS_ERROR,
-                payload: error.response
-            })
-            toast.error(error.message)
-        }
-    })
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400) {
+                toast.error(error.response.data.message)
+            } else {
+                dispatch({
+                    type: CHANGE_ORDER_STATUS_ERROR,
+                    payload: error.response
+                })
+                toast.error(error.message)
+            }
+        })
 }
 
 export const deleteOrderById = (id) => async dispatch => {
@@ -218,42 +222,42 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
         })
 }
 
-export const createOrderInvoice =
-    (id: number, data: any, type: string, containerId?: number) =>
-        async dispatch => {
-            const url = `/api/orders/${id}/generatepdf${type}`
-            let formData = data
-            if (type !== 'packinglist') {
-                formData = new FormData()
-                Object.entries(data).forEach(([key, val]) => {
+export const createOrderInvoice = (id: number, data: any, type: string, containerId?: number) =>
+    async dispatch => {
+        const url = `/api/orders/${id}/generatepdf${type}`
+        let formData = data
+        if (type !== 'packinglist') {
+            formData = new FormData()
+            Object.entries(data)
+                .forEach(([key, val]) => {
                     if (Array.isArray(val)) {
                         return formData.append(key, JSON.stringify(val))
                     } else {
                         return formData.append(key, val)
                     }
                 })
-            }
-            axios
-                .post(url, formData, {
-                    responseType: 'blob'
-                })
-                .then(answer => {
-                    const blob = new Blob([answer.data],
-                        {type: 'application/pdf;charset=utf-8'})
-                    if (type === 'packinglist' && containerId) {
-                        dispatch(fetchContainerById(containerId, false))
-                    }
-                    toast.success(`${type} сгенерирован`)
-                    saveAs(blob, `${type}.pdf`)
-                })
-                .catch((error: AxiosError) => {
-                    if (error.response?.status === 400) {
-                        toast.error(error.response.data)
-                    } else {
-                        toast.error(error.message)
-                    }
-                })
         }
+        axios
+            .post(url, formData, {
+                responseType: 'blob'
+            })
+            .then(answer => {
+                const blob = new Blob([answer.data],
+                    {type: 'application/pdf;charset=utf-8'})
+                if (type === 'packinglist' && containerId) {
+                    dispatch(fetchContainerById(containerId, false))
+                }
+                toast.success(`${type} сгенерирован`)
+                saveAs(blob, `${type}.pdf`)
+            })
+            .catch((error: AxiosError) => {
+                if (error.response?.status === 400) {
+                    toast.error(error.response.data)
+                } else {
+                    toast.error(error.message)
+                }
+            })
+    }
 
 export const removeStampByType = (orderId, type) => async dispatch => {
     const url = `/api/orders/${orderId}/deletepdfcontract${type.toLowerCase()}`
