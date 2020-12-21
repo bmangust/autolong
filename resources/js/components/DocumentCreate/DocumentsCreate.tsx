@@ -27,6 +27,7 @@ import Input from '../UI/Inputs/Input/Input'
 import TextEditor from '../UI/TextEditor/TextEditor'
 import FileInput from '../UI/Inputs/FileInput/FileInput'
 import {mapOrder} from '../../utils'
+import translate from '../UI/Inputs/Input/inputTranslate.json'
 
 const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const dispatch = useDispatch()
@@ -315,7 +316,8 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     <span>Счёт</span>
                 </button>
             </div>
-            <Modal title={`Генерация документа ${type}`}
+
+            <Modal title={`Генерация документа ${type in translate ? translate[type] : type}`}
                    setIsOpen={setIsOpen} isOpen={isOpen}>
                 {modal}
             </Modal>

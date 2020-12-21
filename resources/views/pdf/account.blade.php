@@ -108,12 +108,12 @@
 
     <table style="border-collapse: collapse; text-align: left; font-size: 10px;">
         <tr>
-            <td style="font-size: 12px;">Производство: {{ $provider->manufacturer ? $provider->manufacturer : '-' }}
+            <td style="font-size: 12px;">Производитель: {{ $provider->manufacturer ? $provider->manufacturer : '-' }}
             </td>
         </tr>
         <tr>
             <td>
-                Описание оплаты: {{ $statusPayment }}
+                Оплата: {{ $statusPayment }}
             </td>
         </tr>
         <tr>
@@ -141,7 +141,7 @@
             </td>
         </tr>
         <tr>
-            <td style="width: 150px;">СВИФТ:</td>
+            <td style="width: 150px;">Swift:</td>
             <td style="width: 350px;">
                 {{ ($order->provider->beneficiary_swift_address) ?: '-' }}
             </td>
