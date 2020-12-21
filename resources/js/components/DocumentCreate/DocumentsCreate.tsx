@@ -317,6 +317,13 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     className={classes.invoiceBtn}>
                     <span>Контракт</span>
                 </button>
+                <button
+                    onClick={() =>
+                        fetchInvoiceHandler(
+                            id, 'contract')}
+                    className={classes.invoiceBtn}>
+                    <span>Счёт</span>
+                </button>
             </div>
             <Modal title={`Генерация документа ${type}`}
                    setIsOpen={setIsOpen} isOpen={isOpen}>

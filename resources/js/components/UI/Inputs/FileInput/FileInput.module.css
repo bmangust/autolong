@@ -17,6 +17,10 @@
     margin: 1rem 0;
 }
 
+.fileInput:focus {
+    background-color: rgba(247,248,250, .5);
+}
+
 .fileList {
     margin: 0;
     padding: 0;

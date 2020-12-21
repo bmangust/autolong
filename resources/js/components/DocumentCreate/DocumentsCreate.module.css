@@ -1,36 +1,46 @@
 .invoiceBtnBlock {
     display: flex;
     justify-content: space-between;
+    align-items: center;
+    margin: 0 -6px;
 }
 
 .invoiceBtnBlock .invoiceBtn {
-    width: 120px;
-    height: 110px;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 0 1 25%;
+    max-width: 120px;
+    min-height: 110px;
+    margin: 0 6px;
+    padding: 0 !important;
     border: 0;
     border-radius: 15px;
-    background: #F7F8FA url('/svg/document.svg') center no-repeat;
+    background: #F7F8FA url('/svg/document.svg') right 30px center no-repeat;
 }
 
 .invoiceBtnBlock .invoiceBtn span {
+    position: relative;
     display: block;
-    margin-top: 10px;
-    padding: 6px 13px;
+    width: 100%;
+    margin-top: 7px;
+    padding: 7px 7px;
     font-weight: 500;
     font-size: 16px;
     line-height: 20px;
     color: var(--orange);
     background: #F7F8FA;
-    border-radius: 5px;
-}
-
-
-.invoiceBtnBlock .invoiceBtn:last-of-type {
-    margin-right: 0;
 }
 
 @media (max-width: 767px) {
+
+    .invoiceBtnBlock {
+        flex-wrap: wrap;
+    }
+
     .invoiceBtnBlock .invoiceBtn {
-        margin-right: 10px;
-        padding: 10px 10px;
+        flex: 0 0 50%;
+        margin-bottom: 12px;
     }
 }
