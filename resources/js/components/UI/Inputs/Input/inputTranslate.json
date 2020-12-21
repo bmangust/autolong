@@ -15,6 +15,7 @@
     "statusPayment": "Статус оплаты",
     "contractNumber": "Номер контракта",
     "proformaNumber": "Номер проформы",
+    "accountNumber": "Номер счета",
     "proforma": "Проформа",
     "paymentTerms": "Условия оплаты",
     "additionalField": "Дополнительное поле",

@@ -27,29 +27,37 @@ class Order extends Model
     protected $fillable = ['name', 'provider_id'];
 
     public $contractActualRows = [
-        'name' => null,
-        'supply' => null,
-        'date' => null,
-        'directorRu' => null,
-        'directorEn' => null,
-        'classificationRu' => null,
-        'classificationEn' => null,
-        'contractEndDate' => null
+            'name' => null,
+            'supply' => null,
+            'date' => null,
+            'directorRu' => null,
+            'directorEn' => null,
+            'classificationRu' => null,
+            'classificationEn' => null,
+            'contractEndDate' => null
     ];
 
     public $proformaActualRows = [
-        'supply' => null,
-        'statusPayment' => null,
-        'contractNumber' => null,
-        'proformaNumber' => null,
-        'date' => null
+            'supply' => null,
+            'statusPayment' => null,
+            'contractNumber' => null,
+            'proformaNumber' => null,
+            'date' => null
     ];
 
     public $invoiceActualRows = [
-        'paymentTerms' => null,
-        'contractNumber' => null,
-        'proformaStatusPayment' => null,
-        'additionalField' => null
+            'paymentTerms' => null,
+            'contractNumber' => null,
+            'proformaStatusPayment' => null,
+            'additionalField' => null
+    ];
+
+    public $accountActualRows = [
+            'supply' => null,
+            'statusPayment' => null,
+            'contractNumber' => null,
+            'accountNumber' => null,
+            'date' => null
     ];
 
     public function provider()
@@ -91,6 +99,12 @@ class Order extends Model
     {
         return $this->hasOne('App\ProformaDocument');
     }
+
+    public function account()
+    {
+        return $this->hasOne('App\AccountDocument');
+    }
+
 
     public function addOrderItems($items)
     {
@@ -231,7 +245,7 @@ class Order extends Model
             $this->status = $status;
 
             if ((is_null($this->arrival_date) && is_null($this->city_id)) ||
-                (!is_null($city) && !is_null($arrivalDate))) {
+                    (!is_null($city) && !is_null($arrivalDate))) {
                 $this->city_id = $city;
                 $this->arrival_date = $arrivalDate;
             }
@@ -270,6 +284,36 @@ class Order extends Model
         return true;
     }
 
+    public function generateAccount(): bool
+    {
+        $account = new AccountDocument();
+
+        $account->order_id = $this->id;
+        $account->save();
+
+        $account = $this->account;
+
+        if (!is_null($this->contract)) {
+            $contractInfo = $this->contract->getInfo();
+        } else {
+            $contractInfo = ContractDocument::whereOrderId($this->id)->first()->getInfo();
+        }
+
+        $supply = $contractInfo->supply;
+        $statusPayment = $this->status_payment;
+        $contractNumber = $contractInfo->name;
+        $date = Carbon::now()->format('Y/m/d');
+
+        $account->saveInfoWithJson([
+                'supply' => $supply,
+                'statusPayment' => $statusPayment,
+                'contractNumber' => $contractNumber,
+                'accountNumber' => $account->id,
+                'date' => $date
+        ]);
+        return true;
+    }
+
     public function generateInvoice(): bool
     {
         $invoice = new InvoiceDocument();
@@ -292,9 +336,9 @@ class Order extends Model
         $paymentTerms = $contractInfo->supply . ' by proforma invoice ' . $proformaInfo->proformaNumber . ' dated ' . Carbon::now()->format('Y/m/d');
 
         $invoice->saveInfoWithJson([
-            'paymentTerms' => $paymentTerms,
-            'contractNumber' => $contractNumber,
-            'proformaStatusPayment' => $proformaStatusPayment,
+                'paymentTerms' => $paymentTerms,
+                'contractNumber' => $contractNumber,
+                'proformaStatusPayment' => $proformaStatusPayment,
         ]);
         return true;
     }
@@ -320,11 +364,11 @@ class Order extends Model
         $date = Carbon::now()->format('Y/m/d');
 
         $proforma->saveInfoWithJson([
-            'supply' => $supply,
-            'statusPayment' => $statusPayment,
-            'contractNumber' => $contractNumber,
-            'proformaNumber' => $proforma->id,
-            'date' => $date
+                'supply' => $supply,
+                'statusPayment' => $statusPayment,
+                'contractNumber' => $contractNumber,
+                'proformaNumber' => $proforma->id,
+                'date' => $date
         ]);
         return true;
     }
@@ -344,19 +388,19 @@ class Order extends Model
         $supply = Supply::fob();
 
         $contract->saveInfoWithJson([
-            'name' => $contractName,
-            'supply' => $supply,
-            'date' => $date,
-            'directorRu' => null,
-            'directorEn' => null,
-            'classificationRu' => null,
-            'classificationEn' => null,
-            'contractEndDate' => null,
-            'requisites' => null,
-            'importerStamp' => null,
-            'providerStamp' => null,
-            'importerSignature' => null,
-            'providerSignature' => null
+                'name' => $contractName,
+                'supply' => $supply,
+                'date' => $date,
+                'directorRu' => null,
+                'directorEn' => null,
+                'classificationRu' => null,
+                'classificationEn' => null,
+                'contractEndDate' => null,
+                'requisites' => null,
+                'importerStamp' => null,
+                'providerStamp' => null,
+                'importerSignature' => null,
+                'providerSignature' => null
         ]);
         return true;
     }
@@ -382,7 +426,7 @@ class Order extends Model
     public function saveStamp(string $directory, string $name, $image): string
     {
         return Storage::disk('main')
-            ->putFileAs($directory, $image, $name . '.' . $image->getClientOriginalExtension());
+                ->putFileAs($directory, $image, $name . '.' . $image->getClientOriginalExtension());
     }
 
     public function deletePdfContractFilesStampsOrSignatures(string $name)
@@ -444,5 +488,17 @@ class Order extends Model
             }
         }
         return $invoiceData;
+    }
+
+
+    public function checkActualIfNotThenChangeAccount(array $accountData): array
+    {
+        $actual = array_diff_key($this->accountActualRows, $accountData);
+        if (count($actual) > 0) {
+            foreach ($actual as $key => $value) {
+                $accountData = [$key => $value] + $accountData;
+            }
+        }
+        return $accountData;
     }
 }

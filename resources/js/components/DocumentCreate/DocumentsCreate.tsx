@@ -61,12 +61,12 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
         setIsOpen(false)
     }
 
-    const sorting = ['supply', 'name', 'directorRu',
-                     'directorEn', 'date', 'contractEndDate',
-                     'classificationRu', 'classificationEn',
-                     'requisites', 'importerStamp', 'providerStamp',
-                     'importerSignature', 'providerSignature'
-    ]
+    const sorting = [
+        'supply', 'name', 'directorRu',
+        'directorEn', 'date', 'contractEndDate',
+        'classificationRu', 'classificationEn',
+        'requisites', 'importerStamp', 'providerStamp',
+        'importerSignature', 'providerSignature']
 
     const documentCreateSubmitHandler =
         handleSubmit((formValues) => {
@@ -277,8 +277,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                 </div>
                 <div className="col-lg-6">
                     <button onClick={onCloseModalHandler}
-                            className='btn btn-light w-100
-                        mt-lg-0 mt-3 text-center'>
+                            className='btn btn-light w-100 mt-lg-0 mt-3 text-center'>
                         Отменить
                     </button>
                 </div>
@@ -311,11 +310,8 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     className={classes.invoiceBtn}>
                     <span>Контракт</span>
                 </button>
-                <button
-                    onClick={() =>
-                        fetchInvoiceHandler(
-                            id, 'contract')}
-                    className={classes.invoiceBtn}>
+                <button onClick={() => fetchInvoiceHandler(id, 'account')}
+                        className={classes.invoiceBtn}>
                     <span>Счёт</span>
                 </button>
             </div>

@@ -39,7 +39,7 @@ class OrderController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -50,7 +50,7 @@ class OrderController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function store(Request $request)
     {
@@ -77,7 +77,7 @@ class OrderController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Order $order)
     {
@@ -289,6 +289,9 @@ class OrderController extends Controller
         if (!$order->invoice()->count() || is_null($order->invoice->info)) {
             $order->generateInvoice();
         }
+        if (!$order->account()->count() || is_null($order->account->info)) {
+            $order->generateAccount();
+        }
 
         $all = $order->checkActualIfNotThenChangeContract($all);
         if (!is_null($order->contract)) {
@@ -298,7 +301,6 @@ class OrderController extends Controller
             $contract = ContractDocument::whereOrderId($order->id)->first();
             $contract->saveInfoWithJson($all);
         }
-
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
@@ -334,6 +336,9 @@ class OrderController extends Controller
         }
         if (!$order->invoice()->count() || is_null($order->invoice->info)) {
             $order->generateInvoice();
+        }
+        if (!$order->account()->count() || is_null($order->account->info)) {
+            $order->generateAccount();
         }
 
         $all = $order->checkActualIfNotThenChangeProforma($request->all());
@@ -387,6 +392,9 @@ class OrderController extends Controller
         if (!$order->invoice()->count() || is_null($order->invoice->info)) {
             $order->generateInvoice();
         }
+        if (!$order->account()->count() || is_null($order->account->info)) {
+            $order->generateAccount();
+        }
 
         $all = $order->checkActualIfNotThenChangeInvoice($request->all());
 
@@ -397,7 +405,6 @@ class OrderController extends Controller
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.invoice', [
             'order' => $order,
-
             'importer' => $importer,
             'provider' => $provider,
             'orderItems' => $order->orderItems,
@@ -452,6 +459,61 @@ class OrderController extends Controller
             'importer' => $importer,
             'provider' => $provider,
             'hsCodes' => $hsCodes,
+        ]);
+        return $newPdf->download();
+    }
+
+    public function getPdfAccount(Order $order)
+    {
+        if ($order->account != null) {
+            return response()->json($order->account->getInfo());
+        }
+        return response()->json($order->accountActualRows, 200);
+    }
+
+    public function generatePdfAccount(Request $request, Order $order)
+    {
+        $request->validate([
+                '*' => 'max:255',
+        ]);
+        $importer = Importer::first();
+        $provider = $order->provider;
+
+        if (!$order->contract()->count() || is_null($order->contract->info)) {
+            $order->generateContract();
+        }
+        if (!$order->proforma()->count() || is_null($order->proforma->info)) {
+            $order->generateProforma();
+        }
+        if (!$order->invoice()->count() || is_null($order->invoice->info)) {
+            $order->generateInvoice();
+        }
+        if (!$order->account()->count() || is_null($order->account->info)) {
+            $order->generateAccount();
+        }
+
+        $all = $order->checkActualIfNotThenChangeAccount($request->all());
+
+        $order->account->saveInfoWithJson($all);
+        $account = $order->account->getInfo();
+        $contract = $order->contract->getInfo();
+
+        $date = $proforma->date ?? null;
+        $contractNumber = $account->contractNumber ?? null;
+        $accountNumber = $account->accountNumber ?? null;
+
+        $pdf = App::make('dompdf.wrapper');
+        $newPdf = $pdf->loadView('pdf.account', [
+                'order' => $order,
+                'supply' => $account->supply,
+                'importer' => $importer,
+                'provider' => $provider,
+                'contractNumber' => $contractNumber,
+                'accountNumber' => $accountNumber,
+                'contract' => $contract->name,
+                'orderItems' => $order->orderItems,
+                'statusPayment' => $account->statusPayment,
+                'date' => $date
         ]);
         return $newPdf->download();
     }
