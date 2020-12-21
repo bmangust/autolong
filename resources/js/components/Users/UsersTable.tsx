@@ -4,22 +4,21 @@ import React, {useContext, useEffect} from 'react'
 // Third-party
 import {ColumnDescription} from 'react-bootstrap-table-next'
 import {useDispatch, useSelector} from 'react-redux'
+import {NavLink} from 'react-router-dom'
 
 // Actions
 import {fetchUsers} from '../../store/actions/users'
 
 // Typescript
 import {IUsersRootState} from './IUsers'
+import {IRole} from '../Roles/IRoles'
 
 // App
 import AutoTable from '../UI/AutoTable/AutoTable'
 import Error from '../UI/Error/Error'
 import Loader from '../UI/Loader/Loader'
 import Placeholder from '../UI/Placeholder/Placeholder'
-import {NavLink} from 'react-router-dom'
-import {IRole} from '../Roles/IRoles'
 import SvgEdit from '../UI/iconComponents/Edit'
-import {nameToLinkFormatter} from '../../utils'
 import {SanctumContext} from '../../Sanctum'
 
 const UsersTable = () => {
@@ -30,12 +29,11 @@ const UsersTable = () => {
         dispatch(fetchUsers())
     }, [dispatch])
 
-    const {users, loading, error} = useSelector(
-        (state: IUsersRootState) => ({
-            users: state.usersState.users,
-            loading: state.usersState.loading,
-            error: state.usersState.error
-        }))
+    const {users, loading, error} = useSelector((state: IUsersRootState) => ({
+        users: state.usersState.users,
+        loading: state.usersState.loading,
+        error: state.usersState.error
+    }))
 
     const roleFormatter = (role: IRole, row) => {
         return <div className='d-flex justify-content-between'>
@@ -48,14 +46,17 @@ const UsersTable = () => {
         </div>
     }
 
+    const nameFormatter = (name, row) => {
+        return `${name} ${row.lastname}`
+    }
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'name',
             text: 'Сотрудник',
             classes: 'title',
             sort: true,
-            formatter: (name, row) =>
-                nameToLinkFormatter(name, row, 'settings/user')
+            formatter: nameFormatter
         },
         {
             dataField: 'role',

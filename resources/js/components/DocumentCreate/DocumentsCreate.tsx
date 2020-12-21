@@ -62,10 +62,10 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     }
 
     const sorting = ['supply', 'name', 'directorRu',
-        'directorEn', 'date', 'contractEndDate',
-        'classificationRu', 'classificationEn',
-        'requisites', 'importerStamp', 'providerStamp',
-        'importerSignature', 'providerSignature'
+                     'directorEn', 'date', 'contractEndDate',
+                     'classificationRu', 'classificationEn',
+                     'requisites', 'importerStamp', 'providerStamp',
+                     'importerSignature', 'providerSignature'
     ]
 
     const documentCreateSubmitHandler =
@@ -175,7 +175,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                             return <Input
                                 key={key} id={key}
                                 ref={register} name={key}
-                                defaultValue={value} label={key}/>
+                                defaultValue={value as string} label={key}/>
                         }
                     })}
                 {type === 'contract'
@@ -297,23 +297,17 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
         <>
             <div className={classes.invoiceBtnBlock}>
                 <button
-                    onClick={() =>
-                        fetchInvoiceHandler(
-                            id, 'invoice')}
+                    onClick={() => fetchInvoiceHandler(id, 'invoice')}
                     className={classes.invoiceBtn}>
                     <span>Invoice</span>
                 </button>
                 <button
-                    onClick={() =>
-                        fetchInvoiceHandler(
-                            id, 'proforma')}
+                    onClick={() => fetchInvoiceHandler(id, 'proforma')}
                     className={classes.invoiceBtn}>
                     <span>Proforma</span>
                 </button>
                 <button
-                    onClick={() =>
-                        fetchInvoiceHandler(
-                            id, 'contract')}
+                    onClick={() => fetchInvoiceHandler(id, 'contract')}
                     className={classes.invoiceBtn}>
                     <span>Контракт</span>
                 </button>

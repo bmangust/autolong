@@ -40,9 +40,19 @@ const FileInput: React.FC<IFileInput> =
                 defaultValue={[]}
                 render={({onChange, onBlur, value}) => <>
                     <Dropzone maxFiles={maxFiles} onDrop={onChange}>
-                        {({getRootProps, getInputProps}) =>
-                            (<div className={classes.fileInput}
-                                  {...getRootProps()}>
+                        {({getRootProps, getInputProps, isDragAccept, isDragActive, isDragReject}) => {
+                            const cls = [classes.fileInput]
+                            if (isDragAccept) {
+                                cls.push(classes.dragAccept)
+                            }
+                            if (isDragActive) {
+                                cls.push(classes.dragActive)
+                            }
+                            if (isDragReject) {
+                                cls.push(classes.dragReject)
+                            }
+
+                            return <div className={cls.join(' ')}{...getRootProps()}>
                                 <input
                                     {...getInputProps()}
                                     onBlur={onBlur}
@@ -51,8 +61,11 @@ const FileInput: React.FC<IFileInput> =
                                     {label in translate
                                         ? translate[label]
                                         : label
-                                    }</p>
-                            </div>)}
+                                    }
+                                </p>
+                            </div>
+                        }
+                        }
                     </Dropzone>
                     <ul className={classes.fileList}>
                         {value.map((f, index) => (
