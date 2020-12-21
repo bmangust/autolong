@@ -29,6 +29,7 @@ class Access extends Model
         'products_update',
         'products_delete',
         'products_index',
+        'products_new_index',
 
         'providers_create',
         'providers_update',
@@ -51,7 +52,8 @@ class Access extends Model
         'user_index',
 
         'logs_index',
-        'settings_index'
+        'settings_index',
+        'compare_index'
     ];
 
     public function userRole()
