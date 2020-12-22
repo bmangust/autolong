@@ -20,5 +20,7 @@
     "paymentTerms": "Условия оплаты",
     "additionalField": "Дополнительное поле",
     "proformaStatusPayment": "Статус оплаты проформы",
-    "invoice": "Выставленный счет"
+    "invoice": "Выставленный счет",
+    "contract": "Контракт",
+    "account": "Счёт"
 }

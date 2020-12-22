@@ -18,6 +18,15 @@
     border: 0;
     border-radius: 15px;
     background: #F7F8FA url('/svg/document.svg') right 30px center no-repeat;
+    transition: all .3s linear;
+}
+
+.invoiceBtnBlock .invoiceBtn:hover {
+    background-color: #fff;
+}
+
+.invoiceBtnBlock .invoiceBtn:hover span {
+    background-color: #fff;
 }
 
 .invoiceBtnBlock .invoiceBtn span {
@@ -31,6 +40,7 @@
     line-height: 20px;
     color: var(--orange);
     background: #F7F8FA;
+    transition: all .3s linear;
 }
 
 @media (max-width: 767px) {
