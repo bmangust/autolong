@@ -49,7 +49,8 @@ class Order extends Model
             'paymentTerms' => null,
             'contractNumber' => null,
             'proformaStatusPayment' => null,
-            'additionalField' => null
+            'additionalField' => null,
+            'date' => null
     ];
 
     public $accountActualRows = [

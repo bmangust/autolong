@@ -498,7 +498,7 @@ class OrderController extends Controller
         $account = $order->account->getInfo();
         $contract = $order->contract->getInfo();
 
-        $date = $proforma->date ?? null;
+        $date = $account->date ?? null;
         $contractNumber = $account->contractNumber ?? null;
         $accountNumber = $account->accountNumber ?? null;
 

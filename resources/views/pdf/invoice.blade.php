@@ -34,7 +34,11 @@
         <td style="width: 500px">
             number: {{ $order->id }}
             <br/>
-            date: {{ \Carbon\Carbon::now()->format('d F Y') }}
+            @if(isset($invoice['date']))
+                date: {{ $invoice['date'] }}
+            @else
+                date: {{ \Carbon\Carbon::now()->format('d F Y') }}
+            @endif
         </td>
     </tr>
 </table>
