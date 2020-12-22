@@ -2,14 +2,7 @@ import * as React from "react";
 
 function SvgDownloadGrey(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 22 22"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <svg width="1em" height="1em" viewBox="0 0 22 22" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
             <circle cx={11} cy={11} r={11} fill="#F7F8FA" />
             <g clipPath="url(#download-grey_svg__clip0)">
                 <path
@@ -19,11 +12,7 @@ function SvgDownloadGrey(props: React.SVGProps<SVGSVGElement>) {
             </g>
             <defs>
                 <clipPath id="download-grey_svg__clip0">
-                    <path
-                        fill="#fff"
-                        transform="translate(6 6)"
-                        d="M0 0h10v10H0z"
-                    />
+                    <path fill="#fff" transform="translate(6 6)" d="M0 0h10v10H0z" />
                 </clipPath>
             </defs>
         </svg>

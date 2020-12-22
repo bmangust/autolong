@@ -2,14 +2,7 @@ import * as React from "react";
 
 function SvgInProduction(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 70 70"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <svg width="1em" height="1em" viewBox="0 0 70 70" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
             <path
                 d="M48.425 43.9a1.032 1.032 0 00-1.225-.79l-1.88.406a1.03 1.03 0 10.434 2.014l1.881-.406a1.03 1.03 0 00.79-1.225zM41.733 44.289l-5.213 1.125a1.03 1.03 0 10.434 2.014l5.214-1.125a1.03 1.03 0 00-.434-2.014z"
                 fill="#f44a0e"

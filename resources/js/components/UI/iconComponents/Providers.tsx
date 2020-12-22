@@ -2,14 +2,7 @@ import * as React from "react";
 
 function SvgProviders(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 15 17"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <svg width="1em" height="1em" viewBox="0 0 15 17" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
             <path
                 d="M13.334 1.666H9.848A2.505 2.505 0 007.496 0c-1.09 0-2 .704-2.344 1.666H1.666C.747 1.666 0 2.413 0 3.33V15c0 .919.747 1.666 1.666 1.666h11.668c.919 0 1.666-.747 1.666-1.666V3.331c0-.918-.747-1.665-1.666-1.665zm-5.838 0a.834.834 0 11-.002 1.667.834.834 0 01.002-1.667z"
                 fill="currentColor"

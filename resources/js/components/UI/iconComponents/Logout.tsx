@@ -2,14 +2,7 @@ import * as React from "react";
 
 function SvgLogout(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 15 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <svg width="1em" height="1em" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
             <path
                 d="M9.377 8.128a.628.628 0 00-.628.628v2.498c0 .347-.281.628-.628.628H6.25V2.498c0-.532-.34-1.013-.85-1.19l-.184-.06h2.911c.347 0 .628.282.628.629v1.877a.628.628 0 101.256 0V1.877A1.88 1.88 0 008.135 0H1.404c-.022 0-.044.007-.067.015C1.307.015 1.278 0 1.25 0 .562 0 0 .562 0 1.249v11.246c0 .532.34 1.012.85 1.19l3.76 1.256a1.252 1.252 0 001.633-1.19v-.628h1.885a1.88 1.88 0 001.877-1.877V8.75a.626.626 0 00-.628-.62z"
                 fill="currentColor"
