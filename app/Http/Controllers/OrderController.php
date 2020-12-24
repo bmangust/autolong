@@ -21,18 +21,18 @@ class OrderController extends Controller
     protected function orderCreateValidator(array $data)
     {
         $messages = [
-            'required' => 'Поле :attribute обязательно для заполнения.',
-            'max' => 'Поле :attribute должно содержать не более :max символов',
+                'required' => 'Поле :attribute обязательно для заполнения.',
+                'max' => 'Поле :attribute должно содержать не более :max символов',
         ];
 
         $names = [
-            'name' => 'название',
-            'providerId' => 'поставщик',
+                'name' => 'название',
+                'providerId' => 'поставщик',
         ];
 
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
-            'providerId' => ['required', 'integer'],
+                'name' => ['required', 'string', 'max:255'],
+                'providerId' => ['required', 'integer'],
         ], $messages, $names);
     }
 
@@ -43,7 +43,12 @@ class OrderController extends Controller
      */
     public function index()
     {
-        return response()->json(OrderWithRelationshipsResource::collection(Order::all()->sortByDesc('updated_at'), 200));
+        $orders = Order::with([
+                'orderItems',
+                'provider',
+                'sandboxFiles',
+                'container'])->orderByDesc('updated_at')->get();
+        return response()->json(OrderWithRelationshipsResource::collection($orders, 200));
     }
 
     /**
@@ -127,7 +132,7 @@ class OrderController extends Controller
     public function changeStatus(Request $request, Order $order)
     {
         $request->validate([
-            'status' => 'required',
+                'status' => 'required',
         ]);
         $status = $request->input('status');
         $statusOrderInProduction = array_keys(get_object_vars(Status::getOrderStatuses()), 'Находится в производстве')[0];
@@ -138,7 +143,7 @@ class OrderController extends Controller
                 throw new HttpException(400, 'Указана не актуальная дата');
             }
             $city = City::firstOrCreate([
-                'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
+                    'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
             ]);
             $arrivalDate = $request->input('arrivalDate');
             $order->setOrderStatus($status, $city->id, $arrivalDate);
@@ -153,7 +158,7 @@ class OrderController extends Controller
     public function changeStatusPayment(Request $request, Order $order)
     {
         $request->validate([
-            'statusPayment' => 'required',
+                'statusPayment' => 'required',
         ]);
         $status = $request->input('statusPayment');
         if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
@@ -192,7 +197,7 @@ class OrderController extends Controller
     public function checkProductNumberWithUs(Request $request, Order $order)
     {
         $request->validate([
-            'numbers' => 'required'
+                'numbers' => 'required'
         ]);
         $numbers = array_unique($order->cleanSpaceInArrayItems($request->input('numbers')));
         $unknownProductsKey = 'number';
@@ -234,7 +239,7 @@ class OrderController extends Controller
 
         if ($request->hasFile('providerStamp') && $request->file('providerStamp')->isValid()) {
             $request->validate(
-                ['providerStamp' => 'file|mimes:png,jpg,jpeg']
+                    ['providerStamp' => 'file|mimes:png,jpg,jpeg']
             );
             $providerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('providerStamp'));
         } elseif (isset($oldContract->providerStamp)) {
@@ -245,7 +250,7 @@ class OrderController extends Controller
 
         if ($request->hasFile('importerStamp') && $request->file('importerStamp')->isValid()) {
             $request->validate(
-                ['importerStamp' => 'file|mimes:png,jpg,jpeg']
+                    ['importerStamp' => 'file|mimes:png,jpg,jpeg']
             );
             $importerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('importerStamp'));
         } elseif (isset($oldContract->importerStamp)) {
@@ -258,7 +263,7 @@ class OrderController extends Controller
 
         if ($request->hasFile('importerSignature') && $request->file('importerSignature')->isValid()) {
             $request->validate(
-                ['importerSignature' => 'file|mimes:png,jpg,jpeg']
+                    ['importerSignature' => 'file|mimes:png,jpg,jpeg']
             );
             $importerSignature = $order->saveStamp($signatureDirectory, uniqid('signature-', false), $request->file('importerSignature'));
         } elseif (isset($oldContract->importerSignature)) {
@@ -269,7 +274,7 @@ class OrderController extends Controller
 
         if ($request->hasFile('providerSignature') && $request->file('providerSignature')->isValid()) {
             $request->validate(
-                ['providerSignature' => 'file|mimes:png,jpg,jpeg']
+                    ['providerSignature' => 'file|mimes:png,jpg,jpeg']
             );
             $providerSignature = $order->saveStamp($signatureDirectory, uniqid('signature-', false), $request->file('providerSignature'));
         } elseif (isset($oldContract->providerSignature)) {
@@ -304,10 +309,10 @@ class OrderController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.contract', [
-            'importer' => $importer,
-            'provider' => $provider,
-            'order' => $order,
-            'contract' => $contract,
+                'importer' => $importer,
+                'provider' => $provider,
+                'order' => $order,
+                'contract' => $contract,
         ]);
         return $newPdf->download();
     }
@@ -323,7 +328,7 @@ class OrderController extends Controller
     public function generatePdfProforma(Request $request, Order $order)
     {
         $request->validate([
-            '*' => 'max:255',
+                '*' => 'max:255',
         ]);
         $importer = Importer::first();
         $provider = $order->provider;
@@ -353,16 +358,16 @@ class OrderController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.proforma', [
-            'order' => $order,
-            'supply' => $proforma->supply,
-            'importer' => $importer,
-            'provider' => $provider,
-            'contractNumber' => $contractNumber,
-            'proformaNumber' => $proformaNumber,
-            'contract' => $contract->name,
-            'orderItems' => $order->orderItems,
-            'statusPayment' => $proforma->statusPayment,
-            'date' => $date
+                'order' => $order,
+                'supply' => $proforma->supply,
+                'importer' => $importer,
+                'provider' => $provider,
+                'contractNumber' => $contractNumber,
+                'proformaNumber' => $proformaNumber,
+                'contract' => $contract->name,
+                'orderItems' => $order->orderItems,
+                'statusPayment' => $proforma->statusPayment,
+                'date' => $date
         ]);
         return $newPdf->download();
     }
@@ -378,7 +383,7 @@ class OrderController extends Controller
     public function generatePdfInvoice(Request $request, Order $order)
     {
         $request->validate([
-            '*' => 'max:255',
+                '*' => 'max:255',
         ]);
         $importer = Importer::first();
         $provider = $order->provider;
@@ -404,12 +409,12 @@ class OrderController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.invoice', [
-            'order' => $order,
-            'importer' => $importer,
-            'provider' => $provider,
-            'orderItems' => $order->orderItems,
-            'invoice' => $invoice,
-            'contract' => $contract
+                'order' => $order,
+                'importer' => $importer,
+                'provider' => $provider,
+                'orderItems' => $order->orderItems,
+                'invoice' => $invoice,
+                'contract' => $contract
         ]);
         return $newPdf->download();
     }
@@ -439,11 +444,11 @@ class OrderController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.packing-list', [
-            'order' => $order,
-            'importer' => $importer,
-            'provider' => $provider,
-            'orderItems' => $orderItems,
-            'contract' => $contract
+                'order' => $order,
+                'importer' => $importer,
+                'provider' => $provider,
+                'orderItems' => $orderItems,
+                'contract' => $contract
         ])->setPaper('a4', 'landscape');
         return $newPdf->download();
     }
@@ -455,10 +460,10 @@ class OrderController extends Controller
         $hsCodes = $order->getProductsHsCode();
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.marking', [
-            'order' => $order,
-            'importer' => $importer,
-            'provider' => $provider,
-            'hsCodes' => $hsCodes,
+                'order' => $order,
+                'importer' => $importer,
+                'provider' => $provider,
+                'hsCodes' => $hsCodes,
         ]);
         return $newPdf->download();
     }
@@ -545,8 +550,8 @@ class OrderController extends Controller
     public function indexUnapplied()
     {
         $unappliedOrders = Order::all()->where('container_id', '=', null)
-            ->where('status', '!=', array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0])
-            ->sortByDesc('updated_at');
+                ->where('status', '!=', array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0])
+                ->sortByDesc('updated_at');
         return response()->json(OrderWithRelationshipsResource::collection($unappliedOrders, 200));
     }
 }
