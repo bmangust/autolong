@@ -28,6 +28,7 @@ import TextEditor from '../UI/TextEditor/TextEditor'
 import FileInput from '../UI/Inputs/FileInput/FileInput'
 import {mapOrder} from '../../utils'
 import translate from '../UI/Inputs/Input/inputTranslate.json'
+import SvgDocument from '../UI/iconComponents/Document'
 
 const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
     const dispatch = useDispatch()
@@ -299,20 +300,24 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                 <button
                     onClick={() => fetchInvoiceHandler(id, 'invoice')}
                     className={classes.invoiceBtn}>
+                    <SvgDocument/>
                     <span>Invoice</span>
                 </button>
                 <button
                     onClick={() => fetchInvoiceHandler(id, 'proforma')}
                     className={classes.invoiceBtn}>
+                    <SvgDocument/>
                     <span>Proforma</span>
                 </button>
                 <button
                     onClick={() => fetchInvoiceHandler(id, 'contract')}
                     className={classes.invoiceBtn}>
+                    <SvgDocument/>
                     <span>Контракт</span>
                 </button>
                 <button onClick={() => fetchInvoiceHandler(id, 'account')}
-                        className={classes.invoiceBtn}>
+                    className={classes.invoiceBtn}>
+                    <SvgDocument/>
                     <span>Счёт</span>
                 </button>
             </div>

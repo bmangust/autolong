@@ -2,14 +2,7 @@ import * as React from "react";
 
 function SvgErrorPlaceholder(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 89 89"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <svg width="1em" height="1em" viewBox="0 0 89 89" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
             <path
                 d="M29.835 77.765H9.265C4.155 77.765 0 73.614 0 68.507V9.257C0 4.152 4.155 0 9.265 0H53.74c5.111 0 9.266 4.151 9.266 9.258V35.29a1.853 1.853 0 01-3.706 0V9.258a5.564 5.564 0 00-5.56-5.555H9.266a5.564 5.564 0 00-5.559 5.555v59.25a5.564 5.564 0 005.56 5.554h20.569c1.023 0 1.853.83 1.853 1.851 0 1.022-.83 1.852-1.853 1.852z"
                 fill="currentColor"

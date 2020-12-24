@@ -2,14 +2,7 @@ import * as React from "react";
 
 function SvgArrivedAtCustoms(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 70 66"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <svg width="1em" height="1em" viewBox="0 0 70 66" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
             <path
                 d="M7 41.517l-1.508-1.509-1.65 1.65 2.334 2.333a1.167 1.167 0 001.65 0l5.833-5.833-1.65-1.65-5.008 5.009z"
                 fill="#f44a0e"

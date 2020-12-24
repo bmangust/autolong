@@ -2,14 +2,7 @@ import * as React from "react";
 
 function SvgDownload(props: React.SVGProps<SVGSVGElement>) {
     return (
-        <svg
-            width="1em"
-            height="1em"
-            viewBox="0 0 15 15"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg"
-            {...props}
-        >
+        <svg width="1em" height="1em" viewBox="0 0 15 15" fill="none" xmlns="http://www.w3.org/2000/svg" {...props}>
             <path
                 d="M13.828 9.17v4.072a.587.587 0 01-.586.586H1.758a.587.587 0 01-.586-.586V9.17H0v4.072C0 14.212.789 15 1.758 15h11.484A1.76 1.76 0 0015 13.242V9.17h-1.172z"
                 fill="#f44a0e"
