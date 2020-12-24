@@ -32,7 +32,7 @@ class OrderWithRelationshipsResource extends JsonResource
             'paymentAmount' => $this->payment_amount,
             'surchargeAmount' => $this->surcharge_amount,
             'provider' => new ProviderResource($this->provider),
-            'items' => OrderItemResource::collection($this->orderItems),
+            'items' => OrderItemResource::collection($this->orderItems()->with('product')->get()),
             'cargo' => $this->cargo,
             'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
             'container' => new ContainerResource($this->container),

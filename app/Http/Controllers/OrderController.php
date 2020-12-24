@@ -47,7 +47,8 @@ class OrderController extends Controller
                 'orderItems',
                 'provider',
                 'sandboxFiles',
-                'container'])->orderByDesc('updated_at')->get();
+                'container',
+                'city'])->orderByDesc('updated_at')->get();
         return response()->json(OrderWithRelationshipsResource::collection($orders, 200));
     }
 

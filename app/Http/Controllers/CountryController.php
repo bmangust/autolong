@@ -29,11 +29,12 @@ class CountryController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
-        return response()->json(CountryWithRelationshipsResource::collection(Country::all()), 200);
+        $countries = Country::with('providers')->get();
+        return response()->json(CountryWithRelationshipsResource::collection($countries), 200);
     }
 
     /**

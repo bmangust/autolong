@@ -14,25 +14,30 @@ class ContainerController extends Controller
     protected function containerCreateValidator(array $data)
     {
         $messages = [
-            'required' => 'Поле :attribute обязательно для заполнения.',
+                'required' => 'Поле :attribute обязательно для заполнения.',
         ];
 
         $names = [
-            'orders' => 'заказы',
+                'orders' => 'заказы',
         ];
 
         return Validator::make($data, [
-            'orders' => ['required'],
+                'orders' => ['required'],
         ], $messages, $names);
     }
+
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\Response
      */
     public function index()
     {
-        return response()->json(ContainerWithRelationshipsResource::collection(Container::all()->sortByDesc('updated_at'), 200));
+        $containers = Container::with([
+                'orders',
+                'city',
+                'sandboxFiles'])->orderByDesc('updated_at')->get();
+        return response()->json(ContainerWithRelationshipsResource::collection($containers), 200);
     }
 
     /**
@@ -98,13 +103,13 @@ class ContainerController extends Controller
     public function changeStatus(Request $request, Container $container)
     {
         $request->validate([
-            'status' => 'required'
+                'status' => 'required'
         ]);
         $status = $request->input('status');
         $container->setContainerStatus($status);
 
-        $containerStatus = head((array) Status::getContainerStatuses()->$status);
-        $orderStatuses = (array) Status::getOrderStatuses();
+        $containerStatus = head((array)Status::getContainerStatuses()->$status);
+        $orderStatuses = (array)Status::getOrderStatuses();
         if (in_array($containerStatus, $orderStatuses)) {
             $orderStatus = head(array_keys($orderStatuses, $containerStatus));
             $container->changeStatusInOrders($orderStatus);

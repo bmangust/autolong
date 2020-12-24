@@ -80,7 +80,8 @@ class UserController extends Controller
      */
     public function index()
     {
-        return response()->json(UserWithRelationshipsResource::collection(User::all()->sortByDesc('created_at')), 200);
+        $users = User::with('role')->orderByDesc('created_at')->get();
+        return response()->json(UserWithRelationshipsResource::collection($users), 200);
     }
 
     /**

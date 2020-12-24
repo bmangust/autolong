@@ -9,6 +9,7 @@ class LogController extends Controller
 {
     public function index()
     {
-        return response()->json(LogWithRelationshipsResource::collection(Log::all()->sortByDesc('created_at')), 200);
+        $logs = Log::with('user')->orderByDesc('created_at')->get();
+        return response()->json(LogWithRelationshipsResource::collection($logs), 200);
     }
 }
