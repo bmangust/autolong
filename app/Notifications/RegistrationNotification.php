@@ -55,11 +55,4 @@ class RegistrationNotification extends Notification implements ShouldQueue
                 'updateUser' => $this->updateUser
             ]);
     }
-
-    /**
-     * Get the array representation of the notification.
-     *
-     * @param mixed $notifiable
-     * @return array
-     */
 }
