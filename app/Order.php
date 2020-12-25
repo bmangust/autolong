@@ -307,7 +307,7 @@ class Order extends Model
     public function createInfoPaymentAmountBlock(int $paymentAmount = 0): array
     {
         $block = self::PAYMENT_AMOUNT_INFO_BLOCK;
-        $block['data'] = strtotime(Carbon::now()->format('d.m.Y'));
+        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
         $block['paymentAmount'] = $paymentAmount;
         return $block;
     }
@@ -315,7 +315,7 @@ class Order extends Model
     public function createInfoSurchargeAmountBlock(int $surchargeAmount = 0): array
     {
         $block = self::SURCHARGE_AMOUNT_INFO_BLOCK;
-        $block['data'] = strtotime(Carbon::now()->format('d.m.Y'));
+        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
         $block['surchargeAmount'] = $surchargeAmount;
         return $block;
     }
