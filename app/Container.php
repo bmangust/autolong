@@ -11,9 +11,10 @@ class Container extends Model
     use TranslateToSnakeCaseTrait;
 
     protected $fillable = [
-        'name',
-        'status',
-        'city'
+            'name',
+            'status',
+            'city',
+            'identifier'
     ];
 
     public const SANDBOX_DIRECTORY = '/container/';
@@ -61,14 +62,14 @@ class Container extends Model
 
     public function setContainerStatus($status)
     {
-        $statuses = (array) Status::getContainerStatuses();
+        $statuses = (array)Status::getContainerStatuses();
         $statusContainerInStock = head(array_keys($statuses, "На складе"));
         if (array_key_exists($status, $statuses)) {
             $this->status = $status;
             $status == $statusContainerInStock ? $this->arrival_date = Carbon::now()->toDateString() : $this->arrival_date = null;
             $this->save();
         } else {
-            throw new HttpException(404,'Данного статуса контейнера не существует');
+            throw new HttpException(404, 'Данного статуса контейнера не существует');
         }
     }
 
@@ -76,14 +77,14 @@ class Container extends Model
     {
         $mainCity = Order::findOrFail(head($ordersIds))->city;
         if (is_null($mainCity)) {
-            throw new HttpException(400,'В выбранном заказе не указан город');
+            throw new HttpException(400, 'В выбранном заказе не указан город');
         }
         foreach ($ordersIds as $id) {
             $city = Order::findOrFail($id)->city;
             if ($mainCity == $city) {
                 continue;
             }
-            throw new HttpException(400,'Города в заказах отличаются');
+            throw new HttpException(400, 'Города в заказах отличаются');
         }
         return $mainCity->id;
     }
