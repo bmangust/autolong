@@ -268,17 +268,20 @@ class Order extends Model
     {
         $statuses = Status::getOrderPaymentStatuses();
         $paymentRefunded = Status::getOrderPaymentRefunded();
+        $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
         if (property_exists($statuses, $status)) {
             if (is_null($paymentAmount) && is_null($surchargeAmount) && $status != $paymentRefunded) {
                 $this->status_payment = $status;
                 $this->save();
             } else {
-                $oldPaymentHistory = json_decode($this->payment_history, true);
-                $oldPaymentHistory[] = $this->createInfoPaymentBlock($paymentAmount, $surchargeAmount);
+                if ($status != $paymentPaidInFull) {
+                    $oldPaymentHistory = json_decode($this->payment_history, true);
+                    $oldPaymentHistory[] = $this->createInfoPaymentBlock($paymentAmount, $surchargeAmount);
+                    $this->payment_history = $oldPaymentHistory;
+                }
                 $this->status_payment = $status;
                 $this->payment_amount = $paymentAmount;
                 $this->surcharge_amount = $surchargeAmount;
-                $this->payment_history = $oldPaymentHistory;
                 $this->save();
             }
         } else {
