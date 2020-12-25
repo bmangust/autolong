@@ -23,7 +23,7 @@ import {
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
-import {createNotyMsg} from '../../utils'
+import {createNotyMsg, timeConverter} from '../../utils'
 import {push} from 'connected-react-router'
 import {saveAs} from 'file-saver'
 import {fetchContainerById} from './containers'
@@ -222,7 +222,7 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
         })
 }
 
-export const createOrderInvoice = (id: number, data: any, type: string, containerId?: number) =>
+export const createOrderInvoice = (id: number, data: any, type: string, date: number, containerId?: number) =>
     async dispatch => {
         const url = `/api/orders/${id}/generatepdf${type}`
         let formData = data
@@ -238,9 +238,7 @@ export const createOrderInvoice = (id: number, data: any, type: string, containe
                 })
         }
         axios
-            .post(url, formData, {
-                responseType: 'blob'
-            })
+            .post(url, formData, {responseType: 'blob'})
             .then(answer => {
                 const blob = new Blob([answer.data],
                     {type: 'application/pdf;charset=utf-8'})
@@ -248,7 +246,7 @@ export const createOrderInvoice = (id: number, data: any, type: string, containe
                     dispatch(fetchContainerById(containerId, false))
                 }
                 toast.success(`${type} сгенерирован`)
-                saveAs(blob, `${type}.pdf`)
+                saveAs(blob, `${type === 'account' ? 'bill' : type}-${id}-${timeConverter(date)}.pdf`)
             })
             .catch((error: AxiosError) => {
                 if (error.response?.status === 400) {

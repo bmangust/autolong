@@ -30,7 +30,7 @@ import {mapOrder} from '../../utils'
 import translate from '../UI/Inputs/Input/inputTranslate.json'
 import SvgDocument from '../UI/iconComponents/Document'
 
-const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
+const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => {
     const dispatch = useDispatch()
 
     const [isOpen, setIsOpen] = useState(false)
@@ -70,25 +70,24 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
         'requisites', 'importerStamp', 'providerStamp',
         'importerSignature', 'providerSignature']
 
-    const documentCreateSubmitHandler =
-        handleSubmit((formValues) => {
-            if ('providerStamp' in formValues) {
-                formValues.providerStamp = formValues.providerStamp[0] || ''
-            }
-            if ('importerStamp' in formValues) {
-                formValues.importerStamp = formValues.importerStamp[0] || ''
-            }
-            if ('importerSignature' in formValues) {
-                formValues.importerSignature =
-                    formValues.importerSignature[0] || ''
-            }
-            if ('providerSignature' in formValues) {
-                formValues.providerSignature =
-                    formValues.providerSignature[0] || ''
-            }
-            setIsOpen(false)
-            dispatch(createOrderInvoice(id, formValues, type))
-        })
+    const documentCreateSubmitHandler = handleSubmit((formValues) => {
+        if ('providerStamp' in formValues) {
+            formValues.providerStamp = formValues.providerStamp[0] || ''
+        }
+        if ('importerStamp' in formValues) {
+            formValues.importerStamp = formValues.importerStamp[0] || ''
+        }
+        if ('importerSignature' in formValues) {
+            formValues.importerSignature =
+                formValues.importerSignature[0] || ''
+        }
+        if ('providerSignature' in formValues) {
+            formValues.providerSignature =
+                formValues.providerSignature[0] || ''
+        }
+        setIsOpen(false)
+        dispatch(createOrderInvoice(id, formValues, type, date))
+    })
 
     modal = <>
         <Form onSubmit={documentCreateSubmitHandler}>
@@ -141,7 +140,6 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                                     </button>
                                     : null
                                 }
-
                             </div>
                         } else if (key === 'importerSignature') {
                             return <div className='col-12' key={key}>
@@ -316,7 +314,7 @@ const DocumentsCreate: React.FC<{ id: number }> = ({id}) => {
                     <span>Контракт</span>
                 </button>
                 <button onClick={() => fetchInvoiceHandler(id, 'account')}
-                    className={classes.invoiceBtn}>
+                        className={classes.invoiceBtn}>
                     <SvgDocument/>
                     <span>Счёт</span>
                 </button>

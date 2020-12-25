@@ -58,8 +58,7 @@ const Container: React.FC<IContainer> = () => {
     }
 
     const downloadPack = (order, old) => {
-        dispatch(createOrderInvoice(order.id, {old: old ? 1 : 0},
-            'packinglist'))
+        dispatch(createOrderInvoice(order.id, {old: old ? 1 : 0}, 'packinglist', order.createdAt))
     }
 
     const showPackage = (order, old) => {
@@ -173,8 +172,7 @@ const Container: React.FC<IContainer> = () => {
                                             </p>
                                         }
                                         <p className={classes.btn}
-                                           onClick={() =>
-                                               getMarkingList(order.id)}>
+                                           onClick={() => getMarkingList(order.id, order.createdAt)}>
                                             <SvgDownloadGrey/>
                                             Маркировка
                                         </p>

@@ -44,8 +44,8 @@ export interface IOrder {
     sandboxFiles: ISandboxFile[]
     price: IProductPrice
     provider: IProvider
-    createdAt?: number
-    updatedAt?: number
+    createdAt: number
+    updatedAt: number
 }
 
 export interface IOrdersState {
