@@ -12,28 +12,43 @@ import {timeConverter} from '../../../utils'
 
 type Props = {
     paymentHistory: IPaymentHistory[]
-    orderPrice: number
+    orderPrice?: number
+    paymentAmount: number
+    surchargeAmount: number
 }
 
 const PaymentHistory: React.FC<Props> = (props) => {
-    const {paymentHistory, orderPrice} = props
+    const {paymentHistory, orderPrice, paymentAmount, surchargeAmount} = props
 
     return <div className={classes.paymentHistory}>
-        {paymentHistory.length && [...paymentHistory].reverse()
-            .map((payment) => {
-                return <p key={payment.date}>
-                    <span className={classes.date}>{timeConverter(payment.date)}</span>
-                    <span className={classes.text}>
-                    {payment.paymentAmount >= orderPrice
-                        ? 'Заказ оплачен полностью'
+        {paymentHistory && paymentHistory.length
+            ? [...paymentHistory].reverse()
+                .map((payment) => {
+                    return <p key={payment.id}>
+                        <span className={classes.date}>{timeConverter(payment.date)}</span>
+                        <span className={classes.text}>
+                    {orderPrice && 'paymentAmount' in payment && payment.paymentAmount >= orderPrice
+                        ? `Заказ оплачен полностью - ${'paymentAmount' in payment && payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}`
                         : <>
-                            {payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}
-                            {payment.surchargeAmount ? ` Доплата: ${payment.surchargeAmount} ¥` : null}
+                            {'paymentAmount' in payment && payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}
+                            {'surchargeAmount' in payment && payment.surchargeAmount ? `Доплата: ${payment.surchargeAmount} ¥` : null}
                         </>
                     }
                 </span>
-                </p>
-            })}
+                    </p>
+                })
+            : null
+        }
+        {paymentHistory && paymentHistory.length
+            ? <>
+                <hr/>
+                <div>
+                    <span className={classes.text + ' mr-4'}>{paymentAmount ? `Итого ${paymentAmount} ¥` : ''}</span>
+                    <span className={classes.text}>{surchargeAmount ? `Доплата ${surchargeAmount} ¥` : ''}</span>
+                </div>
+            </>
+            : null
+        }
     </div>
 }
 

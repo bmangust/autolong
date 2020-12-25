@@ -172,7 +172,7 @@ const Order: React.FC<IOrder> = () => {
                         </div>
                     </Collapse>
                     {user && user.role.accesses.ordersDelete == 1
-                        ? < button
+                        ? <button
                             onClick={() => onDeleteHandler(order.id)}
                             className='btn btn-danger'>
                             Удалить заказ

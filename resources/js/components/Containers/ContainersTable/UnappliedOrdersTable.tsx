@@ -59,7 +59,7 @@ const UnappliedOrdersTable: React.FC = () => {
                 }
             })
         }
-        console.log(nonSelectable)
+
         if (isSelect) {
             setSelectedRows((oldState) => (
                 [...oldState, row.id]
@@ -71,6 +71,10 @@ const UnappliedOrdersTable: React.FC = () => {
                 ))
             ))
         }
+    }
+
+    const cargoFormatter = (cargo) => {
+        return cargo === 1 ? 'Карго' : ''
     }
 
     const cityFormatter = (city) => {
@@ -105,6 +109,11 @@ const UnappliedOrdersTable: React.FC = () => {
             text: 'Город',
             formatter: cityFormatter,
             sort: true
+        },
+        {
+            dataField: 'cargo',
+            text: '',
+            formatter: cargoFormatter
         }
     ]
 

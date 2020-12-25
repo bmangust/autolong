@@ -1,5 +1,5 @@
 // React
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch} from 'react-redux'
@@ -36,6 +36,13 @@ const OrderPayment: React.FC<Props> = (props) => {
             ? order.paymentAmount || 0
             : 0
     })
+
+    useEffect(() => {
+        if (order.paymentAmount) {
+            setPaymentAmount(order.paymentAmount)
+        }
+    }, [order.paymentAmount])
+
     const [surchargeAmount, setSurchargeAmount] = useState(() => {
         return (order && 'surchargeAmount' in order)
             ? order.surchargeAmount || 0
@@ -47,8 +54,7 @@ const OrderPayment: React.FC<Props> = (props) => {
     })
 
     const returnPaymentHandler = (statusPayment) => {
-        dispatch(changeOrderStatus(order.id,
-            {statusPayment}))
+        dispatch(changeOrderStatus(order.id, {statusPayment}))
     }
 
     const paymentAmountHandler = (e) => {
@@ -89,9 +95,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                         <div className='col-6'>
                             <label>Оплачено</label>
                             <h2 className='m-0'>
-                                {Math.round(
-                                    paymentAmount / +order.price.cny
-                                    * 100)} %
+                                {Math.round(paymentAmount / +order.price.cny * 100)} %
                                 {surchargeAmount
                                     ? ` + ${surchargeAmount} ¥`
                                     : null
@@ -146,9 +150,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                         <div className='col-6'>
                             <label>Оплачено</label>
                             <h2 className='m-0'>
-                                {Math.round(
-                                    paymentAmount / +order.price.cny
-                                    * 100)} %
+                                {Math.round(paymentAmount / +order.price.cny * 100)} %
                                 {surchargeAmount
                                     ? ` + ${surchargeAmount} ¥`
                                     : null
@@ -161,9 +163,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                                 isCheck={true}
                                 isShowFiles={false}
                                 label='+ Добавить чек'
-                                sandboxFiles={
-                                    order.sandboxFiles
-                                }
+                                sandboxFiles={order.sandboxFiles}
                                 page='orders'/>
                         </div>
                     </div>
@@ -178,9 +178,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                         <div className="col-6">
                             <button
                                 type='button'
-                                onClick={() =>
-                                    returnPaymentHandler(
-                                        'paymentAwaitingRefund')}
+                                onClick={() => returnPaymentHandler('paymentAwaitingRefund')}
                                 className='btn btn-link btn-refund'>
                                 Возврат оплаты
                             </button>
@@ -217,9 +215,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                         <div className='col-6'>
                             <label>Оплачено</label>
                             <h2 className='m-0'>
-                                {Math.round(
-                                    paymentAmount / +order.price.cny
-                                    * 100)} %
+                                {Math.round(paymentAmount / +order.price.cny * 100)} %
                                 {surchargeAmount
                                     ? ` + ${surchargeAmount} ¥`
                                     : null
@@ -249,9 +245,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                         <div className="col-6">
                             <button
                                 type='button'
-                                onClick={() =>
-                                    returnPaymentHandler(
-                                        'paymentAwaitingRefund')}
+                                onClick={() => returnPaymentHandler('paymentAwaitingRefund')}
                                 className='btn btn-link btn-refund'>
                                 Возврат оплаты
                             </button>
@@ -264,8 +258,9 @@ const OrderPayment: React.FC<Props> = (props) => {
         case 'paymentAwaitingRefund': {
             paymentContent = <>
                 <hr className='m-0'/>
-                <button onClick={() => returnPaymentHandler('paymentRefunded')}
-                        className='btn btn-link mb-4 mt-3'>
+                <button
+                    onClick={() => returnPaymentHandler('paymentRefunded')}
+                    className='btn btn-link mb-4 mt-3'>
                     Подтвердить возврат оплаты
                 </button>
             </>
@@ -297,7 +292,9 @@ const OrderPayment: React.FC<Props> = (props) => {
         {paymentContent}
         <PaymentHistory
             paymentHistory={order.paymentHistory}
-            orderPrice={+order.price.cny}
+            paymentAmount={order.paymentAmount}
+            surchargeAmount={order.surchargeAmount}
+            orderPrice={order.price ? +order.price.cny : undefined}
         />
     </>
 }

@@ -50,9 +50,10 @@ export interface IOrder {
 }
 
 export interface IPaymentHistory {
+    id: number
     date: number
-    paymentAmount: number
-    surchargeAmount: number
+    paymentAmount?: number
+    surchargeAmount?: number
 }
 
 export interface IOrdersState {
