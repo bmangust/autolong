@@ -24,13 +24,13 @@ class Order extends Model
     protected $fillable = ['name', 'provider_id'];
 
     private const PAYMENT_AMOUNT_INFO_BLOCK = [
-            'date' => null,
-            'paymentAmount' => null
+            'paymentAmount' => null,
+            'date' => null
     ];
 
     private const SURCHARGE_AMOUNT_INFO_BLOCK = [
-            'date' => null,
             'surchargeAmount' => null,
+            'date' => null
     ];
 
     public $contractActualRows = [
