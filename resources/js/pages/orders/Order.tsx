@@ -243,7 +243,7 @@ const Order: React.FC<IOrder> = () => {
             <div className='card mb-3'>
                 <div className='card-body'>
                     <h2 className='mb-4'>Документы</h2>
-                    <DocumentsCreate id={order.id}/>
+                    <DocumentsCreate date={order.createdAt} id={order.id}/>
                 </div>
             </div>
 

@@ -73,13 +73,14 @@ export const fetchProductById = (id) => async dispatch => {
 
 export const createProduct = (data, redirect = '') => async dispatch => {
     const formData = new FormData()
-    Object.entries(data).map(([key, val]) => {
-        if (Array.isArray(val)) {
-            return formData.append(key, JSON.stringify(val))
-        } else {
-            return formData.append(key, val)
-        }
-    })
+    Object.entries(data)
+        .map(([key, val]) => {
+            if (Array.isArray(val)) {
+                return formData.append(key, JSON.stringify(val))
+            } else {
+                return formData.append(key, val)
+            }
+        })
     await dispatch({
         type: CREATE_PRODUCT_START
     })
@@ -91,9 +92,7 @@ export const createProduct = (data, redirect = '') => async dispatch => {
                 type: CREATE_PRODUCT_SUCCESS,
                 payload: answer.data
             })
-            toast.success(
-                createNotyMsg(answer.data.nameRu,
-                    `товар ${answer.data.autolongNumber} создан`))
+            toast.success(createNotyMsg(answer.data.nameRu, `товар ${answer.data.autolongNumber} создан`))
             if (redirect) {
                 dispatch(push(redirect))
             }
@@ -119,8 +118,7 @@ export const updateProduct = (id, data, redirect = '') => async dispatch => {
                 type: UPDATE_PRODUCT_SUCCESS,
                 payload: answer.data
             })
-            toast.success(
-                createNotyMsg(answer.data.nameRu, 'товар обновлен'))
+            toast.success(createNotyMsg(answer.data.nameRu, 'товар обновлен'))
             if (redirect) {
                 dispatch(push(redirect))
             }
@@ -156,35 +154,38 @@ export const fetchProductsByVendors = (data, published = 1) =>
         await dispatch({
             type: FETCH_BY_VENDOR_START
         })
-        const numbers = data.numbers.split('\n').filter(el => {
-            return el != null && el != ''
-        })
+        const numbers = data.numbers.split('\n')
+            .filter(el => {
+                return el != null && el != ''
+            })
         const url = '/api/products/checknumbercode'
         axios
             .post(url, {numbers, published})
             .then((answer) => {
                 if (published === 0) {
-                    Object.entries(answer.data).forEach(([key, value]: any) => {
-                        if (key === 'published') {
-                            value.forEach(item => {
-                                toast.warn(createNotyMsg(item,
-                                    'товар с таким номером' +
-                                    ' есть опубликованный'))
-                            })
-                        }
-                    })
+                    Object.entries(answer.data)
+                        .forEach(([key, value]: any) => {
+                            if (key === 'published') {
+                                value.forEach(item => {
+                                    toast.warn(createNotyMsg(item,
+                                        'товар с таким номером' +
+                                        ' есть опубликованный'))
+                                })
+                            }
+                        })
                     delete answer.data.published
                 }
                 dispatch({
                     type: FETCH_BY_VENDOR_SUCCESS,
                     payload: answer.data.products
                 })
-            }).catch((error: AxiosError) => {
-            dispatch({
-                type: FETCH_BY_VENDOR_ERROR,
-                payload: error.response
             })
-        })
+            .catch((error: AxiosError) => {
+                dispatch({
+                    type: FETCH_BY_VENDOR_ERROR,
+                    payload: error.response
+                })
+            })
     }
 
 export const deleteProductById = (id, redirect = '') => async dispatch => {
@@ -205,13 +206,14 @@ export const deleteProductById = (id, redirect = '') => async dispatch => {
 
 export const updateProductImageById = (id, data) => async dispatch => {
     const formData = new FormData()
-    Object.entries(data).forEach(([key, val]) => {
-        if (Array.isArray(val)) {
-            return formData.append(key, JSON.stringify(val))
-        } else {
-            return formData.append(key, val)
-        }
-    })
+    Object.entries(data)
+        .forEach(([key, val]) => {
+            if (Array.isArray(val)) {
+                return formData.append(key, JSON.stringify(val))
+            } else {
+                return formData.append(key, val)
+            }
+        })
     const url = `/api/products/${id}/updateimage`
     axios
         .post(url, formData)

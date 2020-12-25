@@ -17,7 +17,7 @@ import {
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
-import {createNotyMsg} from '../../utils'
+import {createNotyMsg, timeConverter} from '../../utils'
 import {push} from 'connected-react-router'
 import {saveAs} from 'file-saver'
 
@@ -148,20 +148,21 @@ export const changeContainerStatus = (id, data) => async dispatch => {
             })
             toast.success(createNotyMsg(answer.data.name,
                 'статус контейнера изменен'))
-        }).catch((error: AxiosError) => {
-        dispatch({
-            type: CHANGE_CONTAINER_STATUS_ERROR,
-            payload: error.response
         })
-        if (error.response?.status === 400) {
-            toast.error(error.response.data)
-        } else {
-            toast.error(error.message)
-        }
-    })
+        .catch((error: AxiosError) => {
+            dispatch({
+                type: CHANGE_CONTAINER_STATUS_ERROR,
+                payload: error.response
+            })
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
 }
 
-export const getMarkingList = (id) => {
+export const getMarkingList = (id, date) => {
     const url = `/api/orders/${id}/getpdfmarkinglist`
     axios
         .get(url, {
@@ -171,7 +172,7 @@ export const getMarkingList = (id) => {
             const blob = new Blob([answer.data],
                 {type: 'application/pdf;charset=utf-8'})
             toast.success(`Маркировочный лист сгенерирован`)
-            saveAs(blob, `markinglist.pdf`)
+            saveAs(blob, `markinglist-${id}-${timeConverter(date)}.pdf`)
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {
