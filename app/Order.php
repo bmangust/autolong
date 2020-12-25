@@ -310,8 +310,8 @@ class Order extends Model
     {
         $block = self::PAYMENT_AMOUNT_INFO_BLOCK;
         $block['id'] = uniqid('', true);
-        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
         $block['paymentAmount'] = $paymentAmount;
+        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
         return $block;
     }
 
@@ -319,8 +319,8 @@ class Order extends Model
     {
         $block = self::SURCHARGE_AMOUNT_INFO_BLOCK;
         $block['id'] = uniqid('', true);
-        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
         $block['surchargeAmount'] = $surchargeAmount;
+        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
         return $block;
     }
 
