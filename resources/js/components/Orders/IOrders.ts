@@ -36,6 +36,7 @@ export interface IOrder {
     items: IProduct[]
     priceCny: number
     city: ICity
+    paymentHistory: IPaymentHistory[]
     cargo: number
     packingList: boolean
     container: IContainer
@@ -46,6 +47,12 @@ export interface IOrder {
     provider: IProvider
     createdAt: number
     updatedAt: number
+}
+
+export interface IPaymentHistory {
+    date: number
+    paymentAmount: number
+    surchargeAmount: number
 }
 
 export interface IOrdersState {

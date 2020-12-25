@@ -15,8 +15,14 @@ import {changeOrderStatus} from '../../../store/actions/orders'
 import Form from '../../UI/Form/Form'
 import Input from '../../UI/Inputs/Input/Input'
 import SandboxFilesCard from '../../SandboxCard/SandboxFilesCard'
+import PaymentHistory from '../PaymentHistory/PaymentHistory'
 
-const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
+type Props = {
+    order: IOrder
+}
+
+const OrderPayment: React.FC<Props> = (props) => {
+    const {order} = props
     const dispatch = useDispatch()
     const {register, handleSubmit} = useForm({
         defaultValues: {
@@ -287,7 +293,13 @@ const OrderPayment: React.FC<{ order: IOrder }> = ({order}) => {
             paymentContent = null
     }
 
-    return paymentContent
+    return <>
+        {paymentContent}
+        <PaymentHistory
+            paymentHistory={order.paymentHistory}
+            orderPrice={+order.price.cny}
+        />
+    </>
 }
 
 export default OrderPayment
