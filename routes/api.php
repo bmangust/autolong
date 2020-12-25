@@ -98,7 +98,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::put('sandboxfiles/{sandboxFile}', 'SandboxFileController@update');
     Route::delete('sandboxfiles/{sandboxFile}', 'SandboxFileController@destroy');
     Route::post('{model}/{id}/savefile', 'SandboxFileController@saveFile')
-        ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе. Не работает для слов оканчивающиеся на y или s
+        ->where('model', '(orders|providers|catalogs|containers|importers|products)'); //типы моделей во множественном числе. Не работает для слов оканчивающиеся на y или ies
     Route::bind('id', function ($id, $route) {
         $model = preg_replace('#s$#', '', $route->parameter('model'));
         $class = 'App\\' . ucfirst(Str::camel($model));

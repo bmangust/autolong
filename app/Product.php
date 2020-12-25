@@ -131,7 +131,11 @@ class Product extends Model
     public static function setProductsCache($published, string $cacheKey)
     {
         $products = ProductWithRelationshipsResource::collection(self::withoutTrashed()
-                ->with(['provider', 'catalog', 'sandboxFiles', 'orderItems'])->wherePublished($published)->orderByDesc('created_at')->get());
+                ->with([
+                        'provider',
+                        'catalog',
+                        'sandboxFiles',
+                        'orderItems'])->wherePublished($published)->orderByDesc('created_at')->get());
         Redis::set($cacheKey, json_encode($products), 'EX', self::PRODUCTS_CACHE_TTL);
         return $products;
     }

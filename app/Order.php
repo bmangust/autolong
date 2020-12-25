@@ -20,11 +20,14 @@ class Order extends Model
     public const CHECK_DIRECTORY = '/checks/';
     public const STAMP_DIRECTORY = '/storage/stamps/';
     public const SIGNATURE_DIRECTORY = '/storage/signature/';
-    /**
-     * @var null[]
-     */
 
     protected $fillable = ['name', 'provider_id'];
+
+    private const PAYMENT_INFO_BLOCK = [
+            'data' => null,
+            'surchargeAmount' => null,
+            'paymentAmount' => null
+    ];
 
     public $contractActualRows = [
             'name' => null,
@@ -106,6 +109,10 @@ class Order extends Model
         return $this->hasOne('App\AccountDocument');
     }
 
+    public function setPaymentHistoryAttribute($value)
+    {
+        $this->attributes['payment_history'] = json_encode($value);
+    }
 
     public function addOrderItems($items)
     {
@@ -266,14 +273,26 @@ class Order extends Model
                 $this->status_payment = $status;
                 $this->save();
             } else {
+                $oldPaymentHistory = json_decode($this->payment_history, true);
+                $oldPaymentHistory[] = $this->createInfoPaymentBlock($paymentAmount, $surchargeAmount);
                 $this->status_payment = $status;
                 $this->payment_amount = $paymentAmount;
                 $this->surcharge_amount = $surchargeAmount;
+                $this->payment_history = $oldPaymentHistory;
                 $this->save();
             }
         } else {
             throw new HttpException(404, 'Данного статуса оплаты не существует');
         }
+    }
+
+    public function createInfoPaymentBlock(int $paymentAmount, int $surchargeAmount): array
+    {
+        $block = self::PAYMENT_INFO_BLOCK;
+        $block['data'] = strtotime(Carbon::now()->format('d.m.Y'));
+        $block['paymentAmount'] = $paymentAmount;
+        $block['surchargeAmount'] = $surchargeAmount;
+        return $block;
     }
 
     public function checkActualDate(string $date): bool
