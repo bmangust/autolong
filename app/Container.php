@@ -42,6 +42,11 @@ class Container extends Model
         return true;
     }
 
+    public static function getByIdentifier(string $identifier)
+    {
+        return self::whereIdentifier($identifier)->first();
+    }
+
     public function getQuantityOrderItems(array $ordersIds): int
     {
         $quantity = 0;

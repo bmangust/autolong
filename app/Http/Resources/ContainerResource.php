@@ -16,18 +16,19 @@ class ContainerResource extends JsonResource
     public function toArray($request)
     {
         $container = [
-            'id' => $this->id,
-            'name' => $this->name,
-            'status' => $this->status,
-            'city' => $this->city_id,
-            'quantityItems' => $this->quantity_order_items,
-            'arrivalDate' => strtotime($this->arrival_date),
-            'createdAt' => strtotime($this->created_at),
-            'updatedAt' => strtotime($this->updated_at),
+                'id' => $this->id,
+                'name' => $this->name,
+                'status' => $this->status,
+                'city' => $this->city_id,
+                'identifier' => $this->identifier,
+                'quantityItems' => $this->quantity_order_items,
+                'arrivalDate' => strtotime($this->arrival_date),
+                'createdAt' => strtotime($this->created_at),
+                'updatedAt' => strtotime($this->updated_at),
         ];
 
         if ($this->checkCargoOrders()) {
-            if (Auth::user()->role->access->orders_show_cargo){
+            if (Auth::user()->role->access->orders_show_cargo) {
                 return $container;
             }
             return (object)[];
