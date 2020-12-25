@@ -31,7 +31,7 @@ class OrderWithRelationshipsResource extends JsonResource
                         'cny' => $this->getOrderSumInCny()],
                 'paymentAmount' => $this->payment_amount,
                 'surchargeAmount' => $this->surcharge_amount,
-                'paymentHistory' => $this->payment_history,
+                'paymentHistory' => json_decode($this->payment_history, true),
                 'provider' => new ProviderResource($this->provider),
                 'items' => OrderItemResource::collection($this->orderItems()->with('product')->get()),
                 'cargo' => $this->cargo,
