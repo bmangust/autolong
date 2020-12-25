@@ -24,7 +24,7 @@ class Order extends Model
     protected $fillable = ['name', 'provider_id'];
 
     private const PAYMENT_INFO_BLOCK = [
-            'data' => null,
+            'date' => null,
             'surchargeAmount' => null,
             'paymentAmount' => null
     ];

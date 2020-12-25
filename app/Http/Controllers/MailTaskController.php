@@ -17,8 +17,9 @@ class MailTaskController extends Controller
         }
 
         return response()->json([
-            'dispatchTime' => $mailTask->dispatch_time,
-            'email' => $mailTask->email
+                'dispatchTime' => $mailTask->dispatch_time,
+                'email' => $mailTask->email,
+                'notifyWeekend' => $mailTask->notify_weekend
         ], 200);
     }
 
@@ -33,8 +34,9 @@ class MailTaskController extends Controller
             $mailTask->update(['email' => $email, 'dispatch_time' => $dispatchTime]);
         }
         return response()->json([
-            'dispatchTime' => $mailTask->dispatch_time,
-            'email' => $mailTask->email
+                'dispatchTime' => $mailTask->dispatch_time,
+                'email' => $mailTask->email,
+                'notifyWeekend' => $mailTask->notify_weekend
         ], 200);
     }
 

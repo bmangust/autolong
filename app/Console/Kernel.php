@@ -81,6 +81,9 @@ class Kernel extends ConsoleKernel
             if ($dispatchTime == $nowTime) {
                 $newProducts = Product::wherePublished(0)->orderByDesc('created_at')->get();
                 if (count($newProducts) > 0) {
+                    if (!$mailTask->notify_weekend && Carbon::now()->isWeekend()) {
+                        return true;
+                    }
                     Notification::route('mail', $email)->notify(new NewProductsNotification($newProducts));
                 }
             }
