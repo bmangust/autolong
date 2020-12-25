@@ -23,10 +23,14 @@ class Order extends Model
 
     protected $fillable = ['name', 'provider_id'];
 
-    private const PAYMENT_INFO_BLOCK = [
+    private const PAYMENT_AMOUNT_INFO_BLOCK = [
+            'date' => null,
+            'paymentAmount' => null
+    ];
+
+    private const SURCHARGE_AMOUNT_INFO_BLOCK = [
             'date' => null,
             'surchargeAmount' => null,
-            'paymentAmount' => null
     ];
 
     public $contractActualRows = [
@@ -246,6 +250,16 @@ class Order extends Model
         return $weight;
     }
 
+    public function countPaymentAmount(int $paymentAmount): int
+    {
+        return $this->payment_amount + $paymentAmount;
+    }
+
+    public function countSurchargeAmount(int $surchargeAmount): int
+    {
+        return $this->surcharge_amount + $surchargeAmount;
+    }
+
     public function setOrderStatus(string $status, int $city = null, string $arrivalDate = null)
     {
         $statuses = Status::getOrderStatuses();
@@ -276,12 +290,13 @@ class Order extends Model
             } else {
                 if ($status != $paymentPaidInFull) {
                     $oldPaymentHistory = json_decode($this->payment_history, true);
-                    $oldPaymentHistory[] = $this->createInfoPaymentBlock($paymentAmount, $surchargeAmount);
+                    $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount);
+                    $oldPaymentHistory[] = $this->createInfoSurchargeAmountBlock($surchargeAmount);
                     $this->payment_history = $oldPaymentHistory;
                 }
                 $this->status_payment = $status;
-                $this->payment_amount = $paymentAmount;
-                $this->surcharge_amount = $surchargeAmount;
+                $this->payment_amount = $this->countPaymentAmount($paymentAmount);
+                $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
                 $this->save();
             }
         } else {
@@ -289,11 +304,18 @@ class Order extends Model
         }
     }
 
-    public function createInfoPaymentBlock(int $paymentAmount, int $surchargeAmount): array
+    public function createInfoPaymentAmountBlock(int $paymentAmount = 0): array
     {
-        $block = self::PAYMENT_INFO_BLOCK;
+        $block = self::PAYMENT_AMOUNT_INFO_BLOCK;
         $block['data'] = strtotime(Carbon::now()->format('d.m.Y'));
         $block['paymentAmount'] = $paymentAmount;
+        return $block;
+    }
+
+    public function createInfoSurchargeAmountBlock(int $surchargeAmount = 0): array
+    {
+        $block = self::SURCHARGE_AMOUNT_INFO_BLOCK;
+        $block['data'] = strtotime(Carbon::now()->format('d.m.Y'));
         $block['surchargeAmount'] = $surchargeAmount;
         return $block;
     }
