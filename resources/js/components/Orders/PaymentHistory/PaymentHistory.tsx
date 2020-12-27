@@ -27,7 +27,7 @@ const PaymentHistory: React.FC<Props> = (props) => {
                     return <p key={payment.id}>
                         <span className={classes.date}>{timeConverter(payment.date)}</span>
                         <span className={classes.text}>
-                    {orderPrice && 'paymentAmount' in payment && payment.paymentAmount >= orderPrice
+                    {orderPrice && 'paymentAmount' in payment && payment.paymentAmount && payment.paymentAmount >= orderPrice
                         ? `Заказ оплачен полностью - ${'paymentAmount' in payment && payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}`
                         : <>
                             {'paymentAmount' in payment && payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}
@@ -43,7 +43,9 @@ const PaymentHistory: React.FC<Props> = (props) => {
             ? <>
                 <hr/>
                 <div>
-                    <span className={classes.text + ' mr-4'}>{paymentAmount ? `Итого ${paymentAmount} ¥` : ''}</span>
+                    <span className={classes.text + ' mr-4'}>
+                        {paymentAmount ? `Итого оплачено ${paymentAmount} ¥ из ${orderPrice} ¥` : ''}
+                    </span>
                     <span className={classes.text}>{surchargeAmount ? `Доплата ${surchargeAmount} ¥` : ''}</span>
                 </div>
             </>

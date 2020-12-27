@@ -1,5 +1,5 @@
 // React
-import React, {useEffect, useState} from 'react'
+import React, {useState} from 'react'
 
 // Third-party
 import {useDispatch} from 'react-redux'
@@ -37,12 +37,6 @@ const OrderPayment: React.FC<Props> = (props) => {
             : 0
     })
 
-    useEffect(() => {
-        if (order.paymentAmount) {
-            setPaymentAmount(order.paymentAmount)
-        }
-    }, [order.paymentAmount])
-
     const [surchargeAmount, setSurchargeAmount] = useState(() => {
         return (order && 'surchargeAmount' in order)
             ? order.surchargeAmount || 0
@@ -64,6 +58,8 @@ const OrderPayment: React.FC<Props> = (props) => {
     const surchargeAmountHandler = (e) => {
         setSurchargeAmount(e.target.value)
     }
+
+    const orderPaymentAmount = order.paymentAmount || 0
 
     let paymentContent
 
@@ -95,11 +91,8 @@ const OrderPayment: React.FC<Props> = (props) => {
                         <div className='col-6'>
                             <label>Оплачено</label>
                             <h2 className='m-0'>
-                                {Math.round(paymentAmount / +order.price.cny * 100)} %
-                                {surchargeAmount
-                                    ? ` + ${surchargeAmount} ¥`
-                                    : null
-                                }
+                                {Math.round((orderPaymentAmount + +paymentAmount) / +order.price.cny * 100)} %
+                                {surchargeAmount ? ` + ${surchargeAmount} ¥` : null}
                             </h2>
                         </div>
                         <div className='col-6 m-auto'>
@@ -108,9 +101,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                                 isCheck={true}
                                 isShowFiles={false}
                                 label='+ Добавить чек'
-                                sandboxFiles={
-                                    order.sandboxFiles
-                                }
+                                sandboxFiles={order.sandboxFiles}
                                 page='orders'/>
                         </div>
                     </div>
@@ -150,11 +141,8 @@ const OrderPayment: React.FC<Props> = (props) => {
                         <div className='col-6'>
                             <label>Оплачено</label>
                             <h2 className='m-0'>
-                                {Math.round(paymentAmount / +order.price.cny * 100)} %
-                                {surchargeAmount
-                                    ? ` + ${surchargeAmount} ¥`
-                                    : null
-                                }
+                                {Math.round((orderPaymentAmount + +paymentAmount) / +order.price.cny * 100)} %
+                                {surchargeAmount ? ` + ${surchargeAmount} ¥` : null}
                             </h2>
                         </div>
                         <div className='col-6 m-auto'>
@@ -191,35 +179,13 @@ const OrderPayment: React.FC<Props> = (props) => {
         case 'paymentPrepaymentMade': {
             paymentContent = <>
                 <hr className='m-0'/>
-                <Form className='mb-4'
-                      onSubmit={changePaymentStatus}>
-                    <div className='row'>
-                        <Input
-                            id='paymentAmount'
-                            type='number'
-                            label='Укажите сумму оплаты ¥'
-                            ref={register}
-                            onChange={paymentAmountHandler}
-                            name='paymentAmount'
-                        />
-                        <Input
-                            id='surchargeAmount'
-                            type='number'
-                            label='* Укажите сумму доплаты ¥'
-                            ref={register}
-                            onChange={surchargeAmountHandler}
-                            name='surchargeAmount'
-                        />
-                    </div>
-                    <div className='row mb-3'>
+                <Form className='mb-4' onSubmit={changePaymentStatus}>
+                    <div className='row mb-3 mt-2'>
                         <div className='col-6'>
                             <label>Оплачено</label>
                             <h2 className='m-0'>
-                                {Math.round(paymentAmount / +order.price.cny * 100)} %
-                                {surchargeAmount
-                                    ? ` + ${surchargeAmount} ¥`
-                                    : null
-                                }
+                                {Math.round(orderPaymentAmount / +order.price.cny * 100)} %
+                                {surchargeAmount ? ` + ${surchargeAmount} ¥` : null}
                             </h2>
                         </div>
                         <div className='col-6 m-auto'>
@@ -228,9 +194,7 @@ const OrderPayment: React.FC<Props> = (props) => {
                                 isCheck={true}
                                 isShowFiles={false}
                                 label='+ Добавить чек'
-                                sandboxFiles={
-                                    order.sandboxFiles
-                                }
+                                sandboxFiles={order.sandboxFiles}
                                 page='orders'/>
                         </div>
                     </div>

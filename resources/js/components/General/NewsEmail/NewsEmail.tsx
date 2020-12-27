@@ -21,6 +21,7 @@ import classes from './NewsEmail.module.css'
 import Form from '../../UI/Form/Form'
 import Input from '../../UI/Inputs/Input/Input'
 import Error from '../../UI/Error/Error'
+import InputCheckbox from '../../UI/Inputs/InputCheckbox/InputCheckbox'
 
 const NewsEmail: React.FC = () => {
     const dispatch = useDispatch()
@@ -32,11 +33,14 @@ const NewsEmail: React.FC = () => {
             emailSettings: state.settingsState.emailSettings
         }))
 
-    const schema = yup.object().shape({
-        dispatchTime: yup.string().required('Поле обязательно к заполнению'),
-        email: yup.string().email('Укажите корректный email')
-            .required('Поле обязательно к заполнению')
-    })
+    const schema = yup.object()
+        .shape({
+            dispatchTime: yup.string()
+                .required('Поле обязательно к заполнению'),
+            email: yup.string()
+                .email('Укажите корректный email')
+                .required('Поле обязательно к заполнению')
+        })
 
     const deleteEmailSettingsHandler = () => {
         dispatch(deleteEmailSettings())
@@ -51,6 +55,7 @@ const NewsEmail: React.FC = () => {
 
     const saveSettingsHandler =
         handleSubmit((formValues) => {
+            formValues.notifyWeekend = formValues.notifyWeekend ? 1 : 0
             dispatch(updateEmailSettings(formValues))
         })
     if (errorEmail) {
@@ -80,6 +85,12 @@ const NewsEmail: React.FC = () => {
                     defaultValue={emailSettings.dispatchTime || ''}
                     label='Время отправки'
                     name='dispatchTime'/>
+                <div className="col-lg-6">
+                    <InputCheckbox
+                        ref={register}
+                        label='Уведомлять в выходные'
+                        name='notifyWeekend'/>
+                </div>
             </div>
             <div className={classes.btns}>
                 <button
