@@ -1,7 +1,88 @@
 .title {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #EB5E28;
+    margin-bottom: 10px;
+}
 
+.text {
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 136.69%;
+    color: #3A405F;
+    margin-bottom: 20px;
+}
+
+.card svg {
+    width: 110px;
+    height: 110px;
+    display: table;
+    margin: auto auto 25px auto;
+}
+
+.card input {
+    margin-bottom: 10px;
+}
+
+.card button {
+    width: 100% !important;
 }
 
 .card {
+    background: #FFFFFF;
+    border-radius: 15px;
+    padding: 20px 35px 25px;
+}
 
+.cancel {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-decoration-line: underline;
+    color: #3A405F;
+    display: table;
+    margin-bottom: 20px;
+}
+
+.track {
+    font-weight: normal;
+    font-size: 13px;
+    line-height: 136.69%;
+    color: #3A405F;
+    margin-bottom: 5px;
+}
+
+.status {
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    text-align: center;
+    color: #B4B6BD;
+    margin-bottom: 0;
+}
+
+.list .date {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #B4B6BD;
+    margin-bottom: 8px;
+}
+
+.list li {
+    margin-bottom: 20px;
+}
+
+.list p {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 125.5%;
+    color: #3A405F;
+    margin-bottom: 0;
+}
+
+.list {
+    max-height: 230px;
+    overflow-y: scroll;
 }

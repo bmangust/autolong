@@ -107,7 +107,7 @@ export default function ordersReducer(
         case DELETE_ORDER_BY_ID:
             return {
                 ...state, orders: state.orders.filter(({id}) =>
-                    id !== action.payload), order: {}
+                    id !== action.payload), order: null
             }
         case LOCATION_CHANGE: {
             let notFound = state.notFound
@@ -141,6 +141,14 @@ export default function ordersReducer(
                 ...state, invoiceInputs: newInputs
             }
         }
+        case 'CHECK_BAIKAL_STATUS':
+            return {
+                ...state, order: action.payload
+            }
+        case 'DELETE_BAIKAL_ID':
+            return {
+                ...state, order: action.payload
+            }
         default:
             return state
     }

@@ -250,6 +250,7 @@ const Order: React.FC<IOrder> = () => {
         </div>
         {order.cargo && user.role.accesses.ordersShowCargo
             ? <OrderBaikal
+                orderId={order.id}
                 baikalTrackerLink={order.baikalTrackerLink}
                 baikalTrackerHistory={order.baikalTrackerHistory}/>
             : null}

@@ -19,7 +19,7 @@ import {
     FETCH_ORDER_INVOICE_SUCCESS,
     FETCH_ORDER_INVOICE_START,
     FETCH_ORDER_INVOICE_ERROR,
-    REMOVE_INPUT_FROM_INVOICE
+    REMOVE_INPUT_FROM_INVOICE, CHECK_BAIKAL_STATUS, DELETE_BAIKAL_ID
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -260,7 +260,7 @@ export const removeStampByType = (orderId, type) => async dispatch => {
     const url = `/api/orders/${orderId}/deletepdfcontract${type.toLowerCase()}`
     axios
         .delete(url)
-        .then((answer) => {
+        .then(() => {
             dispatch({
                 type: REMOVE_INPUT_FROM_INVOICE,
                 payload: type
@@ -269,6 +269,48 @@ export const removeStampByType = (orderId, type) => async dispatch => {
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+}
+
+export const checkBaikalStatus = (baikalId, id) => async dispatch => {
+    const url = `/api/orders/${id}/checkbaikalstatus`
+
+    axios
+        .post(url, {baikalId})
+        .then(({data}) => {
+            toast.success(`${baikalId} Идентификатор сохранен`)
+            dispatch({
+                type: CHECK_BAIKAL_STATUS,
+                payload: data
+            })
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400 || error.response?.status === 404) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+}
+
+export const deleteBaikalId = (id) => async dispatch => {
+    const url = `/api/orders/${id}/deletebaikalstatus`
+
+    axios
+        .delete(url)
+        .then(({data}) => {
+            toast.success(`Идентификатор удален`)
+            dispatch({
+                type: DELETE_BAIKAL_ID,
+                payload: data
+            })
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400 || error.response?.status === 404) {
                 toast.error(error.response.data)
             } else {
                 toast.error(error.message)
