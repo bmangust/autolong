@@ -234,8 +234,6 @@ export const acceptProductById = (id, nameRu) => async dispatch => {
             dispatch(push('/newproducts'))
         })
         .catch((error: AxiosError) => {
-            // eslint-disable-next-line no-debugger
-            debugger
             if (error.response?.status === 400) {
                 toast.warn(error.response.data.message)
             } else {
