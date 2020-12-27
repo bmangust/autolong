@@ -7,6 +7,7 @@ use App\ExchangeRate;
 use App\Http\Resources\ExchangeRateResource;
 use App\MailTask;
 use App\Notifications\NewProductsNotification;
+use App\Order;
 use App\Product;
 use Carbon\Carbon;
 use Illuminate\Console\Scheduling\Schedule;
@@ -47,17 +48,17 @@ class Kernel extends ConsoleKernel
             if (is_null($lattesCourse) || $lattesCourse->rub != $rubToCnyModulBank || $lattesCourse->usd != $cnyToUsdModulBank) {
                 $infoToFile = $exchangeRate->create(['rub' => $rubToCnyModulBank, 'usd' => $cnyToUsdModulBank]);
                 Storage::disk('resources')
-                    ->put(ExchangeRate::FILE_INFO_COURSE, json_encode(new ExchangeRateResource($infoToFile)));
+                        ->put(ExchangeRate::FILE_INFO_COURSE, json_encode(new ExchangeRateResource($infoToFile)));
             }
         })->dailyAt('10:00');
 
         $schedule->call(function () {
             $name = Carbon::now()->format('d-m-Y') . '-dump.sql';
             MySql::create()
-                ->setDbName(env('DB_DATABASE'))
-                ->setUserName(env('DB_USERNAME'))
-                ->setPassword(env('DB_PASSWORD'))
-                ->dumpToFile($name);
+                    ->setDbName(env('DB_DATABASE'))
+                    ->setUserName(env('DB_USERNAME'))
+                    ->setPassword(env('DB_PASSWORD'))
+                    ->dumpToFile($name);
 
             $year = Carbon::now()->format('Y');
             $month = Carbon::now()->format('m');
@@ -65,7 +66,7 @@ class Kernel extends ConsoleKernel
 
             Storage::disk('base')->move($name, 'public' . $path); //проблема с драйвером
             Dump::create([
-                'path' => $path
+                    'path' => $path
             ]);
         })->dailyAt('03:00');
 
@@ -88,6 +89,16 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->everyMinute();
+
+        $schedule->call(function () {
+            $orders = Order::whereNotNull('baikal_tracker_link')->get();
+            foreach ($orders as $order) {
+                $parsingInfo = Order::parseBaikalLinkById($order->baikal_tracker_link);
+                $order->update([
+                        'baikal_tracker_history' => $parsingInfo
+                ]);
+            }
+        })->hourly();
     }
 
     /**
