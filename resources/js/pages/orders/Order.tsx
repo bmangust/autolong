@@ -34,6 +34,7 @@ import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
 import OrderPayment from '../../components/Orders/OrderPayment/OrderPayment'
 import courses from '../../../courses/courses.json'
 import {SanctumContext} from '../../Sanctum'
+import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -138,7 +139,7 @@ const Order: React.FC<IOrder> = () => {
                 <div className='card-body-info'>
                     <h2 className='mb-3'>
                         {order.name}
-                        {order.cargo
+                        {order.cargo && user.role.accesses.ordersShowCargo
                             ? <span className='cargo'>Статус карго</span>
                             : null}
                     </h2>
@@ -247,6 +248,11 @@ const Order: React.FC<IOrder> = () => {
                 page='orders'
             />
         </div>
+        {order.cargo && user.role.accesses.ordersShowCargo
+            ? <OrderBaikal
+                baikalTrackerLink={order.baikalTrackerLink}
+                baikalTrackerHistory={order.baikalTrackerHistory}/>
+            : null}
         {order.provider
             ? <div className='col-lg-4'>
                 <div className='card'>
