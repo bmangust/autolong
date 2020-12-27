@@ -1,0 +1,151 @@
+.order {
+    border: 1px solid #ebebeb;
+    border-radius: 10px;
+    margin-bottom: 10px;
+}
+
+.order:last-of-type {
+    margin-bottom: 0;
+}
+
+.order .orderHeader {
+    border-bottom: 0;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3a405f;
+    padding: 12px 30px;
+    display: flex;
+    justify-content: space-between;
+    position: relative;
+}
+
+.order .orderHeader.active {
+    border-bottom: 1px solid #ebebeb;
+}
+
+.order .orderHeader:after {
+    content: url("/svg/arrow.svg");
+    position: absolute;
+    right: 40px;
+    bottom: 0;
+    top: 0;
+    align-items: center;
+    display: flex;
+}
+
+.order .orderHeader.active:after {
+    transform: rotate(180deg);
+}
+
+.packageBtn:last-of-type {
+    margin-right: 0;
+}
+
+.order .orderHeader a {
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3a405f;
+}
+
+.order .orderHeader a:before {
+    content: '';
+    width: 10px;
+    height: 10px;
+    margin-right: 10px;
+    background: #f44a0e;
+    border-radius: 50%;
+    display: inline-block;
+}
+
+.order .orderBody {
+    padding: 10px 30px;
+}
+
+.order .orderFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 30px 30px;
+}
+
+.order .orderItemsQrt {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #b4b6bd;
+    margin-bottom: 0;
+}
+
+.order .orderPrice {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3a405f;
+    margin-bottom: 0;
+}
+
+.order .orderPrice span {
+    color: #f44a0e;
+    margin-left: 19px;
+}
+
+.documents {
+    display: flex;
+    justify-content: space-between;
+    padding: 15px 30px;
+    border-top: 1px solid #ebebeb;
+}
+
+.documents .btn {
+    position: relative;
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    text-decoration: none;
+    color: #b4b6bd;
+}
+
+.documents .btn svg {
+    margin-right: 5px;
+    width: 22px;
+    height: 22px;
+}
+
+.btn {
+    text-decoration-line: underline;
+    margin-bottom: 0;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+
+@media (max-width: 767px) {
+    .order .orderFooter {
+        padding: 15px;
+        flex-direction: column;
+    }
+
+    .order .orderItemsQrt {
+        margin-bottom: 10px;
+    }
+
+    .documents {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+
+    .documents .btn:not(:last-child) {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-width: 575px) {
+    .order .orderHeader {
+        flex-direction: column;
+    }
+
+    .order .orderHeader a {
+        margin-bottom: 10px;
+    }
+}

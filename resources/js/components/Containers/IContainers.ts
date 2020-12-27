@@ -20,11 +20,11 @@ import {IOrder} from '../Orders/IOrders'
 import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 
 export interface IContainer {
-    id: number | null
+    id: number
     name: string
     status: string
     city: ICity
-    orders: IOrder[] | []
+    orders: IOrder[]
     sandboxFiles: ISandboxFile[] | []
     arrivalDate: number | null
     createdAt: number
@@ -33,7 +33,7 @@ export interface IContainer {
 
 export interface IContainersState {
     containers: IContainer[] | []
-    container: IContainer | {}
+    container: IContainer | null
     unappliedOrders: IOrder[] | []
     loadingUnapplied: boolean
     loading: boolean

@@ -113,6 +113,7 @@ const UnappliedOrdersTable: React.FC = () => {
         {
             dataField: 'cargo',
             text: '',
+            headerStyle: {width: '85px'},
             formatter: cargoFormatter
         }
     ]

@@ -27,7 +27,7 @@ import {IOrdersActionTypes, IOrdersState} from '../../components/Orders/IOrders'
 
 const initialState: IOrdersState = {
     orders: [],
-    order: {},
+    order: null,
     orderProducts: [],
     loading: true,
     loadingStatus: false,
