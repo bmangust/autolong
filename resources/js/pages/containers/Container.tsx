@@ -144,6 +144,7 @@ const Container: React.FC<IContainer> = () => {
             <div className="col-lg-4">
                 {user.role.accesses.ordersShowCargo && container.orders[0].cargo
                     ? <OrderBaikal
+                        isContainer={true}
                         baikalTrackerLink={container.orders[0].baikalTrackerLink}
                         baikalTrackerHistory={container.orders[0].baikalTrackerHistory}/>
                     : null}

@@ -23,7 +23,7 @@ type Props = {
 }
 
 const OrderBaikal: React.FC<Props> = (props) => {
-    const {baikalTrackerLink, baikalTrackerHistory, orderId, isContainer} = props
+    const {baikalTrackerLink, baikalTrackerHistory, orderId, isContainer = false} = props
     const [baikalId, setBaikalId] = useState('')
     const dispatch = useDispatch()
 
