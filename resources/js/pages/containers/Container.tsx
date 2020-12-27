@@ -2,8 +2,9 @@
 import React, {useContext, useEffect, useState} from 'react'
 
 // Third-party
-import {NavLink, useParams} from 'react-router-dom'
+import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
+import {Accordion} from 'react-bootstrap'
 
 // Styles
 import classes from './Container.module.css'
@@ -11,8 +12,7 @@ import classes from './Container.module.css'
 // Actions
 import {
     deleteContainerById,
-    fetchContainerById,
-    getMarkingList
+    fetchContainerById
 } from '../../store/actions/containers'
 
 // Typescript
@@ -26,16 +26,12 @@ import {IOrder} from '../../components/Orders/IOrders'
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import {getContainerStatusName, timeConverter} from '../../utils'
-import OrderItems from '../../components/Orders/OrderItems/OrderItems'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
-import ContainersStatuses
-    from '../../components/Containers/ContainersStatuses/ContainersStatuses'
+import ContainersStatuses from '../../components/Containers/ContainersStatuses/ContainersStatuses'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderPackage from '../../components/OrderPackage/OrderPackages'
-import {createOrderInvoice} from '../../store/actions/orders'
-import SvgPlusGrey from '../../components/UI/iconComponents/PlusGrey'
-import SvgDownloadGrey from '../../components/UI/iconComponents/DownloadGrey'
 import {SanctumContext} from '../../Sanctum'
+import ContainersOrder from '../../components/Containers/ContainersOrder/ContainersOrder'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -57,16 +53,6 @@ const Container: React.FC<IContainer> = () => {
         dispatch(deleteContainerById(id))
     }
 
-    const downloadPack = (order, old) => {
-        dispatch(createOrderInvoice(order.id, {old: old ? 1 : 0}, 'packinglist', order.createdAt))
-    }
-
-    const showPackage = (order, old) => {
-        setIsOpen(true)
-        setPackingList(old)
-        setActiveOrder(order)
-    }
-
     useEffect(() => {
         dispatch(fetchContainerById(id))
     }, [dispatch, id])
@@ -77,177 +63,123 @@ const Container: React.FC<IContainer> = () => {
     if (loading) {
         return <Loader/>
     }
-    return (
-        <div>
-            <div className="row">
-                <div className="col-lg-8">
-                    <div className="card mb-3 card-body">
-                        <div className="d-flex justify-content-between
-                         align-items-baseline flex-sm-row flex-column">
-                            <h2 className="mb-0">
-                                {'name' in container
-                                    ? container.name
-                                    : ''}
-                            </h2>
-                            {user && user.role.accesses.containersDelete == 1
-                                ? < button
-                                    className='btn btn-link'
-                                    onClick={onDeleteHandler}>
-                                    Удалить
-                                </button>
-                                : null
-                            }
-                            <div className="d-flex">
-                                    <span className="infoBlockHeaders mr-3">
-                                        Статус контейнера
-                                    </span>
-                                <span className={
-                                    'bg-primary text-white '
-                                    + classes.containerStatus}>
+    if (!container) {
+        return null
+    }
+    return <div>
+        <div className="row">
+            <div className="col-lg-8">
+                <div className="card mb-3 card-body">
+                    <div className="d-flex justify-content-between align-items-baseline flex-sm-row flex-column">
+                        <h2 className="mb-0">
+                            Контейнер {container.name} от {timeConverter(container.createdAt)}
+                        </h2>
+                        {user && user.role.accesses.containersDelete == 1
+                            ? < button
+                                className='btn btn-link'
+                                onClick={onDeleteHandler}>
+                                Удалить
+                            </button>
+                            : null
+                        }
+                        <div className="d-flex">
+                            <span className="infoBlockHeaders mr-3">
+                                Статус контейнера
+                            </span>
+                            <span className={'bg-primary text-white ' + classes.containerStatus}>
                                     {getContainerStatusName(container.status)}
-                                </span>
-                            </div>
+                            </span>
                         </div>
                     </div>
-
-                    <div className='mb-3'>
-                        <ContainersStatuses
-                            container={container}/>
-                    </div>
-
-                    {container.orders
-                        ? <div className="card mb-3">
-                            <div className='card-body pb-0'>
-                                <h2 className="mb-3">
-                                    Список заказов в контейнере
-                                </h2>
-                            </div>
-                            {container.orders.map((order: IOrder) => (
-                                <div key={order.id + order.name}
-                                     className={classes.order}>
-                                    <div className={classes.orderHeader}>
-                                        <NavLink to={`/order/${order.id}`}>
-                                            Заказ {order.id}
-                                        </NavLink>
-
-                                    </div>
-                                    <div className={classes.orderBody}>
-                                        <OrderItems items={order.items}/>
-                                    </div>
-                                    <div className={classes.orderFooter}>
-                                        <p className={classes.orderItemsQrt}>
-                                            Товаров в заказе
-                                            ({order.items.length})
-                                        </p>
-                                        <p className={classes.orderPrice}>
-                                            Стоимость заказа
-                                            <span>{parseFloat(order.price.cny)
-                                                .toFixed(2)} ¥</span>
-                                        </p>
-                                    </div>
-                                    <div className={classes.documents}>
-                                        {order.packingList
-                                            ? <>
-                                                <p className={classes.btn}
-                                                   onClick={() =>
-                                                       showPackage(order,
-                                                           false)}>
-                                                    <SvgPlusGrey/>
-                                                    Новый упаковочный лист
-                                                </p>
-                                                <p className={classes.btn}
-                                                   onClick={() =>
-                                                       downloadPack(order,
-                                                           true)}>
-                                                    <SvgDownloadGrey/>
-                                                    Упаковочный лист
-                                                </p>
-                                            </>
-                                            : <p className={classes.btn}
-                                                 onClick={() =>
-                                                     showPackage(order,
-                                                         false)}>
-                                                <SvgPlusGrey/>
-                                                Создать упаковочный лист
-                                            </p>
-                                        }
-                                        <p className={classes.btn}
-                                           onClick={() => getMarkingList(order.id, order.createdAt)}>
-                                            <SvgDownloadGrey/>
-                                            Маркировка
-                                        </p>
-                                    </div>
-                                </div>
-                            ))}
-                        </div>
-                        : null
-                    }
-
-                    <SandboxFilesCard
-                        id={container.id}
-                        sandboxFiles={container.sandboxFiles}
-                        page='containers'
-                    />
                 </div>
 
-                {activeOrder
-                    ? <Modal
-                        size='size-700'
-                        title={`Упаковка заказ ${activeOrder.id}`}
-                        isOpen={isOpen}
-                        setIsOpen={setIsOpen}>
-                        <OrderPackage
-                            setIsOpen={setIsOpen}
-                            containerId={container.id}
-                            packingList={packingList}
-                            orderId={activeOrder.id}
-                            items={activeOrder.items}/>
-                    </Modal>
+                <div className='mb-3'>
+                    <ContainersStatuses container={container}/>
+                </div>
+
+                {container.orders
+                    ? <div className="card mb-3">
+                        <div className='card-body pb-0'>
+                            <h2 className="mb-3">
+                                Список заказов в контейнере
+                            </h2>
+                        </div>
+                        <Accordion defaultActiveKey={container.orders[0].id + container.orders[0].name}>
+                            {container.orders.map((order: IOrder) => (
+                                <ContainersOrder
+                                    key={order.id + order.name}
+                                    setIsOpen={setIsOpen}
+                                    setActiveOrder={setActiveOrder}
+                                    setPackingList={setPackingList}
+                                    order={order}/>
+                            ))}
+                        </Accordion>
+                    </div>
                     : null
                 }
 
-                <div className="col-lg-4">
-                    <div className="card card-body-info">
-                        <p className="infoBlockHeaders mb-1">
-                            Город
-                        </p>
-                        <p className="infoBlockText">
-                            {'city' in container
-                                ? container.city.name
-                                : ''}
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Вес
-                        </p>
-                        <p className="infoBlockText">
-                            -
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Коробки
-                        </p>
-                        <p className="infoBlockText">
-                            -
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Дата выхода
-                        </p>
-                        <p className="infoBlockText">
-                            -
-                        </p>
-                        <p className="infoBlockHeaders mb-1">
-                            Дата прибытия на склад
-                        </p>
-                        <p className="infoBlockText">
-                            {'arrivalDate' in container && container.arrivalDate
-                                ? timeConverter(container.arrivalDate)
-                                : '-'}
-                        </p>
-                    </div>
-                </div>
-
+                <SandboxFilesCard
+                    id={container.id}
+                    sandboxFiles={container.sandboxFiles}
+                    page='containers'
+                />
             </div>
+
+            {activeOrder
+                ? <Modal
+                    size='size-700'
+                    title={`Упаковка заказ ${activeOrder.id}`}
+                    isOpen={isOpen}
+                    setIsOpen={setIsOpen}>
+                    <OrderPackage
+                        setIsOpen={setIsOpen}
+                        containerId={container.id}
+                        packingList={packingList}
+                        orderId={activeOrder.id}
+                        items={activeOrder.items}/>
+                </Modal>
+                : null
+            }
+
+            <div className="col-lg-4">
+                <div className="card card-body-info">
+                    <p className="infoBlockHeaders mb-1">
+                        Город
+                    </p>
+                    <p className="infoBlockText">
+                        {container.city.name}
+                    </p>
+                    <p className="infoBlockHeaders mb-1">
+                        Вес
+                    </p>
+                    <p className="infoBlockText">
+                        -
+                    </p>
+                    <p className="infoBlockHeaders mb-1">
+                        Коробки
+                    </p>
+                    <p className="infoBlockText">
+                        -
+                    </p>
+                    <p className="infoBlockHeaders mb-1">
+                        Дата выхода
+                    </p>
+                    <p className="infoBlockText">
+                        -
+                    </p>
+                    <p className="infoBlockHeaders mb-1">
+                        Дата прибытия на склад
+                    </p>
+                    <p className="infoBlockText">
+                        {container.arrivalDate
+                            ? timeConverter(container.arrivalDate)
+                            : '-'}
+                    </p>
+                </div>
+            </div>
+
         </div>
-    )
+    </div>
 }
 
 export default Container

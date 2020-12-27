@@ -129,12 +129,15 @@ const Order: React.FC<IOrder> = () => {
     if (loading) {
         return <Loader/>
     }
+    if (!order) {
+        return null
+    }
     return <div className='row'>
         <div className='col-lg-8'>
             <div className='card mb-3'>
                 <div className='card-body-info'>
                     <h2 className='mb-3'>
-                        {'name' in order ? order.name : ''}
+                        {order.name}
                         {order.cargo
                             ? <span className='cargo'>Статус карго</span>
                             : null}
@@ -183,17 +186,13 @@ const Order: React.FC<IOrder> = () => {
             </div>
 
             <div className='mb-3'>
-                {'provider' in order
-                    ? <OrderStatuses
-                        id={order.id}
-                        providerId={order.provider.id}
-                        status={order.status}
-                        container={order.container}
-                        unscrupulous={order.provider.unscrupulous}
-                    />
-                    : null
-                }
-
+                <OrderStatuses
+                    id={order.id}
+                    providerId={order.provider.id}
+                    status={order.status}
+                    container={order.container}
+                    unscrupulous={order.provider.unscrupulous}
+                />
             </div>
 
             <div className='card mb-3 pb-lg-4 pb-0'>
@@ -214,10 +213,9 @@ const Order: React.FC<IOrder> = () => {
                             </select>
                         </div>
                     </div>
-                    {'items' in order
-                        ? <OrderItems coursesWithout={coursesWithout}
-                                      items={order.items}/>
-                        : null}
+                    <OrderItems
+                        coursesWithout={coursesWithout}
+                        items={order.items}/>
                     <div className='row align-items-center mt-5'>
                         <div className='col-xl-6'>
                             <div className={classes.orderInfo}>
@@ -229,11 +227,7 @@ const Order: React.FC<IOrder> = () => {
                         </div>
                         <div className='col-xl-6'>
                             <div className={classes.orderPriceTotal}>
-                                Общая стоимость
-                                {'price' in order
-                                    ? moneyFormatter(order.price,
-                                        coursesWithout)
-                                    : null}
+                                Общая стоимость {moneyFormatter(order.price, coursesWithout)}
                             </div>
                         </div>
                     </div>
@@ -253,7 +247,7 @@ const Order: React.FC<IOrder> = () => {
                 page='orders'
             />
         </div>
-        {'provider' in order && order.provider
+        {order.provider
             ? <div className='col-lg-4'>
                 <div className='card'>
                     <div className='card-body-info'>

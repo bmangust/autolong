@@ -26,7 +26,7 @@ import {
 
 const initialState: IContainersState = {
     containers: [],
-    container: {},
+    container: null,
     unappliedOrders: [],
     loadingUnapplied: true,
     loading: true,

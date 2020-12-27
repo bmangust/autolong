@@ -17,7 +17,7 @@ import {IContainersRootState} from '../IContainers'
 import Loader from '../../UI/Loader/Loader'
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import AutoTable from '../../UI/AutoTable/AutoTable'
-import {getContainerStatusName, nameToLinkFormatter} from '../../../utils'
+import {getContainerStatusName, timeConverter} from '../../../utils'
 import Error from '../../UI/Error/Error'
 import statuses from '../../../../statuses/statuses.json'
 import {SanctumContext} from '../../../Sanctum'
@@ -57,6 +57,10 @@ const ContainersTable: React.FC = () => {
             : null
     }
 
+    const nameFormatter = (name, row) => {
+        return `Контейнер ${name} от ${timeConverter(row.createdAt)}`
+    }
+
     const filterOptions = Object.entries(statuses.containerStatuses)
         .map(([key, value]) => {
             return {
@@ -77,8 +81,7 @@ const ContainersTable: React.FC = () => {
             text: 'Название контейнера',
             classes: 'title',
             sort: true,
-            formatter: (name, row) =>
-                nameToLinkFormatter(name, row, 'container')
+            formatter: nameFormatter
         },
         {
             dataField: 'status',
@@ -94,6 +97,7 @@ const ContainersTable: React.FC = () => {
         },
         {
             dataField: 'quantityItems',
+            headerStyle: {width: '85px'},
             text: 'Кол-во товаров',
             sort: true
         }
