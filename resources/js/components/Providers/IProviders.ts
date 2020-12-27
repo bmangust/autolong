@@ -38,8 +38,8 @@ export interface IProvider {
     beneficiarySwiftAddress: string
     manufacturer: string
     sandboxFiles: ISandboxFile[]
-    catalogs: ICatalog[] | []
-    orders: IOrder[] | []
+    catalogs: ICatalog[]
+    orders: IOrder[]
     createdAt?: number;
     updatedAt?: number;
 }

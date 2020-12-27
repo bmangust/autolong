@@ -230,8 +230,7 @@ export const acceptProductById = (id, nameRu) => async dispatch => {
     axios
         .put(url, {publish: 1})
         .then((answer) => {
-            toast.success(createNotyMsg(nameRu,
-                'товар опубликован'))
+            toast.success(createNotyMsg(nameRu, 'товар опубликован'))
             dispatch(push('/newproducts'))
         })
         .catch((error: AxiosError) => {
@@ -258,10 +257,14 @@ export const fetchCompareProductsByVendorCode = (vendorCode) =>
                 }
             })
             .catch((error: AxiosError) => {
-                dispatch({
-                    type: FETCH_COMPARE_PRODUCTS_ERROR,
-                    payload: error.message
-                })
-                toast.error(error.message)
+                if (error.response?.status === 400) {
+                    toast.warn(error.response.data)
+                } else {
+                    dispatch({
+                        type: FETCH_COMPARE_PRODUCTS_ERROR,
+                        payload: error.message
+                    })
+                    toast.error(error.message)
+                }
             })
     }
