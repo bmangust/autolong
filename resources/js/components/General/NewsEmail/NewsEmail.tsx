@@ -51,7 +51,13 @@ const NewsEmail: React.FC = () => {
     }, [dispatch])
 
     const {register, handleSubmit, errors} =
-        useForm({resolver: yupResolver(schema)})
+        useForm({
+            resolver: yupResolver(schema), defaultValues: {
+                email: emailSettings.email || '',
+                dispatchTime: emailSettings.dispatchTime || '',
+                notifyWeekend: emailSettings.notifyWeekend == 1
+            }
+        })
 
     const saveSettingsHandler =
         handleSubmit((formValues) => {
@@ -73,7 +79,6 @@ const NewsEmail: React.FC = () => {
                     ref={register}
                     required={true}
                     label='E-mail'
-                    defaultValue={emailSettings.email || ''}
                     name='email'/>
                 <Input
                     placeholder='Укажите время отправки'
@@ -82,7 +87,6 @@ const NewsEmail: React.FC = () => {
                     helperText={errors?.dispatchTime?.message}
                     ref={register}
                     required={true}
-                    defaultValue={emailSettings.dispatchTime || ''}
                     label='Время отправки'
                     name='dispatchTime'/>
                 <div className="col-lg-6">
