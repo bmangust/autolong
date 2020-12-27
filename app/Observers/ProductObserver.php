@@ -58,6 +58,11 @@ class ProductObserver
         $published = $product->published;
         $cacheKey = Product::getCacheKey($published);
         Product::setProductsCache($published, $cacheKey);
+        $oldPublished = $product->withoutRelations()->getOriginal()['published'];
+        if ($oldPublished == 0) {
+            $cacheKey = Product::getCacheKey($oldPublished);
+            Product::setProductsCache($oldPublished, $cacheKey);
+        }
     }
 
     public function deleting(Product $product)
