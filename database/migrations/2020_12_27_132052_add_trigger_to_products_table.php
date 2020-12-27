@@ -20,8 +20,8 @@ class AddTriggerToProductsTable extends Migration
               CREATE DEFINER=`$userName`@`localhost` TRIGGER `$database`.`products_AFTER_INSERT` AFTER INSERT ON `products` FOR EACH ROW
                   BEGIN
                         IF NEW.published = 0 THEN
-                            INSERT INTO 1c_sandbox.$databaseToInsertNew (name_ru, name_en, about_ru, about_en, price_rub, price_usd, price_cny, weight_netto, weight_brutto)
-                            VALUES (NEW.name_ru, NEW.name_en, NEW.about_ru, NEW.about_en, NEW.price_rub, NEW.price_usd, NEW.price_cny, NEW.weight_netto, NEW.weight_brutto);
+                            INSERT INTO 1c_sandbox.$databaseToInsertNew (name_ru, name_en, about_ru, about_en, price_rub, price_usd, price_cny, weight_netto, weight_brutto, image)
+                            VALUES (NEW.name_ru, NEW.name_en, NEW.about_ru, NEW.about_en, NEW.price_rub, NEW.price_usd, NEW.price_cny, NEW.weight_netto, NEW.weight_brutto, NEW.image);
                         END IF;
                   END
         ");
