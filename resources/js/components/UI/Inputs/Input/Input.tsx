@@ -19,7 +19,7 @@ interface ITextFieldProps {
     helperText?: string
     placeholder?: string
     autoFocus?: boolean
-    type?: 'email' | 'password' | 'text' | 'date'
+    type?: 'email' | 'password' | 'text' | 'date' | 'time'
     textarea?: boolean
     required?: boolean
     disabled?: boolean
