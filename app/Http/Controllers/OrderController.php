@@ -165,7 +165,7 @@ class OrderController extends Controller
         if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
 
             if (!is_numeric($request->input('paymentAmount')) && !is_numeric($request->input('surchargeAmount'))) {
-                throw new HttpException(400,'Переданные данные оплаты не являются числовым типом. Убедитесь, что вы передаете ноль, если вы не хотите вносить информацию об оплате или доплате.');
+                throw new HttpException(400, 'Переданные данные оплаты не являются числовым типом. Убедитесь, что вы передаете ноль, если вы не хотите вносить информацию об оплате или доплате.');
             }
             $paymentAmount = (int)$request->input('paymentAmount');
             $surchargeAmount = (int)$request->input('surchargeAmount');
@@ -561,5 +561,19 @@ class OrderController extends Controller
                 ->where('status', '!=', array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0])
                 ->sortByDesc('updated_at');
         return response()->json(OrderWithRelationshipsResource::collection($unappliedOrders, 200));
+    }
+
+    public function checkBaikalStatus(Request $request, Order $order)
+    {
+        $request->validate([
+                'baikalId' => 'required'
+        ]);
+        $baikalLink = Order::getBaikalLink($request->input('baikalId'));
+        $parsingInfo = Order::parseBaikalLinkById($baikalLink);
+        $order->update([
+                'baikal_tracker_link' => $baikalLink,
+                'baikal_tracker_history' => $parsingInfo
+        ]);
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 }

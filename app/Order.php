@@ -20,8 +20,9 @@ class Order extends Model
     public const CHECK_DIRECTORY = '/checks/';
     public const STAMP_DIRECTORY = '/storage/stamps/';
     public const SIGNATURE_DIRECTORY = '/storage/signature/';
+    public const BAIKAL_TRACKER_LINK = 'https://baikalasia.ru/tracker.php';
 
-    protected $fillable = ['name', 'provider_id'];
+    protected $fillable = ['name', 'provider_id', 'baikal_tracker_link', 'baikal_tracker_history'];
 
     private const PAYMENT_AMOUNT_INFO_BLOCK = [
             'id' => null,
@@ -33,6 +34,11 @@ class Order extends Model
             'id' => null,
             'surchargeAmount' => null,
             'date' => null
+    ];
+
+    public const PARSING_CONTENT = [
+            'date' => null,
+            'text' => null
     ];
 
     public $contractActualRows = [
@@ -118,6 +124,11 @@ class Order extends Model
     public function setPaymentHistoryAttribute($value)
     {
         $this->attributes['payment_history'] = json_encode($value);
+    }
+
+    public function setBaikalTrackerHistoryAttribute($value)
+    {
+        $this->attributes['baikal_tracker_history'] = json_encode($value);
     }
 
     public function addOrderItems($items)
@@ -554,7 +565,6 @@ class Order extends Model
         return $invoiceData;
     }
 
-
     public function checkActualIfNotThenChangeAccount(array $accountData): array
     {
         $actual = array_diff_key($this->accountActualRows, $accountData);
@@ -564,5 +574,34 @@ class Order extends Model
             }
         }
         return $accountData;
+    }
+
+    public static function getBaikalLink(string $baikalId): string
+    {
+        return self::BAIKAL_TRACKER_LINK . '?' . http_build_query(['id' => $baikalId]);
+    }
+
+    public static function parseBaikalLinkById(string $link): array
+    {
+        try {
+            $parse = file_get_contents($link);
+        } catch (HttpException $exception) {
+            throw new HttpException(404, 'Ошибка, нет актуальной ссылки для этого идентификатора. Попробуйте позже, либо введите другой идентификатор.');
+        }
+        preg_match_all('#<td[^>]*>(.*?)</td>#is', $parse, $matches);
+        $history = [];
+        $content = self::PARSING_CONTENT;
+        foreach (array_slice($matches[1], 0) as  $item) {
+            if (strtotime($item)) {
+                $content['date'] = $item;
+            } else {
+                $content['text'] = $item;
+            }
+            if (!is_null($content['date']) && !is_null($content['text'])) {
+                $history[] = $content;
+                $content = self::PARSING_CONTENT;
+            }
+        }
+        return $history;
     }
 }

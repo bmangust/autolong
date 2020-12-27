@@ -12,6 +12,7 @@ use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Product;
 use Illuminate\Support\Facades\Redis;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ProductController extends Controller
 {
@@ -173,6 +174,9 @@ class ProductController extends Controller
 
     public function publish(Product $product)
     {
+        if (is_null($product->provider_id)) {
+            throw new HttpException(400, 'Необходимо указать поставщика перед внесением в основную базу');
+        }
         $product->published = 1;
         $product->autolong_number = Sandbox1c::getBiggestAutolongNumber();
         $product->save();

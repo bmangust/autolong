@@ -38,6 +38,8 @@ class OrderResource extends JsonResource
 
         if ($this->cargo) {
             if (Auth::user()->role->access->orders_show_cargo) {
+                $order['baikal_tracker_link'] = $this->baikal_tracker_link;
+                $order['baikal_tracker_history'] = json_decode($this->baikal_tracker_history, true) ?? [];
                 return $order;
             }
             return (object)[];

@@ -25,7 +25,8 @@
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "predis/predis": "^1.1",
-        "spatie/db-dumper": "^2.18"
+        "spatie/db-dumper": "^2.18",
+      "ext-dom": "*"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",

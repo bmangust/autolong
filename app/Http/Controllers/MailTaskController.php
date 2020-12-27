@@ -28,10 +28,11 @@ class MailTaskController extends Controller
         $mailTask = MailTask::first();
         $dispatchTime = $request->input('dispatchTime');
         $email = $request->input('email');
+        $notifyWeekend = $request->input('notifyWeekend');
         if (is_null($mailTask)) {
-            $mailTask = MailTask::create(['email' => $email, 'dispatch_time' => $dispatchTime]);
+            $mailTask = MailTask::create(['email' => $email, 'dispatch_time' => $dispatchTime, 'notify_weekend' => $notifyWeekend]);
         } else {
-            $mailTask->update(['email' => $email, 'dispatch_time' => $dispatchTime]);
+            $mailTask->update(['email' => $email, 'dispatch_time' => $dispatchTime, 'notify_weekend' => $notifyWeekend]);
         }
         return response()->json([
                 'dispatchTime' => $mailTask->dispatch_time,
