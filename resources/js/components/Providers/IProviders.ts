@@ -47,7 +47,7 @@ export interface IProvider {
 
 export interface IProvidersState {
     providers: IProvider[]
-    provider: IProvider | {}
+    provider: IProvider | null
     loading: boolean;
     error: any
 }

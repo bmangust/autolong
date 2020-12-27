@@ -35,7 +35,7 @@ const initialState: IProductsState = {
     newProducts: [],
     compareProducts: [],
     vendorProducts: [],
-    product: {},
+    product: null,
     price: {},
     loading: true,
     compareLoading: false,
@@ -128,7 +128,7 @@ export default function productsReducer(
         case DELETE_PRODUCT_BY_ID:
             return {
                 ...state, products: state.products.filter(({id}) =>
-                    id !== action.payload), product: {}
+                    id !== action.payload), product: null
             }
         case UPDATE_PRODUCT_IMAGE:
             return {

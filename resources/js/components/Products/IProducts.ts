@@ -69,7 +69,7 @@ export interface IProductAutolong {
 export interface IProductsState {
     products: IProduct[]
     vendorProducts: IProduct[] | IProductAutolong[]
-    product: IProduct | {}
+    product: IProduct | null
     newProducts: IProduct[]
     compareProducts: IProduct[]
     price: IProductPrice | {}

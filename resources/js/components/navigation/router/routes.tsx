@@ -173,7 +173,7 @@ export const routes: IRoute[] = [
     },
     {
         name: 'Редактирование информации о товаре',
-        path: '/productedit/:id',
+        path: '/productedit/:id/:unpublished',
         component: lazy(() => pMinDelay(import('../../../pages/products/ProductEdit'), 600)),
         hide: true,
         exact: false,

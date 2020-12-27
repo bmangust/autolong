@@ -7,7 +7,7 @@ import {useParams} from 'react-router-dom'
 
 // Typescript
 import {IProvidersRootState} from '../../components/Providers/IProviders'
-import {IProductsRootState} from '../../components/Products/IProducts'
+import {IProduct, IProductsRootState} from '../../components/Products/IProducts'
 
 // Actions
 import {fetchProviders} from '../../store/actions/providers'
@@ -19,7 +19,7 @@ import ProductFormEdit
 import Loader from '../../components/UI/Loader/Loader'
 
 const ProductEdit: React.FC = () => {
-    const {id}: any = useParams()
+    const {id, unpublished}: any = useParams()
     const dispatch = useDispatch()
 
     const {providers, loadingProvider} = useSelector(
@@ -50,7 +50,8 @@ const ProductEdit: React.FC = () => {
 
     return (
         <ProductFormEdit
-            product={product}
+            unpublished={unpublished}
+            product={product as IProduct}
             providers={providers}/>
     )
 }
