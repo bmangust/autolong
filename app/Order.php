@@ -299,10 +299,10 @@ class Order extends Model
                         $oldPaymentHistory[] = $this->createInfoSurchargeAmountBlock($surchargeAmount);
                     }
                     $this->payment_history = $oldPaymentHistory;
+                    $this->payment_amount = $this->countPaymentAmount($paymentAmount);
+                    $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
                 }
                 $this->status_payment = $status;
-                $this->payment_amount = $this->countPaymentAmount($paymentAmount);
-                $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
                 $this->save();
             }
         } else {
