@@ -28,9 +28,7 @@ const OrderBaikal: React.FC<Props> = (props) => {
 
     const onChangeHandler = (e) => {
         const value = e.target.value
-        if (value) {
-            setBaikalId(value)
-        }
+        setBaikalId(value)
     }
 
     const cancelTracking = () => {
@@ -53,8 +51,10 @@ const OrderBaikal: React.FC<Props> = (props) => {
     </>
 
     if (baikalTrackerLink && baikalTrackerHistory.length === 0) {
+        const url = new URL(baikalTrackerLink)
+        const id = url.searchParams.get('id')
         content = <>
-            <p className={classes.track}>Идентификатор {baikalTrackerLink}</p>
+            <p className={classes.track}>Идентификатор {id}</p>
             <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
             <SvgBaikalEmpty/>
             <p className={classes.status}>Ожидаем подгрузку событий</p>
@@ -62,16 +62,19 @@ const OrderBaikal: React.FC<Props> = (props) => {
     }
 
     if (baikalTrackerLink && baikalTrackerHistory.length !== 0) {
+        const url = new URL(baikalTrackerLink)
+        const id = url.searchParams.get('id')
         content = <>
-            <p className={classes.track}>Идентификатор {baikalTrackerLink}</p>
+            <p className={classes.track}>Идентификатор {id}</p>
             <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
             <ul className={classes.list}>
-                {baikalTrackerHistory.map(({date, text}) => {
-                    return <li key={date + text}>
-                        <p className={classes.date}>{date}</p>
-                        <p>text</p>
-                    </li>
-                })}
+                {[...baikalTrackerHistory].reverse()
+                    .map(({date, text}) => {
+                        return <li key={date + text}>
+                            <p className={classes.date}>{date}</p>
+                            <p>{text}</p>
+                        </li>
+                    })}
             </ul>
         </>
     }

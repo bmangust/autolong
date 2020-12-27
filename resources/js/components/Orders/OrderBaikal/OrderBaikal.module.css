@@ -42,7 +42,12 @@
     text-decoration-line: underline;
     color: #3A405F;
     display: table;
+    cursor: pointer;
     margin-bottom: 20px;
+}
+
+.cancel:hover {
+    text-decoration: none;
 }
 
 .track {
@@ -60,6 +65,9 @@
     text-align: center;
     color: #B4B6BD;
     margin-bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: 132px;
 }
 
 .list .date {
@@ -83,6 +91,32 @@
 }
 
 .list {
+    list-style: none;
     max-height: 230px;
     overflow-y: scroll;
+    direction: rtl;
+    margin: 0 0 0 -17px;
+    padding: 0 0 0 17px;
+}
+
+/* width */
+.list::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+.list::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #F7F8FA;
+}
+
+/* Handle */
+.list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #3A405F;
+}
+
+/* Handle on hover */
+.list::-webkit-scrollbar-thumb:hover {
+    background: #3A405F;
 }
