@@ -137,7 +137,8 @@ const Container: React.FC<IContainer> = () => {
                         containerId={container.id}
                         packingList={packingList}
                         orderId={activeOrder.id}
-                        items={activeOrder.items}/>
+                        items={activeOrder.items}
+                    />
                 </Modal>
                 : null
             }
