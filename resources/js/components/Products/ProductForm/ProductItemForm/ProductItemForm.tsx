@@ -143,24 +143,23 @@ const ProductItemForm: React.FC<Props> = (props) => {
         }
     }, [product])
 
-    const productFormSubmitHandler =
-        handleSubmit((formValues: IEditProductData) => {
-            formValues.published = unpublished === 'unpublished' ? 0 : 1
-            formValues.providerId = formValues.providerId.value === 0 ? null : formValues.providerId.value
-            if ('id' in product && product.id) {
-                dispatch(updateProduct(product.id, formValues))
-                if (formValues.imageFile[0]) {
-                    dispatch(updateProductImageById(product.id,
-                        {image: formValues.imageFile[0]}))
-                }
-            } else if ('number' in product) {
-                if (formValues.imageFile[0]) {
-                    formValues.image = formValues.imageFile[0]
-                }
-                dispatch(createProduct(formValues))
+    const productFormSubmitHandler = handleSubmit((formValues: IEditProductData) => {
+        formValues.published = unpublished === 'unpublished' ? 0 : 1
+        formValues.providerId = formValues.providerId.value === 0 ? null : formValues.providerId.value
+        if ('id' in product && product.id) {
+            dispatch(updateProduct(product.id, formValues))
+            if (formValues.imageFile[0]) {
+                dispatch(updateProductImageById(product.id,
+                    {image: formValues.imageFile[0]}))
             }
-            onHide('number' in product ? product.number : product.autolongNumber)
-        })
+        } else if ('number' in product) {
+            if (formValues.imageFile[0]) {
+                formValues.image = formValues.imageFile[0]
+            }
+            dispatch(createProduct(formValues))
+        }
+        onHide('number' in product ? product.number : product.autolongNumber)
+    })
 
     const onChangePrice = (e, currencyCode) => {
         const value = e.target.value
@@ -286,7 +285,12 @@ const ProductItemForm: React.FC<Props> = (props) => {
                                 <Controller
                                     name="providerId"
                                     as={providerSelect}
-                                    defaultValue=''
+                                    defaultValue={
+                                        {
+                                            label: 'Не указывать поставщика',
+                                            value: 0
+                                        }
+                                    }
                                     options={providersOptions}
                                     control={control}
                                 />
