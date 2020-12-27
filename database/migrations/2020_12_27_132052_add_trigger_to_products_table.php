@@ -13,10 +13,9 @@ class AddTriggerToProductsTable extends Migration
     public function up()
     {
         $userName = env('DB_USERNAME', 'root');
-        $databaseHost = env('DB_HOST', 'localhost');
         $database = env('DB_DATABASE', 'laravel');
         DB::unprepared("
-              CREATE DEFINER=`$userName`@`$databaseHost` TRIGGER `$database`.`products_AFTER_INSERT` AFTER INSERT ON `products` FOR EACH ROW
+              CREATE DEFINER=`$userName`@`localhost` TRIGGER `$database`.`products_AFTER_INSERT` AFTER INSERT ON `products` FOR EACH ROW
                   BEGIN
                         IF NEW.published = 0 THEN
                             INSERT INTO 1c_sandbox.autolong_erp_new_products (name_ru, name_en, about_ru, about_en, price_rub, price_usd, price_cny, weight_netto, weight_brutto)
