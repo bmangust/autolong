@@ -292,8 +292,12 @@ class Order extends Model
             } else {
                 if ($status != $paymentPaidInFull) {
                     $oldPaymentHistory = json_decode($this->payment_history, true);
-                    $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount);
-                    $oldPaymentHistory[] = $this->createInfoSurchargeAmountBlock($surchargeAmount);
+                    if ($paymentAmount != 0) {
+                        $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount);
+                    }
+                    if ($surchargeAmount != 0) {
+                        $oldPaymentHistory[] = $this->createInfoSurchargeAmountBlock($surchargeAmount);
+                    }
                     $this->payment_history = $oldPaymentHistory;
                 }
                 $this->status_payment = $status;

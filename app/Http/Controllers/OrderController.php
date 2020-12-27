@@ -163,29 +163,36 @@ class OrderController extends Controller
         ]);
         $status = $request->input('statusPayment');
         if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
-            $paymentAmount = $request->input('paymentAmount');
-            $surchargeAmount = $request->input('surchargeAmount');
+
+            if (!is_numeric($request->input('paymentAmount')) && !is_numeric($request->input('surchargeAmount'))) {
+                throw new HttpException(400,'Переданные данные оплаты не являются числовым типом. Убедитесь, что вы передаете ноль, если вы не хотите вносить информацию об оплате или доплате.');
+            }
+            $paymentAmount = (int)$request->input('paymentAmount');
+            $surchargeAmount = (int)$request->input('surchargeAmount');
 
             $paymentAwaiting = Status::getOrderPaymentAwaiting();
             $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
             $paymentPaidFor = Status::getOrderPaymentPaidFor();
 
+            $orderAmount = $order->getOrderSumInCny();
+            $newPaymentAmount = $order->payment_amount + $paymentAmount;
+
             if ($order->status_payment == $paymentPrepaymentMade) {
-                if ($paymentAmount >= $order->getOrderSumInCny()) {
+                if ($newPaymentAmount >= $orderAmount) {
                     $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
                     $order->setOrderPaymentStatus($paymentPaidInFull, $paymentAmount, $surchargeAmount);
                 }
-                if ($paymentAmount < $order->getOrderSumInCny()) {
+                if ($newPaymentAmount < $orderAmount) {
                     $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
                     $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
                 }
             }
 
             if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
-                if ($paymentAmount >= $order->getOrderSumInCny()) {
+                if ($newPaymentAmount >= $orderAmount) {
                     $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
                 }
-                if ($paymentAmount < $order->getOrderSumInCny()) {
+                if ($newPaymentAmount < $orderAmount) {
                     $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $surchargeAmount);
                 }
             }
