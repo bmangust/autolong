@@ -248,14 +248,15 @@ const Order: React.FC<IOrder> = () => {
                 page='orders'
             />
         </div>
-        {order.cargo && user.role.accesses.ordersShowCargo
-            ? <OrderBaikal
-                orderId={order.id}
-                baikalTrackerLink={order.baikalTrackerLink}
-                baikalTrackerHistory={order.baikalTrackerHistory}/>
-            : null}
-        {order.provider
-            ? <div className='col-lg-4'>
+        <div className='col-lg-4'>
+            {order.cargo && user.role.accesses.ordersShowCargo
+                ? <OrderBaikal
+                    orderId={order.id}
+                    baikalTrackerLink={order.baikalTrackerLink}
+                    baikalTrackerHistory={order.baikalTrackerHistory}/>
+                : null}
+            {order.provider
+                ?
                 <div className='card'>
                     <div className='card-body-info'>
                         <p className='infoBlockHeaders mb-1'>Поставщик</p>
@@ -296,8 +297,8 @@ const Order: React.FC<IOrder> = () => {
                         </NavLink>
                     </div>
                 </div>
-            </div>
-            : null}
+                : null}
+        </div>
     </div>
 }
 

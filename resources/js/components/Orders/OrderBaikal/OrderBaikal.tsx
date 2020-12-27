@@ -18,11 +18,12 @@ import SvgBaikalEmpty from '../../UI/iconComponents/BaikalEmpty'
 type Props = {
     baikalTrackerLink: string | null
     baikalTrackerHistory: { date: string, text: string }[]
-    orderId: number
+    orderId?: number
+    isContainer?: boolean
 }
 
 const OrderBaikal: React.FC<Props> = (props) => {
-    const {baikalTrackerLink, baikalTrackerHistory, orderId} = props
+    const {baikalTrackerLink, baikalTrackerHistory, orderId, isContainer} = props
     const [baikalId, setBaikalId] = useState('')
     const dispatch = useDispatch()
 
@@ -55,7 +56,10 @@ const OrderBaikal: React.FC<Props> = (props) => {
         const id = url.searchParams.get('id')
         content = <>
             <p className={classes.track}>Идентификатор {id}</p>
-            <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
+            {!isContainer
+                ? null
+                : <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
+            }
             <SvgBaikalEmpty/>
             <p className={classes.status}>Ожидаем подгрузку событий</p>
         </>
@@ -66,7 +70,10 @@ const OrderBaikal: React.FC<Props> = (props) => {
         const id = url.searchParams.get('id')
         content = <>
             <p className={classes.track}>Идентификатор {id}</p>
-            <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
+            {!isContainer
+                ? null
+                : <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
+            }
             <ul className={classes.list}>
                 {[...baikalTrackerHistory].reverse()
                     .map(({date, text}) => {
@@ -79,13 +86,11 @@ const OrderBaikal: React.FC<Props> = (props) => {
         </>
     }
 
-    return <div className='col-lg-4'>
-        <div className={classes.card}>
-            <p className={classes.title}>
-                TRACKING
-            </p>
-            {content}
-        </div>
+    return <div className={classes.card}>
+        <p className={classes.title}>
+            TRACKING
+        </p>
+        {content}
     </div>
 }
 

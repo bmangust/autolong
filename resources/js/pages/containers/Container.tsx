@@ -32,6 +32,7 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderPackage from '../../components/OrderPackage/OrderPackages'
 import {SanctumContext} from '../../Sanctum'
 import ContainersOrder from '../../components/Containers/ContainersOrder/ContainersOrder'
+import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -140,8 +141,12 @@ const Container: React.FC<IContainer> = () => {
                 </Modal>
                 : null
             }
-
             <div className="col-lg-4">
+                {user.role.accesses.ordersShowCargo && container.orders[0].cargo
+                    ? <OrderBaikal
+                        baikalTrackerLink={container.orders[0].baikalTrackerLink}
+                        baikalTrackerHistory={container.orders[0].baikalTrackerHistory}/>
+                    : null}
                 <div className="card card-body-info">
                     <p className="infoBlockHeaders mb-1">
                         Город

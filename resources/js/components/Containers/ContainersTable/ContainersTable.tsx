@@ -97,7 +97,7 @@ const ContainersTable: React.FC = () => {
         },
         {
             dataField: 'quantityItems',
-            headerStyle: {width: '85px'},
+            headerStyle: {width: '100px'},
             text: 'Кол-во товаров',
             sort: true
         }
