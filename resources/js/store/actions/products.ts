@@ -87,12 +87,12 @@ export const createProduct = (data, redirect = '') => async dispatch => {
     const url = '/api/products'
     axios
         .post(url, formData)
-        .then((answer) => {
+        .then(({data}) => {
             dispatch({
                 type: CREATE_PRODUCT_SUCCESS,
-                payload: answer.data
+                payload: data
             })
-            toast.success(createNotyMsg(answer.data.nameRu, `товар ${answer.data.autolongNumber} создан`))
+            toast.success(createNotyMsg(data.nameRu, `товар ${data.autolongNumber || data.id} создан`))
             if (redirect) {
                 dispatch(push(redirect))
             }

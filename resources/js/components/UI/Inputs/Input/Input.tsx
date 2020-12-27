@@ -10,7 +10,7 @@ import translate from './inputTranslate.json'
 type InputElement = HTMLInputElement | HTMLTextAreaElement;
 
 interface ITextFieldProps {
-    value?: string
+    value?: any
     defaultValue?: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     label: string

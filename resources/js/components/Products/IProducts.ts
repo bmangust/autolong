@@ -67,11 +67,11 @@ export interface IProductAutolong {
 }
 
 export interface IProductsState {
-    products: IProduct[] | []
-    vendorProducts: IProduct[] | IProductAutolong[] | []
+    products: IProduct[]
+    vendorProducts: IProduct[] | IProductAutolong[]
     product: IProduct | {}
-    newProducts: IProduct[] | []
-    compareProducts: IProduct[] | []
+    newProducts: IProduct[]
+    compareProducts: IProduct[]
     price: IProductPrice | {}
     loading: boolean
     vendorLoading: boolean

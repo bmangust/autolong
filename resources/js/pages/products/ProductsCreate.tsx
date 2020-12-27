@@ -1,5 +1,5 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -9,6 +9,7 @@ import {useParams} from 'react-router-dom'
 // Typescript
 import {IProductsRootState} from '../../components/Products/IProducts'
 import {IProvidersRootState} from '../../components/Providers/IProviders'
+import {IOrdersRootState} from '../../components/Orders/IOrders'
 
 // Actions
 import {fetchProductsByVendors} from '../../store/actions/products'
@@ -18,12 +19,15 @@ import {fetchProviders} from '../../store/actions/providers'
 import ProductsForms from '../../components/Products/ProductForm/ProductsForms'
 import Error from '../../components/UI/Error/Error'
 import Loader from '../../components/UI/Loader/Loader'
-import {IOrdersRootState} from '../../components/Orders/IOrders'
+import Form from '../../components/UI/Form/Form'
+import Input from '../../components/UI/Inputs/Input/Input'
 
 
 const ProductsCreate: React.FC = () => {
     const dispatch = useDispatch()
     const {unpublished}: any = useParams()
+    const [count, setCount] = useState(1)
+    const [newProducts, setNewProducts] = useState<null | { number: number }[]>(null)
 
     const {notFound} = useSelector(
         (state: IOrdersRootState) => ({
@@ -35,18 +39,15 @@ const ProductsCreate: React.FC = () => {
         numbers = notFound.join('\n')
     }
 
-    const {
-        register, handleSubmit
-    } = useForm({
+    const {register, handleSubmit} = useForm({
         defaultValues: {
             numbers: numbers || ''
         }
     })
 
-    const {providers} = useSelector(
-        (state: IProvidersRootState) => ({
-            providers: state.providersState.providers
-        }))
+    const {providers} = useSelector((state: IProvidersRootState) => ({
+        providers: state.providersState.providers
+    }))
 
     useEffect(() => {
         dispatch(fetchProviders())
@@ -59,19 +60,44 @@ const ProductsCreate: React.FC = () => {
             error: state.productsState.error
         }))
 
-    const getProductSubmitHandler =
-        handleSubmit((formValues) => {
-            dispatch(fetchProductsByVendors(formValues,
-                unpublished === 'unpublished' ? 0 : 1))
-        })
+    const getProductSubmitHandler = handleSubmit((formValues) => {
+        dispatch(fetchProductsByVendors(formValues, unpublished === 'unpublished' ? 0 : 1))
+    })
 
-    let contentProduct =
-        <ProductsForms
+    const onChangeHandler = (e) => {
+        const value = e.target.value
+        if (value <= 0) {
+            setCount(1)
+        }
+        if (value >= 11) {
+            setCount(10)
+        }
+        if (value > 0 && value < 11) {
+            setCount(+value)
+        }
+    }
+
+    const addNewForms = (count) => {
+        const newArray = new Array(count).fill(null)
+            .map((_, index) => ({
+                number: index + 1
+            }))
+        setNewProducts(newArray)
+    }
+
+    let contentProduct = <ProductsForms
+        unpublished={unpublished}
+        vendorProducts={vendorProducts}
+        providers={providers}
+    />
+
+    if (newProducts) {
+        contentProduct = <ProductsForms
             unpublished={unpublished}
-            vendorProducts={vendorProducts}
+            vendorProducts={newProducts}
             providers={providers}
         />
-
+    }
     if (error) {
         contentProduct = <Error/>
     }
@@ -79,37 +105,55 @@ const ProductsCreate: React.FC = () => {
         contentProduct = <Loader/>
     }
 
-    return (
-        <>
-            <form onSubmit={getProductSubmitHandler}>
-                <div className='card mb-3'>
-                    <div className="card-body">
-                        <div className="row">
-                            <div className="col-lg-7">
-                                <label htmlFor="articles">
-                                    Добавить товары по внутреннему номер
-                                </label>
-                                <textarea
-                                    ref={register({required: true})}
-                                    name="numbers" rows={4}
-                                    placeholder='
-                                    Добавляйте каждый внутреннему
-                                    номер через enter
-                                    '>
-                        </textarea>
+    return <>
+        <Form onSubmit={getProductSubmitHandler}>
+            <div className='card mb-3'>
+                <div className="card-body">
+                    {unpublished !== 'unpublished'
+                        ? <>
+                            <div className="row">
+                                <div className="col-lg-7">
+                                    <label htmlFor="articles">
+                                        Добавить товары по внутреннему номер
+                                    </label>
+                                    <textarea
+                                        ref={register({required: true})}
+                                        name="numbers"
+                                        rows={4}
+                                        placeholder='Добавляйте каждый внутреннему номер через enter'>
+                                    </textarea>
+                                </div>
+                            </div>
+                            <button
+                                className='btn btn-success mt-2'
+                                type='submit'>
+                                Добавить товары
+                            </button>
+                        </>
+                        : <div className="row">
+                            <div className="col-lg-6">
+                                <Input
+                                    onChange={(e) => onChangeHandler(e)}
+                                    label='Кол-во новых товаров'
+                                    name="numbers"
+                                    value={count}
+                                    type='number'
+                                />
+                                <button
+                                    style={{marginTop: 36}}
+                                    className='btn btn-success'
+                                    onClick={() => addNewForms(count)}
+                                    type='button'>
+                                    Добавить товары
+                                </button>
                             </div>
                         </div>
-                        <button
-                            className='btn btn-success mt-2'
-                            type='submit'>
-                            Добавить товары
-                        </button>
-                    </div>
+                    }
                 </div>
-            </form>
-            {contentProduct}
-        </>
-    )
+            </div>
+        </Form>
+        {contentProduct}
+    </>
 }
 
 export default ProductsCreate

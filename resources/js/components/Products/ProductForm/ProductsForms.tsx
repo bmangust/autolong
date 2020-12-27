@@ -1,5 +1,5 @@
 // React
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {CSSTransition, TransitionGroup} from 'react-transition-group'
@@ -11,26 +11,34 @@ import {IProvider} from '../../Providers/IProviders'
 // App
 import ProductItemForm from './ProductItemForm/ProductItemForm'
 
-const ProductsForms: React.FC<{
+type Props = {
     vendorProducts: IProduct[] | IProductAutolong[]
     providers: IProvider[]
     unpublished: string
-}> = ({vendorProducts, providers, unpublished = 'published'}) => {
+}
+
+const ProductsForms: React.FC<Props> = (props) => {
+    const {vendorProducts, providers, unpublished = 'published'} = props
     const [productsState, setProductsState] = useState(() => {
         return vendorProducts
     })
 
+    useEffect(() => {
+        if (vendorProducts) {
+            setProductsState(vendorProducts)
+        }
+    }, [vendorProducts])
+
     const onHideHandler = (number) => {
-        setProductsState((oldState) =>
-            oldState.filter((product) =>
-                (product.number || product.autolongNumber) != number)
+        setProductsState((prevState) =>
+            prevState.filter((product) => (product.number || product.autolongNumber) != number)
         )
     }
 
     return <TransitionGroup>
         {productsState.map((product: IProduct | IProductAutolong) => (
             <CSSTransition
-                key={product.number || product.autolongNumber}
+                key={'number' in product ? product.number : product.autolongNumber}
                 unmountOnExit
                 timeout={750}
                 classNames='fade'>

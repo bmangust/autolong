@@ -57,7 +57,7 @@ export interface IPaymentHistory {
 }
 
 export interface IOrdersState {
-    orders: IOrder[] | []
+    orders: IOrder[]
     order: IOrder | null
     orderProducts: IProduct[] | []
     loading: boolean;

@@ -14,7 +14,7 @@ import {IProduct, IProductAutolong} from '../../IProducts'
 import {IProvider} from '../../../Providers/IProviders'
 
 // Styles
-import classes from './ProductItemForm.module.css';
+import classes from './ProductItemForm.module.css'
 
 // Actions
 import {
@@ -26,6 +26,7 @@ import {
 // App
 import TextEditor from '../../../UI/TextEditor/TextEditor'
 import {currencyConversion} from '../../../../utils'
+import Form from '../../../UI/Form/Form'
 
 interface IEditProductData {
     nameRu: string
@@ -45,22 +46,18 @@ interface IEditProductData {
     weightBrutto: number
 }
 
-const ProductItemForm: React.FC<{
+type Props = {
     product: IProduct | IProductAutolong
     providers: IProvider[]
     onHide: Function
     unpublished: string
-}> = (
-    {
-        product,
-        providers,
-        onHide,
-        unpublished = 'published'
-    }) => {
+}
+
+const ProductItemForm: React.FC<Props> = (props) => {
+    const {product, providers, onHide, unpublished = 'published'} = props
     let defaultValues
 
-    const [priceState, setPriceState] =
-        useState({rub: 0, usd: 0, cny: 0})
+    const [priceState, setPriceState] = useState({rub: 0, usd: 0, cny: 0})
 
     const providersOptions = providers.map(
         (provider: IProvider) => {
@@ -70,12 +67,30 @@ const ProductItemForm: React.FC<{
             }
         })
 
-    const schema = yup.object().shape({
-        autolongNumber: yup.string().required(),
-        providerId: yup.object().required(),
-        nameRu: yup.string().required()
-        // priceCny: yup.number().positive().integer().required()
-    })
+    let schema: yup.ObjectSchema<yup.Shape<object | undefined, { nameRu: string }>> = yup.object()
+        .shape({
+            autolongNumber: yup.string()
+                .required(),
+            providerId: yup.object()
+                .required(),
+            nameRu: yup.string()
+                .required()
+            // priceCny: yup.number().positive().integer().required()
+        })
+
+    if (unpublished === 'unpublished') {
+        providersOptions.unshift({
+            label: 'Не указывать поставщика',
+            value: 0
+        })
+        schema = yup.object()
+            .shape({
+                nameRu: yup.string()
+                    .required(),
+                providerId: yup.object()
+                    .required()
+            })
+    }
 
     'id' in product
         ? defaultValues = {
@@ -86,8 +101,7 @@ const ProductItemForm: React.FC<{
             aboutEn: product.aboutEn,
             image: product.image,
             providerId: providersOptions
-                .filter(({value}) =>
-                    value === product.providerId)[0],
+                .filter(({value}) => value === product.providerId)[0],
             autolongNumber: +product.autolongNumber,
             hsCode: product.hsCode || null,
             priceCny: product.price.cny,
@@ -106,9 +120,7 @@ const ProductItemForm: React.FC<{
             priceRub: product.price
         }
 
-    const {
-        register, handleSubmit, errors, control
-    } = useForm<IEditProductData>({
+    const {register, handleSubmit, errors, control} = useForm<IEditProductData>({
         defaultValues, resolver: yupResolver(schema)
     })
 
@@ -134,7 +146,7 @@ const ProductItemForm: React.FC<{
     const productFormSubmitHandler =
         handleSubmit((formValues: IEditProductData) => {
             formValues.published = unpublished === 'unpublished' ? 0 : 1
-            formValues.providerId = formValues.providerId.value
+            formValues.providerId = formValues.providerId.value === 0 ? null : formValues.providerId.value
             if ('id' in product && product.id) {
                 dispatch(updateProduct(product.id, formValues))
                 if (formValues.imageFile[0]) {
@@ -147,7 +159,7 @@ const ProductItemForm: React.FC<{
                 }
                 dispatch(createProduct(formValues))
             }
-            onHide(product.autolongNumber || product.number)
+            onHide('number' in product ? product.number : product.autolongNumber)
         })
 
     const onChangePrice = (e, currencyCode) => {
@@ -173,108 +185,163 @@ const ProductItemForm: React.FC<{
 
     return <div className='card mb-3'>
         <div className="card-body">
-            <form onSubmit={productFormSubmitHandler}>
-                <div className='mb-3 row'>
-                    <div className="col-lg-6">
-                        <label htmlFor='autolongNumber'
-                               className='w-100 required'>
-                            Внутренний номер
-                        </label>
-                        <input className='col-lg-10 mb-3'
-                               name="autolongNumber"
-                               ref={register}
-                               type="number"
-                               defaultValue={'number' in product
-                                   ? product.number
-                                   : ''}
-                               placeholder="Введите номер"/>
-                        {errors.autolongNumber &&
-                        <small>Это поле обязательно</small>}
+            <Form onSubmit={productFormSubmitHandler}>
 
-                        <label htmlFor='hsCode'
-                               className='w-100'>
-                            HS code
-                        </label>
-                        <input className='col-lg-10 mb-3'
-                               name="hsCode"
-                               ref={register}
-                               type="number"
-                               placeholder="Введите HS code"/>
+                {unpublished !== 'unpublished'
+                    ? <div className='mb-3 row'>
+                        <div className="col-lg-6">
+                            <label
+                                htmlFor='autolongNumber'
+                                className='w-100 required'>
+                                Внутренний номер
+                            </label>
+                            <input
+                                className='col-lg-10 mb-3'
+                                name="autolongNumber"
+                                ref={register}
+                                type="number"
+                                defaultValue={'number' in product
+                                    ? product.number
+                                    : ''}
+                                placeholder="Введите номер"
+                            />
+                            {errors.autolongNumber &&
+                            <small>Это поле обязательно</small>}
 
-                        <label htmlFor='vendorCode'
-                               className='w-100'>
-                            Укажите артикул
-                        </label>
-                        <input className='col-lg-10 mb-3'
-                               name="vendorCode"
-                               ref={register}
-                               type="text"
-                               placeholder="Введите номер"/>
+                            <label htmlFor='hsCode'
+                                   className='w-100'>
+                                HS code
+                            </label>
+                            <input
+                                className='col-lg-10 mb-3'
+                                name="hsCode"
+                                ref={register}
+                                type="number"
+                                placeholder="Введите HS code"
+                            />
 
-                    </div>
-                    <div className="col-lg-6 mt-lg-0 mt-3">
-
-                        <div className="row mb-3">
-                            <div className="col-lg-2 col-3 pr-0">
-                                {img
-                                    ? <img className={classes.ProductItemImg}
-                                           src={img} alt=""/>
-                                    : null
-                                }
-                            </div>
-                            <div className="col-lg-8 mt-lg-0 mt-2">
-                                <label htmlFor='image'>
-                                    Загрузка изображения
-                                </label>
-                                <div className="custom-file">
-                                    <input className='hidden d-none'
-                                           ref={register}
-                                           name='image'
-                                           type="hidden"/>
-                                    {fileInput}
-                                    <label
-                                        className="custom-file-label"
-                                        htmlFor="imageFile">
-                                        Выберите файл
+                            <label htmlFor='vendorCode'
+                                   className='w-100'>
+                                Укажите артикул
+                            </label>
+                            <input
+                                className='col-lg-10 mb-3'
+                                name="vendorCode"
+                                ref={register}
+                                type="text"
+                                placeholder="Введите номер"
+                            />
+                        </div>
+                        <div className="col-lg-6 mt-lg-0 mt-3">
+                            <div className="row mb-3">
+                                <div className="col-lg-2 col-3 pr-0">
+                                    {img
+                                        ? <img className={classes.ProductItemImg}
+                                               src={img} alt=""/>
+                                        : null
+                                    }
+                                </div>
+                                <div className="col-lg-8 mt-lg-0 mt-2">
+                                    <label htmlFor='image'>
+                                        Загрузка изображения
                                     </label>
+                                    <div className="custom-file">
+                                        <input className='hidden d-none'
+                                               ref={register}
+                                               name='image'
+                                               type="hidden"/>
+                                        {fileInput}
+                                        <label
+                                            className="custom-file-label"
+                                            htmlFor="imageFile">
+                                            Выберите файл
+                                        </label>
+                                    </div>
+                                </div>
+                            </div>
+                            <label className='required'
+                                   htmlFor='providerId'>
+                                Выберите поставщика
+                            </label>
+                            <div className='col-lg-10 mb-3 p-0'>
+                                <Controller
+                                    name="providerId"
+                                    as={providerSelect}
+                                    defaultValue=''
+                                    options={providersOptions}
+                                    control={control}
+                                />
+                                {errors.providerId &&
+                                <small>Это поле обязательно</small>}
+                            </div>
+                        </div>
+                    </div>
+                    : <div className='mb-3 row'>
+                        <div className="col-lg-6">
+                            <div className='col-lg-10 mb-3 p-0'>
+                                <label
+                                    htmlFor='providerId'>
+                                    Выберите поставщика
+                                </label>
+                                <Controller
+                                    name="providerId"
+                                    as={providerSelect}
+                                    defaultValue=''
+                                    options={providersOptions}
+                                    control={control}
+                                />
+                                {errors.providerId &&
+                                <small>Это поле обязательно</small>}
+                            </div>
+                        </div>
+                        <div className="col-lg-6 mt-lg-0 mt-3">
+                            <div className="row mb-3">
+                                <div className="col-lg-2 col-3 pr-0">
+                                    {img
+                                        ? <img className={classes.ProductItemImg}
+                                               src={img} alt=""/>
+                                        : null
+                                    }
+                                </div>
+                                <div className="col-lg-8 mt-lg-0 mt-2">
+                                    <label htmlFor='image'>
+                                        Загрузка изображения
+                                    </label>
+                                    <div className="custom-file">
+                                        <input className='hidden d-none'
+                                               ref={register}
+                                               name='image'
+                                               type="hidden"/>
+                                        {fileInput}
+                                        <label
+                                            className="custom-file-label"
+                                            htmlFor="imageFile">
+                                            Выберите файл
+                                        </label>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <label className='required'
-                               htmlFor='providerId'>
-                            Выберите поставщика
-                        </label>
-                        <div className='col-lg-10 mb-3 p-0'>
-                            <Controller
-                                name="providerId"
-                                as={providerSelect}
-                                defaultValue=''
-                                options={providersOptions}
-                                control={control}
-                            />
-                            {errors.providerId &&
-                            <small>Это поле обязательно</small>}
-                        </div>
                     </div>
-                </div>
+                }
 
                 <div className='mb-3 row'>
                     <div className='col-lg-6'>
-                        <label htmlFor='nameRu'
-                               className='w-100 required'>
+                        <label
+                            htmlFor='nameRu'
+                            className='w-100 required'>
                             Укажите название товара
-                            <span className="float-right
-                                    text-main
-                                    font-weight-bold
-                                    ">
-                                    RU
-                                </span>
+                            <span className="float-right text-main font-weight-bold ">
+                                RU
+                            </span>
                         </label>
-                        <input name="nameRu"
-                               className='col-lg-10 mb-3'
-                               ref={register}
-                               type="text"
-                               placeholder="Введите название"/>
+                        <input
+                            name="nameRu"
+                            className='col-lg-10 mb-3'
+                            ref={register}
+                            type="text"
+                            placeholder="Введите название"
+                        />
                         {errors.nameRu &&
                         <small>Это поле обязательно</small>}
                         <label htmlFor='aboutRu'>
@@ -301,22 +368,19 @@ const ProductItemForm: React.FC<{
                     <div className="col-lg-6 mt-lg-0 mt-3">
                         <label htmlFor='nameEn' className='w-100'>
                             Product name
-                            <span className="float-right
-                                    text-main
-                                    font-weight-bold
-                                    ">
-                                    ENG
-                                </span>
+                            <span className="float-right text-main font-weight-bold ">
+                                ENG
+                            </span>
                         </label>
-                        <input name="nameEn"
-                               className='col-lg-10 mb-3'
-                               ref={register}
-                               type="text" placeholder="Type here"/>
-
+                        <input
+                            name="nameEn"
+                            className='col-lg-10 mb-3'
+                            ref={register}
+                            type="text" placeholder="Type here"
+                        />
 
                         <label htmlFor='aboutEn'>Description</label>
                         <div className="row">
-
                             <div className="col-lg-10">
                                 <Controller
                                     name="aboutEn"
@@ -346,19 +410,16 @@ const ProductItemForm: React.FC<{
                                     value={priceState.cny}
                                     min={0}
                                     step={0.01}
-                                    onChange={(e) =>
-                                        onChangePrice(e, 'cny')}
-                                    placeholder="0"/>
+                                    onChange={(e) => onChangePrice(e, 'cny')}
+                                    placeholder="0"
+                                />
                                 {errors.priceCny &&
                                 <small>Это поле обязательно</small>}
                             </div>
                             <div className='col-1 pl-0'>
-                                    <span
-                                        className='priceSymbol
-                                        text-orange
-                                        font-weight-bold'>
-                                        ¥
-                                    </span>
+                                <span className='priceSymbol text-orange font-weight-bold'>
+                                    ¥
+                                </span>
                             </div>
                         </div>
                         <div className="row mb-3">
@@ -367,8 +428,7 @@ const ProductItemForm: React.FC<{
                                     name="priceUsd"
                                     type="number"
                                     ref={register}
-                                    onChange={(e) =>
-                                        onChangePrice(e, 'usd')}
+                                    onChange={(e) => onChangePrice(e, 'usd')}
                                     value={priceState.usd}
                                     min={0}
                                     step={0.01}
@@ -377,20 +437,16 @@ const ProductItemForm: React.FC<{
                                 />
                             </div>
                             <div className='col-xl-2 col-1 pl-0'>
-                                    <span
-                                        className='priceSymbol text-main
-                                         font-weight-bold'>
+                                <span className='priceSymbol text-main font-weight-bold'>
                                     $
-                                    </span>
+                                </span>
                             </div>
-                            <div className='col-xl-4 col-lg-10
-                             col-11 mt-xl-0 mt-3'>
+                            <div className='col-xl-4 col-lg-10 col-11 mt-xl-0 mt-3'>
                                 <input
                                     name="priceRub"
                                     type="number"
                                     ref={register}
-                                    onChange={(e) =>
-                                        onChangePrice(e, 'rub')}
+                                    onChange={(e) => onChangePrice(e, 'rub')}
                                     value={priceState.rub}
                                     min={0}
                                     step={0.01}
@@ -399,11 +455,9 @@ const ProductItemForm: React.FC<{
                                 />
                             </div>
                             <div className='col-xl-2 col-1 pl-0 mt-xl-0 mt-3'>
-                                    <span
-                                        className='priceSymbol text-main
-                                        font-weight-bold'>
-                                        ₽
-                                    </span>
+                                <span className='priceSymbol text-main font-weight-bold'>
+                                    ₽
+                                </span>
                             </div>
                         </div>
                     </div>
@@ -413,9 +467,7 @@ const ProductItemForm: React.FC<{
                                 <label>Укажите вес</label>
 
                                 <div className='row mb-3'>
-                                    <div
-                                        className='col-xl-2 col-3 small
-                                                    pt-2 font-weight-bold'>
+                                    <div className='col-xl-2 col-3 small pt-2 font-weight-bold'>
                                         Брутто
                                     </div>
                                     <div className='col-xl-8 col-lg-7 col-8'>
@@ -429,18 +481,13 @@ const ProductItemForm: React.FC<{
                                             Это поле обязательно
                                         </small>}
                                     </div>
-                                    <div className='col-xl-2 col-lg-2 col-1
-                                                priceSymbol
-                                                text-main
-                                                font-weight-bold pl-0'>
+                                    <div
+                                        className='col-xl-2 col-lg-2 col-1 priceSymbol  text-main font-weight-bold pl-0'>
                                         кг
                                     </div>
                                 </div>
                                 <div className='row mb-3'>
-                                    <div
-                                        className='col-xl-2 col-3 small
-                                            pt-2 font-weight-bold'
-                                    >
+                                    <div className='col-xl-2 col-3 small pt-2 font-weight-bold'>
                                         Нетто
                                     </div>
                                     <div className='col-xl-8 col-lg-7 col-8'>
@@ -454,9 +501,8 @@ const ProductItemForm: React.FC<{
                                             Это поле обязательно
                                         </small>}
                                     </div>
-                                    <div className='col-xl-2 col-lg-2 col-1
-                                                priceSymbol
-                                            text-main font-weight-bold pl-0'>
+                                    <div
+                                        className='col-xl-2 col-lg-2 col-1 priceSymbol text-main font-weight-bold pl-0'>
                                         кг
                                     </div>
                                 </div>
@@ -477,7 +523,7 @@ const ProductItemForm: React.FC<{
                         </div>
                     </div>
                 </div>
-            </form>
+            </Form>
         </div>
     </div>
 }
