@@ -16,7 +16,7 @@ import {
 const initialState = {
     loadingEmail: true,
     errorEmail: null,
-    emailSettings: {},
+    emailSettings: null,
     error: null,
     loading: true,
     backups: []

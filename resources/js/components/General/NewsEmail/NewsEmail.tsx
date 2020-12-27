@@ -1,8 +1,8 @@
 // React
-import React, {useEffect} from 'react'
+import React from 'react'
 
 // Third-party
-import {useDispatch, useSelector} from 'react-redux'
+import {useDispatch} from 'react-redux'
 import * as yup from 'yup'
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
@@ -10,7 +10,6 @@ import {yupResolver} from '@hookform/resolvers/yup'
 // Actions
 import {
     deleteEmailSettings,
-    fetchEmailSettings,
     updateEmailSettings
 } from '../../../store/actions/settings'
 
@@ -23,15 +22,9 @@ import Input from '../../UI/Inputs/Input/Input'
 import Error from '../../UI/Error/Error'
 import InputCheckbox from '../../UI/Inputs/InputCheckbox/InputCheckbox'
 
-const NewsEmail: React.FC = () => {
+const NewsEmail: React.FC = (props) => {
+    const {errorEmail, emailSettings} = props
     const dispatch = useDispatch()
-
-    const {errorEmail, emailSettings} = useSelector(
-        (state) => ({
-            loadingEmail: state.settingsState.loadingEmail,
-            errorEmail: state.settingsState.errorEmail,
-            emailSettings: state.settingsState.emailSettings
-        }))
 
     const schema = yup.object()
         .shape({
@@ -46,18 +39,14 @@ const NewsEmail: React.FC = () => {
         dispatch(deleteEmailSettings())
     }
 
-    useEffect(() => {
-        dispatch(fetchEmailSettings())
-    }, [dispatch])
-
-    const {register, handleSubmit, errors} =
-        useForm({
-            resolver: yupResolver(schema), defaultValues: {
-                email: emailSettings.email || '',
-                dispatchTime: emailSettings.dispatchTime || '',
-                notifyWeekend: emailSettings.notifyWeekend == 1
-            }
-        })
+    const {register, handleSubmit, errors} = useForm({
+        resolver: yupResolver(schema),
+        defaultValues: {
+            email: emailSettings.email,
+            dispatchTime: emailSettings.dispatchTime,
+            notifyWeekend: emailSettings.notifyWeekend == 1
+        }
+    })
 
     const saveSettingsHandler =
         handleSubmit((formValues) => {
@@ -66,6 +55,9 @@ const NewsEmail: React.FC = () => {
         })
     if (errorEmail) {
         return <Error/>
+    }
+    if (!emailSettings) {
+        return null
     }
     return <div className='card card-body mb-3'>
         <h2>Настройка отправки писем с новинками</h2>
