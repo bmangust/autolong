@@ -72,7 +72,7 @@ const Container: React.FC<IContainer> = () => {
                 <div className="card mb-3 card-body">
                     <div className="d-flex justify-content-between align-items-baseline flex-sm-row flex-column">
                         <h2 className="mb-0">
-                            {container.name}
+                            Контейнер {container.name} от {timeConverter(container.createdAt)}
                         </h2>
                         {user && user.role.accesses.containersDelete == 1
                             ? < button
