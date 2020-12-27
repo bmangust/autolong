@@ -175,7 +175,7 @@ class ProductController extends Controller
     public function publish(Product $product)
     {
         if (is_null($product->provider_id)) {
-            throw new HttpException(400, 'Необходимо указать поставщика перед внесением в основную базу');
+            throw new HttpException(400, 'Необходимо указать поставщика перед внесением в основную базу.');
         }
         $product->published = 1;
         $product->autolong_number = Sandbox1c::getBiggestAutolongNumber();
