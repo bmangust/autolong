@@ -39,7 +39,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function index()
     {
@@ -51,16 +51,19 @@ class ProductController extends Controller
      * Store a newly created resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Product $product
+     * @param ExchangeRate $exchangeRate
      * @return void
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function store(Request $request, ExchangeRate $exchangeRate)
     {
+        $product = new Product();
         if ($request->has('published') && $request->input('published')) {
             $this->productCreateValidator($request->all())->validate();
             $published = $request->input('published');
+            $product->vendor_code = $request->input('vendorCode');
+            $product->autolong_number = $request->input('autolongNumber');
         }
-        $product = new Product();
         $product->name_ru = $request->input('nameRu');
         $product->name_en = $request->input('nameEn');
         $product->about_ru = $request->input('aboutRu');
@@ -73,8 +76,6 @@ class ProductController extends Controller
         $product->price_usd = round($exchangeRate->lastCourse()->usd * $priceCny, 2);
         $product->weight_netto = $request->input('weightNetto');
         $product->weight_brutto = $request->input('weightBrutto');
-        $product->vendor_code = $request->input('vendorCode');
-        $product->autolong_number = $request->input('autolongNumber');
         $product->hs_code = $request->input('hsCode') ?? 0;
         $product->save();
         Log::$write = false;
