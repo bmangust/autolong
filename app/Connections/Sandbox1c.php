@@ -16,17 +16,25 @@ class Sandbox1c
 
     public static function getBiggestAutolongNumber()
     {
-        $productTable = self::PRODUCTS_TABLE;
-        $autolongTable = self::AUTOLONG_ERP_NEW_PRODUCTS_TABLE;
         try {
+            $productTable = self::PRODUCTS_TABLE;
+            $autolongTable = self::AUTOLONG_ERP_NEW_PRODUCTS_TABLE;
+
             $code = DB::connection(self::CONNECTION)
-                            ->select("SELECT code FROM $productTable order by CAST(code as UNSIGNED) DESC LIMIT 1;")[0]->code + 1;
+                    ->select("SELECT code FROM $productTable order by CAST(code as UNSIGNED) DESC LIMIT 1;");
             $latestCodeInAutolongErp = DB::connection(self::CONNECTION)
-                            ->select("SELECT autolong_number FROM $autolongTable order by CAST(autolong_number as UNSIGNED) DESC LIMIT 1;")[0]->autolong_number;
-            if ($code == $latestCodeInAutolongErp) {
-                ++$code;
+                    ->select("SELECT autolong_number FROM $autolongTable order by CAST(autolong_number as UNSIGNED) DESC LIMIT 1;");
+            if (!empty($code)) {
+                $code = $code[0]->code + 1;
+                if (!empty($latestCodeInAutolongErp)) {
+                    $latestCodeInAutolongErp = $latestCodeInAutolongErp[0]->autolong_number;
+                    if ($code == $latestCodeInAutolongErp) {
+                        ++$code;
+                    }
+                }
+                return $code;
             }
-            return $code;
+            return uniqid('', true);
         } catch (HttpException $exception) {
             throw new HttpException(500, 'Не удалось получить информацию из базы данных 1с_sandbox.');
         }
