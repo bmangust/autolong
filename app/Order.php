@@ -252,14 +252,20 @@ class Order extends Model
         return $weight;
     }
 
-    public function countPaymentAmount(int $paymentAmount): int
+    public function countPaymentAmount($paymentAmount): int
     {
-        return $this->payment_amount + $paymentAmount;
+        if (is_numeric($paymentAmount)) {
+            return $this->payment_amount + $paymentAmount;
+        }
+        return $this->payment_amount;
     }
 
     public function countSurchargeAmount(int $surchargeAmount): int
     {
-        return $this->surcharge_amount + $surchargeAmount;
+        if (is_numeric($surchargeAmount)) {
+            return $this->surcharge_amount + $surchargeAmount;
+        }
+        return $this->surcharge_amount;
     }
 
     public function setOrderStatus(string $status, int $city = null, string $arrivalDate = null)
@@ -291,16 +297,21 @@ class Order extends Model
                 $this->save();
             } else {
                 if ($status != $paymentPaidInFull) {
-                    $oldPaymentHistory = json_decode($this->payment_history, true);
-                    if ($paymentAmount != 0) {
-                        $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount);
+                    if ($status == $paymentRefunded) {
+                        $this->payment_amount = $this->countPaymentAmount($paymentAmount);
+                        $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
+                    } else {
+                        $oldPaymentHistory = json_decode($this->payment_history, true);
+                        if ($paymentAmount != 0) {
+                            $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount);
+                        }
+                        if ($surchargeAmount != 0) {
+                            $oldPaymentHistory[] = $this->createInfoSurchargeAmountBlock($surchargeAmount);
+                        }
+                        $this->payment_history = $oldPaymentHistory;
+                        $this->payment_amount = $this->countPaymentAmount($paymentAmount);
+                        $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
                     }
-                    if ($surchargeAmount != 0) {
-                        $oldPaymentHistory[] = $this->createInfoSurchargeAmountBlock($surchargeAmount);
-                    }
-                    $this->payment_history = $oldPaymentHistory;
-                    $this->payment_amount = $this->countPaymentAmount($paymentAmount);
-                    $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
                 }
                 $this->status_payment = $status;
                 $this->save();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\AutolongRuProduct;
+use App\Connections\Sandbox1c;
 use App\ExchangeRate;
 use App\Http\Resources\ProductResource;
 use App\Log;
@@ -170,6 +171,7 @@ class ProductController extends Controller
     public function publish(Product $product)
     {
         $product->published = 1;
+        $product->autolong_number = Sandbox1c::getBiggestAutolongNumber();
         $product->save();
         response()->json(new ProductWithRelationshipsResource($product), 200);
     }
