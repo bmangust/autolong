@@ -576,4 +576,13 @@ class OrderController extends Controller
         ]);
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
+
+    public function deleteBaikalStatus(Order $order)
+    {
+        $order->update([
+                'baikal_tracker_link' => null,
+                'baikal_tracker_history' => null
+        ]);
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
 }
