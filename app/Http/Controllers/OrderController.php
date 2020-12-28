@@ -126,14 +126,16 @@ class OrderController extends Controller
             }
         } else {
             $oldContainer = $order->container;
-            $containerIsCargo = $oldContainer->checkCargoOrders();
-            if (!$containerIsCargo && $request->input('cargo')) {
-                throw new HttpException(400, 'Вы не можете присвоить статус карго этому заказу в данном контейнере.');
+            if ($oldContainer) {
+                $containerIsCargo = $oldContainer->checkCargoOrders();
+                if (!$containerIsCargo && $request->input('cargo')) {
+                    throw new HttpException(400, 'Вы не можете присвоить статус карго этому заказу в данном контейнере.');
+                }
+                if ($containerIsCargo && !$request->input('cargo')) {
+                    throw new HttpException(400, 'Вы не можете убрать статус карго у этого заказа в данном контейнере.');
+                }
+                $order->cargo = $request->input('cargo');
             }
-            if ($containerIsCargo && !$request->input('cargo')) {
-                throw new HttpException(400, 'Вы не можете убрать статус карго у этого заказа в данном контейнере.');
-            }
-            $order->cargo = $request->input('cargo');
         }
         $order->save();
         $order->refresh();
@@ -166,9 +168,6 @@ class OrderController extends Controller
         if ($status == $statusOrderCreated || $status == $statusOrderConfirmed) {
             $order->setOrderStatus($status);
         } elseif ($request->has('arrivalDate') && $request->has('city')) {
-            if (!$order->checkActualDate($request->input('arrivalDate'))) {
-                throw new HttpException(400, 'Указана не актуальная дата');
-            }
             $city = City::firstOrCreate([
                     'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
             ]);

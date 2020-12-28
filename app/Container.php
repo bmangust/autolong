@@ -40,8 +40,8 @@ class Container extends Model
 
     public function addOrders(array $ids): bool
     {
-        foreach ($ids as $id) {
-            $order = Order::findOrFail($id);
+        $orders = Order::find($ids);
+        foreach ($orders as $order) {
             $this->orders()->save($order);
         }
         return true;
@@ -55,8 +55,8 @@ class Container extends Model
     public function getQuantityOrderItems(array $ordersIds): int
     {
         $quantity = 0;
-        foreach ($ordersIds as $id) {
-            $order = Order::findOrFail($id);
+        $orders = Order::find($ordersIds);
+        foreach ($orders as $order) {
             foreach ($order->orderItems as $item) {
                 $quantity += $item->quantity;
             }
@@ -113,9 +113,9 @@ class Container extends Model
 
     public function checkCargoOrdersById(array $ids): bool
     {
-        $status = Order::findOrFail($ids[0])->cargo;
-        foreach ($ids as $id) {
-            $order = Order::findOrFail($id);
+        $orders = Order::find($ids);
+        $status = $orders[0]->cargo;
+        foreach ($orders as $order) {
             if ($order->cargo == $status) {
                 continue;
             }
