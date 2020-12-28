@@ -31,7 +31,7 @@ const FinalCalculation: React.FC<Props> = (props) => {
     let deliveryAmount = 0
 
     if (totalAmount > 0) {
-        deliveryAmount = deliveryPrice / totalAmount
+        deliveryAmount = +deliveryPrice / totalAmount
     }
 
     return <>
@@ -40,7 +40,7 @@ const FinalCalculation: React.FC<Props> = (props) => {
             <ul className={classes.list}>
                 <li>
                     <p className={classes.title}>Доставка</p>
-                    <p>{deliveryPrice ? `${deliveryPrice.toFixed(2)} ₽` : '-'}</p>
+                    <p>{deliveryPrice ? `${deliveryPrice} ₽` : '-'}</p>
                 </li>
                 <li>
                     <p className={classes.title}>Общая стоимость</p>
