@@ -92,13 +92,13 @@ const OrderItems: React.FC<IOrderItems> = (
                             className={classes.orderProductsName}>
                             {item.nameRu}
                         </NavLink>
-                        <div className='row align-items-center mt-1'>
-                            <div className='col-xl-2 col-6'>
+                        <div className='row align-items-baseline mt-1'>
+                            <div className='col-xl-2'>
                                 <p className={classes.orderProductsArticle}>
                                     {item.autolongNumber}
                                 </p>
                             </div>
-                            <div className='col-xl-4 col-6'>
+                            <div className='col-xl-4'>
                                 <p className={classes.orderProductsItemPrice
                                 + ' priceOne'}>
                                     Цена за шт:
@@ -108,12 +108,12 @@ const OrderItems: React.FC<IOrderItems> = (
                                         : null}
                                 </p>
                             </div>
-                            <div className='col-xl-2 col-6'>
+                            <div className='col-xl-2'>
                                 <p className={classes.orderProductsCount}>
                                     {item.quantity + ' шт'}
                                 </p>
                             </div>
-                            <div className='col-xl-4 col-6
+                            <div className='col-xl-4
                             text-xl-right text-left'>
                                 <p className={classes.orderProductsPrice}>
                                     {item.fullPrice
