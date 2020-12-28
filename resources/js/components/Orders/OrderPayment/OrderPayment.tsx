@@ -66,9 +66,8 @@ const OrderPayment: React.FC<Props> = (props) => {
     switch (order.statusPayment) {
         case 'paymentAwaiting': {
             paymentContent = <>
-                <hr className='m-0'/>
-                <Form className='mb-4'
-                      onSubmit={changePaymentStatus}>
+                <hr className='mt-3 mb-2'/>
+                <Form onSubmit={changePaymentStatus}>
                     <div className='row'>
                         <Input
                             id='paymentAmount'
@@ -116,9 +115,8 @@ const OrderPayment: React.FC<Props> = (props) => {
         }
         case 'paymentPaidFor': {
             paymentContent = <>
-                <hr className='m-0'/>
-                <Form className='mb-4'
-                      onSubmit={changePaymentStatus}>
+                <hr className='mt-3 mb-2'/>
+                <Form onSubmit={changePaymentStatus}>
                     <div className='row'>
                         <Input
                             id='paymentAmount'
@@ -178,8 +176,8 @@ const OrderPayment: React.FC<Props> = (props) => {
         }
         case 'paymentPrepaymentMade': {
             paymentContent = <>
-                <hr className='m-0'/>
-                <Form className='mb-4' onSubmit={changePaymentStatus}>
+                <hr className='mt-3 mb-2'/>
+                <Form onSubmit={changePaymentStatus}>
                     <div className='row mb-3 mt-2'>
                         <div className='col-6'>
                             <label>Оплачено</label>
@@ -221,10 +219,10 @@ const OrderPayment: React.FC<Props> = (props) => {
         }
         case 'paymentAwaitingRefund': {
             paymentContent = <>
-                <hr className='m-0'/>
+                <hr className='mt-3 mb-2'/>
                 <button
                     onClick={() => returnPaymentHandler('paymentRefunded')}
-                    className='btn btn-link mb-4 mt-3'>
+                    className='btn btn-link'>
                     Подтвердить возврат оплаты
                 </button>
             </>
@@ -232,8 +230,8 @@ const OrderPayment: React.FC<Props> = (props) => {
         }
         case 'paymentPaidInFull': {
             paymentContent = <>
-                <hr className='m-0'/>
-                <h2 className='mb-4 pt-3'>
+                <hr className='mt-3 mb-2'/>
+                <h2 className='mb-0'>
                     Заказ оплачен полностью
                 </h2>
             </>
@@ -241,8 +239,8 @@ const OrderPayment: React.FC<Props> = (props) => {
         }
         case 'paymentRefunded': {
             paymentContent = <>
-                <hr className='m-0'/>
-                <h2 className='mb-4 pt-3'>
+                <hr className='mt-3 mb-2'/>
+                <h2 className='mb-0'>
                     Оплата заказа возвращена полностью
                 </h2>
             </>

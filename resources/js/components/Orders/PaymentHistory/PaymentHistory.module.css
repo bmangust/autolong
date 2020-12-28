@@ -1,5 +1,27 @@
-.paymentHistory {
-    margin-bottom: 32px;
+.list {
+    max-height: 160px;
+    overflow-y: scroll;
+}
+/* width */
+.list::-webkit-scrollbar {
+    width: 2px;
+}
+
+/* Track */
+.list::-webkit-scrollbar-track {
+    border-radius: 10px;
+    background: #F7F8FA;
+}
+
+/* Handle */
+.list::-webkit-scrollbar-thumb {
+    border-radius: 10px;
+    background: #3A405F;
+}
+
+/* Handle on hover */
+.list::-webkit-scrollbar-thumb:hover {
+    background: #3A405F;
 }
 
 .date {

@@ -20,13 +20,17 @@ type Props = {
 const PaymentHistory: React.FC<Props> = (props) => {
     const {paymentHistory, orderPrice, paymentAmount, surchargeAmount} = props
 
+    if (!paymentHistory || (paymentHistory && paymentHistory.length === 0)) {
+        return null
+    }
     return <div className={classes.paymentHistory}>
-        {paymentHistory && paymentHistory.length
-            ? [...paymentHistory].reverse()
-                .map((payment) => {
-                    return <p key={payment.id}>
-                        <span className={classes.date}>{timeConverter(payment.date)}</span>
-                        <span className={classes.text}>
+        <div className={classes.list}>
+            {paymentHistory && paymentHistory.length
+                ? [...paymentHistory].reverse()
+                    .map((payment) => {
+                        return <p key={payment.id}>
+                            <span className={classes.date}>{timeConverter(payment.date)}</span>
+                            <span className={classes.text}>
                     {orderPrice && 'paymentAmount' in payment && payment.paymentAmount && payment.paymentAmount >= orderPrice
                         ? `Заказ оплачен полностью - ${'paymentAmount' in payment && payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}`
                         : <>
@@ -35,10 +39,11 @@ const PaymentHistory: React.FC<Props> = (props) => {
                         </>
                     }
                 </span>
-                    </p>
-                })
-            : null
-        }
+                        </p>
+                    })
+                : null
+            }
+        </div>
         {paymentHistory && paymentHistory.length
             ? <>
                 <hr/>
