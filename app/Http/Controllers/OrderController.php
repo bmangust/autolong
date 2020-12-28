@@ -105,11 +105,8 @@ class OrderController extends Controller
         if ($request->has('cargo')) {
             $order->cargo = $request->input('cargo');
         }
-        if ($order->status != $request->input('status')) {
-            $order->setOrderStatus($request->input('status'));
-        }
-        if ($order->status_payment != $request->input('statusPayment')) {
-            $order->setOrderPaymentStatus($request->input('statusPayment'));
+        if ($order->container_id != $request->input('containerId')) {
+            $order->container_id = $request->input('containerId');
         }
         $order->save();
         if ($request->has('items') && is_array($request->input('items'))) {
