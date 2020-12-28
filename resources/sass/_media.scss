@@ -1,171 +1,174 @@
 @media (max-width: 1199px) {
-    .react-bootstrap-table .table {
-        table-layout: auto;
-    }
+  .react-bootstrap-table .table {
+    // table-layout: auto;
+  }
 
-    .react-bootstrap-table .table td:first-child,
-    .react-bootstrap-table .table th:first-child {
-        padding-left: 15px;
-    }
+  .react-bootstrap-table .table td:first-child,
+  .react-bootstrap-table .table th:first-child {
+    padding-left: 15px;
+  }
 
-    .card-body-info {
-        padding: 15px !important;
-    }
+  .card-body-info {
+    padding: 15px !important;
+  }
 
-    html .select-mini,
-    html .select-mini-tags {
-        &__control {
-            padding: 0 8px;
-        }
+  html .select-mini,
+  html .select-mini-tags {
+    &__control {
+      padding: 0 8px;
     }
+  }
 }
 
 @media (max-width: 991px) {
-    .react-bootstrap-table .table thead th {
-        padding-bottom: 10px;
-        white-space: nowrap;
-    }
+  .react-bootstrap-table .table thead th {
+    padding-bottom: 10px;
+    white-space: nowrap !important;
+  }
 
-    .react-bootstrap-table .table td:first-child,
-    .react-bootstrap-table .table th:first-child,
-    .row-expansion-style table td:first-child,
-    .row-expansion-style table th:first-child {
-        padding-left: 15px;
-    }
+  .react-bootstrap-table .table td:first-child,
+  .react-bootstrap-table .table th:first-child,
+  .row-expansion-style table td:first-child,
+  .row-expansion-style table th:first-child {
+    padding-left: 15px;
+  }
 
-    .react-bootstrap-table .table td,
-    .react-bootstrap-table .table th,
-    .row-expansion-style table td,
-    .row-expansion-style table th {
-        padding: 1rem;
-    }
+  .react-bootstrap-table {
+    overflow-x: auto !important;
+  }
 
-    .row-expansion-style table td:first-child,
-    .row-expansion-style table th:first-child {
-        padding-left: 0 !important;
-    }
+  .row-expansion-style {
+    overflow-x: auto !important;
+  }
 
-    .card-body {
-        padding: 15px;
-    }
+  .react-bootstrap-table .table td,
+  .react-bootstrap-table .table th,
+  .row-expansion-style table td,
+  .row-expansion-style table th {
+    white-space: nowrap !important;
+  }
 
-    .searchBar input {
-        padding-left: 50px !important;
-        padding-right: 10px !important;
-        background: white url(/svg/search.svg) no-repeat 15px center / 20px !important;
-    }
-    .addButton {
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        background: var(--white) url(/svg/plus.svg) no-repeat 15px center / 20px !important;
-        padding-left: 50px;
-        line-height: 1;
-        padding-right: 10px;
-    }
+  .row-expansion-style table td:first-child,
+  .row-expansion-style table th:first-child {
+    padding-left: 0 !important;
+  }
 
-    .border-right {
-        border-color: transparent !important;
-    }
+  .card-body {
+    padding: 15px;
+  }
 
-    .custom-switch {
-        z-index: 0;
-    }
+  .searchBar input {
+    padding-left: 50px !important;
+    padding-right: 10px !important;
+    background: white url(/svg/search.svg) no-repeat 15px center / 20px !important;
+  }
 
-    .priceSymbol {
-        font-size: 12px;
-        white-space: nowrap;
-    }
+  .addButton {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--white) url(/svg/plus.svg) no-repeat 15px center / 20px !important;
+    padding-left: 50px;
+    line-height: 1;
+    padding-right: 10px;
+  }
 
-    html .select-filter .select-mini__control, html .select-filter .select-mini-tags__control {
-        width: 100%;
-    }
+  .border-right {
+    border-color: transparent !important;
+  }
+
+  .custom-switch {
+    z-index: 0;
+  }
+
+  .priceSymbol {
+    font-size: 12px;
+    white-space: nowrap;
+  }
+
+  html .select-filter .select-mini__control,
+  html .select-filter .select-mini-tags__control {
+    width: 100%;
+  }
 }
 
 @media (max-width: 767px) {
-    .react-bootstrap-table {
-        overflow-x: auto !important;
-    }
 
-    .row-expansion-style {
-        overflow-x: auto !important;
-    }
+  .infoBlockText>span {
+    font-size: 12px !important;
+  }
 
-    .infoBlockText > span {
-        font-size: 12px !important;
-    }
+  .email,
+  .phone,
+  .status {
+    white-space: nowrap;
+  }
 
-    .email,
-    .phone,
-    .status {
-        white-space: nowrap;
-    }
+  input:not([type='checkbox']),
+  textarea {
+    font-size: 12px;
 
-    input:not([type='checkbox']),
-    textarea {
-        font-size: 12px;
-
-        &::placeholder {
-            font-size: 12px;
-        }
+    &::placeholder {
+      font-size: 12px;
     }
+  }
 }
 
 @media (max-width: 575px) {
 
-    .searchBar label {
-        margin-bottom: 15px;
+  .searchBar label {
+    margin-bottom: 15px;
+  }
+
+
+  .addButton {
+    margin-bottom: 7px;
+    padding: 19px 10px 19px 50px;
+  }
+
+  .react-bootstrap-table-pagination {
+    flex-wrap: nowrap !important;
+
+    #pageDropDown {
+      margin-left: 0;
     }
 
-
-    .addButton {
-        margin-bottom: 7px;
-        padding: 19px 10px 19px 50px;
+    .dropdown-menu {
+      min-width: 4rem;
+      font-size: 0.7rem;
     }
+  }
 
-    .react-bootstrap-table-pagination {
-        flex-wrap: nowrap !important;
+  .btn-success,
+  .btn-danger,
+  .btn-light {
+    width: 100% !important;
+    padding: 0.15rem 0.5rem;
+  }
 
-        #pageDropDown {
-            margin-left: 0;
-        }
+  input:not([type='checkbox']),
+  textarea {
+    font-size: 12px;
+  }
 
-        .dropdown-menu {
-            min-width: 4rem;
-            font-size: 0.7rem;
-        }
+  .card-body .text-right {
+    font-size: 14px;
+  }
+
+  .card-body.text-center {
+    font-size: 12px;
+  }
+
+  .Toastify {
+    &__toast-container {
+      width: 300px;
+      left: 50%;
+      transform: translateX(-50%);
     }
+  }
 
-    .btn-success,
-    .btn-danger,
-    .btn-light {
-        width: 100% !important;
-        padding: 0.15rem 0.5rem;
-    }
-
-    input:not([type='checkbox']),
-    textarea {
-        font-size: 12px;
-    }
-
-    .card-body .text-right {
-        font-size: 14px;
-    }
-
-    .card-body.text-center {
-        font-size: 12px;
-    }
-
-    .Toastify {
-        &__toast-container {
-            width: 300px;
-            left: 50%;
-            transform: translateX(-50%);
-        }
-    }
-
-    .tag {
-        display: inline-block;
-        margin-bottom: 10px;
-    }
+  .tag {
+    display: inline-block;
+    margin-bottom: 10px;
+  }
 }
