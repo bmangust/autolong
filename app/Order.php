@@ -31,7 +31,9 @@ class Order extends Model
             'payment_amount',
             'surcharge_amount',
             'customs_amount',
-            'ordering_amount'
+            'ordering_amount',
+            'payment_amount_rub',
+            'surcharge_amount_rub'
     ];
 
     private const PAYMENT_AMOUNT_INFO_BLOCK = [

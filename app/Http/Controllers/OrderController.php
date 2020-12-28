@@ -628,7 +628,9 @@ class OrderController extends Controller
                 'paymentAmount' => 'numeric',
                 'surchargeAmount' => 'numeric',
                 'customsAmount' => 'numeric',
-                'orderingAmount' => 'numeric'
+                'orderingAmount' => 'numeric',
+                'paymentAmountRub' => 'numeric',
+                'surchargeAmountRub' => 'numeric'
         ]);
         $newRequest = $order->cleanSpaceInArrayItems($request->all(), true);
         $order->update([
@@ -636,12 +638,16 @@ class OrderController extends Controller
                 'payment_amount' => $newRequest['paymentAmount'],
                 'surcharge_amount' => $newRequest['surchargeAmount'],
                 'customs_amount' => $newRequest['customsAmount'],
-                'ordering_amount' => $newRequest['orderingAmount']
+                'ordering_amount' => $newRequest['orderingAmount'],
+                'payment_amount_rub' => $newRequest['paymentAmountRub'],
+                'surcharge_amount_rub' => $newRequest['surchargeAmountRub']
         ]);
         $container = $order->container;
-        $container->update([
-                'delivery_price' => $newRequest['deliveryPrice']
-        ]);
+        if ($order->container->delivery_price != $newRequest['deliveryPrice']) {
+            $container->update([
+                    'delivery_price' => $newRequest['deliveryPrice']
+            ]);
+        }
         return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
 }
