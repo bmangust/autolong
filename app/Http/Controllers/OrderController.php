@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\City;
 use App\ContractDocument;
+use App\Http\Resources\ContainerWithRelationshipsResource;
 use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Order;
@@ -595,5 +596,29 @@ class OrderController extends Controller
                 'baikal_tracker_history' => null
         ]);
         return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
+
+    public function setPrices(Request $request, Order $order)
+    {
+        $request->validate([
+                'deliveryPrice' => 'numeric',
+                'refusalAmount' => 'numeric',
+                'paymentAmount' => 'numeric',
+                'surchargeAmount' => 'numeric',
+                'customsAmount' => 'numeric',
+                'orderingAmount' => 'numeric'
+        ]);
+        $order->update([
+                'refusal_amount' => $request->input('refusalAmount'),
+                'payment_amount' => $request->input('paymentAmount'),
+                'surcharge_amount' => $request->input('surchargeAmount'),
+                'customs_amount' => $request->input('customsAmount'),
+                'ordering_amount' => $request->input('orderingAmount')
+        ]);
+        $container = $order->container;
+        $container->update([
+                'delivery_price' => $request->input('deliveryPrice')
+        ]);
+        return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
 }

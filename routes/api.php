@@ -90,6 +90,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('orders/{order}/deletepdfcontractprovidersignature', 'OrderController@deletePdfContractProviderSignature');
     Route::post('orders/{order}/checkbaikalstatus', 'OrderController@checkBaikalStatus');
     Route::delete('orders/{order}/deletebaikalstatus', 'OrderController@deleteBaikalStatus');
+    Route::put('orders/{order}/setprices', 'OrderController@setPrices');
 
     Route::get('tags', 'TagController@index');
 

@@ -22,7 +22,17 @@ class Order extends Model
     public const SIGNATURE_DIRECTORY = '/storage/signature/';
     public const BAIKAL_TRACKER_LINK = 'https://baikalasia.ru/tracker.php';
 
-    protected $fillable = ['name', 'provider_id', 'baikal_tracker_link', 'baikal_tracker_history'];
+    protected $fillable = [
+            'name',
+            'provider_id',
+            'baikal_tracker_link',
+            'baikal_tracker_history',
+            'refusal_amount',
+            'payment_amount',
+            'surcharge_amount',
+            'customs_amount',
+            'ordering_amount'
+    ];
 
     private const PAYMENT_AMOUNT_INFO_BLOCK = [
             'id' => null,
