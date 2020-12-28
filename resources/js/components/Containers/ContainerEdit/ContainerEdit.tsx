@@ -28,8 +28,7 @@ const ContainerEdit: React.FC<Props> = (props) => {
     const {register, handleSubmit, errors} = useForm({
         defaultValues: {
             arrivalDate: container.arrivalDate || '',
-            name: container.name,
-            identifier: container.identifier || ''
+            name: container.name
         }
     })
 
@@ -83,15 +82,8 @@ const ContainerEdit: React.FC<Props> = (props) => {
             <Input
                 ref={register}
                 type='date'
-                label='Дата выхода'
+                label='Дата прибытия'
                 name='arrivalDate'
-            />
-            <Input
-                ref={register}
-                type='text'
-                label='Идентификатор байкал'
-                name='identifier'
-                placeholder='Идентификатор байкал'
             />
         </div>
         <button
