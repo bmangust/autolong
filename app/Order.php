@@ -271,7 +271,7 @@ class Order extends Model
         return $this->payment_amount;
     }
 
-    public function countSurchargeAmount(int $surchargeAmount): int
+    public function countSurchargeAmount($surchargeAmount): int
     {
         if (is_numeric($surchargeAmount)) {
             return $this->surcharge_amount + $surchargeAmount;
@@ -309,8 +309,8 @@ class Order extends Model
             } else {
                 if ($status != $paymentPaidInFull) {
                     if ($status == $paymentRefunded) {
-                        $this->payment_amount = $this->countPaymentAmount($paymentAmount);
-                        $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
+                        $this->payment_amount = 0;
+                        $this->surcharge_amount = 0;
                     } else {
                         $oldPaymentHistory = json_decode($this->payment_history, true);
                         if ($paymentAmount != 0) {
@@ -591,7 +591,7 @@ class Order extends Model
         preg_match_all('#<td[^>]*>(.*?)</td>#is', $parse, $matches);
         $history = [];
         $content = self::PARSING_CONTENT;
-        foreach (array_slice($matches[1], 0) as  $item) {
+        foreach (array_slice($matches[1], 0) as $item) {
             if (strtotime($item)) {
                 $content['date'] = $item;
             } else {
