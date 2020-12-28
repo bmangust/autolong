@@ -193,6 +193,7 @@ export const editContainerAdmin = (id, data) => async dispatch => {
                 type: EDIT_CONTAINER_ADMIN,
                 payload: data
             })
+            toast.success('Данные контейнера успешно изменены')
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {
