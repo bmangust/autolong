@@ -36,10 +36,10 @@ const OrderEdit: React.FC<Props> = (props) => {
             name: order.name,
             cargo: !!order.cargo,
             providerId: {label: order.provider.name, value: order.provider.id},
-            containerId: {
+            containerId: order.container ? {
                 label: `Контейнер ${order.container.name} от ${timeConverter(order.container.createdAt)}`,
                 value: order.container.id
-            }
+            } : {label: 'Контейнер не выбран', value: 0}
         }
     })
 
@@ -72,6 +72,8 @@ const OrderEdit: React.FC<Props> = (props) => {
         }
     })
 
+    containersOptions.unshift({label: 'Контейнер не выбран', value: 0})
+
     const orderStatuses = Object.entries(statuses.orderStatuses)
         .map(([key, value]) => {
             return {label: value, value: key}
@@ -93,7 +95,7 @@ const OrderEdit: React.FC<Props> = (props) => {
     const editOrderHandler = handleSubmit((formValues) => {
         formValues.cargo = formValues.cargo ? 1 : 0
         formValues.providerId = formValues.providerId.value
-        formValues.containerId = formValues.containerId.value
+        formValues.containerId = formValues.containerId.value !== 0 ? formValues.containerId.value : null
         dispatch(editOrderAdmin(order.id, formValues))
     })
 
