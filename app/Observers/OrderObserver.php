@@ -85,6 +85,10 @@ class OrderObserver
                 'model_name' => get_class($order)
             ]);
         }
+        $container = $order->container;
+        if (!$container->orders()->count()) {
+            $container->delete();
+        }
     }
 
     /**
