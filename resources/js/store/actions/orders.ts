@@ -332,7 +332,7 @@ export const editOrderAdmin = (id, data) => async dispatch => {
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400 || error.response?.status === 404) {
-                toast.error(error.response.data)
+                toast.error(error.response.data.message)
             } else {
                 toast.error(error.message)
             }
