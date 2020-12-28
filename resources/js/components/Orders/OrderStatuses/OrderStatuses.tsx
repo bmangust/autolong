@@ -42,9 +42,21 @@ const OrderStatuses: React.FC<{
     const dispatch = useDispatch()
 
     const [date, setDate] = useState('')
-    const [city, setCity] = useState({})
+    const [city, setCity] = useState<{ label: string, value: any } | {}>({})
     const [unscrupulousState, setUnscrupulousState] = useState<boolean>(!!unscrupulous)
     const {user} = useContext(SanctumContext)
+
+    useEffect(() => {
+        if (arrivalDate) {
+            setDate(arrivalDate)
+        }
+    }, [arrivalDate])
+
+    useEffect(() => {
+        if (orderCity) {
+            setCity({label: orderCity.name, value: orderCity.id})
+        }
+    }, [orderCity])
 
     useEffect(() => {
         dispatch(fetchCities())
