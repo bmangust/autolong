@@ -134,8 +134,8 @@ class OrderController extends Controller
                 if ($containerIsCargo && !$request->input('cargo')) {
                     throw new HttpException(400, 'Вы не можете убрать статус карго у этого заказа в данном контейнере.');
                 }
-                $order->cargo = $request->input('cargo');
             }
+            $order->cargo = $request->input('cargo');
         }
         $order->save();
         $order->refresh();
