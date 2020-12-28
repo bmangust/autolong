@@ -172,12 +172,19 @@
 @media (max-width: 1199px) {
     .orderProductsName,
     .orderProductsArticle,
+    .orderProductsCount,
     .orderProductsItemPrice {
         margin-bottom: 10px;
     }
 }
 
 @media (max-width: 991px) {
+    .orderProducts:before {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
     .orderProducts:before {
         max-width: 100%;
     }

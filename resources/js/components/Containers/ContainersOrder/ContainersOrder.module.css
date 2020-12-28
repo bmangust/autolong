@@ -125,10 +125,42 @@
     margin-right: 10px;
 }
 
+@media (max-width: 1200px) {
+    .order .orderFooter {
+        flex-direction: column;
+    }
+
+    .order .orderFooter .orderItemsQrt {
+        margin-bottom: 10px;
+    }
+
+    .order .orderBody {
+        padding-bottom: 0;
+    }
+
+    
+    .order .orderFooter {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 991px) {
+
+    .order .orderBody {
+        padding: 15px 15px 0;
+    }
+    
+    .order .orderFooter {
+        padding: 0 15px 15px;
+    }
+
+    .documents {
+        padding: 15px;
+    }
+}
 
 @media (max-width: 767px) {
     .order .orderFooter {
-        padding: 15px;
         flex-direction: column;
     }
 
