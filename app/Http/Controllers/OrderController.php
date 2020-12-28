@@ -110,6 +110,7 @@ class OrderController extends Controller
             $order->container_id = $request->input('containerId');
         }
         $order->save();
+        $order->refresh();
         if (isset($oldContainer) && !$oldContainer->refresh()->orders()->count()) {
             $oldContainer->delete();
         }
