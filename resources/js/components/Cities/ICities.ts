@@ -18,7 +18,7 @@ export interface ICity {
 }
 
 export interface ICitiesState {
-    cities: ICity[] | []
+    cities: ICity[]
     loading: boolean
     error: any
 }

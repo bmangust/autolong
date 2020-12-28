@@ -623,6 +623,11 @@ label.required:after {
   padding-bottom: 5px;
 }
 
+html button.editButton {
+  border: none;
+  max-width: fit-content;
+}
+
 html button.btn {
   border-radius: 15px;
   border: none;

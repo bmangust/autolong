@@ -41,8 +41,7 @@ const OrderStatuses: React.FC<{
 
     const [date, setDate] = useState('')
     const [city, setCity] = useState({})
-    const [unscrupulousState, setUnscrupulousState] =
-        useState<boolean>(!!unscrupulous)
+    const [unscrupulousState, setUnscrupulousState] = useState<boolean>(!!unscrupulous)
     const {user} = useContext(SanctumContext)
 
     useEffect(() => {
@@ -87,15 +86,14 @@ const OrderStatuses: React.FC<{
             cities: state.citiesState.cities
         }))
 
-    let citiesOptions = []
+    let citiesOptions: { label: string, value: number }[] = []
     if (cities.length) {
-        citiesOptions = cities.map(
-            (city: ICity) => {
-                return {
-                    label: city.name,
-                    value: city.id
-                }
-            })
+        citiesOptions = cities.map((city: ICity) => {
+            return {
+                label: city.name,
+                value: city.id
+            }
+        })
     }
 
     const cls = [classes.status]

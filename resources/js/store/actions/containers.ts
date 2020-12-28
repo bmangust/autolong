@@ -13,7 +13,7 @@ import {
     CREATE_CONTAINER_START,
     CHANGE_CONTAINER_STATUS_START,
     CHANGE_CONTAINER_STATUS_SUCCESS,
-    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID
+    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID, EDIT_CONTAINER_ADMIN
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -173,6 +173,27 @@ export const getMarkingList = (id, date) => {
                 {type: 'application/pdf;charset=utf-8'})
             toast.success(`Маркировочный лист сгенерирован`)
             saveAs(blob, `markinglist-${id}-${timeConverter(date)}.pdf`)
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+}
+
+export const editContainerAdmin = (id, data) => async dispatch => {
+    const url = `/api/containers/${id}`
+
+    axios
+        .put(url, data)
+        .then(({data}) => {
+            dispatch({
+                type: EDIT_CONTAINER_ADMIN,
+                payload: data
+            })
+            toast.success('Данные контейнера успешно изменены')
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {

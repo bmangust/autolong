@@ -14,7 +14,9 @@ class Container extends Model
             'name',
             'status',
             'city',
-            'identifier'
+            'identifier',
+            'arrival_date',
+            'release_date'
     ];
 
     public const SANDBOX_DIRECTORY = '/container/';

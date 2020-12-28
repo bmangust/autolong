@@ -295,6 +295,12 @@ const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
                 </div>
                 <div className="col-lg-6">
                     <InputCheckbox
+                        name='adminPower'
+                        ref={register}
+                        label='Админский доступ к изменению контейнеров и заказов'/>
+                </div>
+                <div className="col-lg-6">
+                    <InputCheckbox
                         name='settingsIndex'
                         ref={register}
                         label='Доступ и просмотр информации о настройках'/>

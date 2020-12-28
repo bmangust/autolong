@@ -13,7 +13,7 @@ import {
     FETCH_UNAPPLIED_ORDERS_ERROR,
     CHANGE_CONTAINER_STATUS_START,
     CHANGE_CONTAINER_STATUS_SUCCESS,
-    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID
+    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID, EDIT_CONTAINER_ADMIN
 } from '../../store/actions/actionTypes'
 import {ICity} from '../Cities/ICities'
 import {IOrder} from '../Orders/IOrders'
@@ -25,6 +25,7 @@ export interface IContainer {
     status: string
     city: ICity
     orders: IOrder[]
+    identifier: string | null
     sandboxFiles: ISandboxFile[] | []
     arrivalDate: number | null
     createdAt: number
@@ -32,9 +33,9 @@ export interface IContainer {
 }
 
 export interface IContainersState {
-    containers: IContainer[] | []
+    containers: IContainer[]
     container: IContainer | null
-    unappliedOrders: IOrder[] | []
+    unappliedOrders: IOrder[]
     loadingUnapplied: boolean
     loading: boolean
     loadingStatus: boolean
@@ -136,6 +137,11 @@ interface IDeleteContainerById {
     payload: any
 }
 
+interface IEditContainerAdmin {
+    type: typeof EDIT_CONTAINER_ADMIN
+    payload: IContainer
+}
+
 export type IContainersActionTypes =
     IFetchContainersStart | IFetchContainersSuccess | IFetchContainersError |
     IFetchContainerStart | IFetchContainerSuccess | IFetchContainerError |
@@ -143,4 +149,4 @@ export type IContainersActionTypes =
     IFetchUnappliedOrdersStart | IFetchUnappliedOrdersSuccess |
     IFetchUnappliedOrdersError | IChangeContainerStatusStart |
     IChangeContainerStatusSuccess | IChangeContainerStatusError |
-    IDeleteContainerById
+    IDeleteContainerById | IEditContainerAdmin

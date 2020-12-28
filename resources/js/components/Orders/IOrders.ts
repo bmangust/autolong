@@ -18,7 +18,7 @@ import {
     DELETE_ORDER_BY_ID,
     FETCH_ORDER_INVOICE_START,
     FETCH_ORDER_INVOICE_SUCCESS,
-    FETCH_ORDER_INVOICE_ERROR, REMOVE_INPUT_FROM_INVOICE, CHECK_BAIKAL_STATUS, DELETE_BAIKAL_ID
+    FETCH_ORDER_INVOICE_ERROR, REMOVE_INPUT_FROM_INVOICE, CHECK_BAIKAL_STATUS, DELETE_BAIKAL_ID, EDIT_ORDER_ADMIN
 } from '../../store/actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -61,7 +61,7 @@ export interface IPaymentHistory {
 export interface IOrdersState {
     orders: IOrder[]
     order: IOrder | null
-    orderProducts: IProduct[] | []
+    orderProducts: IProduct[]
     loading: boolean;
     loadingStatus: boolean
     loadingInvoice: boolean
@@ -209,6 +209,11 @@ interface IDeleteBaikalId {
     payload: IOrder
 }
 
+interface IEditOrderAdmin {
+    type: typeof EDIT_ORDER_ADMIN
+    payload: IOrder
+}
+
 export type IOrdersActionTypes =
     IFetchOrdersStart | IFetchOrdersSuccess | IFetchOrdersError |
     IFetchOrderStart | IFetchOrderSuccess | IFetchOrderError |
@@ -218,4 +223,5 @@ export type IOrdersActionTypes =
     IChangeOrderStatusSuccess | IChangeOrderStatusError |
     IDeleteOrderById | IClearOrderProducts | IFetchOrderInvoiceStart |
     IFetchOrderInvoiceSuccess | IFetchOrderInvoiceError |
-    IRemoveInputFromInvoice | ICheckBaikalStatus | IDeleteBaikalId
+    IRemoveInputFromInvoice | ICheckBaikalStatus | IDeleteBaikalId |
+    IEditOrderAdmin

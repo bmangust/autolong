@@ -25,7 +25,6 @@ class ContainerController extends Controller
                 'orders' => ['required'],
         ], $messages, $names);
     }
-
     /**
      * Display a listing of the resource.
      *
@@ -88,11 +87,18 @@ class ContainerController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Container $container
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function update(Request $request, Container $container)
     {
-        $container->update($container->dashesToSnakeCase($request->all()));
+        $request->validate([
+                'name' => 'required',
+        ]);
+        $container->update([
+                'name' => $request->input('name'),
+                'arrival_date' => $request->input('arrivalDate'),
+                'release_date' => $request->input('releaseDate')
+        ]);
         return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
 
