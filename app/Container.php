@@ -17,7 +17,7 @@ class Container extends Model
             'identifier',
             'arrival_date',
             'release_date',
-            'delivery_rice',
+            'delivery_price',
             'quantity_order_items'
     ];
 
@@ -109,6 +109,17 @@ class Container extends Model
             }
         }
         return false;
+    }
+
+    public function checkCargoOrdersById(array $ids): bool
+    {
+        foreach ($ids as $id) {
+            $order = Order::findOrFail($id);
+            if ($order->cargo) {
+                continue;
+            }
+            return false;
+        }
     }
 
     public function updateQuantityOrderItems()
