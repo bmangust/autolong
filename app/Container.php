@@ -17,7 +17,8 @@ class Container extends Model
             'identifier',
             'arrival_date',
             'release_date',
-            'delivery_rice'
+            'delivery_rice',
+            'quantity_order_items'
     ];
 
     public const SANDBOX_DIRECTORY = '/container/';
@@ -108,5 +109,17 @@ class Container extends Model
             }
         }
         return false;
+    }
+
+    public function updateQuantityOrderItems()
+    {
+        $orders = $this->orders()->with('orderItems')->get();
+        $quantity = 0;
+        foreach ($orders as $order) {
+            $quantity += $order->getOrderItemsQuantity();
+        }
+        $this->update([
+                'quantity_order_items' => $quantity
+        ]);
     }
 }

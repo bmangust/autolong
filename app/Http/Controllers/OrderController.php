@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\City;
+use App\Container;
 use App\ContractDocument;
 use App\Http\Resources\ContainerWithRelationshipsResource;
 use App\Http\Resources\ProductResource;
@@ -95,26 +96,47 @@ class OrderController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param int $id
+     * @param Order $order
      * @return \Illuminate\Http\Response
+     * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Order $order)
     {
         $this->orderCreateValidator($request->all())->validate();
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
-        if ($request->has('cargo')) {
-            $order->cargo = $request->input('cargo');
-        }
+
         if ($order->container_id != $request->input('containerId')) {
+            $order->cargo = $request->input('cargo');
+            $newContainer = Container::find($request->input('containerId'));
+            if ($newContainer) {
+                if ($newContainer->checkCargoOrders()) {
+                    if ($order->cargo) {
+                        $order->container_id = $request->input('containerId');
+                    } else {
+                        throw new HttpException(400, 'Вы не можете перенести данный заказ в контейнер №' . $newContainer->name . ' состоящий из заказов карго.');
+                    }
+                } elseif (!$order->cargo) {
+                    $order->container_id = $request->input('containerId');
+                } else {
+                    throw new HttpException(400, 'Вы не можете перенести данный заказ карго в контейнер №' . $newContainer->name . '. Данный контейнер состоит из не карго заказов.');
+                }
+            } else {
+                $order->container_id = $request->input('containerId');
+            }
+        } else {
             $oldContainer = $order->container;
-            $order->container_id = $request->input('containerId');
+            $containerIsCargo = $oldContainer->checkCargoOrders();
+            if (!$containerIsCargo && $request->input('cargo')) {
+                throw new HttpException(400, 'Вы не можете присвоить статус карго этому заказу в данном контейнере.');
+            }
+            if ($containerIsCargo && !$request->input('cargo')) {
+                throw new HttpException(400, 'Вы не можете убрать статус карго у этого заказа в данном контейнере.');
+            }
+            $order->cargo = $request->input('cargo');
         }
         $order->save();
         $order->refresh();
-        if (isset($oldContainer) && !$oldContainer->refresh()->orders()->count()) {
-            $oldContainer->delete();
-        }
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
         }

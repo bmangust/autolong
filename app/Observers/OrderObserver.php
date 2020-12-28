@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Container;
 use App\Http\Resources\OrderResource;
 use App\Log;
 use App\Order;
@@ -41,10 +42,10 @@ class OrderObserver
      */
     public function updated(Order $order)
     {
+        $before = $order->withoutRelations()->getOriginal();
+        $after = $order->withoutRelations()->toArray();
         if (Log::$write && Auth::user()) {
             $log = new Log();
-            $before = $order->withoutRelations()->getOriginal();
-            $after = $order->withoutRelations()->toArray();
             $log->create([
                 'user_id' => Auth::user()->id,
                 'action' => Log::ACTION_UPDATED,
@@ -54,6 +55,19 @@ class OrderObserver
                 'after' => json_encode(array_diff_assoc($after, $before)),
             ]);
         }
+        $oldContainerId = $before['container_id'];
+        $newContainerId = $after['container_id'];
+        if ($oldContainerId != $newContainerId) {
+            $oldContainer = Container::find($oldContainerId);
+            $newContainer = Container::find($newContainerId);
+            if ($oldContainer) {
+                $oldContainer->updateQuantityOrderItems();
+            }
+            if ($newContainer) {
+                $newContainer->updateQuantityOrderItems();
+            }
+        }
+
     }
 
     public function deleting(Order $order)
@@ -86,8 +100,12 @@ class OrderObserver
             ]);
         }
         $container = $order->container;
-        if (!$container->orders()->count()) {
-            $container->delete();
+        if ($container) {
+            if (!$container->orders()->count()) {
+                $container->delete();
+            } else {
+                $container->updateQuantityOrderItems();
+            }
         }
     }
 
