@@ -26,7 +26,7 @@ import SvgInProduction from '../../UI/iconComponents/InProduction'
 import SvgReadyForSent from '../../UI/iconComponents/ReadyForSent'
 import SvgDeliveryBox from '../../UI/iconComponents/DeliveryBox'
 import SvgOrderInContainer from '../../UI/iconComponents/OrderInContainer'
-import {getContainerStatusName} from '../../../utils'
+import {getContainerStatusName, timeConverter} from '../../../utils'
 import InputCheckbox from '../../UI/Inputs/InputCheckbox/InputCheckbox'
 import {SanctumContext} from '../../../Sanctum'
 
@@ -241,14 +241,14 @@ const OrderStatuses: React.FC<{
                     <div>
                         <p>Номер контейнера</p>
                         <NavLink to={`/container/${container?.id}`}>
-                            {container?.id}
+                            №{container.name} от {timeConverter(container.createdAt)}
                         </NavLink>
                     </div>
                     <div>
                         <p>Статус контейнера</p>
                         <span>
-                                {getContainerStatusName(container?.status)}
-                            </span>
+                            {getContainerStatusName(container?.status)}
+                        </span>
                     </div>
                 </div>
             </div>
