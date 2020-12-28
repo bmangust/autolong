@@ -608,16 +608,17 @@ class OrderController extends Controller
                 'customsAmount' => 'numeric',
                 'orderingAmount' => 'numeric'
         ]);
+        $newRequest = $order->cleanSpaceInArrayItems($request->all(), true);
         $order->update([
-                'refusal_amount' => $request->input('refusalAmount'),
-                'payment_amount' => $request->input('paymentAmount'),
-                'surcharge_amount' => $request->input('surchargeAmount'),
-                'customs_amount' => $request->input('customsAmount'),
-                'ordering_amount' => $request->input('orderingAmount')
+                'refusal_amount' => $newRequest['refusalAmount'],
+                'payment_amount' => $newRequest['paymentAmount'],
+                'surcharge_amount' => $newRequest['surchargeAmount'],
+                'customs_amount' => $newRequest['customsAmount'],
+                'ordering_amount' => $newRequest['orderingAmount']
         ]);
         $container = $order->container;
         $container->update([
-                'delivery_price' => $request->input('deliveryPrice')
+                'delivery_price' => $newRequest['deliveryPrice']
         ]);
         return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
