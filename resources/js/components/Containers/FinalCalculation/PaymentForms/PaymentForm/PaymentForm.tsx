@@ -183,7 +183,7 @@ const PaymentForm: React.FC<Props> = (props) => {
                 <span>
                    <b> {additionalTotal} ₽ </b>
                     {additionalTotal > 0
-                        ? `(${(totalRub / additionalTotal).toFixed(3)} ₽)`
+                        ? `(+${(additionalTotal / totalRub).toFixed(3)} ₽)`
                         : null
                     }
                 </span>
