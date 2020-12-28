@@ -234,7 +234,11 @@ export const acceptProductById = (id, nameRu) => async dispatch => {
             dispatch(push('/newproducts'))
         })
         .catch((error: AxiosError) => {
-            toast.error(error.message)
+            if (error.response?.status === 400) {
+                toast.warn(error.response.data.message)
+            } else {
+                toast.error(error.message)
+            }
         })
 }
 

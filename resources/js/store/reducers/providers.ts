@@ -21,7 +21,7 @@ import {
 
 const initialState: IProvidersState = {
     providers: [],
-    provider: {},
+    provider: null,
     loading: true,
     error: null
 }

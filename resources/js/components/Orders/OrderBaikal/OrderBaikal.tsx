@@ -23,7 +23,7 @@ type Props = {
 }
 
 const OrderBaikal: React.FC<Props> = (props) => {
-    const {baikalTrackerLink, baikalTrackerHistory, orderId, isContainer} = props
+    const {baikalTrackerLink, baikalTrackerHistory, orderId, isContainer = false} = props
     const [baikalId, setBaikalId] = useState('')
     const dispatch = useDispatch()
 
@@ -56,7 +56,7 @@ const OrderBaikal: React.FC<Props> = (props) => {
         const id = url.searchParams.get('id')
         content = <>
             <p className={classes.track}>Идентификатор {id}</p>
-            {!isContainer
+            {isContainer
                 ? null
                 : <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
             }
@@ -70,7 +70,7 @@ const OrderBaikal: React.FC<Props> = (props) => {
         const id = url.searchParams.get('id')
         content = <>
             <p className={classes.track}>Идентификатор {id}</p>
-            {!isContainer
+            {isContainer
                 ? null
                 : <span className={classes.cancel} onClick={() => cancelTracking()}>Отменить отслеживание</span>
             }
