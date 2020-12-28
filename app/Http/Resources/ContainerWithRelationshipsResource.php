@@ -25,6 +25,7 @@ class ContainerWithRelationshipsResource extends JsonResource
                 'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
                 'quantityItems' => $this->quantity_order_items,
                 'arrivalDate' => strtotime($this->arrival_date),
+                'releaseDate' => strtotime($this->release_date),
                 'createdAt' => strtotime($this->created_at),
                 'updatedAt' => strtotime($this->updated_at),
         ];
