@@ -113,8 +113,8 @@ const OrderEdit: React.FC<Props> = (props) => {
             <Input
                 type='text'
                 ref={register({required: true})}
-                label='Название контейнера'
-                placeholder='Название контейнера'
+                label='Название заказа'
+                placeholder='Название заказа'
                 name='name'
                 required
             />
