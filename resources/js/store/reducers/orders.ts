@@ -149,6 +149,10 @@ export default function ordersReducer(
             return {
                 ...state, order: action.payload
             }
+        case 'EDIT_ORDER_ADMIN':
+            return {
+                ...state, order: action.payload
+            }
         default:
             return state
     }

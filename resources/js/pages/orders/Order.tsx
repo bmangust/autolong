@@ -35,12 +35,15 @@ import OrderPayment from '../../components/Orders/OrderPayment/OrderPayment'
 import courses from '../../../courses/courses.json'
 import {SanctumContext} from '../../Sanctum'
 import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
+import Modal from '../../components/UI/Modal/Modal'
+import OrderEdit from '../../components/Orders/OrderEdit/OrderEdit'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
     const [isShow, setIsShow] = useState(false)
     const [course, setCourse] = useState('cny')
     const {user} = useContext(SanctumContext)
+    const [isShowAdminModal, setIsShowAdminModal] = useState(false)
 
     const dispatch = useDispatch()
     const history = useHistory()
@@ -139,6 +142,26 @@ const Order: React.FC<IOrder> = () => {
                 <div className='card-body-info'>
                     <h2 className='mb-3'>
                         {order.name}
+                        {user.role.accesses.adminPower == 1
+                            ? <>
+                                <button
+                                    onClick={() => setIsShowAdminModal(true)}
+                                    className='editButton ml-4'>
+                                    Редактировать
+                                </button>
+                                {isShowAdminModal
+                                    ? <Modal
+                                        size='size-700'
+                                        title='Редактирование заказа'
+                                        isOpen={isShowAdminModal}
+                                        setIsOpen={setIsShowAdminModal}>
+                                        <OrderEdit setIsOpen={setIsShowAdminModal} order={order}/>
+                                    </Modal>
+                                    : null
+                                }
+                            </>
+                            : null
+                        }
                         {order.cargo && user.role.accesses.ordersShowCargo
                             ? <span className='cargo'>Статус карго</span>
                             : null}

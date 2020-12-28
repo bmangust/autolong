@@ -65,7 +65,7 @@ const ContainerEdit: React.FC<Props> = (props) => {
                     Выберите статус
                 </label>
                 <Select
-                    placeholder='Выберите поставщика'
+                    placeholder='Выберите статус'
                     classNamePrefix='select-mini'
                     className='select-mini'
                     defaultValue={{label: statuses.containerStatuses[container.status], value: container.status}}
