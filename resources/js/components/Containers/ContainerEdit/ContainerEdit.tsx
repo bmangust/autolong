@@ -16,6 +16,7 @@ import {changeContainerStatus, editContainerAdmin} from '../../../store/actions/
 import Form from '../../UI/Form/Form'
 import Input from '../../UI/Inputs/Input/Input'
 import statuses from '../../../../statuses/statuses.json'
+import {timeConverter} from '../../../utils'
 
 type Props = {
     container: IContainer
@@ -27,7 +28,8 @@ const ContainerEdit: React.FC<Props> = (props) => {
     const dispatch = useDispatch()
     const {register, handleSubmit, errors} = useForm({
         defaultValues: {
-            arrivalDate: container.arrivalDate || '',
+            arrivalDate: container.arrivalDate ? timeConverter(container.arrivalDate, true) : '',
+            releaseDate: container.releaseDate ? timeConverter(container.releaseDate, true) : '',
             name: container.name
         }
     })
@@ -45,7 +47,7 @@ const ContainerEdit: React.FC<Props> = (props) => {
         dispatch(editContainerAdmin(container.id, formValues))
     })
     return <Form onSubmit={editContainerHandler}>
-        <div className='row'>
+        <div className='row mb-3'>
             <Input
                 type='text'
                 ref={register({required: true})}

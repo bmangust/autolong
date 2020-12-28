@@ -197,7 +197,9 @@ const Container: React.FC<IContainer> = () => {
                         Дата выхода
                     </p>
                     <p className="infoBlockText">
-                        -
+                        {container.releaseDate
+                            ? timeConverter(container.releaseDate)
+                            : '-'}
                     </p>
                     <p className="infoBlockHeaders mb-1">
                         Дата прибытия на склад
