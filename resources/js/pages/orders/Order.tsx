@@ -37,6 +37,8 @@ import {SanctumContext} from '../../Sanctum'
 import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderEdit from '../../components/Orders/OrderEdit/OrderEdit'
+import SvgEdit from '../../components/UI/iconComponents/Edit'
+import SvgDelete from '../../components/UI/iconComponents/Delete'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -138,35 +140,17 @@ const Order: React.FC<IOrder> = () => {
     }
     return <div className='row'>
         <div className='col-lg-8'>
-            <div className='card mb-3'>
-                <div className='card-body-info'>
-                    <h2 className='mb-3'>
+            <div className='new-card mb-3'>
+                <div className='new-card__header'>
+                    <h2>
                         {order.name}
-                        {user.role.accesses.adminPower == 1
-                            ? <>
-                                <button
-                                    onClick={() => setIsShowAdminModal(true)}
-                                    className='editButton ml-4'>
-                                    Редактировать
-                                </button>
-                                {isShowAdminModal
-                                    ? <Modal
-                                        size='size-700'
-                                        title='Редактирование заказа'
-                                        isOpen={isShowAdminModal}
-                                        setIsOpen={setIsShowAdminModal}>
-                                        <OrderEdit setIsOpen={setIsShowAdminModal} order={order}/>
-                                    </Modal>
-                                    : null
-                                }
-                            </>
-                            : null
-                        }
-                        {order.cargo && user.role.accesses.ordersShowCargo
-                            ? <span className='cargo'>Статус карго</span>
-                            : null}
                     </h2>
-                    <div className='row mb-3 flex-lg-row flex-column'>
+                    {order.cargo && user.role.accesses.ordersShowCargo
+                        ? <span className='cargo'>Заказ карго</span>
+                        : null}
+                </div>
+                <div className="new-card__body">
+                    <div className='row flex-lg-row flex-column'>
                         <div className='col-md-5 mb-xl-0 mb-3'>
                             <p className='infoBlockHeaders'>
                                 Статус заказа
@@ -198,11 +182,35 @@ const Order: React.FC<IOrder> = () => {
                             <OrderPayment order={order}/>
                         </div>
                     </Collapse>
+                </div>
+                <div className="new-card__footer">
+                    {user.role.accesses.adminPower == 1
+                        ? <>
+                            <button
+                                onClick={() => setIsShowAdminModal(true)}
+                                className='new-card__footer--btn'>
+                                <SvgEdit/>
+                                Редактировать информацию
+                            </button>
+                            {isShowAdminModal
+                                ? <Modal
+                                    size='size-700'
+                                    title='Редактирование заказа'
+                                    isOpen={isShowAdminModal}
+                                    setIsOpen={setIsShowAdminModal}>
+                                    <OrderEdit setIsOpen={setIsShowAdminModal} order={order}/>
+                                </Modal>
+                                : null
+                            }
+                        </>
+                        : null
+                    }
                     {user && user.role.accesses.ordersDelete == 1
                         ? <button
                             onClick={() => onDeleteHandler(order.id)}
-                            className='btn btn-danger'>
-                            Удалить заказ
+                            className='new-card__footer--btn'>
+                            <SvgDelete/>
+                            Удалить заказ из системы
                         </button>
                         : null
                     }
@@ -211,6 +219,8 @@ const Order: React.FC<IOrder> = () => {
 
             <div className='mb-3'>
                 <OrderStatuses
+                    arrivalDate={order.arrivalDate}
+                    orderCity={order.city}
                     id={order.id}
                     providerId={order.provider.id}
                     status={order.status}

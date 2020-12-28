@@ -28,6 +28,7 @@ export interface IContainer {
     identifier: string | null
     sandboxFiles: ISandboxFile[] | []
     arrivalDate: number | null
+    releaseDate: number | null
     createdAt: number
     updatedAt: number
 }

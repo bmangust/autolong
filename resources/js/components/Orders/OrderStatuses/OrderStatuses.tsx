@@ -31,12 +31,14 @@ import InputCheckbox from '../../UI/Inputs/InputCheckbox/InputCheckbox'
 import {SanctumContext} from '../../../Sanctum'
 
 const OrderStatuses: React.FC<{
+    arrivalDate: string
     id: number
+    orderCity: ICity
     status: string
     providerId: number
     container?: IContainer
     unscrupulous: 0 | 1
-}> = ({id, status, providerId, container, unscrupulous}) => {
+}> = ({id, status, orderCity, arrivalDate, providerId, container, unscrupulous}) => {
     const dispatch = useDispatch()
 
     const [date, setDate] = useState('')
@@ -126,9 +128,11 @@ const OrderStatuses: React.FC<{
                 </p>
                 <div className={classes.inputs}>
                     <input onChange={onChangeDateHandler}
+                           defaultValue={arrivalDate || ''}
                            type="date" name='arrivalDate'/>
                     <CreatableSelect
                         isClearable={true}
+                        defaultValue={orderCity ? {label: orderCity.name, value: orderCity.id} : {}}
                         placeholder='Введите город'
                         onChange={onChangeCityHandler}
                         classNamePrefix='select-mini-tags'

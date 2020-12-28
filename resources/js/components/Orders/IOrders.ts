@@ -37,6 +37,7 @@ export interface IOrder {
     baikalTrackerHistory: { date: string, text: string }[]
     items: IProduct[]
     priceCny: number
+    arrivalDate: string
     city: ICity
     paymentHistory: IPaymentHistory[]
     cargo: number

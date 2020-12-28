@@ -36,10 +36,10 @@ const OrderEdit: React.FC<Props> = (props) => {
             name: order.name,
             cargo: !!order.cargo,
             providerId: {label: order.provider.name, value: order.provider.id},
-            containerId: {
-                label: `Контейнер ${order.container.name} от ${timeConverter(order.container.createdAt)}`,
+            containerId: order.container ? {
+                label: `№${order.container.name} от ${timeConverter(order.container.createdAt)}`,
                 value: order.container.id
-            }
+            } : {label: 'Контейнер не выбран', value: 0}
         }
     })
 
@@ -67,10 +67,12 @@ const OrderEdit: React.FC<Props> = (props) => {
 
     const containersOptions = containers.map((container: IContainer) => {
         return {
-            label: `Контейнер ${container.name} от ${timeConverter(container.createdAt)}`,
+            label: `№${container.name} от ${timeConverter(container.createdAt)}`,
             value: container.id
         }
     })
+
+    containersOptions.unshift({label: 'Контейнер не выбран', value: 0})
 
     const orderStatuses = Object.entries(statuses.orderStatuses)
         .map(([key, value]) => {
@@ -93,7 +95,7 @@ const OrderEdit: React.FC<Props> = (props) => {
     const editOrderHandler = handleSubmit((formValues) => {
         formValues.cargo = formValues.cargo ? 1 : 0
         formValues.providerId = formValues.providerId.value
-        formValues.containerId = formValues.containerId.value
+        formValues.containerId = formValues.containerId.value !== 0 ? formValues.containerId.value : null
         dispatch(editOrderAdmin(order.id, formValues))
     })
 
@@ -111,8 +113,8 @@ const OrderEdit: React.FC<Props> = (props) => {
             <Input
                 type='text'
                 ref={register({required: true})}
-                label='Название контейнера'
-                placeholder='Название контейнера'
+                label='Название заказа'
+                placeholder='Название заказа'
                 name='name'
                 required
             />

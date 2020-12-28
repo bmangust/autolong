@@ -6,9 +6,6 @@ import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Accordion} from 'react-bootstrap'
 
-// Styles
-import classes from './Container.module.css'
-
 // Actions
 import {
     deleteContainerById,
@@ -34,6 +31,8 @@ import {SanctumContext} from '../../Sanctum'
 import ContainersOrder from '../../components/Containers/ContainersOrder/ContainersOrder'
 import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
 import ContainerEdit from '../../components/Containers/ContainerEdit/ContainerEdit'
+import SvgEdit from '../../components/UI/iconComponents/Edit'
+import SvgDelete from '../../components/UI/iconComponents/Delete'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -72,48 +71,52 @@ const Container: React.FC<IContainer> = () => {
     return <div>
         <div className="row">
             <div className="col-lg-8">
-                <div className="card mb-3 card-body">
-                    <div className="d-flex justify-content-between align-items-baseline flex-sm-row flex-column">
-                        <h2 className="mb-0">
+                <div className="new-card mb-3">
+                    <div className="new-card__header">
+                        <h2>
                             № {container.name} от {timeConverter(container.createdAt)}
                         </h2>
-                        {user && user.role.accesses.containersDelete == 1
-                            ? < button
-                                className='btn btn-link'
-                                onClick={onDeleteHandler}>
-                                Удалить
-                            </button>
-                            : null
-                        }
-                        <div className="d-flex align-items-center">
+                        <div className='new-card__status'>
                             <span className="infoBlockHeaders mr-3">
-                                Статус
+                                Статус контейнера
                             </span>
-                            <span className={'bg-primary text-white ' + classes.containerStatus}>
-                                    {getContainerStatusName(container.status)}
+                            <span className='new-card__status--badge'>
+                                {getContainerStatusName(container.status)}
                             </span>
                         </div>
                     </div>
-                    {user.role.accesses.adminPower == 1
-                        ? <>
-                            <button
-                                onClick={() => setIsShowAdminModal(true)}
-                                className='editButton'>
-                                Редактировать
+                    <div className="new-card__footer">
+                        {user.role.accesses.adminPower == 1
+                            ? <>
+                                <button
+                                    onClick={() => setIsShowAdminModal(true)}
+                                    className='new-card__footer--btn'>
+                                    <SvgEdit/>
+                                    Редактировать информацию
+                                </button>
+                                {isShowAdminModal
+                                    ? <Modal
+                                        size='size-700'
+                                        title='Редактирование контейнера'
+                                        isOpen={isShowAdminModal}
+                                        setIsOpen={setIsShowAdminModal}>
+                                        <ContainerEdit setIsOpen={setIsShowAdminModal} container={container}/>
+                                    </Modal>
+                                    : null
+                                }
+                            </>
+                            : null
+                        }
+                        {user && user.role.accesses.containersDelete == 1
+                            ? <button
+                                className='new-card__footer--btn'
+                                onClick={onDeleteHandler}>
+                                <SvgDelete/>
+                                Удалить контейнер из системы
                             </button>
-                            {isShowAdminModal
-                                ? <Modal
-                                    size='size-700'
-                                    title='Редактирование контейнера'
-                                    isOpen={isShowAdminModal}
-                                    setIsOpen={setIsShowAdminModal}>
-                                    <ContainerEdit setIsOpen={setIsShowAdminModal} container={container}/>
-                                </Modal>
-                                : null
-                            }
-                        </>
-                        : null
-                    }
+                            : null
+                        }
+                    </div>
                 </div>
 
                 <div className='mb-3'>
@@ -194,7 +197,9 @@ const Container: React.FC<IContainer> = () => {
                         Дата выхода
                     </p>
                     <p className="infoBlockText">
-                        -
+                        {container.releaseDate
+                            ? timeConverter(container.releaseDate)
+                            : '-'}
                     </p>
                     <p className="infoBlockHeaders mb-1">
                         Дата прибытия на склад

@@ -50,12 +50,16 @@ export function substringOut(value: string, length: number) {
 /**
  * Convert timestamp to m.d.Y by timestamp
  * @param timestamp
+ * @param input
  */
-export function timeConverter(timestamp) {
+export function timeConverter(timestamp, input = false) {
     const a = new Date(timestamp * 1000)
     const month = a.getMonth() + 1
     const year = a.getFullYear()
     const date = a.getDate()
+    if (input) {
+        return `${year}-${month}-${date}`
+    }
     return `${date}.${month}.${year}`
 }
 
@@ -67,17 +71,20 @@ export function timeConverter(timestamp) {
 export function moneyFormatter(price: IProductPrice, without: string[] = []) {
     return (
         <span className="pricesBlock">
-           {Object.entries(price).sort().map(([key, val]) => {
-               if (without.length && without.includes(key)) {
-                   return false
-               }
-               return (
-                   <span key={key}>
-                       {val ? parseFloat(val).toFixed(2) : +val}
-                       {getSymbolFromCurrency(key)}
+           {Object.entries(price)
+               .sort()
+               .map(([key, val]) => {
+                   if (without.length && without.includes(key)) {
+                       return false
+                   }
+                   return (
+                       <span key={key}>
+                       {val ? parseFloat(val)
+                           .toFixed(2) : +val}
+                           {getSymbolFromCurrency(key)}
                    </span>
-               )
-           })}
+                   )
+               })}
         </span>
     )
 }
@@ -169,9 +176,10 @@ export const tagsConverter = (tags: ITag[]) => {
  * @param key
  */
 export const mapOrder =
-    (array: [string, unknown][],
-     order: string[],
-     key = 0) => {
+    (
+        array: [string, unknown][],
+        order: string[],
+        key = 0) => {
         array.sort((a, b) => {
             const A = a[key]
             const B = b[key]

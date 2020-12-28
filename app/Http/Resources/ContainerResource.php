@@ -23,6 +23,7 @@ class ContainerResource extends JsonResource
                 'identifier' => $this->identifier,
                 'quantityItems' => $this->quantity_order_items,
                 'arrivalDate' => strtotime($this->arrival_date),
+                'releaseDate' => strtotime($this->release_date),
                 'createdAt' => strtotime($this->created_at),
                 'updatedAt' => strtotime($this->updated_at),
         ];

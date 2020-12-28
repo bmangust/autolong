@@ -133,8 +133,9 @@ class OrderController extends Controller
                 'status' => 'required',
         ]);
         $status = $request->input('status');
-        $statusOrderInProduction = array_keys(get_object_vars(Status::getOrderStatuses()), 'Находится в производстве')[0];
-        if ($status != $statusOrderInProduction) {
+        $statusOrderCreated = array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0];
+        $statusOrderConfirmed = array_keys(get_object_vars(Status::getOrderStatuses()), 'Подтвержден')[0];
+        if ($status == $statusOrderCreated || $status == $statusOrderConfirmed) {
             $order->setOrderStatus($status);
         } elseif ($request->has('arrivalDate') && $request->has('city')) {
             if (!$order->checkActualDate($request->input('arrivalDate'))) {
@@ -148,7 +149,7 @@ class OrderController extends Controller
         } elseif (!is_null($order->city) && !is_null($order->arrival_date)) {
             $order->setOrderStatus($status);
         } else {
-            throw new HttpException(400, 'Заполнена не вся информация для статуса "Находится в производстве"');
+            throw new HttpException(400, 'Для данного статуса необходимо указать город и дату. Эти данные указываются на этапе подтверждения. ');
         }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
@@ -159,31 +160,23 @@ class OrderController extends Controller
                 'statusPayment' => 'required',
         ]);
         $status = $request->input('statusPayment');
-        if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
 
+        $paymentAwaiting = Status::getOrderPaymentAwaiting();
+        $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+        $paymentPaidFor = Status::getOrderPaymentPaidFor();
+        $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
+        $paymentAwaitingRefund = Status::getOrderPaymentAwaitingRefund();
+        $paymentRefunded = Status::getOrderPaymentRefunded();
+
+        if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
             if (!is_numeric($request->input('paymentAmount')) && !is_numeric($request->input('surchargeAmount'))) {
                 throw new HttpException(400, 'Переданные данные оплаты не являются числовым типом. Убедитесь, что вы передаете ноль, если вы не хотите вносить информацию об оплате или доплате.');
             }
             $paymentAmount = (int)$request->input('paymentAmount');
             $surchargeAmount = (int)$request->input('surchargeAmount');
 
-            $paymentAwaiting = Status::getOrderPaymentAwaiting();
-            $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
-            $paymentPaidFor = Status::getOrderPaymentPaidFor();
-
             $orderAmount = $order->getOrderSumInCny();
             $newPaymentAmount = $order->payment_amount + $paymentAmount;
-
-            if ($order->status_payment == $paymentPrepaymentMade) {
-                if ($newPaymentAmount >= $orderAmount) {
-                    $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
-                    $order->setOrderPaymentStatus($paymentPaidInFull, $paymentAmount, $surchargeAmount);
-                }
-                if ($newPaymentAmount < $orderAmount) {
-                    $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
-                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
-                }
-            }
 
             if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
                 if ($newPaymentAmount >= $orderAmount) {
@@ -195,7 +188,23 @@ class OrderController extends Controller
             }
             return response()->json(new OrderWithRelationshipsResource($order), 200);
         }
-        $order->setOrderPaymentStatus($status);
+
+        switch ($order->status_payment) {
+            case $paymentPrepaymentMade:
+                if ($status == $paymentAwaitingRefund) {
+                    $order->setOrderPaymentStatus($paymentAwaitingRefund);
+                } else {
+                    $order->setOrderPaymentStatus($paymentPaidInFull);
+                }
+                break;
+            case $paymentAwaitingRefund:
+                $order->setOrderPaymentStatus($paymentRefunded);
+                break;
+            default:
+                $order->setOrderPaymentStatus($status);
+                break;
+        }
+
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 
