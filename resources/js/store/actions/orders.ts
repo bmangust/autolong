@@ -19,7 +19,7 @@ import {
     FETCH_ORDER_INVOICE_SUCCESS,
     FETCH_ORDER_INVOICE_START,
     FETCH_ORDER_INVOICE_ERROR,
-    REMOVE_INPUT_FROM_INVOICE, CHECK_BAIKAL_STATUS, DELETE_BAIKAL_ID
+    REMOVE_INPUT_FROM_INVOICE, CHECK_BAIKAL_STATUS, DELETE_BAIKAL_ID, EDIT_ORDER_ADMIN
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -306,6 +306,27 @@ export const deleteBaikalId = (id) => async dispatch => {
             toast.success(`Идентификатор удален`)
             dispatch({
                 type: DELETE_BAIKAL_ID,
+                payload: data
+            })
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400 || error.response?.status === 404) {
+                toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+}
+
+export const editOrderAdmin = (id, data) => async dispatch => {
+    const url = `/api/orders/${id}`
+
+    axios
+        .put(url, data)
+        .then(({data}) => {
+            toast.success(`Заказ успешно изменен`)
+            dispatch({
+                type: EDIT_ORDER_ADMIN,
                 payload: data
             })
         })

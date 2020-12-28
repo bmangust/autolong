@@ -33,9 +33,9 @@ export interface IContainer {
 }
 
 export interface IContainersState {
-    containers: IContainer[] | []
+    containers: IContainer[]
     container: IContainer | null
-    unappliedOrders: IOrder[] | []
+    unappliedOrders: IOrder[]
     loadingUnapplied: boolean
     loading: boolean
     loadingStatus: boolean

@@ -18,6 +18,12 @@
     display: flex;
     justify-content: space-between;
     position: relative;
+    cursor: pointer;
+    transition: background-color .3s linear;
+}
+
+.order .orderHeader:hover {
+    background: rgba(247,248,250, .5);
 }
 
 .order .orderHeader.active {

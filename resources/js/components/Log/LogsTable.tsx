@@ -98,7 +98,7 @@ const LogsTable: React.FC = () => {
             dataField: 'modelName',
             text: 'Действие',
             sort: true,
-            headerClasses: 'w-50',
+            // headerClasses: 'w-50',
             formatter: logActionFormatter
         },
         {

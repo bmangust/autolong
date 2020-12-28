@@ -136,7 +136,7 @@ a {
     color: #3a3d61;
     border-collapse: separate;
     border-spacing: 0 11px;
-    table-layout: fixed;
+    // table-layout: fixed;
 
     .title {
       font-weight: 700;
@@ -181,6 +181,7 @@ a {
         line-height: 15px;
         transition: all 0.3s;
         padding-bottom: 19px;
+        white-space: nowrap;
       }
 
       th:focus {
@@ -228,10 +229,6 @@ a {
 
     th.sortable {
       cursor: pointer;
-
-      // &:nth-child(2) {
-      //     min-width: 250px;
-      // }
     }
 
     td:first-child,
