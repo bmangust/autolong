@@ -8,6 +8,7 @@ use App\Status;
 use Illuminate\Http\Request;
 use App\Http\Resources\ContainerWithRelationshipsResource;
 use Illuminate\Support\Facades\Validator;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ContainerController extends Controller
 {
@@ -50,6 +51,12 @@ class ContainerController extends Controller
     {
         $this->containerCreateValidator($request->all())->validate();
         $orderIds = $request->input('orders');
+        if (empty($orderIds)) {
+            throw new HttpException(400, 'Передаваемое значение пустое.');
+        }
+        if (!$container->checkCargoOrdersById($orderIds)) {
+            throw new HttpException(400, 'Заказы в контейнере должны быть с одинаковыми статусами.');
+        }
         if ($request->has('identifier')) {
             $containerByIdentifier = Container::getByIdentifier($request->input('identifier'));
             if ($containerByIdentifier) {

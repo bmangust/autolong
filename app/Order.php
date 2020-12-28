@@ -616,4 +616,17 @@ class Order extends Model
         }
         return $history;
     }
+
+    public function getBaikalId()
+    {
+        $url = $this->baikal_tracker_link;
+        if ($url) {
+            $parts = parse_url($url);
+            if (!empty($parts['query'])) {
+                parse_str($parts['query'], $query);
+                return $query['id'];
+            }
+        }
+        return false;
+    }
 }

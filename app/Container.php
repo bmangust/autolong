@@ -113,13 +113,15 @@ class Container extends Model
 
     public function checkCargoOrdersById(array $ids): bool
     {
+        $status = Order::findOrFail($ids[0])->cargo;
         foreach ($ids as $id) {
             $order = Order::findOrFail($id);
-            if ($order->cargo) {
+            if ($order->cargo == $status) {
                 continue;
             }
             return false;
         }
+        return true;
     }
 
     public function updateQuantityOrderItems()
