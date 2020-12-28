@@ -23,6 +23,7 @@ class ContainerWithRelationshipsResource extends JsonResource
                 'identifier' => $this->identifier,
                 'orders' => OrderResource::collection($this->orders),
                 'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
+                'deliveryPrice' => $this->delivery_price,
                 'quantityItems' => $this->quantity_order_items,
                 'arrivalDate' => strtotime($this->arrival_date),
                 'releaseDate' => strtotime($this->release_date),
