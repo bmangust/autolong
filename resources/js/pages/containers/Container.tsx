@@ -33,6 +33,7 @@ import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
 import ContainerEdit from '../../components/Containers/ContainerEdit/ContainerEdit'
 import SvgEdit from '../../components/UI/iconComponents/Edit'
 import SvgDelete from '../../components/UI/iconComponents/Delete'
+import FinalCalculation from '../../components/Containers/FinalCalculation/FinalCalculation'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -174,7 +175,7 @@ const Container: React.FC<IContainer> = () => {
                         baikalTrackerLink={container.orders[0].baikalTrackerLink}
                         baikalTrackerHistory={container.orders[0].baikalTrackerHistory}/>
                     : null}
-                <div className="card card-body-info">
+                <div className="card card-body-info mb-3">
                     <p className="infoBlockHeaders mb-1">
                         Город
                     </p>
@@ -210,6 +211,10 @@ const Container: React.FC<IContainer> = () => {
                             : '-'}
                     </p>
                 </div>
+                <FinalCalculation
+                    orders={container.orders}
+                    deliveryPrice={container.deliveryPrice}
+                />
             </div>
 
         </div>

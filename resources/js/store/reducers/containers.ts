@@ -109,6 +109,10 @@ export default function containersReducer(
             return {
                 ...state, container: action.payload
             }
+        case 'SET_ORDER_PAYMENT':
+            return {
+                ...state, container: action.payload
+            }
         default:
             return state
     }

@@ -13,7 +13,10 @@ import {
     CREATE_CONTAINER_START,
     CHANGE_CONTAINER_STATUS_START,
     CHANGE_CONTAINER_STATUS_SUCCESS,
-    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID, EDIT_CONTAINER_ADMIN
+    CHANGE_CONTAINER_STATUS_ERROR,
+    DELETE_CONTAINER_BY_ID,
+    EDIT_CONTAINER_ADMIN,
+    SET_ORDER_PAYMENT
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -198,6 +201,27 @@ export const editContainerAdmin = (id, data) => async dispatch => {
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {
                 toast.error(error.response.data)
+            } else {
+                toast.error(error.message)
+            }
+        })
+}
+
+export const setOrderPayment = (id, data) => async dispatch => {
+    const url = `/api/orders/${id}/setprices`
+
+    axios
+        .put(url, data)
+        .then(({data}) => {
+            toast.success(`Информация об оплате успешно записана`)
+            dispatch({
+                type: SET_ORDER_PAYMENT,
+                payload: data
+            })
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400 || error.response?.status === 404) {
+                toast.error(error.response.data.message)
             } else {
                 toast.error(error.message)
             }

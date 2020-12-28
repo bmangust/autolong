@@ -13,7 +13,10 @@ import {
     FETCH_UNAPPLIED_ORDERS_ERROR,
     CHANGE_CONTAINER_STATUS_START,
     CHANGE_CONTAINER_STATUS_SUCCESS,
-    CHANGE_CONTAINER_STATUS_ERROR, DELETE_CONTAINER_BY_ID, EDIT_CONTAINER_ADMIN
+    CHANGE_CONTAINER_STATUS_ERROR,
+    DELETE_CONTAINER_BY_ID,
+    EDIT_CONTAINER_ADMIN,
+    SET_ORDER_PAYMENT
 } from '../../store/actions/actionTypes'
 import {ICity} from '../Cities/ICities'
 import {IOrder} from '../Orders/IOrders'
@@ -25,6 +28,7 @@ export interface IContainer {
     status: string
     city: ICity
     orders: IOrder[]
+    deliveryPrice: number
     identifier: string | null
     sandboxFiles: ISandboxFile[] | []
     arrivalDate: number | null
@@ -143,6 +147,11 @@ interface IEditContainerAdmin {
     payload: IContainer
 }
 
+interface ISetContainerPayment {
+    type: typeof SET_ORDER_PAYMENT
+    payload: IContainer
+}
+
 export type IContainersActionTypes =
     IFetchContainersStart | IFetchContainersSuccess | IFetchContainersError |
     IFetchContainerStart | IFetchContainerSuccess | IFetchContainerError |
@@ -150,4 +159,4 @@ export type IContainersActionTypes =
     IFetchUnappliedOrdersStart | IFetchUnappliedOrdersSuccess |
     IFetchUnappliedOrdersError | IChangeContainerStatusStart |
     IChangeContainerStatusSuccess | IChangeContainerStatusError |
-    IDeleteContainerById | IEditContainerAdmin
+    IDeleteContainerById | IEditContainerAdmin | ISetContainerPayment

@@ -18,7 +18,11 @@ import {
     DELETE_ORDER_BY_ID,
     FETCH_ORDER_INVOICE_START,
     FETCH_ORDER_INVOICE_SUCCESS,
-    FETCH_ORDER_INVOICE_ERROR, REMOVE_INPUT_FROM_INVOICE, CHECK_BAIKAL_STATUS, DELETE_BAIKAL_ID, EDIT_ORDER_ADMIN
+    FETCH_ORDER_INVOICE_ERROR,
+    REMOVE_INPUT_FROM_INVOICE,
+    CHECK_BAIKAL_STATUS,
+    DELETE_BAIKAL_ID,
+    EDIT_ORDER_ADMIN
 } from '../../store/actions/actionTypes'
 import {LOCATION_CHANGE} from 'connected-react-router'
 
@@ -44,7 +48,12 @@ export interface IOrder {
     packingList: boolean
     container: IContainer
     paymentAmount: number
+    paymentAmountRub: number
     surchargeAmount: number
+    surchargeAmountRub: number
+    refusalAmount: number
+    orderingAmount: number
+    customsAmount: number
     sandboxFiles: ISandboxFile[]
     price: IProductPrice
     provider: IProvider

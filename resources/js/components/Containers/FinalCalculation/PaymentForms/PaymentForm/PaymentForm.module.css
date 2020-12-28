@@ -1,0 +1,57 @@
+.title {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #EB5E28;
+    margin-bottom: 9px;
+}
+
+.block p {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+    margin-bottom: 3px;
+}
+
+.total {
+    margin-bottom: 20px;
+}
+
+.total p {
+    margin-bottom: 10px;
+}
+
+.total p:last-of-type {
+    margin-bottom: 0;
+}
+
+.total span {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+}
+
+.total span b {
+    font-weight: 600;
+}
+
+.total span:first-of-type {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+    margin-right: 25px;
+    display: inline-block;
+    min-width: 160px;
+}
+
+.footer {
+    padding-top: 20px;
+    border-top: 1px solid #EBEBEB;
+}
+
+.footer button {
+    width: 100% !important;
+}
