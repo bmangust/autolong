@@ -106,9 +106,13 @@ class OrderController extends Controller
             $order->cargo = $request->input('cargo');
         }
         if ($order->container_id != $request->input('containerId')) {
+            $oldContainer = $order->container;
             $order->container_id = $request->input('containerId');
         }
         $order->save();
+        if (isset($oldContainer) && !$oldContainer->refresh()->orders()->count()) {
+            $oldContainer->delete();
+        }
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
         }
