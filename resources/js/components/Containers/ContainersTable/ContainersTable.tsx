@@ -58,7 +58,7 @@ const ContainersTable: React.FC = () => {
     }
 
     const nameFormatter = (name, row) => {
-        return `Контейнер ${name} от ${timeConverter(row.createdAt)}`
+        return `№${name} от ${timeConverter(row.createdAt)}`
     }
 
     const filterOptions = Object.entries(statuses.containerStatuses)
