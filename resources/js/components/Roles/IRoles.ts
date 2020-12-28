@@ -56,6 +56,7 @@ export interface IRole {
 
         productsNewIndex: 0 | 1
         compareIndex: 0 | 1
+        adminPower: 0 | 1
 
         userCreate: 0 | 1
         userUpdate: 0 | 1

@@ -27,11 +27,11 @@ export default function citiesReducer(
             }
         case FETCH_CITIES_SUCCESS:
             return {
-                ...state, loading: true, cities: action.payload
+                ...state, loading: false, cities: action.payload
             }
         case FETCH_CITIES_ERROR:
             return {
-                ...state, loading: true, error: action.payload
+                ...state, loading: false, error: action.payload
             }
         case CREATE_CITY_START:
             return {
@@ -39,12 +39,12 @@ export default function citiesReducer(
             }
         case CREATE_CITY_SUCCESS:
             return {
-                ...state, loading: true,
+                ...state, loading: false,
                 cities: [...state.cities, action.payload]
             }
         case CREATE_CITY_ERROR:
             return {
-                ...state, loading: true, error: action.payload
+                ...state, loading: false, error: action.payload
             }
         case DELETE_CITY_START:
             return {
@@ -52,13 +52,13 @@ export default function citiesReducer(
             }
         case DELETE_CITY_SUCCESS:
             return {
-                ...state, loading: true,
+                ...state, loading: false,
                 cities: state.cities
                     .filter(({id}) => id !== action.payload)
             }
         case DELETE_CITY_ERROR:
             return {
-                ...state, loading: true, error: action.payload
+                ...state, loading: false, error: action.payload
             }
         default:
             return state

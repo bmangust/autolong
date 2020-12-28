@@ -91,7 +91,7 @@ export default function containersReducer(
         case DELETE_CONTAINER_BY_ID:
             return {
                 ...state, containers: state.containers.filter(({id}) =>
-                    id !== action.payload), container: {}
+                    id !== action.payload), container: null
             }
         case CHANGE_CONTAINER_STATUS_START:
             return {
@@ -104,6 +104,10 @@ export default function containersReducer(
         case CHANGE_CONTAINER_STATUS_ERROR:
             return {
                 ...state, loadingStatus: false, statusError: action.payload
+            }
+        case 'EDIT_CONTAINER_ADMIN':
+            return {
+                ...state, container: action.payload
             }
         default:
             return state

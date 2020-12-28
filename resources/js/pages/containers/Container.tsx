@@ -33,12 +33,14 @@ import OrderPackage from '../../components/OrderPackage/OrderPackages'
 import {SanctumContext} from '../../Sanctum'
 import ContainersOrder from '../../components/Containers/ContainersOrder/ContainersOrder'
 import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
+import ContainerEdit from '../../components/Containers/ContainerEdit/ContainerEdit'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
     const [isOpen, setIsOpen] = useState(false)
     const [activeOrder, setActiveOrder] = useState<null | IOrder>(null)
     const [packingList, setPackingList] = useState(false)
+    const [isShowAdminModal, setIsShowAdminModal] = useState(false)
     const dispatch = useDispatch()
     const {user} = useContext(SanctumContext)
 
@@ -92,6 +94,26 @@ const Container: React.FC<IContainer> = () => {
                             </span>
                         </div>
                     </div>
+                    {user.role.accesses.adminPower == 1
+                        ? <>
+                            <button
+                                onClick={() => setIsShowAdminModal(true)}
+                                className='editButton'>
+                                Редактировать
+                            </button>
+                            {isShowAdminModal
+                                ? <Modal
+                                    size='size-700'
+                                    title='Редактирование контейнера'
+                                    isOpen={isShowAdminModal}
+                                    setIsOpen={setIsShowAdminModal}>
+                                    <ContainerEdit setIsOpen={setIsShowAdminModal} container={container}/>
+                                </Modal>
+                                : null
+                            }
+                        </>
+                        : null
+                    }
                 </div>
 
                 <div className='mb-3'>
