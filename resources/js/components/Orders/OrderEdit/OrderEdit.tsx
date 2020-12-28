@@ -37,7 +37,7 @@ const OrderEdit: React.FC<Props> = (props) => {
             cargo: !!order.cargo,
             providerId: {label: order.provider.name, value: order.provider.id},
             containerId: order.container ? {
-                label: `Контейнер ${order.container.name} от ${timeConverter(order.container.createdAt)}`,
+                label: `№${order.container.name} от ${timeConverter(order.container.createdAt)}`,
                 value: order.container.id
             } : {label: 'Контейнер не выбран', value: 0}
         }
@@ -67,7 +67,7 @@ const OrderEdit: React.FC<Props> = (props) => {
 
     const containersOptions = containers.map((container: IContainer) => {
         return {
-            label: `Контейнер ${container.name} от ${timeConverter(container.createdAt)}`,
+            label: `№${container.name} от ${timeConverter(container.createdAt)}`,
             value: container.id
         }
     })
