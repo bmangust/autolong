@@ -28,6 +28,7 @@ import {ArrowRight} from '../../components/UI/iconComponents'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import SvgBlackLabel from '../../components/UI/iconComponents/BlackLabel'
 import {SanctumContext} from '../../Sanctum'
+import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 
 const Provider: React.FC<IProvider> = () => {
     const {id}: any = useParams()
@@ -226,11 +227,12 @@ const Provider: React.FC<IProvider> = () => {
                                     : null
                                 }
                                 {user && user.role.accesses.providersDelete == 1
-                                    ? <button
-                                        onClick={() => onDeleteHandler(provider.id)}
-                                        className='btn btn-danger'>
+                                    ? <DeleteButton
+                                        name='поставщика'
+                                        buttonStyle='old'
+                                        deleteFn={() => onDeleteHandler(provider.id)}>
                                         Удалить поставщика
-                                    </button>
+                                    </DeleteButton>
                                     : null
                                 }
                             </div>

@@ -23,6 +23,7 @@ import Loader from '../../components/UI/Loader/Loader'
 import {imgFormatter, moneyFormatter, timeConverter} from '../../utils'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import {SanctumContext} from '../../Sanctum'
+import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 
 const Product: React.FC = () => {
     const {id}: any = useParams()
@@ -196,11 +197,12 @@ const Product: React.FC = () => {
                                 : null
                             }
                             {user && user.role.accesses.productsDelete == 1
-                                ? <button
-                                    onClick={() => onDeleteHandler(product.id)}
-                                    className='btn btn-danger'>
+                                ? <DeleteButton
+                                    buttonStyle='old'
+                                    name='товар'
+                                    deleteFn={() => onDeleteHandler(product.id)}>
                                     Удалить товар
-                                </button>
+                                </DeleteButton>
                                 : null
                             }
                             {product.published == '0'
