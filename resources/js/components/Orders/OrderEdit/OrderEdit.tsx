@@ -137,6 +137,8 @@ const OrderEdit: React.FC<Props> = (props) => {
         formValues.cargo = formValues.cargo ? 1 : 0
         formValues.providerId = formValues.providerId.value
         formValues.containerId = formValues.containerId.value !== 0 ? formValues.containerId.value : null
+        formValues.city = city ? city.label : ''
+        formValues.arrivalDate = date
         dispatch(editOrderAdmin(order.id, formValues))
     })
 
