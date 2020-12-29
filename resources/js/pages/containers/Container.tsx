@@ -32,8 +32,8 @@ import ContainersOrder from '../../components/Containers/ContainersOrder/Contain
 import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
 import ContainerEdit from '../../components/Containers/ContainerEdit/ContainerEdit'
 import SvgEdit from '../../components/UI/iconComponents/Edit'
-import SvgDelete from '../../components/UI/iconComponents/Delete'
 import FinalCalculation from '../../components/Containers/FinalCalculation/FinalCalculation'
+import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -109,12 +109,12 @@ const Container: React.FC<IContainer> = () => {
                             : null
                         }
                         {user && user.role.accesses.containersDelete == 1
-                            ? <button
-                                className='new-card__footer--btn'
-                                onClick={onDeleteHandler}>
-                                <SvgDelete/>
+                            ? <DeleteButton
+                                buttonStyle='default'
+                                name='контейнер'
+                                deleteFn={() => onDeleteHandler()}>
                                 Удалить контейнер из системы
-                            </button>
+                            </DeleteButton>
                             : null
                         }
                     </div>

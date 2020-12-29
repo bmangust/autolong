@@ -8,7 +8,7 @@ import ReactDOM from 'react-dom'
 import classes from './Modal.module.css'
 
 interface IModal {
-    title: string
+    title?: string
     isOpen: boolean
     setIsOpen: Function
     onSuccessNode?: NonNullable<ReactNode>
@@ -55,7 +55,10 @@ const Modal: React.FC<IModal> = (
                             &times;
                         </div>
                         <div className={classes.modalBody}>
-                            <h2 className='mb-3'>{title}</h2>
+                            {title
+                                ? <h2 className='mb-3'>{title}</h2>
+                                : null
+                            }
                             {children}
                             {onSuccessNode ? onSuccessNode : null}
                             {onCloseNode ? onCloseNode : onClose}

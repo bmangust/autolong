@@ -24,6 +24,7 @@ import SvgArrowRight from '../../components/UI/iconComponents/ArrowRight'
 import {tagsConverter, timeConverter} from '../../utils'
 import SandboxFilesCard from '../../components/SandboxCard/SandboxFilesCard'
 import {SanctumContext} from '../../Sanctum'
+import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 
 const Catalog: React.FC<ICatalog> = () => {
     const {id}: any = useParams()
@@ -91,11 +92,12 @@ const Catalog: React.FC<ICatalog> = () => {
                             : null
                         }
                         {user && user.role.accesses.catalogsDelete == 1
-                            ? <button
-                                className='btn btn-danger'
-                                onClick={onDeleteHandler}>
-                                Удалить
-                            </button>
+                            ? <DeleteButton
+                                buttonStyle='old'
+                                name='каталог'
+                                deleteFn={() => onDeleteHandler()}>
+                                Удалить каталог
+                            </DeleteButton>
                             : null
                         }
                     </div>

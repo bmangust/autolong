@@ -38,7 +38,7 @@ import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
 import Modal from '../../components/UI/Modal/Modal'
 import OrderEdit from '../../components/Orders/OrderEdit/OrderEdit'
 import SvgEdit from '../../components/UI/iconComponents/Edit'
-import SvgDelete from '../../components/UI/iconComponents/Delete'
+import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -206,12 +206,12 @@ const Order: React.FC<IOrder> = () => {
                         : null
                     }
                     {user && user.role.accesses.ordersDelete == 1
-                        ? <button
-                            onClick={() => onDeleteHandler(order.id)}
-                            className='new-card__footer--btn'>
-                            <SvgDelete/>
+                        ? <DeleteButton
+                            buttonStyle='default'
+                            name='заказ'
+                            deleteFn={() => onDeleteHandler(order.id)}>
                             Удалить заказ из системы
-                        </button>
+                        </DeleteButton>
                         : null
                     }
                 </div>
