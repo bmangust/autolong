@@ -107,6 +107,7 @@ class OrderController extends Controller
                 'arrivalDate' => 'required',
                 'name' => 'required|string|max:255',
                 'providerId' => 'required|integer',
+                'status'
         ]);
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
@@ -187,7 +188,7 @@ class OrderController extends Controller
         } elseif (!is_null($order->city) && !is_null($order->arrival_date)) {
             $order->setOrderStatus($status);
         } else {
-            throw new HttpException(400, 'Для данного статуса необходимо указать город и дату. Эти данные указываются на этапе подтверждения. ');
+            throw new HttpException(400, 'Для данного статуса необходимо указать город и дату.');
         }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
