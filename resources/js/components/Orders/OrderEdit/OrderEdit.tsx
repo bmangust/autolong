@@ -178,7 +178,7 @@ const OrderEdit: React.FC<Props> = (props) => {
                 </label>
                 <CreatableSelect
                     isClearable={true}
-                    defaultValue={order.city ? {label: order.city.name, value: order.city.id} : {}}
+                    defaultValue={order.city ? {label: order.city.name, value: order.city.id} : null}
                     placeholder='Введите город'
                     onChange={onChangeCityHandler}
                     classNamePrefix='select-mini-tags'

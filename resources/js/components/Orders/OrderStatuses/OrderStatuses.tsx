@@ -143,7 +143,7 @@ const OrderStatuses: React.FC<{
                            type="date" name='arrivalDate'/>
                     <CreatableSelect
                         isClearable={true}
-                        defaultValue={orderCity ? {label: orderCity.name, value: orderCity.id} : {}}
+                        defaultValue={orderCity ? {label: orderCity.name, value: orderCity.id} : null}
                         placeholder='Введите город'
                         onChange={onChangeCityHandler}
                         classNamePrefix='select-mini-tags'
