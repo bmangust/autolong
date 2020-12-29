@@ -61,7 +61,7 @@ const ContainersOrder: React.FC<Props> = (props) => {
     return <div className={classes.order}>
         <CustomToggle eventKey={order.id + order.name}>
             <NavLink to={`/order/${order.id}`}>
-                Заказ {order.id}
+                {order.name}
             </NavLink>
         </CustomToggle>
         <Accordion.Collapse eventKey={order.id + order.name}>
