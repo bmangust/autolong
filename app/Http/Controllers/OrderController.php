@@ -8,6 +8,7 @@ use App\ContractDocument;
 use App\Http\Resources\ContainerWithRelationshipsResource;
 use App\Http\Resources\ProductResource;
 use App\Importer;
+use App\Log;
 use App\Order;
 use App\OrderItem;
 use App\Product;
@@ -75,6 +76,8 @@ class OrderController extends Controller
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
         }
+        Log::$write = false;
+        $order->updateWeight();
         $order->generateContract();
         $order->generateProforma();
         $order->generateInvoice();

@@ -42,6 +42,8 @@ class OrderWithRelationshipsResource extends JsonResource
                 'cargo' => $this->cargo,
                 'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
                 'container' => new ContainerResource($this->container),
+                'weightNetto' => $this->weight_netto,
+                'weightBrutto' => $this->weight_brutto,
                 'createdAt' => strtotime($this->created_at),
                 'updatedAt' => strtotime($this->updated_at),
         ];

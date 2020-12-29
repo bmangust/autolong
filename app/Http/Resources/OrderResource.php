@@ -37,6 +37,8 @@ class OrderResource extends JsonResource
                         'usd' => $this->getOrderSumInUsd(),
                         'cny' => $this->getOrderSumInCny()],
                 'cargo' => $this->cargo,
+                'weightNetto' => $this->weight_netto,
+                'weightBrutto' => $this->weight_brutto,
                 'createdAt' => strtotime($this->created_at),
                 'updatedAt' => strtotime($this->updated_at),
         ];

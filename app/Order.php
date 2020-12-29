@@ -33,7 +33,9 @@ class Order extends Model
             'customs_amount',
             'ordering_amount',
             'payment_amount_rub',
-            'surcharge_amount_rub'
+            'surcharge_amount_rub',
+            'weight_brutto',
+            'weight_netto'
     ];
 
     private const PAYMENT_AMOUNT_INFO_BLOCK = [
@@ -628,5 +630,20 @@ class Order extends Model
             }
         }
         return false;
+    }
+
+    public function updateWeight(): void
+    {
+        $orderItems = $this->orderItems()->with('product')->get();
+        $weightBrutto = 0;
+        $weightNetto = 0;
+        foreach ($orderItems as $item) {
+            $weightBrutto += $item->fullWeightBruttoOrderItem();
+            $weightNetto += $item->fullWeightNettoOrderItem();
+        }
+        $this->update([
+                'weight_brutto' => $weightBrutto,
+                'weight_netto' => $weightNetto
+        ]);
     }
 }
