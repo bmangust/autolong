@@ -62,8 +62,6 @@ class ProductController extends Controller
         if ($request->has('published') && $request->input('published')) {
             $this->productCreateValidator($request->all())->validate();
             $published = $request->input('published');
-            $product->vendor_code = $request->input('vendorCode');
-            $product->autolong_number = $request->input('autolongNumber');
         }
         if (is_numeric($request->input('providerId'))) {
             $product->provider_id = $request->input('providerId');
@@ -80,6 +78,8 @@ class ProductController extends Controller
         $product->weight_netto = $request->input('weightNetto');
         $product->weight_brutto = $request->input('weightBrutto');
         $product->hs_code = $request->input('hsCode') ?? 0;
+        $product->vendor_code = $request->input('vendorCode');
+        $product->autolong_number = $request->input('autolongNumber');
         $product->save();
         Log::$write = false;
         if ($request->has('image') && $request->hasFile('image')) {

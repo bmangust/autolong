@@ -35,6 +35,8 @@ class OrderController extends Controller
         return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],
                 'providerId' => ['required', 'integer'],
+                'city' => 'required',
+                'arrivalDate' => 'required'
         ], $messages, $names);
     }
 
@@ -133,10 +135,16 @@ class OrderController extends Controller
                 }
                 if ($containerIsCargo && !$request->input('cargo')) {
                     throw new HttpException(400, 'Вы не можете убрать статус карго у этого заказа в данном контейнере.');
+
                 }
             }
             $order->cargo = $request->input('cargo');
         }
+        $city = City::firstOrCreate([
+                'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
+        ]);
+        $order->city_id = $city->id;
+        $order->arrival_date = $request->input('arrivalDate');
         $order->save();
         $order->refresh();
         if ($request->has('items') && is_array($request->input('items'))) {
