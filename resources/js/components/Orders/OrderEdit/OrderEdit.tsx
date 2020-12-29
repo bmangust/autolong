@@ -140,6 +140,7 @@ const OrderEdit: React.FC<Props> = (props) => {
         formValues.city = city ? city.label : ''
         formValues.arrivalDate = date
         dispatch(editOrderAdmin(order.id, formValues))
+        setIsOpen(false)
     })
 
     const onChangeCityHandler = (newValue: any) => {
@@ -162,17 +163,6 @@ const OrderEdit: React.FC<Props> = (props) => {
     return <Form onSubmit={editOrderHandler}>
         <div className='row mb-3'>
             <Input
-                type='text'
-                ref={register({required: true})}
-                label='Название заказа'
-                placeholder='Название заказа'
-                name='name'
-                required
-            />
-            {errors.name && (
-                <small>Это поле обязательно</small>
-            )}
-            <Input
                 label='Дата прибытия'
                 onChange={onChangeDateHandler}
                 defaultValue={order.arrivalDate || ''}
@@ -188,7 +178,7 @@ const OrderEdit: React.FC<Props> = (props) => {
                 </label>
                 <CreatableSelect
                     isClearable={true}
-                    defaultValue={order.city ? {label: order.city.name, value: order.city.id} : {}}
+                    defaultValue={order.city ? {label: order.city.name, value: order.city.id} : null}
                     placeholder='Введите город'
                     onChange={onChangeCityHandler}
                     classNamePrefix='select-mini-tags'
@@ -202,11 +192,13 @@ const OrderEdit: React.FC<Props> = (props) => {
                     style={{marginTop: 10}}
                     htmlFor='status'>
                     Выберите статус заказа
+                    {!date || !city ? ' (укажите дату и город)' : ''}
                 </label>
                 <Select
                     placeholder='Выберите статус заказа'
                     classNamePrefix='select-mini'
                     className='select-mini'
+                    isDisabled={!date || !city}
                     defaultValue={{label: statuses.orderStatuses[order.status], value: order.status}}
                     onChange={onStatusChange}
                     options={orderStatuses}
@@ -228,6 +220,20 @@ const OrderEdit: React.FC<Props> = (props) => {
                     options={orderPaymentStatuses}
                 />
             </div>
+            <div className="col-12">
+                <hr/>
+            </div>
+            <Input
+                type='text'
+                ref={register({required: true})}
+                label='Название заказа'
+                placeholder='Название заказа'
+                name='name'
+                required
+            />
+            {errors.name && (
+                <small>Это поле обязательно</small>
+            )}
             <div className="col-lg-6">
                 <label
                     className='w-100 required'

@@ -28,6 +28,7 @@ import {IOrder} from '../Orders/IOrders'
 
 export interface IProduct {
     id: number
+    productId: number
     nameRu: string
     nameEn: string
     aboutRu: string
