@@ -66,10 +66,13 @@ const PaymentForms: React.FC<Props> = (props) => {
                 : null
             }
             {activeOrderObject
-                ? <PaymentForm
-                    deliveryPriceOrder={deliveryPriceState}
-                    setIsShow={setIsShow}
-                    order={activeOrderObject}/>
+                ? <div key={activeOrder} className='option'>
+                    <PaymentForm
+                        deliveryPriceOrder={deliveryPriceState}
+                        setIsShow={setIsShow}
+                        order={activeOrderObject}
+                    />
+                </div>
                 : null
             }
         </div>

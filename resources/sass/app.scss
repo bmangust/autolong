@@ -1156,6 +1156,19 @@ html select.select-mini:focus {
   transition: 750ms;
 }
 
+@keyframes toggleIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+.option {
+  animation: toggleIn 200ms ease-in-out 1;
+}
+
 .new-card {
   background: #FFFFFF;
   border-radius: 15px;
