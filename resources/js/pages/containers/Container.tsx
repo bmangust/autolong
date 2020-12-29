@@ -124,7 +124,7 @@ const Container: React.FC<IContainer> = () => {
                     <ContainersStatuses container={container}/>
                 </div>
 
-                {container.orders
+                {container.orders && container.orders.length
                     ? <div className="card mb-3">
                         <div className='card-body pb-0'>
                             <h2 className="mb-3">
@@ -169,7 +169,7 @@ const Container: React.FC<IContainer> = () => {
                 : null
             }
             <div className="col-lg-4">
-                {user.role.accesses.ordersShowCargo && container.orders[0].cargo
+                {user.role.accesses.ordersShowCargo && container.orders.length && container.orders[0].cargo
                     ? <OrderBaikal
                         isContainer={true}
                         baikalTrackerLink={container.orders[0].baikalTrackerLink}
