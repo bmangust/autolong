@@ -28,8 +28,8 @@ class Sandbox1c
                 $code = $code[0]->code + 1;
                 if (!empty($latestCodeInAutolongErp)) {
                     $latestCodeInAutolongErp = $latestCodeInAutolongErp[0]->autolong_number;
-                    if ($code == $latestCodeInAutolongErp) {
-                        ++$code;
+                    if ($code <= $latestCodeInAutolongErp) {
+                        return $latestCodeInAutolongErp + 1;
                     }
                 }
                 return $code;

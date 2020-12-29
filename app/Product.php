@@ -21,6 +21,10 @@ class Product extends Model
     public const PRODUCTS_UNPUBLISHED_CACHE_KEY = 'unpublishedProductsAllWIthRelationships';
     public const PRODUCTS_CACHE_TTL = 60 * 60;
 
+    protected $fillable = [
+            'image'
+    ];
+
     public function setAboutRuAttribute($value)
     {
         $this->attributes['about_ru'] = $this->cutScriptTagsInText($value);
@@ -138,5 +142,22 @@ class Product extends Model
                         'orderItems'])->wherePublished($published)->orderByDesc('created_at')->get());
         Redis::set($cacheKey, json_encode($products), 'EX', self::PRODUCTS_CACHE_TTL);
         return $products;
+    }
+
+    public function renameImageFile(string $imageName, bool $saveDB = true): ?string
+    {
+        if (Storage::disk('main')->exists($this->image)) {
+            $extensionImage = '.' . pathinfo($this->image)['extension'];
+            $name = $imageName . $extensionImage;
+            $newPath = Product::IMAGE_DIRECTORY . '/' . $name;
+            Storage::disk('main')->move($this->image, $newPath);
+            if ($saveDB) {
+                $this->update([
+                        'image' => $newPath
+                ]);
+            }
+            return $newPath;
+        }
+        return null;
     }
 }

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Product;
 use Illuminate\Support\Facades\Redis;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -178,7 +179,9 @@ class ProductController extends Controller
             throw new HttpException(400, 'Необходимо указать поставщика перед внесением в основную базу.');
         }
         $product->published = 1;
-        $product->autolong_number = Sandbox1c::getBiggestAutolongNumber();
+        $autolongNumber = Sandbox1c::getBiggestAutolongNumber();
+        $product->autolong_number = $autolongNumber;
+        $product->image = $product->renameImageFile($autolongNumber . '_1', false);
         $product->save();
         response()->json(new ProductWithRelationshipsResource($product), 200);
     }
