@@ -1,20 +1,23 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
 import Select from 'react-select'
+import CreatableSelect from 'react-select/creatable'
 
 // Typescript
 import {IOrder} from '../IOrders'
 import {IProvider, IProvidersRootState} from '../../Providers/IProviders'
 import {IContainer, IContainersRootState} from '../../Containers/IContainers'
+import {ICitiesRootState, ICity} from '../../Cities/ICities'
 
 // Actions
 import {changeOrderStatus, editOrderAdmin} from '../../../store/actions/orders'
 import {fetchContainers} from '../../../store/actions/containers'
 import {fetchProviders} from '../../../store/actions/providers'
+import {fetchCities} from '../../../store/actions/cities'
 
 // App
 import Loader from '../../UI/Loader/Loader'
@@ -31,6 +34,8 @@ type Props = {
 const OrderEdit: React.FC<Props> = (props) => {
     const {order, setIsOpen} = props
     const dispatch = useDispatch()
+    const [date, setDate] = useState('')
+    const [city, setCity] = useState<{ label: string, value: any } | null>(null)
     const {register, handleSubmit, errors, control} = useForm({
         defaultValues: {
             name: order.name,
@@ -46,7 +51,20 @@ const OrderEdit: React.FC<Props> = (props) => {
     useEffect(() => {
         dispatch(fetchContainers())
         dispatch(fetchProviders())
+        dispatch(fetchCities())
     }, [dispatch])
+
+    useEffect(() => {
+        if (order.arrivalDate) {
+            setDate(order.arrivalDate)
+        }
+    }, [order])
+
+    useEffect(() => {
+        if (order.city) {
+            setCity({label: order.city.name, value: order.city.id})
+        }
+    }, [order])
 
     const {providers, loading} = useSelector((state: IProvidersRootState) => ({
         providers: state.providersState.providers,
@@ -64,6 +82,20 @@ const OrderEdit: React.FC<Props> = (props) => {
             value: provider.id
         }
     })
+
+    const {cities} = useSelector((state: ICitiesRootState) => ({
+        cities: state.citiesState.cities
+    }))
+
+    let citiesOptions: { label: string, value: number }[] = []
+    if (cities.length) {
+        citiesOptions = cities.map((city: ICity) => {
+            return {
+                label: city.name,
+                value: city.id
+            }
+        })
+    }
 
     const containersOptions = containers.map((container: IContainer) => {
         return {
@@ -85,11 +117,20 @@ const OrderEdit: React.FC<Props> = (props) => {
         })
 
     const onStatusChange = (newValue) => {
-        dispatch(changeOrderStatus(order.id, {status: newValue.value}))
+        dispatch(changeOrderStatus(order.id,
+            {
+                status: newValue.value,
+                arrivalDate: date,
+                city: city ? city.label : ''
+            }))
     }
 
     const onPaymentStatusChange = (newValue) => {
-        dispatch(changeOrderStatus(order.id, {statusPayment: newValue.value}))
+        dispatch(changeOrderStatus(order.id, {
+            statusPayment: newValue.value,
+            arrivalDate: date,
+            city: city ? city.label : ''
+        }))
     }
 
     const editOrderHandler = handleSubmit((formValues) => {
@@ -98,6 +139,14 @@ const OrderEdit: React.FC<Props> = (props) => {
         formValues.containerId = formValues.containerId.value !== 0 ? formValues.containerId.value : null
         dispatch(editOrderAdmin(order.id, formValues))
     })
+
+    const onChangeCityHandler = (newValue: any) => {
+        setCity(newValue)
+    }
+
+    const onChangeDateHandler = (e) => {
+        setDate(e.target.value)
+    }
 
     const select = <Select
         placeholder='Выберите поставщика'
@@ -121,9 +170,33 @@ const OrderEdit: React.FC<Props> = (props) => {
             {errors.name && (
                 <small>Это поле обязательно</small>
             )}
+            <Input
+                label='Дата прибытия'
+                onChange={onChangeDateHandler}
+                defaultValue={order.arrivalDate || ''}
+                type="date"
+                required
+                name='arrivalDate'
+            />
+            <div className="col-lg-6">
+                <label style={{marginTop: 10}}
+                       className='w-100 required'
+                       htmlFor="city">
+                    Введите город
+                </label>
+                <CreatableSelect
+                    isClearable={true}
+                    defaultValue={order.city ? {label: order.city.name, value: order.city.id} : {}}
+                    placeholder='Введите город'
+                    onChange={onChangeCityHandler}
+                    classNamePrefix='select-mini-tags'
+                    className='select-mini-tags p-0'
+                    options={citiesOptions}
+                />
+            </div>
             <div className="col-lg-6">
                 <label
-                    className='w-100 required'
+                    className='w-100'
                     style={{marginTop: 10}}
                     htmlFor='status'>
                     Выберите статус заказа
@@ -139,7 +212,7 @@ const OrderEdit: React.FC<Props> = (props) => {
             </div>
             <div className="col-lg-6">
                 <label
-                    className='w-100 required'
+                    className='w-100'
                     style={{marginTop: 10}}
                     htmlFor='paymentStatus'>
                     Выберите статус оплаты заказа
@@ -173,7 +246,7 @@ const OrderEdit: React.FC<Props> = (props) => {
             </div>
             <div className="col-lg-6">
                 <label
-                    className='w-100 required'
+                    className='w-100'
                     style={{marginTop: 10}}
                     htmlFor='status'>
                     Выберите контейнер

@@ -42,7 +42,7 @@ const OrderStatuses: React.FC<{
     const dispatch = useDispatch()
 
     const [date, setDate] = useState('')
-    const [city, setCity] = useState<{ label: string, value: any } | {}>({})
+    const [city, setCity] = useState<{ label: string, value: any } | null>(null)
     const [unscrupulousState, setUnscrupulousState] = useState<boolean>(!!unscrupulous)
     const {user} = useContext(SanctumContext)
 
@@ -74,16 +74,16 @@ const OrderStatuses: React.FC<{
     }
 
     const onSubmitHandler = (status) => {
-        if (date && Object.keys(city).length) {
+        if (date && city && Object.keys(city).length) {
             const data = {
                 status,
                 arrivalDate: date,
-                city: city.label
+                city: city ? city.label : ''
             }
             dispatch(changeOrderStatus(id, data))
         } else {
             toast.error(`Заполните поле ${!date ? 'Дата' : ''}
-                ${!Object.keys(city).length ? 'Город' : ''}`)
+                ${!city ? 'Город' : ''}`)
         }
     }
 
@@ -95,10 +95,9 @@ const OrderStatuses: React.FC<{
         setUnscrupulousState(e.target.checked)
     }
 
-    const {cities} = useSelector(
-        (state: ICitiesRootState) => ({
-            cities: state.citiesState.cities
-        }))
+    const {cities} = useSelector((state: ICitiesRootState) => ({
+        cities: state.citiesState.cities
+    }))
 
     let citiesOptions: { label: string, value: number }[] = []
     if (cities.length) {
