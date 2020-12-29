@@ -18,20 +18,22 @@ class OrderItemWithRelationshipsResource extends JsonResource
     public function toArray($request)
     {
         return [
-            'id' => $this->id,
-            'quantity' => $this->quantity,
-            'nameRu' => $this->product->name_ru,
-            'autolongNumber' => $this->product->autolong_number,
-            'price' => (object)['rub' => $this->price_rub,
-                                'usd' => $this->price_usd,
-                                'cny' => $this->price_cny],
-            'fullPrice' => (object)['rub' => $this->getSumInRub(),
-                                    'usd' => $this->getSumInUsd(),
-                                    'cny' => $this->getSumInCny()],
-            'order' => new OrderResource($this->order),
-            'product' => new ProductResource($this->product),
-            'createdAt' => strtotime($this->created_at),
-            'updatedAt' => strtotime($this->updated_at),
+                'id' => $this->id,
+                'quantity' => $this->quantity,
+                'nameRu' => $this->product->name_ru,
+                'autolongNumber' => $this->product->autolong_number,
+                'price' => (object)['rub' => $this->price_rub,
+                        'usd' => $this->price_usd,
+                        'cny' => $this->price_cny],
+                'fullPrice' => (object)['rub' => $this->getSumInRub(),
+                        'usd' => $this->getSumInUsd(),
+                        'cny' => $this->getSumInCny()],
+                'order' => new OrderResource($this->order),
+                'pcsCtnCtns' => json_decode($this->pcs_ctn_ctns, true),
+                'meas' => json_decode($this->meas, true),
+                'product' => new ProductResource($this->product),
+                'createdAt' => strtotime($this->created_at),
+                'updatedAt' => strtotime($this->updated_at),
         ];
     }
 }
