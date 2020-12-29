@@ -35,8 +35,6 @@ class OrderController extends Controller
         return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],
                 'providerId' => ['required', 'integer'],
-                'city' => 'required',
-                'arrivalDate' => 'required'
         ], $messages, $names);
     }
 
@@ -104,7 +102,12 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $this->orderCreateValidator($request->all())->validate();
+        $request->validate([
+                'city' => 'required',
+                'arrivalDate' => 'required',
+                'name' => 'required|string|max:255',
+                'providerId' => 'required|integer',
+        ]);
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
 
