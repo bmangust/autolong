@@ -35,8 +35,6 @@ class OrderController extends Controller
         return Validator::make($data, [
                 'name' => ['required', 'string', 'max:255'],
                 'providerId' => ['required', 'integer'],
-                'city' => 'required',
-                'arrivalDate' => 'required'
         ], $messages, $names);
     }
 
@@ -104,7 +102,12 @@ class OrderController extends Controller
      */
     public function update(Request $request, Order $order)
     {
-        $this->orderCreateValidator($request->all())->validate();
+        $request->validate([
+                'city' => 'required',
+                'arrivalDate' => 'required',
+                'name' => 'required|string|max:255',
+                'providerId' => 'required|integer',
+        ]);
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
 
@@ -175,7 +178,7 @@ class OrderController extends Controller
         $statusOrderConfirmed = array_keys(get_object_vars(Status::getOrderStatuses()), 'Подтвержден')[0];
         if ($status == $statusOrderCreated || $status == $statusOrderConfirmed) {
             $order->setOrderStatus($status);
-        } elseif ($request->has('arrivalDate') && $request->has('city')) {
+        } elseif ($request->input('arrivalDate') && $request->input('city')) {
             $city = City::firstOrCreate([
                     'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
             ]);
