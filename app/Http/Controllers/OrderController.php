@@ -143,12 +143,10 @@ class OrderController extends Controller
             }
             $order->cargo = $request->input('cargo');
         }
-        if (!is_null($request)) {
-            $city = City::firstOrCreate([
-                    'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
-            ]);
-            $order->city_id = $city->id;
-        }
+        $city = City::firstOrCreate([
+                'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
+        ]);
+        $order->city_id = $city->id;
         $order->arrival_date = $request->input('arrivalDate');
         $order->save();
         $order->refresh();
@@ -180,7 +178,7 @@ class OrderController extends Controller
         $statusOrderConfirmed = array_keys(get_object_vars(Status::getOrderStatuses()), 'Подтвержден')[0];
         if ($status == $statusOrderCreated || $status == $statusOrderConfirmed) {
             $order->setOrderStatus($status);
-        } elseif ($request->has('arrivalDate') && $request->has('city')) {
+        } elseif ($request->input('arrivalDate') && $request->input('city')) {
             $city = City::firstOrCreate([
                     'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
             ]);
