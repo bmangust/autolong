@@ -24,6 +24,7 @@ class ChangeTriggerFromProductsTable extends Migration
             $databaseToInsertNew = env('DB_TO_INSERT_NEW_PRODUCTS', '');
             $fullPathImage = asset('public');
             DB::unprepared("
+            delimiter //
               CREATE DEFINER=`$userName`@`localhost` TRIGGER `$database`.`products_BEFORE_UPDATE` BEFORE UPDATE ON `products` FOR EACH ROW
                   BEGIN
                     IF OLD.published = 0 AND NEW.published = 1 THEN
@@ -32,7 +33,8 @@ class ChangeTriggerFromProductsTable extends Migration
                         INSERT INTO 1c_sandbox.$databaseToInsertNew (name_ru, name_en, about_ru, about_en, price_rub, price_usd, price_cny, weight_netto, weight_brutto, image, autolong_number, vendor_code)
                         VALUES (NEW.name_ru, NEW.name_en, NEW.about_ru, NEW.about_en, NEW.price_rub, NEW.price_usd, NEW.price_cny, NEW.weight_netto, NEW.weight_brutto, full_path, NEW.autolong_number, NEW.vendor_code);
                     END IF;
-                  END
+                  END//
+            delimiter;
         ");
         }
     }
