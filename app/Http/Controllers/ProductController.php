@@ -20,21 +20,21 @@ class ProductController extends Controller
     protected function productCreateValidator(array $data)
     {
         $messages = [
-            'required' => 'Поле :attribute обязательно для заполнения.',
+                'required' => 'Поле :attribute обязательно для заполнения.',
         ];
 
         $names = [
-            'nameRu' => 'название продукта',
-            'priceCny' => 'цена в юань',
-            'autolongNumber' => 'внутренний номер',
-            'providerId' => 'поставщик'
+                'nameRu' => 'название продукта',
+                'priceCny' => 'цена в юань',
+                'autolongNumber' => 'внутренний номер',
+                'providerId' => 'поставщик'
         ];
 
         return Validator::make($data, [
-            'nameRu' => ['required'],
-            'priceCny' => ['required'],
-            'autolongNumber' => ['required'],
-            'providerId' => ['required'],
+                'nameRu' => ['required'],
+                'priceCny' => ['required'],
+                'autolongNumber' => ['required'],
+                'providerId' => ['required'],
         ], $messages, $names);
     }
 
@@ -151,7 +151,7 @@ class ProductController extends Controller
     public function checkNumberCode(Request $request, AutolongRuProduct $autolongRuProduct)
     {
         $request->validate([
-            'numbers' => 'required'
+                'numbers' => 'required'
         ]);
         $numbers = $autolongRuProduct->cleanSpaceInArrayItems($request->input('numbers'));
         $availableProducts = $autolongRuProduct->checkNumberCodesInDB($numbers, $request->input('published'));
@@ -161,7 +161,7 @@ class ProductController extends Controller
     public function updateImage(Request $request, Product $product)
     {
         $request->validate([
-            'image' => 'required|file'
+                'image' => 'required|file'
         ]);
         $product->createOrUpdateImage($request->file('image'));
         return response()->json($product->image, 200);
@@ -189,11 +189,11 @@ class ProductController extends Controller
     public function indexVendorCode(Request $request)
     {
         $request->validate([
-            'vendorCode' => 'required'
+                'vendorCode' => 'required'
         ]);
         $vendorCode = $request->input('vendorCode');
         return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
-            ->whereVendorCode($vendorCode)
-            ->orderBy('created_at', 'asc')->get(), 200));
+                ->whereVendorCode($vendorCode)
+                ->orderBy('created_at', 'asc')->get(), 200));
     }
 }
