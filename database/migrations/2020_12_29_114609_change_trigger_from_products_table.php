@@ -28,7 +28,7 @@ class ChangeTriggerFromProductsTable extends Migration
                   BEGIN
                     IF OLD.published = 0 AND NEW.published = 1 THEN
                         INSERT INTO 1c_sandbox.$databaseToInsertNew (name_ru, name_en, about_ru, about_en, price_rub, price_usd, price_cny, weight_netto, weight_brutto, image, autolong_number, vendor_code)
-                        VALUES (NEW.name_ru, NEW.name_en, NEW.about_ru, NEW.about_en, NEW.price_rub, NEW.price_usd, NEW.price_cny, NEW.weight_netto, NEW.weight_brutto, CONCAT($fullForImagePath, NEW.image), NEW.autolong_number, NEW.vendor_code);
+                        VALUES (NEW.name_ru, NEW.name_en, NEW.about_ru, NEW.about_en, NEW.price_rub, NEW.price_usd, NEW.price_cny, NEW.weight_netto, NEW.weight_brutto, $fullForImagePath NEW.image, NEW.autolong_number, NEW.vendor_code);
                     END IF;
                   END
         ");
