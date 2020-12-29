@@ -143,10 +143,12 @@ class OrderController extends Controller
             }
             $order->cargo = $request->input('cargo');
         }
-        $city = City::firstOrCreate([
-                'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
-        ]);
-        $order->city_id = $city->id;
+        if (!is_null($request)) {
+            $city = City::firstOrCreate([
+                    'name' => City::translateUcFirstCyrillicAndOtherLcWhenStingHaveManyWords($request->input('city'))
+            ]);
+            $order->city_id = $city->id;
+        }
         $order->arrival_date = $request->input('arrivalDate');
         $order->save();
         $order->refresh();
