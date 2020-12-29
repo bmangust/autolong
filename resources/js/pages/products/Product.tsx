@@ -190,8 +190,9 @@ const Product: React.FC = () => {
                         </div>
                         <div className={classes.btns}>
                             {user && user.role.accesses.productsUpdate == 1
-                                ? <NavLink to={`/productedit/${id}${product.published == '0' ? '/unpublished' : ''}`}
-                                           className='editButton'>
+                                ? <NavLink
+                                    to={`/productedit/${id}${product.published == '0' ? '/unpublished' : '/published'}`}
+                                    className='editButton'>
                                     Редактировать
                                 </NavLink>
                                 : null
