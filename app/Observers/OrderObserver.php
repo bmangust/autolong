@@ -55,19 +55,20 @@ class OrderObserver
                 'after' => json_encode(array_diff_assoc($after, $before)),
             ]);
         }
-        $oldContainerId = $before['container_id'];
-        $newContainerId = $after['container_id'];
-        if ($oldContainerId != $newContainerId) {
-            $oldContainer = Container::find($oldContainerId);
-            $newContainer = Container::find($newContainerId);
-            if ($oldContainer) {
-                $oldContainer->updateQuantityOrderItems();
-            }
-            if ($newContainer) {
-                $newContainer->updateQuantityOrderItems();
+        if (isset($before['container_id']) && $after['container_id']) {
+            $oldContainerId = $before['container_id'];
+            $newContainerId = $after['container_id'];
+            if ($oldContainerId != $newContainerId) {
+                $oldContainer = Container::find($oldContainerId);
+                $newContainer = Container::find($newContainerId);
+                if ($oldContainer) {
+                    $oldContainer->updateQuantityOrderItems();
+                }
+                if ($newContainer) {
+                    $newContainer->updateQuantityOrderItems();
+                }
             }
         }
-
     }
 
     public function deleting(Order $order)
