@@ -140,6 +140,7 @@ const ProductFormEdit: React.FC<Props> = (props) => {
         <div className='card mb-3'>
             <div className="card-body">
                 <form onSubmit={productFormSubmitHandler}>
+
                     {unpublished !== 'unpublished'
                         ? <div className='mb-3 row'>
                             <div className="col-lg-6">
@@ -235,6 +236,16 @@ const ProductFormEdit: React.FC<Props> = (props) => {
                         </div>
                         : <div className='mb-3 row'>
                             <div className="col-lg-6">
+                                <label htmlFor='vendorCode'
+                                       className='w-100'>
+                                    Укажите артикул
+                                </label>
+                                <input
+                                    name="vendorCode"
+                                    ref={register}
+                                    type="text"
+                                    placeholder="Введите номер"
+                                />
                                 <label
                                     className='required'
                                     htmlFor='providerId'>

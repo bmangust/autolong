@@ -278,6 +278,17 @@ const ProductItemForm: React.FC<Props> = (props) => {
                     : <div className='mb-3 row'>
                         <div className="col-lg-6">
                             <div className='col-lg-10 mb-3 p-0'>
+                                <label htmlFor='vendorCode'
+                                       className='w-100'>
+                                    Укажите артикул
+                                </label>
+                                <input
+                                    className='mb-3'
+                                    name="vendorCode"
+                                    ref={register}
+                                    type="text"
+                                    placeholder="Введите номер"
+                                />
                                 <label
                                     htmlFor='providerId'>
                                     Выберите поставщика
