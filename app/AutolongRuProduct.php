@@ -36,14 +36,14 @@ class AutolongRuProduct extends Model
         return $this->translateHtmlCodesToTags($this->attributes['name']);
     }
 
-    public function checkNumberCodesInDB($numbers,int $published = 1): array
+    public function checkNumberCodesInDB($numbers, int $published = 1): array
     {
         $availableProducts = ['products' => []];
         foreach ($numbers as $number) {
             $usProduct = Product::whereAutolongNumber($number);
             $product = $this->whereNumber($number)->first();
             if ($usProduct->exists()) {
-                if (!$published && $usProduct->first()->published){
+                if (!$published && $usProduct->first()->published) {
                     array_key_exists('published', $availableProducts) ?: $availableProducts['published'] = [];
                     $availableProducts['published'][] = $number;
                 } else {
@@ -52,7 +52,7 @@ class AutolongRuProduct extends Model
             } elseif (!is_null($product) && $product != '') {
                 $availableProducts['products'][] = new AutolongRuProductResource($product);
             } else {
-                $availableProducts['products'][] = (object) ['number' => $number];
+                $availableProducts['products'][] = (object)['number' => $number];
             }
         }
         return $availableProducts;
