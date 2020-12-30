@@ -157,6 +157,7 @@ const Container: React.FC<IContainer> = () => {
                             {container.orders.map((order: IOrder) => (
                                 <ContainersOrder
                                     key={order.id + order.name}
+                                    deliveryPrice={container.deliveryPrice}
                                     activeView={activeView}
                                     setIsOpen={setIsOpen}
                                     setActiveOrder={setActiveOrder}

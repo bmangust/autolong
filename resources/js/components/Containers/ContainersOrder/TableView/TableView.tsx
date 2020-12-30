@@ -19,10 +19,11 @@ type Props = {
     total: number
     totalRub: number
     orderingPrice: number
+    deliveryPrice: number
 }
 
 const TableView: React.FC<Props> = (props) => {
-    const {order, totalRubCourse, total, totalRub, orderingPrice} = props
+    const {order, totalRubCourse, total, totalRub, orderingPrice, deliveryPrice} = props
 
     return <>
         <div className={classes.orderBody}>
@@ -31,8 +32,8 @@ const TableView: React.FC<Props> = (props) => {
                 <tr>
                     <th>Код</th>
                     <th>Кол-во</th>
-                    <th>Цена, RMB</th>
-                    <th>Цена, руб</th>
+                    <th>RMB</th>
+                    <th>РУБ</th>
                     <th>Доставка</th>
                     <th>Доп. расходы</th>
                     <th>Итоговая цена</th>
@@ -41,6 +42,7 @@ const TableView: React.FC<Props> = (props) => {
                 <TableItems
                     total={total}
                     totalRub={totalRub}
+                    deliveryPrice={deliveryPrice}
                     totalRubCourse={totalRubCourse}
                     orderingPrice={orderingPrice}
                     items={order.items}
