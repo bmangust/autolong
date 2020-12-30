@@ -26,7 +26,7 @@ class OrderItemResource extends JsonResource
                         'usd' => $this->price_usd,
                         'cny' => $this->price_cny],
                 'image' => $this->product->image,
-                'pcsCtnCtns' => json_decode($this->pcs_ctn_ctns, true) ?? [],
+                'pcsCtnCtns' => json_decode($this->pcs_ctn_ctns, true) ?? null,
                 'meas' => json_decode($this->meas, true) ?? [],
                 'fullPrice' => (object)['rub' => $this->getSumInRub(),
                         'usd' => $this->getSumInUsd(),

@@ -6,30 +6,32 @@ import {NavLink} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {Accordion, AccordionContext, useAccordionToggle} from 'react-bootstrap'
 
-// Typescript
-import {IOrder} from '../../Orders/IOrders'
-
 // Actions
 import {getMarkingList} from '../../../store/actions/containers'
+import {createOrderInvoice} from '../../../store/actions/orders'
+
+// Typescript
+import {IOrder} from '../../Orders/IOrders'
 
 // Styles
 import classes from './ContainersOrder.module.css'
 
 // App
-import OrderItems from '../../Orders/OrderItems/OrderItems'
+import DefaultView from './DefaultView/DefaultView'
 import SvgPlusGrey from '../../UI/iconComponents/PlusGrey'
 import SvgDownloadGrey from '../../UI/iconComponents/DownloadGrey'
-import {createOrderInvoice} from '../../../store/actions/orders'
+import TableView from './TableView/TableView'
 
 type Props = {
     order: IOrder
-    setPackingList: (any) => void
-    setActiveOrder: (any) => void
+    setPackingList: (boolean) => void
+    setActiveOrder: (IOrder) => void
     setIsOpen: (boolean) => void
+    activeView: number
 }
 
 const ContainersOrder: React.FC<Props> = (props) => {
-    const {order, setPackingList, setActiveOrder, setIsOpen} = props
+    const {order, setPackingList, setActiveOrder, setIsOpen, activeView} = props
     const dispatch = useDispatch()
     const currentEventKey = useContext(AccordionContext)
 
@@ -57,6 +59,12 @@ const ContainersOrder: React.FC<Props> = (props) => {
         </div>
     }
 
+    const total = (+order.paymentAmount || 0) + (+order.surchargeAmount || 0)
+    const totalRub = (+order.paymentAmountRub || 0) + (+order.surchargeAmountRub || 0)
+    const additionalTotal = (+order.refusalAmount || 0) + (+order.orderingAmount || 0) + (+order.customsAmount || 0)
+
+    const totalRubCourse = total ? totalRub / total : 0
+    const orderingPrice = totalRub ? additionalTotal / totalRub : 0
 
     return <div className={classes.order}>
         <CustomToggle eventKey={order.id + order.name}>
@@ -65,48 +73,68 @@ const ContainersOrder: React.FC<Props> = (props) => {
             </NavLink>
         </CustomToggle>
         <Accordion.Collapse eventKey={order.id + order.name}>
-            <>
-                <div className={classes.orderBody}>
-                    <OrderItems items={order.items}/>
-                </div>
-                <div className={classes.orderFooter}>
-                    <p className={classes.orderItemsQrt}>
-                        Товаров в заказе
-                        ({order.items.length})
-                    </p>
-                    <p className={classes.orderPrice}>
-                        Стоимость заказа
-                        <span>{parseFloat(order.price.cny)
-                            .toFixed(2)} ¥</span>
-                    </p>
-                </div>
-                <div className={classes.documents}>
-                    {order.packingList
-                        ? <>
-                            <p className={classes.btn}
-                               onClick={() => showPackage(order, false)}>
+            <div key={activeView} className='option'>
+                {activeView === 0
+                    ? <DefaultView order={order}/>
+                    : <TableView
+                        total={total}
+                        totalRub={totalRub}
+                        totalRubCourse={totalRubCourse}
+                        orderingPrice={orderingPrice}
+                        order={order}
+                    />
+                }
+                {activeView === 0
+                    ? <div className={classes.documents}>
+                        {order.packingList
+                            ? <>
+                                <p className={classes.btn}
+                                   onClick={() => showPackage(order, false)}>
+                                    <SvgPlusGrey/>
+                                    Новый упаковочный лист
+                                </p>
+                                <p className={classes.btn}
+                                   onClick={() => downloadPack(order, true)}>
+                                    <SvgDownloadGrey/>
+                                    Упаковочный лист
+                                </p>
+                            </>
+                            : <p className={classes.btn}
+                                 onClick={() => showPackage(order, false)}>
                                 <SvgPlusGrey/>
-                                Новый упаковочный лист
+                                Создать упаковочный лист
                             </p>
-                            <p className={classes.btn}
-                               onClick={() => downloadPack(order, true)}>
-                                <SvgDownloadGrey/>
-                                Упаковочный лист
-                            </p>
-                        </>
-                        : <p className={classes.btn}
-                             onClick={() => showPackage(order, false)}>
-                            <SvgPlusGrey/>
-                            Создать упаковочный лист
+                        }
+                        <p className={classes.btn}
+                           onClick={() => getMarkingList(order.id, order.createdAt)}>
+                            <SvgDownloadGrey/>
+                            Маркировка
                         </p>
-                    }
-                    <p className={classes.btn}
-                       onClick={() => getMarkingList(order.id, order.createdAt)}>
-                        <SvgDownloadGrey/>
-                        Маркировка
-                    </p>
-                </div>
-            </>
+                    </div>
+                    : <div className={classes.total}>
+                        <p className={classes.orderTotal}>
+                            <span>Итого стоимость товаров:</span>
+                            <span>
+                                <b> {total} ¥ </b>
+                                {total > 0
+                                    ? `(${totalRub} ₽ по курсу ${totalRubCourse.toFixed(3)})`
+                                    : null
+                                }
+                            </span>
+                        </p>
+                        <p className={classes.orderTotal}>
+                            <span>Стоимость оформления:</span>
+                            <span>
+                                <b> {additionalTotal} ₽ </b>
+                                {additionalTotal > 0
+                                    ? `(+${orderingPrice.toFixed(3)} ₽)`
+                                    : null
+                                }
+                            </span>
+                        </p>
+                    </div>
+                }
+            </div>
         </Accordion.Collapse>
     </div>
 }
