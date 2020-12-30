@@ -178,5 +178,7 @@
 
   .new-card__footer {
     padding: 15px;
+    flex-direction: column;
+    align-items: flex-start;
   }
 }
