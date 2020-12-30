@@ -1,0 +1,69 @@
+.orderBody {
+    padding: 10px 30px;
+}
+
+.orderFooter {
+    display: flex;
+    justify-content: space-between;
+    padding: 25px 30px 30px;
+}
+
+.orderItemsQrt {
+    font-weight: normal;
+    font-size: 12px;
+    line-height: 14px;
+    color: #b4b6bd;
+    margin-bottom: 0;
+}
+
+.orderPrice {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3a405f;
+    margin-bottom: 0;
+}
+
+.orderPrice span {
+    color: #f44a0e;
+    margin-left: 19px;
+}
+
+@media (max-width: 1200px) {
+    .orderFooter {
+        flex-direction: column;
+    }
+
+    .orderFooter .orderItemsQrt {
+        margin-bottom: 10px;
+    }
+
+    .orderBody {
+        padding-bottom: 0;
+    }
+
+    .orderFooter {
+        padding-top: 0;
+    }
+}
+
+@media (max-width: 991px) {
+
+    .orderBody {
+        padding: 15px 15px 0;
+    }
+
+    .orderFooter {
+        padding: 0 15px 15px;
+    }
+}
+
+@media (max-width: 767px) {
+    .orderFooter {
+        flex-direction: column;
+    }
+
+    .orderItemsQrt {
+        margin-bottom: 10px;
+    }
+}

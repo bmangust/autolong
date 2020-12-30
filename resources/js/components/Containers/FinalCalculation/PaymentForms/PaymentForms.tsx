@@ -19,14 +19,8 @@ type Props = {
 
 const PaymentForms: React.FC<Props> = (props) => {
     const {orders, setIsShow, deliveryPrice} = props
-    const [activeOrder, setActiveOrder] = useState<number>()
+    const [activeOrder, setActiveOrder] = useState<number>(orders[0].id)
     const [deliveryPriceState, setDeliveryPriceState] = useState<number>(deliveryPrice ? deliveryPrice : 0)
-
-    useEffect(() => {
-        if (orders.length) {
-            setActiveOrder(orders[0].id)
-        }
-    }, [orders])
 
     useEffect(() => {
         if (deliveryPrice) {
@@ -72,10 +66,13 @@ const PaymentForms: React.FC<Props> = (props) => {
                 : null
             }
             {activeOrderObject
-                ? <PaymentForm
-                    deliveryPriceOrder={deliveryPriceState}
-                    setIsShow={setIsShow}
-                    order={activeOrderObject}/>
+                ? <div key={activeOrder} className='option'>
+                    <PaymentForm
+                        deliveryPriceOrder={deliveryPriceState}
+                        setIsShow={setIsShow}
+                        order={activeOrderObject}
+                    />
+                </div>
                 : null
             }
         </div>

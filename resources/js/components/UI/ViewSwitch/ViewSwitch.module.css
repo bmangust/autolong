@@ -1,0 +1,27 @@
+.switches {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}
+
+.switches svg {
+    margin-right: 15px;
+    width: 20px;
+    height: 20px;
+    transition: 145ms ease-in-out;
+    cursor: pointer;
+}
+
+.switches svg path {
+    fill: #B4B6BD;
+    transition: 145ms ease-in-out;
+}
+
+.switches svg.active path,
+.switches svg:hover path {
+    fill: #3A405F;
+}
+
+.switches svg:last-of-type {
+    margin-right: 0;
+}

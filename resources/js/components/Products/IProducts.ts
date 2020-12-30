@@ -46,6 +46,7 @@ export interface IProduct {
     price: IProductPrice
     fullPrice: IProductPrice
     hsCode: string
+    pcsCtnCtns: { pcsCtn: number[], ctns: number[] } | null
     weightNetto: number
     weightBrutto: number
     createdAt: number

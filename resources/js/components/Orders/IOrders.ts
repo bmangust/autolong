@@ -54,6 +54,8 @@ export interface IOrder {
     refusalAmount: number
     orderingAmount: number
     customsAmount: number
+    weightNetto: number | null
+    weightBrutto: number | null
     sandboxFiles: ISandboxFile[]
     price: IProductPrice
     provider: IProvider

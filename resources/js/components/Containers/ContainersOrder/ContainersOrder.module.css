@@ -23,7 +23,7 @@
 }
 
 .order .orderHeader:hover {
-    background: rgba(247,248,250, .5);
+    background: rgba(247, 248, 250, .5);
 }
 
 .order .orderHeader.active {
@@ -65,35 +65,11 @@
     display: inline-block;
 }
 
-.order .orderBody {
-    padding: 10px 30px;
-}
-
-.order .orderFooter {
-    display: flex;
-    justify-content: space-between;
-    padding: 25px 30px 30px;
-}
-
-.order .orderItemsQrt {
-    font-weight: normal;
-    font-size: 12px;
-    line-height: 14px;
-    color: #b4b6bd;
+.btn {
+    text-decoration-line: underline;
     margin-bottom: 0;
-}
-
-.order .orderPrice {
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 17px;
-    color: #3a405f;
-    margin-bottom: 0;
-}
-
-.order .orderPrice span {
-    color: #f44a0e;
-    margin-left: 19px;
+    cursor: pointer;
+    margin-right: 10px;
 }
 
 .documents {
@@ -118,56 +94,46 @@
     height: 22px;
 }
 
-.btn {
-    text-decoration-line: underline;
-    margin-bottom: 0;
-    cursor: pointer;
-    margin-right: 10px;
+.orderTotal {
+    margin-bottom: 10px;
 }
 
-@media (max-width: 1200px) {
-    .order .orderFooter {
-        flex-direction: column;
-    }
+.total {
+    padding: 25px 32px 32px;
+}
 
-    .order .orderFooter .orderItemsQrt {
-        margin-bottom: 10px;
-    }
+.orderTotal:last-of-type {
+    margin-bottom: 0;
+}
 
-    .order .orderBody {
-        padding-bottom: 0;
-    }
+.orderTotal span b {
+    font-weight: 600;
+}
 
-    
-    .order .orderFooter {
-        padding-top: 0;
-    }
+.orderTotal span {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+}
+
+.orderTotal span:first-of-type {
+    font-weight: 500;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+    margin-right: 25px;
+    display: inline-block;
+    min-width: 180px;
 }
 
 @media (max-width: 991px) {
-
-    .order .orderBody {
-        padding: 15px 15px 0;
-    }
-    
-    .order .orderFooter {
-        padding: 0 15px 15px;
-    }
-
     .documents {
         padding: 15px;
     }
 }
 
 @media (max-width: 767px) {
-    .order .orderFooter {
-        flex-direction: column;
-    }
-
-    .order .orderItemsQrt {
-        margin-bottom: 10px;
-    }
-
     .documents {
         flex-direction: column;
         justify-content: flex-start;

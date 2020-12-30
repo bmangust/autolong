@@ -34,11 +34,13 @@ import ContainerEdit from '../../components/Containers/ContainerEdit/ContainerEd
 import SvgEdit from '../../components/UI/iconComponents/Edit'
 import FinalCalculation from '../../components/Containers/FinalCalculation/FinalCalculation'
 import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
+import ViewSwitch from '../../components/UI/ViewSwitch/ViewSwitch'
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
     const [isOpen, setIsOpen] = useState(false)
     const [activeOrder, setActiveOrder] = useState<null | IOrder>(null)
+    const [activeView, setActiveView] = useState(0)
     const [packingList, setPackingList] = useState(false)
     const [isShowAdminModal, setIsShowAdminModal] = useState(false)
     const dispatch = useDispatch()
@@ -59,6 +61,24 @@ const Container: React.FC<IContainer> = () => {
     useEffect(() => {
         dispatch(fetchContainerById(id))
     }, [dispatch, id])
+
+    let totalWeightNetto = 0
+    let totalWeightBrutto = 0
+    let totalBoxes = 0
+
+    container && container.orders && container.orders.map((order) => {
+        if (order.weightNetto) {
+            totalWeightNetto += order.weightNetto
+        }
+        if (order.weightBrutto) {
+            totalWeightBrutto += order.weightBrutto
+        }
+        order.items.map((item) => {
+            if (item.pcsCtnCtns) {
+                totalBoxes += item.pcsCtnCtns.pcsCtn.reduce((acc, qty) => acc + qty, 0)
+            }
+        })
+    })
 
     if (error) {
         return <Error/>
@@ -127,18 +147,23 @@ const Container: React.FC<IContainer> = () => {
                 {container.orders && container.orders.length
                     ? <div className="card mb-3">
                         <div className='card-body pb-0'>
-                            <h2 className="mb-3">
+                            <h2 className="mb-3"
+                                style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                 Список заказов в контейнере
+                                <ViewSwitch activeItem={activeView} setActiveItem={setActiveView}/>
                             </h2>
                         </div>
                         <Accordion defaultActiveKey={container.orders[0].id + container.orders[0].name}>
                             {container.orders.map((order: IOrder) => (
                                 <ContainersOrder
                                     key={order.id + order.name}
+                                    deliveryPrice={container.deliveryPrice}
+                                    activeView={activeView}
                                     setIsOpen={setIsOpen}
                                     setActiveOrder={setActiveOrder}
                                     setPackingList={setPackingList}
-                                    order={order}/>
+                                    order={order}
+                                />
                             ))}
                         </Accordion>
                     </div>
@@ -186,13 +211,19 @@ const Container: React.FC<IContainer> = () => {
                         Вес
                     </p>
                     <p className="infoBlockText">
-                        -
+                        {totalWeightNetto || totalWeightBrutto
+                            ? <>
+                                {totalWeightNetto ? `Нетто: ${totalWeightNetto}; ` : ''}
+                                {totalWeightBrutto ? `Брутто: ${totalWeightBrutto};` : ''}
+                            </>
+                            : '-'
+                        }
                     </p>
                     <p className="infoBlockHeaders mb-1">
                         Коробки
                     </p>
                     <p className="infoBlockText">
-                        -
+                        {totalBoxes ? `${totalBoxes} шт` : '-'}
                     </p>
                     <p className="infoBlockHeaders mb-1">
                         Дата выхода
