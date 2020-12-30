@@ -608,7 +608,7 @@ class OrderController extends Controller
         $unappliedOrders = Order::all()->where('container_id', '=', null)
                 ->where('status', '!=', array_keys(get_object_vars(Status::getOrderStatuses()), 'Создан')[0])
                 ->sortByDesc('updated_at');
-        return response()->json(OrderWithRelationshipsResource::collection($unappliedOrders, 200));
+        return response()->json(OrderWithRelationshipsResource::collection($unappliedOrders), 200);
     }
 
     public function checkBaikalStatus(Request $request, Order $order)
@@ -618,10 +618,14 @@ class OrderController extends Controller
         ]);
         $baikalLink = Order::getBaikalLink($request->input('baikalId'));
         $parsingInfo = Order::parseBaikalLinkById($baikalLink);
+        $approximateDate = Order::parseApproximateDate($baikalLink);
         $order->update([
                 'baikal_tracker_link' => $baikalLink,
                 'baikal_tracker_history' => $parsingInfo
         ]);
+        if ($approximateDate) {
+            $order->updateArrivalDateInContainer($approximateDate);
+        }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 

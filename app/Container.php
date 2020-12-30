@@ -41,8 +41,30 @@ class Container extends Model
     public function addOrders(array $ids): bool
     {
         $orders = Order::find($ids);
+        $foundBaikalIdAssigned = false;
         foreach ($orders as $order) {
+            if ($order->cargo && $order->baikal_tracker_link) {
+                $baikalId = $order->getBaikalId();
+                $container = self::getByIdentifier($baikalId);
+                if ($container) {
+                    if ($container->city_id != $order->city_id) {
+                        throw new HttpException(400, 'У заказа "' . $order->name . '" такой же байкал идентификатор как и у контейнера №' . $container->name . '. Но города различаются. Установите у заказа другой город, либо поменяйте идентификатор.');
+                    }
+                    $container->orders()->save($order);
+                    $container->updateQuantityOrderItems();
+                    continue;
+                }
+
+                if (!$foundBaikalIdAssigned) {
+                    $this->identifier = $baikalId;
+                    $this->save();
+                    $foundBaikalIdAssigned = true;
+                }
+            }
             $this->orders()->save($order);
+        }
+        if (!$this->orders()->count()) {
+            $this->delete();
         }
         return true;
     }

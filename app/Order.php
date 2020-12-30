@@ -619,6 +619,24 @@ class Order extends Model
         return $history;
     }
 
+    public static function parseApproximateDate(string $link)
+    {
+        try {
+            $parse = file_get_contents($link);
+        } catch (HttpException $exception) {
+            throw new HttpException(404, 'Ошибка, нет актуальной ссылки для этого идентификатора. Попробуйте позже, либо введите другой идентификатор.');
+        }
+        preg_match_all('#<br>(.*?)<table[^>]*>#is', $parse, $matches);
+        if (!empty($matches[1])) {
+            $date = trim($matches[1][0]);
+            preg_match('#[0-9]{2,4}\\.|-[0-9]{2}\\.|-[0-9]{2,4}#', $date, $searchingDate);
+            if (!empty($searchingDate)) {
+                return $searchingDate[0];
+            }
+            return null;
+        }
+    }
+
     public function getBaikalId()
     {
         $url = $this->baikal_tracker_link;
@@ -628,6 +646,23 @@ class Order extends Model
                 parse_str($parts['query'], $query);
                 return $query['id'];
             }
+        }
+        return false;
+    }
+
+    public function updateArrivalDateInContainer(string $date): bool
+    {
+        $container = $this->container;
+        $baikalId = $this->getBaikalId();
+        $date = Carbon::createFromDate($date)->format('Y-m-d');
+        if ($container &&
+                $baikalId &&
+                $container->identifier == $baikalId &&
+                $container->arrival_date != $date)
+        {
+            $container->arrival_date = $date;
+            $container->save();
+            return true;
         }
         return false;
     }

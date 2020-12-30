@@ -57,22 +57,25 @@ class ContainerController extends Controller
         if (!$container->checkCargoOrdersById($orderIds)) {
             throw new HttpException(400, 'Заказы в контейнере должны быть с одинаковыми статусами.');
         }
-        if ($request->has('identifier')) {
-            $containerByIdentifier = Container::getByIdentifier($request->input('identifier'));
-            if ($containerByIdentifier) {
-                $containerByIdentifier->addOrders($orderIds);
-                return response()->json('Данный идентификатор ' . $request->input('identifier') . ' найден у контейнера №' . $containerByIdentifier->id . '. Товары успешно добавлены в данный контейнер.', 201);
-            }
-            $container->identifier = $request->input('orders');
-        }
+
+//        Когда появится идентификатор
+//        if ($request->has('identifier')) {
+//            $containerByIdentifier = Container::getByIdentifier($request->input('identifier'));
+//            if ($containerByIdentifier) {
+//                $containerByIdentifier->addOrders($orderIds);
+//                return response()->json('Данный идентификатор ' . $request->input('identifier') . ' найден у контейнера №' . $containerByIdentifier->id . '. Товары успешно добавлены в данный контейнер.', 201);
+//            }
+//            $container->identifier = $request->input('orders');
+//        }
+
         $container->name = $request->input('name');
         $container->status = array_keys(get_object_vars(Status::getContainerStatuses()), 'Собирается')[0];
         $container->quantity_order_items = $container->getQuantityOrderItems($orderIds);
         $city = $container->compareOrderCityAndChooseCity($orderIds);
         $container->city_id = $city;
         $container->save();
-        $container->addOrders($orderIds);
         Log::$write = false;
+        $container->addOrders($orderIds);
         $container->name = $container->id;
         $container->save();
         return response()->json(new ContainerWithRelationshipsResource($container), 201);

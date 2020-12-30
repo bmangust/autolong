@@ -94,9 +94,13 @@ class Kernel extends ConsoleKernel
             $orders = Order::whereNotNull('baikal_tracker_link')->get();
             foreach ($orders as $order) {
                 $parsingInfo = Order::parseBaikalLinkById($order->baikal_tracker_link);
+                $approximateDate = Order::parseApproximateDate($order->baikal_tracker_link);
                 $order->update([
                         'baikal_tracker_history' => $parsingInfo
                 ]);
+                if ($approximateDate) {
+                    $order->updateArrivalDateInContainer($approximateDate);
+                }
             }
         })->hourly();
     }
