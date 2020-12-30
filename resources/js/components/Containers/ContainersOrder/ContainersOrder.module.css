@@ -131,7 +131,7 @@
     .documents {
         padding: 15px;
     }
-    
+
     .total {
         padding: 15px;
     }
@@ -155,5 +155,13 @@
 
     .order .orderHeader a {
         margin-bottom: 10px;
+    }
+
+    .orderTotal span {
+        display: block !important;
+    }
+
+    .orderTotal span:first-of-type {
+        margin: 0 0 5px;
     }
 }
