@@ -84,34 +84,8 @@ const ContainersOrder: React.FC<Props> = (props) => {
                         order={order}
                     />
                 }
-                {activeView === 0
-                    ? <div className={classes.documents}>
-                        {order.packingList
-                            ? <>
-                                <p className={classes.btn}
-                                   onClick={() => showPackage(order, false)}>
-                                    <SvgPlusGrey/>
-                                    Новый упаковочный лист
-                                </p>
-                                <p className={classes.btn}
-                                   onClick={() => downloadPack(order, true)}>
-                                    <SvgDownloadGrey/>
-                                    Упаковочный лист
-                                </p>
-                            </>
-                            : <p className={classes.btn}
-                                 onClick={() => showPackage(order, false)}>
-                                <SvgPlusGrey/>
-                                Создать упаковочный лист
-                            </p>
-                        }
-                        <p className={classes.btn}
-                           onClick={() => getMarkingList(order.id, order.createdAt)}>
-                            <SvgDownloadGrey/>
-                            Маркировка
-                        </p>
-                    </div>
-                    : <div className={classes.total}>
+                {activeView === 1
+                    ? <div className={classes.total}>
                         <p className={classes.orderTotal}>
                             <span>Итого стоимость товаров:</span>
                             <span>
@@ -133,7 +107,34 @@ const ContainersOrder: React.FC<Props> = (props) => {
                             </span>
                         </p>
                     </div>
+                    : null
                 }
+                <div className={classes.documents}>
+                    {order.packingList
+                        ? <>
+                            <p className={classes.btn}
+                               onClick={() => showPackage(order, false)}>
+                                <SvgPlusGrey/>
+                                Новый упаковочный лист
+                            </p>
+                            <p className={classes.btn}
+                               onClick={() => downloadPack(order, true)}>
+                                <SvgDownloadGrey/>
+                                Упаковочный лист
+                            </p>
+                        </>
+                        : <p className={classes.btn}
+                             onClick={() => showPackage(order, false)}>
+                            <SvgPlusGrey/>
+                            Создать упаковочный лист
+                        </p>
+                    }
+                    <p className={classes.btn}
+                       onClick={() => getMarkingList(order.id, order.createdAt)}>
+                        <SvgDownloadGrey/>
+                        Маркировка
+                    </p>
+                </div>
             </div>
         </Accordion.Collapse>
     </div>
