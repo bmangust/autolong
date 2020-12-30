@@ -30,10 +30,10 @@ const TableItems: React.FC<Props> = (props) => {
             <td>{item.autolongNumber}</td>
             <td>{item.quantity}</td>
             <td>{Math.round(+item.price.cny)} ¥</td>
-            <td>{priceRub ? `${Math.round(priceRub)} ₽` : '-'}</td>
-            <td>{delivery ? `${Math.round(delivery)} ₽` : '-'}</td>
-            <td>{additionalSpending ? `${Math.round(additionalSpending)} ₽` : '-'}</td>
-            <td>{totalPrice ? `${Math.round(totalPrice)} ₽` : '-'}</td>
+            <td>{priceRub ? `${priceRub.toFixed(2)} ₽` : '-'}</td>
+            <td>{delivery ? `${delivery.toFixed(2)} ₽` : '-'}</td>
+            <td>{additionalSpending ? `${additionalSpending.toFixed(2)} ₽` : '-'}</td>
+            <td>{totalPrice ? `${totalPrice.toFixed(2)} ₽` : '-'}</td>
         </tr>
     })}
     </tbody>
