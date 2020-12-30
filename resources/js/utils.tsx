@@ -175,21 +175,31 @@ export const tagsConverter = (tags: ITag[]) => {
  * @param order
  * @param key
  */
-export const mapOrder =
-    (
-        array: [string, unknown][],
-        order: string[],
-        key = 0) => {
-        array.sort((a, b) => {
-            const A = a[key]
-            const B = b[key]
+export const mapOrder = (
+    array: [string, unknown][],
+    order: string[],
+    key = 0) => {
+    array.sort((a, b) => {
+        const A = a[key]
+        const B = b[key]
 
-            if (order.indexOf(A as string) > order.indexOf(B as string)) {
-                return 1
-            } else {
-                return -1
-            }
-        })
+        if (order.indexOf(A as string) > order.indexOf(B as string)) {
+            return 1
+        } else {
+            return -1
+        }
+    })
 
-        return array
-    }
+    return array
+}
+
+/**
+ * toFixed without rounding
+ * @param num
+ * @param fixed
+ */
+export const toFixed = (num, fixed) => {
+    const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?')
+    return num.toString()
+        .match(re)[0]
+}

@@ -21,6 +21,7 @@ import DefaultView from './DefaultView/DefaultView'
 import SvgPlusGrey from '../../UI/iconComponents/PlusGrey'
 import SvgDownloadGrey from '../../UI/iconComponents/DownloadGrey'
 import TableView from './TableView/TableView'
+import {toFixed} from '../../../utils'
 
 type Props = {
     order: IOrder
@@ -91,9 +92,9 @@ const ContainersOrder: React.FC<Props> = (props) => {
                         <p className={classes.orderTotal}>
                             <span>Итого стоимость товаров:</span>
                             <span>
-                                <b> {total} ¥ </b>
+                                <b> {toFixed(total, 2)} ¥ </b>
                                 {total > 0
-                                    ? `(${totalRub} ₽ по курсу ${totalRubCourse.toFixed(3)})`
+                                    ? `(${toFixed(totalRub, 2)} ₽ по курсу ${toFixed(totalRubCourse, 2)})`
                                     : null
                                 }
                             </span>
@@ -101,9 +102,9 @@ const ContainersOrder: React.FC<Props> = (props) => {
                         <p className={classes.orderTotal}>
                             <span>Стоимость оформления:</span>
                             <span>
-                                <b> {additionalTotal} ₽ </b>
+                                <b> {toFixed(additionalTotal, 2)} ₽ </b>
                                 {additionalTotal > 0
-                                    ? `(+${orderingPrice.toFixed(3)} ₽)`
+                                    ? `(+${toFixed(orderingPrice, 2)} ₽)`
                                     : null
                                 }
                             </span>

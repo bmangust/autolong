@@ -14,7 +14,7 @@ import classes from './PaymentForm.module.css'
 import {setOrderPayment} from '../../../../../store/actions/containers'
 
 // App
-import {timeConverter} from '../../../../../utils'
+import {timeConverter, toFixed} from '../../../../../utils'
 import Input from '../../../../UI/Inputs/Input/Input'
 
 type Props = {
@@ -171,9 +171,9 @@ const PaymentForm: React.FC<Props> = (props) => {
             <p>
                 <span>Итого стоимость товаров:</span>
                 <span>
-                    <b> {total} ¥ </b>
+                    <b> {toFixed(total, 2)} ¥ </b>
                     {total > 0
-                        ? `(${totalRub} ₽ по курсу ${(totalRub / total).toFixed(3)})`
+                        ? `(${toFixed(totalRub, 2)} ₽ по курсу ${toFixed(totalRub / total, 2)})`
                         : null
                     }
                 </span>
@@ -181,9 +181,9 @@ const PaymentForm: React.FC<Props> = (props) => {
             <p>
                 <span>Стоимость оформления:</span>
                 <span>
-                   <b> {additionalTotal} ₽ </b>
+                   <b> {toFixed(additionalTotal, 2)} ₽ </b>
                     {additionalTotal > 0
-                        ? `(+${(additionalTotal / totalRub).toFixed(3)} ₽)`
+                        ? `(+${toFixed(additionalTotal / totalRub, 2)} ₽)`
                         : null
                     }
                 </span>

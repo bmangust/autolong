@@ -1,5 +1,6 @@
 // React
 import React from 'react'
+import {toFixed} from '../../../../utils'
 
 // Typescript
 import {IProduct} from '../../../Products/IProducts'
@@ -16,7 +17,6 @@ type Props = {
 const TableItems: React.FC<Props> = (props) => {
     const {items, totalRubCourse, totalRub, orderingPrice, deliveryPrice} = props
 
-
     return <tbody>
     {items.map((item) => {
         const priceRub = totalRubCourse * +item.price.cny
@@ -30,11 +30,11 @@ const TableItems: React.FC<Props> = (props) => {
         return <tr key={item.productId}>
             <td>{item.autolongNumber}</td>
             <td>{item.quantity}</td>
-            <td>{Math.round(+item.price.cny)} ¥</td>
-            <td>{priceRub ? `${priceRub.toFixed(2)} ₽` : '-'}</td>
-            <td>{delivery ? `${delivery.toFixed(2)} ₽` : '-'}</td>
-            <td>{additionalSpending ? `${additionalSpending.toFixed(2)} ₽` : '-'}</td>
-            <td>{totalPrice ? `${totalPrice.toFixed(2)} ₽` : '-'}</td>
+            <td>{toFixed(+item.price.cny, 2)} ¥</td>
+            <td>{priceRub ? `${toFixed(priceRub, 2)} ₽` : '-'}</td>
+            <td>{delivery ? `${toFixed(delivery, 2)} ₽` : '-'}</td>
+            <td>{additionalSpending ? `${toFixed(additionalSpending, 2)} ₽` : '-'}</td>
+            <td>{totalPrice ? `${toFixed(totalPrice, 2)} ₽` : '-'}</td>
         </tr>
     })}
     </tbody>

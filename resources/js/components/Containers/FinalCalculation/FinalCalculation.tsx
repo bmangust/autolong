@@ -10,6 +10,7 @@ import classes from './FinalCalculation.module.css'
 // App
 import Modal from '../../UI/Modal/Modal'
 import PaymentForms from './PaymentForms/PaymentForms'
+import {toFixed} from '../../../utils'
 
 type Props = {
     orders: IOrder[]
@@ -40,19 +41,19 @@ const FinalCalculation: React.FC<Props> = (props) => {
             <ul className={classes.list}>
                 <li>
                     <p className={classes.title}>Доставка</p>
-                    <p>{deliveryPrice ? `${deliveryPrice} ₽` : '-'}</p>
+                    <p>{deliveryPrice ? `${toFixed(deliveryPrice, 2)} ₽` : '-'}</p>
                 </li>
                 <li>
                     <p className={classes.title}>Общая стоимость</p>
-                    <p>{totalAmount ? `${totalAmount.toFixed(2)} ₽` : '-'}</p>
+                    <p>{totalAmount ? `${toFixed(totalAmount, 2)} ₽` : '-'}</p>
                 </li>
                 <li>
                     <p className={classes.title}>Стоимость доставки</p>
-                    <p>{deliveryAmount ? `${deliveryAmount.toFixed(2)} ₽` : '-'}</p>
+                    <p>{deliveryAmount ? `${toFixed(deliveryAmount, 2)} ₽` : '-'}</p>
                 </li>
                 <li>
                     <p className={classes.title}>Итого таможня</p>
-                    <p>{totalCustoms ? `${totalCustoms.toFixed(2)} ₽` : '-'}</p>
+                    <p>{totalCustoms ? `${toFixed(totalCustoms, 2)} ₽` : '-'}</p>
                 </li>
             </ul>
             <button onClick={() => setIsShow(true)} className='btn btn-success'>Изменить данные</button>
