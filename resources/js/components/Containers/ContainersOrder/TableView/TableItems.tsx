@@ -11,18 +11,18 @@ type Props = {
     total: number
     totalRub: number
     orderingPrice: number
-    deliveryPrice: number
+    totalAmount: number
 }
 
 const TableItems: React.FC<Props> = (props) => {
-    const {items, totalRubCourse, totalRub, orderingPrice, deliveryPrice} = props
+    const {items, totalRubCourse, totalRub, orderingPrice, totalAmount} = props
 
     return <tbody>
     {items.map((item) => {
         const priceRub = totalRubCourse * +item.price.cny
         let delivery
         if (totalRub) {
-            delivery = priceRub * (+deliveryPrice / totalRub)
+            delivery = priceRub * totalAmount
         }
         const additionalSpending = priceRub * orderingPrice
         const totalPrice = priceRub + delivery + additionalSpending

@@ -65,8 +65,10 @@ const Container: React.FC<IContainer> = () => {
     let totalWeightNetto = 0
     let totalWeightBrutto = 0
     let totalBoxes = 0
+    let totalAmount = 0
 
     container && container.orders && container.orders.map((order) => {
+        totalAmount += (order.paymentAmountRub + order.surchargeAmountRub)
         if (order.weightNetto) {
             totalWeightNetto += order.weightNetto
         }
@@ -158,6 +160,7 @@ const Container: React.FC<IContainer> = () => {
                                 <ContainersOrder
                                     key={order.id + order.name}
                                     deliveryPrice={container.deliveryPrice}
+                                    totalAmount = {container.deliveryPrice / totalAmount}
                                     activeView={activeView}
                                     setIsOpen={setIsOpen}
                                     setActiveOrder={setActiveOrder}

@@ -30,10 +30,11 @@ type Props = {
     setIsOpen: (boolean) => void
     activeView: number
     deliveryPrice: number
+    totalAmount: number
 }
 
 const ContainersOrder: React.FC<Props> = (props) => {
-    const {order, setPackingList, setActiveOrder, setIsOpen, activeView, deliveryPrice} = props
+    const {order, setPackingList, setActiveOrder, setIsOpen, activeView, deliveryPrice, totalAmount} = props
     const dispatch = useDispatch()
     const currentEventKey = useContext(AccordionContext)
 
@@ -85,6 +86,7 @@ const ContainersOrder: React.FC<Props> = (props) => {
                         totalRubCourse={totalRubCourse}
                         orderingPrice={orderingPrice}
                         order={order}
+                        totalAmount={totalAmount}
                     />
                 }
                 {activeView === 1

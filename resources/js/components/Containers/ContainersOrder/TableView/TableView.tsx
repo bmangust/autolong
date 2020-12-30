@@ -20,10 +20,11 @@ type Props = {
     totalRub: number
     orderingPrice: number
     deliveryPrice: number
+    totalAmount: number
 }
 
 const TableView: React.FC<Props> = (props) => {
-    const {order, totalRubCourse, total, totalRub, orderingPrice, deliveryPrice} = props
+    const {order, totalRubCourse, total, totalRub, orderingPrice, deliveryPrice, totalAmount} = props
 
     return <>
         <div className={classes.orderBody}>
@@ -46,6 +47,7 @@ const TableView: React.FC<Props> = (props) => {
                     totalRubCourse={totalRubCourse}
                     orderingPrice={orderingPrice}
                     items={order.items}
+                    totalAmount={totalAmount}
                 />
             </Table>
         </div>
