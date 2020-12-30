@@ -29,11 +29,11 @@ const TableItems: React.FC<Props> = (props) => {
         return <tr key={item.productId}>
             <td>{item.autolongNumber}</td>
             <td>{item.quantity}</td>
-            <td>{item.price.cny} ¥</td>
-            <td>{priceRub ? `${priceRub} ₽` : '-'}</td>
-            <td>{delivery ? `${delivery} ₽` : '-'}</td>
-            <td>{additionalSpending ? `${additionalSpending} ₽` : '-'}</td>
-            <td>{totalPrice ? `${totalPrice} ₽` : '-'}</td>
+            <td>{Math.round(+item.price.cny)} ¥</td>
+            <td>{priceRub ? `${Math.round(priceRub)} ₽` : '-'}</td>
+            <td>{delivery ? `${Math.round(delivery)} ₽` : '-'}</td>
+            <td>{additionalSpending ? `${Math.round(additionalSpending)} ₽` : '-'}</td>
+            <td>{totalPrice ? `${Math.round(totalPrice)} ₽` : '-'}</td>
         </tr>
     })}
     </tbody>
