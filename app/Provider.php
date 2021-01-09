@@ -17,23 +17,23 @@ class Provider extends Model
     public const PROVIDERS_CACHE_TTL = 60 * 60;
 
     protected $fillable = [
-        'name',
-        'name_company',
-        'email',
-        'website',
-        'unscrupulous',
-        'phone',
-        'wechat',
-        'country_id',
-        'beneficiary_name',
-        'beneficiary_address',
-        'beneficiary_account_name',
-        'beneficiary_bank_address',
-        'beneficiary_bank_name',
-        'beneficiary_bank_code',
-        'beneficiary_swift_address',
-        'beneficiary_name',
-        'manufacturer'
+            'name',
+            'name_company',
+            'email',
+            'website',
+            'unscrupulous',
+            'phone',
+            'wechat',
+            'country_id',
+            'beneficiary_name',
+            'beneficiary_address',
+            'beneficiary_account_name',
+            'beneficiary_bank_address',
+            'beneficiary_bank_name',
+            'beneficiary_bank_code',
+            'beneficiary_swift_address',
+            'beneficiary_name',
+            'manufacturer'
     ];
 
     public function catalogs()
@@ -87,7 +87,17 @@ class Provider extends Model
 
     public static function setProvidersCache(string $cacheKey = self::PROVIDERS_CACHE_KEY)
     {
-        $providers = ProviderWithRelationshipsResource::collection(self::withoutTrashed()->orderBy('name', 'asc')->get());
+        $providers = ProviderWithRelationshipsResource::collection(self::withoutTrashed()
+                ->with([
+                        'catalogs.tags',
+                        'country',
+                        'products',
+                        'sandboxFiles',
+                        'orders.orderItems',
+                        'orders.orderItems.product',
+                        'orders.city'
+                ])
+                ->orderBy('name', 'asc')->get());
         Redis::set($cacheKey, json_encode($providers), 'EX', self::PROVIDERS_CACHE_TTL);
         return $providers;
     }

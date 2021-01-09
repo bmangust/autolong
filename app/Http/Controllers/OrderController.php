@@ -47,11 +47,12 @@ class OrderController extends Controller
     public function index()
     {
         $orders = Order::with([
-                'orderItems',
-                'provider',
+                'orderItems.product',
+                'provider.country',
                 'sandboxFiles',
-                'container',
-                'city'])->orderByDesc('created_at')->get();
+                'container.orders',
+                'city'
+        ])->orderByDesc('created_at')->get();
         return response()->json(OrderWithRelationshipsResource::collection($orders), 200);
     }
 

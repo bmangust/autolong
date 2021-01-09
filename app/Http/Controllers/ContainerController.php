@@ -34,7 +34,8 @@ class ContainerController extends Controller
     public function index()
     {
         $containers = Container::with([
-                'orders',
+                'orders.city',
+                'orders.orderItems.product',
                 'city',
                 'sandboxFiles'])->orderByDesc('updated_at')->get();
         return response()->json(ContainerWithRelationshipsResource::collection($containers), 200);
