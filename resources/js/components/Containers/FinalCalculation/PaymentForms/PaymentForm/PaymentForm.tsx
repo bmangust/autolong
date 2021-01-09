@@ -64,7 +64,7 @@ const PaymentForm: React.FC<Props> = (props) => {
     const onChangeHandler = (e, code = 'cny') => {
         const value = +e.target.value
         const name = e.target.name
-        if (value > 0) {
+        if (value >= 0) {
             switch (name) {
                 case 'paymentAmount':
                     if (code && code === 'rub') {

@@ -2,7 +2,6 @@
 import React, {useContext} from 'react'
 
 // Third-party
-import {NavLink} from 'react-router-dom'
 import {useDispatch} from 'react-redux'
 import {Accordion, AccordionContext, useAccordionToggle} from 'react-bootstrap'
 
@@ -30,10 +29,11 @@ type Props = {
     setIsOpen: (boolean) => void
     activeView: number
     deliveryPrice: number
+    totalAmount: number
 }
 
 const ContainersOrder: React.FC<Props> = (props) => {
-    const {order, setPackingList, setActiveOrder, setIsOpen, activeView, deliveryPrice} = props
+    const {order, setPackingList, setActiveOrder, setIsOpen, activeView, deliveryPrice, totalAmount} = props
     const dispatch = useDispatch()
     const currentEventKey = useContext(AccordionContext)
 
@@ -70,9 +70,7 @@ const ContainersOrder: React.FC<Props> = (props) => {
 
     return <div className={classes.order}>
         <CustomToggle eventKey={order.id + order.name}>
-            <NavLink to={`/order/${order.id}`}>
-                {order.name}
-            </NavLink>
+            {order.name}
         </CustomToggle>
         <Accordion.Collapse eventKey={order.id + order.name}>
             <div key={activeView} className='option'>
@@ -85,6 +83,7 @@ const ContainersOrder: React.FC<Props> = (props) => {
                         totalRubCourse={totalRubCourse}
                         orderingPrice={orderingPrice}
                         order={order}
+                        totalAmount={totalAmount}
                     />
                 }
                 {activeView === 1
