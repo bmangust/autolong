@@ -64,12 +64,7 @@ const PaymentForm: React.FC<Props> = (props) => {
     const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')
 
     const onChangeHandler = (e, code = 'cny') => {
-        let value = +e.target.value
-        const str = e.target.value
-        if (!str.length && str.charAt(str.length - 1) === '') {
-            const newStr = str.slice(0, -1) + ','
-            value = +newStr
-        }
+        const value = +e.target.value
         const name = e.target.name
         if (floatRegExp.test(String(value))) {
             switch (name) {
