@@ -61,10 +61,12 @@ const PaymentForm: React.FC<Props> = (props) => {
         }
     }, [deliveryPriceOrder])
 
+    const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')
+
     const onChangeHandler = (e, code = 'cny') => {
         const value = +e.target.value
         const name = e.target.name
-        if (value >= 0) {
+        if (floatRegExp.test(String(value))) {
             switch (name) {
                 case 'paymentAmount':
                     if (code && code === 'rub') {
@@ -108,14 +110,16 @@ const PaymentForm: React.FC<Props> = (props) => {
                 <Input
                     type='number'
                     label='CNY'
-                    value={paymentAmount}
+                    min='0'
+                    value={paymentAmount.toString()}
                     name='paymentAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
                 <Input
                     type='number'
                     label='Руб'
-                    value={paymentAmountRub}
+                    min='0'
+                    value={paymentAmountRub.toString()}
                     onChange={(e) => onChangeHandler(e, 'rub')}
                     name='paymentAmount'
                 />
@@ -128,14 +132,16 @@ const PaymentForm: React.FC<Props> = (props) => {
                 <Input
                     type='number'
                     label='CNY'
-                    value={surchargeAmount}
+                    min='0'
+                    value={surchargeAmount.toString()}
                     name='surchargeAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
                 <Input
                     type='number'
                     label='Руб'
-                    value={surchargeAmountRub}
+                    min='0'
+                    value={surchargeAmountRub.toString()}
                     onChange={(e) => onChangeHandler(e, 'rub')}
                     name='surchargeAmount'
                 />
@@ -147,21 +153,24 @@ const PaymentForm: React.FC<Props> = (props) => {
                 <Input
                     type='number'
                     label='Отказное'
-                    value={refusalAmount}
+                    min='0'
+                    value={refusalAmount.toString()}
                     name='refusalAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
                 <Input
                     type='number'
                     label='Оформление'
-                    value={orderingAmount}
+                    min='0'
+                    value={orderingAmount.toString()}
                     name='orderingAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
                 <Input
                     type='number'
                     label='Таможня'
-                    value={customsAmount}
+                    min='0'
+                    value={customsAmount.toString()}
                     name='customsAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
