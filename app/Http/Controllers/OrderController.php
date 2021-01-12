@@ -88,7 +88,7 @@ class OrderController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param Order $order
      * @return \Illuminate\Http\JsonResponse
      */
     public function show(Order $order)
@@ -422,7 +422,7 @@ class OrderController extends Controller
                 'contractNumber' => $contractNumber,
                 'proformaNumber' => $proformaNumber,
                 'contract' => $contract->name,
-                'orderItems' => $order->orderItems,
+                'orderItems' => $order->orderItems()->with('product')->get(),
                 'statusPayment' => $proforma->statusPayment,
                 'date' => $date
         ]);
@@ -469,7 +469,7 @@ class OrderController extends Controller
                 'order' => $order,
                 'importer' => $importer,
                 'provider' => $provider,
-                'orderItems' => $order->orderItems,
+                'orderItems' => $order->orderItems()->with('product')->get(),
                 'invoice' => $invoice,
                 'contract' => $contract
         ]);
@@ -491,7 +491,7 @@ class OrderController extends Controller
 
         $importer = Importer::first();
         $provider = $order->provider;
-        $orderItems = $order->orderItems;
+        $orderItems = $order->orderItems()->with('product')->get();
         if ($order->contract && isset($order->contract->getInfo()->name)) {
             $contract = $order->contract->getInfo();
             $order->generateNamePackingListIfNull($contract->name);
@@ -573,7 +573,7 @@ class OrderController extends Controller
                 'contractNumber' => $contractNumber,
                 'accountNumber' => $accountNumber,
                 'contract' => $contract->name,
-                'orderItems' => $order->orderItems,
+                'orderItems' => $order->orderItems()->with('product')->get(),
                 'statusPayment' => $account->statusPayment,
                 'date' => $date
         ]);
@@ -614,7 +614,7 @@ class OrderController extends Controller
 
     public function checkBaikalStatus(Request $request, Order $order)
     {
-        $request->validate([
+         $request->validate([
                 'baikalId' => 'required'
         ]);
         $baikalLink = Order::getBaikalLink($request->input('baikalId'));

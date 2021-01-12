@@ -52,7 +52,7 @@
 <table style="border-collapse: collapse; text-align: center; font-size: 10px;" border="1" width="100%">
     <tr>
         <th style="border: 1px solid #000;">
-            filters and accessories<br/>for agricultural system
+            Name
         </th>
         <th style="padding: 10px; border: 1px solid #000;">
             PICTURES
@@ -135,24 +135,24 @@
     <tr>
         <td style="width: 150px;">Bank</td>
         <td style="width: 350px;">
-            {{ ($order->provider->beneficiary_bank_name) ?: '-' }}</td>
+            {{ ($provider->beneficiary_bank_name) ?: '-' }}</td>
     </tr>
     <tr>
         <td style="width: 150px;">Number account</td>
         <td style="width: 350px;">
-            {{ ($order->provider->beneficiary_account_name) ?: '-' }}
+            {{ ($provider->beneficiary_account_name) ?: '-' }}
         </td>
     </tr>
     <tr>
         <td style="width: 150px;">SWIFT:</td>
         <td style="width: 350px;">
-            {{ ($order->provider->beneficiary_swift_address) ?: '-' }}
+            {{ ($provider->beneficiary_swift_address) ?: '-' }}
         </td>
     </tr>
     <tr>
         <td style="width: 150px;">Address of bank</td>
         <td style="width: 350px;">
-            {{ ($order->provider->beneficiary_bank_address) ?: '-' }}
+            {{ ($provider->beneficiary_bank_address) ?: '-' }}
         </td>
     </tr>
 </table>

@@ -4,8 +4,6 @@ namespace App;
 
 use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Model;
-use App\Product;
-use App\OrderItem;
 use Illuminate\Support\Facades\Storage;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -629,9 +627,10 @@ class Order extends Model
         preg_match_all('#<br>(.*?)<table[^>]*>#is', $parse, $matches);
         if (!empty($matches[1])) {
             $date = trim($matches[1][0]);
-            preg_match('#[0-9]{2,4}\\.|-[0-9]{2}\\.|-[0-9]{2,4}#', $date, $searchingDate);
+            preg_match('#\d{2,4}([-/.])\d{2}([-/.])\d{2,4}#', $date, $searchingDate);
             if (!empty($searchingDate)) {
-                return $searchingDate[0];
+                    return $searchingDate[0];
+
             }
             return null;
         }
@@ -654,15 +653,17 @@ class Order extends Model
     {
         $container = $this->container;
         $baikalId = $this->getBaikalId();
-        $date = Carbon::createFromDate($date)->format('Y-m-d');
-        if ($container &&
-                $baikalId &&
-                $container->identifier == $baikalId &&
-                $container->arrival_date != $date)
-        {
-            $container->arrival_date = $date;
-            $container->save();
-            return true;
+        if (strtotime($date)) {
+            $date = Carbon::createFromDate($date)->format('Y-m-d');
+            if ($container &&
+                    $baikalId &&
+                    $container->identifier == $baikalId &&
+                    $container->arrival_date != $date)
+            {
+                $container->arrival_date = $date;
+                $container->save();
+                return true;
+            }
         }
         return false;
     }

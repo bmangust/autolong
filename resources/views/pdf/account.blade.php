@@ -53,7 +53,7 @@
     <table style="border-collapse: collapse; text-align: center; font-size: 10px;" border="1" width="100%">
         <tr>
             <th style="border: 1px solid #000;">
-               Фильтры и акссесуары<br /> для сельскохозяйственной системы
+               Наименование
             </th>
             <th style="padding: 10px; border: 1px solid #000;">
                 ИЗОБРАЖЕНИЕ
@@ -71,7 +71,7 @@
         @foreach($orderItems as $item)
         <tr>
             <td style="padding: 10px; border: 1px solid #000;">
-                {{ $item->translateHtmlCodesToTags($item->product->name_en) ??  '-'}} {{ $item->product->vendor_code }}
+                {{ $item->translateHtmlCodesToTags($item->product->name_ru) ??  '-'}} {{ $item->product->vendor_code }}
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
                 @if(!is_null($item->product->image))
@@ -132,24 +132,24 @@
         <tr>
             <td style="width: 150px;">Банк</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_bank_name) ?: '-' }}</td>
+                {{ ($provider->beneficiary_bank_name) ?: '-' }}</td>
         </tr>
         <tr>
             <td style="width: 150px;">Номер счета</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_account_name) ?: '-' }}
+                {{ ($provider->beneficiary_account_name) ?: '-' }}
             </td>
         </tr>
         <tr>
             <td style="width: 150px;">Swift:</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_swift_address) ?: '-' }}
+                {{ ($provider->beneficiary_swift_address) ?: '-' }}
             </td>
         </tr>
         <tr>
             <td style="width: 150px;">Адрес банка</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_bank_address) ?: '-' }}
+                {{ ($provider->beneficiary_bank_address) ?: '-' }}
             </td>
         </tr>
     </table>

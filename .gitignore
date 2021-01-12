@@ -22,3 +22,4 @@ tsconfig.json
 /public/*.js.LICENSE.txt
 /resources/courses/
 .vscode/settings.json
+/nbproject/private/
