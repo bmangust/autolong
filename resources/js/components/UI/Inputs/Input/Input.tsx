@@ -13,8 +13,11 @@ interface ITextFieldProps {
     value?: any
     defaultValue?: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
+    onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
     label: string
     name: string
+    pattern?: string
+    min?: string
     id?: string
     helperText?: string
     placeholder?: string
@@ -32,7 +35,7 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
     React.RefAttributes<InputElement>> = forwardRef<InputElement, ITextFieldProps>((
     {
         required, label, id,
-        helperText, error,
+        helperText, error, pattern,
         type, disabled, ...rest
     }, ref) => {
     let labelNode
@@ -69,6 +72,7 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
             {labelNode}
             <input
                 type={type}
+                pattern={pattern}
                 disabled={disabled || false}
                 className={inputCls.join(' ')}
                 {...rest}

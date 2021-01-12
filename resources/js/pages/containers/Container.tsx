@@ -46,8 +46,7 @@ const Container: React.FC<IContainer> = () => {
     const dispatch = useDispatch()
     const {user} = useContext(SanctumContext)
 
-    const {container, loading, error} = useSelector(
-        (state: IContainersRootState) => ({
+    const {container, loading, error} = useSelector((state: IContainersRootState) => ({
             error: state.containersState.error,
             container: state.containersState.container,
             loading: state.containersState.loading
@@ -152,15 +151,17 @@ const Container: React.FC<IContainer> = () => {
                             <h2 className="mb-3"
                                 style={{display: 'flex', justifyContent: 'space-between', alignItems: 'center'}}>
                                 Список заказов в контейнере
-                                <ViewSwitch activeItem={activeView} setActiveItem={setActiveView}/>
+                                {user.role.accesses.containersUpdate == 1
+                                    ? <ViewSwitch activeItem={activeView} setActiveItem={setActiveView}/>
+                                    : null
+                                }
                             </h2>
                         </div>
                         <Accordion defaultActiveKey={container.orders[0].id + container.orders[0].name}>
                             {container.orders.map((order: IOrder) => (
                                 <ContainersOrder
                                     key={order.id + order.name}
-                                    deliveryPrice={container.deliveryPrice}
-                                    totalAmount = {container.deliveryPrice / totalAmount}
+                                    totalAmount={container.deliveryPrice / totalAmount}
                                     activeView={activeView}
                                     setIsOpen={setIsOpen}
                                     setActiveOrder={setActiveOrder}
@@ -250,7 +251,6 @@ const Container: React.FC<IContainer> = () => {
                     deliveryPrice={container.deliveryPrice}
                 />
             </div>
-
         </div>
     </div>
 }

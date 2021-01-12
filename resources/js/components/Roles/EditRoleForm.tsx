@@ -135,7 +135,7 @@ const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
                     <InputCheckbox
                         name='containersUpdate'
                         ref={register}
-                        label='Редактирование информации о контейнере'/>
+                        label='Доступ к виду расчетов'/>
                 </div>
                 <div className="col-lg-6">
                     <InputCheckbox
