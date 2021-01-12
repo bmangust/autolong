@@ -33,6 +33,18 @@
     border: 1px solid #f44a0e;
 }
 
+/* Chrome, Safari, Edge, Opera */
+.input input.number::-webkit-outer-spin-button,
+.input input.number::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+/* Firefox */
+.input input.number[type=number] {
+    -moz-appearance: textfield;
+}
+
 .helperText {
     color: #f44a0e;
 }

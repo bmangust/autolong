@@ -44,6 +44,21 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
     const labelCls: string[] = []
     const inputCls: string[] = []
 
+    const onKeyDownHandler = (e) => {
+        if (type === 'number') {
+            if (e.key === 'e') {
+                e.preventDefault()
+            }
+            if (e.key === '.') {
+                const value = e.target.value
+                if (value.indexOf('.') === -1) {
+                    e.target.value = `${value}.0`
+                }
+                e.preventDefault()
+            }
+        }
+    }
+
     if (required) {
         labelCls.push('required')
     }
@@ -66,13 +81,15 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
                 {helperText}
             </small>
     }
+    if (type === 'number') {
+        inputCls.push(classes.number)
+    }
 
     return (
         <div className={classes.input}>
             {labelNode}
             <input
-                onKeyDown={type === 'number' ? (e) =>
-                    (e.key === 'e' || e.key === '.') && e.preventDefault() : undefined}
+                onKeyDown={(e) => onKeyDownHandler(e)}
                 type={type}
                 pattern={pattern}
                 disabled={disabled || false}
