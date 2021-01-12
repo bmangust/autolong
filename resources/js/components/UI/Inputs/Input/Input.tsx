@@ -71,6 +71,8 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
         <div className={classes.input}>
             {labelNode}
             <input
+                onKeyDown={type === 'number' ? (e) =>
+                    (e.key === 'e' || e.key === '.') && e.preventDefault() : undefined}
                 type={type}
                 pattern={pattern}
                 disabled={disabled || false}
