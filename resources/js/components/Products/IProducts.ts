@@ -19,9 +19,8 @@ import {
     UPDATE_PRODUCT_IMAGE,
     FETCH_COMPARE_PRODUCTS_START,
     FETCH_COMPARE_PRODUCTS_SUCCESS,
-    FETCH_COMPARE_PRODUCTS_ERROR
+    FETCH_COMPARE_PRODUCTS_ERROR, LOCATION_CHANGE
 } from '../../store/actions/actionTypes'
-import {LOCATION_CHANGE} from 'connected-react-router'
 import {IProvider} from '../Providers/IProviders'
 import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 import {IOrder} from '../Orders/IOrders'

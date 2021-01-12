@@ -22,7 +22,6 @@ import {
     UPDATE_PRODUCT_START,
     UPDATE_PRODUCT_SUCCESS
 } from '../actions/actionTypes'
-import {LOCATION_CHANGE} from 'connected-react-router'
 
 // Typescript
 import {
@@ -134,7 +133,7 @@ export default function productsReducer(
             return {
                 ...state
             }
-        case LOCATION_CHANGE:
+        case 'LOCATION_CHANGE':
             return {
                 ...state, vendorProducts: [], compareProducts: []
             }

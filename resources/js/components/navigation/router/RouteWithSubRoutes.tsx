@@ -11,6 +11,7 @@ import {IRoute} from './IRoute'
 // App
 import Error from '../../UI/Error/Error'
 import SanctumContext from '../../../Sanctum/SanctumContext'
+import Layout from '../../../layout/Layout'
 
 const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
     const history = useHistory()
@@ -21,12 +22,9 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
     const objectAccess = {}
 
     useEffect(() => {
-        const doVerify = async () => {
-            if (checkAuthentication) {
-                await checkAuthentication()
-            }
+        if (checkAuthentication) {
+            checkAuthentication()
         }
-        doVerify()
     }, [checkAuthentication])
 
     localStorage.getItem('access-autolong')
@@ -42,7 +40,7 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
 
     // console.log('user', user)
     // console.log('authenticated', authenticated)
-    return (
+    return <Layout>
         <ErrorBoundary FallbackComponent={Error}>
             <Suspense fallback={route.fallback}>
                 <Route
@@ -60,7 +58,7 @@ const RouteWithSubRoutes: React.FC<IRoute> = ((route) => {
                 />
             </Suspense>
         </ErrorBoundary>
-    )
+    </Layout>
 })
 
 export default RouteWithSubRoutes

@@ -1,35 +1,36 @@
 // React
-import React from 'react'
-import PropTypes from 'prop-types'
+import React, {useEffect} from 'react'
 
 // Third-party
 import {Switch} from 'react-router'
+import {Redirect, Route, useLocation} from 'react-router-dom'
+import {useDispatch} from 'react-redux'
 
 // Typescript
 import {IRoute} from './IRoute'
 
 // App
 import RouteWithSubRoutes from './RouteWithSubRoutes'
-import {Redirect, Route} from 'react-router-dom'
 
 interface IProps {
     routes: IRoute[];
 }
 
 const Router: React.FC<IProps> = ({routes}) => {
-    return (
-        <Switch>
-            {routes.map((route: IRoute) =>
-                <RouteWithSubRoutes key={route.path} {...route} />)}
-            <Route exact path="/">
-                <Redirect to="/orders"/>
-            </Route>
-        </Switch>
-    )
-}
+    const location = useLocation()
+    const dispatch = useDispatch()
 
-Router.propTypes = {
-    routes: PropTypes.array.isRequired
+    useEffect(() => {
+            dispatch({type: 'LOCATION_CHANGE'})
+        }, [location.pathname, dispatch]
+    )
+
+    return <Switch>
+        {routes.map((route: IRoute) => <RouteWithSubRoutes key={route.path} {...route} />)}
+        <Route exact path="/">
+            <Redirect to="/orders"/>
+        </Route>
+    </Switch>
 }
 
 export default Router

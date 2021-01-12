@@ -20,7 +20,6 @@ import {
     FETCH_ORDERS_START,
     FETCH_ORDERS_SUCCESS, REMOVE_INPUT_FROM_INVOICE
 } from '../actions/actionTypes'
-import {LOCATION_CHANGE} from 'connected-react-router'
 
 // Typescript
 import {IOrdersActionTypes, IOrdersState} from '../../components/Orders/IOrders'
@@ -109,9 +108,9 @@ export default function ordersReducer(
                 ...state, orders: state.orders.filter(({id}) =>
                     id !== action.payload), order: null
             }
-        case LOCATION_CHANGE: {
+        case 'LOCATION_CHANGE': {
             let notFound = state.notFound
-            if (state.locationChangeCount === 2) {
+            if (state.locationChangeCount >= 2) {
                 notFound = []
             }
             return {
