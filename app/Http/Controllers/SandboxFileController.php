@@ -59,9 +59,11 @@ class SandboxFileController extends Controller
         $request->validate([
             'name' => 'required|string|min:1|max:255',
         ]);
+
         $name = $sandboxFile->getClearName($request->input('name'));
         $description = $request->input('description');
         $newName = $sandboxFile->getNewFileName($name);
+
         if ($sandboxFile->name != $newName) {
             $newPath = str_replace($sandboxFile->name, $newName, $sandboxFile->file);
             if ($sandboxFile->checkFileInFolder($newPath)) {

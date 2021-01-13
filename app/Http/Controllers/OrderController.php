@@ -6,6 +6,7 @@ use App\City;
 use App\Container;
 use App\ContractDocument;
 use App\Http\Resources\ContainerWithRelationshipsResource;
+use App\Http\Resources\OrderWithRelationshipsResource;
 use App\Http\Resources\ProductResource;
 use App\Importer;
 use App\Log;
@@ -16,7 +17,6 @@ use App\Status;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
-use App\Http\Resources\OrderWithRelationshipsResource;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class OrderController extends Controller
@@ -340,8 +340,6 @@ class OrderController extends Controller
             $providerSignature = null;
         }
 
-        $all = $request->all();
-
         if (!$order->contract()->count() || is_null($order->contract->info)) {
             $order->generateContract();
         }
@@ -354,6 +352,17 @@ class OrderController extends Controller
         if (!$order->account()->count() || is_null($order->account->info)) {
             $order->generateAccount();
         }
+
+        $all = $request->except([
+                'providerStamp',
+                'importerStamp',
+                'importerSignature',
+                'providerSignature'
+        ]);
+        $all['providerStamp'] = $providerStamp;
+        $all['importerStamp'] = $importerStamp;
+        $all['importerSignature'] = $importerSignature;
+        $all['providerSignature'] = $providerSignature;
 
         $all = $order->checkActualIfNotThenChangeContract($all);
         if (!is_null($order->contract)) {
@@ -594,13 +603,13 @@ class OrderController extends Controller
 
     public function deletePdfContractImporterSignature(Order $order)
     {
-        $order->deletePdfContractFilesStampsOrSignatures('ImporterSignature');
+        $order->deletePdfContractFilesStampsOrSignatures('importerSignature');
         return response()->json([], 204);
     }
 
     public function deletePdfContractProviderSignature(Order $order)
     {
-        $order->deletePdfContractFilesStampsOrSignatures('ProviderSignature');
+        $order->deletePdfContractFilesStampsOrSignatures('providerSignature');
         return response()->json([], 204);
     }
 
@@ -614,7 +623,7 @@ class OrderController extends Controller
 
     public function checkBaikalStatus(Request $request, Order $order)
     {
-         $request->validate([
+        $request->validate([
                 'baikalId' => 'required'
         ]);
         $baikalLink = Order::getBaikalLink($request->input('baikalId'));

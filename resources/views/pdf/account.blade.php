@@ -53,7 +53,7 @@
     <table style="border-collapse: collapse; text-align: center; font-size: 10px;" border="1" width="100%">
         <tr>
             <th style="border: 1px solid #000;">
-               Наименование
+               НАИМЕНОВАНИЕ
             </th>
             <th style="padding: 10px; border: 1px solid #000;">
                 ИЗОБРАЖЕНИЕ
