@@ -1,0 +1,44 @@
+.orderDate,
+.orderRateRub,
+.orderRateUSD {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #b4b6bd;
+}
+
+.orderPriceTotal {
+    font-weight: 600;
+    font-size: 14px;
+    line-height: 17px;
+    color: #3a405f;
+    text-align: right;
+}
+
+.orderRateUSD {
+    margin-left: 15px;
+}
+
+.orderPriceTotal > span {
+    display: inline-flex;
+    margin-left: 10px;
+    width: auto;
+}
+
+.orderPriceTotal > span > span {
+    margin-right: 0 !important;
+}
+
+.orderDate {
+    padding-right: 15px;
+    border-right: 1px solid #EBEBEB;
+}
+
+.orderRateRub {
+    padding-right: 15px;
+    border-right: 1px solid #EBEBEB;
+}
+
+.orderInfo {
+    display: flex;
+}

@@ -22,9 +22,8 @@ import {
     REMOVE_INPUT_FROM_INVOICE,
     CHECK_BAIKAL_STATUS,
     DELETE_BAIKAL_ID,
-    EDIT_ORDER_ADMIN
+    EDIT_ORDER_ADMIN, LOCATION_CHANGE
 } from '../../store/actions/actionTypes'
-import {LOCATION_CHANGE} from 'connected-react-router'
 
 import {IProvider} from '../Providers/IProviders'
 import {IProduct, IProductPrice} from '../Products/IProducts'

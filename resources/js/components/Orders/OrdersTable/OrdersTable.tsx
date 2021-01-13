@@ -12,6 +12,9 @@ import {fetchOrders} from '../../../store/actions/orders'
 import {IOrdersRootState} from '../IOrders'
 import {ColumnDescription} from 'react-bootstrap-table-next'
 
+// Styles
+import classes from './OrdersTable.module.css'
+
 // App
 import Placeholder from '../../UI/Placeholder/Placeholder'
 import Loader from '../../UI/Loader/Loader'
@@ -25,6 +28,7 @@ import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
 import statuses from '../../../../statuses/statuses.json'
 import {SanctumContext} from '../../../Sanctum'
+import courses from '../../../../courses/courses.json'
 
 const OrdersTable: React.FC = () => {
     const dispatch = useDispatch()
@@ -89,6 +93,26 @@ const OrdersTable: React.FC = () => {
         return <span className='pricesBlock'><span>{text}</span></span>
     }
 
+
+    const footerFormatterMain = () => {
+        return <div>
+            <p className='mb-0'>Общая стоимость на странице:</p>
+            <div className={classes.orderInfo}>
+                <span className={classes.orderRateRub}>1 ¥ = {courses.rub.toFixed(2)} ₽</span>
+                <span className={classes.orderRateUSD}>1 ¥ = {courses.usd.toFixed(2)} $</span>
+            </div>
+        </div>
+    }
+
+    const footerPriceFormatter = (columnData) => {
+        const totalCny = columnData.reduce((acc: any, price: { cny: any }) => acc + price.cny, 0)
+            .toFixed(2)
+        return <>
+            <span className='d-block' style={{lineHeight: '15px'}}>{totalCny} ¥</span>
+            <span>{(totalCny * courses.rub).toFixed(2)} ₽</span>
+        </>
+    }
+
     const expandRowTable = [
         {
             dataField: 'id',
@@ -115,7 +139,7 @@ const OrdersTable: React.FC = () => {
             headerStyle: {width: '285px'},
             sort: true,
             formatter: (name, row) => nameToLinkFormatter(name, row, 'order'),
-            footer: 'Общая стоимость на странице:'
+            footer: footerFormatterMain
         },
         {
             dataField: 'container',
@@ -146,8 +170,7 @@ const OrdersTable: React.FC = () => {
             text: 'Сумма',
             headerStyle: {width: '90px'},
             formatter: (price) => moneyFormatter(price, ['rub', 'usd']),
-            footer: columnData => columnData.reduce((acc, price) => acc + price.cny, 0)
-                .toFixed(2) + '¥',
+            footer: columnData => footerPriceFormatter(columnData),
             footerFormatter: footerFormatter
         }
     ]

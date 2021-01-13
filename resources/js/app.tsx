@@ -1,13 +1,14 @@
 // React
 import React from 'react'
-import ReactDOM from 'react-dom'
+import {render} from 'react-dom'
 
 // Third-party
 import {applyMiddleware, createStore} from 'redux'
 import {Provider} from 'react-redux'
 import thunk, {ThunkMiddleware} from 'redux-thunk'
 import {composeWithDevTools} from 'redux-devtools-extension/logOnlyInProduction'
-import {ConnectedRouter, routerMiddleware} from 'connected-react-router'
+import {Router} from 'react-router'
+import {routerMiddleware} from 'connected-react-router'
 import {createBrowserHistory} from 'history'
 
 // App
@@ -16,7 +17,7 @@ import createRootReducer from './store/reducers/rootReducer'
 import Sanctum from './Sanctum/Sanctum'
 
 const middleware = thunk as ThunkMiddleware
-const history = createBrowserHistory()
+export const history = createBrowserHistory()
 
 const store = createStore(
     createRootReducer(history),
@@ -36,14 +37,12 @@ const sanctumConfig = {
     userObjectRoute: process.env.MIX_USER_OBJECT_ROUTE || ''
 }
 
-const application = (
-    <Sanctum checkOnInit={false} config={sanctumConfig}>
-        <Provider store={store}>
-            <ConnectedRouter history={history}>
-                <Index/>
-            </ConnectedRouter>
-        </Provider>
-    </Sanctum>
-)
+const application = <Sanctum checkOnInit={false} config={sanctumConfig}>
+    <Provider store={store}>
+        <Router history={history}>
+            <Index/>
+        </Router>
+    </Provider>
+</Sanctum>
 
-ReactDOM.render(application, document.getElementById('root'))
+render(application, document.getElementById('root'))
