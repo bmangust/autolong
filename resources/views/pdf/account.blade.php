@@ -152,6 +152,12 @@
                 {{ ($provider->beneficiary_bank_address) ?: '-' }}
             </td>
         </tr>
+        @if(isset( $account->importerStamp ))
+            <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($account->importerStamp) }}" alt="">
+        @endif
+        @if(isset( $account->importerSignature))
+            <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($account->importerSignature) }}" alt="">
+        @endif
     </table>
 </body>
 </html>

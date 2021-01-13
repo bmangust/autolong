@@ -550,6 +550,10 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
+        if (!is_null($order->account)) {
+            $oldAccount = $order->account->getInfo();
+        }
+
         $stampDirectory = Order::STAMP_DIRECTORY;
 
         if ($request->hasFile('importerStamp') && $request->file('importerStamp')->isValid()) {
@@ -557,8 +561,8 @@ class OrderController extends Controller
                     ['importerStamp' => 'file|mimes:png,jpg,jpeg']
             );
             $importerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('importerStamp'));
-        } elseif (isset($oldContract->importerStamp)) {
-            $importerStamp = $oldContract->importerStamp;
+        } elseif (isset($oldAccount->importerStamp)) {
+            $importerStamp = $oldAccount->importerStamp;
         } else {
             $importerStamp = null;
         }
@@ -570,8 +574,8 @@ class OrderController extends Controller
                     ['importerSignature' => 'file|mimes:png,jpg,jpeg']
             );
             $importerSignature = $order->saveStamp($signatureDirectory, uniqid('signature-', false), $request->file('importerSignature'));
-        } elseif (isset($oldContract->importerSignature)) {
-            $importerSignature = $oldContract->importerSignature;
+        } elseif (isset($oldAccount->importerSignature)) {
+            $importerSignature = $oldAccount->importerSignature;
         } else {
             $importerSignature = null;
         }
@@ -608,6 +612,7 @@ class OrderController extends Controller
 
         $pdf = App::make('dompdf.wrapper');
         $newPdf = $pdf->loadView('pdf.account', [
+                'account' => $account,
                 'order' => $order,
                 'supply' => $account->supply,
                 'importer' => $importer,
