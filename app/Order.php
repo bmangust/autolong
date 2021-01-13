@@ -516,21 +516,29 @@ class Order extends Model
                 ->putFileAs($directory, $image, $name . '.' . $image->getClientOriginalExtension());
     }
 
-    public function deletePdfContractFilesStampsOrSignatures(string $name)
+    public function deletePdfFilesStampsOrSignatures(string $name, string $relation)
     {
         if (!preg_match('#^providerStamp$|^importerStamp$|^importerSignature$|^providerSignature$#', $name)) {
             throw new HttpException(404, $name . 'такого параметра нет');
         }
+        if (!method_exists($this, $relation)) {
+            throw new HttpException(404, $relation . 'такого метода нет');
+        }
         try {
-            $file = json_decode($this->contract->info, true)[$name];
+            $info = $this->$relation->info;
+        } catch (\Exception $e) {
+            throw new HttpException(404, 'Нет такого отношения ' . $name);
+        }
+        try {
+            $file = json_decode($info, true)[$name];
         } catch (\Exception $e) {
             throw new HttpException(404, 'У данного документа нет данного файла ' . $name);
         }
         Storage::disk('main')->delete($file);
-        $array = (array)$this->contract->getInfo();
+        $array = (array)$this->$relation->getInfo();
         unset($array[$name]);
-        $this->contract->info = $array;
-        $this->contract->save();
+        $this->$relation->info = $array;
+        $this->$relation->save();
     }
 
     public function checkDataForPackingList(): bool

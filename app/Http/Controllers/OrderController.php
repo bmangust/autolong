@@ -550,6 +550,32 @@ class OrderController extends Controller
         $importer = Importer::first();
         $provider = $order->provider;
 
+        $stampDirectory = Order::STAMP_DIRECTORY;
+
+        if ($request->hasFile('importerStamp') && $request->file('importerStamp')->isValid()) {
+            $request->validate(
+                    ['importerStamp' => 'file|mimes:png,jpg,jpeg']
+            );
+            $importerStamp = $order->saveStamp($stampDirectory, uniqid('stamp-', false), $request->file('importerStamp'));
+        } elseif (isset($oldContract->importerStamp)) {
+            $importerStamp = $oldContract->importerStamp;
+        } else {
+            $importerStamp = null;
+        }
+
+        $signatureDirectory = Order::SIGNATURE_DIRECTORY;
+
+        if ($request->hasFile('importerSignature') && $request->file('importerSignature')->isValid()) {
+            $request->validate(
+                    ['importerSignature' => 'file|mimes:png,jpg,jpeg']
+            );
+            $importerSignature = $order->saveStamp($signatureDirectory, uniqid('signature-', false), $request->file('importerSignature'));
+        } elseif (isset($oldContract->importerSignature)) {
+            $importerSignature = $oldContract->importerSignature;
+        } else {
+            $importerSignature = null;
+        }
+
         if (!$order->contract()->count() || is_null($order->contract->info)) {
             $order->generateContract();
         }
@@ -563,7 +589,14 @@ class OrderController extends Controller
             $order->generateAccount();
         }
 
-        $all = $order->checkActualIfNotThenChangeAccount($request->all());
+        $all = $request->except([
+                'importerSignature',
+                'importerStamp'
+        ]);
+        $all['importerSignature'] = $importerSignature;
+        $all['importerStamp'] = $importerStamp;
+
+        $all = $order->checkActualIfNotThenChangeAccount($all);
 
         $order->account->saveInfoWithJson($all);
         $account = $order->account->getInfo();
@@ -591,25 +624,37 @@ class OrderController extends Controller
 
     public function deletePdfContractProviderStamp(Order $order)
     {
-        $order->deletePdfContractFilesStampsOrSignatures('providerStamp');
+        $order->deletePdfFilesStampsOrSignatures('providerStamp', 'contract');
         return response()->json([], 204);
     }
 
     public function deletePdfContractImporterStamp(Order $order)
     {
-        $order->deletePdfContractFilesStampsOrSignatures('importerStamp');
+        $order->deletePdfFilesStampsOrSignatures('importerStamp', 'contract');
         return response()->json([], 204);
     }
 
     public function deletePdfContractImporterSignature(Order $order)
     {
-        $order->deletePdfContractFilesStampsOrSignatures('importerSignature');
+        $order->deletePdfFilesStampsOrSignatures('importerSignature', 'contract');
         return response()->json([], 204);
     }
 
     public function deletePdfContractProviderSignature(Order $order)
     {
-        $order->deletePdfContractFilesStampsOrSignatures('providerSignature');
+        $order->deletePdfFilesStampsOrSignatures('providerSignature', 'contract');
+        return response()->json([], 204);
+    }
+
+    public function deletePdfAccountImporterSignature(Order $order)
+    {
+        $order->deletePdfFilesStampsOrSignatures('importerSignature', 'account');
+        return response()->json([], 204);
+    }
+
+    public function deletePdfAccountImporterStamp(Order $order)
+    {
+        $order->deletePdfFilesStampsOrSignatures('importerStamp', 'account');
         return response()->json([], 204);
     }
 

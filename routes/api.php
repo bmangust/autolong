@@ -88,6 +88,8 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('orders/{order}/deletepdfcontractimporterstamp', 'OrderController@deletePdfContractImporterStamp');
     Route::delete('orders/{order}/deletepdfcontractimportersignature', 'OrderController@deletePdfContractImporterSignature');
     Route::delete('orders/{order}/deletepdfcontractprovidersignature', 'OrderController@deletePdfContractProviderSignature');
+    Route::delete('orders/{order}/deletepdfaccountimportersignature', 'OrderController@deletePdfAccountImporterSignature');
+    Route::delete('orders/{order}/deletepdfaccountimporterstamp', 'OrderController@deletePdfAccountImporterStamp');
     Route::post('orders/{order}/checkbaikalstatus', 'OrderController@checkBaikalStatus');
     Route::delete('orders/{order}/deletebaikalstatus', 'OrderController@deleteBaikalStatus');
     Route::put('orders/{order}/setprices', 'OrderController@setPrices');
