@@ -247,7 +247,7 @@ export const createOrderInvoice = (id: number, data: any, type: string, date: nu
                 if (type === 'packinglist' && containerId) {
                     dispatch(fetchContainerById(containerId, false))
                 }
-                toast.success(`${type} сгенерирован`)
+                toast.success(`${type === 'account' ? 'Счет' : type} сгенерирован`)
                 saveAs(blob, `${type === 'account' ? 'bill' : type}-${id}-${timeConverter(date)}.pdf`)
             })
             .catch((error: AxiosError) => {
@@ -259,8 +259,8 @@ export const createOrderInvoice = (id: number, data: any, type: string, date: nu
             })
     }
 
-export const removeStampByType = (orderId, type) => async dispatch => {
-    const url = `/api/orders/${orderId}/deletepdfcontract${type.toLowerCase()}`
+export const removeStampByType = (orderId, type, modalType) => async dispatch => {
+    const url = `/api/orders/${orderId}/deletepdf${modalType}${type.toLowerCase()}`
     axios
         .delete(url)
         .then(() => {

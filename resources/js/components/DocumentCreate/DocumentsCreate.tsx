@@ -55,8 +55,8 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
         dispatch(fetchOrderInvoice(id, type))
     }
 
-    const removeStamp = (type) => {
-        dispatch(removeStampByType(id, type))
+    const removeStamp = (type, modalType) => {
+        dispatch(removeStampByType(id, type, modalType))
     }
 
     const onCloseModalHandler = () => {
@@ -118,7 +118,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 {value
                                     ? <button
                                         type='button'
-                                        onClick={() => removeStamp(key)}
+                                        onClick={() => removeStamp(key, type)}
                                         className='btn btn-link'>
                                         Удалить печать поставщика
                                     </button>
@@ -134,7 +134,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 {value
                                     ? <button
                                         type='button'
-                                        onClick={() => removeStamp(key)}
+                                        onClick={() => removeStamp(key, type)}
                                         className='btn btn-link'>
                                         Удалить подпись поставщика
                                     </button>
@@ -149,7 +149,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 {value
                                     ? <button
                                         type='button'
-                                        onClick={() => removeStamp(key)}
+                                        onClick={() => removeStamp(key, type)}
                                         className='btn btn-link'>
                                         Удалить подпись импортера
                                     </button>
@@ -157,14 +157,14 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 }
                             </div>
                         } else if (key === 'importerStamp') {
-                            return <div className='col-12' key={key}>
+                            return <div className='col-12' key={key, type}>
                                 <FileInput
                                     label='importerStamp'
                                     control={control} name='importerStamp'/>
                                 {value
                                     ? <button
                                         type='button'
-                                        onClick={() => removeStamp(key)}
+                                        onClick={() => removeStamp(key, type)}
                                         className='btn btn-link'>
                                         Удалить печать импортера
                                     </button>
@@ -266,6 +266,21 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 ref={register} name='additionalField'/>
                             : null}
                     </>
+                    : null
+                }
+                {type === 'account'
+                    ? <div className="col-12">
+                        {!('importerStamp' in invoiceInputs)
+                            ? <FileInput
+                                label='Печать импортера'
+                                control={control} name='importerStamp'/>
+                            : null}
+                        {!('importerSignature' in invoiceInputs)
+                            ? <FileInput
+                                label='Подпись импортера'
+                                control={control} name='importerSignature'/>
+                            : null}
+                    </div>
                     : null
                 }
             </div>
