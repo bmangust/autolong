@@ -1,27 +1,5 @@
 .list {
-    max-height: 160px;
-    overflow-y: scroll;
-}
-/* width */
-.list::-webkit-scrollbar {
-    width: 2px;
-}
-
-/* Track */
-.list::-webkit-scrollbar-track {
-    border-radius: 10px;
-    background: #F7F8FA;
-}
-
-/* Handle */
-.list::-webkit-scrollbar-thumb {
-    border-radius: 10px;
-    background: #3A405F;
-}
-
-/* Handle on hover */
-.list::-webkit-scrollbar-thumb:hover {
-    background: #3A405F;
+    overflow-x: hidden;
 }
 
 .date {
@@ -45,4 +23,63 @@
 
 .paymentHistory p:last-of-type {
     margin-bottom: 20px;
+}
+
+.payment {
+    padding: 15px 0;
+    border-bottom: 1px solid #EBEBEB;
+}
+
+.payment:last-of-type {
+    margin-bottom: 15px;
+}
+
+.payment span {
+    font-weight: 600;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+}
+
+.payment {
+    font-weight: 500;
+    font-size: 11px;
+    line-height: 13px;
+    color: #B4B6BD;
+}
+
+.paymentHistory .empty {
+    font-weight: 500;
+    font-size: 12px;
+    line-height: 15px;
+    color: #3A405F;
+    padding-top: 13px;
+    margin-bottom: 0;
+}
+
+.icons svg {
+    margin-right: 15px;
+    width: 15px;
+    height: 15px;
+    cursor: pointer;
+}
+
+.icons svg path {
+    transition: 145ms ease-in-out;
+}
+
+.icons svg:hover path {
+    fill: #EB5E28;
+}
+
+.icons .edit path {
+    fill: #3A405F;
+}
+
+.icons .delete path {
+    fill: #BDBDBD;
+}
+
+.icons svg:last-of-type {
+    margin-right: 0;
 }

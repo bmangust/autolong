@@ -1250,7 +1250,8 @@ html select.select-mini:focus {
         transition: 145ms ease-in-out;
       }
 
-      svg path {
+      path {
+        transition: 145ms ease-in-out;
         fill: #B4B6BD;
       }
     }

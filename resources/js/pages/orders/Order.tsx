@@ -31,7 +31,6 @@ import {
     timeConverter
 } from '../../utils'
 import OrderStatuses from '../../components/Orders/OrderStatuses/OrderStatuses'
-import OrderPayment from '../../components/Orders/OrderPayment/OrderPayment'
 import courses from '../../../courses/courses.json'
 import {SanctumContext} from '../../Sanctum'
 import OrderBaikal from '../../components/Orders/OrderBaikal/OrderBaikal'
@@ -39,6 +38,7 @@ import Modal from '../../components/UI/Modal/Modal'
 import OrderEdit from '../../components/Orders/OrderEdit/OrderEdit'
 import SvgEdit from '../../components/UI/iconComponents/Edit'
 import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
+import OrderPayments from '../../components/Orders/OrderPayments/OrderPayments'
 
 const Order: React.FC<IOrder> = () => {
     const {id}: any = useParams()
@@ -173,16 +173,16 @@ const Order: React.FC<IOrder> = () => {
                             <span
                                 className={cls.join(' ')}
                                 onClick={showPaymentHandler}>
-                                    Изменить
+                                    Подробнее
                             </span>
                         </div>
                     </div>
-                    <Collapse in={isShow}>
-                        <div>
-                            <OrderPayment order={order}/>
-                        </div>
-                    </Collapse>
                 </div>
+                <Collapse in={isShow}>
+                    <div>
+                        <OrderPayments order={order}/>
+                    </div>
+                </Collapse>
                 <div className="new-card__footer">
                     {user.role.accesses.adminPower == 1
                         ? <>

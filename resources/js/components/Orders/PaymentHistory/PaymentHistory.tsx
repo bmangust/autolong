@@ -1,6 +1,9 @@
 // React
 import React from 'react'
 
+// Third-party
+import ReactTooltip from 'react-tooltip'
+
 // Typescript
 import {IPaymentHistory} from '../IOrders'
 
@@ -9,52 +12,66 @@ import classes from './PaymentHistory.module.css'
 
 // App
 import {timeConverter} from '../../../utils'
+import SvgEdit from '../../UI/iconComponents/Edit'
+import SvgDelete from '../../UI/iconComponents/Delete'
+import {useDispatch} from 'react-redux'
+import {paymentHandler} from '../../../store/actions/orders'
 
 type Props = {
+    orderId: number
     paymentHistory: IPaymentHistory[]
-    orderPrice?: number
-    paymentAmount: number
-    surchargeAmount: number
+    setActivePayment: (IPaymentHistory) => void
+    setIsOpen: (boolean) => void
 }
 
 const PaymentHistory: React.FC<Props> = (props) => {
-    const {paymentHistory, orderPrice, paymentAmount, surchargeAmount} = props
+    const {orderId, paymentHistory, setActivePayment, setIsOpen} = props
+    const dispatch = useDispatch()
 
-    if (!paymentHistory || (paymentHistory && paymentHistory.length === 0)) {
-        return null
+    const onEditHandler = (payment: IPaymentHistory) => {
+        setIsOpen(true)
+        setActivePayment(payment)
     }
+
+    const onDeleteHandler = (id: number) => {
+        dispatch(paymentHandler(orderId, {id}, 'delete'))
+    }
+
     return <div className={classes.paymentHistory}>
-        <div className={classes.list}>
-            {paymentHistory && paymentHistory.length
-                ? [...paymentHistory].reverse()
-                    .map((payment) => {
-                        return <p key={payment.id}>
-                            <span className={classes.date}>{timeConverter(payment.date)}</span>
-                            <span className={classes.text}>
-                    {orderPrice && 'paymentAmount' in payment && payment.paymentAmount && payment.paymentAmount >= orderPrice
-                        ? `Заказ оплачен полностью - ${'paymentAmount' in payment && payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}`
-                        : <>
-                            {'paymentAmount' in payment && payment.paymentAmount ? `Оплата: ${payment.paymentAmount} ¥` : null}
-                            {'surchargeAmount' in payment && payment.surchargeAmount ? `Доплата: ${payment.surchargeAmount} ¥` : null}
-                        </>
-                    }
-                </span>
-                        </p>
-                    })
-                : null
-            }
-        </div>
-        {paymentHistory && paymentHistory.length
+        {paymentHistory.length
             ? <>
-                <hr/>
-                <div>
-                    <span className={classes.text + ' mr-4'}>
-                        {paymentAmount ? `Итого оплачено ${paymentAmount} ¥ из ${orderPrice} ¥` : ''}
-                    </span>
-                    <span className={classes.text}>{surchargeAmount ? `Доплата ${surchargeAmount} ¥` : ''}</span>
+                <div className={classes.list}>
+                    {paymentHistory.map((payment) => {
+                        return <div className={classes.payment + ' row'} key={payment.id}>
+                            <div className='col-4'>
+                                <span>{payment.paymentType}</span>
+                            </div>
+                            <div className='col-3'>
+                                Дата: {timeConverter(payment.updatedAt)}
+                            </div>
+                            <div className='col-3'>
+                                Сумма: {payment.paymentAmount} ¥
+                            </div>
+                            <div className='col-2'>
+                                <div className={classes.icons}>
+                                    <SvgEdit
+                                        data-tip="Редактировать оплату"
+                                        className={classes.edit}
+                                        onClick={() => onEditHandler(payment)}
+                                    />
+                                    <SvgDelete
+                                        data-tip="Удалить"
+                                        className={classes.delete}
+                                        onClick={() => onDeleteHandler(payment.id)}
+                                    />
+                                </div>
+                            </div>
+                        </div>
+                    })}
                 </div>
+                <ReactTooltip place="bottom" type="dark" effect="solid"/>
             </>
-            : null
+            : <p className={classes.empty}>Нажмите кнопку «Добавить оплату», чтобы отобразить оплату в системе</p>
         }
     </div>
 }

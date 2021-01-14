@@ -153,6 +153,34 @@ export const fetchItemsByVendors = (data) => async dispatch => {
         })
 }
 
+export const paymentHandler = (id, data, method = 'add') => async dispatch => {
+    await dispatch({
+        type: CHANGE_ORDER_STATUS_START
+    })
+
+    const url = `/api/orders/${id}/${method}payment`
+    axios
+        .post(url, data)
+        .then(({data}) => {
+            dispatch({
+                type: CHANGE_ORDER_STATUS_SUCCESS,
+                payload: data
+            })
+            toast.success(createNotyMsg(data.name, 'Оплата добавлена к заказу'))
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400) {
+                toast.error(error.response.data.message)
+            } else {
+                dispatch({
+                    type: CHANGE_ORDER_STATUS_ERROR,
+                    payload: error.response
+                })
+                toast.error(error.message)
+            }
+        })
+}
+
 export const changeOrderStatus = (id, data) => async dispatch => {
     await dispatch({
         type: CHANGE_ORDER_STATUS_START
@@ -202,6 +230,7 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
     await dispatch({
         type: FETCH_ORDER_INVOICE_START
     })
+
     const url = `/api/orders/${id}/getpdf${type}`
     axios
         .get(url)
