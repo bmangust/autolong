@@ -806,20 +806,26 @@ class OrderController extends Controller
                 'orderingAmount' => 'numeric',
         ]);
         $newRequest = $order->cleanSpaceInArrayItems($request->except('paymentHistory'), true);
-        $order->update([
-                'refusal_amount' => $newRequest['refusalAmount'],
-                'customs_amount' => $newRequest['customsAmount'],
-                'ordering_amount' => $newRequest['orderingAmount'],
-        ]);
+
         Log::$write = false;
+        $newTotalPaymentHistoryRub = 0;
         foreach ($request->input('paymentHistory') as $value) {
             if (isset($value['id'], $value['paymentAmountRub'])) {
                 $order->updateBlockInPaymentHistory($value['id'], [
                         'paymentAmountRub' => $value['paymentAmountRub']
                 ]);
+                $newTotalPaymentHistoryRub += $value['paymentAmountRub'];
             }
         }
         Log::$write = true;
+
+        $order->update([
+                'refusal_amount' => $newRequest['refusalAmount'],
+                'customs_amount' => $newRequest['customsAmount'],
+                'ordering_amount' => $newRequest['orderingAmount'],
+                'total_payment_history_rub' => $newTotalPaymentHistoryRub
+        ]);
+
         $container = $order->container;
         if ($order->container->delivery_price != $newRequest['deliveryPrice']) {
             $container->update([
