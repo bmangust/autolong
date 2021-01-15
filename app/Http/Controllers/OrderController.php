@@ -258,6 +258,7 @@ class OrderController extends Controller
         $paymentAwaiting = Status::getOrderPaymentAwaiting();
         $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
         $paymentPaidFor = Status::getOrderPaymentPaidFor();
+        $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
 
         $paymentAmount = (int)$request->input('paymentAmount');
         $paymentType = $request->input('paymentType');
@@ -265,13 +266,89 @@ class OrderController extends Controller
         $orderAmount = $order->getOrderSumInCny();
         $newPaymentAmount = $order->payment_amount + $paymentAmount;
 
-        if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
-            if ($newPaymentAmount >= $orderAmount) {
+        switch ($order->status_payment) {
+            case $paymentPaidInFull:
+                $order->setOrderPaymentStatus($paymentPaidInFull, $paymentAmount, $paymentType);
+                break;
+            case $paymentPrepaymentMade:
                 $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $paymentType);
+                break;
+            case $order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor:
+                if ($newPaymentAmount >= $orderAmount) {
+                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $paymentType);
+                }
+                if ($newPaymentAmount < $orderAmount) {
+                    $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $paymentType);
+                }
+                break;
+        }
+
+        Log::$write = false;
+        $order->updateTotalPaymentsAmountHistory();
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
+
+    public function editPayment(Request $request, Order $order)
+    {
+        $request->validate([
+                'paymentAmount' => 'required|numeric',
+                'paymentType' => 'required',
+                'id' => 'required',
+        ]);
+        $paymentAwaiting = Status::getOrderPaymentAwaiting();
+        $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+        $paymentPaidFor = Status::getOrderPaymentPaidFor();
+
+        $paymentAmount = (int)$request->input('paymentAmount');
+        $paymentType = $request->input('paymentType');
+        $id = $request->input('id');
+
+        $orderAmount = $order->getOrderSumInCny();
+        $order->updateBlockInPaymentHistory($id, $paymentAmount, $paymentType);
+        $updatedPaymentAmount = $order->countTotalPaymentAmountHistory(true);
+
+        if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
+            if ($updatedPaymentAmount >= $orderAmount) {
+                $order->setOrderPaymentStatus($paymentPrepaymentMade);
             }
-            if ($newPaymentAmount < $orderAmount) {
-                $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $paymentType);
+            if ($updatedPaymentAmount < $orderAmount) {
+                $order->setOrderPaymentStatus($paymentPaidFor);
             }
+        }
+        Log::$write = false;
+        $order->updatePaymentAmount($updatedPaymentAmount);
+        $order->updateTotalPaymentsAmountHistory();
+
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
+
+    public function deletePayment(Request $request, Order $order)
+    {
+        $request->validate([
+                'id' => 'required',
+        ]);
+        $id = $request->input('id');
+        $order->deleteBlockInPaymentHistory($id);
+        $updatedPaymentAmount = $order->countTotalPaymentAmountHistory(true);
+        Log::$write = false;
+        $order->updatePaymentAmount($updatedPaymentAmount);
+        $order->updateTotalPaymentsAmountHistory();
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
+
+    public function setPaymentStatusPaidInfull(Request $request, Order $order)
+    {
+        $request->validate([
+                'isPaidInFull' => 'required'
+        ]);
+        $isPaidInFull = $request->input('isPaidInFull');
+        $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
+        $paymentPaidFor = Status::getOrderPaymentPaidFor();
+
+        if ($isPaidInFull) {
+            $order->setOrderPaymentStatus($paymentPaidInFull);
+        } else {
+            $order->setOrderPaymentStatus($paymentPaidFor);
         }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }

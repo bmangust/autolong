@@ -27,8 +27,6 @@ class OrderResource extends JsonResource
                 'items' => OrderItemResource::collection($this->orderItems),
                 'paymentAmount' => $this->payment_amount,
                 'paymentAmountRub' => $this->payment_amount_rub,
-                'surchargeAmount' => $this->surcharge_amount,
-                'surchargeAmountRub' => $this->surcharge_amount_rub,
                 'refusalAmount' => $this->refusal_amount,
                 'customsAmount' => $this->customs_amount,
                 'orderingAmount' => $this->ordering_amount,

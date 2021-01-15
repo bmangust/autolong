@@ -31,7 +31,10 @@ class Order extends Model
             'ordering_amount',
             'payment_amount_rub',
             'weight_brutto',
-            'weight_netto'
+            'weight_netto',
+            'total_payment_history',
+            'total_payment_history_rub',
+            'payment_history'
     ];
 
     private const PAYMENT_AMOUNT_INFO_BLOCK = [
@@ -39,7 +42,8 @@ class Order extends Model
             'paymentAmount' => null,
             'paymentAmountRub' => null,
             'paymentType' => null,
-            'date' => null
+            'createdAt' => null,
+            'updatedAt' => null
     ];
 
     public const PARSING_CONTENT = [
@@ -277,12 +281,9 @@ class Order extends Model
         return $this->payment_amount;
     }
 
-    public function countSurchargeAmount($surchargeAmount): int
+    public function updatePaymentAmount(int $paymentAmount): void
     {
-        if (is_numeric($surchargeAmount)) {
-            return $this->surcharge_amount + $surchargeAmount;
-        }
-        return $this->surcharge_amount;
+        $this->update(['payment_amount' => $paymentAmount]);
     }
 
     public function setOrderStatus(string $status, int $city = null, string $arrivalDate = null)
@@ -307,23 +308,19 @@ class Order extends Model
     {
         $statuses = Status::getOrderPaymentStatuses();
         $paymentRefunded = Status::getOrderPaymentRefunded();
-        $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
         if (property_exists($statuses, $status)) {
             if (is_null($paymentAmount) && is_null($paymentType) && $status != $paymentRefunded) {
                 $this->status_payment = $status;
                 $this->save();
             } else {
-                if ($status != $paymentPaidInFull) {
-                    if ($status == $paymentRefunded) {
-                        $this->payment_amount = 0;
-                    } else {
-                        $oldPaymentHistory = json_decode($this->payment_history, true);
-                        if ($paymentAmount != 0 && is_string($paymentType)) {
-                            $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount, $paymentType);
-                        }
-                        $this->payment_history = $oldPaymentHistory;
-                        $this->payment_amount = $this->countPaymentAmount($paymentAmount);
-                    }
+                if ($status == $paymentRefunded) {
+                    $this->payment_amount = 0;
+                    $this->payment_history = null;
+                } elseif ($paymentAmount != 0) {
+                    $oldPaymentHistory = json_decode($this->payment_history, true);
+                    $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount, $paymentType);
+                    $this->payment_history = $oldPaymentHistory;
+                    $this->payment_amount = $this->countPaymentAmount($paymentAmount);
                 }
                 $this->status_payment = $status;
                 $this->save();
@@ -339,9 +336,61 @@ class Order extends Model
         $block['id'] = uniqid('', true);
         $block['paymentAmount'] = $paymentAmount;
         $block['paymentType'] = $type;
-        $block['paymentAmountRub'] = $paymentAmount;
-        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
+        $block['paymentAmountRub'] = 0;
+        $block['createdAt'] = strtotime(Carbon::now()->format('d.m.Y'));
+        $block['updatedAt'] = strtotime(Carbon::now()->format('d.m.Y'));
         return $block;
+    }
+
+
+    /**
+     * Обновляем конкретный блок в истории оплаты
+     * @param string $id
+     * @param int $paymentAmount
+     * @param string $type
+     */
+    public function updateBlockInPaymentHistory(string $id, int $paymentAmount, string $type): void
+    {
+        $paymentHistory = json_decode($this->payment_history, true);
+        $find = false;
+        foreach ($paymentHistory as $key => $block) {
+            if ($block['id'] == $id && !$find) {
+                $paymentHistory[$key]['paymentAmount'] = $paymentAmount;
+                $paymentHistory[$key]['paymentType'] = $type;
+                $paymentHistory[$key]['updatedAt'] = strtotime(Carbon::now()->format('d.m.Y'));
+                $find = true;
+                break;
+            }
+        }
+        if (!$find) {
+            throw new HttpException(404, 'Такого блока не существует');
+        }
+        $this->update([
+                'payment_history' => $paymentHistory
+        ]);
+    }
+
+    /**
+     * Удаление блока оплаты из истории
+     * @param string $id
+     */
+    public function deleteBlockInPaymentHistory(string $id): void
+    {
+        $paymentHistory = json_decode($this->payment_history, true);
+        $find = false;
+        foreach ($paymentHistory as $key => $block) {
+            if ($block['id'] == $id && !$find) {
+                unset($paymentHistory[$key]);
+                $find = true;
+                break;
+            }
+        }
+        if (!$find) {
+            throw new HttpException(404, 'Такого блока не существует');
+        }
+        $this->update([
+                'payment_history' => $paymentHistory
+        ]);
     }
 
     public function checkActualDate(string $date): bool
@@ -670,6 +719,39 @@ class Order extends Model
         $this->update([
                 'weight_brutto' => $weightBrutto,
                 'weight_netto' => $weightNetto
+        ]);
+    }
+
+    public function countTotalPaymentAmountHistory(bool $refresh = false): int
+    {
+        if ($refresh) {
+            $this->refresh();
+        }
+        $historyPayments = json_decode($this->payment_history, true);
+        $sum = 0;
+        if ($historyPayments) {
+            foreach ($historyPayments as $historyPayment) {
+                $sum += $historyPayment['paymentAmount'];
+            }
+        }
+        return $sum;
+    }
+
+    public function countTotalPaymentAmountRubHistory(): int
+    {
+        $historyPayments = json_decode($this->payment_history, true);
+        $sum = 0;
+        foreach ($historyPayments as $historyPayment) {
+            $sum += $historyPayment['paymentAmountRub'];
+        }
+        return $sum;
+    }
+
+    public function updateTotalPaymentsAmountHistory()
+    {
+        $this->update([
+                'total_payment_history' => $this->countTotalPaymentAmountHistory(),
+                'total_payment_history_rub' => $this->countTotalPaymentAmountRubHistory()
         ]);
     }
 }
