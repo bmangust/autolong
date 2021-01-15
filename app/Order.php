@@ -360,13 +360,13 @@ class Order extends Model
                     break;
                 }
             }
+            if (!$find) {
+                throw new HttpException(404, 'Такого блока не существует');
+            }
+            $this->update([
+                    'payment_history' => $paymentHistory
+            ]);
         }
-        if (!$find) {
-            throw new HttpException(404, 'Такого блока не существует');
-        }
-        $this->update([
-                'payment_history' => $paymentHistory
-        ]);
     }
 
     /**
@@ -383,13 +383,13 @@ class Order extends Model
                 $find = true;
                 break;
             }
+            if (!$find) {
+                throw new HttpException(404, 'Такого блока не существует');
+            }
+            $this->update([
+                    'payment_history' => $paymentHistory
+            ]);
         }
-        if (!$find) {
-            throw new HttpException(404, 'Такого блока не существует');
-        }
-        $this->update([
-                'payment_history' => $paymentHistory
-        ]);
     }
 
     public function checkActualDate(string $date): bool
