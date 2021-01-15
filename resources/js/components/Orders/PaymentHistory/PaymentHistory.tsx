@@ -3,6 +3,7 @@ import React from 'react'
 
 // Third-party
 import ReactTooltip from 'react-tooltip'
+import {useDispatch} from 'react-redux'
 
 // Typescript
 import {IPaymentHistory} from '../IOrders'
@@ -10,12 +11,13 @@ import {IPaymentHistory} from '../IOrders'
 // Styles
 import classes from './PaymentHistory.module.css'
 
+// Actions
+import {paymentHandler} from '../../../store/actions/orders'
+
 // App
 import {timeConverter} from '../../../utils'
 import SvgEdit from '../../UI/iconComponents/Edit'
 import SvgDelete from '../../UI/iconComponents/Delete'
-import {useDispatch} from 'react-redux'
-import {paymentHandler} from '../../../store/actions/orders'
 
 type Props = {
     orderId: number
@@ -25,12 +27,12 @@ type Props = {
 }
 
 const PaymentHistory: React.FC<Props> = (props) => {
-    const {orderId, paymentHistory, setActivePayment, setIsOpen} = props
+    const {orderId, paymentHistory, setIsOpen, setActivePayment} = props
     const dispatch = useDispatch()
 
     const onEditHandler = (payment: IPaymentHistory) => {
-        setIsOpen(true)
         setActivePayment(payment)
+        setIsOpen(true)
     }
 
     const onDeleteHandler = (id: number) => {

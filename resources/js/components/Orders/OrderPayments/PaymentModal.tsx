@@ -19,7 +19,7 @@ import Input from '../../UI/Inputs/Input/Input'
 
 type Props = {
     orderId: number
-    activePayment: IPaymentHistory | null
+    activePayment?: IPaymentHistory | null
     isOpen: boolean
     setIsOpen: (boolean) => void
 }
@@ -34,14 +34,19 @@ const PaymentModal: React.FC<Props> = (props) => {
         if (activePayment) {
             setPaymentType(activePayment.paymentType)
             setPaymentAmount(activePayment.paymentAmount)
+        } else {
+            setPaymentType('')
+            setPaymentAmount(0)
         }
     }, [activePayment])
 
     const addPaymentHandler = () => {
         if (activePayment) {
             dispatch(paymentHandler(orderId, {paymentType, paymentAmount, id: activePayment.id}, 'edit'))
+            setIsOpen(false)
         } else {
             dispatch(paymentHandler(orderId, {paymentType, paymentAmount}, 'add'))
+            setIsOpen(false)
         }
     }
 
@@ -64,6 +69,7 @@ const PaymentModal: React.FC<Props> = (props) => {
             <Input
                 value={paymentType}
                 name='paymentType'
+                placeholder='Тип оплаты'
                 label='Тип оплаты'
                 onChange={(e) => setPaymentType(e.target.value)}
             />

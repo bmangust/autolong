@@ -166,7 +166,7 @@ export const paymentHandler = (id, data, method = 'add') => async dispatch => {
                 type: CHANGE_ORDER_STATUS_SUCCESS,
                 payload: data
             })
-            toast.success(createNotyMsg(data.name, 'Оплата добавлена к заказу'))
+            toast.success(createNotyMsg(data.name, 'История оплаты успешно изменена'))
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {
