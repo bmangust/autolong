@@ -8,7 +8,7 @@ import {useDispatch} from 'react-redux'
 import {IOrder} from '../IOrders'
 
 // Actions
-import {changeOrderStatus} from '../../../store/actions/orders'
+import {changeOrderStatus, setPaymentStatusPaidInFull} from '../../../store/actions/orders'
 
 // Styles
 import classes from './OrderPayments.module.css'
@@ -33,11 +33,13 @@ const OrderPayments: React.FC<Props> = (props) => {
             createdAt: 1610528133,
             updatedAt: 1610528153,
             paymentAmount: 25000,
+            paymentAmountRub: 0,
             paymentType: 'Оплата за заказ'
         }])
 
     const onCheckHandler = (e) => {
-        console.log(e.target.checked)
+        const isPaidInFull = e.target.checked ? 1 : 0
+        dispatch(setPaymentStatusPaidInFull(order.id, {isPaidInFull}))
     }
 
     const returnPaymentHandler = (statusPayment) => {
@@ -99,6 +101,7 @@ const OrderPayments: React.FC<Props> = (props) => {
             </div>
             {paymentHistory.length
                 ? <InputCheckbox
+                    defaultChecked={order.isPaidInFull}
                     onChange={(e) => onCheckHandler(e)}
                     label='Заказ оплачен полностью'
                     name='isPaidInFull'

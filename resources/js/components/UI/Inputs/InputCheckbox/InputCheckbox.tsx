@@ -10,6 +10,7 @@ interface ICheckboxField {
     value?: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     label: string
+    defaultChecked?: boolean
     name: string
     id?: string
     classNameLabel?: string
@@ -19,12 +20,12 @@ const InputCheckbox: React.ForwardRefExoticComponent<React.PropsWithoutRef<IChec
     // eslint-disable-next-line react/display-name
     React.RefAttributes<InputElement>> = forwardRef<InputElement, ICheckboxField>((
     {
-        label, id, name, classNameLabel,
-        ...rest
+        label, defaultChecked = false, id,
+        name, classNameLabel, ...rest
     }, ref) => {
     return <div className={classes.input}>
         <input
-            defaultChecked={false}
+            defaultChecked={defaultChecked}
             type='checkbox'
             className={classes.inpCbx}
             name={name}

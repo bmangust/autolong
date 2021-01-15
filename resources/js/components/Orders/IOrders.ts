@@ -46,10 +46,9 @@ export interface IOrder {
     cargo: number
     packingList: boolean
     container: IContainer
+    isPaidInFull: boolean
     paymentAmount: number
     paymentAmountRub: number
-    surchargeAmount: number
-    surchargeAmountRub: number
     refusalAmount: number
     orderingAmount: number
     customsAmount: number
@@ -67,6 +66,7 @@ export interface IPaymentHistory {
     createdAt: number
     updatedAt: number
     paymentAmount: number
+    paymentAmountRub: number
     paymentType: string
 }
 

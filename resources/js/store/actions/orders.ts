@@ -181,6 +181,31 @@ export const paymentHandler = (id, data, method = 'add') => async dispatch => {
         })
 }
 
+export const setPaymentStatusPaidInFull = (id, data) => async dispatch => {
+    const url = `/api/orders/${id}/setpaymentstatuspaidinfull`
+
+    axios
+        .put(url, data)
+        .then(({data}) => {
+            dispatch({
+                type: CHANGE_ORDER_STATUS_SUCCESS,
+                payload: data
+            })
+            toast.success(createNotyMsg(data.name, 'Статус полной оплаты изменен'))
+        })
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400) {
+                toast.error(error.response.data.message)
+            } else {
+                dispatch({
+                    type: CHANGE_ORDER_STATUS_ERROR,
+                    payload: error.response
+                })
+                toast.error(error.message)
+            }
+        })
+}
+
 export const changeOrderStatus = (id, data) => async dispatch => {
     await dispatch({
         type: CHANGE_ORDER_STATUS_START
