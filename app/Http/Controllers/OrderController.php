@@ -801,19 +801,25 @@ class OrderController extends Controller
         $request->validate([
                 'deliveryPrice' => 'numeric',
                 'refusalAmount' => 'numeric',
-                'paymentAmount' => 'numeric',
+                'paymentHistory' => 'array',
                 'customsAmount' => 'numeric',
                 'orderingAmount' => 'numeric',
-                'paymentAmountRub' => 'numeric',
         ]);
-        $newRequest = $order->cleanSpaceInArrayItems($request->all(), true);
+        $newRequest = $order->cleanSpaceInArrayItems($request->except('paymentHistory'), true);
         $order->update([
                 'refusal_amount' => $newRequest['refusalAmount'],
-                'payment_amount' => $newRequest['paymentAmount'],
                 'customs_amount' => $newRequest['customsAmount'],
                 'ordering_amount' => $newRequest['orderingAmount'],
-                'payment_amount_rub' => $newRequest['paymentAmountRub'],
         ]);
+        Log::$write = false;
+        foreach ($request->input('paymentHistory') as $value) {
+            if (isset($value['id'], $value['paymentAmountRub'])) {
+                $order->updateBlockInPaymentHistory($value['id'], [
+                        'paymentAmountRub' => $value['paymentAmountRub']
+                ]);
+            }
+        }
+        Log::$write = true;
         $container = $order->container;
         if ($order->container->delivery_price != $newRequest['deliveryPrice']) {
             $container->update([

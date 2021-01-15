@@ -356,7 +356,7 @@ class Order extends Model
                         if (isset($paymentHistory[$key][$index])) {
                             $paymentHistory[$key][$index] = $value;
                         } else {
-                            throw new HttpException(500, 'Неизвестный индекс ' . $index .' в блоке истории заказа');
+                            throw new HttpException(500, 'Неизвестный индекс ' . $index . ' в блоке истории заказа');
                         }
                         $paymentHistory[$key]['updatedAt'] = strtotime(Carbon::now()->format('d.m.Y'));
                     }
@@ -372,7 +372,6 @@ class Order extends Model
             ]);
         }
     }
-
     /**
      * Удаление блока оплаты из истории
      * @param string $id
