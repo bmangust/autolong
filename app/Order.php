@@ -315,7 +315,6 @@ class Order extends Model
             } else {
                 if ($status == $paymentRefunded) {
                     $this->payment_amount = 0;
-                    $this->payment_history = null;
                 } elseif ($paymentAmount != 0) {
                     $oldPaymentHistory = json_decode($this->payment_history, true);
                     $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount, $paymentType);
@@ -353,13 +352,15 @@ class Order extends Model
     {
         $paymentHistory = json_decode($this->payment_history, true);
         $find = false;
-        foreach ($paymentHistory as $key => $block) {
-            if ($block['id'] == $id && !$find) {
-                $paymentHistory[$key]['paymentAmount'] = $paymentAmount;
-                $paymentHistory[$key]['paymentType'] = $type;
-                $paymentHistory[$key]['updatedAt'] = strtotime(Carbon::now()->format('d.m.Y'));
-                $find = true;
-                break;
+        if ($paymentHistory) {
+            foreach ($paymentHistory as $key => $block) {
+                if ($block['id'] == $id && !$find) {
+                    $paymentHistory[$key]['paymentAmount'] = $paymentAmount;
+                    $paymentHistory[$key]['paymentType'] = $type;
+                    $paymentHistory[$key]['updatedAt'] = strtotime(Carbon::now()->format('d.m.Y'));
+                    $find = true;
+                    break;
+                }
             }
         }
         if (!$find) {
