@@ -27,11 +27,9 @@ class Order extends Model
             'baikal_tracker_history',
             'refusal_amount',
             'payment_amount',
-            'surcharge_amount',
             'customs_amount',
             'ordering_amount',
             'payment_amount_rub',
-            'surcharge_amount_rub',
             'weight_brutto',
             'weight_netto'
     ];
@@ -39,12 +37,8 @@ class Order extends Model
     private const PAYMENT_AMOUNT_INFO_BLOCK = [
             'id' => null,
             'paymentAmount' => null,
-            'date' => null
-    ];
-
-    private const SURCHARGE_AMOUNT_INFO_BLOCK = [
-            'id' => null,
-            'surchargeAmount' => null,
+            'paymentAmountRub' => null,
+            'paymentType' => null,
             'date' => null
     ];
 
@@ -309,31 +303,26 @@ class Order extends Model
         }
     }
 
-    public function setOrderPaymentStatus($status, $paymentAmount = null, $surchargeAmount = null)
+    public function setOrderPaymentStatus($status, $paymentAmount = null, $paymentType = null)
     {
         $statuses = Status::getOrderPaymentStatuses();
         $paymentRefunded = Status::getOrderPaymentRefunded();
         $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
         if (property_exists($statuses, $status)) {
-            if (is_null($paymentAmount) && is_null($surchargeAmount) && $status != $paymentRefunded) {
+            if (is_null($paymentAmount) && is_null($paymentType) && $status != $paymentRefunded) {
                 $this->status_payment = $status;
                 $this->save();
             } else {
                 if ($status != $paymentPaidInFull) {
                     if ($status == $paymentRefunded) {
                         $this->payment_amount = 0;
-                        $this->surcharge_amount = 0;
                     } else {
                         $oldPaymentHistory = json_decode($this->payment_history, true);
-                        if ($paymentAmount != 0) {
-                            $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount);
-                        }
-                        if ($surchargeAmount != 0) {
-                            $oldPaymentHistory[] = $this->createInfoSurchargeAmountBlock($surchargeAmount);
+                        if ($paymentAmount != 0 && is_string($paymentType)) {
+                            $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount, $paymentType);
                         }
                         $this->payment_history = $oldPaymentHistory;
                         $this->payment_amount = $this->countPaymentAmount($paymentAmount);
-                        $this->surcharge_amount = $this->countSurchargeAmount($surchargeAmount);
                     }
                 }
                 $this->status_payment = $status;
@@ -344,20 +333,13 @@ class Order extends Model
         }
     }
 
-    public function createInfoPaymentAmountBlock(int $paymentAmount = 0): array
+    public function createInfoPaymentAmountBlock(int $paymentAmount, string $type): array
     {
         $block = self::PAYMENT_AMOUNT_INFO_BLOCK;
         $block['id'] = uniqid('', true);
         $block['paymentAmount'] = $paymentAmount;
-        $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
-        return $block;
-    }
-
-    public function createInfoSurchargeAmountBlock(int $surchargeAmount = 0): array
-    {
-        $block = self::SURCHARGE_AMOUNT_INFO_BLOCK;
-        $block['id'] = uniqid('', true);
-        $block['surchargeAmount'] = $surchargeAmount;
+        $block['paymentType'] = $type;
+        $block['paymentAmountRub'] = $paymentAmount;
         $block['date'] = strtotime(Carbon::now()->format('d.m.Y'));
         return $block;
     }

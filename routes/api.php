@@ -74,6 +74,10 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('orders/{order}', 'OrderController@destroy');
     Route::post('orders/{order}/changestatus', 'OrderController@changeStatus');
     Route::post('orders/{order}/changestatuspayment', 'OrderController@changeStatusPayment');
+    Route::post('orders/{order}/addpayment', 'OrderController@addPayment');
+    Route::post('orders/{order}/editpayment', 'OrderController@editPayment');
+    Route::post('orders/{order}/deletepayment', 'OrderController@deletePayment');
+    Route::post('orders//{order}/setpaymentstatuspaidinfull', 'OrderController@setPaymentStatusPaidInfull');
     Route::get('orders/{order}/getpdfaccount', 'OrderController@getPdfAccount');
     Route::get('orders/{order}/getpdfinvoice', 'OrderController@getPdfInvoice');
     Route::get('orders/{order}/getpdfproforma', 'OrderController@getPdfProforma');

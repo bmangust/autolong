@@ -204,33 +204,31 @@ class OrderController extends Controller
         ]);
         $status = $request->input('statusPayment');
 
-        $paymentAwaiting = Status::getOrderPaymentAwaiting();
         $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
-        $paymentPaidFor = Status::getOrderPaymentPaidFor();
         $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
         $paymentAwaitingRefund = Status::getOrderPaymentAwaitingRefund();
         $paymentRefunded = Status::getOrderPaymentRefunded();
 
-        if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
-            if (!is_numeric($request->input('paymentAmount')) && !is_numeric($request->input('surchargeAmount'))) {
-                throw new HttpException(400, 'Переданные данные оплаты не являются числовым типом. Убедитесь, что вы передаете ноль, если вы не хотите вносить информацию об оплате или доплате.');
-            }
-            $paymentAmount = (int)$request->input('paymentAmount');
-            $surchargeAmount = (int)$request->input('surchargeAmount');
-
-            $orderAmount = $order->getOrderSumInCny();
-            $newPaymentAmount = $order->payment_amount + $paymentAmount;
-
-            if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
-                if ($newPaymentAmount >= $orderAmount) {
-                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
-                }
-                if ($newPaymentAmount < $orderAmount) {
-                    $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $surchargeAmount);
-                }
-            }
-            return response()->json(new OrderWithRelationshipsResource($order), 200);
-        }
+//        if ($request->has('paymentAmount') && $request->has('surchargeAmount')) {
+//            if (!is_numeric($request->input('paymentAmount')) && !is_numeric($request->input('surchargeAmount'))) {
+//                throw new HttpException(400, 'Переданные данные оплаты не являются числовым типом. Убедитесь, что вы передаете ноль, если вы не хотите вносить информацию об оплате или доплате.');
+//            }
+//            $paymentAmount = (int)$request->input('paymentAmount');
+//            $surchargeAmount = (int)$request->input('surchargeAmount');
+//
+//            $orderAmount = $order->getOrderSumInCny();
+//            $newPaymentAmount = $order->payment_amount + $paymentAmount;
+//
+//            if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
+//                if ($newPaymentAmount >= $orderAmount) {
+//                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $surchargeAmount);
+//                }
+//                if ($newPaymentAmount < $orderAmount) {
+//                    $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $surchargeAmount);
+//                }
+//            }
+//            return response()->json(new OrderWithRelationshipsResource($order), 200);
+//        }
 
         switch ($order->status_payment) {
             case $paymentPrepaymentMade:
@@ -248,6 +246,33 @@ class OrderController extends Controller
                 break;
         }
 
+        return response()->json(new OrderWithRelationshipsResource($order), 200);
+    }
+
+    public function addPayment(Request $request, Order $order)
+    {
+        $request->validate([
+                'paymentAmount' => 'required|numeric',
+                'paymentType' => 'required'
+        ]);
+        $paymentAwaiting = Status::getOrderPaymentAwaiting();
+        $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
+        $paymentPaidFor = Status::getOrderPaymentPaidFor();
+
+        $paymentAmount = (int)$request->input('paymentAmount');
+        $paymentType = $request->input('paymentType');
+
+        $orderAmount = $order->getOrderSumInCny();
+        $newPaymentAmount = $order->payment_amount + $paymentAmount;
+
+        if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
+            if ($newPaymentAmount >= $orderAmount) {
+                $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $paymentType);
+            }
+            if ($newPaymentAmount < $orderAmount) {
+                $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $paymentType);
+            }
+        }
         return response()->json(new OrderWithRelationshipsResource($order), 200);
     }
 
@@ -704,21 +729,17 @@ class OrderController extends Controller
                 'deliveryPrice' => 'numeric',
                 'refusalAmount' => 'numeric',
                 'paymentAmount' => 'numeric',
-                'surchargeAmount' => 'numeric',
                 'customsAmount' => 'numeric',
                 'orderingAmount' => 'numeric',
                 'paymentAmountRub' => 'numeric',
-                'surchargeAmountRub' => 'numeric'
         ]);
         $newRequest = $order->cleanSpaceInArrayItems($request->all(), true);
         $order->update([
                 'refusal_amount' => $newRequest['refusalAmount'],
                 'payment_amount' => $newRequest['paymentAmount'],
-                'surcharge_amount' => $newRequest['surchargeAmount'],
                 'customs_amount' => $newRequest['customsAmount'],
                 'ordering_amount' => $newRequest['orderingAmount'],
                 'payment_amount_rub' => $newRequest['paymentAmountRub'],
-                'surcharge_amount_rub' => $newRequest['surchargeAmountRub']
         ]);
         $container = $order->container;
         if ($order->container->delivery_price != $newRequest['deliveryPrice']) {

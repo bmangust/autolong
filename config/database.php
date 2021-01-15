@@ -66,7 +66,7 @@ return [
                 'mysql_1c_sandbox' => [
                         'driver' => 'mysql',
                         'url' => env('DATABASE_URL'),
-                        'host' => env('DB_1C_SANDBOX_HOST=127.0.0.1', '127.0.0.1'),
+                        'host' => env('DB_1C_SANDBOX_HOST', '127.0.0.1'),
                         'port' => env('DB_1C_SANDBOX_PORT', '3306'),
                         'database' => env('DB_1C_SANDBOX_DATABASE', 'forge'),
                         'username' => env('DB_1C_SANDBOX_USERNAME', 'forge'),
