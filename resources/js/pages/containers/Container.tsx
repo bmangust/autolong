@@ -67,7 +67,7 @@ const Container: React.FC<IContainer> = () => {
     let totalAmount = 0
 
     container && container.orders && container.orders.map((order) => {
-        totalAmount += (order.paymentAmountRub + order.surchargeAmountRub)
+        totalAmount += order.totalPaymentHistoryRub
         if (order.weightNetto) {
             totalWeightNetto += order.weightNetto
         }
