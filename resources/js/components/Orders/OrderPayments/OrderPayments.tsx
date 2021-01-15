@@ -5,7 +5,7 @@ import React, {useState} from 'react'
 import {useDispatch} from 'react-redux'
 
 // Typescript
-import {IOrder} from '../IOrders'
+import {IOrder, IPaymentHistory} from '../IOrders'
 
 // Actions
 import {changeOrderStatus, setPaymentStatusPaidInFull} from '../../../store/actions/orders'
@@ -26,7 +26,7 @@ const OrderPayments: React.FC<Props> = (props) => {
     const {order} = props
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
-    const [activePayment, setActivePayment] = useState(null)
+    const [activePayment, setActivePayment] = useState<IPaymentHistory | null>(null)
 
     const onCheckHandler = (e) => {
         const isPaidInFull = e.target.checked ? 1 : 0
@@ -35,6 +35,11 @@ const OrderPayments: React.FC<Props> = (props) => {
 
     const returnPaymentHandler = (statusPayment) => {
         dispatch(changeOrderStatus(order.id, {statusPayment}))
+    }
+
+    const onAddHandler = () => {
+        setIsOpen(true)
+        setActivePayment(null)
     }
 
     let paymentRefund
@@ -77,12 +82,12 @@ const OrderPayments: React.FC<Props> = (props) => {
             <PaymentHistory
                 orderId={order.id}
                 paymentHistory={order.paymentHistory}
-                setActivePayment={setActivePayment}
                 setIsOpen={setIsOpen}
+                setActivePayment={setActivePayment}
             />
             <div className="row">
                 <div className="col-6">
-                    <button style={{textDecoration: 'none'}} className='btn btn-link' onClick={() => setIsOpen(true)}>
+                    <button style={{textDecoration: 'none'}} className='btn btn-link' onClick={() => onAddHandler()}>
                         + Добавить оплату
                     </button>
                 </div>
