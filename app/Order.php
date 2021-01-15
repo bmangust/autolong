@@ -741,8 +741,10 @@ class Order extends Model
     {
         $historyPayments = json_decode($this->payment_history, true);
         $sum = 0;
-        foreach ($historyPayments as $historyPayment) {
-            $sum += $historyPayment['paymentAmountRub'];
+        if ($historyPayments) {
+            foreach ($historyPayments as $historyPayment) {
+                $sum += $historyPayment['paymentAmountRub'];
+            }
         }
         return $sum;
     }
