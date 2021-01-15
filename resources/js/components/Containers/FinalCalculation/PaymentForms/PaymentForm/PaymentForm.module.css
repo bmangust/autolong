@@ -6,6 +6,10 @@
     margin-bottom: 9px;
 }
 
+.block {
+    margin-bottom: 5px;
+}
+
 .block p {
     margin-bottom: 3px;
     font-weight: 600;
