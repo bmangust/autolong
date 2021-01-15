@@ -14,8 +14,8 @@ class AddTotalPaymentsHistoryColumnsToOrdersTable extends Migration
     public function up()
     {
         Schema::table('orders', function (Blueprint $table) {
-            $table->double('total_payment_history')->nullable();
-            $table->double('total_payment_history_rub')->nullable();
+            $table->double('total_payment_history')->default(0)->nullable();
+            $table->double('total_payment_history_rub')->default(0)->nullable();
         });
     }
 
