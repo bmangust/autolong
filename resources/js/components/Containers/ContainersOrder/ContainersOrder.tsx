@@ -60,8 +60,8 @@ const ContainersOrder: React.FC<Props> = (props) => {
         </div>
     }
 
-    const total = (+order.paymentAmount || 0) + (+order.surchargeAmount || 0)
-    const totalRub = (+order.paymentAmountRub || 0) + (+order.surchargeAmountRub || 0)
+    const total = +order.totalPaymentHistory
+    const totalRub = +order.totalPaymentHistoryRub
     const additionalTotal = (+order.refusalAmount || 0) + (+order.orderingAmount || 0) + (+order.customsAmount || 0)
 
     const totalRubCourse = total ? totalRub / total : 0
