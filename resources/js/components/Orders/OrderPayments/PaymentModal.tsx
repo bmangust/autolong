@@ -43,11 +43,12 @@ const PaymentModal: React.FC<Props> = (props) => {
     const addPaymentHandler = () => {
         if (activePayment) {
             dispatch(paymentHandler(orderId, {paymentType, paymentAmount, id: activePayment.id}, 'edit'))
-            setIsOpen(false)
         } else {
             dispatch(paymentHandler(orderId, {paymentType, paymentAmount}, 'add'))
-            setIsOpen(false)
         }
+        setIsOpen(false)
+        setPaymentType('')
+        setPaymentAmount(0)
     }
 
     const onChangeHandler = (e) => {
