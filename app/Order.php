@@ -313,9 +313,7 @@ class Order extends Model
                 $this->status_payment = $status;
                 $this->save();
             } else {
-                if ($status == $paymentRefunded) {
-                    $this->payment_amount = 0;
-                } elseif ($paymentAmount != 0) {
+                if ($paymentAmount != 0) {
                     $oldPaymentHistory = json_decode($this->payment_history, true);
                     $oldPaymentHistory[] = $this->createInfoPaymentAmountBlock($paymentAmount, $paymentType);
                     $this->payment_history = $oldPaymentHistory;
