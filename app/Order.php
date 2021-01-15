@@ -343,19 +343,23 @@ class Order extends Model
     /**
      * Обновляем конкретный блок в истории оплаты
      * @param string $id
-     * @param int $paymentAmount
-     * @param string $type
+     * @param array $attributes
      */
-    public function updateBlockInPaymentHistory(string $id, int $paymentAmount, string $type): void
+    public function updateBlockInPaymentHistory(string $id, array $attributes): void
     {
         $paymentHistory = json_decode($this->payment_history, true);
         $find = false;
         if ($paymentHistory) {
             foreach ($paymentHistory as $key => $block) {
                 if ($block['id'] == $id && !$find) {
-                    $paymentHistory[$key]['paymentAmount'] = $paymentAmount;
-                    $paymentHistory[$key]['paymentType'] = $type;
-                    $paymentHistory[$key]['updatedAt'] = strtotime(Carbon::now()->format('d.m.Y'));
+                    foreach ($attributes as $index => $value) {
+                        if (isset($paymentHistory[$key][$index])) {
+                            $paymentHistory[$key][$index] = $value;
+                        } else {
+                            throw new HttpException(500, 'Неизвестный индекс ' . $index .' в блоке истории заказа');
+                        }
+                        $paymentHistory[$key]['updatedAt'] = strtotime(Carbon::now()->format('d.m.Y'));
+                    }
                     $find = true;
                     break;
                 }
@@ -377,11 +381,13 @@ class Order extends Model
     {
         $paymentHistory = json_decode($this->payment_history, true);
         $find = false;
-        foreach ($paymentHistory as $key => $block) {
-            if ($block['id'] == $id && !$find) {
-                unset($paymentHistory[$key]);
-                $find = true;
-                break;
+        if ($paymentHistory) {
+            foreach ($paymentHistory as $key => $block) {
+                if ($block['id'] == $id && !$find) {
+                    unset($paymentHistory[$key]);
+                    $find = true;
+                    break;
+                }
             }
             if (!$find) {
                 throw new HttpException(404, 'Такого блока не существует');

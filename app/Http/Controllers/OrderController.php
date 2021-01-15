@@ -258,7 +258,6 @@ class OrderController extends Controller
         $paymentAwaiting = Status::getOrderPaymentAwaiting();
         $paymentPrepaymentMade = Status::getOrderPaymentPrepaymentMade();
         $paymentPaidFor = Status::getOrderPaymentPaidFor();
-        $paymentPaidInFull = Status::getOrderPaymentPaidInFull();
 
         $paymentAmount = (int)$request->input('paymentAmount');
         $paymentType = $request->input('paymentType');
@@ -266,21 +265,15 @@ class OrderController extends Controller
         $orderAmount = $order->getOrderSumInCny();
         $newPaymentAmount = $order->payment_amount + $paymentAmount;
 
-        switch ($order->status_payment) {
-            case $paymentPaidInFull:
-                $order->setOrderPaymentStatus($paymentPaidInFull, $paymentAmount, $paymentType);
-                break;
-            case $paymentPrepaymentMade:
+        if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
+            if ($newPaymentAmount >= $orderAmount) {
                 $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $paymentType);
-                break;
-            case $order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor:
-                if ($newPaymentAmount >= $orderAmount) {
-                    $order->setOrderPaymentStatus($paymentPrepaymentMade, $paymentAmount, $paymentType);
-                }
-                if ($newPaymentAmount < $orderAmount) {
-                    $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $paymentType);
-                }
-                break;
+            }
+            if ($newPaymentAmount < $orderAmount) {
+                $order->setOrderPaymentStatus($paymentPaidFor, $paymentAmount, $paymentType);
+            }
+        } else {
+            $order->setOrderPaymentStatus($order->status_payment, $paymentAmount, $paymentType);
         }
 
         Log::$write = false;
@@ -304,7 +297,10 @@ class OrderController extends Controller
         $id = $request->input('id');
 
         $orderAmount = $order->getOrderSumInCny();
-        $order->updateBlockInPaymentHistory($id, $paymentAmount, $paymentType);
+        $order->updateBlockInPaymentHistory($id, [
+                'paymentAmount' => $paymentAmount,
+                'paymentType' => $paymentType
+        ]);
         $updatedPaymentAmount = $order->countTotalPaymentAmountHistory(true);
 
         if ($order->status_payment == $paymentAwaiting || $order->status_payment == $paymentPaidFor) {
