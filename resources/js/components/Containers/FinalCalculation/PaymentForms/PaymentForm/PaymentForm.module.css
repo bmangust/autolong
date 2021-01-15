@@ -7,11 +7,24 @@
 }
 
 .block p {
+    margin-bottom: 3px;
+    font-weight: 600;
+    font-size: 13px;
+    line-height: 16px;
+    color: #3A405F;
+}
+
+.block p.cny {
     font-weight: 500;
     font-size: 13px;
     line-height: 16px;
     color: #3A405F;
-    margin-bottom: 3px;
+    margin-top: 20px;
+    margin-bottom: 0;
+}
+
+.cnyBlock {
+    margin: 10px 0;
 }
 
 .total {

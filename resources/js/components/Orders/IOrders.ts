@@ -49,6 +49,8 @@ export interface IOrder {
     isPaidInFull: boolean
     paymentAmount: number
     paymentAmountRub: number
+    totalPaymentHistory: number
+    totalPaymentHistoryRub: number
     refusalAmount: number
     orderingAmount: number
     customsAmount: number

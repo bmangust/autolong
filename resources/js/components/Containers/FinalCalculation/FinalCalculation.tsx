@@ -25,7 +25,7 @@ const FinalCalculation: React.FC<Props> = (props) => {
     let totalCustoms = 0
 
     orders.map((order) => {
-        totalAmount += (order.paymentAmountRub + order.surchargeAmountRub)
+        totalAmount += (order.totalPaymentHistoryRub)
         totalCustoms += order.customsAmount
     })
 
