@@ -31,6 +31,8 @@ class OrderResource extends JsonResource
                 'customsAmount' => $this->customs_amount,
                 'orderingAmount' => $this->ordering_amount,
                 'paymentHistory' => json_decode($this->payment_history, true) ?? [],
+                'totalPaymentHistory' => $this->total_payment_history ?? 0,
+                'totalPaymentHistoryRub' => $this->total_payment_history_rub ?? 0,
                 'price' => (object)['rub' => $this->getOrderSumInRub(),
                         'usd' => $this->getOrderSumInUsd(),
                         'cny' => $this->getOrderSumInCny()],
