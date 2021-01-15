@@ -27,15 +27,6 @@ const OrderPayments: React.FC<Props> = (props) => {
     const dispatch = useDispatch()
     const [isOpen, setIsOpen] = useState(false)
     const [activePayment, setActivePayment] = useState(null)
-    const [paymentHistory] = useState([
-        {
-            id: 1,
-            createdAt: 1610528133,
-            updatedAt: 1610528153,
-            paymentAmount: 25000,
-            paymentAmountRub: 0,
-            paymentType: 'Оплата за заказ'
-        }])
 
     const onCheckHandler = (e) => {
         const isPaidInFull = e.target.checked ? 1 : 0
@@ -85,7 +76,7 @@ const OrderPayments: React.FC<Props> = (props) => {
         <div className={classes.orderPaymentsBody}>
             <PaymentHistory
                 orderId={order.id}
-                paymentHistory={paymentHistory}
+                paymentHistory={order.paymentHistory}
                 setActivePayment={setActivePayment}
                 setIsOpen={setIsOpen}
             />
@@ -99,7 +90,7 @@ const OrderPayments: React.FC<Props> = (props) => {
                     {paymentRefund}
                 </div>
             </div>
-            {paymentHistory.length
+            {order.paymentHistory.length
                 ? <InputCheckbox
                     defaultChecked={order.isPaidInFull}
                     onChange={(e) => onCheckHandler(e)}
