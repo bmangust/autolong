@@ -120,7 +120,7 @@
             @if(isset($contractNumber))
                 <td>Contract {{ $contractNumber }}</td>
             @else
-                <td>Contract {{ $contract }}</td>
+                <td>Contract</td>
             @endif
         </tr>
         <tr>
@@ -132,24 +132,24 @@
         <tr>
             <td style="width: 150px;">Bank</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_bank_name) ? $order->provider->beneficiary_bank_name : '-' }}</td>
+                {{ ($order->provider->beneficiary_bank_code) ?: '-' }}</td>
         </tr>
         <tr>
             <td style="width: 150px;">Number account</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_account_name) ? $order->provider->beneficiary_account_name : '-' }}
+                {{ ($order->provider->beneficiary_bank_code) ?: '-' }}
             </td>
         </tr>
         <tr>
             <td style="width: 150px;">SWIFT:</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_swift_address) ? $order->provider->beneficiary_swift_address : '-' }}
+                {{ ($order->provider->beneficiary_swift_address) ?: '-' }}
             </td>
         </tr>
         <tr>
             <td style="width: 150px;">Address of bank</td>
             <td style="width: 350px;">
-                {{ ($order->provider->beneficiary_bank_address) ? $order->provider->beneficiary_bank_address : '-' }}
+                {{ ($order->provider->beneficiary_bank_address) ?: '-' }}
             </td>
         </tr>
     </table>

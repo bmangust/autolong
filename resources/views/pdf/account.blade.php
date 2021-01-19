@@ -137,7 +137,7 @@
         <tr>
             <td style="width: 150px;">Номер счета</td>
             <td style="width: 350px;">
-                {{ ($provider->beneficiary_account_name) ?: '-' }}
+                {{ ($provider->beneficiary_bank_code) ?: '-' }}
             </td>
         </tr>
         <tr>
