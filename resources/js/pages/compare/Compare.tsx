@@ -73,6 +73,7 @@ const Compare = () => {
         {
             dataField: 'price',
             text: 'Цена',
+            sort: true,
             classes: 'price',
             formatter: (price) => moneyFormatter(price, ['rub', 'usd'])
         }
