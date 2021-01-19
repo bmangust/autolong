@@ -120,7 +120,7 @@
             @if(isset($contractNumber))
                 <td>Контракт {{ $contractNumber }}</td>
             @else
-                <td>Контракт {{ $contract }}</td>
+                <td>Контракт '-'</td>
             @endif
         </tr>
         <tr>
