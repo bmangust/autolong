@@ -26,6 +26,7 @@ import {ISandboxFile} from '../SandboxCard/SandboxFilesCard'
 import {IOrder} from '../Orders/IOrders'
 
 export interface IProduct {
+    fakeId: number
     id: number
     productId: number
     nameRu: string
