@@ -18,7 +18,7 @@ import {fetchItemsByVendors} from '../../store/actions/orders'
 import {fetchProviders} from '../../store/actions/providers'
 
 // App
-import OrdersForms from '../../components/Orders/OrderForm/OrdersFroms'
+import OrdersForms from '../../components/Orders/OrderForm/OrdersForms'
 
 const OrdersCreate: React.FC = () => {
     const dispatch = useDispatch()

@@ -22,7 +22,8 @@ import {
     getOrderStatusName,
     getPaymentStatusName,
     moneyFormatter,
-    nameToLinkFormatter
+    nameToLinkFormatter,
+    toLocaleNumber
 } from '../../../utils'
 import AutoTable from '../../UI/AutoTable/AutoTable'
 import Error from '../../UI/Error/Error'
@@ -105,11 +106,10 @@ const OrdersTable: React.FC = () => {
     }
 
     const footerPriceFormatter = (columnData) => {
-        const totalCny = columnData.reduce((acc: any, price: { cny: any }) => acc + price.cny, 0)
-            .toFixed(2)
+        const totalCny: number = columnData.reduce((acc: number, price: { cny: number }) => +acc + +price.cny, 0)
         return <>
-            <span className='d-block' style={{lineHeight: '15px'}}>{totalCny} ¥</span>
-            <span>{(totalCny * courses.rub).toFixed(2)} ₽</span>
+            <span className='d-block' style={{lineHeight: '15px'}}>{toLocaleNumber(totalCny)} ¥</span>
+            <span>{toLocaleNumber((totalCny * courses.rub))} ₽</span>
         </>
     }
 

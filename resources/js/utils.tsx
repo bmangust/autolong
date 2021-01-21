@@ -81,14 +81,18 @@ export function moneyFormatter(price: IProductPrice, without: string[] = []) {
                    }
                    return (
                        <span key={key}>
-                       {val ? parseFloat(val)
-                           .toFixed(2) : +val}
+                       {val ? toLocaleNumber(parseFloat(val))
+                           : toLocaleNumber(val)}
                            {getSymbolFromCurrency(key)}
                    </span>
                    )
                })}
         </span>
     )
+}
+
+export const toLocaleNumber = (val: number) => {
+    return val.toLocaleString('ru-RU', {maximumFractionDigits: 2})
 }
 
 export function getOrderStatusName(key: string) {

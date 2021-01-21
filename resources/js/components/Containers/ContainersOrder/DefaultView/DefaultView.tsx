@@ -9,6 +9,7 @@ import {IOrder} from '../../../Orders/IOrders'
 
 // App
 import OrderItems from '../../../Orders/OrderItems/OrderItems'
+import {toLocaleNumber} from '../../../../utils'
 
 type Props = {
     order: IOrder
@@ -28,8 +29,7 @@ const DefaultView: React.FC<Props> = (props) => {
             </p>
             <p className={classes.orderPrice}>
                 Стоимость заказа
-                <span>{parseFloat(order.price.cny)
-                    .toFixed(2)} ¥</span>
+                <span>{toLocaleNumber(parseFloat(order.price.cny))} ¥</span>
             </p>
         </div>
     </>

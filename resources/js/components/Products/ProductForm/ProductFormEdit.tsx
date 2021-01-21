@@ -26,6 +26,7 @@ import {
 // App
 import TextEditor from '../../UI/TextEditor/TextEditor'
 import {currencyConversion} from '../../../utils'
+import Form from '../../UI/Form/Form'
 
 interface IEditProductData {
     nameRu: string
@@ -139,7 +140,7 @@ const ProductFormEdit: React.FC<Props> = (props) => {
     const content =
         <div className='card mb-3'>
             <div className="card-body">
-                <form onSubmit={productFormSubmitHandler}>
+                <Form onSubmit={productFormSubmitHandler}>
 
                     {unpublished !== 'unpublished'
                         ? <div className='mb-3 row'>
@@ -497,7 +498,7 @@ const ProductFormEdit: React.FC<Props> = (props) => {
                             </div>
                         </div>
                     </div>
-                </form>
+                </Form>
             </div>
         </div>
 

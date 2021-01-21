@@ -20,7 +20,7 @@ import DefaultView from './DefaultView/DefaultView'
 import SvgPlusGrey from '../../UI/iconComponents/PlusGrey'
 import SvgDownloadGrey from '../../UI/iconComponents/DownloadGrey'
 import TableView from './TableView/TableView'
-import {toFixed} from '../../../utils'
+import {toLocaleNumber} from '../../../utils'
 
 type Props = {
     order: IOrder
@@ -89,9 +89,9 @@ const ContainersOrder: React.FC<Props> = (props) => {
                         <p className={classes.orderTotal}>
                             <span>Итого стоимость товаров:</span>
                             <span>
-                                <b> {toFixed(total, 2)} ¥ </b>
+                                <b> {toLocaleNumber(total)} ¥ </b>
                                 {total > 0
-                                    ? `(${toFixed(totalRub, 2)} ₽ по курсу ${toFixed(totalRubCourse, 2)})`
+                                    ? `(${toLocaleNumber(totalRub)} ₽ по курсу ${toLocaleNumber(totalRubCourse)})`
                                     : null
                                 }
                             </span>
@@ -99,9 +99,9 @@ const ContainersOrder: React.FC<Props> = (props) => {
                         <p className={classes.orderTotal}>
                             <span>Стоимость оформления:</span>
                             <span>
-                                <b> {toFixed(additionalTotal, 2)} ₽ </b>
+                                <b> {toLocaleNumber(additionalTotal)} ₽ </b>
                                 {additionalTotal > 0
-                                    ? `(+${toFixed(orderingPrice, 2)} ₽)`
+                                    ? `(+${toLocaleNumber(orderingPrice)} ₽)`
                                     : null
                                 }
                             </span>

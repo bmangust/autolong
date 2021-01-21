@@ -14,7 +14,7 @@ import classes from './PaymentForm.module.css'
 import {setOrderPayment} from '../../../../../store/actions/containers'
 
 // App
-import {floatRegExp, timeConverter, toFixed} from '../../../../../utils'
+import {floatRegExp, timeConverter, toLocaleNumber} from '../../../../../utils'
 import Input from '../../../../UI/Inputs/Input/Input'
 
 type Props = {
@@ -111,7 +111,7 @@ const PaymentForm: React.FC<Props> = (props) => {
                         <label>
                             CNY
                         </label>
-                        <p className={classes.cny}>{payment.paymentAmount}</p>
+                        <p className={classes.cny}>{toLocaleNumber(payment.paymentAmount)}</p>
                     </div>
                 </div>
             </div>
@@ -150,9 +150,9 @@ const PaymentForm: React.FC<Props> = (props) => {
             <p>
                 <span>Итого стоимость товаров:</span>
                 <span>
-                    <b> {toFixed(total, 2)} ¥ </b>
+                    <b> {toLocaleNumber(total)} ¥ </b>
                     {total > 0
-                        ? `(${toFixed(totalRub, 2)} ₽ по курсу ${toFixed(totalRub / total, 2)})`
+                        ? `(${toLocaleNumber(totalRub)} ₽ по курсу ${toLocaleNumber(totalRub / total)})`
                         : null
                     }
                 </span>
@@ -160,9 +160,9 @@ const PaymentForm: React.FC<Props> = (props) => {
             <p>
                 <span>Стоимость оформления:</span>
                 <span>
-                   <b> {toFixed(additionalTotal, 2)} ₽ </b>
+                   <b> {toLocaleNumber(additionalTotal)} ₽ </b>
                     {additionalTotal > 0 && totalRub > 0
-                        ? `(+${toFixed(additionalTotal / totalRub, 2)} ₽)`
+                        ? `(+${toLocaleNumber(additionalTotal / totalRub)} ₽)`
                         : null
                     }
                 </span>

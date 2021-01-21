@@ -1,6 +1,6 @@
 // React
 import React from 'react'
-import {toFixed} from '../../../../utils'
+import {toFixed, toLocaleNumber} from '../../../../utils'
 
 // Typescript
 import {IProduct} from '../../../Products/IProducts'
@@ -31,10 +31,10 @@ const TableItems: React.FC<Props> = (props) => {
             <td>{item.autolongNumber}</td>
             <td>{item.quantity}</td>
             <td>{toFixed(+item.price.cny, 2)} ¥</td>
-            <td>{priceRub ? `${toFixed(priceRub, 2)} ₽` : '-'}</td>
-            <td>{delivery ? `${toFixed(delivery, 2)} ₽` : '-'}</td>
-            <td>{additionalSpending ? `${toFixed(additionalSpending, 2)} ₽` : '-'}</td>
-            <td>{totalPrice ? `${toFixed(totalPrice, 2)} ₽` : '-'}</td>
+            <td>{priceRub ? `${toLocaleNumber(priceRub)} ₽` : '-'}</td>
+            <td>{delivery ? `${toLocaleNumber(delivery)} ₽` : '-'}</td>
+            <td>{additionalSpending ? `${toLocaleNumber(additionalSpending)} ₽` : '-'}</td>
+            <td>{totalPrice ? `${toLocaleNumber(totalPrice)} ₽` : '-'}</td>
         </tr>
     })}
     </tbody>
