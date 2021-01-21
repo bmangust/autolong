@@ -16,6 +16,7 @@ import {paymentHandler} from '../../../store/actions/orders'
 // App
 import Modal from '../../UI/Modal/Modal'
 import Input from '../../UI/Inputs/Input/Input'
+import {floatRegExp} from '../../../utils'
 
 type Props = {
     orderId: number
@@ -53,7 +54,7 @@ const PaymentModal: React.FC<Props> = (props) => {
 
     const onChangeHandler = (e) => {
         const value = +e.target.value
-        if (value >= 0) {
+        if (floatRegExp.test(String(value))) {
             setPaymentAmount(value)
         }
     }
@@ -75,9 +76,11 @@ const PaymentModal: React.FC<Props> = (props) => {
                 onChange={(e) => setPaymentType(e.target.value)}
             />
             <Input
+                min='0'
                 type='number'
-                value={paymentAmount}
-                name='paymentAmount' label='CNY'
+                value={paymentAmount.toString()}
+                name='paymentAmount'
+                label='CNY'
                 onChange={(e => onChangeHandler(e))}
             />
         </div>

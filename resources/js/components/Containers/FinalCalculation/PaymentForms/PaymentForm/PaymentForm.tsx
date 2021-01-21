@@ -14,7 +14,7 @@ import classes from './PaymentForm.module.css'
 import {setOrderPayment} from '../../../../../store/actions/containers'
 
 // App
-import {timeConverter, toFixed} from '../../../../../utils'
+import {floatRegExp, timeConverter, toFixed} from '../../../../../utils'
 import Input from '../../../../UI/Inputs/Input/Input'
 
 type Props = {
@@ -53,8 +53,6 @@ const PaymentForm: React.FC<Props> = (props) => {
             setDeliveryPrice(deliveryPriceOrder)
         }
     }, [deliveryPriceOrder])
-
-    const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')
 
     const onChangeHandler = (e) => {
         const value = +e.target.value

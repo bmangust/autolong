@@ -47,6 +47,8 @@ export function substringOut(value: string, length: number) {
     }
 }
 
+export const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')
+
 /**
  * Convert timestamp to m.d.Y by timestamp
  * @param timestamp

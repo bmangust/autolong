@@ -10,6 +10,7 @@ import classes from './PaymentForms.module.css'
 // App
 import Input from '../../../UI/Inputs/Input/Input'
 import PaymentForm from './PaymentForm/PaymentForm'
+import {floatRegExp} from '../../../../utils'
 
 type Props = {
     orders: IOrder[]
@@ -30,10 +31,7 @@ const PaymentForms: React.FC<Props> = (props) => {
 
     const onChangeHandler = (e) => {
         const value = +e.target.value
-        if (value < 0) {
-            setDeliveryPriceState(0)
-        }
-        if (value >= 0) {
+        if (floatRegExp.test(String(value))) {
             setDeliveryPriceState(value)
         }
     }
@@ -45,7 +43,8 @@ const PaymentForms: React.FC<Props> = (props) => {
             <div className="row">
                 <Input
                     type='number'
-                    value={deliveryPriceState}
+                    min='0'
+                    value={deliveryPriceState.toString()}
                     onChange={(e) => onChangeHandler(e)}
                     label='Оплата за доставку контейнера (руб.)'
                     name='deliveryPrice'
