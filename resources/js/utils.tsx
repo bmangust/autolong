@@ -81,9 +81,7 @@ export function moneyFormatter(price: IProductPrice, without: string[] = []) {
                    }
                    return (
                        <span key={key}>
-                       {val ? toLocaleNumber(parseFloat(val))
-                           : toLocaleNumber(val)}
-                           {getSymbolFromCurrency(key)}
+                       {val ? toLocaleNumber(parseFloat(val)) : toLocaleNumber(val)} {getSymbolFromCurrency(key)}
                    </span>
                    )
                })}
