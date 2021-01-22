@@ -189,11 +189,20 @@ class ProductController extends Controller
     public function indexVendorCode(Request $request)
     {
         $request->validate([
-                'vendorCode' => 'required'
+                'vendorCode' => 'required',
+                'isAutolongNumber' => 'required'
         ]);
-        $vendorCode = $request->input('vendorCode');
-        return response()->json(ProductWithRelationshipsResource::collection(Product::withoutTrashed()
-                ->whereVendorCode($vendorCode)
-                ->orderBy('created_at', 'asc')->get(), 200));
+        if ($request->input('isAutolongNumber')) {
+            $products = ProductWithRelationshipsResource::collection(Product::withoutTrashed()
+                    ->whereAutolongNumber($request->input('isAutolongNumber'))
+                    ->orderBy('created_at', 'asc')
+                    ->get());
+        } else {
+            $products = ProductWithRelationshipsResource::collection(Product::withoutTrashed()
+                    ->whereVendorCode($request->input('vendorCode'))
+                    ->orderBy('created_at', 'asc')
+                    ->get());
+        }
+        return response()->json($products , 200);
     }
 }
