@@ -24,15 +24,22 @@ import {
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
 import SvgPrices from '../../components/UI/iconComponents/Prices'
+import InputCheckbox from '../../components/UI/Inputs/InputCheckbox/InputCheckbox'
+import Form from '../../components/UI/Form/Form'
+
+interface IFormData {
+    isAutolongNumber: 1 | 0
+    vendorCode: string
+}
 
 const Compare = () => {
     const dispatch = useDispatch()
-
     const {register, handleSubmit} = useForm()
-
     const compareSubmitHandler =
-        handleSubmit((formValues) => {
-            dispatch(fetchCompareProductsByVendorCode(formValues))
+        handleSubmit((formValues: IFormData) => {
+            const data = formValues
+            data.isAutolongNumber = data.isAutolongNumber ? 1 : 0
+            dispatch(fetchCompareProductsByVendorCode(data))
         })
 
     const {compareProducts, compareLoading, compareError} = useSelector(
@@ -116,11 +123,11 @@ const Compare = () => {
     }
 
     return <>
-        <form onSubmit={compareSubmitHandler}>
+        <Form onSubmit={compareSubmitHandler}>
             <div className='card mb-3'>
                 <div className='card-body'>
                     <div className='row'>
-                        <div className='col-lg-7'>
+                        <div className='col-lg-5'>
                             <label htmlFor='articles'>
                                 Введите артикул товара для сравнения
                             </label>
@@ -130,7 +137,13 @@ const Compare = () => {
                                 placeholder='Артикул товара для сравнения'
                             />
                         </div>
-                        <div className="col-lg-5">
+                        <div className="col-lg-3 mt-auto">
+                            <InputCheckbox
+                                label='Поиск по внутреннему коду'
+                                name='isAutolongNumber'
+                            />
+                        </div>
+                        <div className="col-lg-4">
                             <button
                                 className='btn btn-success mt-4'
                                 type='submit'>
@@ -140,7 +153,7 @@ const Compare = () => {
                     </div>
                 </div>
             </div>
-        </form>
+        </Form>
         {table}
     </>
 }

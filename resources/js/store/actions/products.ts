@@ -242,32 +242,31 @@ export const acceptProductById = (id, nameRu) => async dispatch => {
         })
 }
 
-export const fetchCompareProductsByVendorCode = (vendorCode) =>
-    async dispatch => {
-        await dispatch({
-            type: FETCH_COMPARE_PRODUCTS_START
+export const fetchCompareProductsByVendorCode = (data) => async dispatch => {
+    await dispatch({
+        type: FETCH_COMPARE_PRODUCTS_START
+    })
+    const url = '/api/products/getbyvendorcode'
+    axios
+        .post(url, data)
+        .then((answer) => {
+            dispatch({
+                type: FETCH_COMPARE_PRODUCTS_SUCCESS,
+                payload: answer.data
+            })
+            if (!answer.data.length) {
+                toast.warn(`Товары с артикулом ${data.vendorCode} не найдены`)
+            }
         })
-        const url = '/api/products/getbyvendorcode'
-        axios
-            .post(url, {vendorCode})
-            .then((answer) => {
+        .catch((error: AxiosError) => {
+            if (error.response?.status === 400) {
+                toast.warn(error.response.data)
+            } else {
                 dispatch({
-                    type: FETCH_COMPARE_PRODUCTS_SUCCESS,
-                    payload: answer.data
+                    type: FETCH_COMPARE_PRODUCTS_ERROR,
+                    payload: error.message
                 })
-                if (!answer.data.length) {
-                    toast.warn(`Товары с артикулом ${vendorCode.vendorCode} не найдены`)
-                }
-            })
-            .catch((error: AxiosError) => {
-                if (error.response?.status === 400) {
-                    toast.warn(error.response.data)
-                } else {
-                    dispatch({
-                        type: FETCH_COMPARE_PRODUCTS_ERROR,
-                        payload: error.message
-                    })
-                    toast.error(error.message)
-                }
-            })
-    }
+                toast.error(error.message)
+            }
+        })
+}
