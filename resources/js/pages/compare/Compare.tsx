@@ -129,12 +129,12 @@ const Compare = () => {
                     <div className='row'>
                         <div className='col-lg-5'>
                             <label htmlFor='articles'>
-                                Введите артикул товара для сравнения
+                                Введите артикул/внутренний код товара для сравнения
                             </label>
                             <input
                                 ref={register({required: true})}
                                 name='vendorCode'
-                                placeholder='Артикул товара для сравнения'
+                                placeholder='Артикул товара/внутренний код для сравнения'
                             />
                         </div>
                         <div className="col-lg-3 mt-auto">
