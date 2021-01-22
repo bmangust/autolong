@@ -140,6 +140,7 @@ const Compare = () => {
                         <div className="col-lg-3 mt-auto">
                             <InputCheckbox
                                 ref={register}
+                                defaultChecked={true}
                                 label='Поиск по внутреннему коду'
                                 name='isAutolongNumber'
                             />
