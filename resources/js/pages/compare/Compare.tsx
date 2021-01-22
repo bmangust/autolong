@@ -38,7 +38,7 @@ const Compare = () => {
     const compareSubmitHandler =
         handleSubmit((formValues: IFormData) => {
             const data = formValues
-            data.isAutolongNumber = data.isAutolongNumber ? 1 : 0
+            data.isAutolongNumber = formValues.isAutolongNumber ? 1 : 0
             dispatch(fetchCompareProductsByVendorCode(data))
         })
 
@@ -139,6 +139,7 @@ const Compare = () => {
                         </div>
                         <div className="col-lg-4 mt-auto">
                             <InputCheckbox
+                                ref={register}
                                 label='Поиск по внутреннему коду'
                                 name='isAutolongNumber'
                             />
