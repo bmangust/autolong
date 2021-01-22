@@ -17,6 +17,7 @@ import {fetchProviders} from '../../../store/actions/providers'
 // App
 import OrderItems from '../OrderItems/OrderItems'
 import {currencyConversion} from '../../../utils'
+import Form from '../../UI/Form/Form'
 
 interface ICreateOrderData {
     name: string
@@ -114,7 +115,7 @@ const OrderForm: React.FC = () => {
     })
 
     return <>
-        <form onSubmit={getProductSubmitHandler}>
+        <Form onSubmit={getProductSubmitHandler}>
             <div className='card mb-3'>
                 <div className='card-body'>
                     <div className='row'>
@@ -136,7 +137,7 @@ const OrderForm: React.FC = () => {
                     </button>
                 </div>
             </div>
-        </form>
+        </Form>
 
         <form onSubmit={orderFormSubmitHandler}>
             <div className='card mb-3'>

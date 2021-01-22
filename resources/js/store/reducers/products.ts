@@ -25,6 +25,7 @@ import {
 
 // Typescript
 import {
+    IProduct,
     IProductsActionTypes,
     IProductsState
 } from '../../components/Products/IProducts'
@@ -112,10 +113,29 @@ export default function productsReducer(
             return {
                 ...state, compareLoading: true
             }
-        case FETCH_COMPARE_PRODUCTS_SUCCESS:
-            return {
-                ...state, compareLoading: false, compareProducts: action.payload
+        case FETCH_COMPARE_PRODUCTS_SUCCESS: {
+            const data: IProduct[] = []
+            const actionData = action.payload
+            if (actionData.length && actionData[0].orders) {
+                actionData[0].orders?.forEach((order, index) => {
+                    const dataToPush = {...actionData[0]}
+                    dataToPush.fakeId = dataToPush.id + index
+                    dataToPush.price = order.items.find(
+                        (item) => actionData[0].id === item.productId)?.price || actionData[0].price
+                    dataToPush.providerId = order.providerId
+                    const isAdd: boolean[] = []
+                    data.forEach((item) => {
+                        isAdd.push(item.price.cny !== dataToPush.price.cny)
+                    })
+                    if (isAdd.every(item => item)) {
+                        data.push(dataToPush)
+                    }
+                })
             }
+            return {
+                ...state, compareLoading: false, compareProducts: data
+            }
+        }
         case FETCH_COMPARE_PRODUCTS_ERROR:
             return {
                 ...state, compareLoading: false, error: action.payload

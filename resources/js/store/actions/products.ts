@@ -256,8 +256,7 @@ export const fetchCompareProductsByVendorCode = (vendorCode) =>
                     payload: answer.data
                 })
                 if (!answer.data.length) {
-                    toast.warn(`Товары с артикулом
-                ${vendorCode.vendorCode} не найдены`)
+                    toast.warn(`Товары с артикулом ${vendorCode.vendorCode} не найдены`)
                 }
             })
             .catch((error: AxiosError) => {

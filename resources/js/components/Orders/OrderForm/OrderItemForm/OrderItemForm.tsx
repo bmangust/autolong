@@ -19,6 +19,7 @@ import classes from './OrderItemForm.module.css'
 import OrderItems from '../../OrderItems/OrderItems'
 import {currencyConversion} from '../../../../utils'
 import {SanctumContext} from '../../../../Sanctum'
+import Form from '../../../UI/Form/Form'
 
 interface ICreateOrderData {
     name: string
@@ -86,7 +87,7 @@ const OrderItemForm: React.FC<{
     })
 
     return <div className="card mb-3">
-        <form onSubmit={orderFormSubmitHandler}>
+        <Form onSubmit={orderFormSubmitHandler}>
             <div className="card-body mb-4 pb-0">
                 <h2 className={classes.provider}>
                     Поставщик:
@@ -163,7 +164,7 @@ const OrderItemForm: React.FC<{
                     Сформировать
                 </button>
             </div>
-        </form>
+        </Form>
     </div>
 }
 

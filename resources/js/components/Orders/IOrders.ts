@@ -59,6 +59,7 @@ export interface IOrder {
     sandboxFiles: ISandboxFile[]
     price: IProductPrice
     provider: IProvider
+    providerId: number
     createdAt: number
     updatedAt: number
 }

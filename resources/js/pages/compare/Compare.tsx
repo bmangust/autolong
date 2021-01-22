@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useEffect} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
@@ -8,9 +8,11 @@ import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Typescript
 import {IProductsRootState} from '../../components/Products/IProducts'
+import {IProvidersRootState} from '../../components/Providers/IProviders'
 
 // Actions
 import {fetchCompareProductsByVendorCode} from '../../store/actions/products'
+import {fetchProviders} from '../../store/actions/providers'
 
 // App
 import AutoTable from '../../components/UI/AutoTable/AutoTable'
@@ -26,25 +28,33 @@ import SvgPrices from '../../components/UI/iconComponents/Prices'
 const Compare = () => {
     const dispatch = useDispatch()
 
-    const {
-        register, handleSubmit
-    } = useForm()
+    const {register, handleSubmit} = useForm()
 
     const compareSubmitHandler =
         handleSubmit((formValues) => {
             dispatch(fetchCompareProductsByVendorCode(formValues))
         })
 
-    const {compareProducts, compareLoading, error} = useSelector(
+    const {compareProducts, compareLoading, compareError} = useSelector(
         (state: IProductsRootState) => ({
-            error: state.productsState.error,
+            compareError: state.productsState.error,
             compareProducts: state.productsState.compareProducts,
             compareLoading: state.productsState.compareLoading
         })
     )
 
-    const providerFormatter = (provider) => {
-        return provider.name
+    const {providers, loading, error} = useSelector((state: IProvidersRootState) => ({
+        providers: state.providersState.providers,
+        loading: state.providersState.loading,
+        error: state.providersState.error
+    }))
+
+    useEffect(() => {
+        dispatch(fetchProviders())
+    }, [dispatch])
+
+    const providerFormatter = (providerId) => {
+        return providers.find((provider) => provider.id === providerId)?.name || providerId
     }
 
     const columns: ColumnDescription[] = [
@@ -66,13 +76,14 @@ const Compare = () => {
                 nameToLinkFormatter(nameRu, row, 'product')
         },
         {
-            dataField: 'provider',
+            dataField: 'providerId',
             text: 'Поставщик',
             formatter: providerFormatter
         },
         {
             dataField: 'price',
             text: 'Цена',
+            sort: true,
             classes: 'price',
             formatter: (price) => moneyFormatter(price, ['rub', 'usd'])
         }
@@ -96,11 +107,11 @@ const Compare = () => {
         </div>
     }
 
-    if (error) {
+    if (compareError || error) {
         table = <Error/>
     }
 
-    if (compareLoading) {
+    if (compareLoading || loading) {
         table = <Loader/>
     }
 

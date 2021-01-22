@@ -47,6 +47,8 @@ export function substringOut(value: string, length: number) {
     }
 }
 
+export const floatRegExp = new RegExp('^[+-]?([0-9]+([.][0-9]*)?|[.][0-9]+)$')
+
 /**
  * Convert timestamp to m.d.Y by timestamp
  * @param timestamp
@@ -79,14 +81,16 @@ export function moneyFormatter(price: IProductPrice, without: string[] = []) {
                    }
                    return (
                        <span key={key}>
-                       {val ? parseFloat(val)
-                           .toFixed(2) : +val}
-                           {getSymbolFromCurrency(key)}
+                       {val ? toLocaleNumber(parseFloat(val)) : toLocaleNumber(val)} {getSymbolFromCurrency(key)}
                    </span>
                    )
                })}
         </span>
     )
+}
+
+export const toLocaleNumber = (val: number) => {
+    return val.toLocaleString('ru-RU', {maximumFractionDigits: 2})
 }
 
 export function getOrderStatusName(key: string) {

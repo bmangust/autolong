@@ -10,7 +10,7 @@ import classes from './FinalCalculation.module.css'
 // App
 import Modal from '../../UI/Modal/Modal'
 import PaymentForms from './PaymentForms/PaymentForms'
-import {toFixed} from '../../../utils'
+import {toLocaleNumber} from '../../../utils'
 
 type Props = {
     orders: IOrder[]
@@ -41,19 +41,19 @@ const FinalCalculation: React.FC<Props> = (props) => {
             <ul className={classes.list}>
                 <li>
                     <p className={classes.title}>Доставка</p>
-                    <p>{deliveryPrice ? `${toFixed(deliveryPrice, 2)} ₽` : '-'}</p>
+                    <p>{deliveryPrice ? `${toLocaleNumber(deliveryPrice)} ₽` : '-'}</p>
                 </li>
                 <li>
                     <p className={classes.title}>Общая стоимость</p>
-                    <p>{totalAmount ? `${toFixed(totalAmount, 2)} ₽` : '-'}</p>
+                    <p>{totalAmount ? `${toLocaleNumber(totalAmount)} ₽` : '-'}</p>
                 </li>
                 <li>
                     <p className={classes.title}>Стоимость доставки</p>
-                    <p>{deliveryAmount ? `${toFixed(deliveryAmount, 2)} ₽` : '-'}</p>
+                    <p>{deliveryAmount ? `${toLocaleNumber(deliveryAmount)} ₽` : '-'}</p>
                 </li>
                 <li>
                     <p className={classes.title}>Итого таможня</p>
-                    <p>{totalCustoms ? `${toFixed(totalCustoms, 2)} ₽` : '-'}</p>
+                    <p>{totalCustoms ? `${toLocaleNumber(totalCustoms)} ₽` : '-'}</p>
                 </li>
             </ul>
             <button onClick={() => setIsShow(true)} className='btn btn-success'>Изменить данные</button>
