@@ -194,7 +194,7 @@ class ProductController extends Controller
         ]);
         if ($request->input('isAutolongNumber')) {
             $products = ProductWithRelationshipsResource::collection(Product::withoutTrashed()
-                    ->whereAutolongNumber($request->input('isAutolongNumber'))
+                    ->whereAutolongNumber($request->input('vendorCode'))
                     ->orderBy('created_at', 'asc')
                     ->get());
         } else {
