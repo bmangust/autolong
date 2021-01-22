@@ -137,13 +137,13 @@ const Compare = () => {
                                 placeholder='Артикул товара/внутренний код'
                             />
                         </div>
-                        <div className="col-lg-3 mt-auto">
+                        <div className="col-lg-4 mt-auto">
                             <InputCheckbox
                                 label='Поиск по внутреннему коду'
                                 name='isAutolongNumber'
                             />
                         </div>
-                        <div className="col-lg-4">
+                        <div className="col-lg-3">
                             <button
                                 className='btn btn-success mt-4'
                                 type='submit'>
