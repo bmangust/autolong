@@ -5,13 +5,10 @@ namespace App\Http\Controllers;
 use App\AutolongRuProduct;
 use App\Connections\Sandbox1c;
 use App\ExchangeRate;
-use App\Http\Resources\ProductResource;
-use App\Log;
-use Illuminate\Http\Request;
 use App\Http\Resources\ProductWithRelationshipsResource;
+use App\Log;
 use App\Product;
-use Illuminate\Support\Facades\Redis;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
@@ -192,14 +189,15 @@ class ProductController extends Controller
                 'vendorCode' => 'required',
                 'isAutolongNumber' => 'required'
         ]);
+        $code = $request->input('vendorCode');
         if ($request->input('isAutolongNumber')) {
             $products = ProductWithRelationshipsResource::collection(Product::withoutTrashed()
-                    ->whereAutolongNumber($request->input('vendorCode'))
+                    ->whereAutolongNumber($code)
                     ->orderBy('created_at', 'asc')
                     ->get());
         } else {
             $products = ProductWithRelationshipsResource::collection(Product::withoutTrashed()
-                    ->whereVendorCode($request->input('vendorCode'))
+                    ->whereVendorCode($code)
                     ->orderBy('created_at', 'asc')
                     ->get());
         }
