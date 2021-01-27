@@ -73,7 +73,7 @@ const CountryCitiesForm: React.FC<{
             <div className="row mb-3">
                 <Input
                     placeholder={placeholder}
-                    type='name'
+                    type='text'
                     error={!!errors.name}
                     helperText={errors?.name?.message}
                     ref={register}
