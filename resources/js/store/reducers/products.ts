@@ -123,6 +123,7 @@ export default function productsReducer(
                     dataToPush.price = order.items.find(
                         (item) => actionData[0].id === item.productId)?.price || actionData[0].price
                     dataToPush.providerId = order.providerId
+                    dataToPush.orders = [order]
                     const isAdd: boolean[] = []
                     data.forEach((item) => {
                         isAdd.push(item.price.cny !== dataToPush.price.cny)

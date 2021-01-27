@@ -17,9 +17,10 @@ import {fetchProviders} from '../../store/actions/providers'
 // App
 import AutoTable from '../../components/UI/AutoTable/AutoTable'
 import {
+    getPaymentStatusName,
     imgFormatter,
     moneyFormatter,
-    nameToLinkFormatter
+    nameToLinkFormatter, timeConverter
 } from '../../utils'
 import Loader from '../../components/UI/Loader/Loader'
 import Error from '../../components/UI/Error/Error'
@@ -64,6 +65,23 @@ const Compare = () => {
         return providers.find((provider) => provider.id === providerId)?.name || providerId
     }
 
+    // const moneyWithTotalFormatter = (price, row) => {
+    //     const total = +row.orders[0].totalPaymentHistory
+    //     const totalRub = +row.orders[0].totalPaymentHistoryRub
+    //     const totalRubCourse = total ? totalRub / total : 0
+    //     const priceRub = totalRubCourse * +price.cny
+    //     const additionalTotal = (+row.orders[0].refusalAmount || 0) + (+row.orders[0].orderingAmount || 0)
+    //         + (+row.orders[0].customsAmount || 0)
+    //     const orderingPrice = totalRub ? additionalTotal / totalRub : 0
+    //     let delivery
+    //     if (totalRub) {
+    //         delivery = priceRub * totalAmount
+    //     }
+    //     const additionalSpending = priceRub * orderingPrice
+    //     const totalPrice = priceRub + delivery + additionalSpending
+    //     return `${price.cny} ${totalPrice}`
+    // }
+
     const columns: ColumnDescription[] = [
         {
             dataField: 'image',
@@ -96,8 +114,65 @@ const Compare = () => {
         }
     ]
 
+    const idFormatter = (id, row) => {
+        if (!row.orders.length) {
+            return null
+        }
+        return row.orders[0].id
+    }
+
+    const nameFormatter = (name, row) => {
+        if (!row.orders.length) {
+            return null
+        }
+        return row.orders[0].name
+    }
+
+    const itemsFormatter = (items, row) => {
+        if (!row.orders.length) {
+            return null
+        }
+        return row.orders[0].items.length
+    }
+
+    const expandRowTable = [
+        {
+            dataField: 'id',
+            text: 'ID',
+            headerStyle: {width: '85px'},
+            formatter: idFormatter
+        },
+        {
+            dataField: 'name',
+            text: 'Название',
+            headerStyle: {width: '270px'},
+            formatter: nameFormatter
+        },
+        {
+            dataField: 'hsCode',
+            text: 'Кол.наим.',
+            formatter: itemsFormatter
+        },
+        {
+            dataField: 'statusPayment',
+            text: 'Статус оплаты',
+            headerStyle: {width: '250px'},
+            formatter: (statusPayment, row) => row.orders.length
+                ? getPaymentStatusName(row.orders[0].statusPayment)
+                : null
+        },
+        {
+            dataField: 'createdAt',
+            text: 'Создан',
+            formatter: (createdAt, row) => row.orders.length
+                ? timeConverter(row.orders[0].createdAt)
+                : null
+        }
+    ]
+
     let table = <AutoTable
-        keyField='id'
+        expandRowTable={expandRowTable}
+        keyField='fakeId'
         header={false}
         data={compareProducts}
         columns={columns}
@@ -140,6 +215,7 @@ const Compare = () => {
                         <div className="col-lg-3 mt-auto">
                             <InputCheckbox
                                 ref={register}
+                                defaultChecked={true}
                                 label='Поиск по внутреннему коду'
                                 name='isAutolongNumber'
                             />
