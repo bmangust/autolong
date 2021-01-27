@@ -33,7 +33,7 @@ class CountryController extends Controller
      */
     public function index()
     {
-        $countries = Country::with('providers')->get();
+        $countries = Country::with(['providers.country'])->get();
         return response()->json(CountryWithRelationshipsResource::collection($countries), 200);
     }
 

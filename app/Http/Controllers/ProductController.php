@@ -193,11 +193,29 @@ class ProductController extends Controller
         if ($request->input('isAutolongNumber')) {
             $products = ProductWithRelationshipsResource::collection(Product::withoutTrashed()
                     ->whereAutolongNumber($code)
+                    ->with([
+                            'provider',
+                            'provider.country',
+                            'catalog.tags',
+                            'sandboxFiles',
+                            'orderItems.order.orderItems.product',
+                            'orderItems.order.city',
+                            'orderItems.order.container',
+                    ])
                     ->orderBy('created_at', 'asc')
                     ->get());
         } else {
             $products = ProductWithRelationshipsResource::collection(Product::withoutTrashed()
                     ->whereVendorCode($code)
+                    ->with([
+                            'provider',
+                            'provider.country',
+                            'catalog.tags',
+                            'sandboxFiles',
+                            'orderItems.order.orderItems.product',
+                            'orderItems.order.city',
+                            'orderItems.order.container',
+                    ])
                     ->orderBy('created_at', 'asc')
                     ->get());
         }

@@ -22,6 +22,7 @@ class OrderResource extends JsonResource
                 'arrivalDate' => $this->arrival_date,
                 'city' => new CityResource($this->city),
                 'statusPayment' => $this->status_payment,
+                'container' => new ContainerResource($this->container),
                 'packingList' => $this->checkDataForPackingList(),
                 'providerId' => $this->provider_id,
                 'items' => OrderItemResource::collection($this->orderItems),
