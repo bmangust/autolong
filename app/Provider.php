@@ -95,8 +95,7 @@ class Provider extends Model
                         'sandboxFiles',
                         'orders.orderItems',
                         'orders.orderItems.product',
-                        'orders.city',
-                        'orders.container'
+                        'orders.city'
                 ])
                 ->orderBy('name', 'asc')->get());
         Redis::set($cacheKey, json_encode($providers), 'EX', self::PROVIDERS_CACHE_TTL);

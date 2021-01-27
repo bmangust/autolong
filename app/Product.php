@@ -143,7 +143,6 @@ class Product extends Model
                         'sandboxFiles',
                         'orderItems.order.orderItems.product',
                         'orderItems.order.city',
-                        'orderItems.order.container',
                 ])->orderByDesc('created_at')->get());
         Redis::set($cacheKey, json_encode($products), 'EX', self::PRODUCTS_CACHE_TTL);
         return $products;

@@ -35,7 +35,6 @@ class ContainerController extends Controller
     {
         $containers = Container::with([
                 'orders.city',
-                'orders.container',
                 'orders.orderItems.product',
                 'city',
                 'sandboxFiles'])->orderByDesc('updated_at')->get();
