@@ -185,7 +185,10 @@ interface IDeleteProductById {
 
 interface IUpdateProductImage {
     type: typeof UPDATE_PRODUCT_IMAGE
-    payload: IProduct
+    payload: {
+        id: number
+        url: string
+    }
 }
 
 interface IClearVendorProducts {

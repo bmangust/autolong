@@ -18,6 +18,7 @@ import {
     FETCH_PRODUCTS_START,
     FETCH_PRODUCTS_SUCCESS,
     UPDATE_PRODUCT_ERROR,
+    UPDATE_PRODUCT_IMAGE,
     UPDATE_PRODUCT_START,
     UPDATE_PRODUCT_SUCCESS
 } from '../actions/actionTypes'
@@ -65,7 +66,6 @@ export default function productsReducer(
                 ...state, loading: true
             }
         case FETCH_PRODUCT_SUCCESS:
-        case 'UPDATE_PRODUCT_IMAGE':
             return {
                 ...state, loading: false, product: action.payload
             }
@@ -149,6 +149,10 @@ export default function productsReducer(
             return {
                 ...state, products: state.products.filter(({id}) =>
                     id !== action.payload), product: null
+            }
+        case UPDATE_PRODUCT_IMAGE:
+            return {
+                ...state
             }
         case 'LOCATION_CHANGE':
             return {
