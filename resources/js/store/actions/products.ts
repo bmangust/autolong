@@ -204,7 +204,7 @@ export const deleteProductById = (id, redirect = '') => async dispatch => {
         })
 }
 
-export const updateProductImageById = (id, data) => async dispatch => {
+export const updateProductImageById = (id, data, redirect = '') => async dispatch => {
     const formData = new FormData()
     Object.entries(data)
         .forEach(([key, val]) => {
@@ -222,6 +222,9 @@ export const updateProductImageById = (id, data) => async dispatch => {
                 type: UPDATE_PRODUCT_IMAGE,
                 payload: {url: answer.data, id}
             })
+            if (redirect) {
+                dispatch(push(redirect))
+            }
         })
 }
 
