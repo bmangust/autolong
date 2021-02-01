@@ -32,10 +32,8 @@ const OrderItems: React.FC<IOrderItems> = (
     }
     return onChange && onDelete && onChangePrice
         ? items.map((item: IProduct) => (
-            <div
-                key={item.id + item.nameRu}
-                className={classes.products + ' row mb-2'}
-            >
+            <div key={item.id + item.nameRu}
+                 className={classes.products + ' row mb-2'}>
                 <div className={classes.productImg + ' col-xl-1'}>
                     {imgFormatter(item.image, null, item.nameRu, 'pt-2')}
                 </div>
@@ -55,11 +53,11 @@ const OrderItems: React.FC<IOrderItems> = (
                 <div className='col-xl-4 pr-xl-0'>
                     <p className={classes.productPrices}>
                         <input
-                            min={0}
+                            min='0'
                             step={0.01}
                             className={classes.productCount + ' mt-0'}
                             name='priceCny'
-                            value={item.price.cny}
+                            value={item.price.cny.toString()}
                             onChange={(e) => onChangePrice(e, item.id, 'cny')}
                             type='number'
                         />
