@@ -60,7 +60,7 @@ class Product extends Model
         if (!is_null($this->image)) {
             $this->deleteImage();
         }
-        $path = Storage::disk('main')->putFileAs(self::IMAGE_DIRECTORY, $image, uniqid('', true) . '.' . $image->getClientOriginalExtension());
+        $path = Storage::disk('main')->putFileAs(self::IMAGE_DIRECTORY, $image, $this->id . '_' . $this->id . '.' . $image->getClientOriginalExtension());
         $this->image = '/' . $path;
         $this->save();
     }
