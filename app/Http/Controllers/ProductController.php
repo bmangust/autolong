@@ -127,7 +127,6 @@ class ProductController extends Controller
         $product->autolong_number = $request->input('autolongNumber');
         $product->hs_code = $request->input('hsCode') ?? 0;
         $product->save();
-        $product->refresh();
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }
 
