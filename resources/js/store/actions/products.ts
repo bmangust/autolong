@@ -111,7 +111,7 @@ export const updateProduct = (id, data, redirect = '') => async dispatch => {
         type: UPDATE_PRODUCT_START
     })
     const url = `/api/products/${id}`
-    await axios
+    axios
         .put(url, data)
         .then((answer) => {
             dispatch({
@@ -215,7 +215,7 @@ export const updateProductImageById = (id, data) => async dispatch => {
             }
         })
     const url = `/api/products/${id}/updateimage`
-    await axios
+    axios
         .post(url, formData)
         .then((answer) => {
             dispatch({
