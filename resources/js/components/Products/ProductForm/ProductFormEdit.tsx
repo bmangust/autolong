@@ -108,12 +108,10 @@ const ProductFormEdit: React.FC<Props> = (props) => {
 
     const productFormSubmitHandler = handleSubmit((formValues: IEditProductData) => {
         formValues.providerId = formValues.providerId.value === 0 ? null : formValues.providerId.value
-        dispatch(updateProduct(product.id, formValues,
-            `/product/${product.id}`))
         if (formValues.imageFile[0]) {
-            dispatch(updateProductImageById(product.id,
-                {image: formValues.imageFile[0]}))
+            dispatch(updateProductImageById(product.id, {image: formValues.imageFile[0]}))
         }
+        dispatch(updateProduct(product.id, formValues, `/product/${product.id}`))
     })
 
     const onChangePrice = (e, currencyCode) => {

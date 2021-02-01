@@ -215,7 +215,7 @@ export const updateProductImageById = (id, data) => async dispatch => {
             }
         })
     const url = `/api/products/${id}/updateimage`
-    axios
+    await axios
         .post(url, formData)
         .then((answer) => {
             dispatch({
