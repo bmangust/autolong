@@ -66,6 +66,10 @@ const Compare = () => {
     }
 
     // const moneyWithTotalFormatter = (price, row) => {
+    //     let totalAmount = 0
+    //     row.orders[0].container && row.orders[0].container.orders && row.orders[0].container.orders.map((order) => {
+    //         totalAmount += order.totalPaymentHistoryRub
+    //     })
     //     const total = +row.orders[0].totalPaymentHistory
     //     const totalRub = +row.orders[0].totalPaymentHistoryRub
     //     const totalRubCourse = total ? totalRub / total : 0

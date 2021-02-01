@@ -142,6 +142,9 @@ const AutoTable: React.FC<IAutoTable> = (
         onSizePerPageChange: (sizePerPage) => {
             localStorage.setItem('autolong_size_per_page', sizePerPage)
         },
+        onPageChange: () => {
+            window.scrollTo(0, 0)
+        },
         sizePerPage: Number(localStorage.getItem('autolong_size_per_page')) || 10
     }
 
