@@ -111,7 +111,7 @@ export const updateProduct = (id, data, redirect = '') => async dispatch => {
         type: UPDATE_PRODUCT_START
     })
     const url = `/api/products/${id}`
-    axios
+    await axios
         .put(url, data)
         .then((answer) => {
             dispatch({
