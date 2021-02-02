@@ -83,14 +83,12 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
     }
     if (type === 'number') {
         inputCls.push(classes.number)
-    }
-
-    return (
-        <div className={classes.input}>
+        return <div className={classes.input}>
             {labelNode}
             <input
                 onKeyDown={(e) => onKeyDownHandler(e)}
                 type={type}
+                min='0'
                 pattern={pattern}
                 disabled={disabled || false}
                 className={inputCls.join(' ')}
@@ -98,7 +96,20 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
                 ref={ref as never}/>
             {errorNode}
         </div>
-    )
+    }
+
+    return <div className={classes.input}>
+        {labelNode}
+        <input
+            onKeyDown={(e) => onKeyDownHandler(e)}
+            type={type}
+            pattern={pattern}
+            disabled={disabled || false}
+            className={inputCls.join(' ')}
+            {...rest}
+            ref={ref as never}/>
+        {errorNode}
+    </div>
 })
 
 export default Input

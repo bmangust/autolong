@@ -422,8 +422,7 @@ const ProductItemForm: React.FC<Props> = (props) => {
                                     className='w-100'
                                     ref={register}
                                     type="number"
-                                    value={priceState.cny}
-                                    min={0}
+                                    value={priceState.cny.toString()}
                                     step={0.01}
                                     onChange={(e) => onChangePrice(e, 'cny')}
                                     placeholder="0"
@@ -444,8 +443,7 @@ const ProductItemForm: React.FC<Props> = (props) => {
                                     type="number"
                                     ref={register}
                                     onChange={(e) => onChangePrice(e, 'usd')}
-                                    value={priceState.usd}
-                                    min={0}
+                                    value={priceState.usd.toString()}
                                     step={0.01}
                                     className='w-100'
                                     placeholder="0"
@@ -462,8 +460,7 @@ const ProductItemForm: React.FC<Props> = (props) => {
                                     type="number"
                                     ref={register}
                                     onChange={(e) => onChangePrice(e, 'rub')}
-                                    value={priceState.rub}
-                                    min={0}
+                                    value={priceState.rub.toString()}
                                     step={0.01}
                                     className='w-100'
                                     placeholder="0"

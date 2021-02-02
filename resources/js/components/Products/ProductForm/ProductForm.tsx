@@ -222,8 +222,7 @@ const ProductForm: React.FC = () => {
                                                    )}
                                                    onChange={(e) =>
                                                        onChangePrice(e, 'cny')}
-                                                   value={priceState.cny}
-                                                   min={0}
+                                                   value={priceState.cny.toString()}
                                                    step={0.01}
                                                    type="number"
                                                    placeholder="0"/>
@@ -245,8 +244,7 @@ const ProductForm: React.FC = () => {
                                                 type="number"
                                                 onChange={(e) =>
                                                     onChangePrice(e, 'usd')}
-                                                value={priceState.usd}
-                                                min={0}
+                                                value={priceState.usd?.toString()}
                                                 step={0.01}
                                                 className='w-100'
                                                 placeholder="0"
@@ -254,34 +252,23 @@ const ProductForm: React.FC = () => {
                                             />
                                         </div>
                                         <div className='col-xl-2 col-1 pl-0'>
-                                    <span
-                                        className='priceSymbol text-main
-                                         font-weight-bold'>
-                                    $
-                                    </span>
+                                            <span className='priceSymbol text-main font-weight-bold'>$</span>
                                         </div>
-                                        <div className='col-xl-4 col-lg-10
-                             col-11 mt-xl-0 mt-3'>
+                                        <div className='col-xl-4 col-lg-10 col-11 mt-xl-0 mt-3'>
                                             <input
                                                 name="priceRub"
                                                 type="number"
                                                 onChange={(e) =>
                                                     onChangePrice(e, 'rub')}
-                                                value={priceState.rub}
-                                                min={0}
+                                                value={priceState.rub?.toString()}
                                                 step={0.01}
                                                 className='w-100'
                                                 placeholder="0"
                                                 disabled
                                             />
                                         </div>
-                                        <div className='col-xl-2 col-1
-                                         pl-0 mt-xl-0 mt-3'>
-                                    <span
-                                        className='priceSymbol text-main
-                                        font-weight-bold'>
-                                        ₽
-                                    </span>
+                                        <div className='col-xl-2 col-1 pl-0 mt-xl-0 mt-3'>
+                                            <span className='priceSymbol text-main font-weight-bold'>₽</span>
                                         </div>
                                     </div>
 
