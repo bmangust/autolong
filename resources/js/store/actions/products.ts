@@ -188,14 +188,14 @@ export const fetchProductsByVendors = (data, published = 1) =>
             })
     }
 
-export const deleteProductById = (id, redirect = '') => async dispatch => {
+export const deleteProductById = (id, redirect = '', type = 'products') => async dispatch => {
     const url = `/api/products/${id}`
     axios
         .delete(url)
-        .then((answer) => {
+        .then(() => {
             dispatch({
                 type: DELETE_PRODUCT_BY_ID,
-                payload: id
+                payload: {type, id}
             })
             if (redirect) {
                 dispatch(push('/products'))

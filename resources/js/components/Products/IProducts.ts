@@ -180,7 +180,7 @@ interface IFetchProductPrice {
 
 interface IDeleteProductById {
     type: typeof DELETE_PRODUCT_BY_ID
-    payload: number
+    payload: { id: number, type: string }
 }
 
 interface IUpdateProductImage {
