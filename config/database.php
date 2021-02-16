@@ -86,7 +86,7 @@ return [
                 'mysql_old_autolong' => [
                         'driver' => 'mysql',
                         'url' => env('DATABASE_OLD_URL'),
-                        'host' => env('DB_OLD_HOST'),
+                        'host' => '185.148.39.175',
                         'port' => env('DB_OLD_PORT', '3306'),
                         'database' => env('DB_OLD_DATABASE', 'forge'),
                         'username' => env('DB_OLD_USERNAME', 'forge'),
