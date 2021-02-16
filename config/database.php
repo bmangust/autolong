@@ -85,12 +85,12 @@ return [
 
                 'mysql_old_autolong' => [
                         'driver' => 'mysql',
-                        'url' => env('DATABASE_URL'),
-                        'host' => env('DB_OLD_AUTOLONG_HOST', '127.0.0.1'),
-                        'port' => env('DB_OLD_AUTOLONG_PORT', '3306'),
-                        'database' => env('DB_OLD_AUTOLONG_DATABASE', 'forge'),
-                        'username' => env('DB_OLD_AUTOLONG_USERNAME', 'forge'),
-                        'password' => env('DB_OLD_AUTOLONG_PASSWORD', ''),
+                        'url' => env('DATABASE_OLD_URL'),
+                        'host' => env('DB_OLD_HOST', '127.0.0.1'),
+                        'port' => env('DB_OLD_PORT', '3306'),
+                        'database' => env('DB_OLD_DATABASE', 'forge'),
+                        'username' => env('DB_OLD_USERNAME', 'forge'),
+                        'password' => env('DB_OLD_PASSWORD', ''),
                         'unix_socket' => env('DB_SOCKET', ''),
                         'charset' => 'utf8mb4',
                         'collation' => 'utf8mb4_unicode_ci',
