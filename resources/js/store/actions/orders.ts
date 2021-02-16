@@ -27,7 +27,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg, timeConverter} from '../../utils'
-import {push} from 'connected-react-router'
+import {history} from '../../app'
 import {saveAs} from 'file-saver'
 import {fetchContainerById} from './containers'
 
@@ -89,7 +89,7 @@ export const createOrder = (data, redirect = '') => async dispatch => {
             })
             toast.success(createNotyMsg(answer.data.name, 'заказ создан'))
             if (redirect) {
-                dispatch(push(redirect))
+                history.push(redirect)
             }
         })
         .catch((error: AxiosError) => {

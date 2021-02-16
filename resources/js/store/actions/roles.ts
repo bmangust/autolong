@@ -15,7 +15,7 @@ import {
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
-import {push} from 'connected-react-router'
+import {history} from '../../app'
 
 export const fetchRoles = () => async dispatch => {
     await dispatch({
@@ -52,8 +52,8 @@ export const createRole = (data) => async dispatch => {
                 type: CREATE_ROLE_SUCCESS,
                 payload: answer.data
             })
-            dispatch(push('/settings/roles'))
             toast.success(createNotyMsg(answer.data.name, 'роль создана'))
+            history.push('/settings/roles')
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -100,8 +100,8 @@ export const updateRole = (data, id) => async dispatch => {
                 type: UPDATE_ROLE_SUCCESS,
                 payload: answer.data
             })
-            dispatch(push('/settings/roles'))
             toast.success(createNotyMsg(answer.data.name, 'роль обновлена'))
+            history.push('/settings/roles')
         })
         .catch((error: AxiosError) => {
             dispatch({

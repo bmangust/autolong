@@ -24,7 +24,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
-import {push} from 'connected-react-router'
+import {history} from '../../app'
 
 export const fetchProducts: (unpublished?: boolean) => (dispatch) =>
     Promise<void> = (unpublished = false) => async dispatch => {
@@ -94,7 +94,7 @@ export const createProduct = (data, redirect = '') => async dispatch => {
             })
             toast.success(createNotyMsg(data.nameRu, `товар ${data.autolongNumber || data.id} создан`))
             if (redirect) {
-                dispatch(push(redirect))
+                history.push(redirect)
             }
         })
         .catch((error: AxiosError) => {
@@ -120,7 +120,7 @@ export const updateProduct = (id, data, redirect = '') => async dispatch => {
             })
             toast.success(createNotyMsg(answer.data.nameRu, 'товар обновлен'))
             if (redirect) {
-                dispatch(push(redirect))
+                history.push(redirect)
             }
         })
         .catch((error: AxiosError) => {
@@ -198,7 +198,7 @@ export const deleteProductById = (id, redirect = '', type = 'products') => async
                 payload: {type, id}
             })
             if (redirect) {
-                dispatch(push('/products'))
+                history.push('/products')
             }
             toast.success('Товар удален')
         })
@@ -223,7 +223,7 @@ export const updateProductImageById = (id, data, redirect = '') => async dispatc
                 payload: {url: answer.data, id}
             })
             if (redirect) {
-                dispatch(push(redirect))
+                history.push(redirect)
             }
         })
 }
@@ -234,7 +234,7 @@ export const acceptProductById = (id, nameRu) => async dispatch => {
         .put(url, {publish: 1})
         .then((answer) => {
             toast.success(createNotyMsg(nameRu, 'товар опубликован'))
-            dispatch(push('/newproducts'))
+            history.push('/newproducts')
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {

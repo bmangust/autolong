@@ -15,7 +15,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
-import {push} from 'connected-react-router'
+import {history} from '../../app'
 
 export const fetchImporters = () => async dispatch => {
     await dispatch({
@@ -73,9 +73,8 @@ export const createImporter = (data, redirect = '') => async dispatch => {
                 type: CREATE_IMPORTER_SUCCESS,
                 payload: answer.data
             })
-            toast.success(
-                createNotyMsg(answer.data.nameRu, 'Импортер создан'))
-            dispatch(push(redirect))
+            toast.success(createNotyMsg(answer.data.nameRu, 'Импортер создан'))
+            history.push(redirect)
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -97,9 +96,8 @@ export const updateImporter = (data, id, redirect = '') => async dispatch => {
                 type: UPDATE_IMPORTER_SUCCESS,
                 payload: answer.data
             })
-            toast.success(
-                createNotyMsg(answer.data.nameRu, 'Импортер обновлен'))
-            dispatch(push(redirect))
+            toast.success(createNotyMsg(answer.data.nameRu, 'Импортер обновлен'))
+            history.push(redirect)
         })
         .catch((error: AxiosError) => {
             dispatch({
