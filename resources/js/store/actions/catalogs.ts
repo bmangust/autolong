@@ -14,7 +14,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
-import {push} from 'connected-react-router'
+import {history} from '../../app'
 
 export const fetchCatalogs = () => async dispatch => {
     await dispatch({
@@ -83,7 +83,7 @@ export const createCatalog = (data, redirect = '') => async dispatch => {
             })
             toast.success(
                 createNotyMsg(answer.data.name, 'каталог создан'))
-            dispatch(push(redirect))
+            history.push(redirect)
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -97,13 +97,13 @@ export const deleteCatalogById = (id) => async dispatch => {
     const url = `/api/catalogs/${id}`
     axios
         .delete(url)
-        .then((answer) => {
+        .then(() => {
             dispatch({
                 type: DELETE_CATALOG_SUCCESS,
                 payload: id
             })
             toast.success('Каталог удален')
-            dispatch(push('/catalogs'))
+            history.push('/catalogs')
         })
         .catch((error: AxiosError) => {
             toast.error(error.message)
@@ -123,7 +123,7 @@ export const updateCatalogFileById = (id, data) => async dispatch => {
     const url = `/api/catalogs/${id}/addfile`
     axios
         .post(url, formData)
-        .then((answer) => {
+        .then(() => {
             dispatch({
                 type: UPDATE_CATALOG_FILE
             })
@@ -140,9 +140,8 @@ export const updateCatalogById = (data, id, redirect = '') =>
                     type: UPDATE_CATALOG_SUCCESS,
                     payload: answer.data
                 })
-                toast.success(
-                    createNotyMsg(answer.data.name, 'каталог обновлен'))
-                dispatch(push(redirect))
+                toast.success(createNotyMsg(answer.data.name, 'каталог обновлен'))
+                history.push(redirect)
             })
             .catch((error: AxiosError) => {
                 toast.error(error.message)

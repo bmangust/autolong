@@ -21,7 +21,7 @@ import {
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
 import {createNotyMsg, timeConverter} from '../../utils'
-import {push} from 'connected-react-router'
+import {history} from '../../app'
 import {saveAs} from 'file-saver'
 
 export const fetchContainers = () => async dispatch => {
@@ -97,12 +97,12 @@ export const deleteContainerById = id => async dispatch => {
     const url = `/api/containers/${id}`
     axios
         .delete(url)
-        .then((answer) => {
+        .then(() => {
             dispatch({
                 type: DELETE_CONTAINER_BY_ID,
                 payload: id
             })
-            dispatch(push('/containers'))
+            history.push('/containers')
             toast.success('Контейнер удален')
         })
 }
@@ -122,7 +122,7 @@ export const createContainer = (data, redirect) => async dispatch => {
             })
             toast.success(
                 createNotyMsg(answer.data.name, 'контейнер создан'))
-            dispatch(push(redirect))
+            history.push(redirect)
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {

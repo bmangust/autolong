@@ -16,7 +16,7 @@ import {
 } from './actionTypes'
 import {toast} from 'react-toastify'
 import {createNotyMsg} from '../../utils'
-import {push} from 'connected-react-router'
+import {history} from '../../app'
 
 export const fetchProviders = () => async dispatch => {
     await dispatch({
@@ -72,9 +72,8 @@ export const createProvider = (data, redirect = '') => async dispatch => {
                 type: CREATE_PROVIDER_SUCCESS,
                 payload: answer.data
             })
-            toast.success(
-                createNotyMsg(answer.data.name, 'поставщик создан'))
-            dispatch(push(redirect))
+            toast.success(createNotyMsg(answer.data.name, 'поставщик создан'))
+            history.push(redirect)
         })
         .catch((error: AxiosError) => {
             dispatch({
@@ -97,9 +96,8 @@ export const updateProvider = (data, providerId, redirect = '') =>
                     type: UPDATE_PROVIDER_SUCCESS,
                     payload: answer.data
                 })
-                toast.success(
-                    createNotyMsg(answer.data.name, 'поставщик обновлен'))
-                dispatch(push(redirect))
+                toast.success(createNotyMsg(answer.data.name, 'поставщик обновлен'))
+                history.push(redirect)
             })
             .catch((error: AxiosError) => {
                 dispatch({
@@ -113,7 +111,7 @@ export const deleteProviderById = (id) => async dispatch => {
     const url = `/api/providers/${id}`
     axios
         .delete(url)
-        .then((answer) => {
+        .then(() => {
             dispatch({
                 type: DELETE_PROVIDER_BY_ID,
                 payload: id

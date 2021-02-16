@@ -43,59 +43,34 @@ const initialState: IProductsState = {
     error: null
 }
 
-export default function productsReducer(
-    state = initialState,
-    action: IProductsActionTypes): IProductsState {
+export default function productsReducer(state = initialState, action: IProductsActionTypes): IProductsState {
     switch (action.type) {
-        case FETCH_PRODUCTS_START:
-            return {
-                ...state, loading: true
-            }
         case FETCH_PRODUCTS_SUCCESS: {
             const productsKey = action.unpublished ? 'newProducts' : 'products'
             return {
                 ...state, loading: false, [productsKey]: action.payload
             }
         }
+        case FETCH_PRODUCT_ERROR:
         case FETCH_PRODUCTS_ERROR:
+        case CREATE_PRODUCT_ERROR:
+        case UPDATE_PRODUCT_ERROR:
             return {
                 ...state, loading: false, error: action.payload
             }
         case FETCH_PRODUCT_START:
+        case CREATE_PRODUCT_START:
+        case UPDATE_PRODUCT_START:
+        case FETCH_PRODUCTS_START:
+
             return {
                 ...state, loading: true
             }
         case FETCH_PRODUCT_SUCCESS:
-            return {
-                ...state, loading: false, product: action.payload
-            }
-        case FETCH_PRODUCT_ERROR:
-            return {
-                ...state, loading: false, error: action.payload
-            }
-        case CREATE_PRODUCT_START:
-            return {
-                ...state, loading: true
-            }
         case CREATE_PRODUCT_SUCCESS:
-            return {
-                ...state, loading: false, product: action.payload
-            }
-        case CREATE_PRODUCT_ERROR:
-            return {
-                ...state, loading: false, error: action.payload
-            }
-        case UPDATE_PRODUCT_START:
-            return {
-                ...state, loading: true
-            }
         case UPDATE_PRODUCT_SUCCESS:
             return {
                 ...state, loading: false, product: action.payload
-            }
-        case UPDATE_PRODUCT_ERROR:
-            return {
-                ...state, loading: false, error: action.payload
             }
         case FETCH_BY_VENDOR_START:
             return {
@@ -147,8 +122,8 @@ export default function productsReducer(
             }
         case DELETE_PRODUCT_BY_ID:
             return {
-                ...state, products: state.products.filter(({id}) =>
-                    id !== action.payload), product: null
+                ...state, [action.payload.type]: state[action.payload.type].filter(({id}) =>
+                    id !== action.payload.id)
             }
         case UPDATE_PRODUCT_IMAGE:
             return {

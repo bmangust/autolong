@@ -94,7 +94,7 @@ const ProductsTable: React.FC<{ unpublished?: boolean }> = (
     }
 
     const onDeleteHandler = (id) => {
-        dispatch(deleteProductById(id))
+        dispatch(deleteProductById(id, '', unpublished ? 'newProducts' : 'products'))
     }
 
     const deleteFormatter = (id) => {
