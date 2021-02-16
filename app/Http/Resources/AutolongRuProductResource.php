@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\AutolongRuProduct;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class AutolongRuProductResource extends JsonResource
@@ -21,7 +22,7 @@ class AutolongRuProductResource extends JsonResource
             'price' => $this->price,
             'h_price' => $this->h_price,
             'text' => $this->text,
-            'photo' => $this->photo
+            'photo' => AutolongRuProduct::AUTOLONG_LINK_IMAGE . $this->photo
         ];
     }
 }

@@ -8,8 +8,11 @@ use App\ExchangeRate;
 use App\Http\Resources\ProductWithRelationshipsResource;
 use App\Log;
 use App\Product;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Validation\ValidationException;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class ProductController extends Controller
@@ -38,7 +41,7 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      *
-     * @return \Illuminate\Http\JsonResponse
+     * @return JsonResponse
      */
     public function index()
     {
@@ -49,10 +52,10 @@ class ProductController extends Controller
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param ExchangeRate $exchangeRate
      * @return void
-     * @throws \Illuminate\Validation\ValidationException
+     * @throws ValidationException
      */
     public function store(Request $request, ExchangeRate $exchangeRate)
     {
@@ -92,7 +95,7 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function show(Product $product)
     {
@@ -102,10 +105,10 @@ class ProductController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param Request $request
      * @param Product $product
      * @param ExchangeRate $exchangeRate
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function update(Request $request, Product $product, ExchangeRate $exchangeRate)
     {
@@ -134,7 +137,7 @@ class ProductController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return Response
      */
     public function destroy(Product $product)
     {

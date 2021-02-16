@@ -400,10 +400,7 @@ class Order extends Model
     public function checkActualDate(string $date): bool
     {
         $nowDay = Carbon::now()->toDateString();
-        if ($nowDay > $date) {
-            return false;
-        }
-        return true;
+        return !($nowDay > $date);
     }
 
     public function generateAccount(): bool
