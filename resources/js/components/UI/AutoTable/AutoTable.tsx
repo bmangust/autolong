@@ -3,11 +3,7 @@ import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {NavLink, useHistory} from 'react-router-dom'
-import BootstrapTable, {
-    BootstrapTableProps,
-    ColumnFormatter,
-    ExpandRowProps
-} from 'react-bootstrap-table-next'
+import BootstrapTable, {BootstrapTableProps, ColumnFormatter, ExpandRowProps} from 'react-bootstrap-table-next'
 import paginationFactory from 'react-bootstrap-table2-paginator'
 import ToolkitProvider, {Search} from 'react-bootstrap-table2-toolkit'
 import _ from 'lodash'
@@ -78,7 +74,7 @@ const AutoTable: React.FC<IAutoTable> = (
     const expandRow: ExpandRowProps<any> = {
         expandColumnPosition: 'right',
         renderer: renderer,
-        expandByColumnOnly: true,
+        expandByColumnOnly: false,
         showExpandColumn: true,
         expandHeaderColumnRenderer: expandHeaderColumnRenderer,
         expandColumnRenderer: expandColumnRenderer
@@ -271,7 +267,7 @@ const AutoTable: React.FC<IAutoTable> = (
                                 pagination={paginationFactory(paginationOptions)}
                                 bordered={false}
                                 expandRow={expandRowTable ? expandRow : undefined}
-                                rowEvents={rowClickLink ? tableRowEvents : undefined}
+                                rowEvents={!expandRowTable && rowClickLink ? tableRowEvents : undefined}
                                 selectRow={selectRow ? selectRow : undefined}
                                 {...props.baseProps}
                             />
