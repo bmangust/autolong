@@ -44,7 +44,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('products', 'ProductController@index');
     Route::get('products/unpublished', 'ProductController@indexUnpublished');
     Route::post('products', 'ProductController@store');
-    Route::post('products/checknumbercode', 'ProductController@checkNumberCode');
+    Route::post('products/checknumbercodes', 'ProductController@checkNumberCode');
     Route::get('products/{product}', 'ProductController@show');
     Route::put('products/{product}', 'ProductController@update');
     Route::post('products/{product}/updateimage', 'ProductController@updateImage');
