@@ -4,15 +4,14 @@
 namespace App\Connections;
 
 
-use Illuminate\Database\ConnectionInterface;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\DB;
+use PDO;
 
 class OldAutolongDatabase
 {
-    public const AUTOLONG_LINK_IMAGE = 'https://autolong.ru/images/products/thumb/';
+    public const AUTOLONG_LINK_IMAGE = "https://autolong.ru/images/products/thumb/";
     /**
      * Информация по подключению
      */
@@ -32,27 +31,30 @@ class OldAutolongDatabase
 
     /**
      * Выполнить подключение к старой базе автолонга
-     * @return ConnectionInterface
+     * @return PDO
      */
-    private static function connect(): ConnectionInterface
+    private static function connect(): PDO
     {
-        return DB::connection(self::CONNECTION);
+        return new PDO(env('DB_OLD_DRIVER').':host='. env('DB_OLD_HOST') . ';port=' . env('DB_OLD_PORT') . ';charset=' . env('DB_OLD_CHARSET') . ';dbname=' . env('DB_OLD_DATABASE'), env('DB_OLD_USERNAME'), env('DB_OLD_PASSWORD'));
     }
 
     /**
      * @param string $number
-     * @return Model|Builder|Collection|object
+     * @return mixed
      */
     public static function findByNumber(string $number)
     {
-        return self::connect()->table(self::PRODUCTS_TABLE)->selectRaw(
-                self::RAW_OLD_DB_NUMBER . ' , ' .
-                self::RAW_OLD_DB_ARTICUL . ' , ' .
-                self::RAW_OLD_DB_NAME . ' , ' .
-                self::RAW_OLD_DB_PRICE . ' , ' .
-                self::RAW_OLD_DB_H_PRICE . ' , ' .
-                self::RAW_OLD_DB_TEXT . ' , ' .
-                "CONCAT('" . self::AUTOLONG_LINK_IMAGE . "'," . self::RAW_OLD_DB_PHOTO . ')' . ' as ' . self::RAW_OLD_DB_PHOTO
-        )->where(self::RAW_OLD_DB_NUMBER, '=', $number)->first();
+        $pdo = self::connect();
+        return $pdo->query('SELECT ' .
+                self::RAW_OLD_DB_NUMBER . ',' .
+                self::RAW_OLD_DB_ARTICUL . ',' .
+                self::RAW_OLD_DB_NAME . ',' .
+                self::RAW_OLD_DB_PRICE . ',' .
+                self::RAW_OLD_DB_H_PRICE . ',' .
+                self::RAW_OLD_DB_TEXT . ',' .
+                'CONCAT("' . self::AUTOLONG_LINK_IMAGE . '",' . self::RAW_OLD_DB_PHOTO . ')' . ' as ' . self::RAW_OLD_DB_PHOTO.
+                ' FROM ' . self::PRODUCTS_TABLE .
+                ' WHERE ' . self::RAW_OLD_DB_NUMBER . '=' . $number
+        )->fetch(PDO::FETCH_OBJ);
     }
 }
