@@ -42,7 +42,7 @@ class AutolongRuProduct extends Model
         $availableProducts = ['products' => []];
         foreach ($numbers as $number) {
             $usProduct = Product::whereAutolongNumber($number);
-            $product = $this->whereNumber($number)->first();
+            $product = OldAutolongDatabase::findByNumber($number);
             if ($usProduct->exists()) {
                 if (!$published && $usProduct->first()->published) {
                     array_key_exists('published', $availableProducts) ?: $availableProducts['published'] = [];
@@ -50,7 +50,7 @@ class AutolongRuProduct extends Model
                 } else {
                     $availableProducts['products'][] = new ProductResource($usProduct->first());
                 }
-            } elseif (!is_null($product) && $product != '') {
+            } elseif ($product) {
                 $availableProducts['products'][] = new AutolongRuProductResource($product);
             } else {
                 $availableProducts['products'][] = (object)['number' => $number];
