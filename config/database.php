@@ -85,22 +85,12 @@ return [
 
                 'mysql_old_autolong' => [
                         'driver' => 'mysql',
-                        'read' => [
-                                'host' => [
-                                        '185.148.39.175',
-                                ],
-                        ],
-                        'write' => [
-                                'host' => [
-                                        '185.148.39.175',
-                                ],
-                        ],
-                        'sticky' => true,
                         'url' => env('DATABASE_OLD_URL'),
-                        'port' => '3306',
-                        'database' => 'autolong',
-                        'username' => 'richbee',
-                        'password' => 'xJe7L3eBxW',
+                        'host' => env('DB_OLD_HOST'),
+                        'port' => env('DB_OLD_PORT'),
+                        'database' => env('DB_OLD_DATABASE'),
+                        'username' => env('DB_OLD_USERNAME'),
+                        'password' => env('DB_OLD_PASSWORD'),
                         'unix_socket' => env('DB_SOCKET', ''),
                         'charset' => 'utf8mb4',
                         'collation' => 'utf8mb4_unicode_ci',

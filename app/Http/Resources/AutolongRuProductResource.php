@@ -22,7 +22,7 @@ class AutolongRuProductResource extends JsonResource
             'price' => $this->price,
             'h_price' => $this->h_price,
             'text' => $this->text,
-            'photo' => AutolongRuProduct::AUTOLONG_LINK_IMAGE . $this->photo
+            'photo' => $this->photo
         ];
     }
 }
