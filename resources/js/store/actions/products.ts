@@ -158,7 +158,7 @@ export const fetchProductsByVendors = (data, published = 1) =>
             .filter(el => {
                 return el != null && el != ''
             })
-        const url = '/api/products/checknumbercode'
+        const url = '/api/products/checknumbercodes'
         axios
             .post(url, {numbers, published})
             .then((answer) => {
