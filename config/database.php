@@ -85,8 +85,18 @@ return [
 
                 'mysql_old_autolong' => [
                         'driver' => 'mysql',
+                        'read' => [
+                                'host' => [
+                                        '185.148.39.175',
+                                ],
+                        ],
+                        'write' => [
+                                'host' => [
+                                        '185.148.39.175',
+                                ],
+                        ],
+                        'sticky' => true,
                         'url' => env('DATABASE_OLD_URL'),
-                        'host' => '185.148.39.175',
                         'port' => '3306',
                         'database' => 'autolong',
                         'username' => 'richbee',
