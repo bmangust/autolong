@@ -6,7 +6,7 @@ import {useDispatch} from 'react-redux'
 import * as yup from 'yup'
 import {useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
-import {push} from 'connected-react-router'
+import {useHistory} from 'react-router-dom'
 
 // Styles
 import classes from '../../pages/settings/roles/CreateRole.module.css'
@@ -24,6 +24,7 @@ import InputCheckbox from '../UI/Inputs/InputCheckbox/InputCheckbox'
 
 const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const schema = yup.object()
         .shape({
@@ -47,7 +48,7 @@ const EditRoleForm: React.FC<{ role: IRole }> = ({role}) => {
         })
 
     const goBackHandler = () => {
-        dispatch(push('/settings/roles'))
+        history.push('/settings/roles')
     }
 
     const createRoleHandler =

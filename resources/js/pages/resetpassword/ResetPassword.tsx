@@ -4,8 +4,6 @@ import React, {useState} from 'react'
 // Third-party
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
-import {push} from 'connected-react-router'
-import {useDispatch} from 'react-redux'
 import queryString from 'query-string'
 import {useHistory} from 'react-router-dom'
 
@@ -22,14 +20,13 @@ const ResetPassword: React.FC = () => {
     const [token] = useState<string>(() => {
         return Object.keys(params)[0]
     })
-    const dispatch = useDispatch()
 
     const forgotHandler = (e) => {
         e.preventDefault()
         axios.post('/reset', {password, email, token})
             .then(() => {
                 toast.success('Пароль успешно изменен')
-                dispatch(push('/login'))
+                history.push('/login')
             })
             .catch((error: AxiosError) => {
                 if (error.response?.status === 400) {

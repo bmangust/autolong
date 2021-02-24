@@ -26,8 +26,9 @@ import Input from '../../components/UI/Inputs/Input/Input'
 const ProductsCreate: React.FC = () => {
     const dispatch = useDispatch()
     const {unpublished}: any = useParams()
-    const [count, setCount] = useState(1)
+    const [count, setCount] = useState<string | number>('')
     const [newProducts, setNewProducts] = useState<null | { number: number }[]>(null)
+    const [errorInput, setErrorInput] = useState(false)
 
     const {notFound} = useSelector(
         (state: IOrdersRootState) => ({
@@ -67,22 +68,29 @@ const ProductsCreate: React.FC = () => {
     const onChangeHandler = (e) => {
         const value = e.target.value
         if (value <= 0) {
-            setCount(1)
+            setCount('')
         }
         if (value >= 11) {
             setCount(10)
+            setErrorInput(false)
         }
         if (value > 0 && value < 11) {
             setCount(+value)
+            setErrorInput(false)
         }
     }
 
-    const addNewForms = (count) => {
-        const newArray = new Array(count).fill(null)
-            .map((_, index) => ({
-                number: index + 1
-            }))
-        setNewProducts(newArray)
+    const addNewForms = () => {
+        if (count) {
+            const newArray = new Array(count).fill('')
+                .map((_, index) => ({
+                    number: index + 1
+                }))
+            setNewProducts(newArray)
+            setErrorInput(false)
+        } else {
+            setErrorInput(true)
+        }
     }
 
     let contentProduct = <ProductsForms
@@ -133,16 +141,18 @@ const ProductsCreate: React.FC = () => {
                         : <div className="row">
                             <div className="col-lg-6">
                                 <Input
+                                    helperText='Укажите число от 1 до 10'
+                                    error={errorInput}
                                     onChange={(e) => onChangeHandler(e)}
                                     label='Кол-во новых товаров'
                                     name="numbers"
-                                    value={count}
+                                    value={count.toString()}
                                     type='number'
                                 />
                                 <button
                                     style={{marginTop: 36}}
                                     className='btn btn-success'
-                                    onClick={() => addNewForms(count)}
+                                    onClick={() => addNewForms()}
                                     type='button'>
                                     Добавить товары
                                 </button>

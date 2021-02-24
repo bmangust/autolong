@@ -4,7 +4,7 @@ import React, {useEffect} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
-import {push} from 'connected-react-router'
+import {useHistory} from 'react-router-dom'
 
 // Typescript
 import {IProvidersRootState} from '../../components/Providers/IProviders'
@@ -22,6 +22,7 @@ import OrdersForms from '../../components/Orders/OrderForm/OrdersForms'
 
 const OrdersCreate: React.FC = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const {
         register, handleSubmit
@@ -38,7 +39,7 @@ const OrdersCreate: React.FC = () => {
         }))
 
     const createProductsHandler = () => {
-        dispatch(push('/productscreate/published'))
+        history.push('/productscreate/published')
     }
 
     const {providers} = useSelector(
@@ -75,13 +76,8 @@ const OrdersCreate: React.FC = () => {
                         <div className="col-lg-4">
                             {notFound && notFound.length
                                 ? <p className={classes.notFound}>
-                                    Для артикулов {notFound
-                                    .map((item, index) =>
-                                        index + 1 === notFound.length
-                                            ? `${item} `
-                                            : `${item}, `)}
-                                    не найдены записи. <span onClick={() =>
-                                    createProductsHandler()}>
+                                    Для артикулов {notFound.join(', ')} не найдены записи.
+                                    <span onClick={() => createProductsHandler()}>
                                         Создайте эти товары
                                     </span>
                                 </p>
@@ -93,15 +89,12 @@ const OrdersCreate: React.FC = () => {
                 </div>
             </div>
         </form>
-        {
-            Object.keys(orderProducts).length
-                ? <>
-                    <OrdersForms
-                        items={orderProducts}
-                        providers={providers}
-                    />
-                </>
-                : null
+        {Object.keys(orderProducts).length
+            ? <OrdersForms
+                items={orderProducts}
+                providers={providers}
+            />
+            : null
         }
     </>
 }
