@@ -179,9 +179,7 @@ class ProductController extends Controller
             throw new HttpException(400, 'Необходимо указать поставщика перед внесением в основную базу.');
         }
         $product->published = 1;
-        $autolongNumber = Sandbox1c::getBiggestAutolongNumber();
-        $product->autolong_number = $autolongNumber;
-        $product->image = $product->renameImageFile($autolongNumber . '_1', false);
+        $product->autolong_number = Sandbox1c::getBiggestAutolongNumber();
         $product->save();
         response()->json(new ProductWithRelationshipsResource($product), 200);
     }
