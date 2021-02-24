@@ -70,7 +70,7 @@ export interface IRole {
 }
 
 export interface IRoleState {
-    roles: IRole[] | []
+    roles: IRole[]
     role: IRole | {}
     loading: boolean
     error: any

@@ -6,8 +6,8 @@ import {useDispatch} from 'react-redux'
 import * as yup from 'yup'
 import {Controller, useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
-import {push} from 'connected-react-router'
 import Select from 'react-select'
+import {useHistory} from 'react-router-dom'
 
 // Typescript
 import {IRole} from '../Roles/IRoles'
@@ -24,10 +24,15 @@ import {IUser} from './IUsers'
 import classes from './EditUserForm.module.css'
 import SvgDelete from '../UI/iconComponents/Delete'
 
-const EditUserForm: React.FC<{
-    roles: IRole[], user: IUser
-}> = ({roles, user}) => {
+type Props = {
+    roles: IRole[]
+    user: IUser
+}
+
+const EditUserForm: React.FC<Props> = (props) => {
+    const {roles, user} = props
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const rolesOptions = roles.map(
         (role: IRole) => {
@@ -37,30 +42,32 @@ const EditUserForm: React.FC<{
             }
         })
 
-    const schema = yup.object().shape({
-        name: yup.string().required('Поле обязательно к заполнению'),
-        lastname: yup.string().required('Поле обязательно к заполнению'),
-        roleId: yup.object().required(),
-        email: yup.string().email('Укажите корректный email')
-    })
-
-    const {register, control, handleSubmit, errors} =
-        useForm({
-            defaultValues: {
-                name: user.name,
-                lastname: user.lastname,
-                patronymic: user.patronymic,
-                phone: user.phone,
-                roleId: rolesOptions
-                    .filter(({value}) =>
-                        value === user.role.id)[0],
-                email: user.email
-            },
-            resolver: yupResolver(schema)
+    const schema = yup.object()
+        .shape({
+            name: yup.string()
+                .required('Поле обязательно к заполнению'),
+            lastname: yup.string()
+                .required('Поле обязательно к заполнению'),
+            roleId: yup.object()
+                .required(),
+            email: yup.string()
+                .email('Укажите корректный email')
         })
 
+    const {register, control, handleSubmit, errors} = useForm({
+        defaultValues: {
+            name: user.name,
+            lastname: user.lastname,
+            patronymic: user.patronymic,
+            phone: user.phone,
+            roleId: rolesOptions.filter(({value}) => value === user.role.id)[0],
+            email: user.email
+        },
+        resolver: yupResolver(schema)
+    })
+
     const goBackHandler = () => {
-        dispatch(push('/settings/users'))
+        history.push('/settings/users')
     }
 
     const deleteUserHandler = () => {
@@ -73,11 +80,11 @@ const EditUserForm: React.FC<{
         className='select-mini'
     />
 
-    const createUserHandler =
-        handleSubmit((formValues) => {
-            formValues.roleId = formValues.roleId.value
-            dispatch(updateUserById(formValues, user.id))
-        })
+    const createUserHandler = handleSubmit((formValues) => {
+        formValues.roleId = formValues.roleId.value
+        dispatch(updateUserById(formValues, user.id))
+    })
+
     return <div className='card card-body'>
         <Form onSubmit={createUserHandler}>
             <div className="row">
@@ -111,8 +118,10 @@ const EditUserForm: React.FC<{
 
             <div className="row">
                 <div className='col-lg-6'>
-                    <label className='required'
-                           htmlFor='roleId'>
+                    <label
+                        className='required'
+                        htmlFor='roleId'
+                    >
                         Выберите роль
                     </label>
                     <Controller
@@ -146,7 +155,6 @@ const EditUserForm: React.FC<{
                     error={!!errors.phone}
                     helperText={errors?.phone?.message}
                     ref={register}
-                    autoComplete='phone'
                     label='Номер телефона'
                     name='phone'/>
 

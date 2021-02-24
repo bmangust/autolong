@@ -6,8 +6,8 @@ import {useDispatch, useSelector} from 'react-redux'
 import * as yup from 'yup'
 import {Controller, useForm} from 'react-hook-form'
 import {yupResolver} from '@hookform/resolvers/yup'
-import {push} from 'connected-react-router'
 import Select from 'react-select'
+import {useHistory} from 'react-router-dom'
 
 // Typescript
 import {IRole, IRolesRootState} from '../../../components/Roles/IRoles'
@@ -25,28 +25,28 @@ import classes from './CreateUser.module.css'
 
 const CreateUser = () => {
     const dispatch = useDispatch()
+    const history = useHistory()
 
     const schema = yup.object()
         .shape({
-                   name: yup.string()
-                       .required('Поле обязательно к заполнению'),
-                   lastname: yup.string()
-                       .required('Поле обязательно к заполнению'),
-                   roleId: yup.object()
-                       .required(),
-                   password: yup.string()
-                       .min(8, 'Минимальная длина пароль 8 символов')
-                       .required('Поле обязательно к заполнению'),
-                   email: yup.string()
-                       .email('Укажите корректный email')
-                       .required('Поле обязательно к заполнению')
-               })
+            name: yup.string()
+                .required('Поле обязательно к заполнению'),
+            lastname: yup.string()
+                .required('Поле обязательно к заполнению'),
+            roleId: yup.object()
+                .required(),
+            password: yup.string()
+                .min(8, 'Минимальная длина пароль 8 символов')
+                .required('Поле обязательно к заполнению'),
+            email: yup.string()
+                .email('Укажите корректный email')
+                .required('Поле обязательно к заполнению')
+        })
 
-    const {register, control, handleSubmit, errors} =
-        useForm({resolver: yupResolver(schema)})
+    const {register, control, handleSubmit, errors} = useForm({resolver: yupResolver(schema)})
 
     const goBackHandler = () => {
-        dispatch(push('/settings/users'))
+        history.push('/settings/users')
     }
 
     useEffect(() => {
@@ -64,14 +64,14 @@ const CreateUser = () => {
         className='select-mini'
     />
 
-    let rolesOptions = []
+    let rolesOptions: { label: string, value: string }[] = []
 
     if (roles) {
         rolesOptions = roles.map(
             (role: IRole) => {
                 return {
                     label: role.name,
-                    value: role.id
+                    value: role.id.toString()
                 }
             })
     }
@@ -155,7 +155,6 @@ const CreateUser = () => {
                     ref={register}
                     label='Номер телефона'
                     defaultValue=''
-                    autoComplete='phone'
                     name='phone'/>
 
                 <Input
