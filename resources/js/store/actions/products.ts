@@ -19,7 +19,7 @@ import {
     UPDATE_PRODUCT_IMAGE,
     FETCH_COMPARE_PRODUCTS_START,
     FETCH_COMPARE_PRODUCTS_SUCCESS,
-    FETCH_COMPARE_PRODUCTS_ERROR
+    FETCH_COMPARE_PRODUCTS_ERROR, ADD_TO_ORDER_PRODUCTS
 } from './actionTypes'
 import axios, {AxiosError} from 'axios'
 import {toast} from 'react-toastify'
@@ -71,7 +71,7 @@ export const fetchProductById = (id) => async dispatch => {
         })
 }
 
-export const createProduct = (data, redirect = '') => async dispatch => {
+export const createProduct = (data, redirect = '', isOrdersPage?: boolean) => async dispatch => {
     const formData = new FormData()
     Object.entries(data)
         .map(([key, val]) => {
@@ -92,6 +92,12 @@ export const createProduct = (data, redirect = '') => async dispatch => {
                 type: CREATE_PRODUCT_SUCCESS,
                 payload: data
             })
+            if (isOrdersPage) {
+                dispatch({
+                    type: ADD_TO_ORDER_PRODUCTS,
+                    payload: data
+                })
+            }
             toast.success(createNotyMsg(data.nameRu, `товар ${data.autolongNumber || data.id} создан`))
             if (redirect) {
                 history.push(redirect)

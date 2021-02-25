@@ -12,16 +12,15 @@ import {IProvider} from '../../Providers/IProviders'
 import ProductItemForm from './ProductItemForm/ProductItemForm'
 
 type Props = {
-    vendorProducts: IProduct[] | IProductAutolong[]
+    vendorProducts: IProduct[] | IProductAutolong[] | { number: number }[]
     providers: IProvider[]
     unpublished: string
+    isOrdersPage?: boolean
 }
 
 const ProductsForms: React.FC<Props> = (props) => {
-    const {vendorProducts, providers, unpublished = 'published'} = props
-    const [productsState, setProductsState] = useState(() => {
-        return vendorProducts
-    })
+    const {vendorProducts, providers, unpublished = 'published', isOrdersPage} = props
+    const [productsState, setProductsState] = useState(vendorProducts)
 
     useEffect(() => {
         if (vendorProducts) {
@@ -36,7 +35,7 @@ const ProductsForms: React.FC<Props> = (props) => {
     }
 
     return <TransitionGroup>
-        {productsState.map((product: IProduct | IProductAutolong) => (
+        {productsState.map((product) => (
             <CSSTransition
                 key={'number' in product ? product.number : product.autolongNumber}
                 unmountOnExit
@@ -46,7 +45,9 @@ const ProductsForms: React.FC<Props> = (props) => {
                     unpublished={unpublished}
                     onHide={onHideHandler}
                     providers={providers}
-                    product={product}/>
+                    product={product}
+                    isOrdersPage={isOrdersPage}
+                />
             </CSSTransition>
         ))}
     </TransitionGroup>

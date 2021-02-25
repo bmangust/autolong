@@ -63,6 +63,31 @@ a {
   transition: 0.2s all;
 }
 
+.btn.btn-empty {
+  width: 100%;
+  display: inline-block;
+  padding: 10px;
+  font-weight: normal;
+  font-size: 14px;
+  line-height: 19px;
+  color: var(--black);
+  background: var(--white);
+  border-radius: 5px;
+  border: 1px solid var(--black);
+  transition: all 0.5s ease;
+  margin-bottom: 1rem;
+
+  &:disabled {
+    cursor: not-allowed;
+  }
+
+  &:not(:disabled):hover {
+    color: var(--black);
+    background-color: var(--white);
+    border-color: var(--accent);
+  }
+}
+
 .statusOrder {
   font-weight: 500;
   font-size: 12px;

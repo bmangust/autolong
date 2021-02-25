@@ -27,7 +27,7 @@ import {IOrdersActionTypes, IOrdersState} from '../../components/Orders/IOrders'
 const initialState: IOrdersState = {
     orders: [],
     order: null,
-    orderProducts: [],
+    orderProducts: null,
     loading: true,
     loadingStatus: false,
     loadingInvoice: true,
@@ -38,9 +38,7 @@ const initialState: IOrdersState = {
     statusError: null
 }
 
-export default function ordersReducer(
-    state = initialState,
-    action: IOrdersActionTypes): IOrdersState {
+export default function ordersReducer(state = initialState, action: IOrdersActionTypes): IOrdersState {
     switch (action.type) {
         case FETCH_ORDERS_START:
             return {
@@ -87,6 +85,19 @@ export default function ordersReducer(
                 ...state, loading: false, orderProducts: action.payload,
                 notFound: action.notFound
             }
+        case 'ADD_TO_ORDER_PRODUCTS': {
+            const newNotFound = [...state.notFound].filter((item) => +item !== +action.payload.autolongNumber)
+            return {
+                ...state,
+                orderProducts: {
+                    ...state.orderProducts,
+                    [action.payload.provider.id]: state.orderProducts && state.orderProducts[action.payload.provider.id]
+                        ? [...state.orderProducts[action.payload.provider.id],
+                           action.payload] : [action.payload]
+                },
+                notFound: newNotFound
+            }
+        }
         case FETCH_ITEMS_BY_VENDOR_ERROR:
             return {
                 ...state, loading: false, error: action.payload

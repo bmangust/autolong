@@ -22,7 +22,7 @@ import {
     REMOVE_INPUT_FROM_INVOICE,
     CHECK_BAIKAL_STATUS,
     DELETE_BAIKAL_ID,
-    EDIT_ORDER_ADMIN, LOCATION_CHANGE
+    EDIT_ORDER_ADMIN, LOCATION_CHANGE, ADD_TO_ORDER_PRODUCTS
 } from '../../store/actions/actionTypes'
 
 import {IProvider} from '../Providers/IProviders'
@@ -73,15 +73,19 @@ export interface IPaymentHistory {
     paymentType: string
 }
 
+export interface IOrderProducts {
+    [key: number]: IProduct[]
+}
+
 export interface IOrdersState {
     orders: IOrder[]
     order: IOrder | null
-    orderProducts: IProduct[]
+    orderProducts: IOrderProducts | null
     loading: boolean;
     loadingStatus: boolean
     loadingInvoice: boolean
     invoiceInputs: any
-    notFound: any[]
+    notFound: number[]
     locationChangeCount: number
     error: any
     statusError: any
@@ -161,8 +165,8 @@ interface IFetchItemsByVendorError {
 
 interface IFetchItemsByVendorSuccess {
     type: typeof FETCH_ITEMS_BY_VENDOR_SUCCESS
-    payload: IProduct[]
-    notFound: any[]
+    payload: IOrderProducts
+    notFound: number[]
     loading: boolean
 }
 
@@ -229,6 +233,11 @@ interface IEditOrderAdmin {
     payload: IOrder
 }
 
+interface IAddToOrderProducts {
+    type: typeof ADD_TO_ORDER_PRODUCTS
+    payload: IProduct
+}
+
 export type IOrdersActionTypes =
     IFetchOrdersStart | IFetchOrdersSuccess | IFetchOrdersError |
     IFetchOrderStart | IFetchOrderSuccess | IFetchOrderError |
@@ -239,4 +248,4 @@ export type IOrdersActionTypes =
     IDeleteOrderById | IClearOrderProducts | IFetchOrderInvoiceStart |
     IFetchOrderInvoiceSuccess | IFetchOrderInvoiceError |
     IRemoveInputFromInvoice | ICheckBaikalStatus | IDeleteBaikalId |
-    IEditOrderAdmin
+    IEditOrderAdmin | IAddToOrderProducts

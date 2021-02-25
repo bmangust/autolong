@@ -1,10 +1,9 @@
 // React
-import React, {useEffect} from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {useForm} from 'react-hook-form'
-import {useHistory} from 'react-router-dom'
 
 // Typescript
 import {IProvidersRootState} from '../../components/Providers/IProviders'
@@ -19,33 +18,39 @@ import {fetchProviders} from '../../store/actions/providers'
 
 // App
 import OrdersForms from '../../components/Orders/OrderForm/OrdersForms'
+import ProductsForms from '../../components/Products/ProductForm/ProductsForms'
+import {Accordion, Button} from 'react-bootstrap'
 
 const OrdersCreate: React.FC = () => {
     const dispatch = useDispatch()
-    const history = useHistory()
+    const [newProducts, setNewProducts] = useState<{ number: number }[]>()
 
-    const {
-        register, handleSubmit
-    } = useForm()
+    const {register, handleSubmit} = useForm()
 
     const getProductSubmitHandler = handleSubmit((formValues) => {
         dispatch(fetchItemsByVendors(formValues))
     })
 
-    const {orderProducts, notFound} = useSelector(
-        (state: IOrdersRootState) => ({
-            orderProducts: state.ordersState.orderProducts,
-            notFound: state.ordersState.notFound
-        }))
+    const {orderProducts, notFound} = useSelector((state: IOrdersRootState) => ({
+        orderProducts: state.ordersState.orderProducts,
+        notFound: state.ordersState.notFound
+    }))
 
-    const createProductsHandler = () => {
-        history.push('/productscreate/published')
-    }
+    const {providers} = useSelector((state: IProvidersRootState) => ({
+        providers: state.providersState.providers
+    }))
 
-    const {providers} = useSelector(
-        (state: IProvidersRootState) => ({
-            providers: state.providersState.providers
-        }))
+    useEffect(() => {
+        if (notFound && notFound.length) {
+            const newArr: { number: number }[] = []
+            notFound.map((item) => {
+                newArr.push({number: +item})
+            })
+            setNewProducts(newArr)
+        } else {
+            setNewProducts([])
+        }
+    }, [notFound])
 
     useEffect(() => {
         dispatch(fetchProviders())
@@ -77,7 +82,7 @@ const OrdersCreate: React.FC = () => {
                             {notFound && notFound.length
                                 ? <p className={classes.notFound}>
                                     Для артикулов {notFound.join(', ')} не найдены записи.
-                                    <span onClick={() => createProductsHandler()}>
+                                    <span>
                                         Создайте эти товары
                                     </span>
                                 </p>
@@ -85,11 +90,28 @@ const OrdersCreate: React.FC = () => {
                             }
                         </div>
                     </div>
-
                 </div>
             </div>
         </form>
-        {Object.keys(orderProducts).length
+        {newProducts && newProducts.length
+            ? <Accordion defaultActiveKey="0">
+                <div className='mb-0'>
+                    <Accordion.Toggle as={Button} variant="empty" eventKey="0">
+                        Создание товаров
+                    </Accordion.Toggle>
+                    <Accordion.Collapse eventKey="0">
+                        <ProductsForms
+                            unpublished='published'
+                            vendorProducts={newProducts}
+                            providers={providers}
+                            isOrdersPage
+                        />
+                    </Accordion.Collapse>
+                </div>
+            </Accordion>
+            : null
+        }
+        {orderProducts && Object.keys(orderProducts).length
             ? <OrdersForms
                 items={orderProducts}
                 providers={providers}

@@ -51,10 +51,11 @@ type Props = {
     providers: IProvider[]
     onHide: Function
     unpublished: string
+    isOrdersPage?: boolean
 }
 
 const ProductItemForm: React.FC<Props> = (props) => {
-    const {product, providers, onHide, unpublished = 'published'} = props
+    const {product, providers, onHide, unpublished = 'published', isOrdersPage} = props
     let defaultValues
 
     const [priceState, setPriceState] = useState({rub: 0, usd: 0, cny: 0})
@@ -156,7 +157,7 @@ const ProductItemForm: React.FC<Props> = (props) => {
             if (formValues.imageFile[0]) {
                 formValues.image = formValues.imageFile[0]
             }
-            dispatch(createProduct(formValues))
+            dispatch(createProduct(formValues, '', isOrdersPage))
         }
         onHide('number' in product ? product.number : product.autolongNumber)
     })
