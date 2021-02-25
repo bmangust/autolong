@@ -69,7 +69,7 @@ const OrderStatuses: React.FC<{
     const onClickHandler = (status: string) => {
         dispatch(changeOrderStatus(id, {status}))
         if (status === 'orderCompleted') {
-            dispatch(setBlackLabelById(providerId, unscrupulousState))
+            dispatch(setBlackLabelById(providerId, unscrupulousState ? 1 : 0))
         }
     }
 
