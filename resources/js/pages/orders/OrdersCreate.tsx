@@ -69,9 +69,8 @@ const OrdersCreate: React.FC = () => {
                                 ref={register}
                                 name='numbers'
                                 rows={4}
-                                placeholder='
-                            Добавляйте каждый внутреннему номер через enter
-                            '/>
+                                placeholder=' Добавляйте каждый внутреннему номер через enter'
+                            />
                             <button
                                 className='btn btn-success mt-2'
                                 type='submit'>

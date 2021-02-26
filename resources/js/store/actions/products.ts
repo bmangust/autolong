@@ -173,9 +173,7 @@ export const fetchProductsByVendors = (data, published = 1) =>
                         .forEach(([key, value]: any) => {
                             if (key === 'published') {
                                 value.forEach(item => {
-                                    toast.warn(createNotyMsg(item,
-                                        'товар с таким номером' +
-                                        ' есть опубликованный'))
+                                    toast.warn(createNotyMsg(item, 'товар с таким номером есть опубликованный'))
                                 })
                             }
                         })

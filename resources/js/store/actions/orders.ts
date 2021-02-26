@@ -120,9 +120,7 @@ export const fetchItemsByVendors = (data) => async dispatch => {
         type: FETCH_ITEMS_BY_VENDOR_START
     })
     const numbers = data.numbers.split('\n')
-        .filter(el => {
-            return el != null && el != ''
-        })
+        .filter(el => el != null && el != '')
     const url = '/api/orders/checkproductnumberwithus'
     axios
         .post(url, {numbers})
@@ -133,8 +131,7 @@ export const fetchItemsByVendors = (data) => async dispatch => {
                     if (key === 'number') {
                         value.forEach(item => {
                             notFound.push(item)
-                            toast.warn(createNotyMsg(item,
-                                'артикул не найден'))
+                            toast.warn(createNotyMsg(item, 'артикул не найден'))
                         })
                     }
                 })
