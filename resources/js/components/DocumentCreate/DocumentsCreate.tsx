@@ -107,6 +107,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
             formValues.providerSignature =
                 formValues.providerSignature[0] || ''
         }
+        formValues.currency = formValues.currency.value
         setIsOpen(false)
         dispatch(createOrderInvoice(id, formValues, type, date))
     })
@@ -291,7 +292,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                             <Controller
                                 name="currency"
                                 as={currencySelect}
-                                defaultValue=''
+                                defaultValue={currencyOptions[0]}
                                 options={currencyOptions}
                                 control={control}
                             />
@@ -317,7 +318,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                         <Controller
                             name="currency"
                             as={currencySelect}
-                            defaultValue=''
+                            defaultValue={currencyOptions[0]}
                             options={currencyOptions}
                             control={control}
                         />
@@ -331,7 +332,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                             <Controller
                                 name="currency"
                                 as={currencySelect}
-                                defaultValue=''
+                                defaultValue={currencyOptions[0]}
                                 options={currencyOptions}
                                 control={control}
                             />
