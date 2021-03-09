@@ -200,7 +200,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 <Controller
                                     name="currency"
                                     as={currencySelect}
-                                    defaultValue={currencyOptions.find((option) => option === value)}
+                                    defaultValue={currencyOptions.find((option) => option.value === value)}
                                     options={currencyOptions}
                                     control={control}
                                 />
@@ -332,7 +332,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                 {type === 'account'
                     ? <div className="col-12">
                         {!('currency' in invoiceInputs)
-                            ? <div className="col-lg-6" style={{margin: '10px 0'}}>
+                            ? <div style={{margin: '10px 0'}}>
                                 <label htmlFor="currency">Выберите валюту</label>
                                 <Controller
                                     name="currency"
