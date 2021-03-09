@@ -101,7 +101,7 @@ class OrderController extends Controller
      *
      * @param \Illuminate\Http\Request $request
      * @param Order $order
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      * @throws \Illuminate\Validation\ValidationException
      */
     public function update(Request $request, Order $order)
@@ -111,7 +111,6 @@ class OrderController extends Controller
                 'arrivalDate' => 'required',
                 'name' => 'required|string|max:255',
                 'providerId' => 'required|integer',
-                'status'
         ]);
         $order->name = $request->input('name');
         $order->provider_id = $request->input('providerId');
@@ -165,7 +164,7 @@ class OrderController extends Controller
      * Remove the specified resource from storage.
      *
      * @param int $id
-     * @return \Illuminate\Http\Response
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Order $order)
     {
@@ -524,6 +523,7 @@ class OrderController extends Controller
         $newPdf = $pdf->loadView('pdf.proforma', [
                 'order' => $order,
                 'supply' => $proforma->supply,
+                'proforma' => $proforma,
                 'importer' => $importer,
                 'provider' => $provider,
                 'contractNumber' => $contractNumber,

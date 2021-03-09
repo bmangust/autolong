@@ -66,6 +66,7 @@ class Order extends Model
             'supply' => null,
             'statusPayment' => null,
             'contractNumber' => null,
+            'currency' => null,
             'proformaNumber' => null,
             'date' => null
     ];
@@ -75,6 +76,7 @@ class Order extends Model
             'contractNumber' => null,
             'proformaStatusPayment' => null,
             'additionalField' => null,
+            'currency' => null,
             'date' => null
     ];
 
@@ -82,6 +84,7 @@ class Order extends Model
             'supply' => null,
             'statusPayment' => null,
             'contractNumber' => null,
+            'currency' => null,
             'accountNumber' => null,
             'date' => null
     ];

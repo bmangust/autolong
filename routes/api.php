@@ -137,4 +137,6 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::delete('mailtask', 'MailTaskController@destroy');
 
     Route::get('dumps', 'DumpController@index');
+
+    Route::get('exchangerate', 'ExchangeRateController@getLastCourse');
 });
