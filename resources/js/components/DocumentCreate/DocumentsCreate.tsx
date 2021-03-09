@@ -4,6 +4,7 @@ import React, {useState} from 'react'
 // Third-party
 import {useDispatch, useSelector} from 'react-redux'
 import {Controller, useForm} from 'react-hook-form'
+import Select from 'react-select'
 
 // Styles
 import classes from './DocumentsCreate.module.css'
@@ -62,6 +63,27 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
     const onCloseModalHandler = () => {
         setIsOpen(false)
     }
+
+    const walletSelect = <Select
+        placeholder='Выберите валюту'
+        classNamePrefix='select-mini'
+        className='select-mini'
+    />
+
+    const walletOptions = [
+        {
+            label: 'Рубль',
+            value: 'rub'
+        },
+        {
+            label: 'Доллар',
+            value: 'usd'
+        },
+        {
+            label: 'Юань',
+            value: 'cny'
+        }
+    ]
 
     const sorting = [
         'supply', 'name', 'directorRu',
@@ -157,7 +179,7 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 }
                             </div>
                         } else if (key === 'importerStamp') {
-                            return <div className='col-12' key={key, type}>
+                            return <div className='col-12' key={key}>
                                 <FileInput
                                     label='importerStamp'
                                     control={control} name='importerStamp'/>
@@ -170,6 +192,17 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                     </button>
                                     : null
                                 }
+                            </div>
+                        } else if (key === 'wallet') {
+                            return <div className="col-lg-6" style={{margin: '10px 0'}} key={key}>
+                                <label htmlFor="wallet">Выберите валюту</label>
+                                <Controller
+                                    name="wallet"
+                                    as={walletSelect}
+                                    defaultValue={walletOptions.find((option) => option === value)}
+                                    options={walletOptions}
+                                    control={control}
+                                />
                             </div>
                         } else {
                             return <Input
@@ -253,6 +286,16 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                 }
                 {type === 'invoice'
                     ? <>
+                        <div className="col-lg-6" style={{margin: '10px 0'}}>
+                            <label htmlFor="wallet">Выберите валюту</label>
+                            <Controller
+                                name="wallet"
+                                as={walletSelect}
+                                defaultValue=''
+                                options={walletOptions}
+                                control={control}
+                            />
+                        </div>
                         {!('paymentTerms' in invoiceInputs)
                             ? <Input
                                 id='paymentTerms' type='text'
@@ -268,8 +311,31 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                     </>
                     : null
                 }
+                {type === 'proforma'
+                    ? <div className="col-lg-6" style={{margin: '10px 0'}}>
+                        <label htmlFor="wallet">Выберите валюту</label>
+                        <Controller
+                            name="wallet"
+                            as={walletSelect}
+                            defaultValue=''
+                            options={walletOptions}
+                            control={control}
+                        />
+                    </div>
+                    : null
+                }
                 {type === 'account'
                     ? <div className="col-12">
+                        <div style={{margin: '10px 0'}}>
+                            <label htmlFor="wallet">Выберите валюту</label>
+                            <Controller
+                                name="wallet"
+                                as={walletSelect}
+                                defaultValue=''
+                                options={walletOptions}
+                                control={control}
+                            />
+                        </div>
                         {!('importerStamp' in invoiceInputs)
                             ? <FileInput
                                 label='Печать импортера'
