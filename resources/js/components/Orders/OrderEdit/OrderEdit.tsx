@@ -137,8 +137,8 @@ const OrderEdit: React.FC<Props> = (props) => {
         formValues.cargo = formValues.cargo ? 1 : 0
         formValues.providerId = formValues.providerId.value
         formValues.containerId = formValues.containerId.value !== 0 ? formValues.containerId.value : null
-        formValues.city = city ? city.label : ''
-        formValues.arrivalDate = date
+        formValues.city = city ? city.label : citiesOptions[0].label
+        formValues.arrivalDate = date || new Date().toLocaleDateString('ru-RU')
         dispatch(editOrderAdmin(order.id, formValues))
         setIsOpen(false)
     })

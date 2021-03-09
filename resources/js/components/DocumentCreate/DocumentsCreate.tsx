@@ -64,13 +64,13 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
         setIsOpen(false)
     }
 
-    const walletSelect = <Select
+    const currencySelect = <Select
         placeholder='Выберите валюту'
         classNamePrefix='select-mini'
         className='select-mini'
     />
 
-    const walletOptions = [
+    const currencyOptions = [
         {
             label: 'Рубль',
             value: 'rub'
@@ -193,14 +193,14 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                     : null
                                 }
                             </div>
-                        } else if (key === 'wallet') {
+                        } else if (key === 'currency') {
                             return <div className="col-lg-6" style={{margin: '10px 0'}} key={key}>
-                                <label htmlFor="wallet">Выберите валюту</label>
+                                <label htmlFor="currency">Выберите валюту</label>
                                 <Controller
-                                    name="wallet"
-                                    as={walletSelect}
-                                    defaultValue={walletOptions.find((option) => option === value)}
-                                    options={walletOptions}
+                                    name="currency"
+                                    as={currencySelect}
+                                    defaultValue={currencyOptions.find((option) => option === value)}
+                                    options={currencyOptions}
                                     control={control}
                                 />
                             </div>
@@ -287,12 +287,12 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                 {type === 'invoice'
                     ? <>
                         <div className="col-lg-6" style={{margin: '10px 0'}}>
-                            <label htmlFor="wallet">Выберите валюту</label>
+                            <label htmlFor="currency">Выберите валюту</label>
                             <Controller
-                                name="wallet"
-                                as={walletSelect}
+                                name="currency"
+                                as={currencySelect}
                                 defaultValue=''
-                                options={walletOptions}
+                                options={currencyOptions}
                                 control={control}
                             />
                         </div>
@@ -313,12 +313,12 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                 }
                 {type === 'proforma'
                     ? <div className="col-lg-6" style={{margin: '10px 0'}}>
-                        <label htmlFor="wallet">Выберите валюту</label>
+                        <label htmlFor="currency">Выберите валюту</label>
                         <Controller
-                            name="wallet"
-                            as={walletSelect}
+                            name="currency"
+                            as={currencySelect}
                             defaultValue=''
-                            options={walletOptions}
+                            options={currencyOptions}
                             control={control}
                         />
                     </div>
@@ -327,12 +327,12 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                 {type === 'account'
                     ? <div className="col-12">
                         <div style={{margin: '10px 0'}}>
-                            <label htmlFor="wallet">Выберите валюту</label>
+                            <label htmlFor="currency">Выберите валюту</label>
                             <Controller
-                                name="wallet"
-                                as={walletSelect}
+                                name="currency"
+                                as={currencySelect}
                                 defaultValue=''
-                                options={walletOptions}
+                                options={currencyOptions}
                                 control={control}
                             />
                         </div>
