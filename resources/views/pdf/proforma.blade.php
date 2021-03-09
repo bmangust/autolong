@@ -86,20 +86,20 @@
                 {{ $item->quantity }}
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
-                @if($proforma['currency'] === 'cny')
+                @if($proforma->currency === 'cny')
                     {{ $item->price_cny }}
-                @elseif($proforma['currency'] === 'rub')
+                @elseif($proforma->currency === 'rub')
                     {{ $item->price_rub }}
-                @elseif($proforma['currency'] === 'usd')
+                @elseif($proforma->currency === 'usd')
                     {{ $item->price_usd }}
                 @endif
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
-                @if($proforma['currency'] === 'cny')
+                @if($proforma->currency === 'cny')
                     {{ $item->getSumInCny() }}
-                @elseif($proforma['currency'] === 'rub')
+                @elseif($proforma->currency === 'rub')
                     {{ $item->getSumInRub() }}
-                @elseif($proforma['currency'] === 'usd')
+                @elseif($proforma->currency === 'usd')
                     {{ $item->getSumInUsd() }}
                 @endif
             </td>
@@ -113,11 +113,11 @@
             <td style="padding: 10px; border: 1px solid #000;">{{ $order->getOrderItemsQuantity() }}</td>
             <td style="padding: 10px; border: 1px solid #000;"></td>
             <td style="padding: 10px; border: 1px solid #000;">
-                @if($proforma['currency'] === 'cny')
+                @if($proforma->currency === 'cny')
                     {{ $order->getOrderSumInCny() }}
-                @elseif($proforma['currency'] === 'rub')
+                @elseif($proforma->currency === 'rub')
                     {{ $order->getOrderSumInRub() }}
-                @elseif($proforma['currency'] === 'usd')
+                @elseif($proforma->currency === 'usd')
                     {{  $order->getOrderSumInUsd()  }}
                 @endif
             </td>

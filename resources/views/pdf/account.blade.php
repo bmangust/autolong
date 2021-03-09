@@ -86,20 +86,20 @@
                 {{ $item->quantity }}
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
-                @if($account['currency'] === 'cny')
+                @if($account->currency === 'cny')
                     {{ $item->price_cny }}
-                @elseif($account['currency'] === 'rub')
+                @elseif($account->currency === 'rub')
                     {{ $item->price_rub }}
-                @elseif($account['currency'] === 'usd')
+                @elseif($account->currency === 'usd')
                     {{ $item->price_usd }}
                 @endif
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
-                @if($account['currency'] === 'cny')
+                @if($account->currency === 'cny')
                     {{ $item->getSumInCny() }}
-                @elseif($account['currency'] === 'rub')
+                @elseif($account->currency === 'rub')
                     {{ $item->getSumInRub() }}
-                @elseif($account['currency'] === 'usd')
+                @elseif($account->currency === 'usd')
                     {{ $item->getSumInUsd() }}
                 @endif
             </td>
@@ -113,11 +113,11 @@
             <td style="padding: 10px; border: 1px solid #000;">{{ $order->getOrderItemsQuantity() }}</td>
             <td style="padding: 10px; border: 1px solid #000;"></td>
             <td style="padding: 10px; border: 1px solid #000;">
-                @if($account['currency'] === 'cny')
+                @if($account->currency === 'cny')
                     {{ $order->getOrderSumInCny() }}
-                @elseif($account['currency'] === 'rub')
+                @elseif($account->currency === 'rub')
                     {{ $order->getOrderSumInRub() }}
-                @elseif($account['currency'] === 'usd')
+                @elseif($account->currency === 'usd')
                     {{  $order->getOrderSumInUsd()  }}
                 @endif
             </td>
