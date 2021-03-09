@@ -64,10 +64,22 @@
             QUANTITY
         </th>
         <th style="padding: 10px; border: 1px solid #000;">
-            PRICE (RMB)
+            @if($invoice['currency'] === 'cny')
+                PRICE (CNY)
+            @elseif($invoice['currency'] === 'rub')
+                PRICE (RMB)
+            @elseif($invoice['currency'] === 'usd')
+                PRICE (USD)
+            @endif
         </th>
         <th style="padding: 10px; border: 1px solid #000;">
-            AMOUNT (RMB)
+            @if($invoice['currency'] === 'cny')
+                AMOUNT (CNY)
+            @elseif($invoice['currency'] === 'rub')
+                AMOUNT (RMB)
+            @elseif($invoice['currency'] === 'usd')
+                AMOUNT (USD)
+            @endif
         </th>
     </tr>
     @foreach($orderItems as $item)

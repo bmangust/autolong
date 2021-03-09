@@ -62,10 +62,22 @@
                 КОЛ-ВО
             </th>
             <th style="padding: 10px; border: 1px solid #000;">
-                ЦЕНА (RMB)
+                @if($account->currency === 'cny')
+                    ЦЕНА (CNY)
+                @elseif($account->currency === 'rub')
+                    ЦЕНА (RMB)
+                @elseif($account->currency === 'usd')
+                    ЦЕНА (USD)
+                @endif
             </th>
             <th style="padding: 10px; border: 1px solid #000;">
-                СУММА (RMB)
+                @if($account->currency === 'cny')
+                    СУММА (CNY)
+                @elseif($account->currency === 'rub')
+                    СУММА (RMB)
+                @elseif($account->currency === 'usd')
+                    СУММА (USD)
+                @endif
             </th>
         </tr>
         @foreach($orderItems as $item)

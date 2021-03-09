@@ -62,10 +62,22 @@
                 QUANTITY
             </th>
             <th style="padding: 10px; border: 1px solid #000;">
-                PRICE (RMB)
+                @if($proforma->currency === 'cny')
+                    PRICE (CNY)
+                @elseif($proforma->currency === 'rub')
+                    PRICE (RMB)
+                @elseif($proforma->currency === 'usd')
+                    PRICE (USD)
+                @endif
             </th>
             <th style="padding: 10px; border: 1px solid #000;">
-                AMOUNT (RMB)
+                @if($proforma->currency === 'cny')
+                    AMOUNT (CNY)
+                @elseif($proforma->currency === 'rub')
+                    AMOUNT (RMB)
+                @elseif($proforma->currency === 'usd')
+                    AMOUNT (USD)
+                @endif
             </th>
         </tr>
         @foreach($orderItems as $item)
