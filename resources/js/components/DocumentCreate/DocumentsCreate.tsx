@@ -287,16 +287,18 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                 }
                 {type === 'invoice'
                     ? <>
-                        <div className="col-lg-6" style={{margin: '10px 0'}}>
-                            <label htmlFor="currency">Выберите валюту</label>
-                            <Controller
-                                name="currency"
-                                as={currencySelect}
-                                defaultValue={currencyOptions[0]}
-                                options={currencyOptions}
-                                control={control}
-                            />
-                        </div>
+                        {!('currency' in invoiceInputs)
+                            ? <div className="col-lg-6" style={{margin: '10px 0'}}>
+                                <label htmlFor="currency">Выберите валюту</label>
+                                <Controller
+                                    name="currency"
+                                    as={currencySelect}
+                                    defaultValue={currencyOptions[0]}
+                                    options={currencyOptions}
+                                    control={control}
+                                />
+                            </div>
+                            : null}
                         {!('paymentTerms' in invoiceInputs)
                             ? <Input
                                 id='paymentTerms' type='text'
@@ -313,21 +315,8 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                     : null
                 }
                 {type === 'proforma'
-                    ? <div className="col-lg-6" style={{margin: '10px 0'}}>
-                        <label htmlFor="currency">Выберите валюту</label>
-                        <Controller
-                            name="currency"
-                            as={currencySelect}
-                            defaultValue={currencyOptions[0]}
-                            options={currencyOptions}
-                            control={control}
-                        />
-                    </div>
-                    : null
-                }
-                {type === 'account'
-                    ? <div className="col-12">
-                        <div style={{margin: '10px 0'}}>
+                    ? !('currency' in invoiceInputs)
+                        ? <div className="col-lg-6" style={{margin: '10px 0'}}>
                             <label htmlFor="currency">Выберите валюту</label>
                             <Controller
                                 name="currency"
@@ -337,6 +326,23 @@ const DocumentsCreate: React.FC<{ id: number, date: number }> = ({id, date}) => 
                                 control={control}
                             />
                         </div>
+                        : null
+                    : null
+                }
+                {type === 'account'
+                    ? <div className="col-12">
+                        {!('currency' in invoiceInputs)
+                            ? <div className="col-lg-6" style={{margin: '10px 0'}}>
+                                <label htmlFor="currency">Выберите валюту</label>
+                                <Controller
+                                    name="currency"
+                                    as={currencySelect}
+                                    defaultValue={currencyOptions[0]}
+                                    options={currencyOptions}
+                                    control={control}
+                                />
+                            </div>
+                            : null}
                         {!('importerStamp' in invoiceInputs)
                             ? <FileInput
                                 label='Печать импортера'
