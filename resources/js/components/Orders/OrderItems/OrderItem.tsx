@@ -2,9 +2,9 @@
 import React, {useEffect, useState} from 'react'
 import classes from './OrderItems.module.css'
 import {imgFormatter, moneyFormatter, useDebounce} from '../../../utils'
-import Input from '../../UI/Inputs/Input/Input'
 import SvgClose from '../../UI/iconComponents/Close'
 import {IProduct} from '../../Products/IProducts'
+import Input from '../../UI/Inputs/Input/Input'
 
 type Props = {
     item: IProduct
@@ -31,7 +31,7 @@ const OrderItem: React.FC<Props> = (props) => {
             <p className={classes.productName}>{item.nameRu}</p>
         </div>
         <div className='col-xl-2 d-flex align-items-center'>
-            <Input
+            <input
                 name='qty'
                 data-id={item.id}
                 className={classes.productCount + ' pr-1'}

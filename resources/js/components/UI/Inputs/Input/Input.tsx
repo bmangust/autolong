@@ -49,21 +49,6 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
     const inputCls: string[] = []
     const wrapperCls: string[] = [classes.input]
 
-    const onKeyDownHandler = (e) => {
-        if (type === 'number') {
-            if (e.key === 'e') {
-                e.preventDefault()
-            }
-            if (e.key === '.') {
-                const value = e.target.value
-                if (value.indexOf('.') === -1) {
-                    e.target.value = `${value}.0`
-                }
-                e.preventDefault()
-            }
-        }
-    }
-
     if (required) {
         labelCls.push('required')
     }
@@ -99,11 +84,8 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
         return <div style={style} className={wrapperCls.join(' ')}>
             {labelNode}
             <input
-                onKeyDown={(e) => onKeyDownHandler(e)}
                 type={type}
-                min='0'
                 value={value || ''}
-                step='0.01'
                 pattern={pattern}
                 disabled={disabled || false}
                 className={inputCls.join(' ')}
@@ -116,7 +98,6 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
     return <div style={style} className={wrapperCls.join(' ')}>
         {labelNode}
         <input
-            onKeyDown={(e) => onKeyDownHandler(e)}
             type={type}
             value={value}
             pattern={pattern}
