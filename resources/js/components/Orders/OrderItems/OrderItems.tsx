@@ -4,8 +4,8 @@ import {IProduct} from '../../Products/IProducts'
 import {imgFormatter, moneyFormatter} from '../../../utils'
 
 import classes from '../OrderItems/OrderItems.module.css'
-import SvgClose from '../../UI/iconComponents/Close'
 import {NavLink} from 'react-router-dom'
+import OrderItem from './OrderItem'
 
 interface IOrderItems {
     items: IProduct[]
@@ -32,49 +32,13 @@ const OrderItems: React.FC<IOrderItems> = (
     }
     return onChange && onDelete && onChangePrice
         ? items.map((item: IProduct) => (
-            <div key={item.id + item.nameRu}
-                 className={classes.products + ' row mb-2'}>
-                <div className={classes.productImg + ' col-xl-1'}>
-                    {imgFormatter(item.image, null, item.nameRu, 'pt-2')}
-                </div>
-                <div className='col-xl-4 pr-0'>
-                    <p className={classes.productName}>{item.nameRu}</p>
-                </div>
-                <div className='col-xl-2 d-flex align-items-center'>
-                    <input
-                        data-id={item.id}
-                        min={1}
-                        className={classes.productCount + ' pr-1'}
-                        defaultValue={1}
-                        onChange={(e) => onChange(e, item.id)}
-                        type='number'
-                    />
-                </div>
-                <div className='col-xl-4 pr-xl-0'>
-                    <p className={classes.productPrices}>
-                        <input
-                            min='0'
-                            step={0.01}
-                            className={classes.productCount + ' mt-0'}
-                            name='priceCny'
-                            value={item.price.cny.toString()}
-                            onChange={(e) => onChangePrice(e, item.id, 'cny')}
-                            type='number'
-                        />
-                        {item.price
-                            ? moneyFormatter(item.price, ['cny'])
-                            : null}
-                    </p>
-                </div>
-                <div className={
-                    classes.deleteButton +
-                    ' col-xl-1 text-right pr-xl-4 pr-2'}>
-                    <SvgClose
-                        onClick={() => onDelete(item.id)}
-                        className='mt-lg-3 mt-0 deleteButton'
-                    />
-                </div>
-            </div>
+            <OrderItem
+                item={item}
+                key={item.id + item.nameRu}
+                onChange={onChange}
+                onDelete={onDelete}
+                onChangePrice={onChangePrice}
+            />
         ))
         : <div>
             {items.map((item: IProduct) => (
@@ -97,8 +61,7 @@ const OrderItems: React.FC<IOrderItems> = (
                                 </p>
                             </div>
                             <div className='col-xl-4'>
-                                <p className={classes.orderProductsItemPrice
-                                + ' priceOne'}>
+                                <p className={classes.orderProductsItemPrice + ' priceOne'}>
                                     Цена за шт:
                                     {item.price
                                         ? moneyFormatter(item.price,
@@ -111,8 +74,7 @@ const OrderItems: React.FC<IOrderItems> = (
                                     {item.quantity + ' шт'}
                                 </p>
                             </div>
-                            <div className='col-xl-4
-                            text-xl-right text-left'>
+                            <div className='col-xl-4 text-xl-right text-left'>
                                 <p className={classes.orderProductsPrice}>
                                     {item.fullPrice
                                         ? moneyFormatter(item.fullPrice,

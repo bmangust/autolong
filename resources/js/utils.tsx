@@ -1,5 +1,5 @@
 // React
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 // Third-party
 import {NavLink} from 'react-router-dom'
@@ -206,4 +206,23 @@ export const toFixed = (num, fixed) => {
     const re = new RegExp('^-?\\d+(?:.\\d{0,' + (fixed || -1) + '})?')
     return num.toString()
         .match(re)[0]
+}
+
+/**
+ * Custom hook useDebounce
+ * @param value
+ * @param timeout
+ */
+export const useDebounce: (value, timeout) => string | number = (value, timeout) => {
+    // Save a local copy of `value` in this state which is local to our hook
+    const [state, setState] = useState(value)
+
+    useEffect(() => {
+        // Set timeout to run after delay
+        const handler = setTimeout(() => setState(value), timeout)
+        // clear the setTimeout listener on unMount
+        return () => clearTimeout(handler)
+    }, [value, timeout])
+
+    return state
 }

@@ -1,5 +1,5 @@
 // React
-import React, {forwardRef} from 'react'
+import React, {CSSProperties, forwardRef, ReactText} from 'react'
 
 // Styles
 import classes from './Input.module.css'
@@ -11,10 +11,13 @@ type InputElement = HTMLInputElement | HTMLTextAreaElement;
 
 interface ITextFieldProps {
     value?: any
-    defaultValue?: string
+    style?: CSSProperties
+    defaultValue?: ReactText
+    className?: string
+    wrapperClass?: string
     onChange?: (e: React.ChangeEvent<HTMLInputElement>) => void
     onBlur?: (e: React.ChangeEvent<HTMLInputElement>) => void
-    label: string
+    label?: string
     name: string
     pattern?: string
     min?: string
@@ -36,13 +39,15 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
     {
         required, label, id,
         helperText, error, pattern,
-        type, disabled, ...rest
+        type, disabled, className,
+        wrapperClass, style, value, ...rest
     }, ref) => {
     let labelNode
     let errorNode
 
     const labelCls: string[] = []
     const inputCls: string[] = []
+    const wrapperCls: string[] = [classes.input]
 
     const onKeyDownHandler = (e) => {
         if (type === 'number') {
@@ -74,6 +79,14 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
             </label>
     }
 
+    if (wrapperClass) {
+        wrapperCls.push(wrapperClass)
+    }
+
+    if (className) {
+        inputCls.push(className)
+    }
+
     if (error) {
         inputCls.push(classes.error)
         errorNode =
@@ -83,12 +96,14 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
     }
     if (type === 'number') {
         inputCls.push(classes.number)
-        return <div className={classes.input}>
+        return <div style={style} className={wrapperCls.join(' ')}>
             {labelNode}
             <input
                 onKeyDown={(e) => onKeyDownHandler(e)}
                 type={type}
                 min='0'
+                value={value || ''}
+                step='0.01'
                 pattern={pattern}
                 disabled={disabled || false}
                 className={inputCls.join(' ')}
@@ -98,11 +113,12 @@ const Input: React.ForwardRefExoticComponent<React.PropsWithoutRef<ITextFieldPro
         </div>
     }
 
-    return <div className={classes.input}>
+    return <div style={style} className={wrapperCls.join(' ')}>
         {labelNode}
         <input
             onKeyDown={(e) => onKeyDownHandler(e)}
             type={type}
+            value={value}
             pattern={pattern}
             disabled={disabled || false}
             className={inputCls.join(' ')}

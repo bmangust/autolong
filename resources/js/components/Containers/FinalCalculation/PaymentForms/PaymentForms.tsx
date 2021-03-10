@@ -44,7 +44,7 @@ const PaymentForms: React.FC<Props> = (props) => {
                 <Input
                     type='number'
                     min='0'
-                    value={deliveryPriceState.toString()}
+                    value={deliveryPriceState}
                     onChange={(e) => onChangeHandler(e)}
                     label='Оплата за доставку контейнера (руб.)'
                     name='deliveryPrice'

@@ -103,7 +103,7 @@ const PaymentForm: React.FC<Props> = (props) => {
                         label='Руб'
                         data-id={payment.id}
                         min='0'
-                        value={payment.paymentAmountRub.toString()}
+                        value={payment.paymentAmountRub}
                         name={payment.paymentType}
                         onChange={(e) => onChangeHandler(e)}
                     />
@@ -124,7 +124,7 @@ const PaymentForm: React.FC<Props> = (props) => {
                     type='number'
                     label='Отказное'
                     min='0'
-                    value={refusalAmount.toString()}
+                    value={refusalAmount}
                     name='refusalAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
@@ -132,7 +132,7 @@ const PaymentForm: React.FC<Props> = (props) => {
                     type='number'
                     label='Оформление'
                     min='0'
-                    value={orderingAmount.toString()}
+                    value={orderingAmount}
                     name='orderingAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
@@ -140,7 +140,7 @@ const PaymentForm: React.FC<Props> = (props) => {
                     type='number'
                     label='Таможня'
                     min='0'
-                    value={customsAmount.toString()}
+                    value={customsAmount}
                     name='customsAmount'
                     onChange={(e) => onChangeHandler(e)}
                 />
