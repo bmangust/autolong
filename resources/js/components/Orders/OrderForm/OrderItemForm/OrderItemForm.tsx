@@ -37,8 +37,7 @@ const OrderItemForm: React.FC<{
     const [items, setItems] = useState(() => {
         return products.map((el) => (el.id ? {...el, quantity: 1} : el))
     })
-    const {register, handleSubmit, errors} =
-        useForm<ICreateOrderData>()
+    const {register, handleSubmit, errors} = useForm<ICreateOrderData>()
 
     const dispatch = useDispatch()
 
@@ -56,18 +55,13 @@ const OrderItemForm: React.FC<{
 
     const onChangeQtyHandler = (e, itemId: number) => {
         const value = +e.target.value
-        const newItems = items.map((el) =>
-            el.id === itemId ? {...el, quantity: value} : el
-        )
+        const newItems = items.map((el) => el.id === itemId ? {...el, quantity: value} : el)
         setItems(newItems)
     }
 
-    const onChangePrice = (e, itemId: number, currencyCode) => {
-        const value = e.target.value
+    const onChangePrice = (value, itemId: number, currencyCode) => {
         const newPrice = currencyConversion(+value, currencyCode)
-        const newItems = items.map((el) =>
-            el.id === itemId ? {...el, price: newPrice} : el
-        )
+        const newItems = items.map((el) => el.id === itemId ? {...el, price: newPrice} : el)
         setItems(newItems)
     }
 
@@ -82,8 +76,7 @@ const OrderItemForm: React.FC<{
     let totalPrice = 0
 
     items.forEach((el) => {
-        totalPrice =
-            totalPrice + (+el.price.cny) * el.quantity
+        totalPrice = totalPrice + (+el.price.cny) * el.quantity
     })
 
     return <div className="card mb-3">

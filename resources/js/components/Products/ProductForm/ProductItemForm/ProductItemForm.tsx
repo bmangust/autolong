@@ -27,6 +27,7 @@ import {
 import TextEditor from '../../../UI/TextEditor/TextEditor'
 import {currencyConversion} from '../../../../utils'
 import Form from '../../../UI/Form/Form'
+import Input from '../../../UI/Inputs/Input/Input'
 
 interface IEditProductData {
     nameRu: string
@@ -199,7 +200,7 @@ const ProductItemForm: React.FC<Props> = (props) => {
                                 className='col-lg-10 mb-3'
                                 name="autolongNumber"
                                 ref={register}
-                                type="number"
+                                type="text"
                                 defaultValue={'number' in product
                                     ? product.number
                                     : ''}
@@ -418,13 +419,13 @@ const ProductItemForm: React.FC<Props> = (props) => {
                             Укажите цену</label>
                         <div className='row mb-3'>
                             <div className='col-lg-10 col-11'>
-                                <input
+                                <Input
                                     name="priceCny"
+                                    style={{maxWidth: '100%', padding: '0', margin: '0'}}
                                     className='w-100'
                                     ref={register}
                                     type="number"
-                                    value={priceState.cny.toString()}
-                                    step={0.01}
+                                    value={priceState.cny}
                                     onChange={(e) => onChangePrice(e, 'cny')}
                                     placeholder="0"
                                 />
@@ -439,13 +440,13 @@ const ProductItemForm: React.FC<Props> = (props) => {
                         </div>
                         <div className="row mb-3">
                             <div className='col-xl-4 col-lg-10 col-11'>
-                                <input
+                                <Input
                                     name="priceUsd"
+                                    style={{maxWidth: '100%', padding: '0', margin: '0'}}
                                     type="number"
                                     ref={register}
                                     onChange={(e) => onChangePrice(e, 'usd')}
-                                    value={priceState.usd.toString()}
-                                    step={0.01}
+                                    value={priceState.usd}
                                     className='w-100'
                                     placeholder="0"
                                 />
@@ -456,13 +457,13 @@ const ProductItemForm: React.FC<Props> = (props) => {
                                 </span>
                             </div>
                             <div className='col-xl-4 col-lg-10 col-11 mt-xl-0 mt-3'>
-                                <input
+                                <Input
                                     name="priceRub"
+                                    style={{maxWidth: '100%', padding: '0', margin: '0'}}
                                     type="number"
                                     ref={register}
                                     onChange={(e) => onChangePrice(e, 'rub')}
-                                    value={priceState.rub.toString()}
-                                    step={0.01}
+                                    value={priceState.rub}
                                     className='w-100'
                                     placeholder="0"
                                 />
