@@ -823,7 +823,7 @@
                 </h4>
                 <p style="margin: 0;">
                     <span style="font-weight: bold; border-bottom: 2px solid #000; ">14.1. THE
-                        BUYER:</span>
+                        SELLER:</span>
                 </p>
                 <p style="margin: 0;">
                     Name: «{{ $provider->name_company ?: '-'}}»
@@ -838,7 +838,7 @@
                     Bank: {{ $provider->beneficiary_bank_name ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Number account {{ $provider->beneficiary_account_name ?: '-' }}
+                    Number account {{ $provider->beneficiary_bank_code ?: '-' }}
                 </p>
                 <p style="margin: 0;">
                     SWIFT: {{ $provider->beneficiary_swift_address ?: '-' }}
