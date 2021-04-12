@@ -848,10 +848,10 @@
                     {{ $provider->beneficiary_bank_address ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Директор/Director
+                    Director
                 </p>
                 <p style="margin: 0;">
-                    {{ $contract['directorRu'] ?: '-' }} {{ $contract['directorEn'] ?: '-' }}
+                    {{ $contract['directorEn'] ?: '-' }}
                 </p>
                 @if(isset( $contract['providerStamp']))
                 <img style="width: 100%; max-width: 150px; margin: 30px 0 0;" src="{{ asset($contract['providerStamp']) }}" alt="">
