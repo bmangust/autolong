@@ -829,13 +829,13 @@
                     Name: «{{ $provider->name_company ?: '-'}}»
                 </p>
                 <p style="margin: 0;">
-                    Address: TONG YANG VILLAGE BAI ZHANG JI TOWN, WENZHOU,CN
+                    Address: {{ $provider->beneficiary_address ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Beneficiary:
+                    Beneficiary: {{ $provider->beneficiary_address ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Bank: {{ $provider->beneficiary_bank_name ?: '-' }}
+                    Bank: {{ $provider->beneficiary_name ?: '-' }}
                 </p>
                 <p style="margin: 0;">
                     Number account {{ $provider->beneficiary_bank_code ?: '-' }}
