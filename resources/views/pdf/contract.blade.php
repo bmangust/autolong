@@ -832,10 +832,10 @@
                     Address: {{ $provider->beneficiary_address ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Beneficiary: {{ $provider->beneficiary_address ?: '-' }}
+                    Beneficiary: {{ $provider->beneficiary_account_name ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Bank: {{ $provider->beneficiary_name ?: '-' }}
+                    Bank: {{ $provider->beneficiary_bank_name ?: '-' }}
                 </p>
                 <p style="margin: 0;">
                     Number account {{ $provider->beneficiary_bank_code ?: '-' }}
