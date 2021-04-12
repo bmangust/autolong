@@ -848,7 +848,7 @@
                     {{ $provider->beneficiary_bank_address ?: '-' }}
                 </p>
                 <p style="margin: 0;">
-                    Director
+                    Director:
                 </p>
                 <p style="margin: 0;">
                     {{ $contract['directorEn'] ?: '-' }}
