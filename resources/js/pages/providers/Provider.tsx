@@ -158,32 +158,56 @@ const Provider: React.FC<IProvider> = () => {
                             <div className="row mb-3">
                                 <div className="col-lg-5 infoBlockHeaders">
                                     <p>Beneficiary Name</p>
-                                    <p>Address</p>
-                                    <p>Beneficiary Account Name </p>
-                                    <p>Beneficiary Bank Address</p>
-                                    <p>Bank Account Number </p>
-                                    <p>Manufacturer </p>
-                                    <p>SWIFT Address</p>
                                 </div>
                                 <div className="col-lg-7 infoBlockText">
                                     <p>{provider.beneficiaryName
                                         ? provider.beneficiaryName
                                         : '-'}</p>
+                                </div>
+                                <div className="col-lg-5 infoBlockHeaders">
+                                    <p>Address</p>
+                                </div>
+                                <div className="col-lg-7 infoBlockText">
                                     <p>{provider.beneficiaryAddress
                                         ? provider.beneficiaryAddress
                                         : '-'}</p>
+                                </div>
+                                <div className="col-lg-5 infoBlockHeaders">
+                                    <p>Beneficiary Account Name</p>
+                                </div>
+                                <div className="col-lg-7 infoBlockText">
                                     <p>{provider.beneficiaryAccountName
                                         ? provider.beneficiaryAccountName
                                         : '-'}</p>
+                                </div>
+                                <div className="col-lg-5 infoBlockHeaders">
+                                    <p>Beneficiary Bank Address</p>
+                                </div>
+                                <div className="col-lg-7 infoBlockText">
                                     <p>{provider.beneficiaryBankAddress
                                         ? provider.beneficiaryBankAddress
                                         : '-'}</p>
+                                </div>
+                                <div className="col-lg-5 infoBlockHeaders">
+                                    <p>Bank Account Number</p>
+                                </div>
+                                <div className="col-lg-7 infoBlockText">
                                     <p>{provider.beneficiaryBankCode
                                         ? provider.beneficiaryBankCode
                                         : '-'}</p>
+                                </div>
+                                <div className="col-lg-5 infoBlockHeaders">
+                                    <p>Manufacturer</p>
+                                </div>
+                                <div className="col-lg-7 infoBlockText">
                                     <p>{provider.manufacturer
                                         ? provider.manufacturer
                                         : '-'}</p>
+                                </div>
+                                <div className="col-lg-5 infoBlockHeaders">
+                                    <p>SWIFT Address</p>
+                                </div>
+                                <div className="col-lg-7 infoBlockText">
                                     <p>{provider.beneficiarySwiftAddress
                                         ? provider.beneficiarySwiftAddress
                                         : '-'}</p>
