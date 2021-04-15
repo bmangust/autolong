@@ -17,7 +17,7 @@ import classes from './OrderItemForm.module.css'
 
 // App
 import OrderItems from '../../OrderItems/OrderItems'
-import {currencyConversion} from '../../../../utils'
+import {currencyConversion, timeConverter} from '../../../../utils'
 import {SanctumContext} from '../../../../Sanctum'
 import Form from '../../../UI/Form/Form'
 
@@ -79,6 +79,8 @@ const OrderItemForm: React.FC<{
         totalPrice = totalPrice + (+el.price.cny) * el.quantity
     })
 
+    const date = new Date()
+
     return <div className="card mb-3">
         <Form onSubmit={orderFormSubmitHandler}>
             <div className="card-body mb-4 pb-0">
@@ -106,6 +108,7 @@ const OrderItemForm: React.FC<{
                             Название заказа
                         </label>
                         <input
+                            defaultValue={`${providers.find(({id}) => id === providerId)?.name} - ${timeConverter(date.getTime()/1000, true)}`}
                             className='col-lg-10 mb-3'
                             name='name'
                             ref={register({required: true})}
