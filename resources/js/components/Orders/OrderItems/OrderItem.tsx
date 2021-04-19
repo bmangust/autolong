@@ -48,7 +48,6 @@ const OrderItem: React.FC<Props> = props => {
                 <input
                     onKeyDown={(e) => onKeyDownHandler(e)}
                     name='qty'
-                    tabIndex='1'
                     data-id={item.id}
                     className={classes.productCount + ' pr-1'}
                     defaultValue='1'
