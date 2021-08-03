@@ -18,7 +18,7 @@ class Order extends Model
     public const CHECK_DIRECTORY = '/checks/';
     public const STAMP_DIRECTORY = '/storage/stamps/';
     public const SIGNATURE_DIRECTORY = '/storage/signature/';
-    public const BAIKAL_TRACKER_LINK = 'https://baikalasia.ru/tracker.php';
+    public const BAIKAL_TRACKER_LINK = 'https://tms.baikalasia.com/selectBaikalasiaE.aspx';
 
     protected $fillable = [
             'name',
@@ -375,6 +375,7 @@ class Order extends Model
             ]);
         }
     }
+
     /**
      * Удаление блока оплаты из истории
      * @param string $id
@@ -633,7 +634,7 @@ class Order extends Model
 
     public static function getBaikalLink(string $baikalId): string
     {
-        return self::BAIKAL_TRACKER_LINK . '?' . http_build_query(['id' => $baikalId]);
+        return self::BAIKAL_TRACKER_LINK . '?' . http_build_query(['CNum' => $baikalId]);
     }
 
     public static function parseBaikalLinkById(string $link): array
@@ -643,14 +644,21 @@ class Order extends Model
         } catch (HttpException $exception) {
             throw new HttpException(404, 'Ошибка, нет актуальной ссылки для этого идентификатора. Попробуйте позже, либо введите другой идентификатор.');
         }
-        preg_match_all('#<td[^>]*>(.*?)</td>#is', $parse, $matches);
+
+        preg_match_all('#<tbody[^>]*>\s*(.*)\s*</tbody>#is', $parse, $matches);
+        preg_match_all('#<tr[^>]*>(.*?)</tr>#is', $matches[1][0], $matches);
         $history = [];
         $content = self::PARSING_CONTENT;
         foreach (array_slice($matches[1], 0) as $item) {
-            if (strtotime($item)) {
-                $content['date'] = $item;
-            } else {
-                $content['text'] = $item;
+            preg_match_all('#<td[^>]*>(.*?)</td>#is', $item, $itemMatches);
+
+            if (isset($itemMatches[1])) {
+                if (isset($itemMatches[1][0])) {
+                    $content['date'] = $itemMatches[1][0];
+                }
+                if (isset($itemMatches[1][1])) {
+                    $content['text'] = $itemMatches[1][1];
+                }
             }
             if (!is_null($content['date']) && !is_null($content['text'])) {
                 $history[] = $content;
@@ -667,12 +675,13 @@ class Order extends Model
         } catch (HttpException $exception) {
             throw new HttpException(404, 'Ошибка, нет актуальной ссылки для этого идентификатора. Попробуйте позже, либо введите другой идентификатор.');
         }
-        preg_match_all('#<br>(.*?)<table[^>]*>#is', $parse, $matches);
+        preg_match_all('#Ориентировочная дата прибытия груза：<span[^>]*>([^<>]*)</span>#is', $parse, $matches);
+
         if (!empty($matches[1])) {
             $date = trim($matches[1][0]);
             preg_match('#\d{2,4}([-/.])\d{2}([-/.])\d{2,4}#', $date, $searchingDate);
             if (!empty($searchingDate)) {
-                    return $searchingDate[0];
+                return $searchingDate[0];
 
             }
             return null;
@@ -686,7 +695,7 @@ class Order extends Model
             $parts = parse_url($url);
             if (!empty($parts['query'])) {
                 parse_str($parts['query'], $query);
-                return $query['id'];
+                return $query['CNum'];
             }
         }
         return false;
@@ -701,8 +710,7 @@ class Order extends Model
             if ($container &&
                     $baikalId &&
                     $container->identifier == $baikalId &&
-                    $container->arrival_date != $date)
-            {
+                    $container->arrival_date != $date) {
                 $container->arrival_date = $date;
                 $container->save();
                 return true;
