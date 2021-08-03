@@ -657,7 +657,7 @@ class Order extends Model
                     $content['date'] = $itemMatches[1][0];
                 }
                 if (isset($itemMatches[1][1])) {
-                    $content['text'] = $itemMatches[1][1];
+                    $content['text'] = trim(preg_replace('#[\x{4e00}-\x{9fa5}]*#isu', '', $itemMatches[1][1]));
                 }
             }
             if (!is_null($content['date']) && !is_null($content['text'])) {
