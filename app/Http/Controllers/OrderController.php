@@ -634,7 +634,7 @@ class OrderController extends Controller
 
     public function getPdfAccount(Order $order)
     {
-        if ($order->account != null) {
+        if ($order->account && $order->account->info) {
             return response()->json($order->account->getInfo());
         }
         return response()->json($order->accountActualRows, 200);
