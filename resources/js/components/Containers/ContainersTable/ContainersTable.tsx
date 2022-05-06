@@ -34,8 +34,7 @@ const ContainersTable: React.FC = () => {
             error: state.containersState.error,
             containers: state.containersState.containers,
             loading: state.containersState.loading
-        })
-    )
+    }))   
 
     if (error) {
         return <Error/>
@@ -96,9 +95,20 @@ const ContainersTable: React.FC = () => {
             formatter: cityFormatter
         },
         {
+            dataField: 'ordersCount',
+            text: 'Кол-во заказов',
+            sort: true
+        },
+        {
             dataField: 'quantityItems',
             headerStyle: {width: '100px'},
             text: 'Кол-во товаров',
+            sort: true
+        },
+        {
+            dataField: 'ordersPrice',
+            headerStyle: {width: '100px'},
+            text: 'Сумма заказов',
             sort: true
         }
     ]

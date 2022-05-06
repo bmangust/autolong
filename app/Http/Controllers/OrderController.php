@@ -18,6 +18,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\HttpException;
+use App\Connections\Sandbox1c;
 
 class OrderController extends Controller
 {
@@ -350,13 +351,26 @@ class OrderController extends Controller
 
     public function checkProductNumberWithUs(Request $request, Order $order)
     {
+        $codes = Sandbox1c::getProductsList();
+        $codes_result = [];
+        
+        foreach($codes as $code => $value) {
+	        $codes_result[$value] = $code;
+        }
+        
         $request->validate([
                 'numbers' => 'required'
         ]);
         $numbers = array_unique($order->cleanSpaceInArrayItems($request->input('numbers')));
+        
+        foreach($numbers as $key => $num) {
+	    #   $numbers[$key] = $codes_result[$num];
+        }
+        
         $unknownProductsKey = 'number';
         $availableAndUnknownProducts = [$unknownProductsKey => []];
         foreach ($numbers as $number) {
+	        
             $product = Product::wherePublished(1)->whereAutolongNumber($number);
             if ($product->exists()) {
                 $providerId = $product->first()->provider->id;
@@ -368,6 +382,7 @@ class OrderController extends Controller
             } else {
                 $availableAndUnknownProducts[$unknownProductsKey][] = $number;
             }
+
         }
         return response()->json($availableAndUnknownProducts);
     }
@@ -781,6 +796,7 @@ class OrderController extends Controller
                 'baikal_tracker_link' => $baikalLink,
                 'baikal_tracker_history' => $parsingInfo
         ]);
+        
         if ($approximateDate) {
             $order->updateArrivalDateInContainer($approximateDate);
         }

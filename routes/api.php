@@ -104,6 +104,8 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('logs', 'LogController@index');
 
+    Route::get('purchases', 'PurchasesController@index');
+
     Route::put('sandboxfiles/{sandboxFile}', 'SandboxFileController@update');
     Route::delete('sandboxfiles/{sandboxFile}', 'SandboxFileController@destroy');
     Route::post('{model}/{id}/savefile', 'SandboxFileController@saveFile')

@@ -38,6 +38,7 @@ class ContainerController extends Controller
                 'orders.orderItems.product',
                 'city',
                 'sandboxFiles'])->orderByDesc('updated_at')->get();
+                
         return response()->json(ContainerWithRelationshipsResource::collection($containers), 200);
     }
 

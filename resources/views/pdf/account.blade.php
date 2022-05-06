@@ -87,7 +87,7 @@
             </td>
             <td style="padding: 10px; border: 1px solid #000;">
                 @if(!is_null($item->product->image))
-                    <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset($item->product->image) }}"
+                    <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ str_replace("https://","http://",asset($item->product->image)) }}"
                          alt="" />
                 @else
                     <img style="width: 100%; max-width: 50px; max-height:50px" src="{{ asset('/imgs/placeholder-product-image.png') }}"

@@ -1,5 +1,4 @@
 <?php
-
 namespace App;
 
 use App\Http\Resources\ProductWithRelationshipsResource;
@@ -144,6 +143,7 @@ class Product extends Model
                         'orderItems.order.orderItems.product',
                         'orderItems.order.city',
                 ])->orderByDesc('created_at')->get());
+                
         Redis::set($cacheKey, json_encode($products), 'EX', self::PRODUCTS_CACHE_TTL);
         return $products;
     }

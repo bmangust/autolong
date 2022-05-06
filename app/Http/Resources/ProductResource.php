@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Connections\Sandbox1c;
 use Illuminate\Http\Resources\Json\JsonResource;
 
 class ProductResource extends JsonResource
@@ -14,6 +15,8 @@ class ProductResource extends JsonResource
      */
     public function toArray($request)
     {
+	    $this->code_from_1c = $this->autolong_number ? Sandbox1c::getCode_1C($this->autolong_number) : null;
+
         return [
             'id' => $this->id,
             'nameRu' => $this->name_ru,
@@ -28,7 +31,7 @@ class ProductResource extends JsonResource
             'weightNetto' => $this->weight_netto,
             'weightBrutto' => $this->weight_brutto,
             'vendorCode' => $this->vendor_code,
-            'autolongNumber' => $this->autolong_number,
+            'autolongNumber' => $this->code_from_1c ?? $this->autolong_number,
             'createdAt' => strtotime($this->created_at),
             'updatedAt' => strtotime($this->updated_at),
         ];

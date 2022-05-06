@@ -182,6 +182,17 @@ export const routes: IRoute[] = [
         access: ['productsIndex', 'productsUpdate']
     },
     {
+        name: 'Анализ закупок',
+        path: '/analysis_purchases',
+        component: lazy(() => pMinDelay(import('../../../pages/analysis/Purchases'), 600)),
+        hide: false,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Prices/>,
+        access: ['compareIndex']
+    },
+    {
         name: 'Добавление нового товара',
         path: '/productcreate',
         component: lazy(() => pMinDelay(import('../../../pages/products/ProductCreate'), 600)),

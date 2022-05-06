@@ -80,6 +80,15 @@ const OrdersTable: React.FC = () => {
         return items.length
     }
 
+    const countsFormatter = (items) => {
+ 	    let totalCounts = 0;
+	    items.reduce((i, items, ) => {
+	        totalCounts += items.quantity;
+	    },[]);
+
+       return totalCounts
+    }
+
     const providerFormatter = (provider) => {
         return 'name' in provider
             ? provider.name
@@ -110,6 +119,32 @@ const OrdersTable: React.FC = () => {
         return <>
             <span className='d-block' style={{lineHeight: '15px'}}>{toLocaleNumber(totalCny)} ¥</span>
             <span>{toLocaleNumber((totalCny * courses.rub))} ₽</span>
+        </>
+    }
+
+    const footerItemsFormatter = (columnData) => {
+	    
+	    let totalItems = 0;
+		columnData.reduce((index, data) => {
+		    totalItems += data.length;
+		},[]);
+	    
+        return <>
+            <span>{totalItems}</span>
+        </>
+    }
+    
+    const footerCountsFormatter = (columnData) => {
+	    
+	    let totalCounts = 0;
+		columnData.reduce((index, data) => {
+		    data.reduce((i, items, ) => {
+		        totalCounts += items.quantity;
+		    },[]);
+		},[]);
+
+        return <>
+            <span>{totalCounts}</span>
         </>
     }
 
@@ -160,10 +195,17 @@ const OrdersTable: React.FC = () => {
         },
         {
             dataField: 'items',
+            text: 'Кол.шт.',
+            headerStyle: {width: '88px'},
+            formatter: countsFormatter,
+            footer: columnData => footerCountsFormatter(columnData),
+        },
+        {
+            dataField: 'items',
             text: 'Кол.наим.',
             headerStyle: {width: '88px'},
             formatter: itemsFormatter,
-            footer: ''
+            footer: columnData => footerItemsFormatter(columnData),
         },
         {
             dataField: 'price',
