@@ -17,7 +17,9 @@ class OrderItemResource extends JsonResource
     public function toArray($request)
     {
 
- 	    $this->product->code_from_1c = Sandbox1c::getProduct1cId($this->product->autolong_number);
+        $this->product->code_from_1c =
+                Sandbox1c::getProduct1cId($this->product->autolong_number) ??
+                Sandbox1c::getCode_1C($this->product->autolong_number);
 
         return [
                 'id' => $this->id,

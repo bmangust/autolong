@@ -137,11 +137,12 @@ class Sandbox1c
             $data->execute([$autolong_number]);
             $result = $data->fetch();
 
-            return $result['code_from_1c'];
-
+            if (is_array($result) && isset($result['code_from_1c'])) return $result['code_from_1c'];
         } catch (HttpException $exception) {
             return null;
         }
+
+        return null;
     }
 
     public static function getCode_1C($autolong_number)
