@@ -83,6 +83,14 @@ const Product: React.FC = () => {
                                     </tr>
                                     <tr>
                                         <td className="infoBlockHeaders pb-3">
+                                            1с.номер
+                                        </td>
+                                        <td className="infoBlockText pb-3">
+                                            {product.id1c}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td className="infoBlockHeaders pb-3">
                                             HS code
                                         </td>
                                         <td className="infoBlockText pb-3">
