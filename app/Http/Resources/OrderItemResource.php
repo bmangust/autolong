@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Connections\Sandbox1c;
 use App\ExchangeRate;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -15,13 +16,16 @@ class OrderItemResource extends JsonResource
      */
     public function toArray($request)
     {
+
+ 	    $this->product->code_from_1c = Sandbox1c::getCode_1C($this->product->autolong_number);
+
         return [
                 'id' => $this->id,
                 'productId' => $this->product_id,
                 'nameRu' => $this->product->name_ru,
                 'orderId' => $this->order_id,
                 'quantity' => $this->quantity,
-                'autolongNumber' => $this->product->autolong_number,
+                'autolongNumber' => $this->product->code_from_1c ?? $this->product->autolong_number,
                 'price' => (object)[
                         'rub' => $this->price_rub,
                         'usd' => $this->price_usd,

@@ -37,6 +37,7 @@ const OrderBaikal: React.FC<Props> = (props) => {
     }
 
     const onClickHandler = () => {
+	    let order_id = window.location.pathname.replace('/container/','')
         dispatch(checkBaikalStatus(baikalId, orderId))
     }
 
@@ -68,7 +69,9 @@ const OrderBaikal: React.FC<Props> = (props) => {
     if (baikalTrackerLink && baikalTrackerHistory.length !== 0) {
         const url = new URL(baikalTrackerLink)
         const id = url.searchParams.get('id')
+        
         content = <>
+            <p className={classes.track}>Код: {baikalTrackerLink.replace('https://tms.baikalasia.com/selectBaikalasiaE.aspx?CNum=','')}</p>
             <p className={classes.track}>Идентификатор {id}</p>
             {isContainer
                 ? null

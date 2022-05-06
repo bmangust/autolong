@@ -15,6 +15,16 @@ class ContainerWithRelationshipsResource extends JsonResource
      */
     public function toArray($request)
     {
+	    
+	    $this->orders_count = count($this->orders);
+	    $this->orders_price = 150;
+	    
+	    foreach($this->orders as $orders) {
+		    foreach($orders->orderItems as $items) {
+			    $this->orders_price += $items['price_cny'] * $items['quantity'];
+		    }
+	    }
+	    
         $container = [
                 'id' => $this->id,
                 'name' => $this->name,
@@ -25,6 +35,8 @@ class ContainerWithRelationshipsResource extends JsonResource
                 'sandboxFiles' => SandboxFileResource::collection($this->sandboxFiles),
                 'deliveryPrice' => $this->delivery_price,
                 'quantityItems' => $this->quantity_order_items,
+                'ordersCount' => $this->orders_count,
+                'ordersPrice' => sprintf("%.2f",$this->orders_price)." ¥",
                 'arrivalDate' => strtotime($this->arrival_date),
                 'releaseDate' => strtotime($this->release_date),
                 'createdAt' => strtotime($this->created_at),

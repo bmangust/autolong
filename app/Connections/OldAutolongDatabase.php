@@ -4,6 +4,8 @@
 namespace App\Connections;
 
 
+use Illuminate\Support\Facades\DB;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Query\Builder;
 use Illuminate\Support\Collection;
@@ -35,7 +37,8 @@ class OldAutolongDatabase
      */
     private static function connect(): PDO
     {
-        return new PDO(env('DB_OLD_DRIVER').':host='. env('DB_OLD_HOST') . ';port=' . env('DB_OLD_PORT') . ';charset=' . env('DB_OLD_CHARSET') . ';dbname=' . env('DB_OLD_DATABASE'), env('DB_OLD_USERNAME'), env('DB_OLD_PASSWORD'));
+        return new PDO('mysql:host=185.148.39.175;port=3306;charset=utf8mb4;dbname=autolong', 'hayk', '8Hzmn7ma12@');
+        //return new PDO(env('DB_OLD_DRIVER').':host='. env('DB_OLD_HOST') . ';port=' . env('DB_OLD_PORT') . ';charset=' . env('DB_OLD_CHARSET') . ';dbname=' . env('DB_OLD_DATABASE'), env('DB_OLD_USERNAME'), env('DB_OLD_PASSWORD'));
     }
 
     /**

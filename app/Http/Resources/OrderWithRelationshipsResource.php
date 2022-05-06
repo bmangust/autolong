@@ -5,6 +5,7 @@ namespace App\Http\Resources;
 use Illuminate\Http\Resources\Json\JsonResource;
 use App\Http\Resources\ProviderResource;
 use App\Http\Resources\OrderItemResource;
+use App\Http\Resources\OrderCountResource;
 use App\Http\Resources\ContainerResource;
 use Illuminate\Support\Facades\Auth;
 

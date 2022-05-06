@@ -331,6 +331,7 @@ export const removeStampByType = (orderId, type, modalType) => async dispatch =>
 }
 
 export const checkBaikalStatus = (baikalId, id) => async dispatch => {
+	
     const url = `/api/orders/${id}/checkbaikalstatus`
 
     axios
