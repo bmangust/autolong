@@ -67,24 +67,24 @@ class Sandbox1c
     public static function getBalance()
     {
         try {
-	        
+
 	        $cachedBalance = Redis::get(self::BALANCE_CACHE_KEY);
-	
+
 	        if ($cachedBalance) {
 	            $result = json_decode($cachedBalance);
 	        } else {
 	            $data = self::connect()->query("SELECT * FROM `balance` WHERE supplier IS NOT NULL")->fetchAll(PDO::FETCH_OBJ);
-	            
+
 	            $result = [];
-	            
+
 	            foreach($data as $res) {
-		        	$result[preg_replace('/\D/', '', $res->code)] = $res;   
+		        	$result[preg_replace('/\D/', '', $res->code)] = $res;
 	            }
-	            	            
+
 	            Redis::set(self::BALANCE_CACHE_KEY, json_encode($result), 'EX', self::BALANCE_CACHE_TTL);
 	        }
 
-            return $result;                    
+            return $result;
         } catch (HttpException $exception) {
         }
     }
@@ -92,17 +92,17 @@ class Sandbox1c
     public static function getProducts()
     {
         try {
-	        
+
             $data = self::connect()->query("SELECT * FROM `products`")->fetchAll(PDO::FETCH_OBJ);
-            
+
             $result = [];
-            
+
             foreach($data as $res) {
-	        	$result[$res->code] = $res;   
+	        	$result[$res->code] = $res;
             }
-	            	            
-            return $result;     
-                           
+
+            return $result;
+
         } catch (HttpException $exception) {
         }
     }
@@ -114,18 +114,35 @@ class Sandbox1c
             $autolongTable = self::AUTOLONG_ERP_NEW_PRODUCTS_TABLE;
 
             $data = self::connect()->query("SELECT id_1c as autolong_number,code as code_from_1c FROM products")->fetchAll(PDO::FETCH_OBJ);
-            
+
             $result = [];
-            
+
             foreach($data as $res) {
-	        	$result[preg_replace('/\D/', '', $res->autolong_number)] = $res->code_from_1c;   
+	        	$result[preg_replace('/\D/', '', $res->autolong_number)] = $res->code_from_1c;
             }
-            
+
             return $result;
-                    
+
         } catch (HttpException $exception) {
 	        print_r($exception);
         }
+    }
+
+    public static function getProduct1cId($autolong_number)
+    {
+        $autolong_number = preg_replace('/\D/', '', $autolong_number);
+
+        try {
+            $data = self::connect()->prepare("SELECT id_1c as autolong_number,code as code_from_1c FROM products WHERE id_1c = ?");
+            $data->execute([$autolong_number]);
+            $result = $data->fetch();
+
+            if (is_array($result) && isset($result['code_from_1c'])) return $result['code_from_1c'];
+        } catch (HttpException $exception) {
+            return null;
+        }
+
+        return null;
     }
 
     public static function getCode_1C($autolong_number)
@@ -135,11 +152,11 @@ class Sandbox1c
             $autolongTable = self::AUTOLONG_ERP_NEW_PRODUCTS_TABLE;
 
             $code = self::connect()->query("SELECT code_from_1c FROM $autolongTable WHERE autolong_number = $autolong_number")->fetchAll(PDO::FETCH_OBJ);
-            
-            if($code && $code[0]) {   
-				return $code[0]->code_from_1c;  
-            }   
-                    
+
+            if($code && $code[0]) {
+				return $code[0]->code_from_1c;
+            }
+
         } catch (HttpException $exception) {
         }
     }
@@ -149,18 +166,18 @@ class Sandbox1c
         try {
             $productTable = self::PRODUCTS_TABLE;
             $autolongTable = self::AUTOLONG_ERP_NEW_PRODUCTS_TABLE;
-            
+
             $data = self::connect()->query("SELECT `code`,count(balance) as balancei FROM balance WHERE `period2` BETWEEN ".(time() - (90 + $year) * 86400)." AND ".(time() - $year * 86400)." GROUP BY `code`")->fetchAll(PDO::FETCH_OBJ);
-            
+
             $result = [];
-            
+
             foreach($data as $res) {
-	        	$result[preg_replace('/\D/', '', $res->code)] = $res->balancei;   
+	        	$result[preg_replace('/\D/', '', $res->code)] = $res->balancei;
             }
-            
+
             return $result;
-            
-                    
+
+
         } catch (HttpException $exception) {
         }
     }
@@ -170,18 +187,18 @@ class Sandbox1c
         try {
             $productTable = self::PRODUCTS_TABLE;
             $autolongTable = self::AUTOLONG_ERP_NEW_PRODUCTS_TABLE;
-            
+
             $data = self::connect()->query("SELECT `code`,sum(Sold_pieces) as pieces FROM products_mark WHERE `date2` BETWEEN ".(time() - (90 + $year) * 86400)." AND ".(time() - $year * 86400)." GROUP BY `code` LIMIT 10")->fetchAll(PDO::FETCH_OBJ);
-            
+
             $result = [];
-	            
+
             foreach($data as $res) {
-	        	$result[preg_replace('/\D/', '', $res->code)] = $res->pieces;   
+	        	$result[preg_replace('/\D/', '', $res->code)] = $res->pieces;
             }
-            
+
             return $result;
-            
-                    
+
+
         } catch (HttpException $exception) {
         }
     }
@@ -192,19 +209,19 @@ class Sandbox1c
         try {
             $productTable = self::PRODUCTS_TABLE;
             $autolongTable = self::AUTOLONG_ERP_NEW_PRODUCTS_TABLE;
-            
+
             $data = self::connect()->query("SELECT * FROM balance WHERE `period2` IS NULL LIMIT 500000");
-            
+
             $result = [];
-            
+
             foreach($data as $res) {
 	        	# echo $res->date." - ".strtotime($res->date)."'\n";
 	        	self::connect()->query("UPDATE balance SET `period2`='".strtotime($res->period)."' WHERE `id`='".$res->id."'");
             }
-            
+
             return $result;
-            
-                    
+
+
         } catch (HttpException $exception) {
         }
     }

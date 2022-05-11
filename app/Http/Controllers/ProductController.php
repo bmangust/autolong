@@ -47,12 +47,12 @@ class ProductController extends Controller
     {
         $products = Product::getCachedProductsOrSetProductsToCache(1);
         $codes = Sandbox1c::getProductsList();
-        
+
         foreach($products as $key => $product) {
 	        $product->autolongNumber = $codes[$product->autolongNumber] ?? $product->autolongNumber;
 	        $products[$key] = $product;
         }
-        
+
         return response()->json($products, 200);
     }
 
@@ -95,7 +95,7 @@ class ProductController extends Controller
         } elseif (is_string($request->input('image'))) {
             $product->loadImageFromAutolong($request->input('image'));
         }
-        
+
         return response()->json(new ProductWithRelationshipsResource($product), 201);
     }
 
@@ -103,10 +103,12 @@ class ProductController extends Controller
      * Display the specified resource.
      *
      * @param int $id
-     * @return Response
+     * @return JsonResponse
      */
     public function show(Product $product)
     {
+        $product->id_1c = Sandbox1c::getProduct1cId($product->autolong_number);
+
         return response()->json(new ProductWithRelationshipsResource($product), 200);
     }
 

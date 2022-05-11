@@ -42,6 +42,7 @@ export interface IProduct {
     quantity: number
     orders: IOrder[] | null
     autolongNumber: number
+    id1c: number | null
     image: string
     price: IProductPrice
     fullPrice: IProductPrice

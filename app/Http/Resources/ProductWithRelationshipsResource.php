@@ -19,9 +19,10 @@ class ProductWithRelationshipsResource extends JsonResource
     public function toArray($request)
     {
 	    $this->code_from_1c = $this->autolong_number ? Sandbox1c::getCode_1C($this->autolong_number) : null;
-	    	    
+
         return [
             'id' => $this->id,
+            'id1c' => $this->id_1c ?? null,
             'nameRu' => $this->name_ru,
             'nameEn' => $this->name_en,
             'aboutRu' => $this->about_ru,
