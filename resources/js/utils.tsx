@@ -13,9 +13,9 @@ import {IProductPrice} from './components/Products/IProducts'
 import statuses from '../statuses/statuses.json'
 import courses from '../courses/courses.json'
 
-export function nameToLinkFormatter(name: string, row, page: string) {
+export function nameToLinkFormatter(name: string, row, page: string, className: string = '') {
     return (
-        <NavLink to={`/${page}/${row.id}`}>{name}</NavLink>
+        <NavLink to={`/${page}/${row.id}`} className={className}>{name}</NavLink>
     )
 }
 
@@ -63,6 +63,26 @@ export function timeConverter(timestamp, input = false) {
         return `${year}-${month}-${date}`
     }
     return `${date}.${month}.${year}`
+}
+
+/**
+ * Convert timestamp to m.d.Y by timestamp
+ * @param timestamp
+ * @param input
+ */
+export function fullTimeConverter(timestamp, input = false) {
+    const date = new Date(timestamp * 1000)
+
+    const month = date.getMonth() + 1
+    const year = date.getFullYear()
+    const currentDate = date.getDate()
+    const hours = date.getHours()
+    const minutes = date.getMinutes()
+
+    if (input) {
+        return `${year}-${month}-${currentDate} ${hours}:${minutes}`
+    }
+    return `${date}.${month}.${year} ${hours}:${minutes}`
 }
 
 /**
@@ -225,4 +245,8 @@ export const useDebounce: (value, timeout) => string | number = (value, timeout)
     }, [value, timeout])
 
     return state
+}
+
+export const capitalize = (s) => {
+    return s && s[0].toUpperCase() + s.slice(1);
 }

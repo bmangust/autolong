@@ -123,19 +123,19 @@ const OrdersTable: React.FC = () => {
     }
 
     const footerItemsFormatter = (columnData) => {
-	    
+
 	    let totalItems = 0;
 		columnData.reduce((index, data) => {
 		    totalItems += data.length;
 		},[]);
-	    
+
         return <>
             <span>{totalItems}</span>
         </>
     }
-    
+
     const footerCountsFormatter = (columnData) => {
-	    
+
 	    let totalCounts = 0;
 		columnData.reduce((index, data) => {
 		    data.reduce((i, items, ) => {
