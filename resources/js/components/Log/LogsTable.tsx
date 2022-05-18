@@ -15,7 +15,7 @@ import {ILogsRootState} from './ILogs'
 import Error from '../UI/Error/Error'
 import Loader from '../UI/Loader/Loader'
 import AutoTable from '../UI/AutoTable/AutoTable'
-import {timeConverter} from '../../utils'
+import {fullTimeConverter, capitalize, nameToLinkFormatter} from '../../utils'
 import logsTranslate from '../../../logs/logsTranslate.json'
 
 const LogsTable: React.FC = () => {
@@ -26,18 +26,43 @@ const LogsTable: React.FC = () => {
     }, [dispatch])
 
     const {log, loading, error} = useSelector(
-        (state: ILogsRootState) => ({
-            log: state.logsState.logs,
-            loading: state.logsState.loading,
-            error: state.logsState.error
-        })
+            (state: ILogsRootState) => ({
+                log: state.logsState.logs,
+                loading: state.logsState.loading,
+                error: state.logsState.error
+            })
     )
+
+    const itemsToGLow = [
+        'App\\Container',
+        'App\\Order'
+    ]
+
+    const filterGlowedOptions = Object.entries(logsTranslate.classes)
+            .map(([key, value]) => {
+                return {
+                    label: capitalize(value),
+                    value: key
+                }
+            })
+
+    const filterGlowedItems = {
+        options: filterGlowedOptions,
+        field: 'modelName',
+        placeholder: 'Фильтр по объектам'
+    }
 
     const logActionFormatter = (modelName, row) => {
         const item = JSON.parse(row.model)
         const itemLink = item.name || item.nameRu
-        return `${logsTranslate.actions[row.action]}
+        const action = `${logsTranslate.actions[row.action]}
          ${logsTranslate.classes[modelName]} "${itemLink}"`
+
+        let className = ''
+
+        if (itemsToGLow.includes(modelName)) className = 'status'
+
+        return nameToLinkFormatter(action, {id: item.id}, logsTranslate.routes[modelName], className)
     }
 
     const logBeforeFormatter = (before) => {
@@ -74,24 +99,16 @@ const LogsTable: React.FC = () => {
         }
     }
 
-    const expandRowTable = [
-        {
-            dataField: 'before',
-            text: 'До изменений',
-            formatter: logBeforeFormatter
-        },
-        {
-            dataField: 'after',
-            text: 'После',
-            formatter: logAfterFormatter
-        }
-    ]
-
     const columns: ColumnDescription[] = [
         {
             dataField: 'user',
             text: 'Пользователь',
             classes: 'title',
+            sort: true
+        },
+        {
+            dataField: 'role',
+            text: 'Роль',
             sort: true
         },
         {
@@ -102,9 +119,22 @@ const LogsTable: React.FC = () => {
             formatter: logActionFormatter
         },
         {
+            dataField: 'before',
+            text: 'До изменений',
+            sort: true,
+            formatter: logBeforeFormatter
+        },
+        {
+            dataField: 'after',
+            text: 'После изменений',
+            sort: true,
+            formatter: logAfterFormatter
+        },
+        {
             dataField: 'createdAt',
             text: 'Дата и время',
-            formatter: timeConverter
+            sort: true,
+            formatter: fullTimeConverter
         }
     ]
 
@@ -116,8 +146,8 @@ const LogsTable: React.FC = () => {
     }
 
     return <AutoTable
-        expandRowTable={expandRowTable}
-        keyField='id' data={log} columns={columns}
+            filter={filterGlowedItems}
+            keyField='id' data={log} columns={columns}
     />
 }
 

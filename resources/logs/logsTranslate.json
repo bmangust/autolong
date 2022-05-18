@@ -13,5 +13,15 @@
     "App\\Order": "заказ",
     "App\\User": "пользователь",
     "App\\UserRole": "роль"
+  },
+  "routes": {
+    "App\\Product": "product",
+    "App\\Provider": "provider",
+    "App\\Catalog": "catalog",
+    "App\\Container": "container",
+    "App\\Importer": "importer",
+    "App\\Order": "order",
+    "App\\User": "settings/user",
+    "App\\UserRole": "settings/role"
   }
 }
