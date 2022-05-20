@@ -128,6 +128,7 @@ const LogsTable: React.FC = () => {
             dataField: 'after',
             text: 'После изменений',
             sort: true,
+            style: {maxWidth: '150px'},
             formatter: logAfterFormatter
         },
         {
