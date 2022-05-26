@@ -498,6 +498,15 @@ export const routes: IRoute[] = [
         fallback: <div> Loading... </div>
     },
     {
+        name: 'Парсер',
+        path: '/parser',
+        redirect: '/parser',
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <div> Loading... </div>
+    },
+    {
         name: 'Логин',
         path: '/login',
         component: lazy(() => pMinDelay(import('../../../pages/login/Login'), 600)),

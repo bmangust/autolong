@@ -11,6 +11,7 @@ import classes from './Sidebar.module.css'
 import {routes} from '../router/routes'
 import SvgHelp from '../../UI/iconComponents/Help'
 import SvgLogout from '../../UI/iconComponents/Logout'
+import SvgPrices from '../../UI/iconComponents/Prices'
 import {SanctumContext} from '../../../Sanctum'
 
 const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: Function }> = (
@@ -59,6 +60,10 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: Function }> = (
         }
     }
 
+    const onParserClick = () => {
+        window.open('http://37.228.93.249/', '_blank').focus();
+    }
+
     const cls = [classes.sidebar]
 
     if (isOpen) {
@@ -69,6 +74,14 @@ const Sidebar: React.FC<{ isOpen: boolean; setIsOpen: Function }> = (
         <nav className={cls.join(' ') + ' nav flex-column'}>
             <div className='w-100'>
                 {renderLinks(routes)}
+                <NavLink
+                        className={classes.navLink}
+                        activeClassName={classes.active}
+                        onClick={onParserClick}
+                        to='/parser'>
+                    <SvgPrices/>
+                    Парсер
+                </NavLink>
                 <NavLink
                     className={classes.navLink}
                     activeClassName={classes.active}
