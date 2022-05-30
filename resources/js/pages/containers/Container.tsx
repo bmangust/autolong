@@ -55,7 +55,7 @@ const Container: React.FC<IContainer> = () => {
         dispatch(fetchContainerById(id))
     }, [dispatch, id])
 
-    const tablesToCSV = () => {
+    const tablesToCSV = (fileName: string) => {
         setActiveView(1)
 
         setTimeout(() => {
@@ -86,7 +86,7 @@ const Container: React.FC<IContainer> = () => {
                 }
             }
 
-            downloadCSVFile(csvData.join('\n'), 'export.csv');
+            downloadCSVFile(csvData.join('\n'), fileName + '.csv');
         }, 1000);
     }
 
@@ -227,7 +227,7 @@ const Container: React.FC<IContainer> = () => {
                             <div className='card card-body mb-lg-0 mb-3'>
                                 <button
                                         className='btn btn-secondary w-100'
-                                        onClick={() => tablesToCSV()}
+                                        onClick={() => tablesToCSV(container.name)}
                                 >
                                     Экспорт в CSV
                                 </button>
