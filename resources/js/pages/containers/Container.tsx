@@ -79,7 +79,7 @@ const Container: React.FC<IContainer> = () => {
                     // Stores each csv row data
                     const csvrow = [];
                     for (let j = 0; j < cols.length; j++) {
-                        csvrow.push('"' + cols[j].innerHTML + '"');
+                        csvrow.push('"' + cols[j].innerHTML.replace('&nbsp;', ' ') + '"');
                     }
 
                     csvData.push(csvrow.join(','));
