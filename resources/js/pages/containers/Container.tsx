@@ -69,7 +69,7 @@ const Container: React.FC<IContainer> = () => {
                 const rows = tables[x].getElementsByTagName('tr');
 
                 const titleString = Array(rows[0].childNodes.length - 1)
-                titleString.unshift('"' + titles[x].innerText + '"')
+                titleString.unshift('"' + titles[x].innerText.replace('&nbsp;', ' ') + '"')
                 csvData.push(titleString.join(','));
 
                 for (let i = 0; i < rows.length; i++) {
