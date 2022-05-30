@@ -27,9 +27,9 @@ const TableView: React.FC<Props> = (props) => {
 
     return <>
         <div className={classes.orderBody}>
-            <Table bordered hover>
+            <Table bordered hover id={'order-table-' + order.id} className='order-table'>
                 <thead>
-                <tr>
+                <tr className='head-row'>
                     <th>Код</th>
                     <th>Кол-во</th>
                     <th>RMB</th>

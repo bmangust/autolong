@@ -69,7 +69,7 @@ const ContainersOrder: React.FC<Props> = (props) => {
 
     return <div className={classes.order}>
         <CustomToggle eventKey={order.id + order.name}>
-            {order.name}
+            <span className='order-title'>{order.name}</span>
         </CustomToggle>
         <Accordion.Collapse eventKey={order.id + order.name}>
             <div key={activeView} className='option'>
