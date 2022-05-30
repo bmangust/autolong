@@ -69,7 +69,7 @@ const Container: React.FC<IContainer> = () => {
                 const rows = tables[x].getElementsByTagName('tr');
 
                 const titleString = Array(rows[0].childNodes.length - 1)
-                titleString.unshift(titles[x].innerText)
+                titleString.unshift('"' + titles[x].innerText + '"')
                 csvData.push(titleString.join(','));
 
                 for (let i = 0; i < rows.length; i++) {
@@ -79,7 +79,7 @@ const Container: React.FC<IContainer> = () => {
                     // Stores each csv row data
                     const csvrow = [];
                     for (let j = 0; j < cols.length; j++) {
-                        csvrow.push(cols[j].innerHTML);
+                        csvrow.push('"' + cols[j].innerHTML + '"');
                     }
 
                     csvData.push(csvrow.join(','));
