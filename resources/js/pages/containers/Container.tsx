@@ -29,6 +29,8 @@ import SvgEdit from '../../components/UI/iconComponents/Edit'
 import FinalCalculation from '../../components/Containers/FinalCalculation/FinalCalculation'
 import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 import ViewSwitch from '../../components/UI/ViewSwitch/ViewSwitch'
+import axios from "axios";
+import {FETCH_COUNTRIES_SUCCESS} from "../../store/actions/actionTypes";
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -64,11 +66,46 @@ const Container: React.FC<IContainer> = () => {
             // Get each row data
             const tables = document.getElementsByTagName('table');
             const titles = document.getElementsByClassName('order-title');
+            const rowsCount = tables[0].getElementsByTagName('tr')[0].childNodes.length;
+
+            const params = [
+                {
+                    title: 'Итоговая стоимость  товаров, ¥',
+                    value: totalAmountY.toString() + ' ¥'
+                },
+                {
+                    title: 'Курс ¥ к ₽',
+                    value: (totalAmount / totalAmountY).toString() + ' ₽'
+                },
+                {
+                    title: 'Итоговая стоимость  товаров, ₽',
+                    value: totalAmount.toString() + ' ₽'
+                },
+                {
+                    title: 'Стоимость доставки, ₽',
+                    value: container.deliveryPrice.toString() + ' ₽'
+                },
+                {
+                    title: 'Стоимость доп.расходов, ₽',
+                    value: totalOrderingAmount.toString() + ' ₽'
+                },
+                {
+                    title: 'Общая стоимость, ₽',
+                    value: totalAmount.toString() + ' ₽'
+                },
+            ]
+
+            params.forEach(function (item) {
+                const csvItem = Array(rowsCount - 2)
+                csvItem.unshift('"' + item.value.replace('&nbsp;', ' ') + '"')
+                csvItem.unshift('"' + item.title.replace('&nbsp;', ' ') + '"')
+                csvData.push(csvItem.join(','));
+            })
 
             for (let x = 0; x < tables.length; x++) {
                 const rows = tables[x].getElementsByTagName('tr');
 
-                const titleString = Array(rows[0].childNodes.length - 1)
+                const titleString = Array(rowsCount - 1)
                 titleString.unshift('"' + titles[x].innerText.replace('&nbsp;', ' ') + '"')
                 csvData.push(titleString.join(','));
 
@@ -119,9 +156,13 @@ const Container: React.FC<IContainer> = () => {
     let totalWeightBrutto = 0
     let totalBoxes = 0
     let totalAmount = 0
+    let totalAmountY = 0
+    let totalOrderingAmount = 0
 
     container && container.orders && container.orders.map((order) => {
         totalAmount += order.totalPaymentHistoryRub
+        totalAmountY += order.totalPaymentHistory
+        totalOrderingAmount += order.orderingAmount
         if (order.weightNetto) {
             totalWeightNetto += order.weightNetto
         }
