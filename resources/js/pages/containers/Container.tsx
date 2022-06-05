@@ -58,12 +58,20 @@ const Container: React.FC<IContainer> = () => {
     }, [dispatch, id])
 
     function getBase64Image(img) {
-        const canvas = document.createElement('canvas');
-        canvas.width = 150;
-        canvas.height = 150;
-        const ctx = canvas.getContext('2d');
-        ctx.drawImage(img, 0, 0);
-        return canvas.toDataURL('image/png');
+        try {
+            const canvas = document.createElement('canvas');
+            canvas.width = 150;
+            canvas.height = 150;
+            const ctx = canvas.getContext('2d');
+            ctx.drawImage(img, 0, 0);
+
+            return {
+                image: canvas.toDataURL('image/png'),
+                fit: [100, 100]
+            }
+        } catch {
+            return ''
+        }
     }
 
     const exportToPDF = () => {
@@ -74,10 +82,7 @@ const Container: React.FC<IContainer> = () => {
         for (let i = 0; i < allItems.length; i++) {
             pdfItems.push(
                     [
-                        {
-                            image: getBase64Image(document.getElementsByTagName('img')[i]),
-                            fit: [100, 100]
-                        },
+                        getBase64Image(document.getElementsByTagName('img')[i]),
                         {
                             text: allItems[i].nameRu ?? '',
                             link: 'https://cnsup.ru/product/' + allItems[i].productId,
