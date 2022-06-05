@@ -38,7 +38,7 @@ class ContainerController extends Controller
                 'orders.orderItems.product',
                 'city',
                 'sandboxFiles'])->orderByDesc('updated_at')->get();
-                
+
         return response()->json(ContainerWithRelationshipsResource::collection($containers), 200);
     }
 
@@ -87,10 +87,11 @@ class ContainerController extends Controller
      * Display the specified resource.
      *
      * @param Container $container
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function show(Container $container)
     {
+        $container->load('orders.orderItems.product.provider');
         return response()->json(new ContainerWithRelationshipsResource($container), 200);
     }
 

@@ -5,6 +5,8 @@ import React, {useContext, useEffect, useState} from 'react'
 import {useParams} from 'react-router-dom'
 import {useDispatch, useSelector} from 'react-redux'
 import {Accordion} from 'react-bootstrap'
+import pdfMake from 'pdfmake/build/pdfmake';
+import pdfFonts from 'pdfmake/build/vfs_fonts';
 
 // Actions
 import {deleteContainerById, fetchContainerById} from '../../store/actions/containers'
@@ -29,8 +31,6 @@ import SvgEdit from '../../components/UI/iconComponents/Edit'
 import FinalCalculation from '../../components/Containers/FinalCalculation/FinalCalculation'
 import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 import ViewSwitch from '../../components/UI/ViewSwitch/ViewSwitch'
-import axios from "axios";
-import {FETCH_COUNTRIES_SUCCESS} from "../../store/actions/actionTypes";
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
@@ -56,6 +56,59 @@ const Container: React.FC<IContainer> = () => {
     useEffect(() => {
         dispatch(fetchContainerById(id))
     }, [dispatch, id])
+
+    function getBase64Image(img) {
+        const canvas = document.createElement('canvas');
+        canvas.width = 150;
+        canvas.height = 150;
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(img, 0, 0);
+        return canvas.toDataURL('image/png');
+    }
+
+    const exportToPDF = () => {
+        setActiveView(0)
+        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+
+        const pdfItems = []
+        for (let i = 0; i < allItems.length; i++) {
+            pdfItems.push(
+                    [
+                        {
+                            image: getBase64Image(document.getElementsByTagName('img')[i]),
+                            fit: [100, 100]
+                        },
+                        {
+                            text: allItems[i].nameRu ?? '',
+                            link: 'https://cnsup.ru/product/' + allItems[i].productId,
+                            color: 'blue'
+                        },
+                        allItems[i].autolongNumber ?? 0,
+                        allItems[i].vendorCode ?? '',
+                        allItems[i].quantity ?? 0,
+                        allItems[i].provider.name,
+                    ]
+            )
+        }
+
+        const content = {
+            content: [
+                {text: 'Контейнер: ' + container.name, style: 'header'},
+                ' ',
+                {
+                    style: 'tableExample',
+                    table: {
+                        body: [
+                            ['Фото', 'Наименование', 'Код товара', 'Артикул', 'Количество (шт)', 'Поставщик'],
+                            ...pdfItems
+                        ]
+                    }
+                },
+            ]
+        }
+
+        pdfMake.createPdf(content).download('container_' + container.name + '.pdf')
+    }
 
     const tablesToCSV = (fileName: string) => {
         setActiveView(1)
@@ -158,8 +211,10 @@ const Container: React.FC<IContainer> = () => {
     let totalAmount = 0
     let totalAmountY = 0
     let totalOrderingAmount = 0
+    let allItems = []
 
     container && container.orders && container.orders.map((order) => {
+        allItems = allItems.concat(order.items)
         totalAmount += order.totalPaymentHistoryRub
         totalAmountY += order.totalPaymentHistory
         totalOrderingAmount += order.orderingAmount
@@ -271,6 +326,12 @@ const Container: React.FC<IContainer> = () => {
                                         onClick={() => tablesToCSV(container.name)}
                                 >
                                     Экспорт в CSV
+                                </button>
+                                <button
+                                        className='btn btn-secondary w-100 mt-3'
+                                        onClick={() => exportToPDF()}
+                                >
+                                    Экспорт в PDF
                                 </button>
                             </div>
                         </div>
