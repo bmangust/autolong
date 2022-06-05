@@ -29,8 +29,6 @@ import SvgEdit from '../../components/UI/iconComponents/Edit'
 import FinalCalculation from '../../components/Containers/FinalCalculation/FinalCalculation'
 import DeleteButton from '../../components/UI/DeleteButton/DeleteButton'
 import ViewSwitch from '../../components/UI/ViewSwitch/ViewSwitch'
-import axios from "axios";
-import {FETCH_COUNTRIES_SUCCESS} from "../../store/actions/actionTypes";
 
 const Container: React.FC<IContainer> = () => {
     const {id}: any = useParams()
