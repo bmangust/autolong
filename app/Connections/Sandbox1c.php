@@ -3,6 +3,7 @@
 
 namespace App\Connections;
 
+use App\Product;
 use Illuminate\Support\Facades\DB;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use Illuminate\Support\Facades\Redis;
@@ -48,15 +49,17 @@ class Sandbox1c
 
             $code = self::connect()->query("SELECT code FROM $productTable order by CAST(code as UNSIGNED) DESC LIMIT 1;")->fetchAll(PDO::FETCH_OBJ);
             $latestCodeInAutolongErp = self::connect()->query("SELECT autolong_number FROM $autolongTable order by CAST(autolong_number as UNSIGNED) DESC LIMIT 1;")->fetchAll(PDO::FETCH_OBJ);
+            $newCodeLocal = Product::query()->orderByRaw('CAST(autolong_number as UNSIGNED) DESC')->first()->autolong_number + 1;
             if (!empty($code)) {
                 $code = $code[0]->code + 1;
                 if (!empty($latestCodeInAutolongErp)) {
                     $latestCodeInAutolongErp = $latestCodeInAutolongErp[0]->autolong_number;
                     if ($code <= $latestCodeInAutolongErp) {
-                        return $latestCodeInAutolongErp + 1;
+                        $code = $latestCodeInAutolongErp + 1;
                     }
                 }
-                return $code;
+
+                return $code > $newCodeLocal ? $code : $newCodeLocal;
             }
             return uniqid('', true);
         } catch (HttpException $exception) {
