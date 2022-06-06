@@ -121,6 +121,12 @@ class Sandbox1c
 	        	$result[preg_replace('/\D/', '', $res->autolong_number)] = $res->code_from_1c;
             }
 
+            $localData = DB::table('1c_sandbox.' . $autolongTable)->select(['code_from_1c', 'autolong_number'])->whereNotNull(['code_from_1c', 'autolong_number'])->pluck('code_from_1c', 'autolong_number')->toArray();
+
+            foreach($localData as $key => $value) {
+                $result[preg_replace('/\D/', '', $key)] = $value;
+            }
+
             return $result;
 
         } catch (HttpException $exception) {
