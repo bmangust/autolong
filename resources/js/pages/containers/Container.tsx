@@ -120,11 +120,13 @@ const Container: React.FC<IContainer> = () => {
 
         setTimeout(() => {
             const csvData = [];
+            const colDelim = '\t'
+            const rowDelim = '\r\n'
 
             // Get each row data
             const tables = document.getElementsByTagName('table');
             const titles = document.getElementsByClassName('order-title');
-            const rowsCount = tables[0].getElementsByTagName('tr')[0].childNodes.length;
+            const rowsCount = tables[0].getElementsByTagName('tr')[0].childNodes.length
 
             const params = [
                 {
@@ -157,7 +159,7 @@ const Container: React.FC<IContainer> = () => {
                 const csvItem = Array(rowsCount - 2)
                 csvItem.unshift('"' + item.value.replace('&nbsp;', ' ') + '"')
                 csvItem.unshift('"' + item.title.replace('&nbsp;', ' ') + '"')
-                csvData.push(csvItem.join(','));
+                csvData.push(csvItem.join(colDelim));
             })
 
             for (let x = 0; x < tables.length; x++) {
@@ -165,7 +167,7 @@ const Container: React.FC<IContainer> = () => {
 
                 const titleString = Array(rowsCount - 1)
                 titleString.unshift('"' + titles[x].innerText.replace('&nbsp;', ' ') + '"')
-                csvData.push(titleString.join(','));
+                csvData.push(titleString.join(colDelim));
 
                 for (let i = 0; i < rows.length; i++) {
                     // Get each column data
@@ -177,19 +179,23 @@ const Container: React.FC<IContainer> = () => {
                         csvrow.push('"' + cols[j].innerHTML.replace('&nbsp;', ' ') + '"');
                     }
 
-                    csvData.push(csvrow.join(','));
+                    csvData.push(csvrow.join(colDelim));
                 }
             }
 
-            downloadCSVFile(csvData.join('\n'), fileName + '.csv');
+            downloadCSVFile(csvData.join(rowDelim), fileName + '.csv');
         }, 1000);
     }
 
     const downloadCSVFile = (csvData, fileName) => {
+        csvData = decodeURIComponent('%EF%BB%BF') + csvData
+        const csvBytes = new Uint16Array(csvData.split('').map( function(k, v) {
+            return k.charCodeAt(0);
+        }));
         // Create CSV file object and feed
         // our csv_data into it
-        const CSVFile = new Blob([csvData], {
-            type: 'text/csv'
+        const CSVFile = new Blob([csvBytes], {
+            type: 'text/csv;charset=UTF-16LE;'
         });
 
         // Create to temporary link to initiate
