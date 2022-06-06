@@ -155,10 +155,19 @@ class Sandbox1c
 
             if($code && $code[0]) {
 				return $code[0]->code_from_1c;
+            } else {
+                $code = DB::table('1c_sandbox.' . $autolongTable)
+                                ->select(['code_from_1c', 'autolong_number'])
+                                ->where('autolong_number', (string) $autolong_number)
+                                ->first()->code_from_1c ?? null;
+
+                if($code) return $code;
             }
 
         } catch (HttpException $exception) {
         }
+
+        return null;
     }
 
     public static function getBalances($year = 0)
