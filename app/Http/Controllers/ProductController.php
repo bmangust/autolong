@@ -49,7 +49,7 @@ class ProductController extends Controller
         $codes = Sandbox1c::getProductsList();
 
         foreach($products as $key => $product) {
-	        $product->autolongNumber = $codes[$product->autolong_number] ?? $product->autolongNumber;
+	        $product->autolongNumber = $codes[$product->autolongNumber] ?? $product->autolongNumber;
 	        $products[$key] = $product;
         }
 
