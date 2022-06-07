@@ -353,25 +353,30 @@ class OrderController extends Controller
     {
         $codes = Sandbox1c::getProductsList();
         $codes_result = [];
-        
+
         foreach($codes as $code => $value) {
 	        $codes_result[$value] = $code;
         }
-        
+
         $request->validate([
                 'numbers' => 'required'
         ]);
         $numbers = array_unique($order->cleanSpaceInArrayItems($request->input('numbers')));
-        
+
         foreach($numbers as $key => $num) {
 	    #   $numbers[$key] = $codes_result[$num];
         }
-        
+
         $unknownProductsKey = 'number';
         $availableAndUnknownProducts = [$unknownProductsKey => []];
         foreach ($numbers as $number) {
-	        
+
             $product = Product::wherePublished(1)->whereAutolongNumber($number);
+
+            if(!$product->exists()) {
+                $product = Product::wherePublished(1)->whereAutolongNumber($codes_result[$number]);
+            }
+
             if ($product->exists()) {
                 $providerId = $product->first()->provider->id;
                 if (array_key_exists($providerId, $availableAndUnknownProducts)) {
@@ -796,7 +801,7 @@ class OrderController extends Controller
                 'baikal_tracker_link' => $baikalLink,
                 'baikal_tracker_history' => $parsingInfo
         ]);
-        
+
         if ($approximateDate) {
             $order->updateArrivalDateInContainer($approximateDate);
         }
