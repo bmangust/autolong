@@ -373,7 +373,7 @@ class OrderController extends Controller
 
             $product = Product::wherePublished(1)->whereAutolongNumber($number);
 
-            if(!$product->exists()) {
+            if(!$product->exists() && isset($codes_result[$number])) {
                 $product = Product::wherePublished(1)->whereAutolongNumber($codes_result[$number]);
             }
 
