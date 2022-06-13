@@ -507,6 +507,28 @@ export const routes: IRoute[] = [
         fallback: <div> Loading... </div>
     },
     {
+        name: 'Лог изменений',
+        path: '/changelog',
+        component: lazy(() => pMinDelay(import('../../../pages/changelog/Changelog'), 600)),
+        hide: false,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Log/>,
+        access: ['logsIndex']
+    },
+    {
+        name: 'Лог изменений - создать',
+        path: '/changelogcreate',
+        component: lazy(() => pMinDelay(import('../../../pages/changelog/ChangelogCreate'), 600)),
+        hide: true,
+        exact: false,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Log/>,
+        access: ['logsIndex']
+    },
+    {
         name: 'Логин',
         path: '/login',
         component: lazy(() => pMinDelay(import('../../../pages/login/Login'), 600)),
