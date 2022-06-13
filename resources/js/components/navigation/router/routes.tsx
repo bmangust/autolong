@@ -509,7 +509,7 @@ export const routes: IRoute[] = [
     {
         name: 'Лог изменений',
         path: '/changelog',
-        component: lazy(() => pMinDelay(import('../../../pages/Changelog/Changelog'), 600)),
+        component: lazy(() => pMinDelay(import('../../../pages/changelog/Changelog'), 600)),
         hide: false,
         exact: false,
         private: true,
@@ -520,7 +520,7 @@ export const routes: IRoute[] = [
     {
         name: 'Лог изменений - создать',
         path: '/changelogcreate',
-        component: lazy(() => pMinDelay(import('../../../pages/Changelog/ChangelogCreate'), 600)),
+        component: lazy(() => pMinDelay(import('../../../pages/changelog/ChangelogCreate'), 600)),
         hide: false,
         exact: false,
         private: true,
