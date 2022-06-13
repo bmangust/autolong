@@ -140,5 +140,6 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('dumps', 'DumpController@index');
 
-    Route::get('exchangerate', 'ExchangeRateController@getLastCourse');
+
 });
+Route::get('exchangerate', 'ExchangeRateController@getLastCourse');
