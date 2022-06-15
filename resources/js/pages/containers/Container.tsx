@@ -200,6 +200,7 @@ const Container: React.FC<IContainer> = () => {
             <div className="col-lg-4">
                 {user.role.accesses.ordersShowCargo && container.orders.length && container.orders[0].cargo
                     ? <OrderBaikal
+                        orderId={container.orders[0].id}
                         isContainer={true}
                         baikalTrackerLink={container.orders[0].baikalTrackerLink}
                         baikalTrackerHistory={container.orders[0].baikalTrackerHistory}/>
