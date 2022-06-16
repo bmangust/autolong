@@ -67,7 +67,8 @@ const Container: React.FC<IContainer> = () => {
 
             return {
                 image: canvas.toDataURL('image/png'),
-                fit: [100, 100]
+                width: 150,
+                height: 150
             }
         } catch {
             return ''
