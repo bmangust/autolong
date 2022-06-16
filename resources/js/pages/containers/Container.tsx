@@ -63,7 +63,7 @@ const Container: React.FC<IContainer> = () => {
             canvas.width = 150;
             canvas.height = 150;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0);
+            ctx.drawImage(img, 0, 0, 150, 150);
 
             return {
                 image: canvas.toDataURL('image/png'),
