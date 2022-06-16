@@ -39,6 +39,8 @@ class OrderItemResource extends JsonResource
                         'usd' => $this->getSumInUsd(),
                         'cny' => $this->getSumInCny()
                 ],
+                'vendorCode' => $this->whenLoaded('product')->vendor_code,
+                'provider' => new ProviderResource($this->whenLoaded('product')->provider),
                 'createdAt' => strtotime($this->created_at),
                 'updatedAt' => strtotime($this->updated_at),
         ];

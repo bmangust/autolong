@@ -14,6 +14,9 @@ class ExchangeRateController extends Controller
      */
     public function getLastCourse(ExchangeRate $exchangeRate)
     {
-        return response()->json(new ExchangeRateResource($exchangeRate->lastCourse()), 200);
+    	$course = new ExchangeRateResource($exchangeRate->lastCourse());
+    	$course['rub'] = $course['rub'] / 10;
+    	$course['usd'] = $course['usd'] / 10;
+        return response()->json($course);
     }
 }
