@@ -19,7 +19,7 @@ class LoginController extends Controller
         ]);
 
         $user = User::where('email', $request->email)->first();
-
+        
         if (! $user || ! Hash::check($request->password, $user->password)) {
             throw new HttpException( 400 , 'Учетные данные не соответствуют нашим.');
         }

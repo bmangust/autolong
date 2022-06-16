@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Validator;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 use App\Connections\Sandbox1c;
+use App\Events\OrderEvent;
 
 class OrderController extends Controller
 {
@@ -65,6 +66,7 @@ class OrderController extends Controller
      */
     public function store(Request $request)
     {
+        
         $this->orderCreateValidator($request->all())->validate();
         $order = new Order();
         $order->name = $request->input('name');
@@ -83,6 +85,9 @@ class OrderController extends Controller
         $order->generateContract();
         $order->generateProforma();
         $order->generateInvoice();
+
+        event(new OrderEvent($order->name, 'create'));
+
         return response()->json(new OrderWithRelationshipsResource($order), 201);
     }
 
@@ -155,6 +160,7 @@ class OrderController extends Controller
         $order->arrival_date = $request->input('arrivalDate');
         $order->save();
         $order->refresh();
+        event(new OrderEvent($order->name, 'update'));
         if ($request->has('items') && is_array($request->input('items'))) {
             $order->addOrderItems($request->input('items'));
         }
