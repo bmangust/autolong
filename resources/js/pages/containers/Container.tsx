@@ -374,11 +374,12 @@ const Container: React.FC<IContainer> = () => {
             }
             <div className="col-lg-4">
                 {user.role.accesses.ordersShowCargo && container.orders.length && container.orders[0].cargo
-                        ? <OrderBaikal
-                                isContainer={true}
-                                baikalTrackerLink={container.orders[0].baikalTrackerLink}
-                                baikalTrackerHistory={container.orders[0].baikalTrackerHistory}/>
-                        : null}
+                    ? <OrderBaikal
+                        orderId={container.orders[0].id}
+                        isContainer={true}
+                        baikalTrackerLink={container.orders[0].baikalTrackerLink}
+                        baikalTrackerHistory={container.orders[0].baikalTrackerHistory}/>
+                    : null}
                 <div className="card card-body-info mb-3">
                     <p className="infoBlockHeaders mb-1">
                         Город

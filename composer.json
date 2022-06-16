@@ -16,18 +16,19 @@
         "php": "^7.2.5",
         "ext-dom": "*",
         "ext-json": "*",
+        "ext-pdo": "*",
         "barryvdh/laravel-dompdf": "^0.9.0",
         "doctrine/dbal": "^2.11",
         "fideloper/proxy": "^4.2",
         "fruitcake/laravel-cors": "^2.0",
-        "guzzlehttp/guzzle": "^6.3",
+        "guzzlehttp/guzzle": "^6.3|^7.0.1",
         "laravel/framework": "^7.24",
         "laravel/sanctum": "^2.8",
         "laravel/tinker": "^2.0",
         "laravel/ui": "^2.1",
         "predis/predis": "^1.1",
-        "spatie/db-dumper": "^2.18",
-      "ext-pdo": "*"
+        "pusher/pusher-php-server": "^7.0",
+        "spatie/db-dumper": "^2.18"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.5",
