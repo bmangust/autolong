@@ -105,7 +105,7 @@ class Kernel extends ConsoleKernel
             }
         })->hourly();
 
-        $schedule->command(SyncOzonStocks::class)->hourly();
+        $schedule->command(SyncOzonStocks::class)->everyMinute();
     }
 
     /**
