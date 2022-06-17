@@ -40,8 +40,8 @@ class Kernel extends ConsoleKernel
         $schedule->call(function (ExchangeRate $exchangeRate) {
             $response = Http::get(ExchangeRate::CRBF_DAILY_RATE_JSON);
             $percentageModulBank = ExchangeRate::PERCENTAGE_MODULBANK / 100;
-            $rubToCny = json_decode($response->body())->Valute->CNY->Previous;
-            $rubToUsd = json_decode($response->body())->Valute->USD->Previous;
+            $rubToCny = json_decode($response->body())->Valute->CNY->Previous / json_decode($response->body())->Valute->CNY->Nominal;
+            $rubToUsd = json_decode($response->body())->Valute->USD->Previous / json_decode($response->body())->Valute->USD->Nominal;
             $rubToCnyModulBank = $rubToCny + $rubToCny * $percentageModulBank;
             $rubToUsdModulBank = $rubToUsd + $rubToUsd * $percentageModulBank;
             $cnyToUsdModulBank = round($rubToCnyModulBank / $rubToUsdModulBank, 8);
