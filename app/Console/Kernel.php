@@ -2,6 +2,7 @@
 
 namespace App\Console;
 
+use App\Console\Commands\SyncOzonStocks;
 use App\Dump;
 use App\ExchangeRate;
 use App\Http\Resources\ExchangeRateResource;
@@ -103,6 +104,8 @@ class Kernel extends ConsoleKernel
                 }
             }
         })->hourly();
+
+        $schedule->command(SyncOzonStocks::class)->hourly();
     }
 
     /**

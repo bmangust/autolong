@@ -41,6 +41,43 @@ class Sandbox1c
         return new PDO('mysql:host=127.0.0.1;port=3306;charset=utf8mb4;dbname=autolong', 'root', 'Autolong!02-11-NEW$!');
     }
 
+    public static function getProductsStocks(array $codes): array
+    {
+        $codesPreparation = join(",", array_pad(array(), count(
+                array_keys($codes)
+        ), "?"));
+
+
+//        $data = self::connect()->prepare("
+//            SELECT b.code, b.period, b.balance FROM balance b
+//            INNER JOIN (SELECT code, max(STR_TO_DATE(period, '%d.%m.%Y %k:%i:%s')) as max_period FROM balance WHERE code IN ($codesPreparation) GROUP BY code) grd
+//            ON b.code = grd.code AND STR_TO_DATE(b.period, '%d.%m.%Y %k:%i:%s') = grd.max_period
+//            WHERE b.code IN ($codesPreparation)
+//        ");
+
+        $data = self::connect()->prepare("
+            SELECT * from marketplaces
+            WHERE code IN ($codesPreparation)
+        ");
+
+        $data->execute(array_keys($codes));
+
+        $stocks = [];
+
+        foreach ($data->fetchAll(PDO::FETCH_OBJ) as $item)
+        {
+            if($item->balance !== null && $item->balance >= 0) {
+                $stocks[] = [
+                        'offer_id' => (string) $item->code,
+                        'product_id' => $codes[$item->code],
+                        'stock' => $item->balance
+                ];
+            }
+        }
+
+        return $stocks;
+    }
+
     public static function getBiggestAutolongNumber()
     {
         try {
