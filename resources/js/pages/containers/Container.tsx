@@ -60,15 +60,15 @@ const Container: React.FC<IContainer> = () => {
     function getBase64Image(img) {
         try {
             const canvas = document.createElement('canvas');
-            canvas.width = 150;
-            canvas.height = 150;
+            canvas.width = 80;
+            canvas.height = 80;
             const ctx = canvas.getContext('2d');
-            ctx.drawImage(img, 0, 0, 150, 150);
+            ctx.drawImage(img, 0, 0, 80, 80);
 
             return {
                 image: canvas.toDataURL('image/png'),
-                width: 150,
-                height: 150
+                width: 80,
+                height: 80
             }
         } catch {
             return ''
