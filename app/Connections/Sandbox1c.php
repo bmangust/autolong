@@ -47,6 +47,14 @@ class Sandbox1c
                 array_keys($codes)
         ), "?"));
 
+        $codesToInsert = join(",", array_map(function($item) {
+            return '(' . $item . ')';
+        }, array_keys($codes)));
+
+        $data = self::connect()->query("
+            INSERT IGNORE INTO marketplaces (code)
+            VALUES $codesToInsert
+        ");
 
 //        $data = self::connect()->prepare("
 //            SELECT b.code, b.period, b.balance FROM balance b
@@ -57,7 +65,7 @@ class Sandbox1c
 
         $data = self::connect()->prepare("
             SELECT * from marketplaces
-            WHERE code IN ($codesPreparation)
+            WHERE balance IS NOT NULL
         ");
 
         $data->execute(array_keys($codes));
