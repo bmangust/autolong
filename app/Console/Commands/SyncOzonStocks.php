@@ -3,6 +3,7 @@
 namespace App\Console\Commands;
 
 use App\Connections\Sandbox1c;
+use App\Services\OzonService;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use Illuminate\Console\Command;
@@ -24,20 +25,20 @@ class SyncOzonStocks extends Command
      */
     protected $description = 'Sync stocks with ozon';
     /**
-     * @var Client
+     * @var OzonService
      */
-    private $httpClient;
+    private $ozonService;
 
     /**
      * Create a new command instance.
      *
      * @return void
      */
-    public function __construct()
+    public function __construct(OzonService $ozonService)
     {
         parent::__construct();
 
-        $this->httpClient = new Client(['base_uri' => config('ozon.api_url')]);
+        $this->ozonService = $ozonService;
     }
 
     /**
@@ -45,25 +46,17 @@ class SyncOzonStocks extends Command
      *
      * @return int
      */
-    public function handle()
+    public function handle(): int
     {
-        $products = $this->getOzonProducts();
+        $products = app(OzonService::class)->getOzonProducts();
 
         $stocks = Sandbox1c::getProductsStocks($products);
 
         foreach (array_chunk($stocks, 100) as $stocksBatch) {
             try {
-                $response = $this->httpClient->request('POST', 'v1/product/import/stocks', [
-                        'headers' => [
-                                'Client-Id' => config('ozon.client_id'),
-                                'Api-Key' => config('ozon.api_key')
-                        ],
-                        'json' => [
-                                'stocks' => $stocksBatch
-                        ]
-                ])->getBody()->getContents();
-
-                $this->info($response);
+                $this->info(
+                        $this->ozonService->updateStocks($stocksBatch)
+                );
             } catch (ClientException $exception)
             {
                 $this->error($exception->getResponse()->getBody()->getContents());
@@ -71,26 +64,5 @@ class SyncOzonStocks extends Command
         }
 
         return 0;
-    }
-
-    private function getOzonProducts(): array
-    {
-        $response = json_decode(
-                $this->httpClient->request('POST', 'v2/product/list', [
-                        'headers' => [
-                                'Client-Id' => config('ozon.client_id'),
-                                'Api-Key' => config('ozon.api_key')
-                        ]
-                ])->getBody()->getContents(),
-                true
-        );
-
-        $products = [];
-
-        foreach ($response['result']['items'] as $item) {
-            $products[$item['offer_id']] = $item['product_id'];
-        }
-
-        return $products;
     }
 }
