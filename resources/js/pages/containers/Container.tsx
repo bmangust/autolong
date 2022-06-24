@@ -77,43 +77,45 @@ const Container: React.FC<IContainer> = () => {
 
     const exportToPDF = () => {
         setActiveView(0)
-        pdfMake.vfs = pdfFonts.pdfMake.vfs;
+        setTimeout(() => {
+            pdfMake.vfs = pdfFonts.pdfMake.vfs;
 
-        const pdfItems = []
-        for (let i = 0; i < allItems.length; i++) {
-            pdfItems.push(
-                    [
-                        getBase64Image(document.getElementsByTagName('img')[i]),
-                        {
-                            text: allItems[i].nameRu ?? '',
-                            link: 'https://cnsup.ru/product/' + allItems[i].productId,
-                            color: 'blue'
-                        },
-                        allItems[i].autolongNumber ?? 0,
-                        allItems[i].vendorCode ?? '',
-                        allItems[i].quantity ?? 0,
-                        allItems[i].provider.name,
-                    ]
-            )
-        }
-
-        const content = {
-            content: [
-                {text: 'Контейнер: ' + container.name, style: 'header'},
-                ' ',
-                {
-                    style: 'tableExample',
-                    table: {
-                        body: [
-                            ['Фото', 'Наименование', 'Код товара', 'Артикул', 'Количество (шт)', 'Поставщик'],
-                            ...pdfItems
+            const pdfItems = []
+            for (let i = 0; i < allItems.length; i++) {
+                pdfItems.push(
+                        [
+                            getBase64Image(document.getElementsByTagName('img')[i]),
+                            {
+                                text: allItems[i].nameRu ?? '',
+                                link: 'https://cnsup.ru/product/' + allItems[i].productId,
+                                color: 'blue'
+                            },
+                            allItems[i].autolongNumber ?? 0,
+                            allItems[i].vendorCode ?? '',
+                            allItems[i].quantity ?? 0,
+                            allItems[i].provider.name,
                         ]
-                    }
-                },
-            ]
-        }
+                )
+            }
 
-        pdfMake.createPdf(content).download('container_' + container.name + '.pdf')
+            const content = {
+                content: [
+                    {text: 'Контейнер: ' + container.name, style: 'header'},
+                    ' ',
+                    {
+                        style: 'tableExample',
+                        table: {
+                            body: [
+                                ['Фото', 'Наименование', 'Код товара', 'Артикул', 'Количество (шт)', 'Поставщик'],
+                                ...pdfItems
+                            ]
+                        }
+                    },
+                ]
+            }
+
+            pdfMake.createPdf(content).download('container_' + container.name + '.pdf')
+        }, 1000)
     }
 
     const tablesToCSV = (fileName: string) => {
