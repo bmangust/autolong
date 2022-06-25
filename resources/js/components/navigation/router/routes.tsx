@@ -529,6 +529,28 @@ export const routes: IRoute[] = [
         access: ['logsIndex']
     },
     {
+        name: 'Маркетплейсы',
+        path: '/marketplaces',
+        component: lazy(() => pMinDelay(import('../../../pages/marketplaces/Marketplaces'), 600)),
+        hide: false,
+        exact: true,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Prices/>,
+        access: ['compareIndex']
+    },
+    {
+        name: 'OZON: товарные остатки',
+        path: '/marketplaces/ozon/goods/stocks',
+        component: lazy(() => pMinDelay(import('../../../pages/marketplaces/ozon/GoodsStocks'), 600)),
+        hide: true,
+        exact: true,
+        private: true,
+        fallback: <Loader/>,
+        icon: <Prices/>,
+        access: ['compareIndex']
+    },
+    {
         name: 'Логин',
         path: '/login',
         component: lazy(() => pMinDelay(import('../../../pages/login/Login'), 600)),

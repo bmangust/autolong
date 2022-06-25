@@ -51,10 +51,16 @@ class Sandbox1c
             return '(' . $item . ')';
         }, array_keys($codes)));
 
+        $codesStringList = array_map(function($item) {
+            return (string) $item;
+        }, array_keys($codes));
+
         $data = self::connect()->query("
             INSERT IGNORE INTO marketplaces (code)
             VALUES $codesToInsert
         ");
+
+        $data->execute(array_keys($codes));
 
 //        $data = self::connect()->prepare("
 //            SELECT b.code, b.period, b.balance FROM balance b
@@ -62,6 +68,19 @@ class Sandbox1c
 //            ON b.code = grd.code AND STR_TO_DATE(b.period, '%d.%m.%Y %k:%i:%s') = grd.max_period
 //            WHERE b.code IN ($codesPreparation)
 //        ");
+
+        $data = self::connect()->prepare("
+            SELECT * from products
+            WHERE code IN ($codesPreparation)
+        ");
+
+        $data->execute($codesStringList);
+
+        $products = [];
+
+        foreach ($data->fetchAll(PDO::FETCH_OBJ) as $product) {
+            $products[$product->code] = $product;
+        }
 
         $data = self::connect()->prepare("
             SELECT * from marketplaces
@@ -78,6 +97,7 @@ class Sandbox1c
                 $stocks[] = [
                         'offer_id' => (string) $item->code,
                         'product_id' => $codes[$item->code],
+                        'product' => $products[$item->code] ?? null,
                         'stock' => $item->balance
                 ];
             }

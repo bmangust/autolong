@@ -12,6 +12,7 @@ import countryReducer from './countries'
 import ordersReducer from './orders'
 import tagsReducer from './tags'
 import logsReducer from './Logs'
+import goodsStocksReducer from './ozon'
 import citiesReducer from './cities'
 import rolesReducer from './roles'
 import usersReducer from './users'
@@ -33,7 +34,8 @@ const createRootReducer = (history) => combineReducers({
     changelogState: changelogReducer,
     rolesState: rolesReducer,
     usersState: usersReducer,
-    settingsState: settingsReducer
+    settingsState: settingsReducer,
+    goodsStocksState: goodsStocksReducer
 })
 
 export default createRootReducer
