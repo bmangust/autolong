@@ -144,4 +144,12 @@ Route::middleware('auth:sanctum')->group(function () {
 
     Route::get('changelog', 'ChangelogController@index');
     Route::post('changelog', 'ChangelogController@store');
+
+    Route::prefix('marketplaces')->group(function() {
+        Route::prefix('ozon')->group(function() {
+            Route::prefix('goods')->group(function() {
+                Route::get('stocks', 'OzonController@getOzonGoodsStocks');
+            });
+        });
+    });
 });
