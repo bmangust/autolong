@@ -15,18 +15,14 @@ import {createBrowserHistory} from 'history'
 import Index from './index'
 import createRootReducer from './store/reducers/rootReducer'
 import Sanctum from './Sanctum/Sanctum'
+import PusherListener from './components/PusherListener/PusherListener'
 
 const middleware = thunk as ThunkMiddleware
 export const history = createBrowserHistory()
 
 const store = createStore(
     createRootReducer(history),
-    composeWithDevTools(
-        applyMiddleware(
-            routerMiddleware(history),
-            middleware
-        )
-    )
+    composeWithDevTools(applyMiddleware(routerMiddleware(history), middleware))
 )
 
 const sanctumConfig = {
@@ -37,12 +33,15 @@ const sanctumConfig = {
     userObjectRoute: process.env.MIX_USER_OBJECT_ROUTE || ''
 }
 
-const application = <Sanctum checkOnInit={false} config={sanctumConfig}>
-    <Provider store={store}>
-        <Router history={history}>
-            <Index/>
-        </Router>
-    </Provider>
-</Sanctum>
+const application = (
+    <Sanctum checkOnInit={false} config={sanctumConfig}>
+        <Provider store={store}>
+            <Router history={history}>
+                <Index />
+            </Router>
+        </Provider>
+        <PusherListener />
+    </Sanctum>
+)
 
 render(application, document.getElementById('root'))

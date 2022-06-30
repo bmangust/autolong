@@ -1,0 +1,100 @@
+1. fix migration fabric and seed
+database/factories/UserFactory.php
+database/seeds/DatabaseSeeder.php
+
+2. fix envs
+DB_HOST=mysql
+
+MIX_API_URL=http://localhost
+
+ADMIN_EMAIL=test@test.com
+ADMIN_PASSWORD=password1234
+
+password must be at least 8 symbols long
+
+3. run from docker
+php artisan db:seed
+
+4. add data to tables:
+INSERT INTO laravel.user_roles
+(id, name, access_id, created_at, updated_at)
+VALUES(1, 'admin', 1, '2022-06-28 23:57:10', '2022-06-28 23:57:10');
+
+INSERT INTO laravel.accesses
+(id, orders_create, orders_update, orders_show_cargo, orders_delete, orders_index, containers_create, containers_update, containers_delete, containers_index, catalogs_create, catalogs_update, catalogs_delete, catalogs_index, products_create, products_update, products_delete, products_index, providers_create, providers_update, providers_delete, providers_index, importers_create, importers_update, importers_delete, importers_index, user_roles_create, user_roles_update, user_roles_delete, user_roles_index, user_create, user_update, user_delete, user_index, logs_index, created_at, updated_at, user_role_id, settings_index, products_new_index, compare_index, admin_power)
+VALUES(1, '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', '1', NULL, NULL, 1, '1', '1', '1', '1');
+
+(could be done using factories as well)
+
+5. login at http://localhost
+
+6. To enable PUSHER need to run "php artisan queue:work" in container (with QUEUE_CONNECTION=database set) or set QUEUE_CONNECTION=sync
+
+
+
+
+notes:
+'npm i' works with node 17.5.0, does not work with 16.15.1. Use nvm to change versions
+
+npm ERR! code ERESOLVE
+npm ERR! ERESOLVE could not resolve
+npm ERR! 
+npm ERR! While resolving: laravel-mix-react-typescript-extension@1.0.3
+npm ERR! Found: laravel-mix@5.0.9
+npm ERR! node_modules/laravel-mix
+npm ERR!   peer laravel-mix@"^5.0.1" from laravel-mix-react-css-modules@2.0.0
+npm ERR!   node_modules/laravel-mix-react-css-modules
+npm ERR!     laravel-mix-react-css-modules@"^2.0.0" from the root project
+npm ERR!   dev laravel-mix@"^5.0.5" from the root project
+npm ERR! 
+npm ERR! Could not resolve dependency:
+npm ERR! peer laravel-mix@"^4.0.0" from laravel-mix-react-typescript-extension@1.0.3
+npm ERR! node_modules/laravel-mix-react-typescript-extension
+npm ERR!   laravel-mix-react-typescript-extension@"^1.0.3" from the root project
+npm ERR! 
+npm ERR! Conflicting peer dependency: laravel-mix@4.1.4
+npm ERR! node_modules/laravel-mix
+npm ERR!   peer laravel-mix@"^4.0.0" from laravel-mix-react-typescript-extension@1.0.3
+npm ERR!   node_modules/laravel-mix-react-typescript-extension
+npm ERR!     laravel-mix-react-typescript-extension@"^1.0.3" from the root project
+npm ERR! 
+npm ERR! Fix the upstream dependency conflict, or retry
+npm ERR! this command with --force, or --legacy-peer-deps
+npm ERR! to accept an incorrect (and potentially broken) dependency resolution.
+npm ERR! 
+npm ERR! See /Users/18947461/.npm/eresolve-report.txt for a full report.
+
+npm ERR! A complete log of this run can be found in:
+npm ERR!     /Users/18947461/.npm/_logs/2022-06-28T22_35_36_114Z-debug-0.log
+
+
+BUT 'npm run dev' does not work on 17.5
+
+> cross-env NODE_ENV=development node_modules/webpack/bin/webpack.js --progress --hide-modules --env.mixfile=webpack.css.js --config=node_modules/laravel-mix/setup/webpack.config.js
+
+10% building 1/2 modules 1 active /Users/18947461/code/web/autolong/node_modules/laravel-mix/src/builder/mock-entry.jsnode:internal/crypto/hash:67
+  this[kHandle] = new _Hash(algorithm, xofLen);
+                  ^
+
+Error: error:0308010C:digital envelope routines::unsupported
+    at new Hash (node:internal/crypto/hash:67:19)
+    at Object.createHash (node:crypto:135:10)
+    at module.exports (/Users/18947461/code/web/autolong/node_modules/webpack/lib/util/createHash.js:135:53)
+    at NormalModule._initBuildHash (/Users/18947461/code/web/autolong/node_modules/webpack/lib/NormalModule.js:417:16)
+    at handleParseError (/Users/18947461/code/web/autolong/node_modules/webpack/lib/NormalModule.js:471:10)
+    at /Users/18947461/code/web/autolong/node_modules/webpack/lib/NormalModule.js:503:5
+    at /Users/18947461/code/web/autolong/node_modules/webpack/lib/NormalModule.js:358:12
+    at /Users/18947461/code/web/autolong/node_modules/loader-runner/lib/LoaderRunner.js:373:3
+    at iterateNormalLoaders (/Users/18947461/code/web/autolong/node_modules/loader-runner/lib/LoaderRunner.js:214:10)
+    at Array.<anonymous> (/Users/18947461/code/web/autolong/node_modules/loader-runner/lib/LoaderRunner.js:205:4)
+    at Storage.finished (/Users/18947461/code/web/autolong/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:55:16)
+    at /Users/18947461/code/web/autolong/node_modules/enhanced-resolve/lib/CachedInputFileSystem.js:91:9
+    at /Users/18947461/code/web/autolong/node_modules/graceful-fs/graceful-fs.js:123:16
+    at FSReqCallback.readFileAfterClose [as oncomplete] (node:internal/fs/read_file_context:68:3) {
+  opensslErrorStack: [ 'error:03000086:digital envelope routines::initialization error' ],
+  library: 'digital envelope routines',
+  reason: 'unsupported',
+  code: 'ERR_OSSL_EVP_UNSUPPORTED'
+}
+
+Node.js v17.5.0

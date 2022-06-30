@@ -55,6 +55,7 @@ class OrderController extends Controller
                 'container.orders',
                 'city'
         ])->orderByDesc('created_at')->get();
+        broadcast(new OrderEvent("orders", "GET"));
         return response()->json(OrderWithRelationshipsResource::collection($orders), 200);
     }
 
