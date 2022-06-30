@@ -6,9 +6,7 @@ import {useDispatch, useSelector} from 'react-redux'
 import {ColumnDescription} from 'react-bootstrap-table-next'
 
 // Actions
-import {
-    fetchContainers
-} from '../../../store/actions/containers'
+import {fetchContainers} from '../../../store/actions/containers'
 
 // Typescript
 import {IContainersRootState} from '../IContainers'
@@ -30,43 +28,51 @@ const ContainersTable: React.FC = () => {
         dispatch(fetchContainers())
     }, [dispatch])
 
-    const {containers, loading, error} = useSelector((state: IContainersRootState) => ({
+    const {containers, loading, error} = useSelector(
+        (state: IContainersRootState) => ({
             error: state.containersState.error,
             containers: state.containersState.containers,
             loading: state.containersState.loading
-    }))   
+        })
+    )
 
     if (error) {
-        return <Error/>
+        return <Error />
     }
     if (loading) {
-        return <Loader/>
+        return <Loader />
     }
     if (!containers.length) {
-        return <Placeholder
-            description='Нажмите на кнопку «Добавить контейнер», чтобы он отображался в списке'
-            link={user && user.role.accesses.containersCreate == 1 ? 'containercreate' : undefined}
-            linkName='Добавить контейнер'
-            title='В этом списке ещё нет контейнеров'/>
+        return (
+            <Placeholder
+                description="Нажмите на кнопку «Добавить контейнер», чтобы он отображался в списке"
+                link={
+                    user && user.role.accesses.containersCreate == 1
+                        ? 'containercreate'
+                        : undefined
+                }
+                linkName="Добавить контейнер"
+                title="В этом списке ещё нет контейнеров"
+            />
+        )
     }
 
     const cityFormatter = (city) => {
-        return city
-            ? city.name
-            : null
+        return city ? city.name : null
     }
 
     const nameFormatter = (name, row) => {
         return `№${name} от ${timeConverter(row.createdAt)}`
     }
 
-    const filterOptions = Object.entries(statuses.containerStatuses)
-        .map(([key, value]) => {
+    const filterOptions = Object.entries(statuses.containerStatuses).map(
+        ([key, value]) => {
             return {
                 label: value,
                 value: key
             }
-        })
+        }
+    )
 
     const filter = {
         options: filterOptions,
@@ -115,12 +121,17 @@ const ContainersTable: React.FC = () => {
 
     return (
         <AutoTable
-            keyField='id' data={containers} columns={columns}
-            rowClickLink='container'
+            keyField="id"
+            data={containers}
+            columns={columns}
+            rowClickLink="container"
             filter={filter}
-            button={user && user.role.accesses.containersCreate == 1
-                ? {link: 'containercreate', text: 'Добавить контейнер'}
-                : undefined}/>
+            button={
+                user && user.role.accesses.containersCreate == 1
+                    ? {link: 'containercreate', text: 'Добавить контейнер'}
+                    : undefined
+            }
+        />
     )
 }
 

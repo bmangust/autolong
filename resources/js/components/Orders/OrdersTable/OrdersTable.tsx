@@ -46,29 +46,34 @@ const OrdersTable: React.FC = () => {
     }))
 
     if (error) {
-        return <Error/>
+        return <Error />
     }
     if (loading) {
-        return <Loader/>
+        return <Loader />
     }
     if (!orders.length) {
         return (
             <Placeholder
-                description='Нажмите на кнопку «Добавить заказы», чтобы он отображался в списке'
-                link={user && user.role.accesses.ordersCreate == 1 ? 'orderscreate' : undefined}
-                linkName='Добавить заказы'
-                title='В этом списке ещё нет заказов'
+                description="Нажмите на кнопку «Добавить заказы», чтобы он отображался в списке"
+                link={
+                    user && user.role.accesses.ordersCreate == 1
+                        ? 'orderscreate'
+                        : undefined
+                }
+                linkName="Добавить заказы"
+                title="В этом списке ещё нет заказов"
             />
         )
     }
 
-    const filterOptions = Object.entries(statuses.orderStatuses)
-        .map(([key, value]) => {
+    const filterOptions = Object.entries(statuses.orderStatuses).map(
+        ([key, value]) => {
             return {
                 label: value,
                 value: key
             }
-        })
+        }
+    )
 
     const filter = {
         options: filterOptions,
@@ -81,18 +86,16 @@ const OrdersTable: React.FC = () => {
     }
 
     const countsFormatter = (items) => {
- 	    let totalCounts = 0;
-	    items.reduce((i, items, ) => {
-	        totalCounts += items.quantity;
-	    },[]);
+        let totalCounts = 0
+        items.reduce((i, items) => {
+            totalCounts += items.quantity
+        }, [])
 
-       return totalCounts
+        return totalCounts
     }
 
     const providerFormatter = (provider) => {
-        return 'name' in provider
-            ? provider.name
-            : null
+        return 'name' in provider ? provider.name : null
     }
 
     const containerFormatter = (container) => {
@@ -100,52 +103,70 @@ const OrdersTable: React.FC = () => {
     }
 
     const footerFormatter = (column, colIndex, {text}) => {
-        return <span className='pricesBlock'><span>{text}</span></span>
+        return (
+            <span className="pricesBlock">
+                <span>{text}</span>
+            </span>
+        )
     }
 
-
     const footerFormatterMain = () => {
-        return <div>
-            <p className='mb-0'>Общая стоимость на странице:</p>
-            <div className={classes.orderInfo}>
-                <span className={classes.orderRateRub}>1 ¥ = {courses.rub.toFixed(2)} ₽</span>
-                <span className={classes.orderRateUSD}>1 ¥ = {courses.usd.toFixed(2)} $</span>
+        return (
+            <div>
+                <p className="mb-0">Общая стоимость на странице:</p>
+                <div className={classes.orderInfo}>
+                    <span className={classes.orderRateRub}>
+                        1 ¥ = {courses.rub.toFixed(2)} ₽
+                    </span>
+                    <span className={classes.orderRateUSD}>
+                        1 ¥ = {courses.usd.toFixed(2)} $
+                    </span>
+                </div>
             </div>
-        </div>
+        )
     }
 
     const footerPriceFormatter = (columnData) => {
-        const totalCny: number = columnData.reduce((acc: number, price: { cny: number }) => +acc + +price.cny, 0)
-        return <>
-            <span className='d-block' style={{lineHeight: '15px'}}>{toLocaleNumber(totalCny)} ¥</span>
-            <span>{toLocaleNumber((totalCny * courses.rub))} ₽</span>
-        </>
+        const totalCny: number = columnData.reduce(
+            (acc: number, price: {cny: number}) => +acc + +price.cny,
+            0
+        )
+        return (
+            <>
+                <span className="d-block" style={{lineHeight: '15px'}}>
+                    {toLocaleNumber(totalCny)} ¥
+                </span>
+                <span>{toLocaleNumber(totalCny * courses.rub)} ₽</span>
+            </>
+        )
     }
 
     const footerItemsFormatter = (columnData) => {
+        let totalItems = 0
+        columnData.reduce((index, data) => {
+            totalItems += data.length
+        }, [])
 
-	    let totalItems = 0;
-		columnData.reduce((index, data) => {
-		    totalItems += data.length;
-		},[]);
-
-        return <>
-            <span>{totalItems}</span>
-        </>
+        return (
+            <>
+                <span>{totalItems}</span>
+            </>
+        )
     }
 
     const footerCountsFormatter = (columnData) => {
+        let totalCounts = 0
+        columnData.reduce((index, data) => {
+            data.reduce((i, items) => {
+                totalCounts += items.quantity
+            }, [])
+        }, [])
 
-	    let totalCounts = 0;
-		columnData.reduce((index, data) => {
-		    data.reduce((i, items, ) => {
-		        totalCounts += items.quantity;
-		    },[]);
-		},[]);
-
-        return <>
-            <span>{totalCounts}</span>
-        </>
+        return (
+            <>
+                <span>{totalCounts}</span>
+            </>
+        )
     }
 
     const expandRowTable = [
@@ -198,21 +219,21 @@ const OrdersTable: React.FC = () => {
             text: 'Кол.шт.',
             headerStyle: {width: '88px'},
             formatter: countsFormatter,
-            footer: columnData => footerCountsFormatter(columnData),
+            footer: (columnData) => footerCountsFormatter(columnData)
         },
         {
             dataField: 'items',
             text: 'Кол.наим.',
             headerStyle: {width: '88px'},
             formatter: itemsFormatter,
-            footer: columnData => footerItemsFormatter(columnData),
+            footer: (columnData) => footerItemsFormatter(columnData)
         },
         {
             dataField: 'price',
             text: 'Сумма',
             headerStyle: {width: '90px'},
             formatter: (price) => moneyFormatter(price, ['rub', 'usd']),
-            footer: columnData => footerPriceFormatter(columnData),
+            footer: (columnData) => footerPriceFormatter(columnData),
             footerFormatter: footerFormatter
         }
     ]
@@ -221,11 +242,15 @@ const OrdersTable: React.FC = () => {
         <AutoTable
             filter={filter}
             expandRowTable={expandRowTable}
-            rowClickLink='order'
-            keyField='id' data={orders} columns={columns}
-            button={user && user.role.accesses.ordersCreate == 1
-                ? {link: 'orderscreate', text: 'Добавить заказы'}
-                : undefined}
+            rowClickLink="order"
+            keyField="id"
+            data={orders}
+            columns={columns}
+            button={
+                user && user.role.accesses.ordersCreate == 1
+                    ? {link: 'orderscreate', text: 'Добавить заказы'}
+                    : undefined
+            }
         />
     )
 }
