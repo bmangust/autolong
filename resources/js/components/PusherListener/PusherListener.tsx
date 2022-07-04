@@ -1,33 +1,40 @@
-import {useEffect} from 'react'
+import {useCallback, useEffect} from 'react'
 import Pusher from 'pusher-js/with-encryption'
 import {toast} from 'react-toastify'
+import {usePusher} from './usePusher'
 
 export interface IChannelConfig {
-    channelName: string
-    messageType: string
-    callback: Function
+    channelName?: string
+    messageType?: string
+    callback?: (data: string) => void
 }
 
 Pusher.logToConsole = process.env.MIX_PUSHER_APP_DEBUG ? true : false
 
-const PusherListener = () => {
-    useEffect(() => {
-        const config: IChannelConfig = {
-            channelName: 'order',
-            messageType: 'message',
-            callback: (data: any) => toast(JSON.stringify(data))
-        }
-        const pusher = new Pusher(process.env.MIX_PUSHER_APP_KEY || '', {
-            cluster: process.env.MIX_PUSHER_APP_CLUSTER || '',
-            forceTLS: true
-        })
-        const channel = pusher.subscribe(config.channelName)
-        channel.bind(config.messageType, config.callback)
+const PusherListener = ({
+    channelName = 'order',
+    messageType = 'message',
+    callback
+}: IChannelConfig) => {
+    const cb = useCallback(
+        (data: any) =>
+            callback
+                ? callback(JSON.stringify(data))
+                : toast(JSON.stringify(data)),
+        [callback]
+    )
 
+    const savedChannel = usePusher({
+        channelName,
+        messageType,
+        callback: cb
+    })
+    useEffect(() => {
+        savedChannel.subscribe()
         return () => {
-            channel.unbind(config.messageType, config.callback)
+            savedChannel.unsubscribe()
         }
-    }, [])
+    }, [savedChannel])
 
     return null
 }
