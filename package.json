@@ -70,6 +70,7 @@
         "laravel-mix-react-typescript-extension": "^1.0.3",
         "p-min-delay": "^3.1.0",
         "pdfmake": "^0.2.5",
+        "pusher-js": "^7.1.1-beta",
         "query-string": "^6.13.7",
         "react-bootstrap": "^1.4.0",
         "react-bootstrap-table-next": "^4.0.3",

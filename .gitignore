@@ -24,3 +24,4 @@ tsconfig.json
 .vscode/settings.json
 /nbproject/private/
 composer.phar
+/database/mysql
