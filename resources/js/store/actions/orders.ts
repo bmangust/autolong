@@ -31,7 +31,7 @@ import {history} from '../../app'
 import {saveAs} from 'file-saver'
 import {fetchContainerById} from './containers'
 
-export const fetchOrders = () => async dispatch => {
+export const fetchOrders = () => async (dispatch) => {
     await dispatch({
         type: FETCH_ORDERS_START
     })
@@ -53,7 +53,7 @@ export const fetchOrders = () => async dispatch => {
         })
 }
 
-export const fetchOrderById = (id) => async dispatch => {
+export const fetchOrderById = (id) => async (dispatch) => {
     await dispatch({
         type: FETCH_ORDER_START
     })
@@ -75,32 +75,34 @@ export const fetchOrderById = (id) => async dispatch => {
         })
 }
 
-export const createOrder = (data, redirect = '') => async dispatch => {
-    await dispatch({
-        type: CREATE_ORDER_START
-    })
-    const url = '/api/orders'
-    axios
-        .post(url, data)
-        .then((answer) => {
-            dispatch({
-                type: CREATE_ORDER_SUCCESS,
-                payload: answer.data
-            })
-            toast.success(createNotyMsg(answer.data.name, 'заказ создан'))
-            if (redirect) {
-                history.push(redirect)
-            }
+export const createOrder =
+    (data, redirect = '') =>
+    async (dispatch) => {
+        await dispatch({
+            type: CREATE_ORDER_START
         })
-        .catch((error: AxiosError) => {
-            dispatch({
-                type: CREATE_ORDER_ERROR,
-                payload: error.response
+        const url = '/api/orders'
+        axios
+            .post(url, data)
+            .then((answer) => {
+                dispatch({
+                    type: CREATE_ORDER_SUCCESS,
+                    payload: answer.data
+                })
+                toast.success(createNotyMsg(answer.data.name, 'заказ создан'))
+                if (redirect) {
+                    history.push(redirect)
+                }
             })
-        })
-}
+            .catch((error: AxiosError) => {
+                dispatch({
+                    type: CREATE_ORDER_ERROR,
+                    payload: error.response
+                })
+            })
+    }
 
-export const fetchProductsByVendor = (data) => async dispatch => {
+export const fetchProductsByVendor = (data) => async (dispatch) => {
     const vendorCodesArr = data.vendorCodes.split(' ')
     const url = `/api/orders/checkvendorcode`
     axios
@@ -115,26 +117,26 @@ export const fetchProductsByVendor = (data) => async dispatch => {
         })
 }
 
-export const fetchItemsByVendors = (data) => async dispatch => {
+export const fetchItemsByVendors = (data) => async (dispatch) => {
     await dispatch({
         type: FETCH_ITEMS_BY_VENDOR_START
     })
-    const numbers = data.numbers.split('\n')
-        .filter(el => el != null && el != '')
+    const numbers = data.numbers
+        .split('\n')
+        .filter((el) => el != null && el != '')
     const url = '/api/orders/checkproductnumberwithus'
     axios
         .post(url, {numbers})
         .then((answer) => {
             const notFound: any[] = []
-            Object.entries(answer.data)
-                .forEach(([key, value]: any) => {
-                    if (key === 'number') {
-                        value.forEach(item => {
-                            notFound.push(item)
-                            toast.warn(createNotyMsg(item, 'артикул не найден'))
-                        })
-                    }
-                })
+            Object.entries(answer.data).forEach(([key, value]: any) => {
+                if (key === 'number') {
+                    value.forEach((item) => {
+                        notFound.push(item)
+                        toast.warn(createNotyMsg(item, 'артикул не найден'))
+                    })
+                }
+            })
             delete answer.data.number
             dispatch({
                 type: FETCH_ITEMS_BY_VENDOR_SUCCESS,
@@ -150,35 +152,39 @@ export const fetchItemsByVendors = (data) => async dispatch => {
         })
 }
 
-export const paymentHandler = (id, data, method = 'add') => async dispatch => {
-    await dispatch({
-        type: CHANGE_ORDER_STATUS_START
-    })
-
-    const url = `/api/orders/${id}/${method}payment`
-    axios
-        .post(url, data)
-        .then(({data}) => {
-            dispatch({
-                type: CHANGE_ORDER_STATUS_SUCCESS,
-                payload: data
-            })
-            toast.success(createNotyMsg(data.name, 'История оплаты успешно изменена'))
+export const paymentHandler =
+    (id, data, method = 'add') =>
+    async (dispatch) => {
+        await dispatch({
+            type: CHANGE_ORDER_STATUS_START
         })
-        .catch((error: AxiosError) => {
-            if (error.response?.status === 400) {
-                toast.error(error.response.data.message)
-            } else {
+
+        const url = `/api/orders/${id}/${method}payment`
+        axios
+            .post(url, data)
+            .then(({data}) => {
                 dispatch({
-                    type: CHANGE_ORDER_STATUS_ERROR,
-                    payload: error.response
+                    type: CHANGE_ORDER_STATUS_SUCCESS,
+                    payload: data
                 })
-                toast.error(error.message)
-            }
-        })
-}
+                toast.success(
+                    createNotyMsg(data.name, 'История оплаты успешно изменена')
+                )
+            })
+            .catch((error: AxiosError) => {
+                if (error.response?.status === 400) {
+                    toast.error(error.response.data.message)
+                } else {
+                    dispatch({
+                        type: CHANGE_ORDER_STATUS_ERROR,
+                        payload: error.response
+                    })
+                    toast.error(error.message)
+                }
+            })
+    }
 
-export const setPaymentStatusPaidInFull = (id, data) => async dispatch => {
+export const setPaymentStatusPaidInFull = (id, data) => async (dispatch) => {
     const url = `/api/orders/${id}/setpaymentstatuspaidinfull`
 
     axios
@@ -188,7 +194,9 @@ export const setPaymentStatusPaidInFull = (id, data) => async dispatch => {
                 type: CHANGE_ORDER_STATUS_SUCCESS,
                 payload: data
             })
-            toast.success(createNotyMsg(data.name, 'Статус полной оплаты изменен'))
+            toast.success(
+                createNotyMsg(data.name, 'Статус полной оплаты изменен')
+            )
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {
@@ -203,7 +211,7 @@ export const setPaymentStatusPaidInFull = (id, data) => async dispatch => {
         })
 }
 
-export const changeOrderStatus = (id, data) => async dispatch => {
+export const changeOrderStatus = (id, data) => async (dispatch) => {
     await dispatch({
         type: CHANGE_ORDER_STATUS_START
     })
@@ -219,7 +227,9 @@ export const changeOrderStatus = (id, data) => async dispatch => {
                 type: CHANGE_ORDER_STATUS_SUCCESS,
                 payload: answer.data
             })
-            toast.success(createNotyMsg(answer.data.name, 'статус заказа изменен'))
+            toast.success(
+                createNotyMsg(answer.data.name, 'статус заказа изменен')
+            )
         })
         .catch((error: AxiosError) => {
             if (error.response?.status === 400) {
@@ -234,21 +244,18 @@ export const changeOrderStatus = (id, data) => async dispatch => {
         })
 }
 
-export const deleteOrderById = (id) => async dispatch => {
+export const deleteOrderById = (id) => async (dispatch) => {
     const url = `/api/orders/${id}`
-    axios
-        .delete(url)
-        .then((answer) => {
-            dispatch({
-                type: DELETE_ORDER_BY_ID,
-                payload: id
-            })
-            toast.success('Заказ удален')
+    axios.delete(url).then((answer) => {
+        dispatch({
+            type: DELETE_ORDER_BY_ID,
+            payload: id
         })
+        toast.success('Заказ удален')
+    })
 }
 
-
-export const fetchOrderInvoice = (id, type) => async dispatch => {
+export const fetchOrderInvoice = (id, type) => async (dispatch) => {
     await dispatch({
         type: FETCH_ORDER_INVOICE_START
     })
@@ -256,7 +263,7 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
     const url = `/api/orders/${id}/getpdf${type}`
     axios
         .get(url)
-        .then(answer => {
+        .then((answer) => {
             dispatch({
                 type: FETCH_ORDER_INVOICE_SUCCESS,
                 payload: answer.data
@@ -275,31 +282,39 @@ export const fetchOrderInvoice = (id, type) => async dispatch => {
         })
 }
 
-export const createOrderInvoice = (id: number, data: any, type: string, date: number, containerId?: number) =>
-    async dispatch => {
+export const createOrderInvoice =
+    (id: number, data: any, type: string, date: number, containerId?: number) =>
+    async (dispatch) => {
         const url = `/api/orders/${id}/generatepdf${type}`
         let formData = data
         if (type !== 'packinglist') {
             formData = new FormData()
-            Object.entries(data)
-                .forEach(([key, val]) => {
-                    if (Array.isArray(val)) {
-                        return formData.append(key, JSON.stringify(val))
-                    } else {
-                        return formData.append(key, val)
-                    }
-                })
+            Object.entries(data).forEach(([key, val]) => {
+                if (Array.isArray(val)) {
+                    return formData.append(key, JSON.stringify(val))
+                } else {
+                    return formData.append(key, val)
+                }
+            })
         }
         axios
             .post(url, formData, {responseType: 'blob'})
-            .then(answer => {
-                const blob = new Blob([answer.data],
-                    {type: 'application/pdf;charset=utf-8'})
+            .then((answer) => {
+                const blob = new Blob([answer.data], {
+                    type: 'application/pdf;charset=utf-8'
+                })
                 if (type === 'packinglist' && containerId) {
                     dispatch(fetchContainerById(containerId, false))
                 }
-                toast.success(`${type === 'account' ? 'Счет' : type} сгенерирован`)
-                saveAs(blob, `${type === 'account' ? 'bill' : type}-${id}-${timeConverter(date)}.pdf`)
+                toast.success(
+                    `${type === 'account' ? 'Счет' : type} сгенерирован`
+                )
+                saveAs(
+                    blob,
+                    `${
+                        type === 'account' ? 'bill' : type
+                    }-${id}-${timeConverter(date)}.pdf`
+                )
             })
             .catch((error: AxiosError) => {
                 if (error.response?.status === 400) {
@@ -310,28 +325,28 @@ export const createOrderInvoice = (id: number, data: any, type: string, date: nu
             })
     }
 
-export const removeStampByType = (orderId, type, modalType) => async dispatch => {
-    const url = `/api/orders/${orderId}/deletepdf${modalType}${type.toLowerCase()}`
-    axios
-        .delete(url)
-        .then(() => {
-            dispatch({
-                type: REMOVE_INPUT_FROM_INVOICE,
-                payload: type
+export const removeStampByType =
+    (orderId, type, modalType) => async (dispatch) => {
+        const url = `/api/orders/${orderId}/deletepdf${modalType}${type.toLowerCase()}`
+        axios
+            .delete(url)
+            .then(() => {
+                dispatch({
+                    type: REMOVE_INPUT_FROM_INVOICE,
+                    payload: type
+                })
+                toast.success(createNotyMsg(type, 'печать удалена'))
             })
-            toast.success(createNotyMsg(type, 'печать удалена'))
-        })
-        .catch((error: AxiosError) => {
-            if (error.response?.status === 400) {
-                toast.error(error.response.data)
-            } else {
-                toast.error(error.message)
-            }
-        })
-}
+            .catch((error: AxiosError) => {
+                if (error.response?.status === 400) {
+                    toast.error(error.response.data)
+                } else {
+                    toast.error(error.message)
+                }
+            })
+    }
 
-export const checkBaikalStatus = (baikalId, id) => async dispatch => {
-	
+export const checkBaikalStatus = (baikalId, id) => async (dispatch) => {
     const url = `/api/orders/${id}/checkbaikalstatus`
 
     axios
@@ -344,7 +359,10 @@ export const checkBaikalStatus = (baikalId, id) => async dispatch => {
             })
         })
         .catch((error: AxiosError) => {
-            if (error.response?.status === 400 || error.response?.status === 404) {
+            if (
+                error.response?.status === 400 ||
+                error.response?.status === 404
+            ) {
                 toast.error(error.response.data)
             } else {
                 toast.error(error.message)
@@ -352,7 +370,7 @@ export const checkBaikalStatus = (baikalId, id) => async dispatch => {
         })
 }
 
-export const deleteBaikalId = (id) => async dispatch => {
+export const deleteBaikalId = (id) => async (dispatch) => {
     const url = `/api/orders/${id}/deletebaikalstatus`
 
     axios
@@ -365,7 +383,10 @@ export const deleteBaikalId = (id) => async dispatch => {
             })
         })
         .catch((error: AxiosError) => {
-            if (error.response?.status === 400 || error.response?.status === 404) {
+            if (
+                error.response?.status === 400 ||
+                error.response?.status === 404
+            ) {
                 toast.error(error.response.data)
             } else {
                 toast.error(error.message)
@@ -373,7 +394,7 @@ export const deleteBaikalId = (id) => async dispatch => {
         })
 }
 
-export const editOrderAdmin = (id, data) => async dispatch => {
+export const editOrderAdmin = (id, data) => async (dispatch) => {
     const url = `/api/orders/${id}`
 
     axios
@@ -386,7 +407,10 @@ export const editOrderAdmin = (id, data) => async dispatch => {
             })
         })
         .catch((error: AxiosError) => {
-            if (error.response?.status === 400 || error.response?.status === 404) {
+            if (
+                error.response?.status === 400 ||
+                error.response?.status === 404
+            ) {
                 toast.error(error.response.data.message)
             } else {
                 toast.error(error.message)

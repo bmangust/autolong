@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-vars */
 // React
 import React, {useEffect} from 'react'
 
@@ -25,13 +26,11 @@ const LogsTable: React.FC = () => {
         dispatch(fetchPurchases())
     }, [dispatch])
 
-    const {log, loading, error} = useSelector(
-        (state: ILogsRootState) => ({
-            log: state.logsState.logs,
-            loading: state.logsState.loading,
-            error: state.logsState.error
-        })
-    )
+    const {log, loading, error} = useSelector((state: ILogsRootState) => ({
+        log: state.logsState.logs,
+        loading: state.logsState.loading,
+        error: state.logsState.error
+    }))
 
     const logActionFormatter = (modelName, row) => {
         const item = JSON.parse(row.model)
@@ -45,9 +44,11 @@ const LogsTable: React.FC = () => {
             const beforeObj = JSON.parse(before)
             return Object.entries(beforeObj).map(([key, value]) => {
                 if (key !== 'updated_at' && key !== 'created_at') {
-                    return <p key={key + value} className='mb-0'>
-                        {key} : {value}
-                    </p>
+                    return (
+                        <p key={key + value} className="mb-0">
+                            {key} : {value}
+                        </p>
+                    )
                 } else {
                     return null
                 }
@@ -62,9 +63,11 @@ const LogsTable: React.FC = () => {
             const afterObj = JSON.parse(after)
             return Object.entries(afterObj).map(([key, value]) => {
                 if (key !== 'updated_at' && key !== 'created_at') {
-                    return <p key={key + value} className='mb-0'>
-                        {value}
-                    </p>
+                    return (
+                        <p key={key + value} className="mb-0">
+                            {value}
+                        </p>
+                    )
                 } else {
                     return null
                 }
@@ -150,19 +153,23 @@ const LogsTable: React.FC = () => {
             classes: 'title',
             sort: true
         }
-     ]
+    ]
 
     if (error) {
-        return <Error/>
+        return <Error />
     }
     if (loading) {
-        return <Loader/>
+        return <Loader />
     }
 
-    return <AutoTable
-        expandRowTable={expandRowTable}
-        keyField='id' data={log} columns={columns}
-    />
+    return (
+        <AutoTable
+            expandRowTable={expandRowTable}
+            keyField="id"
+            data={log}
+            columns={columns}
+        />
+    )
 }
 
 export default LogsTable
